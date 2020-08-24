@@ -12,11 +12,15 @@
     <link rel="stylesheet" type="text/css" href="../static/styles/default.css" media="only screen and (max-device-width:480px)">
 
     <script src="static/scripts/main.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var lemmatizer = new Lemmatizer();
-        var lemma = lemmatizer.only_lemmas('priorities');     // => [ 'priority' ]
-        console.log(lemma)
-    </script>
+    <script src="static/scripts/utils.js" type="text/javascript"></script>
+    <script src="static/scripts/populate_dicts.js" type="text/javascript"></script>
+
+
+    <script src="static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+    <script src="static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+
+
+
 </head>
 
 
@@ -580,7 +584,7 @@
                                         <!--<nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"-->
                                                  <!--style="text-decoration:none;"-->
                                                  <!--title="Delete entire AMR"-->
-                                                 <!--href="javascript:delete_amr();"><font-->
+                                                 <!--href="javascript:deleteAMR();"><font-->
                                                 <!--color="black">&nbsp;delete&nbsp;<br>&nbsp;entire AMR&nbsp;</font></a>-->
                                         <!--</nobr>-->
                                     <!--</td>-->
@@ -1123,7 +1127,7 @@
                     <tr style="background-color:#BBCCFF;">
                         <td>
                             <nobr>&nbsp;<a style="text-decoration:none" title="refresh AMR display"
-                                           href="javascript:apply_amr_div_params();show_amr('show');"><font
+                                           href="javascript:applyAmrDivParams();show_amr('show');"><font
                                     color="black">Apply and refresh AMR</font></a>&nbsp;
                             </nobr>
                         </td>
