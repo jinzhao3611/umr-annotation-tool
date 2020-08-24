@@ -215,212 +215,16 @@
 </div>
 
 
-<div id="top-template-table" style="display:none;">
-    <p>
-    <table style="background-color:#E8EEFF;">
-        <tbody>
-        <tr>
-            <td>Action template</td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#E8EEFF;">
-                        <td>
-                            <nobr>&nbsp;top&nbsp;</nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>&nbsp; top level concept: <input size="20"
-                                                 title="type in top level concept, e.g. say-01, or type in variable of sub-AMR to be raised to the top"
-                                                 autocapitalize="off" style="font-size:1.2em" id="top-root-concept"
-                                                 name="top-root-concept" value=""
-                                                 onkeypress="action_on_enter('submit', event, 'top-root-concept');">
-                &nbsp;
-            </td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none" title="submit top template action"
-                                           href="javascript:submit_template_action('top');"><font
-                                    color="black">submit</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p>
-</div>
-
-<div id="add-template-table" style="display:none;">
-    <p>
-    <table style="background-color:#E8EEFF;">
-        <tbody>
-        <tr>
-            <td>
-                <nobr>Action template</nobr>
-            </td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#E8EEFF;">
-                        <td>
-                            <nobr>&nbsp;add&nbsp;</nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td width="5"></td>
-            <td>
-                <nobr>head var:</nobr>
-            </td>
-            <td><input size="2" title="type in head variable, e.g. s" autocapitalize="off" style="font-size:1.2em"
-                       id="add-head" value=""></td>
-            <td width="5"></td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none"
-                                           title="display clickable list of AMR roles (popup)"
-                                           href="javascript:popupRoles();"><font color="black">role:</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off" style="font-size:1.2em"
-                       id="add-role" value="" onkeyup="action_on_enter('show roles', event, 'add-role');"></td>
-            <td width="5"></td>
-            <td>arg:</td>
-            <td><input size="20" title="type in arg concept or variable, e.g. boy or b (if b is already defined)"
-                       autocapitalize="off" style="font-size:1.2em" id="add-arg" value=""
-                       onkeypress="action_on_enter('submit add', event, 'add-arg');"></td>
-            <td width="5"></td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none" title="submit add template action"
-                                           href="javascript:submit_template_action('add');"><font
-                                    color="black">submit</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td width="5"></td>
-        </tr>
-        </tbody>
-    </table>
-    </p>
-</div>
-
-<div id="add-ne-template-table" style="display:none;">
-    <p>
-    <table style="background-color:#E8EEFF;">
-        <tbody>
-        <tr>
-            <td align="center">Action<br>template</td>
-            <td width="20"></td>
-            <td>&nbsp; head var: <input size="2" title="type in head variable, e.g. s" autocapitalize="off"
-                                        style="font-size:1.2em" id="add-ne-head" value=""></td>
-            <td width="5"></td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none"
-                                           title="display clickable list of AMR roles (popup)"
-                                           href="javascript:popupRoles();"><font color="black">role:</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td><input size="10" title="type in role, e.g. :ARG0 or :location" autocapitalize="off"
-                       style="font-size:1.2em" id="add-ne-role" value=""
-                       onkeyup="action_on_enter('show roles', event, 'add-ne-role');"></td>
-            <td width="5"></td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none"
-                                           title="display clickable list of NE-types (popup)"
-                                           href="javascript:popupNETypes();"><font color="black">NE type:</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td title="type in the type of the named entity (e.g. person, country, state, city, organization, company, university, work-of-art, bridge, mountain, war, language, law, political-party)">
-                <input size="18" id="add-ne-concept" style="font-size:1.2em" autocapitalize="off" value="">
-            </td>
-            <td width="5"></td>
-        </tr>
-        <tr>
-            <td align="center">
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#E8EEFF;">
-                        <td>
-                            <nobr>&nbsp;add-ne&nbsp;</nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td></td>
-            <td colspan="7">&nbsp; name: <input size="61" title="type in name, e.g. John F. Kennedy (without quotes)"
-                                                autocapitalize="off" style="font-size:1.2em" id="add-ne-name" value=""
-                                                onkeypress="action_on_enter('submit add-ne', event, 'add-ne-name');">
-            </td>
-            <td align="center">
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none" title="submit add-ne template action"
-                                           href="javascript:submit_template_action('add-ne');"><font color="black">submit</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td width="5"></td>
-        </tr>
-        </tbody>
-    </table>
-    </p></div>
-
 <div id="replace-template-table" style="display:none;">
     <p>
-    <table style="background-color:#E8EEFF;">
+    <table>
         <tbody>
         <tr>
             <td>Action template</td>
             <td>
                 <table border="1" cellpadding="1" cellspacing="0">
                     <tbody>
-                    <tr style="background-color:#E8EEFF;">
+                    <tr>
                         <td>
                             <nobr>&nbsp;replace&nbsp;</nobr>
                         </td>
@@ -429,7 +233,7 @@
                 </table>
             </td>
             <td title="select type of AMR element to be replaced">&nbsp;
-                <select id="replace-type" style="font-size:1.2em;background-color:#F9FBFF"
+                <select id="replace-type"
                         onchange="selectReplaceType(this[selectedIndex].text);">
                     <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
                     <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
@@ -438,7 +242,7 @@
                     <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
                 </select></td>
             <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
-                                 autocapitalize="off" style="font-size:1.2em;background-color:#F9FBFF" id="replace-at"
+                                 autocapitalize="off"  id="replace-at"
                                  value=""></td>
             <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
                                    id="replace-new" value=""
@@ -449,7 +253,7 @@
             <td>
                 <table border="1" cellpadding="1" cellspacing="0">
                     <tbody>
-                    <tr style="background-color:#BBCCFF;">
+                    <tr>
                         <td>
                             <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
                                            href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
@@ -536,15 +340,14 @@
 
 <div id="move-template-table" style="display:none;">
     <p>
-    <table style="background-color:#E8EEFF" ;
-    "="">
+    <table>
     <tbody>
     <tr>
         <td>Action template</td>
         <td>
             <table border="1" cellpadding="1" cellspacing="0">
                 <tbody>
-                <tr style="background-color:#E8EEFF;">
+                <tr>
                     <td>
                         <nobr>&nbsp;move&nbsp;</nobr>
                     </td>
@@ -555,15 +358,15 @@
         <td width="5"></td>
         <td>Move
         </td>
-        <td><input size="2" title="type in variable, e.g. b" autocapitalize="off" style="font-size:1.2em"
+        <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
                    id="move-object" value=""></td>
         <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
-                                       style="font-size:1.2em" id="move-new-head" value=""> &nbsp;
+                                        id="move-new-head" value=""> &nbsp;
         </td>
         <td>
             <table border="1" cellpadding="1" cellspacing="0">
                 <tbody>
-                <tr style="background-color:#BBCCFF;">
+                <tr >
                     <td>
                         <nobr>&nbsp;<a style="text-decoration:none" title="display clickable list of AMR roles (popup)"
                                        href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
@@ -573,15 +376,15 @@
                 </tbody>
             </table>
         </td>
-        <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off" style="font-size:1.2em"
+        <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
                    id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
                    onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
         <td>
             <table border="1" cellpadding="1" cellspacing="0">
                 <tbody>
-                <tr style="background-color:#BBCCFF;">
+                <tr >
                     <td>
-                        <nobr>&nbsp;<a style="text-decoration:none" title="submit move template action"
+                        <nobr>&nbsp;<a  title="submit move template action"
                                        href="javascript:submit_template_action('move');"><font
                                 color="black">submit</font></a>&nbsp;
                         </nobr>
@@ -595,552 +398,6 @@
     </table>
     </p></div>
 
-<div id="load-template-table" style="display:none;">
-    <p>
-    <table>
-        <tbody>
-        <tr id="load-cgi2" style="display: inline;">
-            <td style="background-color:#E8EEFF;" width="920">
-                <form name="main" enctype="multipart/form-data"
-                      action="https://www.isi.edu/cgi-bin/div3/mt/amr-editor/load-amr-v1.7.cgi" method="post"
-                      style="margin-bottom: 0em;">
-                    <input type="hidden" id="load-amr-editor-file" name="load-amr-editor-file"
-                           value="/nfs/isd/ulf/public_html/amr/AMR-editor-c-v1.7.html">
-                    <input type="hidden" id="load-amr-editor-url" name="load-amr-editor-url"
-                           value="https://www.isi.edu/~ulf/amr/AMR-editor-c-v1.7.html">
-                    <input type="hidden" id="amr-editor-load-command" name="amr-editor-load-command"
-                           value="Load AMR at ISI">
-                    <input type="hidden" id="load-options2" name="load-options2"
-                           value="string-args-with-head:true;1-line-NEs:true;1-line-ORs:true;wrap:false;fix-font:false;role-auto-case:true;variable-indentation:false;auto-check:true;auto-reification:true;auto-moveto:false;provide-guidance:true;confirm-delete:false;check-chinese:false;resize-command:false;amr-area-var-fix:variable;amr-area-height:20">
-                    <input type="hidden" id="cookie-id-load2" name="cookie-id-load2" value="20200718.13253347.25303766">
-                    <input type="hidden" id="logsid-load2" name="logsid-load2"
-                           value="Mpcw28Jg888DwAnjzufBHQFcbbtQPJGulL9vxVpv">
-                    <input type="hidden" id="workset-p" name="workset-p" value="1">
-                    <table style="background-color:#E8EEFF;" width="100%">
-                        <tbody>
-                        <tr>
-                            <td title="To see and select from list of available worksets, leave workset field empty">
-                                <nobr><b>Load or <a href="https://www.isi.edu/~ulf/amr/ontonotes-snt-finder.html"
-                                                    target="_ON_SNT_FINDER"
-                                                    title="Click here to create new workset using OntoNotes Sentence Finder (in new tab)">create</a>
-                                    AMR workset at ISI</b> &nbsp;
-                                </nobr>
-                            </td>
-                            <td>Annotator:</td>
-                            <td><input type="text" size="12" name="load-username2" id="load-username2" value="guest"
-                                       style="font-size:1.1em"></td>
-                            <td title="To see and select from list of available worksets, leave this field empty">
-                                <nobr> &nbsp; &nbsp; Workset:</nobr>
-                            </td>
-                            <td title="To see and select from list of available worksets, leave this field empty"><input
-                                    type="text" size="24" name="isi-load-workset" style="font-size:1.1em"></td>
-                            <td title="To see and select from list of available worksets, leave workset field empty">
-                                <input type="submit" value="Load workset at ISI"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr id="load-cgi" style="display: inline;">
-            <td style="background-color:#E8EEFF;" width="920">
-                <form name="main" enctype="multipart/form-data"
-                      action="https://www.isi.edu/cgi-bin/div3/mt/amr-editor/load-amr-v1.7.cgi" method="post"
-                      style="margin-bottom: 0em;">
-                    <input type="hidden" id="load-amr-editor-file" name="load-amr-editor-file"
-                           value="/nfs/isd/ulf/public_html/amr/AMR-editor-c-v1.7.html">
-                    <input type="hidden" id="load-amr-editor-url" name="load-amr-editor-url"
-                           value="https://www.isi.edu/~ulf/amr/AMR-editor-c-v1.7.html">
-                    <input type="hidden" id="amr-editor-load-command" name="amr-editor-load-command"
-                           value="Load AMR at ISI">
-                    <input type="hidden" id="load-options" name="load-options"
-                           value="string-args-with-head:true;1-line-NEs:true;1-line-ORs:true;wrap:false;fix-font:false;role-auto-case:true;variable-indentation:false;auto-check:true;auto-reification:true;auto-moveto:false;provide-guidance:true;confirm-delete:false;check-chinese:false;resize-command:false;amr-area-var-fix:variable;amr-area-height:20">
-                    <input type="hidden" id="cookie-id-load" name="cookie-id-load" value="20200718.13253347.25303766">
-                    <input type="hidden" id="logsid-load" name="logsid-load"
-                           value="Mpcw28Jg888DwAnjzufBHQFcbbtQPJGulL9vxVpv">
-                    <input type="hidden" id="workset-p" name="workset-p" value="0">
-                    <table style="background-color:#E8EEFF;" width="100%">
-                        <tbody>
-                        <tr>
-                            <td title="To see and select from list of available files, leave filename field empty">
-                                <nobr><b>Load AMR at ISI</b> &nbsp;</nobr>
-                            </td>
-                            <td>Annotator:</td>
-                            <td><input type="text" size="12" name="load-username" id="load-username" value="guest"
-                                       style="font-size:1.1em"></td>
-                            <td title="To see and select from list of available files, leave this field empty">
-                                <nobr> &nbsp; &nbsp; Filename (without path):</nobr>
-                            </td>
-                            <td title="To see and select from list of available files, leave this field empty">
-                                <nobr><input type="text" size="24" name="isi-load-file" style="font-size:1.1em"><span
-                                        style="font-size:1.1em">.txt</span></nobr>
-                            </td>
-                            <td title="To see and select from list of available files, leave filename field empty">
-                                <input type="submit" value="Load file at ISI"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr id="load-onto-snt" style="display: inline;">
-            <td style="background-color:#E8EEFF;" width="920">
-                <form name="main" enctype="multipart/form-data"
-                      action="https://www.isi.edu/cgi-bin/div3/mt/onto-snt-load-wrapper-v1.0.cgi" method="post"
-                      style="margin-bottom: 0em;">
-                    <input type="hidden" id="los-amr-editor-file" name="los-amr-editor-file"
-                           value="/nfs/isd/ulf/public_html/amr/AMR-editor-c-v1.7.html">
-                    <input type="hidden" id="los-amr-editor-url" name="los-amr-editor-url"
-                           value="https://www.isi.edu/~ulf/amr/AMR-editor-c-v1.7.html">
-                    <input type="hidden" id="los-options" name="los-options"
-                           value="string-args-with-head:true;1-line-NEs:true;1-line-ORs:true;wrap:false;fix-font:false;role-auto-case:true;variable-indentation:false;auto-check:true;auto-reification:true;auto-moveto:false;provide-guidance:true;confirm-delete:false;check-chinese:false;resize-command:false;amr-area-var-fix:variable;amr-area-height:20">
-                    <input type="hidden" id="los-username" name="los-username" value="guest">
-                    <input type="hidden" id="amr-editor-los-command" name="amr-editor-los-command"
-                           value="Load OntoNotes sentence">
-                    <table style="background-color:#E8EEFF;" width="100%">
-                        <tbody>
-                        <tr>
-                            <td><b>Load new sentence from OntoNotes</b></td>
-                            <td title="OntoNotes version">
-                                <select id="ontonotes-version" name="ontonotes-version"
-                                        style="font-size:1.0em;background-color:#E8EEFF">
-                                    <option value="ONv4.0" title="OntoNotes version 4.0" selected="">ON v4.0</option>
-                                    <option value="ONv4.99" title="OntoNotes version 4.99">ON v4.99</option>
-                                </select>
-                            </td>
-                            <td title="Select a sentence loader">
-                                <select id="sentence-loader" name="sentence-loader"
-                                        style="font-size:1.0em;background-color:#E8EEFF">
-                                    <option value="BasicSntLoaderUlf0.2" title="Basic sentence loader (Ulf) v0.2">
-                                        BSLUv0.2
-                                    </option>
-                                    <option value="BasicSntLoaderUlf0.3" title="Basic sentence loader (Ulf) v0.3">
-                                        BSLUv0.3
-                                    </option>
-                                    <option value="BasicSntLoaderUlf0.4" title="Basic sentence loader (Ulf) v0.4">
-                                        BSLUv0.4
-                                    </option>
-                                    <option value="BasicSntLoaderUlf0.5" title="Basic sentence loader (Ulf) v0.5">
-                                        BSLUv0.5
-                                    </option>
-                                    <option value="BasicSntLoaderUlf0.6" title="Basic sentence loader (Ulf) v0.6">
-                                        BSLUv0.6
-                                    </option>
-                                    <option value="SntLoaderUlf0.7" title="Sentence loader (Ulf) v0.7">SLUv0.7</option>
-                                    <option value="SntLoaderUlf0.8" title="Sentence loader (Ulf) v0.8">SLUv0.8</option>
-                                    <option value="SntLoaderUlf0.9" title="Sentence loader (Ulf) v0.9">SLUv0.9</option>
-                                    <option value="SntLoaderUlf1.7" title="Sentence loader (Ulf) v1.7" selected="">
-                                        SLUv1.7
-                                    </option>
-                                </select>
-                            </td>
-                            <td title="E.g. wsj_2412.5">Snt. ID:</td>
-                            <td><input type="text" id="onto-snt-id" name="onto-snt-id" style="font-size:1.1em;"
-                                       size="20"></td>
-                            <td title="Click to load sentence from OntoNotes"><input type="submit"
-                                                                                     value="Load ON Sentence"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr id="load-local" style="display: inline;">
-            <td style="background-color:#E8EEFF;" width="920">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td id="load-local-title"><b>Load local AMR file</b></td>
-                        <td width="10"></td>
-                        <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td>&nbsp;</td>
-                        <td><input type="submit" value="Load local file" onclick="load_local_amr_file()">
-                            &nbsp; &nbsp; <span id="info-locally-loaded" width="200"><font color="#999999">Browser supports File API.</font></span>
-                            <span id="alt-locally-loaded" style="display:none" ;=""> &nbsp; &nbsp; Browsers supporting File current versions of Google Chrome, Mozilla Firefox, Opera</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr id="load-direct" style="display: inline;">
-            <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <textarea rows="20" cols="100" id="load-plain" name="load-plain" autocapitalize="off"
-                                      autocorrect="off" spellcheck="false" style="overflow:auto;"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table width="40" border="1" cellpadding="1" cellspacing="0">
-                                <tbody>
-                                <tr style="background-color:#BBCCFF;">
-                                    <td align="center">
-                                        <nobr>&nbsp;<a style="text-decoration:none"
-                                                       title="click to load amr from text area"
-                                                       href="javascript:loadField2amr();recordDirectEntryLoad();"><font
-                                                color="black">load direct AMR</font></a>&nbsp;
-                                        </nobr>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p></div>
-
-<div id="save-template-table" style="display:none;">
-    <p>
-    <table style="background-color:#E8EEFF;" width="800">
-        <tbody>
-        <tr>
-            <td><b>Save AMR</b> using</td>
-            <td><input type="submit" title="e.g. to save AMR" value="AMR popup" onclick="popupWithAmr()"></td>
-            <td width="500"></td>
-        </tr>
-        </tbody>
-    </table>
-    </p><p>
-    <table style="background-color:#E8EEFF;" width="800">
-        <tbody>
-        <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
-            <td id="save-local-title"><b>Save AMR locally</b></td>
-            <td width="10"></td>
-            <td>
-                <table>
-                    <tbody>
-                    <tr id="save-local-filename">
-                        <td>Filename (without path):</td>
-                        <td><input type="text" id="local_save_file" name="local_save_file" size="24"
-                                   style="font-size:1.1em;text-align:right;" value=""><span
-                                style="font-size:1.1em">.txt</span></td>
-                        <td width="10"></td>
-                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file()"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr id="alt-save-locally" style="display:none" ;="">
-            <td></td>
-            <td></td>
-            <td>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>Browsers supporting current version of Google Chrome, Firefox, Safari, Opera</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p><p>
-</p>
-    <form id="save-at-isi-form" name="save-at-isi-form" enctype="multipart/form-data"
-          action="https://www.isi.edu/cgi-bin/div3/mt/amr-editor/save-amr-v1.7.cgi" method="post">
-        <input type="hidden" id="plain-amr" name="plain-amr" value="">
-        <input type="hidden" id="save-amr-editor-url" name="save-amr-editor-url"
-               value="https://www.isi.edu/~ulf/amr/AMR-editor-c-v1.7.html">
-        <input type="hidden" id="save-amr-editor-file" name="save-amr-editor-file"
-               value="/nfs/isd/ulf/public_html/amr/AMR-editor-c-v1.7.html">
-        <input type="hidden" id="comment" name="comment" value="">
-        <input type="hidden" id="save-options" name="save-options"
-               value="string-args-with-head:true;1-line-NEs:true;1-line-ORs:true;wrap:false;fix-font:false;role-auto-case:true;variable-indentation:false;auto-check:true;auto-reification:true;auto-moveto:false;provide-guidance:true;confirm-delete:false;check-chinese:false;resize-command:false;amr-area-var-fix:variable;amr-area-height:20">
-        <input type="hidden" id="cookie-id-save" name="cookie-id-save" value="20200718.13253347.25303766">
-        <input type="hidden" id="logsid-save" name="logsid-save" value="Mpcw28Jg888DwAnjzufBHQFcbbtQPJGulL9vxVpv">
-        <input type="hidden" id="amr-editor-save-command" name="amr-editor-save-command" value="Save AMR at ISI">
-        <input type="hidden" id="save-template-id" name="save-template-id" value="1">
-        <table style="background-color:#E8EEFF;" width="800">
-            <tbody>
-            <tr>
-                <td colspan="2"><b>Save AMR</b> at ISI using form:</td>
-            </tr>
-            <tr>
-                <td>Annotator:</td>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td><input type="text" size="12" name="save-username" id="save-username" value="guest"
-                                       style="font-size:1.1em"></td>
-                            <td>
-                                <nobr> &nbsp; &nbsp; Filename (without path):</nobr>
-                            </td>
-                            <td><input type="text" size="32" style="font-size:1.1em;text-align:right;"
-                                       name="save-filename" id="save-filename" value=""><span style="font-size:1.1em">.txt</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td><input type="submit" value="Save at ISI"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-</div>
-
-<div id="props-template-table" style="display:none;">
-    <p>
-    <table cellpadding="3" style="background-color:#E8EEFF;">
-        <tbody>
-        <tr>
-            <td colspan="2"><span style="font-size:1.5em;font-weight:bold;">Sentence-level annotations (props)</span>
-                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <i>Do not delete.</i></td>
-        </tr>
-        <tr>
-            <td>Sentence ID: <input type="text" id="props-id" name="props-id" value="" size="15">
-                &nbsp; Author(s): <input type="text" id="props-authors" name="props-authors" value="" size="50">
-                &nbsp; Date: <input type="text" id="props-date" name="props-date" value="" size="10"></td>
-            <td>
-                <table width="40" border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td align="center">
-                            <nobr>&nbsp;<a style="text-decoration:none" title="Set date field to today's date"
-                                           href="javascript:setToday();"><font color="black">today</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">Sentence:<br>
-                <textarea rows="3" cols="100" id="props-snt" name="props-snt" style="overflow:auto;"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">Note:<br>
-                <textarea rows="3" cols="100" id="props-note" name="props-note" style="overflow:auto;"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td align="center">
-                            <nobr>&nbsp;<a style="text-decoration:none" title="Apply sentence-level annotations (props)"
-                                           href="javascript:applyProps('user');"><font color="black">Confirm</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td>
-                <table width="40" border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td align="center">
-                            <nobr>&nbsp;<a style="text-decoration:none" title="Clear sentence-level annotations (props)"
-                                           href="javascript:resetProps();"><font color="black">clear</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p></div>
-
-<div id="options-template-table" style="display:none;">
-    <p>
-    <table cellpadding="5" style="background-color:#E8EEFF;">
-        <tbody>
-        <tr>
-            <td>
-                <h2 style="margin-bottom: 0.1em;">Options</h2>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table border="1" cellpadding="8" cellspacing="0">
-                    <tbody>
-                    <tr>
-                        <td id="amr_display_options">
-                            <h3 style="margin-bottom: 0.5em;">Display options</h3>
-                            <input type="checkbox" id="string-args-with-head" name="string-args-with-head"
-                                   checked="checked">
-                            keep string arguments on same line as head<br>
-                            <input type="checkbox" id="1-line-NEs" name="1-line-NEs" checked="checked">
-                            keep named entities on same line<br>
-                            <input type="checkbox" id="1-line-ORs" name="1-line-ORs" checked="checked">
-                            keep leafy *OR* alternatives on same line<br>
-                            <input type="checkbox" id="wrap" name="wrap">
-                            wrap long lines even if they are scrollable<br>
-                            <input type="checkbox" id="fix-font" name="fix-font">
-                            fix font (Courier)<br>
-                            <input type="checkbox" id="variable-indentation" name="variable-indentation">
-                            variable indentation<br><br>
-                            AMR display area height:<br>
-                            <input type="radio" name="amr-area-var-fix" value="variable" checked=""
-                                   onclick="update_amr_area_fix_color('#999999','variable');"> variable &nbsp; &nbsp;
-                            <input type="radio" name="amr-area-var-fix" value="fix"
-                                   onclick="update_amr_area_fix_color('#000000','fix');"> fix &nbsp;
-                            <input type="text" id="amr-area-height" name="amr-area-height" size="2" value="20"
-                                   style="color:#999999">
-                            <span id="amr-area-fix" style="color:#999999">lines</span>
-                        </td>
-                        <td id="amr_other_options" valign="top" width="250">
-                            <h3 style="margin-bottom: 0.5em;">Editing options</h3>
-                            <input type="checkbox" id="role-auto-case" name="role-auto-case" checked="checked">
-                            <span title="Example: :arg0 → :ARG0">automatic role casing</span><br>
-                            <input type="checkbox" id="provide-guidance" name="provide-guidance" checked="">
-                            <span title="Provide guidance with some commands including delete, replace">provide guidance</span><br>
-                            <input type="checkbox" id="auto-check" name="auto-check" checked="checked">
-                            <span title="Automatically invoke check function">automatic checking</span><br>
-                            <input type="checkbox" id="auto-reification" name="auto-reification" checked="checked">
-                            <span title="Automatically reify :subset/:cause">automatic expansion subset/:cause</span><br>
-                            <input type="checkbox" id="confirm-delete" name="confirm-delete">
-                            <span title="User must confirm any component deletion">must confirm component deletion</span><br>
-                            <input type="checkbox" id="auto-moveto" name="auto-moveto">
-                            <span title="Might not work properly for all browsers (e.g. Chrome)">right-align OntoNotes popups</span><br>
-                            <input type="checkbox" id="check-chinese" name="check-chinese">
-                            <span title="Check for Chinese translation and make it available as pop-up">check for Chinese translation</span><br>
-                            <input type="checkbox" id="resize-command" name="resize-command">
-                            <span title="make &quot;Enter text command&quot; box resizeable (useful for HyTER)">resizeable text command box</span><br>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr style="background-color:#BBCCFF;">
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none" title="refresh AMR display"
-                                           href="javascript:applyAmrDivParams();show_amr('show');"><font
-                                    color="black">Apply and refresh AMR</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p></div>
-
-<!--<div id="help-template-table" style="display:none;">-->
-    <!--<p>-->
-    <!--<table cellpadding="5" style="background-color:#E8EEFF;">-->
-        <!--<tbody>-->
-        <!--<tr>-->
-            <!--<td>-->
-                <!--<h3 style="margin-bottom: 0.4em;">Help</h3>-->
-                <!--<ul style="margin-top: 0.4em;">-->
-                    <!--<li style="margin-bottom: 0.4em;"><b>What is this?</b> &nbsp; An editor to build-->
-                        <!--abstract meaning representations (AMRs) written by Ulf at ISI.-->
-                    <!--</li>-->
-                    <!--<li style="margin-bottom: 0.4em;"><b>First time user?</b>-->
-                        <!--<ol>-->
-                            <!--<li> This-->
-                                <!--&lt;!&ndash; <span title="Click to see a simple example" style="color:#0000FF;text-decoration:underline;" onclick="popUpRight('https://www.isi.edu/~ulf/amr/help/example1.html',550,750,'Simple Example');">simple example</span> &ndash;&gt;-->
-                                <!--<a href="https://www.isi.edu/~ulf/amr/help/example1.html" target="_BLANK"-->
-                                   <!--title="Click to see a simple example">simple example</a>-->
-                                <!--shows how to build an AMR for <i>"The boy wants to see the girl."</i>-->
-                            <!--</li>-->
-                            <!--<li> This <a href="https://www.isi.edu/~ulf/amr/help/example2.html" target="_BLANK"-->
-                                         <!--title="Click to see an example">next example</a> includes a shortcut for adding-->
-                                <!--named entities (NEs) <i>"John F. Kennedy was murdered."</i><br> as well as a replace (=-->
-                                <!--change) operation.-->
-                            <!--</li>-->
-                            <!--<li> Check out the <a href="https://www.isi.edu/~ulf/amr/help/amr-guidelines.pdf"-->
-                                                  <!--target="_GUIDELINES"-->
-                                                  <!--title="Click to consult the AMR Guidelines (Febr. 11, 2014)">AMR-->
-                                <!--Guidelines</a>, the <a href="https://www.isi.edu/~ulf/amr/lib/amr-dict.html"-->
-                                                       <!--target="_DICT"-->
-                                                       <!--title="Click to consult the latest version of the AMR Dictionary">AMR-->
-                                <!--Dictionary</a>, <a href="https://www.isi.edu/~ulf/amr/lib/videos.html" target="_VIDEO"-->
-                                                   <!--title="Click here to watch a few short YouTube videos on slected topics of AMR annotation">YouTube-->
-                                <!--videos about AMR annotation</a>, the <a-->
-                                    <!--href="https://www.isi.edu/~ulf/amr/help/manual.html" target="_MANUAL"-->
-                                    <!--title="Click to consult manual">AMR Editor Manual</a>, the <span-->
-                                    <!--onclick="popupQuickRef();" style="color:blue;text-decoration:underline" ;=""-->
-                                    <!--title="Click to popup QuickRef of common AMR Editor text commands">QuickRef</span>-->
-                                <!--(popup), the <a href="https://www.isi.edu/~ulf/amr/help/faq.html" target="_FAQ"-->
-                                                <!--title="frequently asked questions">FAQs</a> and the <a-->
-                                        <!--href="https://www.isi.edu/~ulf/amr/help/release-notes.html" target="_RNOTES"-->
-                                        <!--title="The release notes document the release history of the versions of this editor, including updates and additions for each new version.">Release-->
-                                    <!--Notes</a>.-->
-                            <!--</li>-->
-                        <!--</ol>-->
-                    <!--</li>-->
-                    <!--<li style="margin-bottom: 0.4em;"><b>Why are there two input methods?</b>-->
-                        <!--<ol>-->
-                            <!--<li> The <span style="text-decoration:underline;">text command</span> input method (see top-->
-                                <!--input line) allows Unix style commands, suited for fast entry of common commands-->
-                                <!--and by the experienced user.-->
-                                <!--One way to learn how to use text command input method is to first use the easier-->
-                                <!--template-based method, and after submitting, to study the automatically generated-->
-                                <!--"Last command" line.-->
-                            <!--</li>-->
-                            <!--<li> The <span style="text-decoration:underline;">template-based</span> command input-->
-                                <!--methods-->
-                                <!--are activated by clicking on one of the blue action template boxes such as "top" or-->
-                                <!--"add".-->
-                                <!--They provide more guidance, often through mouse-overs, and will be easier for new users.-->
-                                <!--When replacing (= changing) concepts, strings, numbers and roles in the AMR, the user-->
-                                <!--can easily identify the element to be changed by clicking on the item to be changed.-->
-                            <!--</li>-->
-                        <!--</ol>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
-    <!--</p></div>-->
 
 </body>
 

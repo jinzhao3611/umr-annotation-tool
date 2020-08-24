@@ -67,6 +67,112 @@ function initialize() {
     current_mode = 'top';
 }
 
+
+
+function conceptDropdown() {
+    document.getElementById("concept_dropdown").classList.toggle("show");
+    submit_concept();
+    // if selected tokens is a number or not
+    let token = selection.anchorNode.nodeValue;
+    let numfied_token = text2num(token);
+    // this is to cover :quant
+    if (!isNaN(numfied_token)) {// if numfied_token is a number
+        let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
+        console.log(number);
+        const lemmaBar = document.getElementById("find_lemma");
+        lemmaBar.onmouseenter = function () {
+            getSenses(number);
+        }
+    } else { // if numfied_token is still a string, meaning the token is not a number
+        // pass the token to server to get the framefile
+        fetch('/', {
+            method: 'POST',
+            body: JSON.stringify({"selected": getLemma(token)})
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            console.log(data); //senses got returned from server
+            const lemmaBar = document.getElementById("find_lemma");
+            lemmaBar.onmouseenter = function () {
+                getSenses(data);
+            }
+        })
+    }
+
+
+}
+
+function getSenses(senses) {
+    let genDrop = document.getElementById('genericDropdown');
+    genDrop.innerHTML = "";
+    if (genDrop.childElementCount > 0) {
+        genDrop.classList.toggle("show");
+    } else {
+        senses.res.forEach(function (value, index, array) {
+            let genLink = document.createElement("a");
+            genLink.innerHTML = value.name;
+            genLink.setAttribute("href", `javascript:submit_template_action('nothing', '${value.name}');`);
+            genLink.setAttribute("title", value.desc);
+            genDrop.appendChild(genLink);
+        });
+        genDrop.classList.toggle("show");
+    }
+}
+
+function neListDropdown() {
+    if (document.getElementById('named_entities').innerText == 'named entities') {
+        document.getElementById("entities_list").classList.toggle("show");
+    }
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function (event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+};
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+}
+
+function submit_relation() {
+    // current_relation = sel.options[sel.selectedIndex].text;
+    current_relation = document.querySelector('#browser').value;
+    if (current_relation) {
+        submit_mode("add");
+    }
+    console.log("current_relation is: " + current_relation);
+}
+
+function submit_concept() {
+    // current_concept = selection.anchorNode.nodeValue;
+    current_concept = document.getElementById('selected_tokens').innerText;
+    console.log("current_concept is: " + current_concept);
+}
+
+function submit_mode(mode) {
+    current_mode = mode;
+    console.log("current_mode is: " + current_mode);
+
+}
+
+function current_command(numbered_sense) {
+    submit_template_action(numbered_sense);
+}
+
+function generate_penman() {
+    console.log(current_mode);
+    submit_template_action(current_mode, c = current_concept, r = current_relation)
+}
+
 /**
  * this function checked the options table based on the loaded information
  * @param html_import_name 'load_options'
@@ -326,224 +432,8 @@ function undo(n) {
     }
 }
 
-/**popup windows ******************************************************/
-/**
- * just as name suggests
- */
-function closeCurrentOpenPopup() {
-    if (current_onto_popup_window
-        && current_onto_popup_window.opener
-        && !current_onto_popup_window.opener.closed) {
-        current_onto_popup_window.close();
-        current_onto_popup_window = '';
-    }
-}
 
-/**
- * this is only called in dynamicOntoNotesPopup()
- */
-function closedCurrentOpenPopup() {
-    current_onto_popup_window = '';
-}
-
-/**
- * pop up a new window with plain penman format string in the window
- */
-function popupWithAmr() {
-    var s, s2;
-    if ((s = document.getElementById('plain-amr')) != null) {
-        closeCurrentOpenPopup();
-        newwindow = window.open('', 'AMR', 'height=400,width=600,resizable=1,scrollbars=1,toolbar=1,statusbar=1,menubar=1');
-        var tmp = newwindow.document;
-        var html_amr = htmlSpaceGuard(s.value);
-        if ((s2 = document.getElementById('comment')) != null) {
-            var comment = s2.value;
-            if (comment.match(/\S/)) {
-                tmp.write(htmlSpaceGuard(comment));
-                tmp.write('<p>\n');
-            }
-        }
-        // add_log('popupWithAmr ' + html_amr);
-        tmp.write(html_amr);
-        tmp.close();
-        current_onto_popup_window = newwindow;
-    } else {
-        add_log('Can\'t find plain-amr for popup');
-    }
-}
-
-/**
- * pop up quick ref window: https://www.isi.edu/~ulf/amr/help/quickref.html
- */
-function popupQuickRef() {
-    closeCurrentOpenPopup();
-    var x = screen.width - 480 - 13;
-    var y = 0;
-    var newWindow = window.open('https://www.isi.edu/~ulf/amr/help/quickref.html', 'QuickRef', 'height=530,width=480,resizable=1,scrollbars=1,toolbar=0,statusbar=0,menubar=0');
-    var auto_moveto = show_amr_obj['option-auto-moveto'];
-    auto_moveto = 1;
-    if (auto_moveto && !browserUserAgent.match(/chrome/i)) {
-        newWindow.moveTo(x, 0);
-        newWindow.focus();
-    }
-    // current_onto_popup_window = newWindow;
-}
-
-function popupNETypes() {
-    closeCurrentOpenPopup();
-    var x = screen.width - 700 - 13;
-    var y = 0;
-    var newWindow = window.open('https://www.isi.edu/~ulf/amr/lib/ne-types.html', 'NE types', 'height=600,width=700,resizable=1,scrollbars=1,toolbar=0,statusbar=0,menubar=0');
-    var auto_moveto = show_amr_obj['option-auto-moveto'];
-    auto_moveto = 1;
-    if (auto_moveto && !browserUserAgent.match(/chrome/i)) {
-        newWindow.moveTo(x, 0);
-        newWindow.focus();
-    }
-    current_onto_popup_window = newWindow;
-}
-
-function popupRoles() {
-    closeCurrentOpenPopup();
-    var x = screen.width - 750 - 13;
-    var y = 0;
-    var newWindow = window.open('https://www.isi.edu/~ulf/amr/lib/roles.html', 'AMR roles', 'height=600,width=750,resizable=1,scrollbars=1,toolbar=0,statusbar=0,menubar=0');
-    var auto_moveto = show_amr_obj['option-auto-moveto'];
-    auto_moveto = 1;
-    if (auto_moveto && !browserUserAgent.match(/chrome/i)) {
-        newWindow.moveTo(x, 0);
-        newWindow.focus();
-    }
-    current_onto_popup_window = newWindow;
-}
-
-function popupAmrDict() {
-    var newWindow = window.open('https://www.isi.edu/~ulf/amr/lib/amr-dict.html', '_WIKI');
-    newWindow.focus();
-}
-
-function popupVideoPage() {
-    var newWindow = window.open('https://www.isi.edu/~ulf/amr/lib/videos.html', '_VIDEO');
-    newWindow.focus();
-}
-
-function popupGuidelines(version) {
-    // closeCurrentOpenPopup();
-    var x = 0;
-    var y = 0;
-    var url = 'https://www.isi.edu/~ulf/amr/help/amr-guidelines.pdf';
-    if (version == 'github') url = 'https://github.com/amrisi/amr-guidelines/blob/master/amr.md';
-    var newWindow = window.open(url, 'AMR guidelines', 'height=600,width=750,resizable=1,scrollbars=1,toolbar=1,statusbar=0,menubar=1');
-    var auto_moveto = show_amr_obj['option-auto-moveto'];
-    auto_moveto = 1;
-    if (auto_moveto && !browserUserAgent.match(/chrome/i)) {
-        newWindow.moveTo(x, 0);
-        newWindow.focus();
-    }
-    // current_onto_popup_window = newWindow;
-}
-
-function dynamicOntoNotesPopup(concept, variable) {
-    // concept = want-01 or buy, variable=w or b
-    // console.log("dynamicOntoNotesPopup is called");
-    // console.log('dynamicOntoNotesPopup ' + concept + ' ' + variable);
-    var core_concept = concept.replace(/[-.](?:\d\d\d?|yy)$/, "");
-    var sense_number = '';
-    if (concept.match(/[-.](?:\d+|yy)$/)) {
-        sense_number = concept.replace(/^.*[-.](\d+|yy)$/, "$1");
-    }
-    var url, url2;
-    if (check_list['oncf.' + core_concept]) {
-        url = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames/' + core_concept + '-c.html';
-        url2 = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames-var/' + core_concept + '-c-' + variable + '.html';
-    } else if (check_list['onvf.' + core_concept]) {
-        url = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames/' + core_concept + '-v.html';
-        url2 = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames-var/' + core_concept + '-v-' + variable + '.html';
-    } else if (check_list['onjf.' + core_concept]) {
-        url = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames/' + core_concept + '-j.html';
-        url2 = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames-var/' + core_concept + '-j-' + variable + '.html';
-    } else if (check_list['onnf.' + core_concept]) {
-        url = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames/' + core_concept + '-n.html';
-        url2 = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames-var/' + core_concept + '-n-' + variable + '.html';
-    } else if (check_list['onf.' + core_concept]) {
-        url = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames/' + core_concept + '.html';
-        url2 = 'https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames-var/' + core_concept + '-' + variable + '.html';
-    }
-    // url = "http://127.0.0.1:5000/buy"
-    // url2 = "http://127.0.0.1:5000/buy"
-    var snt = amr['props-snt'] || '';
-    if (window.XMLHttpRequest) {
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function () {
-            // add_log('xmlhttp.readyState ' + xmlhttp.readyState);
-            // add_log('xmlhttp.status ' + xmlhttp.status);
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                closeCurrentOpenPopup();
-                var onload_fc = '';
-                var ontoNotesFrameContent = xmlhttp.responseText + '';
-                // add_log('Loaded ' + url + ' (' + ontoNotesFrameContent.length + ' bytes)');
-                var ontoNotesFrameContentMod = ontoNotesFrameContent;
-                ontoNotesFrameContentMod = ontoNotesFrameContentMod.replace(/(\bvar page_dynamically_created_p\s* =)\s*\S+?\s*;/, "$1 1;");
-                if (variable) {
-                    ontoNotesFrameContentMod = ontoNotesFrameContentMod.replace(new RegExp('<span title="([^"]*)">(' + core_concept + '[-.](?:\\d\\d\\d?|yy))<\/span>', 'g'), '<span id="' + "$2" + '" title="Select this sense in AMR Editor" style="color:#0000FF;text-decoration:underline;" onclick="window.opener.record_frame_arg_descr(\'' + "$2" + '\', \'' + "$1" + '\');window.opener.exec_command(\'replace concept at ' + variable + ' with ' + "$2" + '\', 1);window.opener.selectTemplate(\'clear\');self.close();closedCurrentOpenPopup();">' + "$2" + '</span>');
-                }
-                if (core_concept != concept) {
-                    // onload_fc += 'redirect(\'' + url + '#' + core_concept + sense_number + '\');';
-                    // add_log('Point A');
-                    ontoNotesFrameContentMod = ontoNotesFrameContentMod.replace(new RegExp('(<h3>.*?' + core_concept + '[-.]' + sense_number + '.*?)(<\\/h3>)', 'g'), "$1" + ' &nbsp; <input type="checkbox" title="Currently selected sense" id="selected-sense" checked="checked">' + "$2");
-
-                    var y = 600 - 30; // window.height - 30
-                    onload_fc += 'goto_page_loc(\'\', \'selected-sense\', ' + y + ');';
-                }
-                if (((check_list['onvfm.' + core_concept])
-                    || (check_list['onjfm.' + core_concept])
-                    || (check_list['onnfm.' + core_concept])
-                    || (check_list['onfm.' + core_concept]))
-                    && (concept.substr(0, 1) == variable.substr(0, 1))
-                    && (variable.match(/^[a-z](|[1-9]|1\d|20)$/))) {
-                    if (sense_number) {
-                        onload_fc = 'redirect(\'' + url2 + '#' + core_concept + sense_number + '\');';
-                    } else {
-                        onload_fc = 'redirect(\'' + url2 + '\');';
-                    }
-                }
-                ontoNotesFrameContentMod = ontoNotesFrameContentMod.replace(/<link [^<>]*stylesheet[^<>]*>/g, "");
-                var x = screen.width - 513 - 13;
-                var y = 0;
-                var newwindow_moveto_command = 'newWindow.moveTo(' + x + ', ' + y + '); newWindow.focus();';
-                // add_log('newwindow_moveto_command: ' + newwindow_moveto_command);
-                var newWindow = window.open('', 'Feedback', 'height=600,width=513,resizable=1,scrollbars=1,toolbar=0,statusbar=0,menubar=0');
-                // add_log('Browser: ' + browserUserAgent);
-                var auto_moveto = show_amr_obj['option-auto-moveto'];
-                if (auto_moveto && !browserUserAgent.match(/chrome/i)) {
-                    // add_log('onload moveTo');
-                    onload_fc += 'window.moveTo(' + x + ',0);window.focus();';
-                }
-                if (onload_fc) {
-                    ontoNotesFrameContentMod = ontoNotesFrameContentMod.replace(/(<body)( [^<>]*>)/, "$1 onload=\"" + onload_fc + "\"$2");
-                }
-                if (snt != '') {
-                    ontoNotesFrameContentMod = ontoNotesFrameContentMod.replace(/(<body [^<>]*>)/, "$1\n<b>Current sentence:</b> &nbsp; <font color=\"red\">" + snt + "</font>\n<p>\n");
-                }
-                newWindow.document.write(ontoNotesFrameContentMod);
-                newWindow.document.close();
-                if (auto_moveto && browserUserAgent.match(/chrome/i)) {
-                    // add_log('delayed moveTo');
-                    setTimeout(newwindow_moveto_command, 2000);
-                }
-                newWindow.focus();
-                current_onto_popup_window = newWindow;
-            }
-        }
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-    } else {
-        add_error('This browser does not support window.XMLHttpRequest');
-    }
-}
-
-
-/**unclear ******************************************************/
+/**TODO ******************************************************/
 /**
  * this function takes in a template id (the name on the button) and return the form to fill out
  * @param id "top"
@@ -731,7 +621,7 @@ function color_amr_elem(id, color, event_type) {
 /**
  * when press enter, it equals to click on submit
  * @param field "submit add", "submit replace" something like submit+id; or "show roles" can popup roles
- * @param event unclear what this is
+ * @param event unclear about this
  * @param s_id element id
  */
 function action_on_enter(field, event, s_id) {
@@ -1475,7 +1365,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else {
                         add_error('Unrecognized <i>add</i> command.');
                     }
-                } else if (value.match(/^record /i)) { //TODO unclear what's it doing
+                } else if (value.match(/^record /i)) { //TODO unclear
                     record_value = value.replace(/^record\s*/, "");
                 } else {
                     if (!value.match(/^(h|help)\b/i)) {
@@ -4181,109 +4071,6 @@ function deletenode(node) {
 }
 
 
-function conceptDropdown() {
-    document.getElementById("concept_dropdown").classList.toggle("show");
-    submit_concept();
-    // if selected tokens is a number or not
-    let token = selection.anchorNode.nodeValue;
-    let numfied_token = text2num(token);
-    // this is to cover :quant
-    if (!isNaN(numfied_token)) {// if numfied_token is a number
-        let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
-        console.log(number);
-        const lemmaBar = document.getElementById("find_lemma");
-        lemmaBar.onmouseenter = function () {
-            getSenses(number);
-        }
-    } else { // if numfied_token is still a string, meaning the token is not a number
-        // pass the token to server to get the framefile
-        fetch('/', {
-            method: 'POST',
-            body: JSON.stringify({"selected": getLemma(token)})
-        }).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            console.log(data); //senses got returned from server
-            const lemmaBar = document.getElementById("find_lemma");
-            lemmaBar.onmouseenter = function () {
-                getSenses(data);
-            }
-        })
-    }
-
-
-}
-
-function getSenses(senses) {
-    let genDrop = document.getElementById('genericDropdown');
-    genDrop.innerHTML = "";
-    if (genDrop.childElementCount > 0) {
-        genDrop.classList.toggle("show");
-    } else {
-        senses.res.forEach(function (value, index, array) {
-            let genLink = document.createElement("a");
-            genLink.innerHTML = value.name;
-            genLink.setAttribute("href", `javascript:submit_template_action('nothing', '${value.name}');`);
-            genLink.setAttribute("title", value.desc);
-            genDrop.appendChild(genLink);
-        });
-        genDrop.classList.toggle("show");
-    }
-}
-
-function neListDropdown() {
-    if (document.getElementById('named_entities').innerText == 'named entities') {
-        document.getElementById("entities_list").classList.toggle("show");
-    }
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-            }
-        }
-    }
-};
-
-function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
-}
-
-function submit_relation() {
-    // current_relation = sel.options[sel.selectedIndex].text;
-    current_relation = document.querySelector('#browser').value;
-    if (current_relation) {
-        submit_mode("add");
-    }
-    console.log("current_relation is: " + current_relation);
-}
-
-function submit_concept() {
-    // current_concept = selection.anchorNode.nodeValue;
-    current_concept = document.getElementById('selected_tokens').innerText;
-    console.log("current_concept is: " + current_concept);
-}
-
-function submit_mode(mode) {
-    current_mode = mode;
-    console.log("current_mode is: " + current_mode);
-
-}
-
-function current_command(numbered_sense) {
-    submit_template_action(numbered_sense);
-}
-
-function generate_penman() {
-    console.log(current_mode);
-    submit_template_action(current_mode, c = current_concept, r = current_relation)
-}
 
 
 // click on load button
@@ -4332,49 +4119,6 @@ function toggleInfo(j) {
     }
 }
 
-//hide the clickable editting amr buttons like top, add...
-function set_read_only_fields() {
-
-    //  if ((s = document.getElementById('text-command')) != null) {
-    // s.style.display = 'none';
-    //  }
-    if ((s = document.getElementById('text-command-text')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('read-only-text')) != null) {
-        s.style.display = 'inline';
-    }
-    if ((s = document.getElementById('top-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('add-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('add-ne-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('replace-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('delete-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('move-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('undo-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('props-box')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('save-at-isi-form')) != null) {
-        s.style.display = 'none';
-    }
-    if ((s = document.getElementById('load-direct-td')) != null) {
-        s.style.display = 'none';
-    }
-}
 
 
 /**
@@ -4403,82 +4147,4 @@ function show_concept_mapping(concept) {
     url = concept_to_url[concept] || '';
     console.log('concept: ' + concept + ' title: ' + title + ' url: ' + url);
 }
-
-//unused function
-function popUpRight(URL, width, height, id) {
-    console.log("popUpRight is called");
-
-    if (id == '') {
-        var day = new Date();
-        var id = day.getTime();
-    }
-    var x = screen.width - width - 13;
-    var y = 0;
-    eval("myWindow = window.open(URL, '" + id + "', 'toolbar=0,titlebar=0,scrollbars=1,location=0,status=0,menubar=0,resizable=1,width=" + width + ",height=" + height + "');");
-    eval("myWindow.moveTo('" + x + "','" + y + "');");
-    eval("if (window.focus) { myWindow.focus() };");
-}
-
-//unused function
-function popup(url, title) {
-    console.log("popup is called");
-
-    var newWindow = window.open(url, title, 'height=600,width=700,resizable=1,scrollbars=1,toolbar=0,statusbar=0,menubar=0')
-}
-
-//unused function
-function clear_undo_redo_box() {
-    var s;
-    if ((s = document.getElementById('undo-redo-box')) != null) {
-        s.style.display = 'none';
-    }
-}
-
-//unused function
-/**
- * this function prints out the last command
- * @param action
- */
-function record_as_last_action(action) {
-    if ((a = document.getElementById('action')) != null) {
-        a.innerHTML = action;
-    }
-}
-
-
-//registered user functionality
-function show_meetings() {
-    /*
-   var newWindow=window.open('https://www.isi.edu/~ulf/amr/lib/meetings.html','_MEETING');
-   newWindow.focus();
-   */
-    show_page('meetings', 'MEETING');
-}
-
-//registered user functionality
-function show_page(page_id, page_target) {
-    console.log("show_page is called");
-    var username = '';
-    var logsid = '';
-    if ((s = document.getElementById('load-username3')) != null) {
-        username = s.value;
-    }
-    if ((s = document.getElementById('logsid-load3')) != null) {
-        logsid = s.value;
-    }
-    var newWindow = window.open('', page_target);
-    newWindow.focus();
-    var tmp = newWindow.document;
-    tmp.write('<html>\n  <head><title>display</title></head>\n');
-    tmp.write('  <body style="background-color:#FFFFEE;" onload="document.getElementById(\'display-page\').submit();">\n');
-    tmp.write('    <form name="display-page" id="display-page" enctype="multipart/form-data" action="https://www.isi.edu/cgi-bin/div3/mt/amr-editor/display-page.cgi" method="post">\n');
-    tmp.write('      <input type="hidden" id="page-id" name="page-id" value="' + page_id + '">\n');
-    tmp.write('      <input type="hidden" id="user"    name="user"    value="' + username + '">\n');
-    tmp.write('      <input type="hidden" id="logsid"  name="logsid"  value="' + logsid + '">\n');
-    tmp.write('    </form>\n');
-    tmp.write('  </body>\n');
-    tmp.write('</html>\n');
-    tmp.close();
-}
-
 
