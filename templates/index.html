@@ -20,9 +20,7 @@
     <script src="static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
 
 
-
 </head>
-
 
 <body onload="initialize()">
 
@@ -57,7 +55,7 @@
             {% for index in range(0, sentence.length) %}
             <td>{{sentence.words[index]}}</td>
             {% endfor %}
-            <td><button onclick="highlightSelection()">Highlight</button></td>
+            <!--<td><button onclick="highlightSelection()">Highlight</button></td>-->
             {% else %}
             <td></td>
             {% endif %}
@@ -67,7 +65,7 @@
             <td align="center">0</td>
 
             {% for index in range(0, sentence.length) %}
-            <td align="center">{{index + 1}}</td>
+            <td align="center">{{index+1}}</td>
             {% endfor %}
             {% else %}
             <td></td>
@@ -160,7 +158,8 @@
 
     <div id="concept_dropdown" class="dropdown-content" >
         <a id="set-root" href="javascript:submit_template_action('set_parent');">set_parent</a>
-        <a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>
+        <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->
+        <a id="find_lemma" class="dropbtn">find lemma</a >
         <a id="named_entities" onmouseover="neListDropdown()">named entities</a>
         <a id="delete" href="javascript:submit_template_action('delete');">delete</a>
 
@@ -172,96 +171,8 @@
         <a id="location" href="javascript:submit_template_action('add-ne', 'location')">location</a>
     </div>
 
-    <div id="buyDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec1" href="javascript:submit_template_action('nothing','buy-01');" title="buy-01
-            ARG0: buyer
-            ARG1: thing bought
-            ARG2: seller
-            ARG3: price paid
-            ARG4: benefactive">buy-01</a>
-        <a id="sec2" href="javascript:submit_template_action('nothing','buy-05');" title="buy-05
-            ARG0: believer
-            ARG1: thing believed">buy-05</a>
-        <!--<a title="type-in predicate"></a>-->
-    </div>
 
-    <div id="publicDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec3-0" href="javascript:submit_template_action('nothing','public-02');" title="public-02
-            ARG1: public entity
-            ARG2: audience arg1 is available to">public-02</a>
-
-    </div>
-
-    <div id="intoxicateDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec4-0" href="javascript:submit_template_action('nothing','intoxicate-01');" title="intoxicate-01
-            ARG0: captivating thing   Stimulus
-            ARG1: experiencer, thing captivated   Experiencer">intoxicate-01</a>
-
-    </div>
-
-    <div id="arrestDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec5-0" href="javascript:submit_template_action('nothing','arrest-01');" title="arrest-01
-            ARG0: police
-            ARG1: criminal
-            ARG2: crime"> arrest-01</a>
-
-        <a id="sec5-1" href="javascript:submit_template_action('nothing','arrest-02');" title="arrest-02
-            ARG0: believer
-            ARG1: thing believed">arrest-02</a>
-        <!--<a title="type-in predicate"></a>-->
-    </div>
-
-    <div id="resistDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec6-0" href="javascript:submit_template_action('nothing','resist-01');" title="resist-01
-            ARG0: resister
-            ARG1: thing resisted">resist-01</a>
-
-    </div>
-
-    <div id="wantDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec1-1" href="javascript:submit_template_action('nothing','want-01');" title="want-01
-            ARG0: wanter, agent, pivot
-            ARG1: things wanted
-            ARG2: beneficiary
-            ARG3: in-exchange-for
-            ARG4: from">want-01</a>
-        <!--<a title="type-in predicate"></a>-->
-    </div>
-
-    <div id="obligateDropdown" class="dropdown-content" style="right:auto; left:50%">
-        <a id="sec6-1" href="javascript:submit_template_action('nothing','obligate-01');" title="obligate-01
-            ARG0: causal agent   Agent
-            ARG1: obligated, impelled agent   Patient
-            ARG2: obligation, impelled action   Result">obligate-01</a>
-        <!--<a title="type-in predicate"></a>-->
-    </div>
-
-    <div id="chargeDropdown" class="dropdown-content" style="right:auto; left:50%">
-
-        <a id="sec2-0" href="javascript:submit_template_action('nothing','charge-01');" title="charge-01
-            ARG0: seller   agent
-            ARG1: asking price   asset
-            ARG2: buyer   recipient
-            ARG3: commodity   asset">charge-01</a>
-        <a id="sec2-1" href="javascript:submit_template_action('nothing','charge-02');" title="charge-02
-            ARG0: entity in motion   theme
-            ARG1: path   theme
-            ARG2: deep agent (if different from arg0)">charge-02</a>
-        <a id="sec2-2" href="javascript:submit_template_action('nothing','charge-03');" title="charge-03
-            ARG0: entity in motion   theme
-            ARG1: path   theme
-            ARG2: deep agent (if different from arg0)">charge-03</a>
-        <a id="sec2-3" href="javascript:submit_template_action('nothing','charge-04');" title="charge-04
-            ARG0: entity in motion   theme
-            ARG1: path   theme
-            ARG2: deep agent (if different from arg0)">charge-04</a>
-        <a id="sec2-4" href="javascript:submit_template_action('nothing','charge-05');" title="charge-05
-            ARG0: assigner
-            ARG1: assigned
-            ARG2: role or crime">charge-05</a>
-
-    </div>
-
+    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:50%"></div>
 
     <br>
     <br>
@@ -269,20 +180,40 @@
 </div>
 
     <hr>
-<div id="amr"><i>empty AMR</i></div>
 
-   <div id="text-command" style="display:none;">
+   <div id="text-command">
       <table><tr><td title="Click for QuickRef on common text commands" onclick="popupQuickRef();"><nobr>Enter text command:</nobr></td>
               <td><textarea rows="1" cols="50" id="command" name="command" autocapitalize="off" autocorrect="off" spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
 			  onkeyup="exec_command('', 1)"></textarea></td>
 	      <td width="20"></td>
-	      <td><span onclick="popupQuickRef();" style="color:#BBBBBB;text-decoration:underline"; title="Click for QuickRef on common text commands">QuickRef</span></td></tr>
           <tr><td colspan="4"><span id="error"><i></i></span></td></tr>
           <tr style="color:#999999">
 	      <td>Last command:</td>
 	      <td colspan="3"><span id="action"><i>none</i></span></td></tr>
       </table>
    </div>
+
+   <table>
+     <button id="replace-box">&nbsp;<a style="text-decoration:none" title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a>&nbsp;</button>
+     <button id="delete-box">&nbsp;<a style="text-decoration:none" title="delete"href="javascript:selectTemplate('delete');">delete</a>&nbsp;</button>
+     <button id="move-box">&nbsp;<a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;</button>
+     <button id="undo-box">&nbsp;<a id="undo-button" style="text-decoration:none" title="currently nothing to undo" href="javascript:undo(-1);">undo</a>&nbsp;</button>
+     <button id="redo-box">&nbsp;<a id="redo-button" style="text-decoration:none" title="currently nothing to undo" href="javascript:undo(1);">redo</a>&nbsp;</button>
+
+   </table>
+
+    <hr>
+
+<div id="amr"><i>empty AMR</i></div>
+
+    <hr>
+<div id="alignment">
+    <p> Alignment Information:</p>
+    <p id="align"></p>
+
+
+</div>
+
 
 <div id="top-template-table" style="display:none;">
     <p>
@@ -533,75 +464,75 @@
     </table>
     </p></div>
 
-<!--<div id="delete-template-table" style="display:none;">-->
-    <!--<p>-->
-    <!--<table>-->
-        <!--<tbody>-->
-        <!--<tr>-->
-            <!--<td >-->
-                <!--<table>-->
-                    <!--<tbody>-->
-                    <!--<tr>-->
-                        <!--<td width="5"></td>-->
-                        <!--<td align="center">Delete AMR element</td>-->
-                        <!--<td width="5"></td>-->
-                        <!--<td><input size="24"-->
-                                   <!--title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"-->
-                                   <!--autocapitalize="off"  id="delete-at"-->
-                                   <!--value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>-->
-                        <!--<td width="5"></td>-->
-                        <!--<td>-->
-                            <!--<table border="1" cellpadding="1" cellspacing="0">-->
-                                <!--<tbody>-->
-                                <!--<tr >-->
-                                    <!--<td align="center">-->
-                                        <!--<nobr><a style="text-decoration:none;" title="submit delete template action"-->
-                                                 <!--href="javascript:submit_template_action('delete');"><font-->
-                                                <!--color="black">&nbsp;delete&nbsp;</font></a>-->
-                                        <!--</nobr>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</td>-->
-                        <!--<td width="5"></td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
-            <!--</td>-->
-            <!--<td width="10"></td>-->
-            <!--<td >-->
-                <!--<table>-->
-                    <!--<tbody>-->
-                    <!--<tr>-->
-                        <!--<td width="5"></td>-->
-                        <!--<td width="5"></td>-->
-                        <!--<td>-->
-                            <!--<table border="1" cellpadding="1" cellspacing="0">-->
-                                <!--<tbody>-->
-                                <!--<tr>-->
-                                    <!--<td align="center">-->
-                                        <!--<nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"-->
-                                                 <!--style="text-decoration:none;"-->
-                                                 <!--title="Delete entire AMR"-->
-                                                 <!--href="javascript:deleteAMR();"><font-->
-                                                <!--color="black">&nbsp;delete&nbsp;<br>&nbsp;entire AMR&nbsp;</font></a>-->
-                                        <!--</nobr>-->
-                                    <!--</td>-->
-                                <!--</tr>-->
-                                <!--</tbody>-->
-                            <!--</table>-->
-                        <!--</td>-->
-                        <!--<td width="5"></td>-->
-                    <!--</tr>-->
-                    <!--</tbody>-->
-                <!--</table>-->
-            <!--</td>-->
-            <!--<td width="10"></td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
-    <!--</p></div>-->
+<div id="delete-template-table" style="display:none;">
+    <p>
+    <table>
+        <tbody>
+        <tr>
+            <td >
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="5"></td>
+                        <td align="center">Delete AMR element</td>
+                        <td width="5"></td>
+                        <td><input size="24"
+                                   title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
+                                   autocapitalize="off"  id="delete-at"
+                                   value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
+                        <td width="5"></td>
+                        <td>
+                            <table border="1" cellpadding="1" cellspacing="0">
+                                <tbody>
+                                <tr >
+                                    <td align="center">
+                                        <nobr><a style="text-decoration:none;" title="submit delete template action"
+                                                 href="javascript:submit_template_action('delete');"><font
+                                                color="black">&nbsp;delete&nbsp;</font></a>
+                                        </nobr>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="5"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="10"></td>
+            <td >
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="5"></td>
+                        <td width="5"></td>
+                        <td>
+                            <table border="1" cellpadding="1" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
+                                                 style="text-decoration:none;"
+                                                 title="Delete entire AMR"
+                                                 href="javascript:deleteAMR();"><font
+                                                color="black">&nbsp;delete&nbsp;<br>&nbsp;entire AMR&nbsp;</font></a>
+                                        </nobr>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="5"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="10"></td>
+        </tr>
+        </tbody>
+    </table>
+    </p></div>
 
 <div id="move-template-table" style="display:none;">
     <p>

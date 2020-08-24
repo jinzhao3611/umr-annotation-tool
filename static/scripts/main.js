@@ -66,6 +66,7 @@ function initialize() {
 
     current_mode = 'top';
 }
+
 /**
  * this function checked the options table based on the loaded information
  * @param html_import_name 'load_options'
@@ -164,6 +165,7 @@ function clone(obj) {
     add_log('clone error: cannot clone object ' + obj);
     return obj;
 }
+
 function cloneCurrentState() {
     var current_state = {};
     current_state['amr'] = clone(amr);
@@ -174,6 +176,7 @@ function cloneCurrentState() {
     add_log('Created state ' + last_state_id);
     return current_state;
 }
+
 function revert2PrevState(previous_state) {
     amr = previous_state['amr'];
     variables = previous_state['variables'];
@@ -182,6 +185,7 @@ function revert2PrevState(previous_state) {
     // props2screen();
     // add_log('Reverted to state ' + previous_state['id']);
 }
+
 /**
  * undo and redo, also probably generate a window at the up right corner
  * @param n positive number or a negative number
@@ -334,12 +338,14 @@ function closeCurrentOpenPopup() {
         current_onto_popup_window = '';
     }
 }
+
 /**
  * this is only called in dynamicOntoNotesPopup()
  */
 function closedCurrentOpenPopup() {
     current_onto_popup_window = '';
 }
+
 /**
  * pop up a new window with plain penman format string in the window
  */
@@ -365,6 +371,7 @@ function popupWithAmr() {
         add_log('Can\'t find plain-amr for popup');
     }
 }
+
 /**
  * pop up quick ref window: https://www.isi.edu/~ulf/amr/help/quickref.html
  */
@@ -381,6 +388,7 @@ function popupQuickRef() {
     }
     // current_onto_popup_window = newWindow;
 }
+
 function popupNETypes() {
     closeCurrentOpenPopup();
     var x = screen.width - 700 - 13;
@@ -394,6 +402,7 @@ function popupNETypes() {
     }
     current_onto_popup_window = newWindow;
 }
+
 function popupRoles() {
     closeCurrentOpenPopup();
     var x = screen.width - 750 - 13;
@@ -407,14 +416,17 @@ function popupRoles() {
     }
     current_onto_popup_window = newWindow;
 }
+
 function popupAmrDict() {
     var newWindow = window.open('https://www.isi.edu/~ulf/amr/lib/amr-dict.html', '_WIKI');
     newWindow.focus();
 }
+
 function popupVideoPage() {
     var newWindow = window.open('https://www.isi.edu/~ulf/amr/lib/videos.html', '_VIDEO');
     newWindow.focus();
 }
+
 function popupGuidelines(version) {
     // closeCurrentOpenPopup();
     var x = 0;
@@ -430,6 +442,7 @@ function popupGuidelines(version) {
     }
     // current_onto_popup_window = newWindow;
 }
+
 function dynamicOntoNotesPopup(concept, variable) {
     // concept = want-01 or buy, variable=w or b
     // console.log("dynamicOntoNotesPopup is called");
@@ -607,6 +620,7 @@ function selectTemplate(id) {
         s.focus();
     }
 }
+
 /**
  * this is the title of the input of replace form
  * @param type
@@ -624,6 +638,7 @@ function selectReplaceType(type) {
         }
     }
 }
+
 /**
  * this has something to do with the onclick function
  * @param type
@@ -657,6 +672,7 @@ function fillReplaceTemplate(type, at, old_value, mo_lock) {
         }
     }
 }
+
 function fillDeleteTemplate(at, mo_lock) {
     var s;
     if ((s = document.getElementById('delete-at')) != null) {
@@ -682,6 +698,7 @@ function fillDeleteTemplate(at, mo_lock) {
         }
     }
 }
+
 function color_all_var_occurrences(variable, color) {
     var var_locs = getLocs(variable);
     if (var_locs) {
@@ -692,6 +709,7 @@ function color_all_var_occurrences(variable, color) {
         }
     }
 }
+
 function color_all_under_amr_elem(id, color, event_type) {
     console.log("color_all_under_amr_elem is called");
     var list_s = show_amr_obj['elem-' + id];
@@ -701,6 +719,7 @@ function color_all_under_amr_elem(id, color, event_type) {
         color_amr_elem(sub_id, color, event_type);
     }
 }
+
 function color_amr_elem(id, color, event_type) {
     var s;
     if ((!(show_amr_mo_lock && (event_type == 'mo')))
@@ -708,6 +727,7 @@ function color_amr_elem(id, color, event_type) {
         s.style.color = color;
     }
 }
+
 /**
  * when press enter, it equals to click on submit
  * @param field "submit add", "submit replace" something like submit+id; or "show roles" can popup roles
@@ -746,6 +766,8 @@ function action_on_enter(field, event, s_id) {
 /** entrance ******************************************************/
 // see the original one
 function submit_template_action(id = "nothing", numbered_predicate = "") {
+
+    console.log("submit_template_action: id: " + id + ", numbered_predicate: " + numbered_predicate);
     highlightSelection();
     if (id == "nothing") {
         id = current_mode;
@@ -764,7 +786,7 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         //     console.log('submit_template_action ' + id + ' ' + concept);
         //     exec_command('top ' + 'buy', 1);
         // }
-        if ((arg1 = document.getElementById('sec1')) != null) {
+        if ((arg1 = document.getElementById('genericDropdown')) != null) {
             // var concept = arg1.innerHTML;
             console.log('submit_template_action ' + id + ' ' + current_concept);
             exec_command('top ' + current_concept, 1);
@@ -821,15 +843,6 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         // var arg = document.getElementById('selected_tokens').innerText;
         var arg = current_concept;
         console.log(arg);
-        console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
-
-        exec_command(current_parent + ' ' + role + ' ' + arg, 1);
-    }
-    else if (id == 'add-polarity') {
-        var head = 'b';
-        // var role = ':' + document.getElementById('test-time').innerText;
-        var role = ':polarity';
-        var arg = '-';
         console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
 
         exec_command(current_parent + ' ' + role + ' ' + arg, 1);
@@ -906,6 +919,7 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         s.focus();
     }
 }
+
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     console.log("exec_command is called");
     var last_command, command_input, s, s1, s2, s3, resize_command_p;
@@ -913,29 +927,17 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     var record_value = '';
 
     if ((command_input = document.getElementById('command')) != null) {
-        // var clen = command_input.value.length; //0, this is the value that got typed in the box
-
-        // if (clen > 50) {  // && show_amr_obj['option-resize-command']
-        //     var n_lines = Math.floor(clen / 43) + 1;
-        //     command_input.style.height = ((n_lines * 1.2) + 0.2) + 'em';
-        // }
-        // if (!value) {
-        //     console.log("**************************************");
-        //     console.log("0");
-        //     if (command_input.value.match(/\n/)) {
-        //         console.log("**************************************");
-        //         console.log("1");
-        //         value = command_input.value;
-        //     } else if (command_input.value.match(/:\?\s*$/)) {
-        //         console.log("**************************************");
-        //         console.log("2");
-        //         popupRoles();
-        //     } else if (command_input.value.match(/:\S+\s+\?\s*$/)) {
-        //         console.log("**************************************");
-        //         console.log("3");
-        //         popupNETypes();
-        //     }
-        // }
+        //resizing the command input box height
+        var clen = command_input.value.length;
+        if (clen > 50) {  // && show_amr_obj['option-resize-command'] // if the input is longer than a line, resize the height
+            var n_lines = Math.floor(clen / 43) + 1;
+            command_input.style.height = ((n_lines * 1.2) + 0.2) + 'em';
+        }
+        if (!value) {
+            if (command_input.value.match(/\n/)) {//if enter key is pressed
+                value = command_input.value;
+            }
+        }
         if (value && ((last_command = document.getElementById('action')) != null)) {
             // add_edit_log('exec_command ' + top + ' ' + value);
             add_log('exec_command: ' + value + ' (top: ' + top + ')');
@@ -953,7 +955,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             // }
             console.log("cc is: " + cc);// ["b", ":arg1", "car"]
 
-/** below are shortcut command **********************************************************************************************************************/
+            /** below are shortcut command **********************************************************************************************************************/
             if (value == '') {
                 // empty
             } else if ((value == 'save')
@@ -1147,7 +1149,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     }
                 }
                 top = 0;
-/** TODO not completely clear**********************************************************************************************************************/
+                /** TODO not completely clear**********************************************************************************************************************/
             } else if (cc.length >= 1) {
                 // cc == ["b", ":arg1", "car"]
                 var key1 = cc[0]; //"b"
@@ -1191,7 +1193,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         }
                         show_amr_args = 'show';
                     }
-/** automatic reification **********************************************************************************************************************/
+                    /** automatic reification **********************************************************************************************************************/
 
                 } else if ((cc.length >= 3) && (cc[1] == ':domain-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
                     cc.splice(1, 1, ':mod');
@@ -1314,7 +1316,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-/** move and add **********************************************************************************************************************/
+                    /** move and add **********************************************************************************************************************/
                 } else if ((cc.length == 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '-')) {
                     move_var_elem(cc[2], cc[0], cc[1]);
                     selectTemplate('clear');
@@ -1432,39 +1434,39 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else {
                         add_error('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                     }
-/** maybe can delete? **********************************************************************************************************************/
-                // } else if (key1 == 'sg') {
-                //     sg();
-                //     top = 0;
-                // } else if (key1 == 'sa') {
-                //     for (var i = 1; i < cc.length; i++) {
-                //         sa(cc[i]);
-                //     }
-                //     top = 0;
-                // } else if (key1 == 'sv') {
-                //     for (var i = 1; i < cc.length; i++) {
-                //         sv(cc[i]);
-                //     }
-                //     top = 0;
-                // } else if (key1 == 'sc') {
-                //     for (var i = 1; i < cc.length; i++) {
-                //         sc(cc[i]);
-                //     }
-                //     top = 0;
-                // } else if (key1 == 'cm') {
-                //     for (var i = 1; i < cc.length; i++) {
-                //         show_concept_mapping(cc[i]); // originially for inspection (testing and debugging)
-                //     }
-                //     top = 0;
-                // } else if (key1 == 'sid') {
-                //     show_AMR_editor_login();
-                //     top = 0;
-                // } else if (key1.match(/^(logout|exit|quit)$/i)) {
-                //     logout(0);
-                //     top = 0;
-                // } else if (key1 == 'login') {
-                //     logout(1);
-                //     top = 0;
+                    /** maybe can delete? **********************************************************************************************************************/
+                    // } else if (key1 == 'sg') {
+                    //     sg();
+                    //     top = 0;
+                    // } else if (key1 == 'sa') {
+                    //     for (var i = 1; i < cc.length; i++) {
+                    //         sa(cc[i]);
+                    //     }
+                    //     top = 0;
+                    // } else if (key1 == 'sv') {
+                    //     for (var i = 1; i < cc.length; i++) {
+                    //         sv(cc[i]);
+                    //     }
+                    //     top = 0;
+                    // } else if (key1 == 'sc') {
+                    //     for (var i = 1; i < cc.length; i++) {
+                    //         sc(cc[i]);
+                    //     }
+                    //     top = 0;
+                    // } else if (key1 == 'cm') {
+                    //     for (var i = 1; i < cc.length; i++) {
+                    //         show_concept_mapping(cc[i]); // originially for inspection (testing and debugging)
+                    //     }
+                    //     top = 0;
+                    // } else if (key1 == 'sid') {
+                    //     show_AMR_editor_login();
+                    //     top = 0;
+                    // } else if (key1.match(/^(logout|exit|quit)$/i)) {
+                    //     logout(0);
+                    //     top = 0;
+                    // } else if (key1 == 'login') {
+                    //     logout(1);
+                    //     top = 0;
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
                     if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
                         add_error('In <i>add</i> command, <font color="red">' + cc[0] + '</font> is not last_command defined variable.');
@@ -1573,13 +1575,16 @@ function add_message(type, message) {
         }
     }
 }
+
 function add_log(message) {
     // console.log("add_log is called");
     add_message('log', message);
 }
+
 function add_error(message) {
     add_log('error', '<font color="red">Error:</font> &nbsp; ' + message);
 }
+
 function add_unique_log(message) {
     // don't show message if it has been shown before
     if (!previous_log_messages[message]) {
@@ -1587,36 +1592,43 @@ function add_unique_log(message) {
         previous_log_messages[message] = 1;
     }
 }
+
 function set_guidance(message) {
     reset_guidance();
     add_guidance(message);
 }
+
 function reset_guidance() {
     reset_message('guidance');
 }
+
 function add_guidance(message) {
     if (show_amr_obj['option-provide-guidance']) {
         add_message('guidance', message);
     }
 }
+
 function add_edit_log(message) {
     console.log("add_edit_log is called");
-   var today = new Date();
-   var date = today.getFullYear() + '-' + pad2(today.getMonth()+1) + '-' + pad2(today.getDate());
-   var time = pad2(today.getHours()) + ':' + pad2(today.getMinutes()) + ':' + pad2(today.getSeconds());
-   var timestamp = date + 'T' + time + '.' + pad3(today.getMilliseconds());
-   add_message('edit-log', '\n:: ' + timestamp + ' ::\n' + htmlProtect(message));
+    var today = new Date();
+    var date = today.getFullYear() + '-' + pad2(today.getMonth() + 1) + '-' + pad2(today.getDate());
+    var time = pad2(today.getHours()) + ':' + pad2(today.getMinutes()) + ':' + pad2(today.getSeconds());
+    var timestamp = date + 'T' + time + '.' + pad3(today.getMilliseconds());
+    add_message('edit-log', '\n:: ' + timestamp + ' ::\n' + htmlProtect(message));
 }
+
 function reset_message(type) {
     var s;
     if ((s = document.getElementById(type)) != null) {
         s.innerHTML = '';
     }
 }
+
 function reset_greeting() {
     // console.log("reset_greeting is called");
     reset_message('greeting');
 }
+
 function reset_error() {
     reset_message('error');
 }
@@ -1639,6 +1651,7 @@ function record_variable(v, loc) {
         // add_log('variable locs for ' + v + ': ' + new_value);
     }
 }
+
 /**
  * add a new (or existing) key value pair concept: loc to the concepts dictionary
  * @param c 'boy'
@@ -1656,6 +1669,7 @@ function record_concept(c, loc) {
         // add_log('concept locs for ' + c + ': ' + new_value);
     }
 }
+
 /**
  * given concept return variable
  * @param concept
@@ -1681,6 +1695,7 @@ function new_var(concept) {
     }
     return v;
 }
+
 /**
  * this might related to the shortcut user typed in, only called in exec_command
  * @param s unclear
@@ -1758,6 +1773,7 @@ function user_descr2locs(s, type) {
         return result_locs;
     }
 }
+
 /**
  * generate a new amr head
  * @param concept "buy"
@@ -1774,14 +1790,22 @@ function new_amr(concept) {
     amr[n + '.n'] = 0;
     amr[n + '.s'] = '';
     amr[n + '.a'] = begOffset + "-" + endOffset;
+
+    if (v) {
+        var alignInfo = document.getElementById('align');
+        alignInfo.innerHTML = concept + ": " + amr[n + '.a'];
+    }
+
+
     record_variable(v, n);
     record_concept(concept, n);
     variable2concept[v] = concept;
     state_has_changed_p = 1;
     console.log('new AMR: ' + concept + ' (' + n + ')' + ' var: ' + v);
-    console.log(amr);
+    // console.log(amr);
     return v;
 }
+
 /**
  * takes in head, role, argument, argument type , and output the argument variable, and populate amr
  * @param head
@@ -1842,6 +1866,13 @@ function add_triple(head, role, arg, arg_type) {
         amr[new_loc + '.c'] = arg_concept;
         amr[new_loc + '.s'] = arg_string;
         amr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
+
+        if (arg_variable) {
+            var alignInfo = document.getElementById('align');
+            alignInfo.innerHTML += htmlSpaceGuard('\n') + arg_concept + ": " + amr[new_loc + '.a'];
+        }
+
+
         record_variable(arg_variable, new_loc);
         record_concept(arg_concept, new_loc);
         variable2concept[arg_variable] = arg_concept;
@@ -1854,6 +1885,7 @@ function add_triple(head, role, arg, arg_type) {
         return '';
     }
 }
+
 function add_ne(value) {
     console.log("add_ne is called");
     // add_log('add_ne: ' + value);
@@ -1883,6 +1915,7 @@ function add_ne(value) {
         }
     }
 }
+
 /**
  * check if value is valid, add triple, if not, add error, :op appears here
  * @param value "b :mod pretty very much so"
@@ -1950,6 +1983,7 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
         add_error('Ill-formed replace concept command. Second argument should be "at". Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
     }
 }
+
 function replace_string(key_at, head_var, role, key_with, new_string) {
     console.log("replace_string is called");
     // add_edit_log('replace_string ' + key_at + '::' + head_var + '::' + role + '::' + key_with + '::' + new_string);
@@ -1998,6 +2032,7 @@ function replace_string(key_at, head_var, role, key_with, new_string) {
         add_error('Ill-formed replace string command. Second argument should be "at". Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
     }
 }
+
 function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
     console.log("replace_role is called");
     // add_edit_log('replace_role ' + key_at + '::' + head_var + '::' + old_role + '::' + arg + '::' + key_with + '::' + new_role);
@@ -2066,6 +2101,7 @@ function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
         add_error('Ill-formed replace role command. Second argument should be "at". Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
     }
 }
+
 function replace_variable(key_at, head_var, role, old_variable, key_with, new_variable) {
     console.log("replace_variable is called");
 
@@ -2145,6 +2181,7 @@ function deleted_p(loc) {
         }
     }
 }
+
 function delete_elem(loc) {
     // add_log('delete_elem ' + loc);
     var locs, concept, variable;
@@ -2183,6 +2220,7 @@ function delete_elem(loc) {
         concepts[concept] = new_loc_list.join(" ");
     }
 }
+
 /**
  * TODO unclear
  * @param loc
@@ -2198,6 +2236,7 @@ function delete_rec(loc) {
         }
     }
 }
+
 function delete_based_on_triple(head_var, role, arg) {
     // add_log('delete ' + head_var + ' ' + role + ' ' + arg);
     var head_var_locs = getLocs(head_var);
@@ -2241,6 +2280,7 @@ function delete_based_on_triple(head_var, role, arg) {
         add_error('Ill-formed delete command. First argument should be a defined variable. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
     }
 }
+
 function delete_top_level(variable) {
     console.log("delete_top_level is called");
     // add_log('delete_top_level ' + variable);
@@ -2260,6 +2300,7 @@ function delete_top_level(variable) {
         add_error('Ill-formed delete top level command. Third argument should be a defined variable. Usage: delete rtop level &lt;var&gt;');
     }
 }
+
 /**
  * delete the whole thing
  */
@@ -2275,6 +2316,7 @@ function deleteAMR() {
     show_amr('show');
     exec_command('record delete amr', 1);
 }
+
 /**
  * TODO why is there top level dummy?
  */
@@ -2377,7 +2419,7 @@ function move_var_elem(variable, new_head_var, role) {
 
 /**
  * in dictionary variables, the original key will be assigned empty value, the new key will be assigned original value
-   {o: "1", r: "1.1", b: "1.1.1", c: "1.1.1.2"} -> {o: "1", r: "", b: "1.1.1", c: "1.1.1.2", r1: "1.1"}
+ {o: "1", r: "1.1", b: "1.1.1", c: "1.1.1.2"} -> {o: "1", r: "", b: "1.1.1", c: "1.1.1.2", r1: "1.1"}
  */
 function change_var_name(variable, target, top) {
     console.log("change_var_name is called");
@@ -2405,6 +2447,7 @@ function change_var_name(variable, target, top) {
     }
     return 0;
 }
+
 /** unclear ******************************************************/
 function renorm_ops(variable) {
     // add_log('renorm_ops ' + variable);
@@ -4137,35 +4180,55 @@ function deletenode(node) {
     node.parentNode.replaceChild(contents, node);
 }
 
+
 function conceptDropdown() {
     document.getElementById("concept_dropdown").classList.toggle("show");
     submit_concept();
-}
-
-
-function getSenses() {
-    var token = selection.anchorNode.nodeValue;
-    //TODO: make the javascript lemmatizer work
-    if (token == 'wants' || token == 'desires') {
-        document.getElementById("wantDropdown").classList.toggle("show");
-    } else if (token == 'buy') {
-        document.getElementById("buyDropdown").classList.toggle("show");
-    } else if (token == 'charged') {
-        document.getElementById("chargeDropdown").classList.toggle("show");
-    } else if (token == 'intoxication') {
-        document.getElementById("intoxicateDropdown").classList.toggle("show");
-    } else if (token == 'resisting' || token == 'resist') {
-        document.getElementById("resistDropdown").classList.toggle("show");
-    } else if (token == 'arrest') {
-        document.getElementById("arrestDropdown").classList.toggle("show");
-    } else if (token == 'public') {
-        document.getElementById("publicDropdown").classList.toggle("show");
-    } else if (token == 'must') {
-        document.getElementById("obligateDropdown").classList.toggle("show");
-    } else {
-        submit_mode('add');
+    // if selected tokens is a number or not
+    let token = selection.anchorNode.nodeValue;
+    let numfied_token = text2num(token);
+    // this is to cover :quant
+    if (!isNaN(numfied_token)) {// if numfied_token is a number
+        let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
+        console.log(number);
+        const lemmaBar = document.getElementById("find_lemma");
+        lemmaBar.onmouseenter = function () {
+            getSenses(number);
+        }
+    } else { // if numfied_token is still a string, meaning the token is not a number
+        // pass the token to server to get the framefile
+        fetch('/', {
+            method: 'POST',
+            body: JSON.stringify({"selected": getLemma(token)})
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            console.log(data); //senses got returned from server
+            const lemmaBar = document.getElementById("find_lemma");
+            lemmaBar.onmouseenter = function () {
+                getSenses(data);
+            }
+        })
     }
 
+
+}
+
+function getSenses(senses) {
+    let genDrop = document.getElementById('genericDropdown');
+    genDrop.innerHTML = "";
+    if (genDrop.childElementCount > 0) {
+        genDrop.classList.toggle("show");
+    } else {
+        senses.res.forEach(function (value, index, array) {
+            let genLink = document.createElement("a");
+            genLink.innerHTML = value.name;
+            genLink.setAttribute("href", `javascript:submit_template_action('nothing', '${value.name}');`);
+            genLink.setAttribute("title", value.desc);
+            genDrop.appendChild(genLink);
+        });
+        genDrop.classList.toggle("show");
+    }
 }
 
 function neListDropdown() {
@@ -4221,9 +4284,6 @@ function generate_penman() {
     console.log(current_mode);
     submit_template_action(current_mode, c = current_concept, r = current_relation)
 }
-
-
-
 
 
 // click on load button
@@ -4394,6 +4454,7 @@ function show_meetings() {
    */
     show_page('meetings', 'MEETING');
 }
+
 //registered user functionality
 function show_page(page_id, page_target) {
     console.log("show_page is called");
