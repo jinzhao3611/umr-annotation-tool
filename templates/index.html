@@ -6,10 +6,11 @@
     <meta name="description" content="amr annotation tool">
 
     <!--<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">-->
-    <title>amr annotation tool</title>
+    <title>umr annotation tool</title>
     <link rel="stylesheet" type="text/css" href="../static/styles/default2.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/default.css" media="handheld">
-    <link rel="stylesheet" type="text/css" href="../static/styles/default.css" media="only screen and (max-device-width:480px)">
+    <link rel="stylesheet" type="text/css" href="../static/styles/default.css"
+          media="only screen and (max-device-width:480px)">
 
     <script src="static/scripts/main.js" type="text/javascript"></script>
     <script src="static/scripts/utils.js" type="text/javascript"></script>
@@ -32,13 +33,14 @@
 </form>
 
 {% block sentence_selection %}
-<form method="post">
+    <form method="post">
+        <br>
+        Sentence ID
+        <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
+               max={{ total_snts }} value={{ sentence.id }}>
+        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
+    </form>
     <br>
-    Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{total_snts}} value={{sentence.id}}>
-    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
-</form>
-<br>
 {% endblock %}
 
 
@@ -46,40 +48,40 @@
 <hr>
 
 {% block sentence_display %}
-<div id="sentence">
-    <table>
-        <tbody>
-        <tr>
-            {% if sentence.length %}
-            <td>dummy_token</td>
-            {% for index in range(0, sentence.length) %}
-            <td>{{sentence.words[index]}}</td>
-            {% endfor %}
-            <!--<td><button onclick="highlightSelection()">Highlight</button></td>-->
-            {% else %}
-            <td></td>
-            {% endif %}
-        </tr>
-        <tr>
-            {% if sentence.length %}
-            <td align="center">0</td>
+    <div id="sentence">
+        <table>
+            <tbody>
+            <tr>
+                {% if sentence.length %}
+                    <td>dummy_token</td>
+                    {% for index in range(0, sentence.length) %}
+                        <td>{{ sentence.words[index] }}</td>
+                    {% endfor %}
+                    <!--<td><button onclick="highlightSelection()">Highlight</button></td>-->
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if sentence.length %}
+                    <td align="center">0</td>
 
-            {% for index in range(0, sentence.length) %}
-            <td align="center">{{index+1}}</td>
-            {% endfor %}
-            {% else %}
-            <td></td>
-            {% endif %}
-        </tr>
-        </tbody>
-    </table>
-</div>
+                    {% for index in range(0, sentence.length) %}
+                        <td align="center">{{ index+1}}</td>
+                    {% endfor %}
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
 
 <hr>
 
 <div class="dropdown">
-    <label for="browser">Relations</label>
+    <label for="browser">Role</label>
     <input list="browsers" name="browser" id="browser">
     <datalist id="browsers">
         <option value=":ARG0">
@@ -146,9 +148,38 @@
         <option value=":wiki">
         <option value=":op1">
         <option value=":op2">
+        <option value=":actor">
+        <option value=":undergoer">
+        <option value=":theme">
+        <option value=":recipient">
+        <option value=":force">
+        <option value=":causer">
+        <option value=":experiencer">
+        <option value=":stimulus">
+        <option value=":companion">
+        <option value=":material">
+        <option value=":place">
+        <option value=":start">
+        <option value=":goal">
+        <option value=":affectee">
+        <option value=":reason">
+        <option value=":temporal">
+        <option value=":Aspect">
     </datalist>
-    <input type="submit"  onclick="submit_relation()">
+    <input type="submit" onclick="submit_relation()">
 
+
+    <div id="aspect-attribute" style="display: none">
+    <label for="browser">Aspect Attributes</label>
+    <input list="browsers" name="browser" id="browser">
+    <datalist id="browsers">
+        <option value='Habitual'>
+        <option value='Activity'>
+        <option value='Endeavor'>
+        <option value='Performance'>
+    </datalist>
+    <input type="submit" onclick="submit_attribute()">
+    </div>
     <br>
     <br>
 
@@ -156,10 +187,10 @@
     Concept:
     <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>
 
-    <div id="concept_dropdown" class="dropdown-content" >
+    <div id="concept_dropdown" class="dropdown-content">
         <a id="set-root" href="javascript:submit_template_action('set_parent');">set_parent</a>
         <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->
-        <a id="find_lemma" class="dropbtn">find lemma</a >
+        <a id="find_lemma" class="dropbtn">find lemma</a>
         <a id="named_entities" onmouseover="neListDropdown()">named entities</a>
         <a id="delete" href="javascript:submit_template_action('delete');">delete</a>
 
@@ -179,34 +210,52 @@
     <button onclick="generate_penman()">Generate</button>
 </div>
 
-    <hr>
+<hr>
 
-   <div id="text-command">
-      <table><tr><td title="Click for QuickRef on common text commands" onclick="popupQuickRef();"><nobr>Enter text command:</nobr></td>
-              <td><textarea rows="1" cols="50" id="command" name="command" autocapitalize="off" autocorrect="off" spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
-			  onkeyup="exec_command('', 1)"></textarea></td>
-	      <td width="20"></td>
-          <tr><td colspan="4"><span id="error"><i></i></span></td></tr>
-          <tr style="color:#999999">
-	      <td>Last command:</td>
-	      <td colspan="3"><span id="action"><i>none</i></span></td></tr>
-      </table>
-   </div>
+<div id="text-command">
+    <table>
+        <tr>
+            <td title="Click for QuickRef on common text commands" onclick="popupQuickRef();">
+                <nobr>Enter text command:</nobr>
+            </td>
+            <td><textarea rows="1" cols="50" id="command" name="command" autocapitalize="off" autocorrect="off"
+                          spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
+                          onkeyup="exec_command('', 1)"></textarea></td>
+            <td width="20"></td>
+        <tr>
+            <td colspan="4"><span id="error"><i></i></span></td>
+        </tr>
+        <tr style="color:#999999">
+            <td>Last command:</td>
+            <td colspan="3"><span id="action"><i>none</i></span></td>
+        </tr>
+    </table>
+</div>
 
-   <table>
-     <button id="replace-box">&nbsp;<a style="text-decoration:none" title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a>&nbsp;</button>
-     <button id="delete-box">&nbsp;<a style="text-decoration:none" title="delete"href="javascript:selectTemplate('delete');">delete</a>&nbsp;</button>
-     <button id="move-box">&nbsp;<a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;</button>
-     <button id="undo-box">&nbsp;<a id="undo-button" style="text-decoration:none" title="currently nothing to undo" href="javascript:undo(-1);">undo</a>&nbsp;</button>
-     <button id="redo-box">&nbsp;<a id="redo-button" style="text-decoration:none" title="currently nothing to undo" href="javascript:undo(1);">redo</a>&nbsp;</button>
+<table>
+    <button id="replace-box">&nbsp;<a style="text-decoration:none"
+                                      title="replace a role, concept, string or secondary variable"
+                                      href="javascript:selectTemplate('replace');">replace</a>&nbsp;
+    </button>
+    <button id="delete-box">&nbsp;<a style="text-decoration:none" title="delete"
+                                     href="javascript:selectTemplate('delete');">delete</a>&nbsp;
+    </button>
+    <button id="move-box">&nbsp;<a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;
+    </button>
+    <button id="undo-box">&nbsp;<a id="undo-button" style="text-decoration:none" title="currently nothing to undo"
+                                   href="javascript:undo(-1);">undo</a>&nbsp;
+    </button>
+    <button id="redo-box">&nbsp;<a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
+                                   href="javascript:undo(1);">redo</a>&nbsp;
+    </button>
 
-   </table>
+</table>
 
-    <hr>
+<hr>
 
 <div id="amr"><i>empty AMR</i></div>
 
-    <hr>
+<hr>
 <div id="alignment">
     <p> Alignment Information:</p>
     <p id="align"></p>
@@ -220,7 +269,7 @@
     <table>
         <tbody>
         <tr>
-            <td>Action template</td>
+{#            <td>Action template</td>#}
             <td>
                 <table border="1" cellpadding="1" cellspacing="0">
                     <tbody>
@@ -236,13 +285,13 @@
                 <select id="replace-type"
                         onchange="selectReplaceType(this[selectedIndex].text);">
                     <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
-                    <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
-                    </option>
+                    {#                    <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string</option>#}
                     <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
-                    <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
-                </select></td>
+                    {#                    <option value="variable" title="replace a secondary variable, e.g. h">variable</option>#}
+                </select>
+            </td>
             <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
-                                 autocapitalize="off"  id="replace-at"
+                                 autocapitalize="off" id="replace-at"
                                  value=""></td>
             <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
                                    id="replace-new" value=""
@@ -273,7 +322,7 @@
     <table>
         <tbody>
         <tr>
-            <td >
+            <td>
                 <table>
                     <tbody>
                     <tr>
@@ -282,13 +331,13 @@
                         <td width="5"></td>
                         <td><input size="24"
                                    title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
-                                   autocapitalize="off"  id="delete-at"
+                                   autocapitalize="off" id="delete-at"
                                    value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
                         <td width="5"></td>
                         <td>
                             <table border="1" cellpadding="1" cellspacing="0">
                                 <tbody>
-                                <tr >
+                                <tr>
                                     <td align="center">
                                         <nobr><a style="text-decoration:none;" title="submit delete template action"
                                                  href="javascript:submit_template_action('delete');"><font
@@ -305,7 +354,7 @@
                 </table>
             </td>
             <td width="10"></td>
-            <td >
+            <td>
                 <table>
                     <tbody>
                     <tr>
@@ -341,60 +390,61 @@
 <div id="move-template-table" style="display:none;">
     <p>
     <table>
-    <tbody>
-    <tr>
-        <td>Action template</td>
-        <td>
-            <table border="1" cellpadding="1" cellspacing="0">
-                <tbody>
-                <tr>
-                    <td>
-                        <nobr>&nbsp;move&nbsp;</nobr>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-        <td width="5"></td>
-        <td>Move
-        </td>
-        <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
-                   id="move-object" value=""></td>
-        <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
-                                        id="move-new-head" value=""> &nbsp;
-        </td>
-        <td>
-            <table border="1" cellpadding="1" cellspacing="0">
-                <tbody>
-                <tr >
-                    <td>
-                        <nobr>&nbsp;<a style="text-decoration:none" title="display clickable list of AMR roles (popup)"
-                                       href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
-                        </nobr>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-        <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
-                   id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
-                   onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
-        <td>
-            <table border="1" cellpadding="1" cellspacing="0">
-                <tbody>
-                <tr >
-                    <td>
-                        <nobr>&nbsp;<a  title="submit move template action"
-                                       href="javascript:submit_template_action('move');"><font
-                                color="black">submit</font></a>&nbsp;
-                        </nobr>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    </tbody>
+        <tbody>
+        <tr>
+{#            <td>Action template</td>#}
+            <td>
+                <table border="1" cellpadding="1" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <nobr>&nbsp;move&nbsp;</nobr>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="5"></td>
+            <td>Move
+            </td>
+            <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
+                       id="move-object" value=""></td>
+            <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
+                                           id="move-new-head" value=""> &nbsp;
+            </td>
+            <td>
+                <table border="1" cellpadding="1" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <nobr>&nbsp;<a style="text-decoration:none"
+                                           title="display clickable list of AMR roles (popup)"
+                                           href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
+                            </nobr>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
+                       id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
+                       onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
+            <td>
+                <table border="1" cellpadding="1" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <nobr>&nbsp;<a title="submit move template action"
+                                           href="javascript:submit_template_action('move');"><font
+                                    color="black">submit</font></a>&nbsp;
+                            </nobr>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
     </table>
     </p></div>
 

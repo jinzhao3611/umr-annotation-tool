@@ -7,6 +7,9 @@
  * var is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
  * var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
  */
+
+var aspects = ['State', 'Habitual', 'Activity', 'Endeavor', 'Performance']
+
 function processCheckLists() {
     var core_role, explanation, role, line, matches, len, counter, counter2, n_roles, n_non_roles;
     var roleList = list_of_known_role_s.split(/   /); //"     // BEGIN ROLES       :ARG0       :ARG1       :ARG2       :ARG3       :ARG4       :ARG5       :ARG6       :ARG7       :ARG8       :ARG9       :accompanier       :age       :beneficiary       :calendar in dates       :card1       :card2       :card3

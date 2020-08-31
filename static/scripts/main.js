@@ -149,8 +149,16 @@ function submit_relation() {
     if (current_relation) {
         submit_mode("add");
     }
+    if(current_relation == ':Aspect'){
+        document.getElementById("aspect-attribute").style.display = 'inline';
+    }
     console.log("current_relation is: " + current_relation);
 }
+
+// function submit_attribute(){
+//     current_relation = document.querySelector('#browser').value;
+//
+// }
 
 function submit_concept() {
     // current_concept = selection.anchorNode.nodeValue;
