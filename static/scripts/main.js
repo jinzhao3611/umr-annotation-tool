@@ -2,6 +2,7 @@ var current_parent;
 var current_concept;
 var current_relation;
 var current_mode;
+var current_attribute;
 
 var selection;
 var begOffset;
@@ -73,7 +74,8 @@ function conceptDropdown() {
     document.getElementById("concept_dropdown").classList.toggle("show");
     submit_concept();
     // if selected tokens is a number or not
-    let token = selection.anchorNode.nodeValue;
+    // let token = selection.anchorNode.nodeValue;
+    let token = current_concept;
     let numfied_token = text2num(token);
     // this is to cover :quant
     if (!isNaN(numfied_token)) {// if numfied_token is a number
@@ -149,16 +151,22 @@ function submit_relation() {
     if (current_relation) {
         submit_mode("add");
     }
+    let eles = document.getElementsByClassName('attributes');
+    var i;
+    for (i=0; i<eles.length; i++){
+        eles[i].style.display ='none';
+    }
     if(current_relation == ':Aspect'){
-        document.getElementById("aspect-attribute").style.display = 'inline';
+        document.getElementById("aspect-attribute").style.display = 'block';
     }
     console.log("current_relation is: " + current_relation);
 }
 
-// function submit_attribute(){
-//     current_relation = document.querySelector('#browser').value;
-//
-// }
+function submit_attribute(n){
+    current_attribute = document.querySelector('#browser' + n).value;
+    submit_template_action(current_mode, current_attribute)
+    console.log("current_attribute is: " + current_attribute);
+}
 
 function submit_concept() {
     // current_concept = selection.anchorNode.nodeValue;
@@ -169,17 +177,22 @@ function submit_concept() {
 function submit_mode(mode) {
     current_mode = mode;
     console.log("current_mode is: " + current_mode);
-
 }
 
 function current_command(numbered_sense) {
     submit_template_action(numbered_sense);
 }
 
-function generate_penman() {
-    console.log(current_mode);
+function generate_penman(){
     submit_template_action(current_mode, c = current_concept, r = current_relation)
 }
+
+function multipleWords(){
+    var c = current_concept.replace(" ", "-");
+    submit_template_action("add", c)
+}
+
+
 
 /**
  * this function checked the options table based on the loaded information
@@ -739,7 +752,7 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         var role = current_relation;
         console.log(role);
         // var arg = document.getElementById('selected_tokens').innerText;
-        var arg = current_concept;
+        var arg = current_concept.toLowerCase();
         console.log(arg);
         console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
 
@@ -2891,7 +2904,7 @@ function show_amr(args) {
         //     s.value = deHTML(amr_s);
         // }
         if (amr_s == '') {
-            html_amr_s = '<i>empty AMR</i>';
+            html_amr_s = '<i>empty umr</i>';
         } else {
             html_amr_s = amr_s;
         }

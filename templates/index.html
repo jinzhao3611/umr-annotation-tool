@@ -47,6 +47,44 @@
 
 <hr>
 
+{% block display_all_snts %}
+    <div id="all-sentences">
+        {% if all_snts %}
+            {% for snt in all_snts %}
+                <table>
+                    <tbody>
+                    <tr>
+                    <td>[{{ snt.id }}]</td>
+                        {% if snt.length %}
+                            <td>dummy_token</td>
+                            {% for index in range(0, snt.length) %}
+                                <td>{{ snt.words[index] }}</td>
+                            {% endfor %}
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        {% if snt.length %}
+                            <td align="center"></td>
+                            <td align="center">0</td>
+
+                            {% for index in range(0, snt.length) %}
+                                <td align="center">{{ index + 1 }}</td>
+                            {% endfor %}
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                    </tbody>
+                </table>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+{% endblock %}
+<hr>
+
 {% block sentence_display %}
     <div id="sentence">
         <table>
@@ -165,21 +203,41 @@
         <option value=":reason">
         <option value=":temporal">
         <option value=":Aspect">
+        <option value=":ARG1-of">
+
     </datalist>
     <input type="submit" onclick="submit_relation()">
+</div>
 
-
-    <div id="aspect-attribute" style="display: none">
-    <label for="browser">Aspect Attributes</label>
-    <input list="browsers" name="browser" id="browser">
-    <datalist id="browsers">
+    <div class= "attributes" id="aspect-attribute" style="display: none">
+    <label for="browser1">Aspect Attributes</label>
+    <input list="browsers1" name="browser1" id="browser1">
+    <datalist id="browsers1">
         <option value='Habitual'>
         <option value='Activity'>
         <option value='Endeavor'>
         <option value='Performance'>
     </datalist>
-    <input type="submit" onclick="submit_attribute()">
+    <input type="submit" onclick="submit_attribute('1')">
     </div>
+    <br>
+    <br>
+
+    <div id="other-attributes">
+    <label for="browser2">Attributes </label>
+    <input list="browsers2" name="browser2" id="browser2">
+    <datalist id="browsers2">
+        <option value='ordinal-entity'>
+        <option value='temporal-quantity'>
+        <option value='amr-unknown'>
+        <option value='amr-choice'>
+        <option value="thing">
+        <option value="person">
+    </datalist>
+    <input type="submit" onclick="submit_attribute('2')">
+    </div>
+
+
     <br>
     <br>
 
@@ -188,16 +246,16 @@
     <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>
 
     <div id="concept_dropdown" class="dropdown-content">
-        <a id="set-root" href="javascript:submit_template_action('set_parent');">set_parent</a>
+        <a id="set-root" href="javascript:submit_template_action('set_parent');">set parent</a>
         <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->
         <a id="find_lemma" class="dropbtn">find lemma</a>
         <a id="named_entities" onmouseover="neListDropdown()">named entities</a>
-        <a id="delete" href="javascript:submit_template_action('delete');">delete</a>
+        <a id="multiple_words" href="javascript:multipleWords();">multiple words</a>
 
     </div>
 
     <div id="entities_list" class="dropdown-content" style="right: auto; left: 50%">
-        <a id="person" href="javascript:submit_mode('add-ne')">person</a>
+        <a id="person" href="javascript:submit_mode('add-ne'); generate_penman()">person</a>
         <a id="organization" href="javascript:submit_template_action('add-ne', 'organization')">organization</a>
         <a id="location" href="javascript:submit_template_action('add-ne', 'location')">location</a>
     </div>
@@ -253,7 +311,7 @@
 
 <hr>
 
-<div id="amr"><i>empty AMR</i></div>
+<div id="amr"><i>empty umr</i></div>
 
 <hr>
 <div id="alignment">

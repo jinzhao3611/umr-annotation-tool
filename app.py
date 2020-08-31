@@ -42,9 +42,9 @@ class ArgTokenParser:
         return "\n".join(temp)
 
 
+frame_parser = ArgTokenParser.from_json(FRAME_DESC_FILE)
 app = Flask(__name__)
 snts = []
-frame_parser = ArgTokenParser.from_json(FRAME_DESC_FILE)
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -68,11 +68,15 @@ def home():
         total_snts = len(snts)
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts)
+            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts)
         else:
-            return render_template('index.html', sentence=snts[0], total_snts=total_snts)
+            print("hahaha")
+            print(snts)
+            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts)
     else:
-        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0)
+        print("xixixix")
+        print(snts)
+        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[])
 
 
 def main():
