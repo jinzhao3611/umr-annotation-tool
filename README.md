@@ -1,3 +1,13 @@
+environment: 
+conda install -c conda-forge flask-sqlalchemy
+pip install Flask-Bcrypt
+pip install Flask-Login
+pip install Pillow
+pip install Flask-WTF
+pip install email-validator
+pip install flask-mail
+
+
 run app.py
 
 so far, the following things works:

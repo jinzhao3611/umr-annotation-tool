@@ -17,9 +17,10 @@ def parse_frame_url(index_page_url):
     results = soup.find_all('a')
     for item in results:
         frame_dict.update(parse_predicate_url(item.text, 'http://verbs.colorado.edu/chinese/cpb/html_frames/' + item['href']))
+        break
         # print(item['href'])
         # print(item.text)
-    with open('./frames_chinese.json', 'w') as json_file:
+    with open('test_frames_chinese.json', 'w') as json_file:
         json.dump(frame_dict, json_file)
 
 def parse_predicate_url(predicate, url):

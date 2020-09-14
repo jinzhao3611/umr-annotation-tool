@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.file }}
+
+        {{form.autocomplete_input(list="id_datalist")}}
+        <datalist id="id_datalist">
+            <option value='Default'>
+            <option value='English'>
+            <option value='Chinese'>
+        </datalist>
+        <input type="submit">
+    </form>
+
+    <a type="button" href="{{ url_for('main.annotate') }}"><button class="btn btn-outline-info">Annotate!</button></a>
+
+{% endblock content %}

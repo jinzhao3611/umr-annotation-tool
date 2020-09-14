@@ -87,18 +87,24 @@ function conceptDropdown() {
         }
     } else { // if numfied_token is still a string, meaning the token is not a number
         // pass the token to server to get the framefile
-        fetch('/', {
-            method: 'POST',
-            body: JSON.stringify({"selected": getLemma(token)})
-        }).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            console.log(data); //senses got returned from server
-            const lemmaBar = document.getElementById("find_lemma");
-            lemmaBar.onmouseenter = function () {
-                getSenses(data);
-            }
-        })
+        try{
+            fetch('/annotate', {
+                method: 'POST',
+                body: JSON.stringify({"selected": getLemma(token)})
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log(data); //senses got returned from server
+                const lemmaBar = document.getElementById("find_lemma");
+                lemmaBar.onmouseenter = function () {
+                    getSenses(data);
+                }
+            })
+        }catch (e){
+            let letter = {"res": [{"desc": "token is a letter", "name": token}]};
+            getSenses(letter);
+        }
+
     }
 
 
@@ -145,6 +151,12 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
+function docAnnot(sentenceId){
+    exec_command("top sentence", 1);
+    submit_template_action('doc-annot');
+
+}
+
 function submit_relation() {
     // current_relation = sel.options[sel.selectedIndex].text;
     current_relation = document.querySelector('#browser').value;
@@ -164,7 +176,8 @@ function submit_relation() {
 
 function submit_attribute(n){
     current_attribute = document.querySelector('#browser' + n).value;
-    submit_template_action(current_mode, current_attribute)
+    // submit_template_action(current_mode, current_attribute);
+    submit_template_action('add-constant', current_attribute);
     console.log("current_attribute is: " + current_attribute);
 }
 
@@ -731,11 +744,12 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
             console.log("current_parent is " + current_parent);
 
         }
-        // console.log(k);
-        // console.log(new_k);
-        // console.log(current_parent);
 
-    } else if (id == 'add') {
+
+    } else if(id == 'doc-annot'){
+        current_parent = 's';
+    }
+    else if (id == 'add') {
         // if (((arg1 = document.getElementById('add-head')) != null)
         //  && ((arg2 = document.getElementById('add-role')) != null)
         //  && ((arg3 = document.getElementById('add-arg')) != null)) {
@@ -756,6 +770,13 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         console.log(arg);
         console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
 
+        exec_command(current_parent + ' ' + role + ' ' + arg, 1);
+    }
+     else if (id == 'add-constant') {
+        var role = current_relation;
+        var arg = current_concept;
+        console.log(arg);
+        console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
         exec_command(current_parent + ' ' + role + ' ' + arg, 1);
     }
     else if (id == 'add-ne') {
@@ -851,7 +872,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
         if (value && ((last_command = document.getElementById('action')) != null)) {
             // add_edit_log('exec_command ' + top + ' ' + value);
-            add_log('exec_command: ' + value + ' (top: ' + top + ')');
+            // add_log('exec_command: ' + value + ' (top: ' + top + ')');
             reset_error();
             reset_guidance();
             reset_greeting();
@@ -865,6 +886,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             //     cc[0] = cc[0].slice(0, -4)
             // }
             console.log("cc is: " + cc);// ["b", ":arg1", "car"]
+
 
             /** below are shortcut command **********************************************************************************************************************/
             if (value == '') {
@@ -1400,7 +1422,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             if (top) {// the undo and redo up right corner
                 record_value = record_value || value;
                 // value: "b :arg1 car"
-                last_command.innerHTML = record_value;
+                // last_command.innerHTML = record_value;
                 show_amr(show_amr_args);
                 // show_amr_args:'show'
                 if (state_has_changed_p) {
@@ -1461,6 +1483,24 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             command_input.style.height = '1.4em';
         }
     }
+    //traverse amr to print the alignment info, and change doc level annotation variables
+    // amr['2.v'] = 's2';
+    var alignInfo = document.getElementById('align');
+    var alignment_string = '';
+    Object.keys(amr).forEach(function(key) {
+        if(/[\\d|\\.]+c/gm.test(key) && amr[key]){
+            alignment_string += amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+        }
+
+        // if(String(amr[key]).charAt(0)=='2'){
+        //     if(/[\\d|\\.]+v/gm.test(key)){
+        //         if(amr[key]!=='s2'){
+        //             amr[key] = 's2' + amr[key];
+        //         }
+        //     }
+        // }
+    });
+    alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
 }
 
 /** log ******************************************************/
@@ -1604,6 +1644,10 @@ function new_var(concept) {
     } else {
         v = initial;
     }
+
+    if(amr['n']>1){
+        v = 'S2' + v;
+    }
     return v;
 }
 
@@ -1702,11 +1746,6 @@ function new_amr(concept) {
     amr[n + '.s'] = '';
     amr[n + '.a'] = begOffset + "-" + endOffset;
 
-    if (v) {
-        var alignInfo = document.getElementById('align');
-        alignInfo.innerHTML = concept + ": " + amr[n + '.a'];
-    }
-
 
     record_variable(v, n);
     record_concept(concept, n);
@@ -1726,7 +1765,6 @@ function new_amr(concept) {
  * @returns {*} arg_variable
  */
 function add_triple(head, role, arg, arg_type) {
-    console.log("add_triple is called");
     head = strip(head); // b
     role = strip(role); // :arg1
     arg = strip(arg); //car
@@ -1777,11 +1815,6 @@ function add_triple(head, role, arg, arg_type) {
         amr[new_loc + '.c'] = arg_concept;
         amr[new_loc + '.s'] = arg_string;
         amr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
-
-        if (arg_variable) {
-            var alignInfo = document.getElementById('align');
-            alignInfo.innerHTML += htmlSpaceGuard('\n') + arg_concept + ": " + amr[new_loc + '.a'];
-        }
 
 
         record_variable(arg_variable, new_loc);
@@ -2716,7 +2749,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                     concept_m = '<span title="' + special_title + '" style="color:' + special_color + ';border-bottom:1px dotted;" target="_BLANK">' + concept + '</span>';
                 }
             }
-            s += '(' + variable_m + '-' + alignment_index + ' / ' + concept_m;
+            // s += '(' + variable_m + '-' + alignment_index + ' / ' + concept_m;
+            s += '(' + variable_m  + ' / ' + concept_m;
+
             var n = amr[loc + '.n'];
             var index;
             var opx_all_simple_p = 1;
@@ -3181,22 +3216,8 @@ function defaultFilename() {
     }
 }
 
-function saveAMR() {
-    console.log("saveAMR is called");
-    if (((s = document.getElementById('workset-template')) != null)
-        && s.style.display.match(/inline/)
-        && ((s1 = document.getElementById('save-snt-id2')) != null)
-        && ((s2 = document.getElementById('next-workset-snt-id2')) != null)
-        && ((s3 = document.getElementById('save-workset-snt')) != null)) {
-        props2comment();
-        s1.value = amr['props-id'] || '';
-        s2.value = s1.value;
-        s2.value = s2.value.replace(/^([a-z][a-z])_(.*)$/, "$1.$2");
-        s2.value = s2.value.replace(/^(.*)_(\d+)$/, "$1.$2");
-        // add_log('save workset sentence. save: ' + s1.value + ' next: ' + s2.value);
-        s1.value = '';
-        s3.submit();
-    }
+function UMR2db(sentence){
+    print(sentence)
 }
 
 function applyProps(caller) {

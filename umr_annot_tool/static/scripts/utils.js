@@ -5,9 +5,9 @@
  * @returns {*} lemma
  */
 function getLemma(inputWord){
-   var lemmatizer = new Lemmatizer();
-   var lemma = lemmatizer.only_lemmas(inputWord);
-   return lemma[0];
+    var lemmatizer = new Lemmatizer();
+    var lemma = lemmatizer.only_lemmas(inputWord);
+    return lemma[0];
 }
 
 /** words2number ******************************************************/
@@ -15,6 +15,7 @@ function getLemma(inputWord){
 var Small = {
     'zero': 0,
     'one': 1,
+    'first':1,
     'two': 2,
     'three': 3,
     'four': 4,

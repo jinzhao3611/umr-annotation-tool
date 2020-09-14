@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="author" content="Jin Zhao">
-    <meta name="description" content="amr annotation tool">
+{% extends "layout.html" %}
 
-    <!--<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">-->
-    <title>umr annotation tool</title>
+{% block head %}
     <link rel="stylesheet" type="text/css" href="../static/styles/default2.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/default.css" media="handheld">
     <link rel="stylesheet" type="text/css" href="../static/styles/default.css"
@@ -19,36 +13,14 @@
 
     <script src="static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
     <script src="static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+{% endblock head %}
 
 
-</head>
-
-<body onload="initialize()">
-
-
-<form method="POST"
-      enctype="multipart/form-data">
-    <input id="test-file" type="file" name="file">
-    <input id="test-input" type="submit"/>
-</form>
-
-{% block sentence_selection %}
-    <form method="post">
-        <br>
-        Sentence ID
-        <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
-               max={{ total_snts }} value={{ sentence.id }}>
-        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
-    </form>
-    <br>
-{% endblock %}
-
-
-
-<hr>
-
-{% block display_all_snts %}
+{% block content %}
+{#<body onload="initialize()">#}
+    {# display all the sentences #}
     <div id="all-sentences">
+        <script type="text/javascript">initialize()</script>
         {% if all_snts %}
             {% for snt in all_snts %}
                 <table>
@@ -56,7 +28,6 @@
                     <tr>
                     <td>[{{ snt.id }}]</td>
                         {% if snt.length %}
-                            <td>dummy_token</td>
                             {% for index in range(0, snt.length) %}
                                 <td>{{ snt.words[index] }}</td>
                             {% endfor %}
@@ -69,7 +40,7 @@
                             <td align="center"></td>
                             <td align="center">0</td>
 
-                            {% for index in range(0, snt.length) %}
+                            {% for index in range(0, snt.length - 1) %}
                                 <td align="center">{{ index + 1 }}</td>
                             {% endfor %}
                         {% else %}
@@ -80,18 +51,21 @@
                 </table>
             {% endfor %}
         {% endif %}
-
     </div>
-{% endblock %}
-<hr>
-
-{% block sentence_display %}
+    <hr>
+    {# choose the sentence ID #}
+    <form method="post">
+        Sentence ID
+        <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
+               max={{ total_snts }} value={{ sentence.id }}>
+        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
+    </form>
+    {# display the sentence with the chosen sentence ID #}
     <div id="sentence">
         <table>
             <tbody>
             <tr>
                 {% if sentence.length %}
-                    <td>dummy_token</td>
                     {% for index in range(0, sentence.length) %}
                         <td>{{ sentence.words[index] }}</td>
                     {% endfor %}
@@ -104,8 +78,8 @@
                 {% if sentence.length %}
                     <td align="center">0</td>
 
-                    {% for index in range(0, sentence.length) %}
-                        <td align="center">{{ index+1}}</td>
+                    {% for index in range(0, sentence.length - 1) %}
+                        <td align="center">{{ index + 1 }}</td>
                     {% endfor %}
                 {% else %}
                     <td></td>
@@ -114,100 +88,122 @@
             </tbody>
         </table>
     </div>
-{% endblock %}
+    <hr>
 
-<hr>
+    {% if 'English' == lang %}
+        <div class="dropdown">
+            <label for="browser">Role</label>
+            <input list="browsers" name="browser" id="browser">
+            <datalist id="browsers">
+                <option value=":ARG0">
+                <option value=":ARG1">
+                <option value=":ARG2">
+                <option value=":ARG3">
+                <option value=":ARG4">
+                <option value=":ARG5">
+                <option value=":calendar">
+                <option value=":century">
+                <option value=":day">
+                <option value=":dayperiod">
+                <option value=":decade">
+                <option value=":era">
+                <option value=":month">
+                <option value=":quarter">
+                <option value=":season">
+                <option value=":timezone">
+                <option value=":weekday">
+                <option value=":year">
+                <option value=":year2">
+                <option value=":accompanier">
+                <option value=":age">
+                <option value=":beneficiary">
+                <option value=":cause">
+                <option value=":concession">
+                <option value=":condition">
+                <option value=":consist_of">
+                <option value=":degree">
+                <option value=":destination">
+                <option value=":direction">
+                <option value=":domain">
+                <option value=":duration">
+                <option value=":example">
+                <option value=":extent">
+                <option value=":frequency">
+                <option value=":instrument">
+                <option value=":li">
+                <option value=":location">
+                <option value=":manner">
+                <option value=":medium">
+                <option value=":mod">
+                <option value=":mode">
+                <option value=":name">
+                <option value=":ord">
+                <option value=":part">
+                <option value=":path">
+                <option value=":polarity">
+                <option value=":polite">
+                <option value=":poss">
+                <option value=":product_of">
+                <option value=":purpose">
+                <option value=":quant">
+                <option value=":range">
+                <option value=":scale">
+                <option value=":source">
+                <option value=":subevent">
+                <option value=":subset">
+                <option value=":sum_of">
+                <option value=":time">
+                <option value=":topic">
+                <option value=":unit">
+                <option value=":value">
+                <option value=":wiki">
+                <option value=":op1">
+                <option value=":op2">
 
-<div class="dropdown">
-    <label for="browser">Role</label>
-    <input list="browsers" name="browser" id="browser">
-    <datalist id="browsers">
-        <option value=":ARG0">
-        <option value=":ARG1">
-        <option value=":ARG2">
-        <option value=":ARG3">
-        <option value=":ARG4">
-        <option value=":ARG5">
-        <option value=":calendar">
-        <option value=":century">
-        <option value=":day">
-        <option value=":dayperiod">
-        <option value=":decade">
-        <option value=":era">
-        <option value=":month">
-        <option value=":quarter">
-        <option value=":season">
-        <option value=":timezone">
-        <option value=":weekday">
-        <option value=":year">
-        <option value=":year2">
-        <option value=":accompanier">
-        <option value=":age">
-        <option value=":beneficiary">
-        <option value=":cause">
-        <option value=":concession">
-        <option value=":condition">
-        <option value=":consist_of">
-        <option value=":degree">
-        <option value=":destination">
-        <option value=":direction">
-        <option value=":domain">
-        <option value=":duration">
-        <option value=":example">
-        <option value=":extent">
-        <option value=":frequency">
-        <option value=":instrument">
-        <option value=":li">
-        <option value=":location">
-        <option value=":manner">
-        <option value=":medium">
-        <option value=":mod">
-        <option value=":mode">
-        <option value=":name">
-        <option value=":ord">
-        <option value=":part">
-        <option value=":path">
-        <option value=":polarity">
-        <option value=":polite">
-        <option value=":poss">
-        <option value=":product_of">
-        <option value=":purpose">
-        <option value=":quant">
-        <option value=":range">
-        <option value=":scale">
-        <option value=":source">
-        <option value=":subevent">
-        <option value=":subset">
-        <option value=":sum_of">
-        <option value=":time">
-        <option value=":topic">
-        <option value=":unit">
-        <option value=":value">
-        <option value=":wiki">
-        <option value=":op1">
-        <option value=":op2">
-        <option value=":actor">
-        <option value=":undergoer">
-        <option value=":theme">
-        <option value=":recipient">
-        <option value=":force">
-        <option value=":causer">
-        <option value=":experiencer">
-        <option value=":stimulus">
-        <option value=":companion">
-        <option value=":material">
-        <option value=":place">
-        <option value=":start">
-        <option value=":goal">
-        <option value=":affectee">
-        <option value=":reason">
-        <option value=":temporal">
-        <option value=":Aspect">
-        <option value=":ARG1-of">
+                <option value=":reason">
+                <option value=":temporal">
+                <option value=":modal">
+                <option value=":coref">
 
-    </datalist>
-    <input type="submit" onclick="submit_relation()">
-</div>
+                <option value=":Aspect">
+                <option value=":ARG1-of">
+
+                <option value=":before">
+                <option value=":depends-on">
+                <option value=":AFF">
+                <option value=":NEG">
+                <option value=":same-entity">
+
+            </datalist>
+            <input type="submit" onclick="submit_relation()">
+        </div>
+    {% else %}
+        <div class="dropdown">
+            <label for="browser">Role</label>
+            <input list="browsers" name="browser" id="browser">
+            <datalist id="browsers">
+                <option value=":actor">
+                <option value=":undergoer">
+                <option value=":theme">
+                <option value=":recipient">
+                <option value=":force">
+                <option value=":causer">
+                <option value=":experiencer">
+                <option value=":stimulus">
+                <option value=":companion">
+                <option value=":material">
+                <option value=":place">
+                <option value=":start">
+                <option value=":goal">
+                <option value=":affectee">
+            </datalist>
+            <input type="submit" onclick="submit_relation()">
+        </div>
+    {% endif %}
+
+
+
+
 
     <div class= "attributes" id="aspect-attribute" style="display: none">
     <label for="browser1">Aspect Attributes</label>
@@ -220,8 +216,7 @@
     </datalist>
     <input type="submit" onclick="submit_attribute('1')">
     </div>
-    <br>
-    <br>
+
 
     <div id="other-attributes">
     <label for="browser2">Attributes </label>
@@ -233,10 +228,24 @@
         <option value='amr-choice'>
         <option value="thing">
         <option value="person">
+
+
     </datalist>
     <input type="submit" onclick="submit_attribute('2')">
     </div>
 
+    <div id="constants">
+    <label for="browser3">Constants </label>
+    <input list="browsers3" name="browser3" id="browser3">
+    <datalist id="browsers3">
+        <option value="IMPERATIVE">
+        <option value="EXPRESSIVE">
+
+        <option value="DCT">
+        <option value="AUTH">
+    </datalist>
+    <input type="submit" onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">
+    </div>
 
     <br>
     <br>
@@ -254,23 +263,24 @@
 
     </div>
 
-    <div id="entities_list" class="dropdown-content" style="right: auto; left: 50%">
+
+    <div id="entities_list" class="dropdown-content" style="right: auto; left:20%">
         <a id="person" href="javascript:submit_mode('add-ne'); generate_penman()">person</a>
         <a id="organization" href="javascript:submit_template_action('add-ne', 'organization')">organization</a>
         <a id="location" href="javascript:submit_template_action('add-ne', 'location')">location</a>
     </div>
 
 
-    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:50%"></div>
+    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:20%"></div>
 
     <br>
     <br>
-    <button onclick="generate_penman()">Generate</button>
-</div>
+    <button onclick="generate_penman()">Submit Query</button>
 
-<hr>
 
-<div id="text-command">
+    <hr>
+
+    <div id="text-command">
     <table>
         <tr>
             <td title="Click for QuickRef on common text commands" onclick="popupQuickRef();">
@@ -284,13 +294,12 @@
             <td colspan="4"><span id="error"><i></i></span></td>
         </tr>
         <tr style="color:#999999">
-            <td>Last command:</td>
-            <td colspan="3"><span id="action"><i>none</i></span></td>
+{#            <td>Last command:</td>#}
+            <td colspan="3"><span id="action"></span></td>
         </tr>
     </table>
 </div>
 
-<table>
     <button id="replace-box">&nbsp;<a style="text-decoration:none"
                                       title="replace a role, concept, string or secondary variable"
                                       href="javascript:selectTemplate('replace');">replace</a>&nbsp;
@@ -306,23 +315,29 @@
     <button id="redo-box">&nbsp;<a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
                                    href="javascript:undo(1);">redo</a>&nbsp;
     </button>
+{#    <button id="doc-level-annot">&nbsp;<a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
+{#                                   href="javascript:docAnnot(2);">doc-level-annot</a>&nbsp;</button>#}
+
+{#    <button><a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
+{#               href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
+    <button><a id="db" style="text-decoration:none" title="click to get current annotation in db" href="javascript:UMR2db(sentence);">db</a></button>
 
 </table>
 
-<hr>
-
-<div id="amr"><i>empty umr</i></div>
-
-<hr>
-<div id="alignment">
-    <p> Alignment Information:</p>
-    <p id="align"></p>
+    <hr>
+    <p>UMR Penman Annotation:</p>
+    <div id="amr"></div>
 
 
-</div>
+
+    <hr>
+    <div id="alignment">
+        <p> Alignments:</p>
+        <p id="align"></p>
+    </div>
 
 
-<div id="replace-template-table" style="display:none;">
+    <div id="replace-template-table" style="display:none;">
     <p>
     <table>
         <tbody>
@@ -374,8 +389,7 @@
         </tbody>
     </table>
     </p></div>
-
-<div id="delete-template-table" style="display:none;">
+    <div id="delete-template-table" style="display:none;">
     <p>
     <table>
         <tbody>
@@ -444,9 +458,8 @@
         </tbody>
     </table>
     </p></div>
+    <div id="move-template-table" style="display:none;">
 
-<div id="move-template-table" style="display:none;">
-    <p>
     <table>
         <tbody>
         <tr>
@@ -504,9 +517,7 @@
         </tr>
         </tbody>
     </table>
-    </p></div>
 
 
-</body>
+{% endblock content %}
 
-</html> 
