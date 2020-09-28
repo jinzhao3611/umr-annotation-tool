@@ -4,6 +4,8 @@ import attr
 import json
 import xml.etree.ElementTree as ET
 from utils import parse_flex_xml
+from bs4 import BeautifulSoup
+
 
 
 from flask import render_template, request, Blueprint
@@ -55,6 +57,8 @@ frame_parser = ArgTokenParser.from_json(FRAME_DESC_FILE)
 snts = []
 target_language = ['Default']
 df_html = []
+gls = []
+notes = []
 
 
 
@@ -73,11 +77,11 @@ def annotate():
 
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html)
+            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html, gls=gls, notes=notes)
         else:
-            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html)
+            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html, gls=gls, notes=notes)
     else:
-        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0], df_html=df_html)
+        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0], df_html=df_html, gls=gls, notes=notes)
 
 
 @main.route("/upload", methods=['GET', 'POST'])
@@ -97,14 +101,23 @@ def upload():
 
         try:
             ET.fromstring(content_string)
-            sents, dfs, sents_gls = parse_flex_xml(content_string)
+            sents, dfs, sents_gls, conv_turns = parse_flex_xml(content_string)
             for i, sent in enumerate(sents):
                 snts.append(Sentence(sent, i, len(sent)))
             for df in dfs:
-                df_html.append(df.to_html(classes="table table-striped", justify='center').replace('border="1"', 'border="0"'))
-            print(sents[0])
-            print(dfs[0])
-            print(sents_gls[0])
+                html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"', 'border="0"')
+                soup = BeautifulSoup(html_str, "html.parser")
+                elements = soup.findAll('tr')[3:6]
+                for ele in elements:
+                    ele['class'] = 'optional-rows'
+                df_html.append(str(soup))
+            for translation in sents_gls:
+                gls.append(translation)
+            for conv_turn in conv_turns:
+                notes.append(conv_turn)
+
+            print(df_html[0])
+
             sent = sents[0]
 
         except ET.ParseError:

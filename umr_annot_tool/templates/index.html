@@ -56,6 +56,10 @@
         {% autoescape off %}
         {{ df_html[sentence.id] }}
         {% endautoescape %}
+        <p><b>Free</b> {{ gls[sentence.id] }}</p>
+        <p><b>Notes</b> {{ notes[sentence.id] }}</p>
+        <button onclick="toggleRow('optional-rows')">show more Info</button>
+
     {% else %}
         <div id="sentence">
         <table>

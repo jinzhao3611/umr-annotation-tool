@@ -4211,6 +4211,19 @@ function toggleInfo(j) {
     }
 }
 
+function toggleRow(id) {
+    var rows = document.getElementsByClassName(id)
+    // var row = document.getElementById(id);
+    for (var i = 0; i < rows.length; i++) {
+        if (rows[i].style.display == '') {
+            rows[i].style.display = 'none';
+        } else {
+            rows[i].style.display = '';
+        }
+    }
+}
+
+
 
 
 /**

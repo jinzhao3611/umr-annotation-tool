@@ -91,6 +91,7 @@ def parse_flex_xml(xml_path: str) -> Tuple:
     gls = list()
     msa = list()
     sent_gls = list()
+    notes = list()
 
     for paragraph in root.iter('paragraph'): # each sentence
         txt_per_sentence = list()
@@ -128,6 +129,8 @@ def parse_flex_xml(xml_path: str) -> Tuple:
                 for item in word.findall('item'):
                     if item.attrib['type'] == 'gls':
                         sent_gls.append(item.text)
+                    if item.attrib['type'] == 'note':
+                        notes.append(item.text)
 
         txt.append(txt_per_sentence)
         word_gls.append(word_gls_per_sentence)
@@ -143,7 +146,7 @@ def parse_flex_xml(xml_path: str) -> Tuple:
         df = pd.DataFrame([txt[i], [", ".join(e) for e in cf[i]], [", ".join(e) for e in gls[i]], [", ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
         tbls.append(df)
-    return txt, tbls, sent_gls
+    return txt, tbls, sent_gls, notes
 
 def output_to_file(textonly:bool, output:str, result:Tuple) -> None:
     if textonly:
