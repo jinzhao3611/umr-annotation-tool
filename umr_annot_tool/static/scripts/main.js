@@ -119,7 +119,7 @@ function getSenses(senses) {
         senses.res.forEach(function (value, index, array) {
             let genLink = document.createElement("a");
             genLink.innerHTML = value.name;
-            genLink.setAttribute("href", `javascript:submit_template_action('nothing', '${value.name}');`);
+            genLink.setAttribute("href", `javascript:submit_template_action('nothing', "${value.name}");`);
             genLink.setAttribute("title", value.desc);
             genDrop.appendChild(genLink);
         });
@@ -184,16 +184,13 @@ function submit_attribute(n){
 function submit_concept() {
     // current_concept = selection.anchorNode.nodeValue;
     current_concept = document.getElementById('selected_tokens').innerText;
+    current_concept = current_concept.replace("'", "\'");
     console.log("current_concept is: " + current_concept);
 }
 
 function submit_mode(mode) {
     current_mode = mode;
     console.log("current_mode is: " + current_mode);
-}
-
-function current_command(numbered_sense) {
-    submit_template_action(numbered_sense);
 }
 
 function generate_penman(){
@@ -204,7 +201,6 @@ function multipleWords(){
     var c = current_concept.replace(" ", "-");
     submit_template_action("add", c)
 }
-
 
 
 /**
@@ -325,7 +321,6 @@ function revert2PrevState(previous_state) {
     // props2screen();
     // add_log('Reverted to state ' + previous_state['id']);
 }
-
 /**
  * undo and redo, also probably generate a window at the up right corner
  * @param n positive number or a negative number
@@ -508,11 +503,11 @@ function selectTemplate(id) {
         focus_field = 'add-ne-head';
     } else if (id == 'move') {
         focus_field = 'move-object';
-    } else if (id == 'load') {
-        export_options();
-        focus_field = 'load-username2';
-    } else if (id == 'save') {
-        export_options();
+    // } else if (id == 'load') {
+    //     export_options();
+    //     focus_field = 'load-username2';
+    // } else if (id == 'save') {
+    //     export_options();
     } else if (id == 'props') {
         focus_field = 'props-id';
     } else if (id == 'clear') {
@@ -622,6 +617,8 @@ function fillDeleteTemplate(at, mo_lock) {
         }
     }
 }
+
+/** coloring umr ******************************************************/
 
 function color_all_var_occurrences(variable, color) {
     var var_locs = getLocs(variable);
@@ -1084,12 +1081,15 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 top = 0;
                 /** TODO not completely clear**********************************************************************************************************************/
             } else if (cc.length >= 1) {
+                console.log("I am here1");
                 // cc == ["b", ":arg1", "car"]
                 var key1 = cc[0]; //"b"
                 var ne_concept;
                 var cc2v;
                 if ((key1 == 'top') || (key1 == 'bottom') || (key1 == 'new')) {
+                    console.log("I am here2");
                     if ((cc.length >= 3) && (cc[1] == '*OR*') && validEntryConcept(cc[2])) {
+                        console.log("I am here3");
                         addOr('top ' + value);
                         selectTemplate('');
                         show_amr_args = 'show';
@@ -1097,6 +1097,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     else if ((cc.length >= 3) && (key1 == 'top') && (ne_concept = cc[1])
                         && validEntryConcept(ne_concept) && (!getLocs(ne_concept))
                         && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                        console.log("I am here4");
                         var ne_var = new_amr(trimConcept(ne_concept));
                         var name_var = add_triple(ne_var, ':name', 'name', 'concept');
                         for (var i = 2; i < cc.length; i++) {
@@ -1104,24 +1105,31 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             add_triple(name_var, sub_role, cc[i], 'string');
                         }
                         if (current_template != 'top') {
+                            console.log("I am here5");
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
                     }
                     else if (cc.length >= 2) {
+                        console.log("I am here6");
                         for (var i = 1; i < cc.length; i++) {
                             var arg = cc[i];
                             if ((key1 == 'top') && getLocs(arg)) {
+                                console.log("I am here7");
                                 move_var_elem(arg, 'top', '');
                             } else {
+                                console.log("I am here8");
                                 if (validEntryConcept(arg)) {
+                                    console.log("I am here9");
                                     new_amr(trimConcept(arg));
                                 } else {
+                                    console.log("I am here10");
                                     add_error('Ill-formed command "' + key1 + ' <font color="red">' + arg + '</font>" &nbsp; Argument should be last_command concept.');
                                 }
                             }
                         }
                         if (current_template != 'top') {
+                            console.log("I am here11");
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
@@ -1251,6 +1259,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     show_amr_args = 'show';
                     /** move and add **********************************************************************************************************************/
                 } else if ((cc.length == 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '-')) {
+                    console.log("I am here12");
                     move_var_elem(cc[2], cc[0], cc[1]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
@@ -1258,10 +1267,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     && (cc[2].match(/\-$/))
                     && (cc2v = cc[2].replace(/^(.*)\-$/, "$1"))
                     && getLocs(cc2v)) {
+                    console.log("I am here13");
                     move_var_elem(cc2v, cc[0], cc[1]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
                 } else if ((cc.length == 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
+                    console.log("I am here14");
                     add_triple(cc[0], cc[1], cc[2]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
@@ -1269,10 +1280,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     && (cc[2].match(/\+$/))
                     && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
                     && getLocs(cc2v)) {
+                    console.log("I am here15");
                     add_triple(cc[0], cc[1], cc2v);
                     selectTemplate('clear');
                     show_amr_args = 'show';
                 } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
+                    console.log("I am here38");
                     // this is the condition we go in 1
                     add_triple(cc[0], cc[1], cc[2], '');
                     if (current_template != 'add') {
@@ -1280,41 +1293,54 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     }
                     show_amr_args = 'show';
                 } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
+                    console.log("I am here16");
                     addOr(value);
                     selectTemplate('');
                     show_amr_args = 'show';
                 } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
+                    console.log("I am here17");
                     add_ne(value);
                     if (current_template != 'add-ne') {
                         selectTemplate('clear');
                     }
                     show_amr_args = 'show';
                 } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
+                    console.log("I am here18");
                     add_ne(value);
                     if (current_template != 'add-ne') {
+                        console.log("I am here19");
                         selectTemplate('clear');
                     }
                     show_amr_args = 'show';
                 } else if (key1 == 'replace') {
+                    console.log("I am here20");
                     if (cc.length == 1) {
+                        console.log("I am here21");
                         add_error('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
                     } else if (cc[1] == 'concept') {
+                        console.log("I am here22");
                         if (cc.length == 6) {
+                            console.log("I am here23");
                             replace_concept(cc[2], cc[3], cc[4], cc[5]);
                             selectTemplate('clear');
                             show_amr_args = 'show';
                         } else {
+                            console.log("I am here24");
                             add_error('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                         }
                     } else if (cc[1] == 'string') {
+                        console.log("I am here25");
                         if (cc.length == 7) {
+                            console.log("I am here26");
                             replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
                             selectTemplate('clear');
                             show_amr_args = 'show';
                         } else {
+                            console.log("I am here27");
                             add_error('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
                         }
                     } else if (cc[1] == 'role') {
+                        console.log("I am here28");
                         if (cc.length == 8) {
                             replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
                             selectTemplate('clear');
@@ -1323,6 +1349,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             add_error('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
                         }
                     } else if (cc[1] == 'variable') {
+                        console.log("I am here29");
                         if (cc.length == 8) {
                             replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
                             selectTemplate('clear');
@@ -1334,6 +1361,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         add_error('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
                     }
                 } else if (key1 == 'delete') {
+                    console.log("I am here30");
                     if (cc.length == 4) {
                         if ((cc[1] == 'top') && (cc[2] == 'level')) {
                             delete_top_level(cc[3]);
@@ -1350,6 +1378,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
                     }
                 } else if ((key1 == 'move') || (key1 == 'mv')) {
+                    console.log("I am here31");
                     if (cc.length >= 4) {
                         if (cc[2] == 'to') {
                             if (cc.length == 4) {
@@ -1401,6 +1430,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     //     logout(1);
                     //     top = 0;
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
+                    console.log("I am here32");
                     if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
                         add_error('In <i>add</i> command, <font color="red">' + cc[0] + '</font> is not last_command defined variable.');
                     } else if (cc.length == 2) {
@@ -1409,8 +1439,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         add_error('Unrecognized <i>add</i> command.');
                     }
                 } else if (value.match(/^record /i)) { //TODO unclear
+                    console.log("I am here33");
                     record_value = value.replace(/^record\s*/, "");
                 } else {
+                    console.log("I am here34");
                     if (!value.match(/^(h|help)\b/i)) {
                         add_error('Unrecognized command: <font color="red">' + value + '</font>');
                     }
@@ -1420,12 +1452,14 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             }
 
             if (top) {// the undo and redo up right corner
+                console.log("I am here35");
                 record_value = record_value || value;
                 // value: "b :arg1 car"
                 // last_command.innerHTML = record_value;
                 show_amr(show_amr_args);
                 // show_amr_args:'show'
                 if (state_has_changed_p) {
+                    console.log("I am here36");
                     var old_state = undo_list[undo_index];
                     old_state['action'] = record_value;
                     undo_index++;
@@ -1489,7 +1523,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     var alignment_string = '';
     Object.keys(amr).forEach(function(key) {
         if(/[\\d|\\.]+c/gm.test(key) && amr[key]){
-            alignment_string += amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+            // alignment_string += amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+            alignment_string += (amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n')).replace(/undefined/g, 'inferred');
         }
 
         // if(String(amr[key]).charAt(0)=='2'){
@@ -1735,6 +1770,7 @@ function user_descr2locs(s, type) {
  * @returns {string} "b"
  */
 function new_amr(concept) {
+    console.log("I am here37");
     console.log(concept);
     var v = new_var(concept);
     console.log(amr);
@@ -1778,6 +1814,7 @@ function add_triple(head, role, arg, arg_type) {
         arg_var_locs = getLocs(arg);
         if (arg_var_locs && (arg_type != 'concept') && (arg_type != 'string')
             && (!role.match(/^:?(li|wiki)$/))) {
+            console.log("I am here39");
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
@@ -1785,18 +1822,22 @@ function add_triple(head, role, arg, arg_type) {
             && (arg_type != 'string') //I suspect this is the difference when arg is a concept or a string
             && (!role_unquoted_string_arg(role, arg, ''))
             && (!role.match(/^:?(li|wiki)$/))) {
+            console.log("I am here40");
             arg_concept = trimConcept(arg);
             arg_variable = new_var(arg_concept);
             arg_string = '';
         } else if (validString(arg)) {
+            console.log("I am here41");
             arg_string = arg; // car
             arg_concept = '';
             arg_variable = '';
         } else if (validString(stripQuotes(arg))) {
+            console.log("I am here42");
             arg_string = stripQuotes(arg);
             arg_concept = '';
             arg_variable = '';
         } else {
+            console.log("I am here43");
             add_error('Ill-formed command "' + head + ' ' + role + ' <font color="red">' + arg + '</font>" &nbsp; Last argument should be a concept, string or previously defined variable.');
             return '';
         }
@@ -1822,6 +1863,7 @@ function add_triple(head, role, arg, arg_type) {
         variable2concept[arg_variable] = arg_concept;
         state_has_changed_p = 1;
         if (role.match(/^:op(-\d|0|\d+\.\d)/)) {
+            console.log("I am here44");
             renorm_ops(head);
         }
         return arg_variable;
@@ -2929,15 +2971,15 @@ function show_amr(args) {
             }
         }
         //should only affect save
-        // if ((s = document.getElementById('plain-amr')) != null) {
-        //     s.value = deHTML(amr_s);
-        // }
-        // if ((s = document.getElementById('plain-amr2')) != null) {
-        //     s.value = deHTML(amr_s);
-        // }
-        // if ((s = document.getElementById('plain-amr3')) != null) {
-        //     s.value = deHTML(amr_s);
-        // }
+        if ((s = document.getElementById('plain-amr')) != null) {
+            s.value = deHTML(amr_s);
+        }
+        if ((s = document.getElementById('plain-amr2')) != null) {
+            s.value = deHTML(amr_s);
+        }
+        if ((s = document.getElementById('plain-amr3')) != null) {
+            s.value = deHTML(amr_s);
+        }
         if (amr_s == '') {
             html_amr_s = '<i>empty umr</i>';
         } else {
@@ -3216,8 +3258,10 @@ function defaultFilename() {
     }
 }
 
-function UMR2db(sentence){
-    print(sentence)
+function UMR2db(){
+    sent = document.getElementById('sentence').innerText;
+    console.log(sent);
+
 }
 
 function applyProps(caller) {
@@ -3550,9 +3594,12 @@ function save_local_amr_file() {
     var comment = '';
     var text = '';
     if (window.BlobBuilder && window.saveAs) {
+        console.log('I am here1-1');
         if (((s = document.getElementById('local_save_file')) != null)
             && ((s2 = document.getElementById('plain-amr')) != null)) {
+            console.log('I am here1-2');
             if ((s3 = document.getElementById('comment')) != null) {
+                console.log('I am here1-3');
                 comment = s3.value;
             }
             filename = s.value;
@@ -3571,8 +3618,10 @@ function save_local_amr_file() {
             saveAs(bb.getBlob(), filename);
         }
     } else {
+        console.log('I am here1-4');
         add_error('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
         if ((s = document.getElementById('alt-save-locally')) != null) {
+            console.log('I am here1-5');
             s.style.display = 'inline';
         }
     }
@@ -4084,7 +4133,8 @@ function highlightRange(range) {
     // Make it highlight
     newNode.setAttribute(
         "style",
-        "background-color: yellow;"
+        // "background-color: yellow;"
+        "color: blue;"
     );
 
     //Make it "Clickable"

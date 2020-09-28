@@ -2,12 +2,16 @@ from werkzeug.utils import secure_filename
 from typing import List, Dict
 import attr
 import json
+import xml.etree.ElementTree as ET
+from utils import parse_flex_xml
+
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool.models import Post
 from umr_annot_tool.models import Sent, Doc, Annotation
 from umr_annot_tool.main.forms import UploadForm
 from umr_annot_tool import db
+
 
 main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/frames-arg_descriptions.json"
@@ -50,6 +54,7 @@ class ArgTokenParser:
 frame_parser = ArgTokenParser.from_json(FRAME_DESC_FILE)
 snts = []
 target_language = ['Default']
+df_html = []
 
 
 
@@ -68,11 +73,11 @@ def annotate():
 
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0])
+            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html)
         else:
-            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0])
+            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html)
     else:
-        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0])
+        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0], df_html=df_html)
 
 
 @main.route("/upload", methods=['GET', 'POST'])
@@ -86,34 +91,50 @@ def upload():
 
         file = request.files['file']
         secure_filename(file.filename)
-        snts.clear()
-        for _, line in enumerate(file, 1):
-            first_sent = line.strip().decode('UTF-8')
-            break
-        print(first_sent)
-        snts.append(Sentence(first_sent.split(), 1, len(first_sent.split())))
+        content_string = file.read()
 
-        if not Sent.query.filter_by(content=first_sent).first():# this doc is not already added in
-            doc = Doc(language=target_language[0])
-            db.session.add(doc)
-            db.session.commit()
+        sent = ""
 
-            sent = Sent(content=first_sent, document=doc)
-            db.session.add(sent)
-            db.session.commit()
-            for i, line in enumerate(file, 1):
-                snts.append(Sentence(line.strip().decode('UTF-8').split(), i, len(line.strip().decode('UTF-8').split())))
-                sent = Sent(content=line.strip().decode('UTF-8'), document=doc)
-                db.session.add(sent)
-                db.session.commit()
-            print(snts)
+        try:
+            ET.fromstring(content_string)
+            sents, dfs, sents_gls = parse_flex_xml(content_string)
+            for i, sent in enumerate(sents):
+                snts.append(Sentence(sent, i, len(sent)))
+            for df in dfs:
+                df_html.append(df.to_html(classes="table table-striped", justify='center').replace('border="1"', 'border="0"'))
+            print(sents[0])
+            print(dfs[0])
+            print(sents_gls[0])
+            sent = sents[0]
 
-        print("####################### docs")
-        print(Doc.query.all())
-        print("####################### sents")
-        print(Sent.query.all())
-        print("####################### first match")
-        print(Sent.query.filter_by(content='He denied any wrongdoing .').first())
+        except ET.ParseError:
+            snts.clear()
+            print(content_string)
+            sents = enumerate(content_string.strip().decode('UTF-8').split('\n'))
+            for i, sent in sents:
+                snts.append(Sentence(sent.split(), i, len(sent.split())))
+
+        # if not Sent.query.filter_by(content=sent).first():# this doc is not already added in
+        #     doc = Doc(language=target_language[0])
+        #     db.session.add(doc)
+        #     db.session.commit()
+        #
+        #     sent = Sent(content=sent, document=doc)
+        #     db.session.add(sent)
+        #     db.session.commit()
+        #     for i, line in enumerate(file, 1):
+        #         snts.append(Sentence(line.strip().decode('UTF-8').split(), i, len(line.strip().decode('UTF-8').split())))
+        #         sent = Sent(content=line.strip().decode('UTF-8'), document=doc)
+        #         db.session.add(sent)
+        #         db.session.commit()
+        #     print(snts)
+        #
+        # print("####################### docs")
+        # print(Doc.query.all())
+        # print("####################### sents")
+        # print(Sent.query.all())
+        # print("####################### first match")
+        # print(Sent.query.filter_by(content='He denied any wrongdoing .').first())
 
     return render_template('upload.html', title='upload', form=form)
 
