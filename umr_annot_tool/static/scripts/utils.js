@@ -365,3 +365,33 @@ function primary_variable_loc(variable) {
         return '';
     }
 }
+
+
+function action_on_enter(field, e, s_id) {
+   var s;
+   var keycode = -1;
+   if (window.event) {
+  keycode = window.event.keyCode;
+   } else if (e) {
+  keycode = e.which;
+   }
+   // Return/Enter key (13)
+   if (keycode == 13) {
+  // add_log('action_on_enter ' + field);
+  // field == 'submit replace' etc.
+  if (field.match(/^submit \S+$/)) {
+     var id = field.replace(/^submit (\S+)$/, "$1");
+     submit_template_action(id);
+  }
+   } else if ((keycode <= 31) && (keycode >= 127)) {
+      // add_log('action_on_enter ' + keycode + ' ' + field);
+   } else if (((s = document.getElementById(s_id)) != null)
+       && s.value.match(/:\?$/)
+       && (field == 'show roles')) {
+  show_roles();
+   } else if (((s = document.getElementById(s_id)) != null)
+       && s.value.match(/^(.*[^:]|)\?$/)
+       && (field == 'show NE types')) {
+  show_ne_types();
+   }
+}

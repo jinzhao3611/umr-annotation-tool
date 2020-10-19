@@ -1,0 +1,4 @@
+(t / taste-01
+      :ARG0 (p / person :name (n / name :op1 "Edmund" :op2 "Pope"))
+      :ARG1 (f / free-04
+            :ARG1 p))

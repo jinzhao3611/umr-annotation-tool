@@ -16,8 +16,9 @@ from umr_annot_tool import db
 
 
 main = Blueprint('main', __name__)
-FRAME_DESC_FILE = "/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/frames-arg_descriptions.json"
+FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
 # FRAME_DESC_FILE = "/umr_annot_tool/resources/frames_chinese.json"
+
 
 @attr.s()
 class Sentence:
@@ -107,9 +108,13 @@ def upload():
             for df in dfs:
                 html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"', 'border="0"')
                 soup = BeautifulSoup(html_str, "html.parser")
-                elements = soup.findAll('tr')[3:6]
-                for ele in elements:
-                    ele['class'] = 'optional-rows'
+                words_row = soup.findAll('tr')[1]
+                words_row['id'] = 'current-words'
+                # elements = soup.findAll('tr')[3:6]
+                # for ele in elements:
+                #     ele['class'] = 'optional-rows'
+                gram_row = soup.findAll('tr')[4]
+                gram_row['class'] = 'optional-rows'
                 df_html.append(str(soup))
             for translation in sents_gls:
                 gls.append(translation)

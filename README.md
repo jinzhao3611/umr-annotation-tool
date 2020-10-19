@@ -6,6 +6,11 @@ pip install Pillow
 pip install Flask-WTF
 pip install email-validator
 pip install flask-mail
+pip install attrs
+pip install tabulate
+pip install pandas
+pip install bs4
+
 
 
 run app.py

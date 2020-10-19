@@ -4,6 +4,8 @@ var current_relation;
 var current_mode;
 var current_attribute;
 
+var temp_umrs = {};
+
 var selection;
 var begOffset;
 var endOffset;
@@ -14,10 +16,9 @@ var reserved_variables = {};
 var concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
 var variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
 var undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
-var check_list = {};
 var undo_index = 0; //2
 var last_state_id = 0; //3
-var state_has_changed_p = 0; //0
+var state_has_changed_p = 0; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished
 var load_amr_feedback = ''; //绿色的pennman html string
 var load_amr_feedback_alert = 0; //0
 var show_amr_obj = {}; // options table {option-1-line-NEs: true, option-1-line-ORs: true, option-auto-check: true, option-auto-moveto: false}
@@ -34,29 +35,24 @@ var ceo_ht; // {1: 1, open.1: 0, open.1.1: 0, open.1.1.1: 0, 1.1.1: 1, 1.1: 1}
 var browserUserAgent = navigator.userAgent || '';
 var frame_arg_descr = {}; //{"": ""}
 
-var concept_to_title = {}; //3D: "3D No such concept. Replace by: (d / dimension :quant...
-var concept_to_url = {}; //albeit: "https://www.isi.edu/~ulf/amr/lib/popup/concession.html"
 var is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
 var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
 var logsid = ''; //"IQrVT4Dh6mkz93W1DCxpNws9Om6qKqk0EGwhFs0x"
 var next_special_action = ''; //''
 
+
+function load_test(){
+    fetch('file:///Users/jinzhao/Downloads/2.txt')
+        .then(response => response.text())
+        .then(text => console.log(text))
+}
 function initialize() {
-    console.log("initialize is called");
+    console.log("initialize is called16");
     amr['n'] = 0;
-
     var s;
-    //光标focus在输入command框
-    // if ((s = document.getElementById('command')) != null) {
-    //     s.focus();
-    // }
 
-    import_options('load-options'); //checked the options table based on the loaded information and apply the style of the "amr" html element and command box resizing
-    processCheckLists(); //processed the long strings at the end of this file and populated 5 dicts
-    initialize_frame_arg_descriptions(); // populate frame_arg_descr, but it seems that it shouldn't be empty though 可能这里什么都没有做
     // loadField2amr(); //如果load里面的Direct AMR entry里什么都没有输入的话，可能这里什么都没有做
-    props2comment(); //如果props里面什么都没有输入的话，就什么都没有做
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
 
@@ -64,10 +60,8 @@ function initialize() {
     if ((s = document.getElementById('next-special-action')) != null) {
         next_special_action = s.value;
     }
-
     current_mode = 'top';
 }
-
 
 
 function conceptDropdown() {
@@ -127,11 +121,6 @@ function getSenses(senses) {
     }
 }
 
-function neListDropdown() {
-    if (document.getElementById('named_entities').innerText == 'named entities') {
-        document.getElementById("entities_list").classList.toggle("show");
-    }
-}
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
@@ -160,6 +149,10 @@ function docAnnot(sentenceId){
 function submit_relation() {
     // current_relation = sel.options[sel.selectedIndex].text;
     current_relation = document.querySelector('#browser').value;
+    if (current_relation){
+    }else{
+        current_relation = document.querySelector('#browser4').value;
+    }
     if (current_relation) {
         submit_mode("add");
     }
@@ -170,6 +163,8 @@ function submit_relation() {
     }
     if(current_relation == ':Aspect'){
         document.getElementById("aspect-attribute").style.display = 'block';
+    } else if(current_relation == ':polarity'){
+        document.getElementById("polarity-attribute").style.display = 'block';
     }
     console.log("current_relation is: " + current_relation);
 }
@@ -188,6 +183,14 @@ function submit_concept() {
     console.log("current_concept is: " + current_concept);
 }
 
+function submit_abstract_concept() {
+    current_concept = document.querySelector('#browser2').value;
+    current_concept = current_concept.replace("'", "\'");
+    console.log("current_concept is: " + current_concept);
+    submit_template_action(current_mode, current_concept);
+
+}
+
 function submit_mode(mode) {
     current_mode = mode;
     console.log("current_mode is: " + current_mode);
@@ -200,65 +203,6 @@ function generate_penman(){
 function multipleWords(){
     var c = current_concept.replace(" ", "-");
     submit_template_action("add", c)
-}
-
-
-/**
- * this function checked the options table based on the loaded information
- * @param html_import_name 'load_options'
- */
-function import_options(html_import_name) {
-    var s;
-    var checkbox_options = ["string-args-with-head", "1-line-NEs", "1-line-ORs", "wrap", "fix-font", "role-auto-case", "variable-indentation", "auto-check", "auto-reification", "auto-moveto", "provide-guidance", "confirm-delete", "check-chinese", "resize-command"];
-    var radio_options = new Array("amr-area-var-fix");
-    var text_options = new Array("amr-area-height");
-    if ((s = document.getElementById(html_import_name)) != null) {
-        var option_string = s.value; // string-args-with-head:true;1-line-NEs:true;1-line-ORs:true;wrap:false;fix-font:false;role-auto-case:true;variable-indentation:false;auto-check:true;auto-reification:true;auto-moveto:false;provide-guidance:true;confirm-delete:false;check-chinese:false;resize-command:false;amr-area-var-fix:fix;amr-area-height:20
-        var options = option_string.split(';');
-        var option_ht = {};
-        for (var i = 0; i < options.length; i++) { //i=0
-            var option_slot_value = options[i]; //"string-args-with-head:true"
-            var option_slot = option_slot_value.replace(/^([^:]+):(.*)$/, "$1"); // "string-args-with-head"
-            var option_value = option_slot_value.replace(/^([^:]+):(.*)$/, "$2"); // "true"
-            option_ht[option_slot] = option_value; //option_ht["string-args-with-head"] = "true";
-        }
-
-        // check everything (all the things in checkbox) in checkbox_options
-        for (var i = 0; i < checkbox_options.length; i++) {
-            var checkbox_option = checkbox_options[i]; // "string-args-with-head"
-            if ((s = document.getElementById(checkbox_option)) != null) {
-                if (option_ht[checkbox_option] != undefined) {
-                    s.checked = (option_ht[checkbox_option] == 'true');
-                    // add_log(' set ' + checkbox_option + ' to ' + option_ht[checkbox_option]);
-                }
-            }
-        }
-        for (var i = 0; i < radio_options.length; i++) { // i=0
-            var radio_option = radio_options[i]; //"amr-area-var-fix"
-            if ((s = document.getElementsByName(radio_option)) != null) {
-                var len = s.length;
-                if (len != undefined) {
-                    for (var j = 0; j < len; j++) {
-                        if ((option_ht[radio_option] != undefined)
-                            && (option_ht[radio_option] == s[j].value)) {
-                            s[j].checked = true;
-                            // add_log(' set ' + radio_option + ' to ' + option_ht[radio_option]);
-                        }
-                    }
-                }
-            }
-        }
-        for (var i = 0; i < text_options.length; i++) { // i=0
-            var text_option = text_options[i]; //"amr-area-height"
-            if ((s = document.getElementById(text_option)) != null) {
-                if (option_ht[text_option] != undefined) {
-                    s.value = option_ht[text_option];
-                    // add_log(' set ' + text_option + ' to ' + option_ht[text_option]);
-                }
-            }
-        }
-    }
-    applyAmrDivParams();
 }
 
 /** undo *******************************************************/
@@ -326,9 +270,6 @@ function revert2PrevState(previous_state) {
  * @param n positive number or a negative number
  */
 function undo(n) {
-    reset_error();
-    reset_guidance();
-    reset_greeting();
     var op_name, undo_title, redo_title, s, s2;
     var undo_list_size = undo_index + 1;
     var redo_list_size = undo_list.length - undo_list_size;
@@ -361,24 +302,6 @@ function undo(n) {
         if ((s = document.getElementById('undo-button')) != null) {
             s.title = undo_title;
         }
-        if ((s = document.getElementById('undo-link')) != null) {
-            if (undo_title == 'currently nothing to undo') {
-                s.style.color = '#999999';
-            } else {
-                s.style.color = '#000000';
-            }
-        }
-        if ((s = document.getElementById('undo-command')) != null) {
-            if (undo_title == 'currently nothing to undo') {
-                s.style.color = '#999999';
-                s.style.fontStyle = 'italic';
-                s.innerHTML = '&nbsp;' + undo_title;
-            } else {
-                s.style.color = '#000000';
-                s.style.fontStyle = 'normal';
-                s.innerHTML = '&nbsp;' + prev_action;
-            }
-        }
         if (redo_list_size) {
             var prev_state = undo_list[undo_index];
             var prev_action = prev_state['action'];
@@ -388,24 +311,6 @@ function undo(n) {
         }
         if ((s = document.getElementById('redo-button')) != null) {
             s.title = redo_title;
-        }
-        if ((s = document.getElementById('redo-link')) != null) {
-            if (redo_title == 'currently nothing to redo') {
-                s.style.color = '#999999';
-            } else {
-                s.style.color = '#000000';
-            }
-        }
-        if ((s = document.getElementById('redo-command')) != null) {
-            if (redo_title == 'currently nothing to redo') {
-                s.style.color = '#999999';
-                s.style.fontStyle = 'italic';
-                s.innerHTML = '&nbsp;' + redo_title;
-            } else {
-                s.style.color = '#000000';
-                s.style.fontStyle = 'normal';
-                s.innerHTML = '&nbsp;' + prev_action;
-            }
         }
         if (op_name == 'undo') {
             var undone_action = old_state['action'];
@@ -418,46 +323,6 @@ function undo(n) {
         if ((s = document.getElementById('undo-redo-box')) != null) {
             s.style.display = 'block';
         }
-        if (undo_index == 0) {
-            if ((s = document.getElementById('save-and-next-button')) != null) {
-                s.style.display = 'none';
-            }
-            if ((s = document.getElementById('workset-snt-saved')) != null) {
-                s.style.display = 'inline';
-            }
-            if ((s = document.getElementById('prev-snt-button')) != null) {
-                s.style.display = 'block';
-            }
-            if ((s = document.getElementById('discard-and-next-button')) != null) {
-                s.style.color = 'black';
-                if ((s2 = document.getElementById('next-symbol')) != null) {
-                    s.value = s2.value;
-                } else {
-                    s.value = "Load next"; // "&#x25b6;"
-                }
-                s.title = 'Load next sentence in workset.';
-                s.setAttribute('onclick', '');
-            }
-            if ((s = document.getElementById('select-workset-snt-button')) != null) {
-                s.style.display = 'block';
-            }
-        } else if (undo_index == 1) {
-            enable_workset_save();
-            if ((s = document.getElementById('discard-and-next-button')) != null) {
-                s.style.color = '#990000';
-                if (next_special_action == 'close') {
-                    s.value = 'Discard and close';
-                    s.title = 'Close this window without saving any changes to this AMR.';
-                    s.setAttribute('onclick', 'self.close();');
-                } else {
-                    s.value = 'Discard and load next';
-                    s.title = 'Load next sentence without saving any changes to this AMR.';
-                }
-            }
-            if ((s = document.getElementById('select-workset-snt-button')) != null) {
-                s.style.display = 'none';
-            }
-        }
     }
 }
 
@@ -468,9 +333,9 @@ function undo(n) {
  * @param id "top"
  */
 function selectTemplate(id) {
-    // add_edit_log('selectTemplate ' + id);
+    console.log("I am here 902");
     current_template = '';
-    var actions = ["top", "add", "add-ne", "replace", "delete", "move", "save", "load", "props", "options", "help"];
+    var actions = ["replace", "delete", "move", "save", "load"];
     var s;
     for (var i = 0; i < actions.length; i++) {
         var action = actions[i];
@@ -479,6 +344,7 @@ function selectTemplate(id) {
                 s.style.display = 'inline';
                 current_template = id;
                 if ((action == 'replace') && !show_amr_status.match(/replace/)) {
+                        console.log("I am here 903");
                     // if clicked on replace from other button
                     show_amr('show replace');
                 } else if ((action == 'delete') && !show_amr_status.match(/delete/)) {
@@ -495,46 +361,11 @@ function selectTemplate(id) {
         }
     }
     var focus_field;
-    if (id == 'top') {
-        focus_field = 'top-root-concept';
-    } else if (id == 'add') {
-        focus_field = 'add-head';
-    } else if (id == 'add-ne') {
-        focus_field = 'add-ne-head';
-    } else if (id == 'move') {
+    if (id == 'move') {
         focus_field = 'move-object';
-    // } else if (id == 'load') {
-    //     export_options();
-    //     focus_field = 'load-username2';
-    // } else if (id == 'save') {
-    //     export_options();
-    } else if (id == 'props') {
-        focus_field = 'props-id';
-    } else if (id == 'clear') {
-        reset_error();
-        reset_guidance();
-        focus_field = 'command';
     } else {
         focus_field = '';
     }
-    reset_greeting();
-    // provide guidance
-    if (id == 'replace') {
-        if (amr_is_empty()) {
-            set_guidance('<p><font style="color:blue;font-weight:bold;">Sorry, cannot replace anything in empty AMR.</font>');
-        } else {
-            set_guidance('<p><font style="color:blue;font-weight:bold;">In AMR above, click on concept, string or role to be replaced.</font>');
-        }
-    } else if (id == 'delete') {
-        if (amr_is_empty()) {
-            set_guidance('<p><font style="color:red;font-weight:bold;">Sorry, cannot delete anything in empty AMR.</font>');
-        } else {
-            set_guidance('<p><font style="color:red;font-weight:bold;">In AMR above, click on element to be deleted.</font>');
-        }
-    } else {
-        reset_guidance();
-    }
-
     if (focus_field && ((s = document.getElementById(focus_field)) != null)) {
         s.focus();
     }
@@ -610,7 +441,6 @@ function fillDeleteTemplate(at, mo_lock) {
             if (show_amr_obj['option-confirm-delete']) {
                 set_guidance('<p><font style="color:red;font-weight:bold;">Confirm deletion in template below.</font>');
             } else {
-                reset_guidance();
                 submit_template_action('delete');
                 selectTemplate('clear');
             }
@@ -649,40 +479,6 @@ function color_amr_elem(id, color, event_type) {
     }
 }
 
-/**
- * when press enter, it equals to click on submit
- * @param field "submit add", "submit replace" something like submit+id; or "show roles" can popup roles
- * @param event unclear about this
- * @param s_id element id
- */
-function action_on_enter(field, event, s_id) {
-    var s;
-    var keycode = -1;
-    if (window.event) {
-        keycode = window.event.keyCode;
-    } else if (event) {
-        keycode = event.which;
-    }
-    // Return/Enter key (13)
-    if (keycode == 13) {
-        // add_log('action_on_enter ' + field);
-        // field == 'submit replace' etc.
-        if (field.match(/^submit \S+$/)) {
-            var id = field.replace(/^submit (\S+)$/, "$1");
-            submit_template_action(id);
-        }
-    } else if ((keycode <= 31) && (keycode >= 127)) {
-        // add_log('action_on_enter ' + keycode + ' ' + field);
-    } else if (((s = document.getElementById(s_id)) != null)
-        && s.value.match(/:\?$/)
-        && (field == 'show roles')) {
-        popupRoles();
-    } else if (((s = document.getElementById(s_id)) != null)
-        && s.value.match(/^(.*[^:]|)\?$/)
-        && (field == 'show NE types')) {
-        popupNETypes();
-    }
-}
 
 /** entrance ******************************************************/
 // see the original one
@@ -780,7 +576,8 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         // var role = ':' + document.getElementById('test-arg0').innerText;
         // var role = ':arg' + num;
         var role = current_relation;
-        var concept = 'person';
+        var concept = document.querySelector('#browser6').value;
+
         // var name = document.getElementById('selected_tokens').innerText;
         var name = current_concept;
         console.log(current_parent + ' ' + role + ' ' + concept + ' ' + name);
@@ -870,9 +667,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         if (value && ((last_command = document.getElementById('action')) != null)) {
             // add_edit_log('exec_command ' + top + ' ' + value);
             // add_log('exec_command: ' + value + ' (top: ' + top + ')');
-            reset_error();
-            reset_guidance();
-            reset_greeting();
             value = strip(value);
             value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); //??? for Kevin: last_command ;arg0 boy -> last_command :arg0 boy
             // value == "b :arg1 car"
@@ -912,8 +706,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 top = 0;
             } else if (value.match(/^(delete all|delete amr|del all|del amr)$/i)) {
                 deleteAMR();
-            } else if (value.match(/^(delete dummies|delete dummy|delete dummy-element|dd)$/i)) {
-                delete_dummies();
             } else if (value.match(/^(ne|[a-z]+(-[a-z]+)*-ne)$/i)) {
                 selectTemplate('add-ne');
                 top = 0;
@@ -930,8 +722,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 undo(-1);
             } else if (value.match(/^(redo)$/i)) {
                 undo(1);
-            } else if (value.match(/^(check amr)$/i)) {
-                check_amr();
             } else if (value.match(/^(o|opt)$/i)) {
                 selectTemplate('options');
                 top = 0;
@@ -1098,7 +888,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         && validEntryConcept(ne_concept) && (!getLocs(ne_concept))
                         && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
                         console.log("I am here4");
-                        var ne_var = new_amr(trimConcept(ne_concept));
+                        var ne_var = newAMR(trimConcept(ne_concept));
                         var name_var = add_triple(ne_var, ':name', 'name', 'concept');
                         for (var i = 2; i < cc.length; i++) {
                             var sub_role = ':op' + (i - 1);
@@ -1115,13 +905,14 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         for (var i = 1; i < cc.length; i++) {
                             var arg = cc[i];
                             if ((key1 == 'top') && getLocs(arg)) {
+                                //when the arg already exist in amr tree
                                 console.log("I am here7");
                                 move_var_elem(arg, 'top', '');
                             } else {
                                 console.log("I am here8");
                                 if (validEntryConcept(arg)) {
                                     console.log("I am here9");
-                                    new_amr(trimConcept(arg));
+                                    newAMR(trimConcept(arg));
                                 } else {
                                     console.log("I am here10");
                                     add_error('Ill-formed command "' + key1 + ' <font color="red">' + arg + '</font>" &nbsp; Argument should be last_command concept.');
@@ -1469,47 +1260,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     if ((s = document.getElementById('undo-button')) != null) {
                         s.title = 'undo ' + record_value;
                     }
-                    if ((s = document.getElementById('undo-link')) != null) {
-                        s.style.color = '#000000';
-                    }
-                    if ((s = document.getElementById('undo-command')) != null) {
-                        s.style.color = '#000000';
-                        s.style.fontStyle = 'normal';
-                        s.innerHTML = '&nbsp' + record_value;
-                    }
                     if ((s = document.getElementById('redo-button')) != null) {
                         s.title = 'currently nothing to redo';
                     }
-                    if ((s = document.getElementById('redo-link')) != null) {
-                        s.style.color = '#999999';
-                    }
-                    if ((s = document.getElementById('redo-command')) != null) {
-                        s.style.color = '#999999';
-                        s.style.fontStyle = 'italic';
-                        s.innerHTML = '&nbsp;currently nothing to redo';
-                    }
                     state_has_changed_p = 0;
-                    var undo_list_size = undo_index + 1;
-                    var redo_list_size = undo_list.length - undo_list_size;
-                    // add_log('undo list increases to ' + undo_list.length + ' elements. Redo list size: ' + redo_list_size + ' Last action: ' + record_value);
-
-                    // if (undo_index == 1) {
-                    //     enable_workset_save();
-                    //     if ((s = document.getElementById('discard-and-next-button')) != null) {
-                    //         s.style.color = '#990000';
-                    //         if (next_special_action == 'close') {
-                    //             s.value = 'Discard and close';
-                    //             s.title = 'Close this window without saving any changes to this AMR';
-                    //             s.setAttribute('onclick', 'self.close();');
-                    //         } else {
-                    //             s.value = 'Discard and load next';
-                    //             s.title = 'Load next sentence without saving any changes to this AMR';
-                    //         }
-                    //     }
-                    //     if ((s = document.getElementById('select-workset-snt-button')) != null) {
-                    //         s.style.display = 'none';
-                    //     }
-                    // }
                 }
             }
             command_input.value = '';
@@ -1580,13 +1334,9 @@ function add_unique_log(message) {
 }
 
 function set_guidance(message) {
-    reset_guidance();
     add_guidance(message);
 }
 
-function reset_guidance() {
-    reset_message('guidance');
-}
 
 function add_guidance(message) {
     if (show_amr_obj['option-provide-guidance']) {
@@ -1594,38 +1344,14 @@ function add_guidance(message) {
     }
 }
 
-function add_edit_log(message) {
-    console.log("add_edit_log is called");
-    var today = new Date();
-    var date = today.getFullYear() + '-' + pad2(today.getMonth() + 1) + '-' + pad2(today.getDate());
-    var time = pad2(today.getHours()) + ':' + pad2(today.getMinutes()) + ':' + pad2(today.getSeconds());
-    var timestamp = date + 'T' + time + '.' + pad3(today.getMilliseconds());
-    add_message('edit-log', '\n:: ' + timestamp + ' ::\n' + htmlProtect(message));
-}
-
-function reset_message(type) {
-    var s;
-    if ((s = document.getElementById(type)) != null) {
-        s.innerHTML = '';
-    }
-}
-
-function reset_greeting() {
-    // console.log("reset_greeting is called");
-    reset_message('greeting');
-}
-
-function reset_error() {
-    reset_message('error');
-}
 
 /** add ******************************************************/
 /**
- * add a new (or existing) key value pair variable: loc to the variables dictionary
+ * add a new (or existing) key value pair (variable: loc) to the variables dictionary
  * @param v 'b'
  * @param loc "1.1.3"
  */
-function record_variable(v, loc) {
+function recordVariable(v, loc) {
     if ((v != undefined) && (v != '')) {
         var old_value = getLocs(v);
         if (old_value) {
@@ -1639,11 +1365,11 @@ function record_variable(v, loc) {
 }
 
 /**
- * add a new (or existing) key value pair concept: loc to the concepts dictionary
+ * add a new (or existing) key value pair (concept: loc) to the concepts dictionary
  * @param c 'boy'
  * @param loc "1.1.3"
  */
-function record_concept(c, loc) {
+function recordConcept(c, loc) {
     if ((c != undefined) && (c != '')) {
         var old_value = concepts[c];
         if (old_value) {
@@ -1659,9 +1385,9 @@ function record_concept(c, loc) {
 /**
  * given concept return variable
  * @param concept
- * @returns {string} variable
+ * @returns {string} variable (initial)
  */
-function new_var(concept) {
+function newVar(concept) {
     var v;
     concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //why is this?
     var initial = concept.substring(0, 1).toLowerCase();
@@ -1765,14 +1491,13 @@ function user_descr2locs(s, type) {
 }
 
 /**
- * generate a new amr head
+ * populate variables, concepts, variable2concept, and amr
  * @param concept "buy"
- * @returns {string} "b"
+ * @returns {string} return a new amr head, "b"
  */
-function new_amr(concept) {
+function newAMR(concept) {
     console.log("I am here37");
-    console.log(concept);
-    var v = new_var(concept);
+    var v = newVar(concept);
     console.log(amr);
     var n = amr['n']; // n is the variable number
     amr['n'] = ++n;
@@ -1783,8 +1508,8 @@ function new_amr(concept) {
     amr[n + '.a'] = begOffset + "-" + endOffset;
 
 
-    record_variable(v, n);
-    record_concept(concept, n);
+    recordVariable(v, n);
+    recordConcept(concept, n);
     variable2concept[v] = concept;
     state_has_changed_p = 1;
     console.log('new AMR: ' + concept + ' (' + n + ')' + ' var: ' + v);
@@ -1824,7 +1549,7 @@ function add_triple(head, role, arg, arg_type) {
             && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here40");
             arg_concept = trimConcept(arg);
-            arg_variable = new_var(arg_concept);
+            arg_variable = newVar(arg_concept);
             arg_string = '';
         } else if (validString(arg)) {
             console.log("I am here41");
@@ -1855,11 +1580,11 @@ function add_triple(head, role, arg, arg_type) {
         amr[new_loc + '.n'] = 0;
         amr[new_loc + '.c'] = arg_concept;
         amr[new_loc + '.s'] = arg_string;
-        amr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
+        amr[new_loc + '.a'] = begOffset-1 + "-" + endOffset-1; // alignment_index
 
 
-        record_variable(arg_variable, new_loc);
-        record_concept(arg_concept, new_loc);
+        recordVariable(arg_variable, new_loc);
+        recordConcept(arg_concept, new_loc);
         variable2concept[arg_variable] = arg_concept;
         state_has_changed_p = 1;
         if (role.match(/^:op(-\d|0|\d+\.\d)/)) {
@@ -1926,7 +1651,7 @@ function addOr(value) {
     } else {
 
         if (head_var == 'top') {
-            or_var = new_amr(key_or);
+            or_var = newAMR(key_or);
         } else {
             or_var = add_triple(head_var, role, key_or, 'concept');
         }
@@ -2303,26 +2028,6 @@ function deleteAMR() {
     exec_command('record delete amr', 1);
 }
 
-/**
- * TODO why is there top level dummy?
- */
-function delete_dummies() {
-    var n = amr['n'];
-    var n_dummies_deleted = 0;
-    for (var i = 1; i <= n; i++) {
-        if (amr[i + '.c'] == 'dummy-element') {
-            delete_elem(i);
-            n_dummies_deleted++;
-        }
-    }
-    if (n_dummies_deleted) {
-        state_has_changed_p = 1;
-        show_amr('show');
-        exec_command('record delete dummies', 1);
-    } else {
-        add_error('Did not find any top-level dummy-element AMRs that could be deleted.');
-    }
-}
 
 /** move ******************************************************/
 function move_var_elem(variable, new_head_var, role) {
@@ -2418,13 +2123,13 @@ function change_var_name(variable, target, top) {
             && (!getLocs(target))) {
             new_variable = target;
         } else {
-            new_variable = new_var(target);
+            new_variable = newVar(target);
         }
         var loc_list = argSplit(locs);
         for (var i = 0; i < loc_list.length; i++) {
             loc = loc_list[i];
             amr[loc + '.v'] = new_variable;
-            record_variable(new_variable, loc);
+            recordVariable(new_variable, loc);
         }
         // add_log('  variable changed to ' + new_variable);
         state_has_changed_p = 1;
@@ -2436,7 +2141,6 @@ function change_var_name(variable, target, top) {
 
 /** unclear ******************************************************/
 function renorm_ops(variable) {
-    // add_log('renorm_ops ' + variable);
     var locs, loc_list, loc, n_subs, sub_loc, sub_role, op_numbers, op_ht, op_number;
     if ((locs = getLocs(variable))
         && (loc_list = argSplit(locs))
@@ -2507,8 +2211,12 @@ function leafy_or_concept_p(loc) {
     }
 }
 
+/**
+ * decide if this new concept amr should be on the same line with parent and grandparent or not
+ * @param loc: 1.1
+ * @returns {number}
+ */
 function show_amr_new_line_p(loc) {
-    // add_log('show_amr_new_line_p: ' + loc);
     var variable = amr[loc + '.v'];
     var concept = amr[loc + '.c'];
     var string = amr[loc + '.s'];
@@ -2549,8 +2257,14 @@ function show_amr_new_line_p(loc) {
     }
 }
 
+/**
+ *
+ * @param role: :op
+ * @param arg: something
+ * @param loc: 1
+ * @returns {number}
+ */
 function role_unquoted_string_arg(role, arg, loc) {
-    // console.log("role_unquoted_string_arg is called");
     var head_loc = '';
     var head_concept = '';
     var head_role = '';
@@ -2575,7 +2289,7 @@ function tolerate_special_concepts(s) {
     if (s.match(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|I|\*OR\*)$/)) {
         return 1;
     }
-    if (s.match(/^:[a-z]/i) && check_list['role.' + s]) {
+    if (s.match(/^:[a-z]/i)) {
         return 1;
     }
     return 0;
@@ -2649,20 +2363,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
                 onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 role_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role + '</span>';
-            } else if (show_check) {
-                var true_case_role;
-                var explanation = check_list['role.' + role];
-                var true_case = check_list['true-case.role.' + role.toLowerCase()];
-                var non_role_explanation = check_list['non-role.' + role.toLowerCase()];
-                if (non_role_explanation) {
-                    role_m = '<span title="' + non_role_explanation + '" style="color:#CC0000">' + role_m + '</span>';
-                } else if (explanation) {
-                    role_m = '<span title="' + explanation + '" style="color:#007700">' + role_m + '</span>';
-                } else if (true_case) {
-                    role_m = '<span title="suggested capitalization: ' + true_case + '" style="color:#0000CC">' + role_m + '</span>';
-                } else {
-                    role_m = '<span title="role not recognized" style="color:#CC0000">' + role_m + '</span>';
-                }
             }
         }
         if (show_delete) {
@@ -2717,79 +2417,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
-            } else if (show_check) {
-                if (loc.match(/\.\d+$/)) {
-                    head_loc = loc.replace(/\.\d+$/, "");
-                    head_concept = amr[head_loc + '.c'] || '';
-                } else {
-                    head_concept = '';
-                }
-                core_concept = concept.replace(/[-.]\d\d\d?$/, "");
-                // add_log('B: concept ' + concept);
-                var special_title = concept_to_title[concept] || '';
-                var special_url = concept_to_url[concept] || '';
-                var special_color = '#007700';
-                if (special_title.match(/\bNo such concept\b/)) special_color = '#CC0000';
-                if (special_title) {
-                    special_title = htmlProtect(special_title);
-                    special_title = special_title.replace(/(\S)(\s\s+)(\S)/g, "$1&#xA;$2$2$3");
-                    special_title = special_title.replace(/(No such concept)/, " &nbsp; $1");
-                }
-                if (special_title && special_url) {
-                    concept_m = '<a href="' + special_url + '" title="' + special_title + '" style="color:' + special_color + ';text-decoration:underline;" target="_BLANK">' + concept + '</a>';
-                } else if (special_url) {
-                    concept_m = '<a href="' + special_url + '" style="color:' + special_color + ';text-decoration:underline;" target="_BLANK">' + concept + '</a>';
-                } else if (concept == 'be-01') {
-                    concept_m = '<a href="https://www.isi.edu/~ulf/amr/lib/popup/be.html" title="be-01 is banned. Click here for more info." style="color:#CC0000;" target="_BLANK">' + concept + '</a>';
-                } else if (check_list['oncf.' + concept]
-                    || check_list['onf.' + concept]) {
-                    concept_m = '<span title="Invoke PropBank frame file selection popup for this word" style="color:#0000FF;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (check_list['onvf.' + concept]
-                    // && (! ((concept == 'name') && head_concept.match(/-ne$/i) && role.match(/^:op\d+$/i)))
-                    && (!((concept == 'name') && role.match(/^:name$/i)))) {
-                    // concept_m = '<a href="https://www.isi.edu/~ulf/amr/ontonotes-4.0-frames/' + concept + '-v.html" target="_BLANK" title="PropBank frame available">' + concept + '</a>';
-                    concept_m = '<span title="Invoke PropBank frame file selection popup for this verb" style="color:#0000FF;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                    // add_log('concept_m ' + htmlProtect(concept_m));
-                } else if (check_list['onjf.' + concept]) {
-                    concept_m = '<span title="Invoke PropBank frame file selection popup for this adjective" style="color:#0000FF;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (check_list['onnf.' + concept]) {
-                    concept_m = '<span title="Invoke PropBank frame file selection popup for this noun" style="color:#0000FF;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (concept.match(/[-.]\d\d\d?$/) && (check_list['oncf.' + core_concept]
-                    || check_list['onf.' + core_concept])) {
-                    if ((arg_descr = frame_arg_descr[concept]) == undefined) {
-                        title = 'Invoke PropBank frames popup for this word';
-                    } else {
-                        title = concept + '  ' + stringGuard(arg_descr);
-                        title = title.replace(/  /g, "&xA;    ");
-                    }
-                    concept_m = '<span title="' + title + '" style="color:#007700;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (concept.match(/[-.]\d\d\d?$/) && check_list['onvf.' + core_concept]) {
-                    if ((arg_descr = frame_arg_descr[concept]) == undefined) {
-                        title = 'Invoke PropBank frames popup for this verb';
-                    } else {
-                        title = concept + '  ' + stringGuard(arg_descr);
-                        title = title.replace(/  /g, "&xA;    ");
-                    }
-                    concept_m = '<span title="' + title + '" style="color:#007700;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (concept.match(/[-.]\d\d\d?$/) && check_list['onjf.' + core_concept]) {
-                    if ((arg_descr = frame_arg_descr[concept]) == undefined) {
-                        title = 'Invoke PropBank frames popup for this adjective';
-                    } else {
-                        title = concept + '  ' + stringGuard(arg_descr);
-                        title = title.replace(/  /g, "&xA;    ");
-                    }
-                    concept_m = '<span title="' + title + '" style="color:#007700;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (concept.match(/[-.]\d\d\d?$/) && check_list['onnf.' + core_concept]) {
-                    if ((arg_descr = frame_arg_descr[concept]) == undefined) {
-                        title = 'Invoke PropBank frames popup for this noun';
-                    } else {
-                        title = concept + '  ' + stringGuard(arg_descr);
-                        title = title.replace(/  /g, "&xA;    ");
-                    }
-                    concept_m = '<span title="' + title + '" style="color:#007700;text-decoration:underline;" onclick="dynamicOntoNotesPopup(\'' + concept + '\', \'' + variable + '\');">' + concept + '</span>';
-                } else if (special_title) {
-                    concept_m = '<span title="' + special_title + '" style="color:' + special_color + ';border-bottom:1px dotted;" target="_BLANK">' + concept + '</span>';
-                }
             }
             // s += '(' + variable_m + '-' + alignment_index + ' / ' + concept_m;
             s += '(' + variable_m  + ' / ' + concept_m;
@@ -2862,7 +2489,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             // add_log('ordered_indexes(' + concept + ') Point D: ' + ordered_indexes.join(', '));
             for (var i = 0; i < ordered_indexes.length; i++) {
                 var index = ordered_indexes[i];
-                var show_amr_rec_result;
+                var show_amr_rec_result; // this stores one amr line
                 var sub_loc = loc + '.' + index;
                 if (show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' ')) {
                     // add_log('Point D: ' + sub_loc + ' ' + show_amr_rec_result);
@@ -2925,11 +2552,10 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
 }
 
 /**
- * this is the function that print out the penman format output
+ * this is the function populate the show_amr_obj with the options table content, and print out the penman format output to webpage
  * @param args "show" or "show replace" or "show delete"
  */
 function show_amr(args) {
-
     //comply with the loaded options
     var s, checked, html_amr_s;
     var n_elems_w_id = 0;
@@ -2960,7 +2586,7 @@ function show_amr(args) {
     }
 
     //generate the pennman string
-    if (args) {
+    if (args) { //args can be "show", "replace", "delete" or "check"
         var amr_s = '';
         var n = amr['n'];
         console.log(amr);
@@ -2991,7 +2617,6 @@ function show_amr(args) {
 
         setInnerHTML('amr', html_amr_s);
         show_amr_status = args;
-        // add_log('show AMR end');
     }
     if ((s = document.getElementById('amr')) != null) {
         // this is the actual output part
@@ -3015,15 +2640,6 @@ function show_amr(args) {
     }
 }
 
-
-// functions below are about load and save and stuff, bring out the clear template
-function check_amr() {
-    console.log("check_amr is called");
-    // add_log('check_amr');
-    selectTemplate('clear');
-    show_amr('show check'); //TODO unclear
-}
-
 function update_amr_area_fix_color(color, var_fix_value) {
     console.log("update_amr_area_fix_color is called");
     var s;
@@ -3036,145 +2652,6 @@ function update_amr_area_fix_color(color, var_fix_value) {
         if (var_fix_value == 'fix') {
             s.focus();
         }
-    }
-}
-
-/**
- * this function is used to apply the style of the "amr" html element and command box resizing
- */
-function applyAmrDivParams() {
-    var s, s2, len, wrap;
-    var area_var_height = ''; // a number between 5 to 100
-    var area_var_fix_value = ''; // "varible" or "fix"
-    var area_var_fix_value_fix_default = 20;
-    var area_var_fix_value_fix_minimum = 5;
-    var area_var_fix_value_fix_maximum = 100;
-    reset_error();
-    reset_guidance();
-
-    // populate var area_var_fix_value to "varible" or "fix"
-    if (s = document.getElementsByName('amr-area-var-fix')) {
-        len = s.length; //2
-        if (len != undefined) {
-            for (var i = 0; i < len; i++) { //i=0
-                if (s[i].checked) {
-                    area_var_fix_value = s[i].value;
-                }
-            }
-        }
-    }
-
-    // populate var area_var_height to a number between 5 to 100
-    if ((s = document.getElementById('amr-area-height')) != null) {
-        area_var_height = s.value;
-    }
-
-    // prompt the user to type in a integer between 5 to 100
-    if (area_var_fix_value == 'fix') {
-        if (!area_var_height.match(/^\d+$/)) {
-            add_error('Under options/Display options/AMR display area height/fix, the number of lines must be a positive integer, not <font color="red">' + area_var_height + '</font>. Setting parameter to default value of <font color="green">' + area_var_fix_value_fix_default + '</font> instead.');
-            area_var_height = area_var_fix_value_fix_default;
-            if ((s = document.getElementById('amr-area-height')) != null) {
-                s.value = area_var_height;
-            }
-        } else if (area_var_height < area_var_fix_value_fix_minimum) {
-            add_error('Under options/Display options/AMR display area height/fix, the number of lines must be at least ' + area_var_fix_value_fix_minimum + ', not <font color="red">' + area_var_height + '</font>. Setting parameter to minimum <font color="green">' + area_var_fix_value_fix_minimum + '</font> instead.');
-            area_var_height = area_var_fix_value_fix_minimum;
-            if ((s = document.getElementById('amr-area-height')) != null) {
-                s.value = area_var_height;
-            }
-        } else if (area_var_height > area_var_fix_value_fix_maximum) {
-            add_error('Under options/Display options/AMR display area height/fix, the number of lines must be at most ' + area_var_fix_value_fix_maximum + ', not <font color="red">' + area_var_height + '</font>. Setting parameter to maximum <font color="green">' + area_var_fix_value_fix_maximum + '</font> instead.');
-            area_var_height = area_var_fix_value_fix_maximum;
-            if ((s = document.getElementById('amr-area-height')) != null) {
-                s.value = area_var_height;
-            }
-        }
-    }
-
-    // enable the style of the amr output box
-    if (s = document.getElementById('amr')) {
-        if (area_var_fix_value == 'fix') {
-            s.style.height = ((area_var_height * 1.2) + 0.2) + 'em';
-            s.style.overflow = 'auto';
-            s.style.border = '1px solid #000033';
-            s.style.padding = '8px';
-            if (((wrap = document.getElementById('wrap')) != null) && wrap.checked) {
-                s.style.whiteSpace = 'normal';
-            } else {
-                s.style.whiteSpace = 'nowrap';
-            }
-        } else if (area_var_fix_value == 'variable') {
-            s.style.height = '';
-            s.style.overflow = '';
-            s.style.border = '0px solid #000000';
-            s.style.padding.padding = '';
-        }
-        if ((s2 = document.getElementById('fix-font')) != null) {
-            show_amr_obj['option-fix-font'] = s2.checked;
-        }
-        if (show_amr_obj['option-fix-font']) {
-            s.style.fontFamily = 'Courier';
-        } else {
-            s.style.fontFamily = '';
-        }
-    }
-
-    //enable resizing command box
-    if (((s = document.getElementById('command')) != null)
-        && ((s2 = document.getElementById('resize-command')) != null)) {
-        if (s2.checked) {
-            s.style.resize = 'both';
-            s.style.overflow = 'auto';
-            var n_lines = Math.floor(s.value.length / 43) + 1;
-            s.style.height = ((n_lines * 1.2) + 0.2) + 'em';
-            // s.style.height = '22px';
-            // s.style.height = '1.4em';
-        } else {
-            s.style.resize = 'none';
-            s.style.overflow = 'hidden';
-            s.style.height = '';
-        }
-    }
-    hideOptions();
-}
-
-function pad2(value) {
-    if (value < 10) {
-        return '0' + value;
-    } else {
-        return value;
-    }
-}
-
-function pad3(value) {
-    if (value < 10) {
-        return '00' + value;
-    } else if (value < 100) {
-        return '0' + value;
-    } else {
-        return value;
-    }
-}
-
-/**
- * @param format seems that it doens't need the param
- * @returns {string} "08/24/2020"
- */
-function today(format) {
-    var today = new Date();
-    var day = today.getDate();
-    var month = today.getMonth() + 1;
-    var year = today.getFullYear();
-    var date = pad2(month) + '\/' + pad2(day) + '\/' + year;
-    // add_log('today is ' + date);
-    return date;
-}
-
-function setToday() {
-    var s;
-    if ((s = document.getElementById('props-date')) != null) {
-        s.value = today('');
     }
 }
 
@@ -3443,11 +2920,12 @@ function loadErrorHandler(evt) {
     }
 }
 
-function load_local_amr_file() {
+function load_local_amr_file(sentence_id) {
     console.log("load_local_amr_file is called");
     var s, scriptPath, fh;
     var load_method = '';
     if (window.File && window.FileReader && window.FileList && window.Blob) {
+        console.log("I am here 2-1");
         add_unique_log('Browser supports File API. Great.');
         var file = document.getElementById('local_load_files').files[0];
         if (file) {
@@ -3465,18 +2943,22 @@ function load_local_amr_file() {
     add_log('This browser does not support the File API.');
 
     if (window.ActiveXObject) {
+        console.log("I am here 2-2");
         add_unique_log('Browser supports ActiveXObject. Good.');
         load_method = 'ActiveXObject';
         try {
             var fso = new ActiveXObject("Scripting.FileSystemObject");
             // var filePath = document.getElementById('local_load_files').files[0];
             var filePath = document.getElementById('local_load_files').value;
+            // var filePath = `C:\\fakepath\\${sentence_id}.txt`;
             // add_log('Loading file ' + filePath + ' ...');
             var file = fso.OpenTextFile(filePath, 1);
             var fileString = file.ReadAll();
             // add_log('ActiveXObject5');
             file.Close();
             // add_log('Loaded AMR: ' + fileString);
+
+            document.getElementById('load-plain').value = ''
             if ((s = document.getElementById('load-plain')) != null) {
                 s.value = fileString;
                 loadField2amr();
@@ -3588,34 +3070,57 @@ function reload_current_workset_snt() {
     }
 }
 
-function save_local_amr_file() {
-    console.log("save_local_amr_file is called");
+function save_local_amr_file(sentence_id, temp=false) {
+    if ((s = document.getElementById('local_save_file')) != null) {
+        s.focus();
+    }
     var s, s2, s3, filename;
     var comment = '';
-    var text = '';
+    var text = '# :: snt \t';
     if (window.BlobBuilder && window.saveAs) {
         console.log('I am here1-1');
-        if (((s = document.getElementById('local_save_file')) != null)
-            && ((s2 = document.getElementById('plain-amr')) != null)) {
+        if ((s2 = document.getElementById('plain-amr')) != null) {
             console.log('I am here1-2');
             if ((s3 = document.getElementById('comment')) != null) {
                 console.log('I am here1-3');
                 comment = s3.value;
             }
-            filename = s.value;
-            filename = filename.replace(/\.txt$/, "");
-            filename = filename.replace(/[^-_a-zA-Z0-9]/g, "_");
-            filename += '.txt';
-            add_log('Saving file ' + filename + ' on your computer, typically in default download directory');
-            if (comment.match(/\S/)) {
-                text += comment + '\n';
-            }
-            text += s2.value;
-            text = text.replace(/\n/g, "\r\n");
+            filename = document.getElementById('local_save_file').value;
 
-            var bb = new BlobBuilder();
-            bb.append(text);
-            saveAs(bb.getBlob(), filename);
+            if (filename === ""){
+                filename = sentence_id;
+            }
+            // filename = filename.replace(/\.txt$/, "");
+            // filename = filename.replace(/[^-_a-zA-Z0-9]/g, "_");
+            filename += '.txt';
+
+            if(temp){
+                text += document.getElementById('current-words').innerText.replace("Words\t", "")
+                text += '\n'
+
+                add_log('Saving file ' + filename + ' on your computer, typically in default download directory');
+                if (comment.match(/\S/)) {
+                    text += comment + '\n';
+                }
+                text += s2.value;
+                text = text.replace(/\n/g, "\r\n");
+                var bb = new BlobBuilder();
+                bb.append(text);
+                saveAs(bb.getBlob(), filename);
+            }else{
+                if (comment.match(/\S/)) {
+                    text += comment + '\n';
+                }
+                text = s2.value;
+                text = text.replace(/\n/g, "\r\n");
+                //TODO: add to temporary dictionary using POST
+                // temp_umrs[sentence_id] = text;
+                // console.log(temp_umrs);
+                var bb = new BlobBuilder();
+                bb.append(text);
+                saveAs(bb.getBlob(), filename);
+            }
+
         }
     } else {
         console.log('I am here1-4');
@@ -3646,6 +3151,11 @@ function reset_save(control) {
     }
 }
 
+/**
+ * used to add space for indentation purpose
+ * @param n the number of the space
+ * @returns {string} n spaces
+ */
 function n_spaces(n) {
     var result = '';
     for (var i = 0; i < n; i++) {
@@ -3654,9 +3164,16 @@ function n_spaces(n) {
     return result;
 }
 
+
+/**
+ * handles the indentation
+ * @param loc
+ * @param c
+ * @param style
+ * @param n
+ * @returns {string}
+ */
 function indent_for_loc(loc, c, style, n) {
-    // console.log("indent_for_loc is called");
-    // add_log('start indent_for_loc ' + loc);
     var indentation, rem_loc, role;
     if (loc.match(/^\d+$/)) {
         indentation = '';
@@ -3795,7 +3312,7 @@ function string2amr_rec(s, loc, state, ht) {
                 || tolerate_special_concepts(concept)) {
                 decorated_concept = concept;
                 amr[loc + '.c'] = concept;
-                record_concept(concept, loc);
+                recordConcept(concept, loc);
                 variable2concept[variable] = concept;
             } else {
                 new_concept = concept.toLowerCase();
@@ -3810,29 +3327,29 @@ function string2amr_rec(s, loc, state, ht) {
                 decorated_concept = '<span ' + change_concept_style + '>' + new_concept + '</span>';
                 load_amr_feedback_alert = 1;
                 amr[loc + '.c'] = new_concept;
-                record_concept(new_concept, loc);
+                recordConcept(new_concept, loc);
                 variable2concept[variable] = new_concept;
             }
             if (getLocs(variable)) {
-                new_variable = new_var(concept);
+                new_variable = newVar(concept);
                 amr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var_style + '>' + new_variable + '</span>';
-                record_variable(new_variable, loc);
+                recordVariable(new_variable, loc);
                 load_amr_feedback_alert = 1;
             } else if (reserved_variables[variable + '.conflict']) {
                 amr[loc + '.v'] = variable;
                 decorated_variable = '<span ' + accept_conflict_style + '>' + variable + '</span>';
-                record_variable(variable, loc);
+                recordVariable(variable, loc);
             } else if (!variable.match(/^[a-z]\d*$/)) {
-                new_variable = new_var(concept);
+                new_variable = newVar(concept);
                 amr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var2_style + '>' + new_variable + '</span>';
-                record_variable(new_variable, loc);
+                recordVariable(new_variable, loc);
                 load_amr_feedback_alert = 1;
             } else {
                 amr[loc + '.v'] = variable;
                 decorated_variable = variable;
-                record_variable(variable, loc);
+                recordVariable(variable, loc);
             }
             amr[loc + '.s'] = '';
             amr[loc + '.n'] = 0;
@@ -3959,7 +3476,7 @@ function string2amr_rec(s, loc, state, ht) {
             load_amr_feedback += '<span ' + accept_style + '>' + string_arg + '</span>';
             if (getLocs(string_arg)) {
                 variable_arg = string_arg;
-                record_variable(variable_arg, loc);
+                recordVariable(variable_arg, loc);
                 string_arg = '';
             } else if (string_arg.match(/^[a-z]\d*$/)) {
                 ht['provisional-string.' + loc] = string_arg;
@@ -4035,7 +3552,7 @@ function string2amr(s) {
                 // add_log('reframing provisional-string as variable ' + ps_loc + ' ' + ps + ' ' + ht[key]);
                 amr[ps_loc + '.s'] = '';
                 amr[ps_loc + '.v'] = ps;
-                record_variable(ps, ps_loc);
+                recordVariable(ps, ps_loc);
             }
         }
     } else if (s.match(/\S/)) {
@@ -4092,6 +3609,11 @@ function loadField2amr() {
 }
 
 /********************************************************/
+// $('table').mousedown(function (event) {
+//     if (event.ctrlKey) {
+//         event.preventDefault();
+//     }
+// });
 
 document.onselectionchange = function selectSpan() {
     selection = document.getSelection();
@@ -4223,6 +3745,11 @@ function toggleRow(id) {
     }
 }
 
+function changeButton(id){
+    var elem = document.getElementById(id);
+    if (elem.innerText=="show more info") elem.innerText = "show less info";
+    else elem.innerText = "show more info";
+}
 
 
 
@@ -4246,10 +3773,4 @@ function initialize_frame_arg_descriptions() {
 }
 
 
-function show_concept_mapping(concept) {
-    // for inspection (testing and debugging)
-    title = concept_to_title[concept] || '';
-    url = concept_to_url[concept] || '';
-    console.log('concept: ' + concept + ' title: ' + title + ' url: ' + url);
-}
 

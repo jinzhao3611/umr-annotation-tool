@@ -6,19 +6,25 @@
     <link rel="stylesheet" type="text/css" href="../static/styles/default.css"
           media="only screen and (max-device-width:480px)">
 
-    <script src="static/scripts/main.js" type="text/javascript"></script>
-    <script src="static/scripts/utils.js" type="text/javascript"></script>
-    <script src="static/scripts/populate_dicts.js" type="text/javascript"></script>
-    <script src="static/scripts/BlobBuilder.js"></script>
-    <script src="static/scripts/FileSaver.js"></script>
+
+{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
+{#    <script src="static/scripts/my_jquery.js"></script>#}
+
+    <script src="../static/scripts/main.js" type="text/javascript"></script>
+{#    <script src="/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/static/scripts/main.js" type="text/javascript"></script>#}
+
+    <script src="../static/scripts/utils.js" type="text/javascript"></script>
+    <script src="../static/scripts/BlobBuilder.js"></script>
+    <script src="../static/scripts/FileSaver.js"></script>
 
 
-    <script src="static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
-    <script src="static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+    <script src="../static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+    <script src="../static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
 {% endblock head %}
 
 
 {% block content %}
+
     {#<body onload="initialize()">#}
     {# display all the sentences #}
     <div id="all-sentences" style="height: 250px; overflow-y: scroll;">
@@ -48,18 +54,20 @@
         Sentence ID
         <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
                max={{ total_snts }} value={{ sentence.id+1 }}>
-        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
+        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="save_local_amr_file({{ sentence.id +1 }})"><br>
     </form>
 
+
     {# display the sentence with the chosen sentence ID #}
-    {% if df_html|length %}
+    {% if df_html|length and 'Default' == lang %}
+        <div id="sentence" style="height: 250px; overflow-y: scroll;">
         {% autoescape off %}
-        {{ df_html[sentence.id] }}
+        <p>{{ df_html[sentence.id] }}</p>
         {% endautoescape %}
         <p><b>Free</b> {{ gls[sentence.id] }}</p>
         <p><b>Notes</b> {{ notes[sentence.id] }}</p>
-        <button onclick="toggleRow('optional-rows')">show more Info</button>
-
+        </div>
+        <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
     {% else %}
         <div id="sentence">
         <table>
@@ -90,11 +98,9 @@
 
     <hr>
 
-
-
     {% if 'English' == lang %}
         <div class="dropdown">
-            <label for="browser">Role</label>
+            <label for="browser">Roles</label>
             <input list="browsers" name="browser" id="browser">
             <datalist id="browsers">
                 <option value=":ARG0">
@@ -103,6 +109,10 @@
                 <option value=":ARG3">
                 <option value=":ARG4">
                 <option value=":ARG5">
+                <option value=":ARG6">
+                <option value=":ARG7">
+                <option value=":ARG8">
+                <option value=":ARG9">
                 <option value=":calendar">
                 <option value=":century">
                 <option value=":day">
@@ -142,7 +152,6 @@
                 <option value=":ord">
                 <option value=":part">
                 <option value=":path">
-                <option value=":polarity">
                 <option value=":polite">
                 <option value=":poss">
                 <option value=":product_of">
@@ -161,13 +170,20 @@
                 <option value=":wiki">
                 <option value=":op1">
                 <option value=":op2">
+                <option value=":op3">
+                <option value=":op4">
+                <option value=":op5">
+                <option value=":op6">
+                <option value=":op7">
+                <option value=":op8">
+                <option value=":op9">
+                <option value=":op10">
 
                 <option value=":reason">
                 <option value=":temporal">
                 <option value=":modal">
                 <option value=":coref">
 
-                <option value=":Aspect">
                 <option value=":ARG1-of">
 
                 <option value=":before">
@@ -181,7 +197,7 @@
         </div>
     {% else %}
         <div class="dropdown">
-            <label for="browser">Role</label>
+            <label for="browser">Roles</label>
             <input list="browsers" name="browser" id="browser">
             <datalist id="browsers">
                 <option value=":actor">
@@ -204,8 +220,169 @@
     {% endif %}
 
 
+    <div id="other-attributes">
+        <label for="browser2">Concept Types </label>
+        <input list="browsers2" name="browser2" id="browser2">
+        <datalist id="browsers2">
+            <option value='ordinal-entity'>
+            <option value='temporal-quantity'>
+            <option value='amr-unknown'>
+            <option value='amr-choice'>
+            <option value='truth-value'>
+            <option value='name'>
+        </datalist>
+        <input type="submit" onclick="submit_abstract_concept(2);">
+    </div>
+
+    <div id="named_entities">
+        <label for="browser6">Named Entity Types </label>
+        <input list="browsers6" name="browser6" id="browser6">
+        <datalist id="browsers6">
+            <option value='thing'>
+            <option value='person'>
+            <option value='family'>
+            <option value='animal'>
+            <option value='language'>
+            <option value='nationality'>
+            <option value='ethnic-group'>
+            <option value='regional-group'>
+            <option value='religious-group'>
+            <option value='political-movement'>
+            <option value='organization'>
+            <option value='company'>
+            <option value='government-organization'>
+            <option value='military'>
+            <option value='criminal-organization'>
+            <option value='political-party'>
+            <option value='market-sector'>
+            <option value='school'>
+            <option value='university'>
+            <option value='research-institute'>
+            <option value='team'>
+            <option value='league'>
+            <option value='location'>
+            <option value='city'>
+            <option value='city-district'>
+            <option value='county'>
+            <option value='state'>
+            <option value='province'>
+            <option value='territory'>
+            <option value='country'>
+            <option value='local-region'>
+            <option value='country-region'>
+            <option value='world-region'>
+            <option value='continent'>
+            <option value='ocean'>
+            <option value='sea'>
+            <option value='lake'>
+            <option value='river'>
+            <option value='gulf'>
+            <option value='bay'>
+            <option value='strait'>
+            <option value='canal'>
+            <option value='peninsula'>
+            <option value='mountain'>
+            <option value='volcano'>
+            <option value='valley'>
+            <option value='canyon'>
+            <option value='island'>
+            <option value='desert'>
+            <option value='forest'>
+            <option value='moon'>
+            <option value='planet'>
+            <option value='star'>
+            <option value='constellation'>
+            <option value='facility'>
+            <option value='airport'>
+            <option value='station'>
+            <option value='port'>
+            <option value='tunnel'>
+            <option value='bridge'>
+            <option value='road'>
+            <option value='railway-line'>
+            <option value='building'>
+            <option value='theater'>
+            <option value='museum'>
+            <option value='palace'>
+            <option value='hotel'>
+            <option value='worship-place'>
+            <option value='sports-facility'>
+            <option value='market'>
+            <option value='park'>
+            <option value='zoo'>
+            <option value='amusement-park'>
+            <option value='event'>
+            <option value='incident'>
+            <option value='natural-disaster'>
+            <option value='earthquake'>
+            <option value='war'>
+            <option value='conference'>
+            <option value='game'>
+            <option value='festival'>
+            <option value='product'>
+            <option value='vehicle'>
+            <option value='ship'>
+            <option value='aircraft'>
+            <option value='aircraft-type'>
+            <option value='spaceship'>
+            <option value='car-make'>
+            <option value='work-of-art'>
+            <option value='picture'>
+            <option value='music'>
+            <option value='show'>
+            <option value='broadcast-program'>
+            <option value='publication'>
+            <option value='book'>
+            <option value='newspaper'>
+            <option value='magazine'>
+            <option value='journal'>
+            <option value='natural-object'>
+            <option value='award'>
+            <option value='law'>
+            <option value='court-decision'>
+            <option value='treaty'>
+            <option value='music-key'>
+            <option value='musical-note'>
+            <option value='food-dish'>
+            <option value='writing-script'>
+            <option value='variable'>
+            <option value='program'>
+            <option value='molecular-physical-entity'>
+            <option value='small-molecule'>
+            <option value='protein'>
+            <option value='protein-family'>
+            <option value='protein-segment'>
+            <option value='amino-acid'>
+            <option value='macro-molecular-complex'>
+            <option value='enzyme'>
+            <option value='nucleic-acid'>
+            <option value='pathway'>
+            <option value='gene'>
+            <option value='dna-sequence'>
+            <option value='cell'>
+            <option value='cell-line'>
+            <option value='species'>
+            <option value='taxon'>
+            <option value='disease'>
+            <option value='medical-condition'>
+        </datalist>
+        <input type="submit" onclick="submit_mode('add-ne')">
+    </div>
+
+    <div id="real-attributes">
+        <label for="browser4">Attributes</label>
+        <input list="browsers4" name="browser4" id="browser4">
+        <datalist id="browsers4">
+            <option value=":Aspect">
+            <option value=":polarity">
+        </datalist>
+        <input type="submit" onclick="submit_relation()">
+    </div>
+
+
+{#    attribute values of Aspect#}
     <div class="attributes" id="aspect-attribute" style="display: none">
-        <label for="browser1">Aspect Attributes</label>
+        <label for="browser1">Attribute Values</label>
         <input list="browsers1" name="browser1" id="browser1">
         <datalist id="browsers1">
             <option value='Habitual'>
@@ -216,29 +393,23 @@
         <input type="submit" onclick="submit_attribute('1')">
     </div>
 
-
-    <div id="other-attributes">
-        <label for="browser2">Attributes </label>
-        <input list="browsers2" name="browser2" id="browser2">
-        <datalist id="browsers2">
-            <option value='ordinal-entity'>
-            <option value='temporal-quantity'>
-            <option value='amr-unknown'>
-            <option value='amr-choice'>
-            <option value="thing">
-            <option value="person">
-
-
+{#    attribute values of polarity#}
+    <div class="attributes" id="aspect-attribute" style="display: none">
+        <label for="browser5">Attribute Values</label>
+        <input list="browsers5" name="browser5" id="browser5">
+        <datalist id="browsers5">
+            <option value='-'>
         </datalist>
-        <input type="submit" onclick="submit_attribute('2')">
+        <input type="submit" onclick="submit_attribute('1')">
     </div>
 
     <div id="constants">
         <label for="browser3">Constants </label>
         <input list="browsers3" name="browser3" id="browser3">
         <datalist id="browsers3">
-            <option value="IMPERATIVE">
-            <option value="EXPRESSIVE">
+            <option value="imperative">
+            <option value="expressive">
+            <option value="interrogative">
 
             <option value="DCT">
             <option value="AUTH">
@@ -248,28 +419,18 @@
     </div>
 
     <br>
-    <br>
-
 
     Concept:
     <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>
 
     <div id="concept_dropdown" class="dropdown-content">
-        <a id="set-root" href="javascript:submit_template_action('set_parent');">set parent</a>
+        <a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a>
         <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->
         <a id="find_lemma" class="dropbtn">find lemma</a>
-        <a id="named_entities" onmouseover="neListDropdown()">named entities</a>
+{#        <a id="named_entities" onmouseover="neListDropdown()">named entities</a>#}
         <a id="multiple_words" href="javascript:multipleWords();">multiple words</a>
 
     </div>
-
-
-    <div id="entities_list" class="dropdown-content" style="right: auto; left:20%">
-        <a id="person" href="javascript:submit_mode('add-ne'); generate_penman()">person</a>
-        <a id="organization" href="javascript:submit_template_action('add-ne', 'organization')">organization</a>
-        <a id="location" href="javascript:submit_template_action('add-ne', 'location')">location</a>
-    </div>
-
 
     <div id="genericDropdown" class="dropdown-content" style="right:auto; left:20%"></div>
 
@@ -283,10 +444,8 @@
     <div id="text-command">
         <table>
             <tr>
-                <td title="Click for QuickRef on common text commands" onclick="popupQuickRef();">
-                    <nobr>Enter text command:</nobr>
-                </td>
-                <td><textarea rows="1" cols="50" id="command" name="command" autocapitalize="off" autocorrect="off"
+                <td>Enter text command:</td>
+                <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off" autocorrect="off"
                               spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
                               onkeyup="exec_command('', 1)"></textarea></td>
                 <td width="20"></td>
@@ -329,7 +488,7 @@
     </button>
 
     </button>
-    <button id="save-box">&nbsp;<a style="text-decoration:none" title="save"
+    <button id="save-box">&nbsp;<a style="text-decoration:none" title="load"
                                      href="javascript:selectTemplate('load');">load</a>&nbsp;
     </button>
 
@@ -348,279 +507,245 @@
     </div>
 
 
-{#    <div id="replace-template-table" style="display:none;">#}
-{#        <p>#}
-{#        <table>#}
-{#            <tbody>#}
-{#            <tr>#}
-                {#            <td>Action template</td>#}
-{#                <td>#}
-{#                    <table border="1" cellpadding="1" cellspacing="0">#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{#                            <td>#}
-{#                                <nobr>&nbsp;replace&nbsp;</nobr>#}
-{#                            </td>#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </td>#}
-{#                <td title="select type of AMR element to be replaced">&nbsp;#}
-{#                    <select id="replace-type"#}
-{#                            onchange="selectReplaceType(this[selectedIndex].text);">#}
-{#                        <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>#}
-                        {#                    <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string</option>#}
-{#                        <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>#}
-                        {#                    <option value="variable" title="replace a secondary variable, e.g. h">variable</option>#}
-{#                    </select>#}
-{#                </td>#}
-{#                <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"#}
-{#                                     autocapitalize="off" id="replace-at"#}
-{#                                     value=""></td>#}
-{#                <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"#}
-{#                                       id="replace-new" value=""#}
-{#                                       onfocus="var val = this.value; this.value = ''; this.value = val;"#}
-{#                                       onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"#}
-{#                                       onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;#}
-{#                </td>#}
-{#                <td>#}
-{#                    <table border="1" cellpadding="1" cellspacing="0">#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{#                            <td>#}
-{#                                <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"#}
-{#                                               href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;#}
-{#                                </nobr>#}
-{#                            </td>#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </td>#}
-{#            </tr>#}
-{#            </tbody>#}
-{#        </table>#}
-{#        </p></div>#}
-{#    <div id="delete-template-table" style="display:none;">#}
-{#        <p>#}
-{#        <table>#}
-{#            <tbody>#}
-{#            <tr>#}
-{#                <td>#}
-{#                    <table>#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{#                            <td width="5"></td>#}
-{#                            <td align="center">Delete AMR element</td>#}
-{#                            <td width="5"></td>#}
-{#                            <td><input size="24"#}
-{#                                       title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"#}
-{#                                       autocapitalize="off" id="delete-at"#}
-{#                                       value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>#}
-{#                            <td width="5"></td>#}
-{#                            <td>#}
-{#                                <table border="1" cellpadding="1" cellspacing="0">#}
-{#                                    <tbody>#}
-{#                                    <tr>#}
-{#                                        <td align="center">#}
-{#                                            <nobr><a style="text-decoration:none;" title="submit delete template action"#}
-{#                                                     href="javascript:submit_template_action('delete');"><font#}
-{#                                                    color="black">&nbsp;delete&nbsp;</font></a>#}
-{#                                            </nobr>#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    </tbody>#}
-{#                                </table>#}
-{#                            </td>#}
-{#                            <td width="5"></td>#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </td>#}
-{#                <td width="10"></td>#}
-{#                <td>#}
-{#                    <table>#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{#                            <td width="5"></td>#}
-{#                            <td width="5"></td>#}
-{#                            <td>#}
-{#                                <table border="1" cellpadding="1" cellspacing="0">#}
-{#                                    <tbody>#}
-{#                                    <tr>#}
-{#                                        <td align="center">#}
-{#                                            <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"#}
-{#                                                     style="text-decoration:none;"#}
-{#                                                     title="Delete entire AMR"#}
-{#                                                     href="javascript:deleteAMR();"><font#}
-{#                                                    color="black">&nbsp;delete&nbsp;<br>&nbsp;entire#}
-{#                                                AMR&nbsp;</font></a>#}
-{#                                            </nobr>#}
-{#                                        </td>#}
-{#                                    </tr>#}
-{#                                    </tbody>#}
-{#                                </table>#}
-{#                            </td>#}
-{#                            <td width="5"></td>#}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </td>#}
-{#                <td width="10"></td>#}
-{#            </tr>#}
-{#            </tbody>#}
-{#        </table>#}
-{#        </p></div>#}
-{#    <div id="move-template-table" style="display:none;">#}
-{#        <table>#}
-{#        <tbody>#}
-{#        <tr>#}
-            {#            <td>Action template</td>#}
-{#            <td>#}
-{#                <table border="1" cellpadding="1" cellspacing="0">#}
-{#                    <tbody>#}
-{#                    <tr>#}
-{#                        <td>#}
-{#                            <nobr>&nbsp;move&nbsp;</nobr>#}
-{#                        </td>#}
-{#                    </tr>#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            </td>#}
-{#            <td width="5"></td>#}
-{#            <td>Move#}
-{#            </td>#}
-{#            <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"#}
-{#                       id="move-object" value=""></td>#}
-{#            <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"#}
-{#                                           id="move-new-head" value=""> &nbsp;#}
-{#            </td>#}
-{#            <td>#}
-{#                <table border="1" cellpadding="1" cellspacing="0">#}
-{#                    <tbody>#}
-{#                    <tr>#}
-{#                        <td>#}
-{#                            <nobr>&nbsp;<a style="text-decoration:none"#}
-{#                                           title="display clickable list of AMR roles (popup)"#}
-{#                                           href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;#}
-{#                            </nobr>#}
-{#                        </td>#}
-{#                    </tr>#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            </td>#}
-{#            <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"#}
-{#                       id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"#}
-{#                       onkeypress="action_on_enter('submit move', event, 'move-role');"></td>#}
-{#            <td>#}
-{#                <table border="1" cellpadding="1" cellspacing="0">#}
-{#                    <tbody>#}
-{#                    <tr>#}
-{#                        <td>#}
-{#                            <nobr>&nbsp;<a title="submit move template action"#}
-{#                                           href="javascript:submit_template_action('move');"><font#}
-{#                                    color="black">submit</font></a>&nbsp;#}
-{#                            </nobr>#}
-{#                        </td>#}
-{#                    </tr>#}
-{#                    </tbody>#}
-{#                </table>#}
-{#            </td>#}
-{#        </tr>#}
-{#        </tbody>#}
-{#    </table>#}
+    <div id="replace-template-table" style="display:none;">
+        <p>
+        <table>
+            <tbody>
+            <tr>
+                <td>Replace</td>
+                <td title="select type of AMR element to be replaced">&nbsp;
+                    <select id="replace-type"
+                            onchange="selectReplaceType(this[selectedIndex].text);">
+                        <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
+                                            <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string</option>
+                        <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
+                                            <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
+                    </select>
+                </td>
+                <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
+                                     autocapitalize="off" id="replace-at"
+                                     value=""></td>
+                <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
+                                       id="replace-new" value=""
+                                       onfocus="var val = this.value; this.value = ''; this.value = val;"
+                                       onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
+                                       onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
+                </td>
+                <td>
+                    <table border="1" cellpadding="1" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
+                                               href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
+                                </nobr>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </p></div>
+    <div id="delete-template-table" style="display:none;">
+        <p>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="5"></td>
+                            <td align="center">Delete AMR element</td>
+                            <td width="5"></td>
+                            <td><input size="24"
+                                       title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
+                                       autocapitalize="off" id="delete-at"
+                                       value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
+                            <td width="5"></td>
+                            <td>
+                                <table border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <nobr><a style="text-decoration:none;" title="submit delete template action"
+                                                     href="javascript:submit_template_action('delete');"><font
+                                                    color="black">&nbsp;delete&nbsp;</font></a>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="10"></td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="5"></td>
+                            <td width="5"></td>
+                            <td>
+                                <table border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
+                                                     style="text-decoration:none;"
+                                                     title="Delete entire AMR"
+                                                     href="javascript:deleteAMR();"><font
+                                                    color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
+                                                AMR&nbsp;</font></a>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="10"></td>
+            </tr>
+            </tbody>
+        </table>
+        </p></div>
+    <div id="move-template-table" style="display:none;">
+        <table>
+            <tbody>
+                <tr>
+                    <td width="5"></td>
+                    <td>Move</td>
+                    <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
+                           id="move-object" value=""></td>
+                    <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
+                                               id="move-new-head" value=""> &nbsp;</td>
+                    <td>
+                        <table border="1" cellpadding="1" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        &nbsp;<a style="text-decoration:none"
+                                               title="display clickable list of AMR roles (popup)"
+                                               href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
 
+                    <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
+                           id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
+                           onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
+                    <td>
+                        <table border="1" cellpadding="1" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>&nbsp;<a title="submit move template action"
+                                               href="javascript:submit_template_action('move');"><font
+                                        color="black">submit</font></a>&nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div id="load-template-table" style="display:none;">
 {#    <div id="load-template-table" style="display:inline;">#}
         <p>
             <table>
                 <tbody>
-                <tr id="load-local" style="display: inline;">
-                    <td style="background-color:#E8EEFF;" width="920">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td id="load-local-title"><b>Load local AMR file</b></td>
-                                <td width="10"></td>
-                                <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td><input type="submit" value="Load local file" onclick="load_local_amr_file()">
-                                    &nbsp; &nbsp;
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+                    <tr id="load-local" style="display: inline;">
+                        <td style="background-color:#E8EEFF;" width="920">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td id="load-local-title"><b>Load local AMR file</b></td>
+                                    <td width="10"></td>
+                                    <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="submit" value="Load local file" onclick="load_local_amr_file()"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
 
-                <tr id="load-direct" style="display: inline;">
-                    <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <textarea rows="20" cols="100" id="load-plain" name="load-plain" autocapitalize="off"
-                                              autocorrect="off" spellcheck="false" style="overflow:auto;"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <table width="40" border="1" cellpadding="1" cellspacing="0">
-                                        <tbody>
-                                        <tr style="background-color:#BBCCFF;">
-                                            <td align="center">
-                                                <nobr>&nbsp;<a style="text-decoration:none"
-                                                               title="click to load amr from text area"
-                                                               href="javascript:loadField2amr();recordDirectEntryLoad();"><font
-                                                        color="black">load direct AMR</font></a>&nbsp;
-                                                </nobr>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
+                    <tr id="load-direct" style="display: inline;">
+                        <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <textarea rows="20" cols="100" id="load-plain" name="load-plain" autocapitalize="off"
+                                                  autocorrect="off" spellcheck="false" style="overflow:auto;"></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table width="40" border="1" cellpadding="1" cellspacing="0">
+                                            <tbody>
+                                            <tr style="background-color:#BBCCFF;">
+                                                <td align="center">
+                                                    <nobr>&nbsp;<a style="text-decoration:none"
+                                                                   title="click to load amr from text area"
+                                                                   href="javascript:loadField2amr();recordDirectEntryLoad();"><font
+                                                            color="black">load direct AMR</font></a>&nbsp;
+                                                    </nobr>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </p>
     </div>
-
     <div id="save-template-table" style="display:none;">
         <input type="hidden" id="plain-amr" name="plain-amr" value="">
 
         <p>
             <table style="background-color:#E8EEFF;" width="800">
                 <tbody>
-                <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
-                    <td id="save-local-title"><b>Save AMR locally</b></td>
-                    <td>
-                        <table>
-                            <tbody>
-                                <tr id="save-local-filename">
-                                    <td>Filename (without path):</td>
-                                    <td><input type="text" id="local_save_file" name="local_save_file" size="24"
-                                               style="font-size:1.1em;text-align:right;" value=""><span
-                                            style="font-size:1.1em">.txt</span></td>
-                                    <td width="10"></td>
-                                    <td><input type="submit" value="Save locally" onclick="save_local_amr_file()"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr id="alt-save-locally" style="display:none" ;="">
-
-                </tr>
+                    <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
+                        <td id="save-local-title"><b>Save AMR locally</b></td>
+                        <td>
+                            <table>
+                                <tbody>
+                                    <tr id="save-local-filename">
+                                        <td>Filename (without path):</td>
+                                        <td><input type="text" id="local_save_file" name="local_save_file" size="24"
+                                                   style="font-size:1.1em;text-align:right;" value=""><span
+                                                style="font-size:1.1em">.txt</span></td>
+                                        <td width="10"></td>
+                                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file({{ sentence.id +2 }}, temp=true)"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr id="alt-save-locally" style="display:none" ;=""></tr>
                 </tbody>
             </table>
         </p>

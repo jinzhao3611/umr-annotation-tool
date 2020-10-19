@@ -139,11 +139,11 @@ def parse_flex_xml(xml_path: str) -> Tuple:
         msa.append(msa_per_sentence)
 
     tbls = list()
-    rowIDs = ['Mophemes', 'Lex. Gloss', 'Lex. Gram Info.', 'Word Gloss']
+    rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat', 'Word Gloss']
     for i in range(len(txt)):
         # tbl = tabulate([cf[i], gls[i], msa[i], word_gls[i]], headers=txt[i], tablefmt='orgtbl', showindex=rowIDs)
         # tbls.append(tbl)
-        df = pd.DataFrame([txt[i], [", ".join(e) for e in cf[i]], [", ".join(e) for e in gls[i]], [", ".join(e) for e in msa[i]], word_gls[i]])
+        df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
         tbls.append(df)
     return txt, tbls, sent_gls, notes
