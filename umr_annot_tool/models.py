@@ -50,13 +50,13 @@ class Post(db.Model):
 
 class Doc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    language = db.Column(db.Text, nullable=False)
+    filename = db.Column(db.Text, nullable=False)
+    lang = db.Column(db.Text, nullable=False)
     sents = db.relationship('Sent', backref='document', lazy=True)
     annotations = db.relationship('Annotation', backref='document', lazy=True)
 
-
-    def __repr__(self):
-        return f"Post('{self.id}', '{self.sents}')"
+    # def __repr__(self):
+    #     return f"Post('{self.id}', '{self.sents}')"
 
 class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,13 +65,12 @@ class Sent(db.Model):
     annotations = db.relationship('Annotation', backref='sentence', lazy=True)
 
 
-    def __repr__(self):
-        return f"Post('{self.id}', '{self.content}')"
+    # def __repr__(self):
+    #     return f"Post('{self.id}', '{self.content}')"
 
 class Annotation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    sent_level_content = db.Column(db.Text, nullable=False)
-    doc_level_content = db.Column(db.Text, nullable=False)
+    annot_str = db.Column(db.Text, nullable=False)
     sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)

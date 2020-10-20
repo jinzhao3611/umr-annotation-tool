@@ -47,6 +47,7 @@ function load_test(){
         .then(response => response.text())
         .then(text => console.log(text))
 }
+
 function initialize() {
     console.log("initialize is called16");
     amr['n'] = 0;
@@ -326,8 +327,6 @@ function undo(n) {
     }
 }
 
-
-/**TODO ******************************************************/
 /**
  * this function takes in a template id (the name on the button) and return the form to fill out
  * @param id "top"
@@ -2736,10 +2735,29 @@ function defaultFilename() {
 }
 
 function UMR2db(){
-    sent = document.getElementById('sentence').innerText;
-    console.log(sent);
+    console.log("I am here521");
+    // sent = document.getElementById('sentence').innerText;
+    var amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
+    var sentenceAndIndice = document.getElementById('sentence').innerText;
+    var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
+    // var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
 
+    fetch('/annotate', {
+        method: 'POST',
+        body: JSON.stringify({"amr": amrHtml, "sentence": sentence})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+                console.log(data); //senses got returned from server
+            });
 }
+
+function firstHalfString(str) {
+    var a = str.split(/\s/);
+    var middle = Math.ceil(a.length / 2);
+    var s1 = a.slice(0, middle).join(" ");
+    return s1;
+};
 
 function applyProps(caller) {
     // add_edit_log('applyProps ' + caller);

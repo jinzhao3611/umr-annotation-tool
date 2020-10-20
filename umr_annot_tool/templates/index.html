@@ -27,6 +27,7 @@
 
     {#<body onload="initialize()">#}
     {# display all the sentences #}
+    <div id="filename"><p>{{ filename }}</p></div>
     <div id="all-sentences" style="height: 250px; overflow-y: scroll;">
         <script type="text/javascript">initialize()</script>
         {% if all_snts %}
@@ -459,19 +460,19 @@
         </table>
     </div>
 
-    <button id="replace-box">&nbsp;<a style="text-decoration:none"
+    <button id="replace-box"><a style="text-decoration:none"
                                       title="replace a role, concept, string or secondary variable"
                                       href="javascript:selectTemplate('replace');">replace</a>&nbsp;
     </button>
-    <button id="delete-box">&nbsp;<a style="text-decoration:none" title="delete"
+    <button id="delete-box"><a style="text-decoration:none" title="delete"
                                      href="javascript:selectTemplate('delete');">delete</a>&nbsp;
     </button>
-    <button id="move-box">&nbsp;<a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;
+    <button id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;
     </button>
-    <button id="undo-box">&nbsp;<a id="undo-button" style="text-decoration:none" title="currently nothing to undo"
+    <button id="undo-box"><a id="undo-button" style="text-decoration:none" title="currently nothing to undo"
                                    href="javascript:undo(-1);">undo</a>&nbsp;
     </button>
-    <button id="redo-box">&nbsp;<a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
+    <button id="redo-box"><a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
                                    href="javascript:undo(1);">redo</a>&nbsp;
     </button>
     {#    <button id="doc-level-annot">&nbsp;<a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}

@@ -5,12 +5,11 @@ import json
 import xml.etree.ElementTree as ET
 from utils import parse_flex_xml
 from bs4 import BeautifulSoup
-
+from flask_login import current_user
 
 
 from flask import render_template, request, Blueprint
-from umr_annot_tool.models import Post
-from umr_annot_tool.models import Sent, Doc, Annotation
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post
 from umr_annot_tool.main.forms import UploadForm
 from umr_annot_tool import db
 
@@ -60,6 +59,7 @@ target_language = ['Default']
 df_html = []
 gls = []
 notes = []
+filename = []
 
 
 
@@ -72,30 +72,46 @@ def annotate():
             return frame_parser.parse(token)
         except:
             pass
+
+        try:
+            amr_html = request.get_json(force=True)["amr"]
+            sentence = request.get_json(force=True)["sentence"]
+            sent_id = Sent.query.filter(Sent.content == sentence).first().id
+            doc_id = Sent.query.filter(Sent.content == sentence).first().doc_id
+            annotation = Annotation(annot_str=amr_html, author=current_user, sent_id=sent_id, doc_id=doc_id)
+            db.session.add(annotation)
+            db.session.commit()
+            return {"amr": amr_html}
+        except:
+            pass
+
         total_snts = len(snts)
         print(f"total_snts: {total_snts}")
         print(target_language)
 
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html, gls=gls, notes=notes)
+            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
         else:
-            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0], df_html=df_html, gls=gls, notes=notes)
+            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
     else:
-        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0], df_html=df_html, gls=gls, notes=notes)
+        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
 
 
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
     form = UploadForm()
     if request.method == "POST":
-        Doc.query.delete()
-        Sent.query.delete()
+        # Doc.query.delete()
+        # Sent.query.delete()
         target_language[0] = form.autocomplete_input.data
         print(target_language)
 
         file = request.files['file']
-        secure_filename(file.filename)
+        filename.clear()
+        filename.append(file.filename)
+        secure_filename(filename[0])
+        print("filename:" + filename[0])
         content_string = file.read()
 
         sent = ""
@@ -128,32 +144,21 @@ def upload():
         except ET.ParseError:
             snts.clear()
             print(content_string)
-            sents = enumerate(content_string.strip().decode('UTF-8').split('\n'))
-            for i, sent in sents:
+            sents = content_string.strip().decode('UTF-8').split('\n')
+            for i, sent in enumerate(sents):
                 snts.append(Sentence(sent.split(), i, len(sent.split())))
 
-        # if not Sent.query.filter_by(content=sent).first():# this doc is not already added in
-        #     doc = Doc(language=target_language[0])
-        #     db.session.add(doc)
-        #     db.session.commit()
-        #
-        #     sent = Sent(content=sent, document=doc)
-        #     db.session.add(sent)
-        #     db.session.commit()
-        #     for i, line in enumerate(file, 1):
-        #         snts.append(Sentence(line.strip().decode('UTF-8').split(), i, len(line.strip().decode('UTF-8').split())))
-        #         sent = Sent(content=line.strip().decode('UTF-8'), document=doc)
-        #         db.session.add(sent)
-        #         db.session.commit()
-        #     print(snts)
-        #
-        # print("####################### docs")
-        # print(Doc.query.all())
-        # print("####################### sents")
-        # print(Sent.query.all())
-        # print("####################### first match")
-        # print(Sent.query.filter_by(content='He denied any wrongdoing .').first())
+        if not Doc.query.filter_by(filename=filename[0]).first():# this doc is not already added in
+            doc = Doc(lang=target_language[0], filename=filename[0])
+            db.session.add(doc)
+            db.session.commit()
 
+
+            for sent_str in sents:
+                print(sent_str)
+                sent = Sent(content=sent_str, doc_id=doc.id)
+                db.session.add(sent)
+                db.session.commit()
     return render_template('upload.html', title='upload', form=form)
 
 
