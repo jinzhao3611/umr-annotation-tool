@@ -1,0 +1,41 @@
+attrs==20.1.0
+bcrypt==3.2.0
+beautifulsoup4==4.9.1
+blinker==1.4
+brotlipy==0.7.0
+certifi==2020.6.20
+cffi @ file:///opt/concourse/worker/volumes/live/0df07f09-9875-42dd-4a5c-3f900d1fbce2/volume/cffi_1598370762311/work
+chardet==3.0.4
+click==7.1.2
+cryptography @ file:///opt/concourse/worker/volumes/live/0204c016-0e05-4202-67a6-f00d8ece4e76/volume/cryptography_1598371395699/work
+dnspython==2.0.0
+email-validator==1.1.1
+Flask==1.1.2
+Flask-Bcrypt==0.7.1
+Flask-Login==0.5.0
+Flask-Mail==0.9.1
+Flask-SQLAlchemy @ file:///home/conda/feedstock_root/build_artifacts/flask-sqlalchemy_1594747318500/work
+Flask-WTF==0.14.3
+gunicorn==20.0.4
+idna @ file:///tmp/build/80754af9/idna_1593446292537/work
+itsdangerous==1.1.0
+Jinja2==2.11.2
+lxml @ file:///opt/concourse/worker/volumes/live/0dfefafa-9e58-455e-535c-75e73a127cfd/volume/lxml_1594826856790/work
+MarkupSafe==1.1.1
+numpy==1.19.2
+pandas==1.1.2
+Pillow==7.2.0
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
+PySocks==1.7.1
+python-dateutil==2.8.1
+pytz==2020.1
+requests @ file:///tmp/build/80754af9/requests_1592841827918/work
+six==1.15.0
+soupsieve==2.0.1
+SQLAlchemy @ file:///Users/runner/miniforge3/conda-bld/sqlalchemy_1597701938823/work
+svgwrite==1.4
+tabulate==0.8.7
+urllib3 @ file:///tmp/build/80754af9/urllib3_1597086586889/work
+Werkzeug==1.0.1
+WTForms==2.3.3
