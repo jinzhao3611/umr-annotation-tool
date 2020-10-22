@@ -75,8 +75,8 @@ class Annotation(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
 
-    def __repr__(self):
-        return f"Post('{self.sent_level_content}', '{self.doc_level_content}')"
+    # def __repr__(self):
+    #     return f"Post('{self.sent_level_content}', '{self.doc_level_content}')"
 
 
 

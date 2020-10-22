@@ -242,6 +242,8 @@ function set(id, value) {
  * @param value
  */
 function setInnerHTML(id, value) {
+    console.log(id);
+    console.log(value);
     var s;
     if ((s = document.getElementById(id)) != null) {
         s.innerHTML = value;

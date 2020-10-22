@@ -9,9 +9,9 @@ from flask_login import current_user
 
 
 from flask import render_template, request, Blueprint
+from umr_annot_tool import db
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post
 from umr_annot_tool.main.forms import UploadForm
-from umr_annot_tool import db
 
 
 main = Blueprint('main', __name__)
@@ -74,13 +74,34 @@ def annotate():
             pass
 
         try:
+            # document_name = request.get_json(force=True)["documentName"]
+            sentence_content = request.get_json(force=True)["sentence"]
+            sent_id = Sent.query.filter(Sent.content == sentence_content).first().id
+            doc_id = Sent.query.filter(Sent.content == sentence_content).first().doc_id
+            history_annot = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == current_user.id).first().annot_str
+            print(history_annot)
+            return {"history_annot": history_annot}
+
+
+        except:
+            pass
+
+        try:
             amr_html = request.get_json(force=True)["amr"]
             sentence = request.get_json(force=True)["sentence"]
             sent_id = Sent.query.filter(Sent.content == sentence).first().id
             doc_id = Sent.query.filter(Sent.content == sentence).first().doc_id
-            annotation = Annotation(annot_str=amr_html, author=current_user, sent_id=sent_id, doc_id=doc_id)
-            db.session.add(annotation)
-            db.session.commit()
+
+            existing = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == current_user.id).first()
+            if existing: #update the existing Annotation object
+                existing.annot_str = amr_html
+                db.session.commit()
+            else:
+                annotation = Annotation(annot_str=amr_html, author=current_user, sent_id=sent_id, doc_id=doc_id)
+                db.session.add(annotation)
+                db.session.commit()
             return {"amr": amr_html}
         except:
             pass
@@ -91,15 +112,21 @@ def annotate():
 
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts, lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
+            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts,
+                                   lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
         else:
-            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts, lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
+            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts,
+                                   lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
     else:
-        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[], lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
+        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[],
+                               lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
 
 
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
+    # existing = Annotation.query.filter(Annotation.sent_id == 1, Annotation.doc_id == 1,
+    #                                    Annotation.user_id == current_user.id).first()
+
     form = UploadForm()
     if request.method == "POST":
         # Doc.query.delete()

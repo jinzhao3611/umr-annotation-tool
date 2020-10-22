@@ -42,11 +42,7 @@ var logsid = ''; //"IQrVT4Dh6mkz93W1DCxpNws9Om6qKqk0EGwhFs0x"
 var next_special_action = ''; //''
 
 
-function load_test(){
-    fetch('file:///Users/jinzhao/Downloads/2.txt')
-        .then(response => response.text())
-        .then(text => console.log(text))
-}
+
 
 function initialize() {
     console.log("initialize is called16");
@@ -2757,7 +2753,25 @@ function firstHalfString(str) {
     var middle = Math.ceil(a.length / 2);
     var s1 = a.slice(0, middle).join(" ");
     return s1;
-};
+}
+
+function load_history(){
+    console.log("I am here524");
+    var sentenceAndIndice = document.getElementById('sentence').innerText;
+    var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
+    var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
+
+    fetch('/annotate', {
+        method: 'POST',
+        body: JSON.stringify({"documentName": documentName, "sentence": sentence})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        setInnerHTML('load-plain', deHTML(data["history_annot"]))//returned from server
+        loadField2amr();
+    });
+}
 
 function applyProps(caller) {
     // add_edit_log('applyProps ' + caller);
@@ -3789,6 +3803,7 @@ function initialize_frame_arg_descriptions() {
         }
     }
 }
+
 
 
 

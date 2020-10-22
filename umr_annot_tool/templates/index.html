@@ -54,7 +54,7 @@
         Sentence ID
         <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
                max={{ total_snts }} value={{ sentence.id+1 }}>
-        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="save_local_amr_file({{ sentence.id +1 }})"><br>
+        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
     </form>
 
 
@@ -491,6 +491,11 @@
     <button id="save-box">&nbsp;<a style="text-decoration:none" title="load"
                                      href="javascript:selectTemplate('load');">load</a>&nbsp;
     </button>
+
+    <button id="save-box">&nbsp;<a style="text-decoration:none" title="load_history"
+                                     href="javascript:load_history();">load_history</a>&nbsp;
+    </button>
+
 
     </table>
 
