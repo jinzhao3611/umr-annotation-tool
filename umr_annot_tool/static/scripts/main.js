@@ -2738,13 +2738,14 @@ function UMR2db(){
     var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
     // var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
 
+    console.log(amrHtml);
     fetch('/annotate', {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "sentence": sentence})
+        body: JSON.stringify({"amr": amrHtml, "db_sentence": sentence})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-                console.log(data); //senses got returned from server
+                console.log(data); //amr got returned from server
             });
 }
 
@@ -3102,7 +3103,9 @@ function reload_current_workset_snt() {
     }
 }
 
-function save_local_amr_file(sentence_id, temp=false) {
+function save_local_amr_file(sentence="", temp=false) {
+    console.log(sentence);
+    // console.log(sentence_id);
     if ((s = document.getElementById('local_save_file')) != null) {
         s.focus();
     }
@@ -3119,16 +3122,17 @@ function save_local_amr_file(sentence_id, temp=false) {
             }
             filename = document.getElementById('local_save_file').value;
 
-            if (filename === ""){
-                filename = sentence_id;
-            }
+            // if (filename === ""){
+            //     filename = sentence_id;
+            // }
             // filename = filename.replace(/\.txt$/, "");
             // filename = filename.replace(/[^-_a-zA-Z0-9]/g, "_");
             filename += '.txt';
 
             if(temp){
-                text += document.getElementById('current-words').innerText.replace("Words\t", "")
-                text += '\n'
+                // text += document.getElementById('current-words').innerText.replace("Words\t", "")
+                text += sentence;
+                text += '\n';
 
                 add_log('Saving file ' + filename + ' on your computer, typically in default download directory');
                 if (comment.match(/\S/)) {

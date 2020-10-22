@@ -65,6 +65,7 @@ filename = []
 
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
+    sentence_content = " ".join(snts[0].words)
     if request.method in ['GET', 'POST']:
         try:
             token = request.get_json(force=True)["selected"]
@@ -89,7 +90,8 @@ def annotate():
 
         try:
             amr_html = request.get_json(force=True)["amr"]
-            sentence = request.get_json(force=True)["sentence"]
+            print(amr_html)
+            sentence = request.get_json(force=True)["db_sentence"]
             sent_id = Sent.query.filter(Sent.content == sentence).first().id
             doc_id = Sent.query.filter(Sent.content == sentence).first().doc_id
 
@@ -110,15 +112,18 @@ def annotate():
         print(f"total_snts: {total_snts}")
         print(target_language)
 
+
+
+
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts,
+            return render_template('index.html', sentence_content=sentence_content, sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts,
                                    lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
         else:
-            return render_template('index.html', sentence=snts[0], total_snts=total_snts, all_snts=snts,
+            return render_template('index.html', sentence_content=sentence_content,sentence=snts[0], total_snts=total_snts, all_snts=snts,
                                    lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
     else:
-        return render_template('index.html', sentence=Sentence([], 0, 0), total_snts=0, all_snts=[],
+        return render_template('index.html', sentence_content=sentence_content, sentence=Sentence([], 0, 0), total_snts=0, all_snts=[],
                                lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
 
 
