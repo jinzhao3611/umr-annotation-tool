@@ -91,13 +91,19 @@ def annotate():
         try:
             amr_html = request.get_json(force=True)["amr"]
             print(amr_html)
-            sentence = request.get_json(force=True)["db_sentence"]
+            sentence = (request.get_json(force=True)["db_sentence"]).strip()
+            print(sentence)
             sent_id = Sent.query.filter(Sent.content == sentence).first().id
+            print(sent_id)
             doc_id = Sent.query.filter(Sent.content == sentence).first().doc_id
+            print(doc_id)
+            print(current_user.id)
 
             existing = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
+            print(existing)
             if existing: #update the existing Annotation object
+                print("here")
                 existing.annot_str = amr_html
                 db.session.commit()
             else:
