@@ -221,3 +221,8 @@ def display_post():
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,
                                                                   per_page=2)  # if we want to order the posts from the lastest to the oldest
     return render_template('display_post.html', posts=posts)
+
+
+@main.route("/guidelines")
+def guidelines():
+    return render_template('guidelines.html')

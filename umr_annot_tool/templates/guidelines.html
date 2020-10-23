@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Guidelines</h2>
+    <p>Below is an example showing how to annotate an English sentence.</p>
+    <p>First you should register an account, you should always annotate after logging in.</p>
+    <p>On home page, click on login.</p>
+    <img src="../static/guidelines_pics/homepage.png" alt="homepage" width="750" height="450">
+    <p>This is the login page, type in your Email and password. </p>
+    <img src="../static/guidelines_pics/login.png" alt="login" width="750" height="450">
+    <p>After logging in, click annotate on Nav bar:</p>
+    <img src="../static/guidelines_pics/homepage_after_login.png" alt="homepage_after_login" width="750" height="450">
+    <p>Choose a txt file, flex format xml or tool box format xml, choose a language, then click on both Submit and Annotate! buttons </p>
+    <img src="../static/guidelines_pics/upload.png" alt="upload" width="750" height="450">
+    <p>At the following annotation page, you can select "tasted" in the sentence by double clicking or click and drag. Then there is a button appears after Concept: click the "tasted" button. </p>
+    <img src="../static/guidelines_pics/select.png" alt="select" width="750" height="450">
+    <p>In the submenu, hover over find lemma, and click on tasted-01 in the subsubmenu: </p>
+    <img src="../static/guidelines_pics/predicate.png" alt="predicate" width="750" height="450">
+    <p>Then the first line of annotation (t / taste-01) appears under UMR Penman Annotation:</p>
+    <img src="../static/guidelines_pics/annot_1.png" alt="annot_1" width="750" height="450">
+    <p>Technically the first concept you annotate will be assumed to be the head, but you can set head by select the variable name, and click on set head submenu: </p>
+    <img src="../static/guidelines_pics/set_head.png" alt="set_head" width="750" height="450">
+    <p>Add Aspect attribute as following, it's very important you click on submit button every time you choose an option: </p>
+    <img src="../static/guidelines_pics/attribute.png" alt="attribute" width="750" height="450">
+    <p>After submit :Aspect option, the attribute value box will appear, you can choose Performance in it, again, you should click on submit after selecting: </p>
+    <img src="../static/guidelines_pics/attribute_value.png" alt="annot_1" width="750" height="450">
+    <p>The second line of annotation appears under UMR Penman Annotation:</p>
+    <img src="../static/guidelines_pics/annot_2.png" alt="annot_2" width="750" height="450">
+    <p>Next, let's add :ARG0</p>
+    <img src="../static/guidelines_pics/arg0.png" alt="arg0" width="750" height="450">
+    <p>Add a Person Named Entity Type:</p>
+    <img src="../static/guidelines_pics/ne_type.png" alt="ne_type" width="750" height="450">
+    <p>Select Edmund Pope, hover over find lemma on submenu, click on Edmund Pope on subsubmenu</p>
+    <img src="../static/guidelines_pics/ne_concept.png" alt="ne_concept" width="750" height="450">
+    <img src="../static/guidelines_pics/annot_3.png" alt="annot_3" width="750" height="450">
+    <p>If you want to logout or go annotate another sentence or file, and then come back, click on db button before you go </p>
+    <img src="../static/guidelines_pics/db.png" alt="db" width="750" height="450">
+    <p>You can switch to another sentence by selecting options in Sentence ID box: </p>
+    <img src="../static/guidelines_pics/switch_snt.png" alt="switch_snt" width="750" height="450">
+    <p>When you come back to sentence 1, the UMR Penman Annotation is empty:</p>
+    <img src="../static/guidelines_pics/switch_snt2.png.png" alt="switch_snt2" width="750" height="450">
+    <p>You can click on load history button, the history annotated will appear:</p>
+    <img src="../static/guidelines_pics/load_history.png" alt="annot_1" width="750" height="450">
+    <p>After you finish your annotation, click on save button, there is form appears at the bottom of the page</p>
+    <img src="../static/guidelines_pics/save.png" alt="save" width="750" height="450">
+    <p>Type in the file name and click on save locally, you should see your downloaded file in your download folder:</p>
+    <img src="../static/guidelines_pics/saved.png" alt="saved" width="750" height="450">
+    <p>If you see a 500 page, make sure you logged in and try refresh after a few seconds, sometimes it helps, sometimes it doesn't ¯\_(ツ)_/¯ I am working on fixing it </p>
+    <img src="../static/guidelines_pics/error500.png" alt="error500" width="750" height="450">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock content %}
