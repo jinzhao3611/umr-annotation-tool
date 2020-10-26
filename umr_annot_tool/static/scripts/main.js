@@ -3652,7 +3652,7 @@ function loadField2amr() {
 // });
 
 document.onselectionchange = function selectSpan() {
-    selection = document.getSelection();
+    let selection = document.getSelection();
     selected_tokens.innerHTML = "";
     selected_tokens.innerHTML += selection;
     begOffset = selection.anchorNode.parentElement.cellIndex;

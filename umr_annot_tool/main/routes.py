@@ -7,15 +7,15 @@ from utils import parse_flex_xml
 from bs4 import BeautifulSoup
 from flask_login import current_user
 
-
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post
 from umr_annot_tool.main.forms import UploadForm
 
-
 main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
+
+
 # FRAME_DESC_FILE = "/umr_annot_tool/resources/frames_chinese.json"
 
 
@@ -62,7 +62,6 @@ notes = []
 filename = []
 
 
-
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
     sentence_content = " ".join(snts[0].words)
@@ -80,7 +79,7 @@ def annotate():
             sent_id = Sent.query.filter(Sent.content == sentence_content).first().id
             doc_id = Sent.query.filter(Sent.content == sentence_content).first().doc_id
             history_annot = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == current_user.id).first().annot_str
+                                                    Annotation.user_id == current_user.id).first().annot_str
             print(history_annot)
             return {"history_annot": history_annot}
 
@@ -102,7 +101,7 @@ def annotate():
             existing = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             print(existing)
-            if existing: #update the existing Annotation object
+            if existing:  # update the existing Annotation object
                 print("here")
                 existing.annot_str = amr_html
                 db.session.commit()
@@ -118,18 +117,18 @@ def annotate():
         print(f"total_snts: {total_snts}")
         print(target_language)
 
-
-
-
         if "set_sentence" in request.form:
             snt_id = request.form["sentence_id"]
-            return render_template('index.html', sentence_content=sentence_content, sentence=snts[int(snt_id) - 1], total_snts=total_snts, all_snts=snts,
+            return render_template('index.html', sentence_content=sentence_content, sentence=snts[int(snt_id) - 1],
+                                   total_snts=total_snts, all_snts=snts,
                                    lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
         else:
-            return render_template('index.html', sentence_content=sentence_content,sentence=snts[0], total_snts=total_snts, all_snts=snts,
+            return render_template('index.html', sentence_content=sentence_content, sentence=snts[0],
+                                   total_snts=total_snts, all_snts=snts,
                                    lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
     else:
-        return render_template('index.html', sentence_content=sentence_content, sentence=Sentence([], 0, 0), total_snts=0, all_snts=[],
+        return render_template('index.html', sentence_content=sentence_content, sentence=Sentence([], 0, 0),
+                               total_snts=0, all_snts=[],
                                lang=target_language[0], filename=filename[0], df_html=df_html, gls=gls, notes=notes)
 
 
@@ -143,7 +142,7 @@ def upload():
         # Doc.query.delete()
         # Sent.query.delete()
         target_language[0] = form.autocomplete_input.data
-        print(target_language)
+        # print(target_language)
 
         file = request.files['file']
         filename.clear()
@@ -152,15 +151,15 @@ def upload():
         print("filename:" + filename[0])
         content_string = file.read()
 
-        sent = ""
-
+        snts.clear()
         try:
             ET.fromstring(content_string)
             sents, dfs, sents_gls, conv_turns = parse_flex_xml(content_string)
             for i, sent in enumerate(sents):
                 snts.append(Sentence(sent, i, len(sent)))
             for df in dfs:
-                html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"', 'border="0"')
+                html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"',
+                                                                                               'border="0"')
                 soup = BeautifulSoup(html_str, "html.parser")
                 words_row = soup.findAll('tr')[1]
                 words_row['id'] = 'current-words'
@@ -175,26 +174,29 @@ def upload():
             for conv_turn in conv_turns:
                 notes.append(conv_turn)
 
-            print(df_html[0])
+            # print("df_html: ", df_html[0])
 
-            sent = sents[0]
 
         except ET.ParseError:
-            snts.clear()
-            print(content_string)
+            print("content_str: ", content_string)
             sents = content_string.strip().decode('UTF-8').split('\n')
             for i, sent in enumerate(sents):
                 snts.append(Sentence(sent.split(), i, len(sent.split())))
 
-        if not Doc.query.filter_by(filename=filename[0]).first():# this doc is not already added in
+        if not Doc.query.filter_by(filename=filename[0]).first():  # this doc is not already added in
             doc = Doc(lang=target_language[0], filename=filename[0])
             db.session.add(doc)
             db.session.commit()
 
-
             for sent_str in sents:
-                print(sent_str)
-                sent = Sent(content=sent_str, doc_id=doc.id)
+                if isinstance(sent_str, list):
+                    print("sent_str: ", " ".join(sent_str))
+                    sent = Sent(content=" ".join(sent_str), doc_id=doc.id)
+                elif isinstance(sent_str, str):
+                    print("sent_str: ", sent_str)
+                    sent = Sent(content=sent_str, doc_id=doc.id)
+                else:
+                    raise Exception("wrong sent_str type!!!!!!!!!")
                 db.session.add(sent)
                 db.session.commit()
     return render_template('upload.html', title='upload', form=form)
