@@ -323,6 +323,7 @@ function undo(n) {
     }
 }
 
+
 /**
  * this function takes in a template id (the name on the button) and return the form to fill out
  * @param id "top"
@@ -2774,6 +2775,55 @@ function load_history(){
     });
 }
 
+function export_annot(){
+    console.log("export_annot is called");
+    var doc_name = document.getElementById('filename').innerText
+    console.log(doc_name);
+    fetch('/annotate', {
+        method: 'POST',
+        body: JSON.stringify({"doc_name": doc_name})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        let output_array = data["annotations"];
+
+        output_array.forEach(e => {
+            console.log(e[1]);
+            e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
+            e[1] = e[1].replace(/&nbsp;/g, " ");
+            e[1] = e[1].replace(/<br>/g, "");
+            e[1] = e[1].replace('<div id="amr">', '');
+            e[1] = e[1].replace('</div>', '');
+
+            console.log(e[1]);
+        })
+
+        console.log(output_array);
+        // let output_str = data["annotations"].map(a => a.join("\n")).join("\n\n ");
+        let output_str = data["annotations"].map(a => a.join("\n")).join("\n\n # :: snt \t");
+
+        console.log(output_str);
+
+    var filename;
+    var text = '# :: snt \t';
+    if (window.BlobBuilder && window.saveAs) {
+        console.log('I am here1-1');
+
+        filename = doc_name;
+        filename += '.txt';
+        text += output_str
+        console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
+        var bb = new BlobBuilder();
+        bb.append(text);
+        saveAs(bb.getBlob(), filename);
+    } else {
+        console.log('I am here1-4');
+        console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
+    }
+
+    });
+}
+
 function applyProps(caller) {
     // add_edit_log('applyProps ' + caller);
     var s, value;
@@ -3105,7 +3155,6 @@ function reload_current_workset_snt() {
 
 function save_local_amr_file(sentence="", temp=false) {
     console.log(sentence);
-    // console.log(sentence_id);
     if ((s = document.getElementById('local_save_file')) != null) {
         s.focus();
     }
@@ -3122,9 +3171,6 @@ function save_local_amr_file(sentence="", temp=false) {
             }
             filename = document.getElementById('local_save_file').value;
 
-            // if (filename === ""){
-            //     filename = sentence_id;
-            // }
             // filename = filename.replace(/\.txt$/, "");
             // filename = filename.replace(/[^-_a-zA-Z0-9]/g, "_");
             filename += '.txt';

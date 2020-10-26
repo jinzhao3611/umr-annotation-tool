@@ -65,6 +65,7 @@ filename = []
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
     sentence_content = " ".join(snts[0].words)
+    print(sentence_content)
     if request.method in ['GET', 'POST']:
         try:
             token = request.get_json(force=True)["selected"]
@@ -73,19 +74,38 @@ def annotate():
         except:
             pass
 
+        # load_history annotation
         try:
             # document_name = request.get_json(force=True)["documentName"]
-            sentence_content = request.get_json(force=True)["sentence"]
-            sent_id = Sent.query.filter(Sent.content == sentence_content).first().id
-            doc_id = Sent.query.filter(Sent.content == sentence_content).first().doc_id
+            db_sent1 = request.get_json(force=True)["sentence"]
+            print("db_sent1: ", db_sent1)
+            sent_id = Sent.query.filter(Sent.content == db_sent1).first().id
+            print("sent_id: ", sent_id)
+            doc_id = Sent.query.filter(Sent.content == db_sent1).first().doc_id
+            print("doc_id: ", doc_id)
             history_annot = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
                                                     Annotation.user_id == current_user.id).first().annot_str
-            print(history_annot)
+            print("history_annot: ", history_annot)
             return {"history_annot": history_annot}
+        except:
+            pass
 
+        # load annotation
+        try:
+            doc_name = request.get_json(force=True)["doc_name"]
+            print("doc_name: ", doc_name)
+            doc_id = Doc.query.filter(Doc.filename==doc_name).first().id
+            print("doc_id: ", doc_id)
+            annotations = Annotation.query.filter(Annotation.doc_id==doc_id).all()
+            sentences2 = Sent.query.filter(Sent.doc_id==doc_id).all()
+            all_annots = [annot.annot_str for annot in annotations]
+            all_sents2 = [sent2.content for sent2 in sentences2]
+            print(list(zip(all_sents2, all_annots)))
+            return {"annotations": list(zip(all_sents2, all_annots))}
 
         except:
             pass
+
 
         try:
             amr_html = request.get_json(force=True)["amr"]

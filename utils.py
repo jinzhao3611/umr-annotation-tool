@@ -80,7 +80,9 @@ def parse_toolbox_xml(xml_path: str) -> Tuple:
         ps.append(ps_per_sentence)
 
     tbls = list()
-    rowIDs = ['mb', 'ge', 'ps']
+    # rowIDs = ['mb', 'ge', 'ps']
+    rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat']
+
     for i in range(len(tx)):
         # tbl = tabulate([mb[i], ge[i], ps[i]], headers=tx[i], tablefmt='orgtbl', showindex=rowIDs)
         # tbls.append(tbl)
