@@ -78,7 +78,27 @@ function conceptDropdown() {
         }
     } else { // if numfied_token is still a string, meaning the token is not a number
         // pass the token to server to get the framefile
-        try{
+        // try{
+        //     console.log("lemma!!!!" + getLemma(token))
+        //     fetch('/annotate', {
+        //         method: 'POST',
+        //         body: JSON.stringify({"selected": getLemma(token)})
+        //     }).then(function (response) {
+        //         return response.json();
+        //     }).then(function (data) {
+        //         console.log(data); //senses got returned from server
+        //         const lemmaBar = document.getElementById("find_lemma");
+        //         lemmaBar.onmouseenter = function () {
+        //             getSenses(data);
+        //         }
+        //     })
+        // }catch (e){
+        //     let letter = {"res": [{"desc": "token is a letter", "name": token}]};
+        //     getSenses(letter);
+        // }
+
+        if(typeof getLemma(token) !== 'undefined'){
+            console.log("lemma!!!!" + getLemma(token))
             fetch('/annotate', {
                 method: 'POST',
                 body: JSON.stringify({"selected": getLemma(token)})
@@ -91,10 +111,11 @@ function conceptDropdown() {
                     getSenses(data);
                 }
             })
-        }catch (e){
+        }else{
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
             getSenses(letter);
         }
+
 
     }
 
@@ -143,13 +164,9 @@ function docAnnot(sentenceId){
 
 }
 
-function submit_relation() {
+function submit_relation(selectorId) {
     // current_relation = sel.options[sel.selectedIndex].text;
-    current_relation = document.querySelector('#browser').value;
-    if (current_relation){
-    }else{
-        current_relation = document.querySelector('#browser4').value;
-    }
+    current_relation = document.querySelector('#'+ selectorId).value;
     if (current_relation) {
         submit_mode("add");
     }
@@ -166,8 +183,8 @@ function submit_relation() {
     console.log("current_relation is: " + current_relation);
 }
 
-function submit_attribute(n){
-    current_attribute = document.querySelector('#browser' + n).value;
+function submit_attribute(selectorID){
+    current_attribute = document.querySelector('#' + selectorID).value;
     // submit_template_action(current_mode, current_attribute);
     submit_template_action('add-constant', current_attribute);
     console.log("current_attribute is: " + current_attribute);
@@ -180,8 +197,8 @@ function submit_concept() {
     console.log("current_concept is: " + current_concept);
 }
 
-function submit_abstract_concept() {
-    current_concept = document.querySelector('#browser2').value;
+function submit_abstract_concept(selectorID) {
+    current_concept = document.querySelector('#'+ selectorID).value;
     current_concept = current_concept.replace("'", "\'");
     console.log("current_concept is: " + current_concept);
     submit_template_action(current_mode, current_concept);
@@ -521,6 +538,10 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         // console.log(current_parent);
         let test_str = "";
         test_str += selection;
+
+        console.log(selection);
+        console.log(test_str);
+
         var k = getKeyByValue(amr, test_str);
 
         if (k.includes("v")) {
@@ -1576,7 +1597,7 @@ function add_triple(head, role, arg, arg_type) {
         amr[new_loc + '.n'] = 0;
         amr[new_loc + '.c'] = arg_concept;
         amr[new_loc + '.s'] = arg_string;
-        amr[new_loc + '.a'] = begOffset-1 + "-" + endOffset-1; // alignment_index
+        amr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
 
 
         recordVariable(arg_variable, new_loc);
@@ -3698,7 +3719,8 @@ function loadField2amr() {
 // });
 
 document.onselectionchange = function selectSpan() {
-    let selection = document.getSelection();
+    selection = document.getSelection();
+    console.log("" + selection);
     selected_tokens.innerHTML = "";
     selected_tokens.innerHTML += selection;
     begOffset = selection.anchorNode.parentElement.cellIndex;

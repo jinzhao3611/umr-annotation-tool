@@ -102,7 +102,7 @@
     {% if 'English' == lang %}
         <div class="dropdown">
             <label for="browser">Roles</label>
-            <input list="browsers" name="browser" id="browser">
+            <input list="browsers" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
             <datalist id="browsers">
                 <option value=":ARG0">
                 <option value=":ARG1">
@@ -194,12 +194,12 @@
                 <option value=":same-entity">
 
             </datalist>
-            <input type="submit" onclick="submit_relation()">
+            <input type="submit" onclick="submit_relation('roles1')">
         </div>
     {% else %}
         <div class="dropdown">
             <label for="browser">Roles</label>
-            <input list="browsers" name="browser" id="browser">
+            <input list="browsers" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
             <datalist id="browsers">
                 <option value=":actor">
                 <option value=":undergoer">
@@ -216,14 +216,14 @@
                 <option value=":goal">
                 <option value=":affectee">
             </datalist>
-            <input type="submit" onclick="submit_relation()">
+            <input type="submit" onclick="submit_relation('roles2')">
         </div>
     {% endif %}
 
 
     <div id="other-attributes">
         <label for="browser2">Concept Types </label>
-        <input list="browsers2" name="browser2" id="browser2">
+        <input list="browsers2" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="browsers2">
             <option value='ordinal-entity'>
             <option value='temporal-quantity'>
@@ -232,12 +232,12 @@
             <option value='truth-value'>
             <option value='name'>
         </datalist>
-        <input type="submit" onclick="submit_abstract_concept(2);">
+        <input type="submit" onclick="submit_abstract_concept('concept_types');">
     </div>
 
     <div id="named_entities">
         <label for="browser6">Named Entity Types </label>
-        <input list="browsers6" name="browser6" id="browser6">
+        <input list="browsers6" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="browsers6">
             <option value='thing'>
             <option value='person'>
@@ -372,41 +372,41 @@
 
     <div id="real-attributes">
         <label for="browser4">Attributes</label>
-        <input list="browsers4" name="browser4" id="browser4">
+        <input list="browsers4" name="attributes" id="attributes" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="browsers4">
             <option value=":Aspect">
             <option value=":polarity">
         </datalist>
-        <input type="submit" onclick="submit_relation()">
+        <input type="submit" onclick="submit_relation('attributes')">
     </div>
 
 
 {#    attribute values of Aspect#}
     <div class="attributes" id="aspect-attribute" style="display: none">
         <label for="browser1">Attribute Values</label>
-        <input list="browsers1" name="browser1" id="browser1">
+        <input list="browsers1" name="attribute_values1" id="attribute_values1" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="browsers1">
             <option value='Habitual'>
             <option value='Activity'>
             <option value='Endeavor'>
             <option value='Performance'>
         </datalist>
-        <input type="submit" onclick="submit_attribute('1')">
+        <input type="submit" onclick="submit_attribute('attribute_values1')">
     </div>
 
 {#    attribute values of polarity#}
-    <div class="attributes" id="aspect-attribute" style="display: none">
+    <div class="attributes" id="polarity-attribute" style="display: none">
         <label for="browser5">Attribute Values</label>
-        <input list="browsers5" name="browser5" id="browser5">
+        <input list="browsers5" name="attribute_values2" id="attribute_values2" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="browsers5">
             <option value='-'>
         </datalist>
-        <input type="submit" onclick="submit_attribute('1')">
+        <input type="submit" onclick="submit_attribute('attribute_values2')">
     </div>
 
     <div id="constants">
         <label for="browser3">Constants </label>
-        <input list="browsers3" name="browser3" id="browser3">
+        <input list="browsers3" name="constants" id="constants" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="browsers3">
             <option value="imperative">
             <option value="expressive">
