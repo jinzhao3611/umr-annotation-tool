@@ -3,7 +3,7 @@ from typing import List, Dict
 import attr
 import json
 import xml.etree.ElementTree as ET
-from utils import parse_flex_xml
+from utils import parse_xml
 from bs4 import BeautifulSoup
 from flask_login import current_user
 
@@ -139,8 +139,6 @@ def upload():
 
     form = UploadForm()
     if request.method == "POST":
-        # Doc.query.delete()
-        # Sent.query.delete()
         target_language[0] = form.autocomplete_input.data
         # print(target_language)
 
@@ -152,12 +150,17 @@ def upload():
         content_string = file.read()
 
         snts.clear()
+        df_html.clear()
         try:
+            print("I am here 1")
             ET.fromstring(content_string)
-            sents, dfs, sents_gls, conv_turns = parse_flex_xml(content_string)
+            print("I am here 2")
+            sents, dfs, sents_gls, conv_turns = parse_xml(content_string)
+            print(sents[0], dfs[0])
             for i, sent in enumerate(sents):
                 snts.append(Sentence(sent, i, len(sent)))
             for df in dfs:
+                print(df)
                 html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"',
                                                                                                'border="0"')
                 soup = BeautifulSoup(html_str, "html.parser")

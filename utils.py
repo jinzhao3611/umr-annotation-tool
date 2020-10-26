@@ -19,6 +19,19 @@ import argparse
 from typing import Tuple
 import pandas as pd
 
+def parse_xml(xml_path):
+    try:
+        root = ET.fromstring(xml_path) # actually xml string here
+    except ET.ParseError:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+
+    if root.tag == 'document':
+        return parse_flex_xml(xml_path)
+    elif root.tag == 'database':
+        return parse_toolbox_xml(xml_path)
+
+
 def parse_toolbox_xml(xml_path: str) -> Tuple:
     """
     parse the Arapahoe toolbox xml file
@@ -28,8 +41,11 @@ def parse_toolbox_xml(xml_path: str) -> Tuple:
     :return: None
     """
 
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
+    try:
+        root = ET.fromstring(xml_path) # actually xml string here
+    except ET.ParseError:
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
 
     tx = list()
     mb = list()
@@ -66,10 +82,12 @@ def parse_toolbox_xml(xml_path: str) -> Tuple:
     tbls = list()
     rowIDs = ['mb', 'ge', 'ps']
     for i in range(len(tx)):
-        tbl = tabulate([mb[i], ge[i], ps[i]], headers=tx[i], tablefmt='orgtbl', showindex=rowIDs)
-        tbls.append(tbl)
-
-    return tx, tbls
+        # tbl = tabulate([mb[i], ge[i], ps[i]], headers=tx[i], tablefmt='orgtbl', showindex=rowIDs)
+        # tbls.append(tbl)
+        df = pd.DataFrame([tx[i], [" ".join(e) for e in mb[i]], [" ".join(e) for e in ge[i]], [" ".join(e) for e in ps[i]]])
+        df.index=['Words'] + rowIDs
+        tbls.append(df)
+    return tx, tbls, "", ""
 
 def parse_flex_xml(xml_path: str) -> Tuple:
     """
@@ -159,29 +177,36 @@ def output_to_file(textonly:bool, output:str, result:Tuple) -> None:
                 outfile.write(tbl + '\n\n\n\n')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("input", help='the input xml file path')
-    parser.add_argument("output", help='the output xml file path')
-    parser.add_argument("source", help='either toolbox or flex')
 
-    parser.add_argument("--textonly", help="the output txt file only shows the raw text of the tx line",
-                        action="store_true")
+    toolbox_path = '/Users/jinzhao/web-projects/umr-annotation-tool/umr_annot_tool/resources/arapahoe.xml'
+    flex_path = '/Users/jinzhao/web-projects/umr-annotation-tool/umr_annot_tool/resources/sanapana/Sanapana_1.xml'
+    # tx, tbls, _, _ = parse_toolbox_xml(toolbox_path)
+    # print(tbls)
 
-    args = parser.parse_args()
-
-    if args.source == 'toolbox':
-        result = parse_toolbox_xml(args.input)
-    else:
-        #  args.source == 'flex'
-        result = parse_flex_xml(args.input)
-
-    output_to_file(args.textonly, args.output, result)
+    tree = ET.parse(toolbox_path)
+    root = tree.getroot()
+    print(root.tag)
 
 
-    # xml_path1 = '/Users/jinzhao/schoolwork/lab-work/language-samples/Arapahoe/text\ sample\ xml.xml out.txt'
-    # xml_path2 = '/Users/jinzhao/schoolwork/lab-work/language-samples/Sanapana/Text\ Sample_Sanapana.xml'
-    # xml_path3 = '/Users/jinzhao/schoolwork/lab-work/language-samples/Secoya/Seywt01-102006_VerifiableGeneric.xml'
 
-    # parse_flex_xml(xml_path3, textonly=False)
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument("input", help='the input xml file path')
+    # parser.add_argument("output", help='the output xml file path')
+    # parser.add_argument("source", help='either toolbox or flex')
+    #
+    # parser.add_argument("--textonly", help="the output txt file only shows the raw text of the tx line",
+    #                     action="store_true")
+    #
+    # args = parser.parse_args()
+    #
+    # if args.source == 'toolbox':
+    #     result = parse_toolbox_xml(args.input)
+    # else:
+    #     #  args.source == 'flex'
+    #     result = parse_flex_xml(args.input)
+    #
+    # output_to_file(args.textonly, args.output, result)
+
+
 
 
