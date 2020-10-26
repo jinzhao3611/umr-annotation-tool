@@ -2756,14 +2756,15 @@ function UMR2db(){
     console.log("I am here521");
     // sent = document.getElementById('sentence').innerText;
     var amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
-    var sentenceAndIndice = document.getElementById('sentence').innerText;
-    var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
+    // var sentenceAndIndice = document.getElementById('sentence').innerText;
+    // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
     // var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
-
+    var sentence_id = document.getElementById('sentence_id').value;
+    console.log(sentence_id);
     console.log(amrHtml);
     fetch('/annotate', {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "db_sentence": sentence})
+        body: JSON.stringify({"amr": amrHtml, "sentence_id": sentence_id})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -2780,13 +2781,14 @@ function firstHalfString(str) {
 
 function load_history(){
     console.log("I am here524");
-    var sentenceAndIndice = document.getElementById('sentence').innerText;
-    var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
+    // var sentenceAndIndice = document.getElementById('sentence').innerText;
+    // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
     var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
+    var sentence_id = document.getElementById('sentence_id').value;
 
     fetch('/annotate', {
         method: 'POST',
-        body: JSON.stringify({"documentName": documentName, "sentence": sentence})
+        body: JSON.stringify({"documentName": documentName, "history_sent_id": sentence_id})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {

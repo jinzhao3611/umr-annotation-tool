@@ -64,9 +64,14 @@ filename = []
 
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
+
     sentence_content = " ".join(snts[0].words)
-    print(sentence_content)
+
     if request.method in ['GET', 'POST']:
+        # snt_id = request.form["sentence_id"]
+        # sentence_db = " ".join(snts[int(snt_id)].words)
+        # print("sentence_db: ", sentence_db)
+
         try:
             token = request.get_json(force=True)["selected"]
             print(token)
@@ -77,11 +82,13 @@ def annotate():
         # load_history annotation
         try:
             # document_name = request.get_json(force=True)["documentName"]
-            db_sent1 = request.get_json(force=True)["sentence"]
-            print("db_sent1: ", db_sent1)
-            sent_id = Sent.query.filter(Sent.content == db_sent1).first().id
+            history_sent_id = request.get_json(force=True)["history_sent_id"]
+            print("history_sent_id: ", history_sent_id)
+            history_sent = " ".join(snts[int(history_sent_id)].words)
+            print("history_sent: ", history_sent)
+            sent_id = Sent.query.filter(Sent.content == history_sent).first().id
             print("sent_id: ", sent_id)
-            doc_id = Sent.query.filter(Sent.content == db_sent1).first().doc_id
+            doc_id = Sent.query.filter(Sent.content == history_sent).first().doc_id
             print("doc_id: ", doc_id)
             history_annot = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
                                                     Annotation.user_id == current_user.id).first().annot_str
@@ -107,16 +114,19 @@ def annotate():
             pass
 
 
+        # add to db
         try:
             amr_html = request.get_json(force=True)["amr"]
-            print(amr_html)
-            sentence = (request.get_json(force=True)["db_sentence"]).strip()
-            print(sentence)
+            print("amr_html: ", amr_html)
+            db_sent_id = request.get_json(force=True)["sentence_id"]
+            print("db_sent_id: ", db_sent_id)
+            sentence = " ".join(snts[int(db_sent_id)].words)
+            print("sentence: ", sentence)
             sent_id = Sent.query.filter(Sent.content == sentence).first().id
-            print(sent_id)
+            print("sent_id", sent_id)
             doc_id = Sent.query.filter(Sent.content == sentence).first().doc_id
-            print(doc_id)
-            print(current_user.id)
+            print("doc_id", doc_id)
+            print("current_user id", current_user.id)
 
             existing = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
