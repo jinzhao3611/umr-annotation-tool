@@ -2790,6 +2790,8 @@ function load_history(){
     // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
     var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
     var sentence_id = document.getElementById('sentence_id').value;
+    console.log(documentName);
+    console.log(sentence_id);
 
     fetch('/annotate', {
         method: 'POST',

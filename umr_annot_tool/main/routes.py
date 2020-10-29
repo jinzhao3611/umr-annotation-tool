@@ -91,7 +91,7 @@ def annotate():
             # document_name = request.get_json(force=True)["documentName"]
             history_sent_id = request.get_json(force=True)["history_sent_id"]
             print("history_sent_id: ", history_sent_id)
-            history_sent = " ".join(snts[int(history_sent_id)].words)
+            history_sent = " ".join(snts[int(history_sent_id)-1].words)
             print("history_sent: ", history_sent)
             sent_id = Sent.query.filter(Sent.content == history_sent).first().id
             print("sent_id: ", sent_id)
@@ -116,10 +116,10 @@ def annotate():
             annotations = Annotation.query.filter(Annotation.doc_id==doc_id).all()
             sentences2 = Sent.query.filter(Sent.doc_id==doc_id).all()
             all_annots = [annot.annot_str for annot in annotations]
-            # all_aligns = [annot.alignment for annot in annotations]
+            all_aligns = [annot.alignment for annot in annotations]
             all_sents2 = [sent2.content for sent2 in sentences2]
-            print(list(zip(all_sents2, all_annots)))
-            return {"annotations": list(zip(all_sents2, all_annots))}
+            print(list(zip(all_sents2, all_annots, all_aligns)))
+            return {"annotations": list(zip(all_sents2, all_annots, all_aligns))}
 
         except:
             pass
@@ -134,11 +134,12 @@ def annotate():
             align_info = request.get_json(force=True)["align"]
             print("align_ino:", align_info)
 
-            sentence = " ".join(snts[int(db_sent_id)].words)
-            print("sentence: ", sentence)
-            sent_id = Sent.query.filter(Sent.content == sentence).first().id
+            print(snts)
+            sentence2db = " ".join(snts[int(db_sent_id)-1].words)
+            print("sentence2db: ", sentence2db)
+            sent_id = Sent.query.filter(Sent.content == sentence2db).first().id
             print("sent_id", sent_id)
-            doc_id = Sent.query.filter(Sent.content == sentence).first().doc_id
+            doc_id = Sent.query.filter(Sent.content == sentence2db).first().doc_id
             print("doc_id", doc_id)
             print("current_user id", current_user.id)
 
