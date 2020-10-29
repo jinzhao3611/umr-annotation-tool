@@ -1,3 +1,4 @@
+from flask import url_for, redirect
 from werkzeug.utils import secure_filename
 from typing import List, Dict
 import attr
@@ -64,9 +65,10 @@ filename = []
 
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
-
-    sentence_content = " ".join(snts[0].words)
-
+    try:
+        sentence_content = " ".join(snts[0].words)
+    except IndexError:
+        return redirect(url_for('main.upload'))
     if request.method in ['GET', 'POST']:
         # snt_id = request.form["sentence_id"]
         # sentence_db = " ".join(snts[int(snt_id)].words)
@@ -74,7 +76,12 @@ def annotate():
 
         try:
             token = request.get_json(force=True)["selected"]
+            # orig_token = request.get_json(force=True)["selected_tok"]
+            # selected_sentId = request.get_json(force=True)["selected_sentId"]
+            # selected_index = snts[int(selected_sentId)].words.index(orig_token)
+
             print(token)
+            print(frame_parser.parse(token))
             return frame_parser.parse(token)
         except:
             pass
@@ -92,12 +99,15 @@ def annotate():
             print("doc_id: ", doc_id)
             history_annot = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
                                                     Annotation.user_id == current_user.id).first().annot_str
+            history_align = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
+                                                    Annotation.user_id == current_user.id).first().alignment
             print("history_annot: ", history_annot)
-            return {"history_annot": history_annot}
+            print("history_align: ", history_align)
+            return {"history_annot": history_annot, "history_align": history_align}
         except:
             pass
 
-        # load annotation
+        # load annotations to save
         try:
             doc_name = request.get_json(force=True)["doc_name"]
             print("doc_name: ", doc_name)
@@ -106,6 +116,7 @@ def annotate():
             annotations = Annotation.query.filter(Annotation.doc_id==doc_id).all()
             sentences2 = Sent.query.filter(Sent.doc_id==doc_id).all()
             all_annots = [annot.annot_str for annot in annotations]
+            # all_aligns = [annot.alignment for annot in annotations]
             all_sents2 = [sent2.content for sent2 in sentences2]
             print(list(zip(all_sents2, all_annots)))
             return {"annotations": list(zip(all_sents2, all_annots))}
@@ -120,6 +131,9 @@ def annotate():
             print("amr_html: ", amr_html)
             db_sent_id = request.get_json(force=True)["sentence_id"]
             print("db_sent_id: ", db_sent_id)
+            align_info = request.get_json(force=True)["align"]
+            print("align_ino:", align_info)
+
             sentence = " ".join(snts[int(db_sent_id)].words)
             print("sentence: ", sentence)
             sent_id = Sent.query.filter(Sent.content == sentence).first().id
@@ -134,9 +148,10 @@ def annotate():
             if existing:  # update the existing Annotation object
                 print("here")
                 existing.annot_str = amr_html
+                existing.alignment = align_info
                 db.session.commit()
             else:
-                annotation = Annotation(annot_str=amr_html, author=current_user, sent_id=sent_id, doc_id=doc_id)
+                annotation = Annotation(annot_str=amr_html, alignment=align_info, author=current_user, sent_id=sent_id, doc_id=doc_id)
                 db.session.add(annotation)
                 db.session.commit()
             return {"amr": amr_html}
@@ -190,7 +205,9 @@ def upload():
             for i, sent in enumerate(sents):
                 snts.append(Sentence(sent, i, len(sent)))
             for df in dfs:
+                df.columns = range(1, len(df.columns)+1)
                 print(df)
+                print(df.columns)
                 html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"',
                                                                                                'border="0"')
                 soup = BeautifulSoup(html_str, "html.parser")

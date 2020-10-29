@@ -98,10 +98,13 @@ function conceptDropdown() {
         // }
 
         if(typeof getLemma(token) !== 'undefined'){
+            var sentence_id = document.getElementById('sentence_id').value;
             console.log("lemma!!!!" + getLemma(token))
             fetch('/annotate', {
                 method: 'POST',
+                // body: JSON.stringify({"selected": getLemma(token), "selected_tok": token, "selected_sentId": sentence_id})
                 body: JSON.stringify({"selected": getLemma(token)})
+
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
@@ -593,7 +596,7 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         // var role = ':' + document.getElementById('test-arg0').innerText;
         // var role = ':arg' + num;
         var role = current_relation;
-        var concept = document.querySelector('#browser6').value;
+        var concept = document.querySelector('#ne_types').value;
 
         // var name = document.getElementById('selected_tokens').innerText;
         var name = current_concept;
@@ -1294,8 +1297,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     var alignment_string = '';
     Object.keys(amr).forEach(function(key) {
         if(/[\\d|\\.]+c/gm.test(key) && amr[key]){
-            // alignment_string += amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
-            alignment_string += (amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n')).replace(/undefined/g, 'inferred');
+            alignment_string += amr[key] + ": " +  amr[key.replace('c', 'v')] + ": " +  amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+            // alignment_string += (amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n')).replace(/undefined/g, 'inferred');
+
         }
 
         // if(String(amr[key]).charAt(0)=='2'){
@@ -2760,11 +2764,12 @@ function UMR2db(){
     // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
     // var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
     var sentence_id = document.getElementById('sentence_id').value;
+    var align_info = document.getElementById('align').innerText;
     console.log(sentence_id);
     console.log(amrHtml);
     fetch('/annotate', {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "sentence_id": sentence_id})
+        body: JSON.stringify({"amr": amrHtml, "sentence_id": sentence_id, "align": align_info})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -2793,7 +2798,8 @@ function load_history(){
         return response.json();
     }).then(function (data) {
         console.log(data);
-        setInnerHTML('load-plain', deHTML(data["history_annot"]))//returned from server
+        setInnerHTML('load-plain', deHTML(data["history_annot"])); //returned from server
+        setInnerHTML('align', htmlSpaceGuard(data['history_align']));
         loadField2amr();
     });
 }
@@ -3710,6 +3716,20 @@ function loadField2amr() {
             s3.value = value;
         }
     }
+    console.log(amr);
+
+    var alignArray = document.getElementById('align').innerText.trim().split(/\n/);
+    var alignArrayLen = alignArray.length;
+    for (var i=0; i < alignArrayLen; i++){
+        var splitted_align = alignArray[i].split(":");
+        var loaded_concept = splitted_align[0].trim();
+        var loaded_variable = splitted_align[1].trim();
+        var loaded_align = splitted_align[2].trim();
+        var loc = getLocs(loaded_variable);
+        amr[loc + '.a'] = loaded_align;
+    }
+
+    console.log(amr);
     show_amr('show');
 }
 
