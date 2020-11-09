@@ -470,12 +470,11 @@
 
 <div id="real-attributes">
     <label for="browser4">Attributes</label>
-    <input list="browsers4" name="attributes" id="attributes" onfocus="this.value=''" onchange="this.blur();">
+    <input list="browsers4" oninput="show_attribute_values('attributes')" name="attributes" id="attributes" onfocus="this.value=''" onchange="this.blur();">
     <datalist id="browsers4">
         <option value=":Aspect">
         <option value=":polarity">
     </datalist>
-    <input type="submit" onclick="show_attribute_values('attributes')">
 </div>
 
 
