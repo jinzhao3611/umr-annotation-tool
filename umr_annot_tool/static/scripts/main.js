@@ -2835,18 +2835,25 @@ function export_annot(){
             e[1] = e[1].replace(/<br>/g, "");
             e[1] = e[1].replace('<div id="amr">', '');
             e[1] = e[1].replace('</div>', '');
-
             console.log(e[1]);
         })
 
         console.log(output_array);
-        // let output_str = data["annotations"].map(a => a.join("\n")).join("\n\n ");
-        let output_str = data["annotations"].map(a => a.join("\n")).join("\n\n # :: snt \t");
-
+        let output_str = data["annotations"].map((a,index) =>
+            index+1 + '\t' + a[0]
+            + "\n# sentence level graph:\n"
+            + a[1]
+            + "\n# alignment:"
+            + a[2]
+            + "\n# document level annotation:\nempty\n").join("\n\n# :: snt");
         console.log(output_str);
 
     var filename;
-    var text = '# :: snt \t';
+
+    var text = "user name: " + document.getElementById('username').innerText + '\n';
+    let curr_time = new Date();
+    text += "export time: " + curr_time.toLocaleString() + '\n\n';
+    text += '# :: snt';
     if (window.BlobBuilder && window.saveAs) {
         console.log('I am here1-1');
 
@@ -3921,6 +3928,8 @@ function clearInput() {
     document.getElementById('attribute_values1').value = '';
     document.getElementById('constants').value = '';
 }
+
+
 
 
 

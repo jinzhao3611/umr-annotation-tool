@@ -24,9 +24,19 @@
 
 
 {% block content %}
+    <table>
+        <tr>
+            <th class='text-muted'>Current User: </th>
+            <th id="username">{{ current_user.username }}</th>
+        </tr>
+        <tr>
+            <th class='text-muted'>File Name: </th>
+            <th id="filename" style="display:inline">{{ filename }}</th>
+        </tr>
+    </table>
+    <hr>
     {#<body onload="initialize()">#}
     {# display all the sentences #}
-    <div id="filename"><p>{{ filename }}</p></div>
     <div id="all-sentences" style="height: 250px; overflow-y: scroll;">
         <script type="text/javascript">initialize()</script>
         {% if all_snts %}
