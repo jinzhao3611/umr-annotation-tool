@@ -65,6 +65,8 @@ filename = []
 
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
     try:
         print(snts)
         sentence_content = " ".join(snts[0].words)
