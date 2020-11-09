@@ -66,6 +66,7 @@ filename = []
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
     try:
+        print(snts)
         sentence_content = " ".join(snts[0].words)
     except IndexError:
         return redirect(url_for('main.upload'))
@@ -180,6 +181,8 @@ def annotate():
 
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
+    snts.clear()
+    df_html.clear()
     # existing = Annotation.query.filter(Annotation.sent_id == 1, Annotation.doc_id == 1,
     #                                    Annotation.user_id == current_user.id).first()
 
@@ -195,8 +198,7 @@ def upload():
         print("filename:" + filename[0])
         content_string = file.read()
 
-        snts.clear()
-        df_html.clear()
+
         try:
             print("I am here 1")
             ET.fromstring(content_string)
@@ -231,8 +233,9 @@ def upload():
         except ET.ParseError:
             print("content_str: ", content_string)
             sents = content_string.strip().decode('UTF-8').split('\n')
-            for i, sent in enumerate(sents):
-                snts.append(Sentence(sent.split(), i, len(sent.split())))
+            if content_string:
+                for i, sent in enumerate(sents):
+                    snts.append(Sentence(sent.split(), i, len(sent.split())))
 
         if not Doc.query.filter_by(filename=filename[0]).first():  # this doc is not already added in
             doc = Doc(lang=target_language[0], filename=filename[0])

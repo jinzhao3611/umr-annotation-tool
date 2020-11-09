@@ -1,5 +1,22 @@
 {% extends "layout.html" %}
+
 {% block content %}
+    <script>
+    function enableDisable(id) {
+        console.log("enableDisable is called");
+        //Reference the Button.
+        var stringfield = document.getElementById(id);
+        var btnSubmit = document.getElementById("btnSubmit");
+
+        //Verify the TextBox value.
+        btnSubmit.disabled = stringfield.value.trim() === "";
+        console.log(btnSubmit.disabled);
+    }
+    function myalert(){
+        alert("example");
+    }
+    </script>
+
     <form method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         {{ form.file }}
@@ -13,6 +30,5 @@
         <input type="submit">
     </form>
 
-    <a type="button" href="{{ url_for('main.annotate') }}"><button class="btn btn-outline-info">Annotate!</button></a>
-
+    <a type="button" href="{{ url_for('main.annotate') }}"><button class="btn btn-outline-info" id="btnSubmit">Annotate!</button></a>
 {% endblock content %}

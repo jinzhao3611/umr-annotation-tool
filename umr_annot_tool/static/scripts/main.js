@@ -134,8 +134,18 @@ function getSenses(senses) {
         senses.res.forEach(function (value, index, array) {
             let genLink = document.createElement("a");
             genLink.innerHTML = value.name;
-            genLink.setAttribute("href", `javascript:submit_template_action('nothing', "${value.name}");`);
+            genLink.setAttribute("href", `javascript:submit_template_action('nothing', "${value.name}"); clearInput()`);
             genLink.setAttribute("title", value.desc);
+            genLink.setAttribute("id", "xx");
+            genLink.onclick = function clearInput() {
+                console.log("clearInput is called");
+                document.getElementById('roles1').value = '';
+                document.getElementById('concept_types').value = '';
+                document.getElementById('ne_types').value = '';
+                document.getElementById('attributes').value = '';
+                document.getElementById('attribute_values1').value = '';
+                document.getElementById('constants').value = '';
+            }
             genDrop.appendChild(genLink);
         });
         genDrop.classList.toggle("show");
@@ -3686,6 +3696,7 @@ function string2amr(s) {
  * this is used to load the penman string
  */
 function loadField2amr() {
+    console.log(loadField2amr);
     var s, s2, s3, value;
     var saved_snt = '';
     if ((s = document.getElementById('load-plain')) != null) {
@@ -3898,6 +3909,17 @@ function initialize_frame_arg_descriptions() {
             // add_log('record_frame_arg_descriptions ' + norm_frame + ' has_frame: ' + frame_arg_descr);
         }
     }
+}
+
+
+function clearInput() {
+    console.log("clearInput is called");
+    document.getElementById('roles1').value = '';
+    document.getElementById('concept_types').value = '';
+    document.getElementById('ne_types').value = '';
+    document.getElementById('attributes').value = '';
+    document.getElementById('attribute_values1').value = '';
+    document.getElementById('constants').value = '';
 }
 
 
