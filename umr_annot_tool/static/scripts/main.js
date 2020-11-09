@@ -179,7 +179,13 @@ function submit_concept() {
 }
 
 function submit_query(){
-    let r = document.getElementById('roles1').value;
+    let r = '';
+    if(document.getElementById('roles1')){
+        r = document.getElementById('roles1').value;
+    }else if(document.getElementById('roles2')){
+        r = document.getElementById('roles2').value;
+    }
+
     let a = document.getElementById('attributes').value;
     let av = '';
     if(document.getElementById('attribute_values1').value){
@@ -3919,7 +3925,12 @@ function initialize_frame_arg_descriptions() {
 
 function clearInput() {
     console.log("clearInput is called");
-    document.getElementById('roles1').value = '';
+    if(document.getElementById('roles1')){
+        document.getElementById('roles1').value = '';
+    }
+    if(document.getElementById('roles2')){
+        document.getElementById('roles2').value = '';
+    }
     document.getElementById('concept_types').value = '';
     document.getElementById('ne_types').value = '';
     document.getElementById('attributes').value = '';
