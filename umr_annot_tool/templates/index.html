@@ -7,11 +7,11 @@
           media="only screen and (max-device-width:480px)">
 
 
-{#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
+    {#    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>#}
     <script src="../static/scripts/my_jquery.js"></script>
 
     <script src="../static/scripts/main.js" type="text/javascript"></script>
-{#    <script src="/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/static/scripts/main.js" type="text/javascript"></script>#}
+    {#    <script src="/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/static/scripts/main.js" type="text/javascript"></script>#}
 
     <script src="../static/scripts/utils.js" type="text/javascript"></script>
     <script src="../static/scripts/BlobBuilder.js"></script>
@@ -20,786 +20,871 @@
 
     <script src="../static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
     <script src="../static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+
+    <script type="text/javascript">
+        $(document).on('click', '.dropdown-menu', function (e) {
+            e.stopPropagation();
+        });
+
+        // make it as accordion for smaller screens
+        if ($(window).width() < 992) {
+            $('.dropdown-menu a').click(function (e) {
+                e.preventDefault();
+                if ($(this).next('.submenu').length) {
+                    $(this).next('.submenu').toggle();
+                }
+                $('.dropdown-li').on('hide.bs.dropdown', function () {
+                    $(this).find('.submenu').hide();
+                })
+            });
+        }
+    </script>
+    <style type="text/css">
+
+        @media (min-width: 992px) {
+            .dropdown-menu .dropdown-toggle:after {
+                border-top: .3em solid transparent;
+                border-right: 0;
+                border-bottom: .3em solid transparent;
+                border-left: .3em solid;
+            }
+
+            .dropdown-menu .dropdown-menu {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .dropdown-menu li {
+                position: relative;
+            }
+
+            .nav-item .submenu {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: -7px;
+            }
+
+            .nav-item .submenu-left {
+                right: 100%;
+                left: auto;
+            }
+
+            .dropdown-menu > li:hover {
+                background-color: #f1f1f1
+            }
+
+            .dropdown-menu > li:hover > .submenu {
+                display: block;
+            }
+        }
+    </style>
 {% endblock head %}
 
 
 {% block content %}
+<table>
+    <tr>
+        <th class='text-muted'>Current User:</th>
+        <th id="username">{{ current_user.username }}</th>
+    </tr>
+    <tr>
+        <th class='text-muted'>File Name:</th>
+        <th id="filename" style="display:inline">{{ filename }}</th>
+    </tr>
+</table>
+<hr>
+{#<body onload="initialize()">#}
+{# display all the sentences #}
+<div id="all-sentences" style="height: 250px; overflow-y: scroll;">
+    <script type="text/javascript">initialize()</script>
+    {% if all_snts %}
+        {% for snt in all_snts %}
+            <table>
+                <tbody>
+                <tr>
+                    <td>[{{ snt.id+1 }}]</td>
+                    {% if snt.length %}
+                        {% for index in range(0, snt.length) %}
+                            <td>{{ snt.words[index] }}</td>
+                        {% endfor %}
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+    {% endif %}
+</div>
+<hr>
+{# choose the sentence ID #}
+<form method="post">
+    Sentence ID
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
+           max={{ total_snts }} value={{ sentence.id+1 }}>
+    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
+</form>
+
+
+{# display the sentence with the chosen sentence ID #}
+{% if df_html|length and 'Default' == lang %}
+<div id="sentence" style="height: 250px; overflow-y: scroll;">
+    {% autoescape off %}
+    <p>{{ df_html[sentence.id] }}</p>
+    {% endautoescape %}
+    {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
+    <p><b>Free</b> {{ gls[sentence.id] }}</p>
+    <p><b>Notes</b> {{ notes[sentence.id] }}</p>
+</div>
+<button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info
+</button>
+{% else %}
+<div id="sentence">
     <table>
+        <tbody>
         <tr>
-            <th class='text-muted'>Current User: </th>
-            <th id="username">{{ current_user.username }}</th>
+            {% if sentence.length %}
+                {% for index in range(0, sentence.length) %}
+                    <td>{{ sentence.words[index] }}</td>
+                {% endfor %}
+            {% else %}
+                <td></td>
+            {% endif %}
         </tr>
         <tr>
-            <th class='text-muted'>File Name: </th>
-            <th id="filename" style="display:inline">{{ filename }}</th>
+            {% if sentence.length %}
+                <td align="center">0</td>
+                {% for index in range(0, sentence.length - 1) %}
+                    <td align="center">{{ index + 1 }}</td>
+                {% endfor %}
+            {% else %}
+                <td></td>
+            {% endif %}
         </tr>
+        </tbody>
     </table>
-    <hr>
-    {#<body onload="initialize()">#}
-    {# display all the sentences #}
-    <div id="all-sentences" style="height: 250px; overflow-y: scroll;">
-        <script type="text/javascript">initialize()</script>
-        {% if all_snts %}
-            {% for snt in all_snts %}
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>[{{ snt.id+1 }}]</td>
-                        {% if snt.length %}
-                            {% for index in range(0, snt.length) %}
-                                <td>{{ snt.words[index] }}</td>
-                            {% endfor %}
-                        {% else %}
-                            <td></td>
-                        {% endif %}
-                    </tr>
-                    </tbody>
-                </table>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <hr>
-    {# choose the sentence ID #}
-    <form method="post">
-        Sentence ID
-        <input type="number" name="sentence_id" id="sentence_id" size=8 min=1
-               max={{ total_snts }} value={{ sentence.id+1 }}>
-        <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
-    </form>
+</div>
+{% endif %}
 
+<hr>
 
-    {# display the sentence with the chosen sentence ID #}
-    {% if df_html|length and 'Default' == lang %}
-        <div id="sentence" style="height: 250px; overflow-y: scroll;">
-        {% autoescape off %}
-        <p>{{ df_html[sentence.id] }}</p>
-        {% endautoescape %}
-{#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
-        <p><b>Free</b> {{ gls[sentence.id] }}</p>
-        <p><b>Notes</b> {{ notes[sentence.id] }}</p>
-        </div>
-        <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
-    {% else %}
-        <div id="sentence">
-        <table>
-            <tbody>
-                <tr>
-                    {% if sentence.length %}
-                        {% for index in range(0, sentence.length) %}
-                            <td>{{ sentence.words[index] }}</td>
-                        {% endfor %}
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    {% if sentence.length %}
-                        <td align="center">0</td>
-                        {% for index in range(0, sentence.length - 1) %}
-                            <td align="center">{{ index + 1 }}</td>
-                        {% endfor %}
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    {% endif %}
+{% if 'English' == lang %}
+    <div class="dropdown">
+        <label for="browser">Roles</label>
+        <input list="browsers" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
+        <datalist id="browsers">
+            <option value=":other">
+            <option value=":ARG0">
+            <option value=":ARG1">
+            <option value=":ARG2">
+            <option value=":ARG3">
+            <option value=":ARG4">
+            <option value=":ARG5">
+            <option value=":ARG6">
+            <option value=":calendar">
+            <option value=":century">
+            <option value=":day">
+            <option value=":dayperiod">
+            <option value=":decade">
+            <option value=":era">
+            <option value=":month">
+            <option value=":quarter">
+            <option value=":season">
+            <option value=":timezone">
+            <option value=":weekday">
+            <option value=":year">
+            <option value=":year2">
+            <option value=":accompanier">
+            <option value=":age">
+            <option value=":beneficiary">
+            <option value=":cause">
+            <option value=":concession">
+            <option value=":condition">
+            <option value=":consist_of">
+            <option value=":degree">
+            <option value=":destination">
+            <option value=":direction">
+            <option value=":domain">
+            <option value=":duration">
+            <option value=":example">
+            <option value=":extent">
+            <option value=":frequency">
+            <option value=":instrument">
+            <option value=":li">
+            <option value=":location">
+            <option value=":manner">
+            <option value=":medium">
+            <option value=":mod">
+            <option value=":mode">
+            <option value=":name">
+            <option value=":ord">
+            <option value=":part">
+            <option value=":path">
+            <option value=":polite">
+            <option value=":poss">
+            <option value=":product_of">
+            <option value=":purpose">
+            <option value=":quant">
+            <option value=":range">
+            <option value=":scale">
+            <option value=":source">
+            <option value=":subevent">
+            <option value=":subset">
+            <option value=":sum_of">
+            <option value=":time">
+            <option value=":topic">
+            <option value=":unit">
+            <option value=":value">
+            <option value=":wiki">
+            <option value=":op1">
+            <option value=":op2">
+            <option value=":op3">
+            <option value=":op4">
+            <option value=":op5">
+            <option value=":op6">
+            <option value=":op7">
+            <option value=":op8">
+            <option value=":op9">
+            <option value=":op10">
 
-    <hr>
+            <option value=":reason">
+            <option value=":temporal">
+            <option value=":modal">
+            <option value=":coref">
 
-    {% if 'English' == lang %}
-        <div class="dropdown">
-            <label for="browser">Roles</label>
-            <input list="browsers" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
-            <datalist id="browsers">
-                <option value=":other">
-                <option value=":ARG0">
-                <option value=":ARG1">
-                <option value=":ARG2">
-                <option value=":ARG3">
-                <option value=":ARG4">
-                <option value=":ARG5">
-                <option value=":ARG6">
-                <option value=":calendar">
-                <option value=":century">
-                <option value=":day">
-                <option value=":dayperiod">
-                <option value=":decade">
-                <option value=":era">
-                <option value=":month">
-                <option value=":quarter">
-                <option value=":season">
-                <option value=":timezone">
-                <option value=":weekday">
-                <option value=":year">
-                <option value=":year2">
-                <option value=":accompanier">
-                <option value=":age">
-                <option value=":beneficiary">
-                <option value=":cause">
-                <option value=":concession">
-                <option value=":condition">
-                <option value=":consist_of">
-                <option value=":degree">
-                <option value=":destination">
-                <option value=":direction">
-                <option value=":domain">
-                <option value=":duration">
-                <option value=":example">
-                <option value=":extent">
-                <option value=":frequency">
-                <option value=":instrument">
-                <option value=":li">
-                <option value=":location">
-                <option value=":manner">
-                <option value=":medium">
-                <option value=":mod">
-                <option value=":mode">
-                <option value=":name">
-                <option value=":ord">
-                <option value=":part">
-                <option value=":path">
-                <option value=":polite">
-                <option value=":poss">
-                <option value=":product_of">
-                <option value=":purpose">
-                <option value=":quant">
-                <option value=":range">
-                <option value=":scale">
-                <option value=":source">
-                <option value=":subevent">
-                <option value=":subset">
-                <option value=":sum_of">
-                <option value=":time">
-                <option value=":topic">
-                <option value=":unit">
-                <option value=":value">
-                <option value=":wiki">
-                <option value=":op1">
-                <option value=":op2">
-                <option value=":op3">
-                <option value=":op4">
-                <option value=":op5">
-                <option value=":op6">
-                <option value=":op7">
-                <option value=":op8">
-                <option value=":op9">
-                <option value=":op10">
+            <option value=":ARG1-of">
 
-                <option value=":reason">
-                <option value=":temporal">
-                <option value=":modal">
-                <option value=":coref">
+            <option value=":before">
+            <option value=":depends-on">
+            <option value=":AFF">
+            <option value=":NEG">
+            <option value=":same-entity">
 
-                <option value=":ARG1-of">
-
-                <option value=":before">
-                <option value=":depends-on">
-                <option value=":AFF">
-                <option value=":NEG">
-                <option value=":same-entity">
-
-            </datalist>
-            <input type="submit" onclick="submit_relation('roles1')">
-        </div>
-    {% else %}
-        <div class="dropdown">
-            <label for="browser">Roles</label>
-            <input list="browsers" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
-            <datalist id="browsers">
-                <option value=":actor">
-                <option value=":undergoer">
-                <option value=":theme">
-                <option value=":recipient">
-                <option value=":force">
-                <option value=":causer">
-                <option value=":experiencer">
-                <option value=":stimulus">
-                <option value=":companion">
-                <option value=":material">
-                <option value=":place">
-                <option value=":start">
-                <option value=":goal">
-                <option value=":affectee">
-                <option value=":other">
-            </datalist>
-            <input type="submit" onclick="submit_relation('roles2')">
-        </div>
-    {% endif %}
-
-
-    <div id="other-attributes">
-        <label for="browser2">Concept Types </label>
-        <input list="browsers2" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers2">
-            <option value='ordinal-entity'>
-            <option value='temporal-quantity'>
-            <option value='amr-unknown'>
-            <option value='amr-choice'>
-            <option value='truth-value'>
-            <option value='name'>
-            <option value='accompany-01'>
-            <option value='age-01'>
-            <option value='benefit-01'>
-            <option value='have-concession-91'>
-            <option value='have-condition-91'>
-            <option value='have-degree-92'>
-            <option value='be-destined-for-91'>
-            <option value='last-01'>
-            <option value='exemplify-01'>
-            <option value='have-extent-91'>
-            <option value='have-frequency-91'>
-            <option value='have-instrument-91'>
-            <option value='have-li-91'>
-            <option value='be-located-at-91'>
-            <option value='have-manner-91'>
-            <option value='have-mod-91'>
-            <option value='have-name-91'>
-            <option value='have-ord-91'>
-            <option value='have-part-91'>
-            <option value='have-polarity-91'>
-            <option value='own-01'>
-            <option value=' have-03'>
-            <option value='have-purpose-91'>
-            <option value='have-quant-91'>
-            <option value='be-from-91'>
-            <option value='have-subevent-91'>
-            <option value='be-temporally-at-91'>
-            <option value='concern-02'>
-            <option value='have-value-91'>
         </datalist>
-        <input type="submit" onclick="submit_abstract_concept('concept_types');">
+        <input type="submit" onclick="submit_relation('roles1')">
     </div>
-
-    <div id="named_entities">
-        <label for="browser6">Named Entity Types </label>
-        <input list="browsers6" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers6">
-            <option value='thing'>
-            <option value='person'>
-            <option value='family'>
-            <option value='animal'>
-            <option value='language'>
-            <option value='nationality'>
-            <option value='ethnic-group'>
-            <option value='regional-group'>
-            <option value='religious-group'>
-            <option value='political-movement'>
-            <option value='organization'>
-            <option value='company'>
-            <option value='government-organization'>
-            <option value='military'>
-            <option value='criminal-organization'>
-            <option value='political-party'>
-            <option value='market-sector'>
-            <option value='school'>
-            <option value='university'>
-            <option value='research-institute'>
-            <option value='team'>
-            <option value='league'>
-            <option value='location'>
-            <option value='city'>
-            <option value='city-district'>
-            <option value='county'>
-            <option value='state'>
-            <option value='province'>
-            <option value='territory'>
-            <option value='country'>
-            <option value='local-region'>
-            <option value='country-region'>
-            <option value='world-region'>
-            <option value='continent'>
-            <option value='ocean'>
-            <option value='sea'>
-            <option value='lake'>
-            <option value='river'>
-            <option value='gulf'>
-            <option value='bay'>
-            <option value='strait'>
-            <option value='canal'>
-            <option value='peninsula'>
-            <option value='mountain'>
-            <option value='volcano'>
-            <option value='valley'>
-            <option value='canyon'>
-            <option value='island'>
-            <option value='desert'>
-            <option value='forest'>
-            <option value='moon'>
-            <option value='planet'>
-            <option value='star'>
-            <option value='constellation'>
-            <option value='facility'>
-            <option value='airport'>
-            <option value='station'>
-            <option value='port'>
-            <option value='tunnel'>
-            <option value='bridge'>
-            <option value='road'>
-            <option value='railway-line'>
-            <option value='building'>
-            <option value='theater'>
-            <option value='museum'>
-            <option value='palace'>
-            <option value='hotel'>
-            <option value='worship-place'>
-            <option value='sports-facility'>
-            <option value='market'>
-            <option value='park'>
-            <option value='zoo'>
-            <option value='amusement-park'>
-            <option value='event'>
-            <option value='incident'>
-            <option value='natural-disaster'>
-            <option value='earthquake'>
-            <option value='war'>
-            <option value='conference'>
-            <option value='game'>
-            <option value='festival'>
-            <option value='product'>
-            <option value='vehicle'>
-            <option value='ship'>
-            <option value='aircraft'>
-            <option value='aircraft-type'>
-            <option value='spaceship'>
-            <option value='car-make'>
-            <option value='work-of-art'>
-            <option value='picture'>
-            <option value='music'>
-            <option value='show'>
-            <option value='broadcast-program'>
-            <option value='publication'>
-            <option value='book'>
-            <option value='newspaper'>
-            <option value='magazine'>
-            <option value='journal'>
-            <option value='natural-object'>
-            <option value='award'>
-            <option value='law'>
-            <option value='court-decision'>
-            <option value='treaty'>
-            <option value='music-key'>
-            <option value='musical-note'>
-            <option value='food-dish'>
-            <option value='writing-script'>
-            <option value='variable'>
-            <option value='program'>
-            <option value='molecular-physical-entity'>
-            <option value='small-molecule'>
-            <option value='protein'>
-            <option value='protein-family'>
-            <option value='protein-segment'>
-            <option value='amino-acid'>
-            <option value='macro-molecular-complex'>
-            <option value='enzyme'>
-            <option value='nucleic-acid'>
-            <option value='pathway'>
-            <option value='gene'>
-            <option value='dna-sequence'>
-            <option value='cell'>
-            <option value='cell-line'>
-            <option value='species'>
-            <option value='taxon'>
-            <option value='disease'>
-            <option value='medical-condition'>
+{% else %}
+    <div class="dropdown">
+        <label for="browser">Roles</label>
+        <input list="browsers" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
+        <datalist id="browsers">
+            <option value=":actor">
+            <option value=":undergoer">
+            <option value=":theme">
+            <option value=":recipient">
+            <option value=":force">
+            <option value=":causer">
+            <option value=":experiencer">
+            <option value=":stimulus">
+            <option value=":companion">
+            <option value=":material">
+            <option value=":place">
+            <option value=":start">
+            <option value=":goal">
+            <option value=":affectee">
+            <option value=":other">
         </datalist>
-        <input type="submit" onclick="submit_mode('add-ne')">
+        <input type="submit" onclick="submit_relation('roles2')">
     </div>
+{% endif %}
 
-    <div id="real-attributes">
-        <label for="browser4">Attributes</label>
-        <input list="browsers4" name="attributes" id="attributes" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers4">
-            <option value=":Aspect">
-            <option value=":polarity">
-        </datalist>
-        <input type="submit" onclick="submit_relation('attributes')">
-    </div>
+
+<div id="other-attributes">
+    <label for="browser2">Concept Types </label>
+    <input list="browsers2" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
+    <datalist id="browsers2">
+        <option value='ordinal-entity'>
+        <option value='temporal-quantity'>
+        <option value='amr-unknown'>
+        <option value='amr-choice'>
+        <option value='truth-value'>
+        <option value='name'>
+        <option value='accompany-01'>
+        <option value='age-01'>
+        <option value='benefit-01'>
+        <option value='have-concession-91'>
+        <option value='have-condition-91'>
+        <option value='have-degree-92'>
+        <option value='be-destined-for-91'>
+        <option value='last-01'>
+        <option value='exemplify-01'>
+        <option value='have-extent-91'>
+        <option value='have-frequency-91'>
+        <option value='have-instrument-91'>
+        <option value='have-li-91'>
+        <option value='be-located-at-91'>
+        <option value='have-manner-91'>
+        <option value='have-mod-91'>
+        <option value='have-name-91'>
+        <option value='have-ord-91'>
+        <option value='have-part-91'>
+        <option value='have-polarity-91'>
+        <option value='own-01'>
+        <option value=' have-03'>
+        <option value='have-purpose-91'>
+        <option value='have-quant-91'>
+        <option value='be-from-91'>
+        <option value='have-subevent-91'>
+        <option value='be-temporally-at-91'>
+        <option value='concern-02'>
+        <option value='have-value-91'>
+    </datalist>
+    <input type="submit" onclick="submit_abstract_concept('concept_types');">
+</div>
+
+<div id="named_entities">
+    <label for="browser6">Named Entity Types </label>
+    <input list="browsers6" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
+    <datalist id="browsers6">
+        <option value='thing'>
+        <option value='person'>
+        <option value='family'>
+        <option value='animal'>
+        <option value='language'>
+        <option value='nationality'>
+        <option value='ethnic-group'>
+        <option value='regional-group'>
+        <option value='religious-group'>
+        <option value='political-movement'>
+        <option value='organization'>
+        <option value='company'>
+        <option value='government-organization'>
+        <option value='military'>
+        <option value='criminal-organization'>
+        <option value='political-party'>
+        <option value='market-sector'>
+        <option value='school'>
+        <option value='university'>
+        <option value='research-institute'>
+        <option value='team'>
+        <option value='league'>
+        <option value='location'>
+        <option value='city'>
+        <option value='city-district'>
+        <option value='county'>
+        <option value='state'>
+        <option value='province'>
+        <option value='territory'>
+        <option value='country'>
+        <option value='local-region'>
+        <option value='country-region'>
+        <option value='world-region'>
+        <option value='continent'>
+        <option value='ocean'>
+        <option value='sea'>
+        <option value='lake'>
+        <option value='river'>
+        <option value='gulf'>
+        <option value='bay'>
+        <option value='strait'>
+        <option value='canal'>
+        <option value='peninsula'>
+        <option value='mountain'>
+        <option value='volcano'>
+        <option value='valley'>
+        <option value='canyon'>
+        <option value='island'>
+        <option value='desert'>
+        <option value='forest'>
+        <option value='moon'>
+        <option value='planet'>
+        <option value='star'>
+        <option value='constellation'>
+        <option value='facility'>
+        <option value='airport'>
+        <option value='station'>
+        <option value='port'>
+        <option value='tunnel'>
+        <option value='bridge'>
+        <option value='road'>
+        <option value='railway-line'>
+        <option value='building'>
+        <option value='theater'>
+        <option value='museum'>
+        <option value='palace'>
+        <option value='hotel'>
+        <option value='worship-place'>
+        <option value='sports-facility'>
+        <option value='market'>
+        <option value='park'>
+        <option value='zoo'>
+        <option value='amusement-park'>
+        <option value='event'>
+        <option value='incident'>
+        <option value='natural-disaster'>
+        <option value='earthquake'>
+        <option value='war'>
+        <option value='conference'>
+        <option value='game'>
+        <option value='festival'>
+        <option value='product'>
+        <option value='vehicle'>
+        <option value='ship'>
+        <option value='aircraft'>
+        <option value='aircraft-type'>
+        <option value='spaceship'>
+        <option value='car-make'>
+        <option value='work-of-art'>
+        <option value='picture'>
+        <option value='music'>
+        <option value='show'>
+        <option value='broadcast-program'>
+        <option value='publication'>
+        <option value='book'>
+        <option value='newspaper'>
+        <option value='magazine'>
+        <option value='journal'>
+        <option value='natural-object'>
+        <option value='award'>
+        <option value='law'>
+        <option value='court-decision'>
+        <option value='treaty'>
+        <option value='music-key'>
+        <option value='musical-note'>
+        <option value='food-dish'>
+        <option value='writing-script'>
+        <option value='variable'>
+        <option value='program'>
+        <option value='molecular-physical-entity'>
+        <option value='small-molecule'>
+        <option value='protein'>
+        <option value='protein-family'>
+        <option value='protein-segment'>
+        <option value='amino-acid'>
+        <option value='macro-molecular-complex'>
+        <option value='enzyme'>
+        <option value='nucleic-acid'>
+        <option value='pathway'>
+        <option value='gene'>
+        <option value='dna-sequence'>
+        <option value='cell'>
+        <option value='cell-line'>
+        <option value='species'>
+        <option value='taxon'>
+        <option value='disease'>
+        <option value='medical-condition'>
+    </datalist>
+    <input type="submit" onclick="submit_mode('add-ne')">
+</div>
+
+<div id="real-attributes">
+    <label for="browser4">Attributes</label>
+    <input list="browsers4" name="attributes" id="attributes" onfocus="this.value=''" onchange="this.blur();">
+    <datalist id="browsers4">
+        <option value=":Aspect">
+        <option value=":polarity">
+    </datalist>
+    <input type="submit" onclick="submit_relation('attributes')">
+</div>
 
 
 {#    attribute values of Aspect#}
-    <div class="attributes" id="aspect-attribute" style="display: none">
-        <label for="browser1">Attribute Values</label>
-        <input list="browsers1" name="attribute_values1" id="attribute_values1" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers1">
-            <option value='Habitual'>
-            <option value='Activity'>
-            <option value='Endeavor'>
-            <option value='Performance'>
-        </datalist>
-        <input type="submit" onclick="submit_attribute('attribute_values1')">
-    </div>
+<div class="attributes" id="aspect-attribute" style="display: none">
+    <label for="browser1">Attribute Values</label>
+    <input list="browsers1" name="attribute_values1" id="attribute_values1" onfocus="this.value=''"
+           onchange="this.blur();">
+    <datalist id="browsers1">
+        <option value='Habitual'>
+        <option value='Activity'>
+        <option value='Endeavor'>
+        <option value='Performance'>
+    </datalist>
+    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">
+</div>
 
 {#    attribute values of polarity#}
-    <div class="attributes" id="polarity-attribute" style="display: none">
-        <label for="browser5">Attribute Values</label>
-        <input list="browsers5" name="attribute_values2" id="attribute_values2" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers5">
-            <option value='-'>
-        </datalist>
-        <input type="submit" onclick="submit_attribute('attribute_values2')">
-    </div>
+<div class="attributes" id="polarity-attribute" style="display: none">
+    <label for="browser5">Attribute Values</label>
+    <input list="browsers5" name="attribute_values2" id="attribute_values2" onfocus="this.value=''"
+           onchange="this.blur();">
+    <datalist id="browsers5">
+        <option value='-'>
+    </datalist>
+    <input type="submit" onclick="submit_attribute('attribute_values2')">
+</div>
 
-    <div id="constants">
-        <label for="browser3">Constants </label>
-        <input list="browsers3" name="constants" id="constants" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers3">
-            <option value="imperative">
-            <option value="expressive">
-            <option value="interrogative">
+<div id="constants">
+    <label for="browser3">Constants </label>
+    <input list="browsers3" name="constants" id="constants" onfocus="this.value=''" onchange="this.blur();">
+    <datalist id="browsers3">
+        <option value="imperative">
+        <option value="expressive">
+        <option value="interrogative">
 
-            <option value="DCT">
-            <option value="AUTH">
-        </datalist>
-        <input type="submit"
-               onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">
-    </div>
+        <option value="DCT">
+        <option value="AUTH">
+    </datalist>
+    <input type="submit"
+           onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">
+</div>
 
-    <br>
+<br>
 
-    Concept:
-    <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>
-
-    <div id="concept_dropdown" class="dropdown-content">
-        <a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a>
-        <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->
-        <a id="find_lemma" class="dropbtn">find lemma</a>
+{#    Concept:#}
+{#    <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>#}
+{##}
+{#    <div id="concept_dropdown" class="dropdown-content">#}
+{#        <a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a>#}
+{#        <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->#}
+{#        <a id="find_lemma" class="dropbtn">find lemma</a>#}
 {#        <a id="named_entities" onmouseover="neListDropdown()">named entities</a>#}
-        <a id="multiple_words" href="javascript:multipleWords();">multiple words</a>
-
-    </div>
-
-    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:20%"></div>
-
-    <br>
-    <br>
-    <button onclick="generate_penman(); clearInput()">Submit Query</button>
-
-
-    <hr>
-
-    <div id="text-command">
-        <table>
-            <tr>
-                <td>Enter text command:</td>
-                <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off" autocorrect="off"
-                              spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
-                              onkeyup="exec_command('', 1)"></textarea></td>
-                <td width="20"></td>
-            <tr>
-                <td colspan="4"><span id="error"><i></i></span></td>
-            </tr>
-            <tr style="color:#999999">
-                {#            <td>Last command:</td>#}
-                <td colspan="3"><span id="action"></span></td>
-            </tr>
-        </table>
-    </div>
-
-    <button id="replace-box"><a style="text-decoration:none"
-                                      title="replace a role, concept, string or secondary variable"
-                                      href="javascript:selectTemplate('replace');">replace</a>&nbsp;
+{#        <a id="multiple_words" href="javascript:multipleWords();">multiple words</a>#}
+{##}
+{#    </div>#}
+{#    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:20%"></div>#}
+Concept:<br>
+<div class="btn-group dropright">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" onclick="conceptDropdown()"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     </button>
-    <button id="delete-box"><a style="text-decoration:none" title="delete"
-                                     href="javascript:selectTemplate('delete');">delete</a>&nbsp;
-    </button>
-    <button id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;
-    </button>
-    <button id="undo-box"><a id="undo-button" style="text-decoration:none" title="currently nothing to undo"
-                                   href="javascript:undo(-1);">undo</a>&nbsp;
-    </button>
-    <button id="redo-box"><a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
-                                   href="javascript:undo(1);">redo</a>&nbsp;
-    </button>
-    {#    <button id="doc-level-annot">&nbsp;<a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
-    {#                                   href="javascript:docAnnot(2);">doc-level-annot</a>&nbsp;</button>#}
 
-    {#    <button><a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
-    {#               href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
-    <button><a id="db" style="text-decoration:none" title="click to get current annotation in db"
-               href="javascript:UMR2db();">db</a></button>
+    <ul id="concept_dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li class="nav-item">
+            <a class="dropdown-item" id="set-root" href=" 'set_parent');">set head</a>
+        </li>
+        <li class="nav-item dropdown-li">
+            <a class="dropdown-item dropdown-toggle" id="find_lemma" data-toggle="dropdown">find lemma</a>
+            <ul id="genericDropdown" class="submenu dropdown-menu">
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="dropdown-item" id="multiple_words" href="javascript:multipleWords();">multiple words</a>
+        </li>
+    </ul>
+</div>
+
+
+<br>
+<br>
+<button onclick="generate_penman(); clearInput()">Submit Query</button>
+
+
+<hr>
+
+<div id="text-command">
+    <table>
+        <tr>
+            <td>Enter text command:</td>
+            <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
+                          autocorrect="off"
+                          spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
+                          onkeyup="exec_command('', 1)"></textarea></td>
+            <td width="20"></td>
+        <tr>
+            <td colspan="4"><span id="error"><i></i></span></td>
+        </tr>
+        <tr style="color:#999999">
+            {#            <td>Last command:</td>#}
+            <td colspan="3"><span id="action"></span></td>
+        </tr>
+    </table>
+</div>
+
+<button id="replace-box"><a style="text-decoration:none"
+                            title="replace a role, concept, string or secondary variable"
+                            href="javascript:selectTemplate('replace');">replace</a>&nbsp;
+</button>
+<button id="delete-box"><a style="text-decoration:none" title="delete"
+                           href="javascript:selectTemplate('delete');">delete</a>&nbsp;
+</button>
+<button id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;
+</button>
+<button id="undo-box"><a id="undo-button" style="text-decoration:none" title="currently nothing to undo"
+                         href="javascript:undo(-1);">undo</a>&nbsp;
+</button>
+<button id="redo-box"><a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
+                         href="javascript:undo(1);">redo</a>&nbsp;
+</button>
+{#    <button id="doc-level-annot">&nbsp;<a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
+{#                                   href="javascript:docAnnot(2);">doc-level-annot</a>&nbsp;</button>#}
+
+{#    <button><a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
+{#               href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
+<button><a id="db" style="text-decoration:none" title="click to get current annotation in db"
+           href="javascript:UMR2db();">db</a></button>
 
 {#    </button>#}
 {#    <button id="save-box">&nbsp;<a style="text-decoration:none" title="save"#}
 {#                                     href="javascript:selectTemplate('save');reset_save('');">save</a>&nbsp;#}
 {#    </button>#}
 
-    <button id="save-box">&nbsp;<a style="text-decoration:none" title="load"
-                                     href="javascript:selectTemplate('load');">load</a>&nbsp;
-    </button>
+<button id="save-box">&nbsp;<a style="text-decoration:none" title="load"
+                               href="javascript:selectTemplate('load');">load</a>&nbsp;
+</button>
 
-    <button id="save-box">&nbsp;<a style="text-decoration:none" title="load_history"
-                                     href="javascript:load_history();">load_history</a>&nbsp;
-    </button>
+<button id="save-box">&nbsp;<a style="text-decoration:none" title="load_history"
+                               href="javascript:load_history();">load_history</a>&nbsp;
+</button>
 
-    <button id="export-box">&nbsp;<a style="text-decoration:none" title="load"
-                                     href="javascript:export_annot();">export</a>&nbsp;
-    </button>
-
-
-    </table>
-
-    <hr>
-    <p>UMR Penman Annotation:</p>
-    <div id="amr"></div>
+<button id="export-box">&nbsp;<a style="text-decoration:none" title="load"
+                                 href="javascript:export_annot();">export</a>&nbsp;
+</button>
 
 
+</table>
 
-    <hr>
-    <div id="alignment">
-        <p> Alignments:</p>
-        <p id="align"></p>
-    </div>
+<hr>
+<p>UMR Penman Annotation:</p>
+<div id="amr"></div>
 
 
-    <div id="replace-template-table" style="display:none;">
-        <p>
-        <table>
-            <tbody>
-            <tr>
-                <td>Replace</td>
-                <td title="select type of AMR element to be replaced">&nbsp;
-                    <select id="replace-type"
-                            onchange="selectReplaceType(this[selectedIndex].text);">
-                        <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
-                                            <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string</option>
-                        <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
-                                            <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
-                    </select>
-                </td>
-                <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
-                                     autocapitalize="off" id="replace-at"
-                                     value=""></td>
-                <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
-                                       id="replace-new" value=""
-                                       onfocus="var val = this.value; this.value = ''; this.value = val;"
-                                       onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
-                                       onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
-                </td>
-                <td>
-                    <table border="1" cellpadding="1" cellspacing="0">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
-                                               href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
-                                </nobr>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        </p></div>
-    <div id="delete-template-table" style="display:none;">
-        <p>
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td width="5"></td>
-                            <td align="center">Delete AMR element</td>
-                            <td width="5"></td>
-                            <td><input size="24"
-                                       title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
-                                       autocapitalize="off" id="delete-at"
-                                       value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
-                            <td width="5"></td>
-                            <td>
-                                <table border="1" cellpadding="1" cellspacing="0">
-                                    <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            <nobr><a style="text-decoration:none;" title="submit delete template action"
-                                                     href="javascript:submit_template_action('delete');"><font
-                                                    color="black">&nbsp;delete&nbsp;</font></a>
-                                            </nobr>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td width="5"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td width="10"></td>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td width="5"></td>
-                            <td width="5"></td>
-                            <td>
-                                <table border="1" cellpadding="1" cellspacing="0">
-                                    <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
-                                                     style="text-decoration:none;"
-                                                     title="Delete entire AMR"
-                                                     href="javascript:deleteAMR();"><font
-                                                    color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
-                                                AMR&nbsp;</font></a>
-                                            </nobr>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td width="5"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td width="10"></td>
-            </tr>
-            </tbody>
-        </table>
-        </p></div>
-    <div id="move-template-table" style="display:none;">
-        <table>
-            <tbody>
-                <tr>
-                    <td width="5"></td>
-                    <td>Move</td>
-                    <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
-                           id="move-object" value=""></td>
-                    <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
-                                               id="move-new-head" value=""> &nbsp;</td>
-                    <td>
-                        <table border="1" cellpadding="1" cellspacing="0">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        &nbsp;<a style="text-decoration:none"
-                                               title="display clickable list of AMR roles (popup)"
-                                               href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
+<hr>
+<div id="alignment">
+    <p> Alignments:</p>
+    <p id="align"></p>
+</div>
 
-                    <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
-                           id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
-                           onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
-                    <td>
-                        <table border="1" cellpadding="1" cellspacing="0">
-                            <tbody>
-                                <tr>
-                                    <td>&nbsp;<a title="submit move template action"
-                                               href="javascript:submit_template_action('move');"><font
-                                        color="black">submit</font></a>&nbsp;
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="load-template-table" style="display:none;">
-{#    <div id="load-template-table" style="display:inline;">#}
-        <p>
-            <table>
-                <tbody>
-                    <tr id="load-local" style="display: inline;">
-                        <td style="background-color:#E8EEFF;" width="920">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td id="load-local-title"><b>Load local AMR file</b></td>
-                                    <td width="10"></td>
-                                    <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="submit" value="Load local file" onclick="load_local_amr_file()"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
 
-                    <tr id="load-direct" style="display: inline;">
-                        <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
-                            <table>
-                                <tbody>
-                                <tr>
-                                    <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <textarea rows="20" cols="100" id="load-plain" name="load-plain" autocapitalize="off"
-                                                  autocorrect="off" spellcheck="false" style="overflow:auto;"></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table width="40" border="1" cellpadding="1" cellspacing="0">
-                                            <tbody>
-                                            <tr style="background-color:#BBCCFF;">
-                                                <td align="center">
-                                                    <nobr>&nbsp;<a style="text-decoration:none"
-                                                                   title="click to load amr from text area"
-                                                                   href="javascript:loadField2amr();recordDirectEntryLoad();"><font
-                                                            color="black">load direct AMR</font></a>&nbsp;
-                                                    </nobr>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </p>
-    </div>
-    <div id="save-template-table" style="display:none;">
-        <input type="hidden" id="plain-amr" name="plain-amr" value="">
-
-        <p>
-            <table style="background-color:#E8EEFF;" width="800">
-                <tbody>
-                    <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
-                        <td id="save-local-title"><b>Save AMR locally</b></td>
+<div id="replace-template-table" style="display:none;">
+    <p>
+    <table>
+        <tbody>
+        <tr>
+            <td>Replace</td>
+            <td title="select type of AMR element to be replaced">&nbsp;
+                <select id="replace-type"
+                        onchange="selectReplaceType(this[selectedIndex].text);">
+                    <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
+                    <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
+                    </option>
+                    <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
+                    <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
+                </select>
+            </td>
+            <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
+                                 autocapitalize="off" id="replace-at"
+                                 value=""></td>
+            <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
+                                   id="replace-new" value=""
+                                   onfocus="var val = this.value; this.value = ''; this.value = val;"
+                                   onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
+                                   onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
+            </td>
+            <td>
+                <table border="1" cellpadding="1" cellspacing="0">
+                    <tbody>
+                    <tr>
                         <td>
-                            <table>
+                            <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
+                                           href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
+                            </nobr>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </p></div>
+<div id="delete-template-table" style="display:none;">
+    <p>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="5"></td>
+                        <td align="center">Delete AMR element</td>
+                        <td width="5"></td>
+                        <td><input size="24"
+                                   title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
+                                   autocapitalize="off" id="delete-at"
+                                   value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
+                        <td width="5"></td>
+                        <td>
+                            <table border="1" cellpadding="1" cellspacing="0">
                                 <tbody>
-                                    <tr id="save-local-filename">
-                                        <td>Filename (without path):</td>
-                                        <td><input type="text" id="local_save_file" name="local_save_file" size="24"
-                                                   style="font-size:1.1em;text-align:right;" value=""><span
-                                                style="font-size:1.1em">.txt</span></td>
-                                        <td width="10"></td>
-{#                                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file({{ sentence_content }}, temp=true)"></td>#}
-                                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file(temp=true)"></td>
+                                <tr>
+                                    <td align="center">
+                                        <nobr><a style="text-decoration:none;" title="submit delete template action"
+                                                 href="javascript:submit_template_action('delete');"><font
+                                                color="black">&nbsp;delete&nbsp;</font></a>
+                                        </nobr>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="5"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="10"></td>
+            <td>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="5"></td>
+                        <td width="5"></td>
+                        <td>
+                            <table border="1" cellpadding="1" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td align="center">
+                                        <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
+                                                 style="text-decoration:none;"
+                                                 title="Delete entire AMR"
+                                                 href="javascript:deleteAMR();"><font
+                                                color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
+                                            AMR&nbsp;</font></a>
+                                        </nobr>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td width="5"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td width="10"></td>
+        </tr>
+        </tbody>
+    </table>
+    </p></div>
+<div id="move-template-table" style="display:none;">
+    <table>
+        <tbody>
+        <tr>
+            <td width="5"></td>
+            <td>Move</td>
+            <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
+                       id="move-object" value=""></td>
+            <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
+                                           id="move-new-head" value=""> &nbsp;
+            </td>
+            <td>
+                <table border="1" cellpadding="1" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            &nbsp;<a style="text-decoration:none"
+                                     title="display clickable list of AMR roles (popup)"
+                                     href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
 
-                                    </tr>
+            <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
+                       id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
+                       onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
+            <td>
+                <table border="1" cellpadding="1" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td>&nbsp;<a title="submit move template action"
+                                     href="javascript:submit_template_action('move');"><font
+                                color="black">submit</font></a>&nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div id="load-template-table" style="display:none;">
+    {#    <div id="load-template-table" style="display:inline;">#}
+    <p>
+    <table>
+        <tbody>
+        <tr id="load-local" style="display: inline;">
+            <td style="background-color:#E8EEFF;" width="920">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td id="load-local-title"><b>Load local AMR file</b></td>
+                        <td width="10"></td>
+                        <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" value="Load local file" onclick="load_local_amr_file()"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+        <tr id="load-direct" style="display: inline;">
+            <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
+                    </tr>
+                    <tr>
+                        <td>
+                                        <textarea rows="20" cols="100" id="load-plain" name="load-plain"
+                                                  autocapitalize="off"
+                                                  autocorrect="off" spellcheck="false"
+                                                  style="overflow:auto;"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="40" border="1" cellpadding="1" cellspacing="0">
+                                <tbody>
+                                <tr style="background-color:#BBCCFF;">
+                                    <td align="center">
+                                        <nobr>&nbsp;<a style="text-decoration:none"
+                                                       title="click to load amr from text area"
+                                                       href="javascript:loadField2amr();recordDirectEntryLoad();"><font
+                                                color="black">load direct AMR</font></a>&nbsp;
+                                        </nobr>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                         </td>
                     </tr>
-                    <tr id="alt-save-locally" style="display:none" ;=""></tr>
-                </tbody>
-            </table>
-        </p>
-    </div>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </p>
+</div>
+<div id="save-template-table" style="display:none;">
+    <input type="hidden" id="plain-amr" name="plain-amr" value="">
 
+    <p>
+    <table style="background-color:#E8EEFF;" width="800">
+        <tbody>
+        <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
+            <td id="save-local-title"><b>Save AMR locally</b></td>
+            <td>
+                <table>
+                    <tbody>
+                    <tr id="save-local-filename">
+                        <td>Filename (without path):</td>
+                        <td><input type="text" id="local_save_file" name="local_save_file" size="24"
+                                   style="font-size:1.1em;text-align:right;" value=""><span
+                                style="font-size:1.1em">.txt</span></td>
+                        <td width="10"></td>
+                        {#                                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file({{ sentence_content }}, temp=true)"></td>#}
+                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file(temp=true)"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr id="alt-save-locally" style="display:none" ;=""></tr>
+        </tbody>
+    </table>
+    </p>
+</div>
 
 
 {% endblock content %}

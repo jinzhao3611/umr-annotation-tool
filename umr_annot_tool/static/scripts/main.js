@@ -42,8 +42,6 @@ var logsid = ''; //"IQrVT4Dh6mkz93W1DCxpNws9Om6qKqk0EGwhFs0x"
 var next_special_action = ''; //''
 
 
-
-
 function initialize() {
     console.log("initialize is called16");
     amr['n'] = 0;
@@ -62,7 +60,7 @@ function initialize() {
 
 
 function conceptDropdown() {
-    document.getElementById("concept_dropdown").classList.toggle("show");
+    // document.getElementById("concept_dropdown").classList.toggle("show");
     submit_concept();
     // if selected tokens is a number or not
     // let token = selection.anchorNode.nodeValue;
@@ -73,9 +71,10 @@ function conceptDropdown() {
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         console.log(number);
         const lemmaBar = document.getElementById("find_lemma");
-        lemmaBar.onmouseenter = function () {
-            getSenses(number);
-        }
+        getSenses(number);
+        // lemmaBar.onmouseenter = function () {
+        //     getSenses(number);
+        // }
     } else { // if numfied_token is still a string, meaning the token is not a number
         // pass the token to server to get the framefile
         // try{
@@ -97,7 +96,7 @@ function conceptDropdown() {
         //     getSenses(letter);
         // }
 
-        if(typeof getLemma(token) !== 'undefined'){
+        if (typeof getLemma(token) !== 'undefined') {
             var sentence_id = document.getElementById('sentence_id').value;
             console.log("lemma!!!!" + getLemma(token))
             fetch('/annotate', {
@@ -109,12 +108,13 @@ function conceptDropdown() {
                 return response.json();
             }).then(function (data) {
                 console.log(data); //senses got returned from server
-                const lemmaBar = document.getElementById("find_lemma");
-                lemmaBar.onmouseenter = function () {
-                    getSenses(data);
-                }
+                getSenses(data);
+                // const lemmaBar = document.getElementById("find_lemma");
+                // lemmaBar.onmouseenter = function () {
+                //     getSenses(data);
+                // }
             })
-        }else{
+        } else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
             getSenses(letter);
         }
@@ -129,7 +129,7 @@ function getSenses(senses) {
     let genDrop = document.getElementById('genericDropdown');
     genDrop.innerHTML = "";
     if (genDrop.childElementCount > 0) {
-        genDrop.classList.toggle("show");
+        // genDrop.classList.toggle("show");
     } else {
         senses.res.forEach(function (value, index, array) {
             let genLink = document.createElement("a");
@@ -137,6 +137,7 @@ function getSenses(senses) {
             genLink.setAttribute("href", `javascript:submit_template_action('nothing', "${value.name}"); clearInput()`);
             genLink.setAttribute("title", value.desc);
             genLink.setAttribute("id", "xx");
+            genLink.setAttribute("class", "dropdown-item");
             genLink.onclick = function clearInput() {
                 console.log("clearInput is called");
                 document.getElementById('roles1').value = '';
@@ -146,9 +147,10 @@ function getSenses(senses) {
                 document.getElementById('attribute_values1').value = '';
                 document.getElementById('constants').value = '';
             }
-            genDrop.appendChild(genLink);
+            // genDrop.appendChild(genLink);
+            genDrop.appendChild(document.createElement("li").appendChild(genLink));
         });
-        genDrop.classList.toggle("show");
+        // genDrop.classList.toggle("show");
     }
 }
 
@@ -171,7 +173,7 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-function docAnnot(sentenceId){
+function docAnnot(sentenceId) {
     exec_command("top sentence", 1);
     submit_template_action('doc-annot');
 
@@ -179,24 +181,24 @@ function docAnnot(sentenceId){
 
 function submit_relation(selectorId) {
     // current_relation = sel.options[sel.selectedIndex].text;
-    current_relation = document.querySelector('#'+ selectorId).value;
+    current_relation = document.querySelector('#' + selectorId).value;
     if (current_relation) {
         submit_mode("add");
     }
     let eles = document.getElementsByClassName('attributes');
     var i;
-    for (i=0; i<eles.length; i++){
-        eles[i].style.display ='none';
+    for (i = 0; i < eles.length; i++) {
+        eles[i].style.display = 'none';
     }
-    if(current_relation == ':Aspect'){
+    if (current_relation == ':Aspect') {
         document.getElementById("aspect-attribute").style.display = 'block';
-    } else if(current_relation == ':polarity'){
+    } else if (current_relation == ':polarity') {
         document.getElementById("polarity-attribute").style.display = 'block';
     }
     console.log("current_relation is: " + current_relation);
 }
 
-function submit_attribute(selectorID){
+function submit_attribute(selectorID) {
     current_attribute = document.querySelector('#' + selectorID).value;
     // submit_template_action(current_mode, current_attribute);
     submit_template_action('add-constant', current_attribute);
@@ -211,7 +213,7 @@ function submit_concept() {
 }
 
 function submit_abstract_concept(selectorID) {
-    current_concept = document.querySelector('#'+ selectorID).value;
+    current_concept = document.querySelector('#' + selectorID).value;
     current_concept = current_concept.replace("'", "\'");
     console.log("current_concept is: " + current_concept);
     submit_template_action(current_mode, current_concept);
@@ -223,11 +225,11 @@ function submit_mode(mode) {
     console.log("current_mode is: " + current_mode);
 }
 
-function generate_penman(){
+function generate_penman() {
     submit_template_action(current_mode, c = current_concept, r = current_relation)
 }
 
-function multipleWords(){
+function multipleWords() {
     var c = current_concept.replace(" ", "-");
     submit_template_action("add", c)
 }
@@ -292,6 +294,7 @@ function revert2PrevState(previous_state) {
     // props2screen();
     // add_log('Reverted to state ' + previous_state['id']);
 }
+
 /**
  * undo and redo, also probably generate a window at the up right corner
  * @param n positive number or a negative number
@@ -370,7 +373,7 @@ function selectTemplate(id) {
                 s.style.display = 'inline';
                 current_template = id;
                 if ((action == 'replace') && !show_amr_status.match(/replace/)) {
-                        console.log("I am here 903");
+                    console.log("I am here 903");
                     // if clicked on replace from other button
                     show_amr('show replace');
                 } else if ((action == 'delete') && !show_amr_status.match(/delete/)) {
@@ -569,10 +572,9 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         }
 
 
-    } else if(id == 'doc-annot'){
+    } else if (id == 'doc-annot') {
         current_parent = 's';
-    }
-    else if (id == 'add') {
+    } else if (id == 'add') {
         // if (((arg1 = document.getElementById('add-head')) != null)
         //  && ((arg2 = document.getElementById('add-role')) != null)
         //  && ((arg3 = document.getElementById('add-arg')) != null)) {
@@ -594,15 +596,13 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
 
         exec_command(current_parent + ' ' + role + ' ' + arg, 1);
-    }
-     else if (id == 'add-constant') {
+    } else if (id == 'add-constant') {
         var role = current_relation;
         var arg = current_concept;
         console.log(arg);
         console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
         exec_command(current_parent + ' ' + role + ' ' + arg, 1);
-    }
-    else if (id == 'add-ne') {
+    } else if (id == 'add-ne') {
         // var role = ':' + document.getElementById('test-arg0').innerText;
         // var role = ':arg' + num;
         var role = current_relation;
@@ -913,8 +913,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         addOr('top ' + value);
                         selectTemplate('');
                         show_amr_args = 'show';
-                    }
-                    else if ((cc.length >= 3) && (key1 == 'top') && (ne_concept = cc[1])
+                    } else if ((cc.length >= 3) && (key1 == 'top') && (ne_concept = cc[1])
                         && validEntryConcept(ne_concept) && (!getLocs(ne_concept))
                         && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
                         console.log("I am here4");
@@ -929,8 +928,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
-                    }
-                    else if (cc.length >= 2) {
+                    } else if (cc.length >= 2) {
                         console.log("I am here6");
                         for (var i = 1; i < cc.length; i++) {
                             var arg = cc[i];
@@ -1305,9 +1303,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     // amr['2.v'] = 's2';
     var alignInfo = document.getElementById('align');
     var alignment_string = '';
-    Object.keys(amr).forEach(function(key) {
-        if(/[\\d|\\.]+c/gm.test(key) && amr[key]){
-            alignment_string += amr[key] + ": " +  amr[key.replace('c', 'v')] + ": " +  amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+    Object.keys(amr).forEach(function (key) {
+        if (/[\\d|\\.]+c/gm.test(key) && amr[key]) {
+            alignment_string += amr[key] + ": " + amr[key.replace('c', 'v')] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
             // alignment_string += (amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n')).replace(/undefined/g, 'inferred');
 
         }
@@ -1437,7 +1435,7 @@ function newVar(concept) {
         v = initial;
     }
 
-    if(amr['n']>1){
+    if (amr['n'] > 1) {
         v = 'S2' + v;
     }
     return v;
@@ -2450,7 +2448,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 tree_span_args = 'id="' + elem_id + '"';
             }
             // s += '(' + variable_m + '-' + alignment_index + ' / ' + concept_m;
-            s += '(' + variable_m  + ' / ' + concept_m;
+            s += '(' + variable_m + ' / ' + concept_m;
 
             var n = amr[loc + '.n'];
             var index;
@@ -2766,7 +2764,7 @@ function defaultFilename() {
     }
 }
 
-function UMR2db(){
+function UMR2db() {
     console.log("I am here521");
     // sent = document.getElementById('sentence').innerText;
     var amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
@@ -2783,8 +2781,8 @@ function UMR2db(){
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-                console.log(data); //amr got returned from server
-            });
+        console.log(data); //amr got returned from server
+    });
 }
 
 function firstHalfString(str) {
@@ -2794,7 +2792,7 @@ function firstHalfString(str) {
     return s1;
 }
 
-function load_history(){
+function load_history() {
     console.log("I am here524");
     // var sentenceAndIndice = document.getElementById('sentence').innerText;
     // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
@@ -2816,7 +2814,7 @@ function load_history(){
     });
 }
 
-function export_annot(){
+function export_annot() {
     console.log("export_annot is called");
     var doc_name = document.getElementById('filename').innerText
     console.log(doc_name);
@@ -2839,8 +2837,8 @@ function export_annot(){
         })
 
         console.log(output_array);
-        let output_str = data["annotations"].map((a,index) =>
-            index+1 + '\t' + a[0]
+        let output_str = data["annotations"].map((a, index) =>
+            index + 1 + '\t' + a[0]
             + "\n# sentence level graph:\n"
             + a[1]
             + "\n# alignment:"
@@ -2848,26 +2846,26 @@ function export_annot(){
             + "\n# document level annotation:\nempty\n").join("\n\n# :: snt");
         console.log(output_str);
 
-    var filename;
+        var filename;
 
-    var text = "user name: " + document.getElementById('username').innerText + '\n';
-    let curr_time = new Date();
-    text += "export time: " + curr_time.toLocaleString() + '\n\n';
-    text += '# :: snt';
-    if (window.BlobBuilder && window.saveAs) {
-        console.log('I am here1-1');
+        var text = "user name: " + document.getElementById('username').innerText + '\n';
+        let curr_time = new Date();
+        text += "export time: " + curr_time.toLocaleString() + '\n\n';
+        text += '# :: snt';
+        if (window.BlobBuilder && window.saveAs) {
+            console.log('I am here1-1');
 
-        filename = doc_name;
-        filename += '.txt';
-        text += output_str
-        console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
-        var bb = new BlobBuilder();
-        bb.append(text);
-        saveAs(bb.getBlob(), filename);
-    } else {
-        console.log('I am here1-4');
-        console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
-    }
+            filename = doc_name;
+            filename += '.txt';
+            text += output_str
+            console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
+            var bb = new BlobBuilder();
+            bb.append(text);
+            saveAs(bb.getBlob(), filename);
+        } else {
+            console.log('I am here1-4');
+            console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
+        }
 
     });
 }
@@ -3201,7 +3199,7 @@ function reload_current_workset_snt() {
     }
 }
 
-function save_local_amr_file(sentence="", temp=false) {
+function save_local_amr_file(sentence = "", temp = false) {
     console.log(sentence);
     if ((s = document.getElementById('local_save_file')) != null) {
         s.focus();
@@ -3223,7 +3221,7 @@ function save_local_amr_file(sentence="", temp=false) {
             // filename = filename.replace(/[^-_a-zA-Z0-9]/g, "_");
             filename += '.txt';
 
-            if(temp){
+            if (temp) {
                 // text += document.getElementById('current-words').innerText.replace("Words\t", "")
                 text += sentence;
                 text += '\n';
@@ -3237,7 +3235,7 @@ function save_local_amr_file(sentence="", temp=false) {
                 var bb = new BlobBuilder();
                 bb.append(text);
                 saveAs(bb.getBlob(), filename);
-            }else{
+            } else {
                 if (comment.match(/\S/)) {
                     text += comment + '\n';
                 }
@@ -3740,7 +3738,7 @@ function loadField2amr() {
 
     var alignArray = document.getElementById('align').innerText.trim().split(/\n/);
     var alignArrayLen = alignArray.length;
-    for (var i=0; i < alignArrayLen; i++){
+    for (var i = 0; i < alignArrayLen; i++) {
         var splitted_align = alignArray[i].split(":");
         var loaded_concept = splitted_align[0].trim();
         var loaded_variable = splitted_align[1].trim();
@@ -3831,8 +3829,6 @@ function deletenode(node) {
 }
 
 
-
-
 // click on load button
 function reset_load(control) {
     var s;
@@ -3891,12 +3887,11 @@ function toggleRow(id) {
     }
 }
 
-function changeButton(id){
+function changeButton(id) {
     var elem = document.getElementById(id);
-    if (elem.innerText=="show more info") elem.innerText = "show less info";
+    if (elem.innerText == "show more info") elem.innerText = "show less info";
     else elem.innerText = "show more info";
 }
-
 
 
 /**
