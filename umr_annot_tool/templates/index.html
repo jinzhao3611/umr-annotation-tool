@@ -262,7 +262,7 @@
             <option value=":same-entity">
 
         </datalist>
-        <input type="submit" onclick="submit_relation('roles1')">
+{#        <input type="submit" onclick="submit_relation('roles1')">#}
     </div>
 {% else %}
     <div class="dropdown">
@@ -285,7 +285,7 @@
             <option value=":affectee">
             <option value=":other">
         </datalist>
-        <input type="submit" onclick="submit_relation('roles2')">
+{#        <input type="submit" onclick="submit_relation('roles2')">#}
     </div>
 {% endif %}
 
@@ -330,7 +330,7 @@
         <option value='concern-02'>
         <option value='have-value-91'>
     </datalist>
-    <input type="submit" onclick="submit_abstract_concept('concept_types');">
+{#    <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
 </div>
 
 <div id="named_entities">
@@ -465,7 +465,7 @@
         <option value='disease'>
         <option value='medical-condition'>
     </datalist>
-    <input type="submit" onclick="submit_mode('add-ne')">
+{#    <input type="submit" onclick="submit_mode('add-ne')">#}
 </div>
 
 <div id="real-attributes">
@@ -475,7 +475,7 @@
         <option value=":Aspect">
         <option value=":polarity">
     </datalist>
-    <input type="submit" onclick="submit_relation('attributes')">
+    <input type="submit" onclick="show_attribute_values('attributes')">
 </div>
 
 
@@ -490,7 +490,7 @@
         <option value='Endeavor'>
         <option value='Performance'>
     </datalist>
-    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">
+{#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
 </div>
 
 {#    attribute values of polarity#}
@@ -501,7 +501,7 @@
     <datalist id="browsers5">
         <option value='-'>
     </datalist>
-    <input type="submit" onclick="submit_attribute('attribute_values2')">
+{#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
 </div>
 
 <div id="constants">
@@ -515,11 +515,12 @@
         <option value="DCT">
         <option value="AUTH">
     </datalist>
-    <input type="submit"
-           onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">
+{#    <input type="submit" onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">#}
+    {# todo fix this at doc level #}
 </div>
 
 <br>
+    <button onclick="submit_query()">Submit</button>
 
 {#    Concept:#}
 {#    <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>#}
@@ -533,6 +534,12 @@
 {##}
 {#    </div>#}
 {#    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:20%"></div>#}
+
+
+
+<br>
+<br>
+{#<button onclick="generate_penman(); clearInput()">Submit Query</button>#}
 Concept:<br>
 <div class="btn-group dropright">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" onclick="conceptDropdown()"
@@ -553,13 +560,6 @@ Concept:<br>
         </li>
     </ul>
 </div>
-
-
-<br>
-<br>
-<button onclick="generate_penman(); clearInput()">Submit Query</button>
-
-
 <hr>
 
 <div id="text-command">

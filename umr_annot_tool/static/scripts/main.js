@@ -3,6 +3,7 @@ var current_concept;
 var current_relation;
 var current_mode;
 var current_attribute;
+var current_ne_concept;
 
 var temp_umrs = {};
 
@@ -134,19 +135,10 @@ function getSenses(senses) {
         senses.res.forEach(function (value, index, array) {
             let genLink = document.createElement("a");
             genLink.innerHTML = value.name;
-            genLink.setAttribute("href", `javascript:submit_template_action('nothing', "${value.name}"); clearInput()`);
+            genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('nothing', "${value.name}"); clearInput()`);
             genLink.setAttribute("title", value.desc);
             genLink.setAttribute("id", "xx");
             genLink.setAttribute("class", "dropdown-item");
-            genLink.onclick = function clearInput() {
-                console.log("clearInput is called");
-                document.getElementById('roles1').value = '';
-                document.getElementById('concept_types').value = '';
-                document.getElementById('ne_types').value = '';
-                document.getElementById('attributes').value = '';
-                document.getElementById('attribute_values1').value = '';
-                document.getElementById('constants').value = '';
-            }
             // genDrop.appendChild(genLink);
             genDrop.appendChild(document.createElement("li").appendChild(genLink));
         });
@@ -179,32 +171,6 @@ function docAnnot(sentenceId) {
 
 }
 
-function submit_relation(selectorId) {
-    // current_relation = sel.options[sel.selectedIndex].text;
-    current_relation = document.querySelector('#' + selectorId).value;
-    if (current_relation) {
-        submit_mode("add");
-    }
-    let eles = document.getElementsByClassName('attributes');
-    var i;
-    for (i = 0; i < eles.length; i++) {
-        eles[i].style.display = 'none';
-    }
-    if (current_relation == ':Aspect') {
-        document.getElementById("aspect-attribute").style.display = 'block';
-    } else if (current_relation == ':polarity') {
-        document.getElementById("polarity-attribute").style.display = 'block';
-    }
-    console.log("current_relation is: " + current_relation);
-}
-
-function submit_attribute(selectorID) {
-    current_attribute = document.querySelector('#' + selectorID).value;
-    // submit_template_action(current_mode, current_attribute);
-    submit_template_action('add-constant', current_attribute);
-    console.log("current_attribute is: " + current_attribute);
-}
-
 function submit_concept() {
     // current_concept = selection.anchorNode.nodeValue;
     current_concept = document.getElementById('selected_tokens').innerText;
@@ -212,17 +178,57 @@ function submit_concept() {
     console.log("current_concept is: " + current_concept);
 }
 
-function submit_abstract_concept(selectorID) {
-    current_concept = document.querySelector('#' + selectorID).value;
-    current_concept = current_concept.replace("'", "\'");
-    console.log("current_concept is: " + current_concept);
-    submit_template_action(current_mode, current_concept);
+function submit_query(){
+    let r = document.getElementById('roles1').value;
+    let a = document.getElementById('attributes').value;
+    let av = '';
+    if(document.getElementById('attribute_values1').value){
+        av = document.getElementById('attribute_values1').value;
+    }else{
+        av = document.getElementById('attribute_values2').value;
+    }
 
+    if(r){
+        current_relation = r;
+        current_mode = "add";
+    }else if(a){
+        current_relation = a;
+        current_attribute = av;
+        submit_template_action('add-constant', current_attribute);
+        // fold attribute value box after submitted
+        let eles = document.getElementsByClassName('attributes');
+        let i;
+        for (i = 0; i < eles.length; i++) {
+            eles[i].style.display = 'none';
+        }
+    }
+
+    let ct = document.getElementById('concept_types').value;
+    if(ct){
+        current_concept = ct;
+        current_concept = current_concept.replace("'", "\'");
+        submit_template_action(current_mode, current_concept);
+    }
+
+    let nt = document.getElementById('ne_types').value;
+    if(nt){
+        current_mode = 'add-ne';
+        current_ne_concept = nt;
+        console.log("current_mode is: " + current_mode);
+    }
+
+    let c = document.getElementById('constants').value;
+
+    clearInput();
 }
 
-function submit_mode(mode) {
-    current_mode = mode;
-    console.log("current_mode is: " + current_mode);
+function show_attribute_values(){
+    let option = document.querySelector('#attributes').value;
+    if (option === ':Aspect') {
+        document.getElementById("aspect-attribute").style.display = 'block';
+    } else if (option === ':polarity') {
+        document.getElementById("polarity-attribute").style.display = 'block';
+    }
 }
 
 function generate_penman() {
@@ -571,7 +577,6 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
 
         }
 
-
     } else if (id == 'doc-annot') {
         current_parent = 's';
     } else if (id == 'add') {
@@ -606,12 +611,9 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         // var role = ':' + document.getElementById('test-arg0').innerText;
         // var role = ':arg' + num;
         var role = current_relation;
-        var concept = document.querySelector('#ne_types').value;
-
-        // var name = document.getElementById('selected_tokens').innerText;
         var name = current_concept;
-        console.log(current_parent + ' ' + role + ' ' + concept + ' ' + name);
-        exec_command(current_parent + ' ' + role + ' ' + concept + ' ' + name, 1);
+        console.log(current_parent + ' ' + role + ' ' + current_ne_concept + ' ' + name);
+        exec_command(current_parent + ' ' + role + ' ' + current_ne_concept + ' ' + name, 1);
 
 
     } else if (id == 'replace') {
@@ -638,18 +640,19 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         if ((arg1 = document.getElementById('delete-at')) != null) {
             // var at = arg1.value;
             // var at = "w :manner beautiful";
+            let curr_variable_key = getKeyByValue(amr, document.getElementById('delete-at').value);
+            console.log('current_concept at delete is: ', document.getElementById('delete-at').value);
+            console.log('curr_variable_key: ', curr_variable_key);
 
-            var curr_variable_key = getKeyByValue(amr, current_concept);
 
             if (curr_variable_key.includes("v")) {
                 var pare_variable_key = curr_variable_key.slice(0, -3) + 'v';
                 var curr_rel_key = curr_variable_key.replace('v', 'r');
-                console.log("current_parent is " + current_parent);
             } else {
-                //TODO: if the selected words is concept, not variable
+            //    todo: delete when user typed in concept instead of variable
             }
 
-            var at = amr[pare_variable_key] + " " + amr[curr_rel_key] + " " + current_concept;
+            var at = amr[pare_variable_key] + " " + amr[curr_rel_key] + " " + document.getElementById('delete-at').value;
             if ((at_list = at.split(/\s+/))
                 && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
                 at = at_list[0] + ' ' + at_list[1] + ' "';
@@ -3785,7 +3788,7 @@ function highlightSelection() {
     //highlights 1 selection (for individual nodes only + Need to uncomment on the bootom)
     //highlightRange(userSelection.getRangeAt(0));
 
-    //Save the text to a string to be used if yoiu want to
+    //Save the text to a string to be used if you want to
     /*var string1 = (userSelection.getRangeAt(0));
     alert(string1);*/
 
