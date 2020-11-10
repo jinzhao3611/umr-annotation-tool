@@ -100,11 +100,10 @@ function conceptDropdown() {
         if (typeof getLemma(token) !== 'undefined') {
             var sentence_id = document.getElementById('sentence_id').value;
             console.log("lemma!!!!" + getLemma(token))
+
             fetch('/annotate', {
                 method: 'POST',
-                // body: JSON.stringify({"selected": getLemma(token), "selected_tok": token, "selected_sentId": sentence_id})
                 body: JSON.stringify({"selected": getLemma(token)})
-
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
@@ -114,6 +113,9 @@ function conceptDropdown() {
                 // lemmaBar.onmouseenter = function () {
                 //     getSenses(data);
                 // }
+            })
+                .catch(function(error){
+                console.log("Fetch error: "+ error);
             })
         } else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
@@ -2791,6 +2793,8 @@ function UMR2db() {
         return response.json();
     }).then(function (data) {
         console.log(data); //amr got returned from server
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
     });
 }
 
@@ -2820,6 +2824,8 @@ function load_history() {
         setInnerHTML('load-plain', deHTML(data["history_annot"])); //returned from server
         setInnerHTML('align', htmlSpaceGuard(data['history_align']));
         loadField2amr();
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
     });
 }
 
@@ -2876,6 +2882,8 @@ function export_annot() {
             console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
         }
 
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
     });
 }
 
@@ -3806,11 +3814,7 @@ function highlightRange(range) {
     var newNode = document.createElement("span");
 
     // Make it highlight
-    newNode.setAttribute(
-        "style",
-        // "background-color: yellow;"
-        "color: blue;"
-    );
+    newNode.setAttribute("class", "text-muted");
 
     //Make it "Clickable"
     newNode.onclick = function () {
