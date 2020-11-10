@@ -79,12 +79,8 @@ def annotate():
 
         try:
             token = request.get_json(force=True)["selected"]
-            # orig_token = request.get_json(force=True)["selected_tok"]
-            # selected_sentId = request.get_json(force=True)["selected_sentId"]
-            # selected_index = snts[int(selected_sentId)].words.index(orig_token)
-
-            print(token)
-            print(frame_parser.parse(token))
+            print("token", token)
+            print("data in js: ", frame_parser.parse(token))
             return frame_parser.parse(token)
         except:
             pass
