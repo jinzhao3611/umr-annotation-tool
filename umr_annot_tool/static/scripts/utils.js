@@ -5,10 +5,9 @@
  * @returns {*} lemma
  */
 function getLemma(inputWord){
-    return inputWord;
-    // var lemmatizer = new Lemmatizer();
-    // var lemma = lemmatizer.only_lemmas(inputWord);
-    // return lemma[0];
+    var lemmatizer = new Lemmatizer();
+    var lemma = lemmatizer.only_lemmas(inputWord);
+    return lemma[0];
 }
 
 /** words2number ******************************************************/

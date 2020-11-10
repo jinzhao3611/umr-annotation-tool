@@ -78,11 +78,13 @@ def annotate():
         # print("sentence_db: ", sentence_db)
 
         try:
+            print("I am here998")
             token = request.get_json(force=True)["selected"]
             print("token", token)
             print("data in js: ", frame_parser.parse(token))
             return frame_parser.parse(token)
-        except:
+        except :
+            print("I am here999")
             pass
 
         # load_history annotation
