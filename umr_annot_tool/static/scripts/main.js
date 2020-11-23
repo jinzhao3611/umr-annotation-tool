@@ -101,7 +101,7 @@ function conceptDropdown() {
             var sentence_id = document.getElementById('sentence_id').value;
             console.log("lemma!!!!" + getLemma(token))
 
-            fetch('https://glacial-shelf-55504.herokuapp.com/annotate', {
+            fetch('/annotate', {
                 method: 'POST',
                 body: JSON.stringify({"selected": getLemma(token)})
             }).then(function (response) {
@@ -3767,13 +3767,6 @@ function loadField2amr() {
     console.log(amr);
     show_amr('show');
 }
-
-/********************************************************/
-// $('table').mousedown(function (event) {
-//     if (event.ctrlKey) {
-//         event.preventDefault();
-//     }
-// });
 
 document.onselectionchange = function selectSpan() {
     selection = document.getSelection();
