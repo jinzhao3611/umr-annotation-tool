@@ -97,7 +97,7 @@
 {#<body onload="initialize()">#}
 {# display all the sentences #}
 <div id="all-sentences" style="height: 250px; overflow-y: scroll;">
-    <script type="text/javascript">initialize()</script>
+    <script type="text/javascript">initialize("{{ frame_dict }}")</script>
     {% if all_snts %}
         {% for snt in all_snts %}
             <table>

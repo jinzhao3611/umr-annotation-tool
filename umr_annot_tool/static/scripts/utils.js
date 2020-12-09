@@ -313,6 +313,9 @@ function deHTML(s) {
     s = s.replace(/<\/?(a|span)\b[^<>]*>/g, "");
     s = s.replace(/&nbsp;/g, " ");
     s = s.replace(/<br>/g, "");
+    s = s.replace(/&#39;/g, '"');
+    s = s.replace(/&#34;/g, '"');
+
     return s;
 }
 

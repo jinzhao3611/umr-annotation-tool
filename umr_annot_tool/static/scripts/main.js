@@ -41,9 +41,10 @@ var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
 var logsid = ''; //"IQrVT4Dh6mkz93W1DCxpNws9Om6qKqk0EGwhFs0x"
 var next_special_action = ''; //''
+var frame_json = {};
 
 
-function initialize() {
+function initialize(frame_dict_str) {
     console.log("initialize is called16");
     amr['n'] = 0;
     var s;
@@ -57,6 +58,8 @@ function initialize() {
         next_special_action = s.value;
     }
     current_mode = 'top';
+    frame_json = JSON.parse(deHTML(frame_dict_str));
+    console.log(frame_json);
 }
 
 
@@ -71,61 +74,24 @@ function conceptDropdown() {
     if (!isNaN(numfied_token)) {// if numfied_token is a number
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         console.log(number);
-        const lemmaBar = document.getElementById("find_lemma");
         getSenses(number);
-        // lemmaBar.onmouseenter = function () {
-        //     getSenses(number);
-        // }
-    } else { // if numfied_token is still a string, meaning the token is not a number
-        // pass the token to server to get the framefile
-        // try{
-        //     console.log("lemma!!!!" + getLemma(token))
-        //     fetch('/annotate', {
-        //         method: 'POST',
-        //         body: JSON.stringify({"selected": getLemma(token)})
-        //     }).then(function (response) {
-        //         return response.json();
-        //     }).then(function (data) {
-        //         console.log(data); //senses got returned from server
-        //         const lemmaBar = document.getElementById("find_lemma");
-        //         lemmaBar.onmouseenter = function () {
-        //             getSenses(data);
-        //         }
-        //     })
-        // }catch (e){
-        //     let letter = {"res": [{"desc": "token is a letter", "name": token}]};
-        //     getSenses(letter);
-        // }
-
+    } else {
         if (typeof getLemma(token) !== 'undefined') {
-            var sentence_id = document.getElementById('sentence_id').value;
-            console.log("lemma!!!!" + getLemma(token))
-
-            fetch('/annotate', {
-                method: 'POST',
-                body: JSON.stringify({"selected": getLemma(token)})
-            }).then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                console.log(data); //senses got returned from server
-                getSenses(data);
-                // const lemmaBar = document.getElementById("find_lemma");
-                // lemmaBar.onmouseenter = function () {
-                //     getSenses(data);
-                // }
-            })
-                .catch(function(error){
-                console.log("Fetch error: "+ error);
-            })
+            let lemma = getLemma(token);
+            console.log("lemma!!!!" + lemma);
+            let senses = [];
+            Object.keys(frame_json).forEach(function(key) {
+                if(key.startsWith(lemma)){
+                    senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                }
+            });
+            let data = {"res": senses};
+            getSenses(data);
         } else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
             getSenses(letter);
         }
-
-
     }
-
-
 }
 
 function getSenses(senses) {
