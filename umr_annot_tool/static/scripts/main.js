@@ -85,7 +85,12 @@ function conceptDropdown() {
                     senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
                 }
             });
-            let data = {"res": senses};
+            let data = {}
+            if (senses.length === 0) {
+                data = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+            }else{
+                data = {"res": senses};
+            }
             getSenses(data);
         } else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
