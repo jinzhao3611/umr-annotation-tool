@@ -1,4 +1,4 @@
-from flask import url_for, redirect
+from flask import url_for, redirect, flash
 from werkzeug.utils import secure_filename
 from typing import List, Dict
 import attr
@@ -193,7 +193,6 @@ def annotate():
 def upload():
     content_str_list.clear()
     form = UploadForm()
-
     if request.method == "POST":
         file = request.files['file']
         filename.clear()
@@ -203,12 +202,13 @@ def upload():
         content_string = file.read()
         content_str_list.append(content_string)
         print(content_string)
-
         print(form.language_mode.data)
         target_language[0] = form.language_mode.data
 
     if form.validate_on_submit():
         return redirect(url_for('main.annotate'))
+    else:
+        flash('Upload Failed. Please upload again', 'danger')
 
     return render_template('upload.html', title='upload', form=form)
 
