@@ -17,9 +17,6 @@ main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
 
 
-# FRAME_DESC_FILE = "/umr_annot_tool/resources/frames_chinese.json"
-
-
 @attr.s()
 class Sentence:
     words: List[str] = attr.ib()
@@ -27,34 +24,6 @@ class Sentence:
     length: int = attr.ib()
 
 
-@attr.s()
-class ArgTokenParser:
-    frame_dict: Dict = attr.ib()
-
-    @classmethod
-    def from_json(cls, frame_file: str):
-        frame_dict = json.load(open(frame_file, "r"))
-        return cls(frame_dict)
-
-    def parse(self, token: str) -> Dict:
-        senses = []
-        token_pattern = token + "-"
-        for sense in self.frame_dict:
-            if sense.startswith(token_pattern):
-                senses.append({"name": sense, "desc": self._desc2str(sense)})
-        if not senses:
-            senses.append({"name": token, "desc": token + "\nThis is placeholder"})
-        return {"res": senses}
-
-    def _desc2str(self, name: str) -> str:
-        temp = [name]
-        desc: Dict = self.frame_dict[name]
-        for pair in desc.items():
-            temp.append(": ".join(pair))
-        return "\n".join(temp)
-
-
-frame_parser = ArgTokenParser.from_json(FRAME_DESC_FILE)
 snts = []
 target_language = ['Default']
 df_html = []
@@ -66,14 +35,20 @@ content_str_list = []
 
 @main.route("/annotate", methods=['GET', 'POST'])
 def annotate():
-    frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
 
+    frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
     snts.clear()
     df_html.clear()
-    content_string = content_str_list[0]
-
 
     try:
+        content_string = content_str_list[0]
+        print(content_string)
+    except IndexError:
+        return redirect(url_for('main.upload'))
+
+    try: # if the content string is xml format, parse with xml parser
         ET.fromstring(content_string)
         sents, dfs, sents_gls, conv_turns = parse_xml(content_string)
         for i, sent in enumerate(sents):
@@ -92,17 +67,17 @@ def annotate():
             gls.append(translation)
         for conv_turn in conv_turns:
             notes.append(conv_turn)
-    except ET.ParseError:
+    except ET.ParseError: # if the content string is plain text sentences, split them
         sents = content_string.strip().decode('UTF-8').split('\n')
         if content_string:
             for i, sent in enumerate(sents):
                 snts.append(Sentence(sent.split(), i, len(sent.split())))
 
+    # add documents and sentences in database
     if not Doc.query.filter_by(filename=filename[0]).first():  # this doc is not already added in
         doc = Doc(lang=target_language[0], filename=filename[0])
         db.session.add(doc)
         db.session.commit()
-
         for sent_str in sents:
             if isinstance(sent_str, list):
                 print("sent_str: ", " ".join(sent_str))
@@ -115,8 +90,6 @@ def annotate():
             db.session.add(sent)
             db.session.commit()
 
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
     try:
         print(snts)
         sentence_content = " ".join(snts[0].words)
