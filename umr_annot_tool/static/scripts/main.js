@@ -58,7 +58,7 @@ function initialize(frame_dict_str) {
         next_special_action = s.value;
     }
     current_mode = 'top';
-    frame_json = JSON.parse(deHTML(frame_dict_str));
+    frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
     console.log(frame_json);
 }
 
