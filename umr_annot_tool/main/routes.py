@@ -206,10 +206,13 @@ def upload():
         target_language[0] = form.language_mode.data
 
     if form.validate_on_submit():
-        if content_str_list[0]:
-            return redirect(url_for('main.annotate'))
-        else:
+        if not content_str_list[0]:
             flash('Upload Failed. Please upload again', 'danger')
+        elif not target_language[0]:
+            flash('Please select language', 'danger')
+        else:
+            return redirect(url_for('main.annotate'))
+
 
 
     return render_template('upload.html', title='upload', form=form)
