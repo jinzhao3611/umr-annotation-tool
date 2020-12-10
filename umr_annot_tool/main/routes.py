@@ -192,11 +192,9 @@ def annotate():
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
     content_str_list.clear()
-
     form = UploadForm()
-    if request.method == "POST":
-        target_language[0] = form.autocomplete_input.data
 
+    if request.method == "POST":
         file = request.files['file']
         filename.clear()
         filename.append(file.filename)
@@ -205,6 +203,12 @@ def upload():
         content_string = file.read()
         content_str_list.append(content_string)
         print(content_string)
+
+        print(form.language_mode.data)
+        target_language[0] = form.language_mode.data
+
+    if form.validate_on_submit():
+        return redirect(url_for('main.annotate'))
 
     return render_template('upload.html', title='upload', form=form)
 
