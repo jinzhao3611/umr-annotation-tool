@@ -23,6 +23,31 @@ class Sentence:
     id: int = attr.ib()
     length: int = attr.ib()
 
+def html(content_string):
+    try:  # if the content string is xml format, parse with xml parser
+        ET.fromstring(content_string)
+        sents, dfs, sents_gls, conv_turns = parse_xml(content_string)
+        for df in dfs:
+            df.columns = range(1, len(df.columns) + 1)
+            html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"',
+                                                                                           'border="0"')
+            soup = BeautifulSoup(html_str, "html.parser")
+            words_row = soup.findAll('tr')[1]
+            words_row['id'] = 'current-words'
+            gram_row = soup.findAll('tr')[4]
+            gram_row['class'] = 'optional-rows'
+            df_html.append(str(soup))
+        for translation in sents_gls:
+            gls.append(translation)
+        for conv_turn in conv_turns:
+            notes.append(conv_turn)
+    except ET.ParseError:  # if the content string is plain text sentences, split them into List[List[str]]
+        sents = [sent.split() for sent in content_string.strip().split('\n')]
+    snts = [Sentence(sent, i, len(sent)) for i, sent in enumerate(sents)]
+    # todo: return more things here
+    return sents
+
+
 
 snts = []
 target_language = ['Default']
@@ -48,45 +73,14 @@ def annotate():
     except IndexError:
         return redirect(url_for('main.upload'))
 
-    try: # if the content string is xml format, parse with xml parser
-        ET.fromstring(content_string)
-        sents, dfs, sents_gls, conv_turns = parse_xml(content_string)
-        for i, sent in enumerate(sents):
-            snts.append(Sentence(sent, i, len(sent)))
-        for df in dfs:
-            df.columns = range(1, len(df.columns) + 1)
-            html_str = df.to_html(classes="table table-striped", justify='center').replace('border="1"',
-                                                                                           'border="0"')
-            soup = BeautifulSoup(html_str, "html.parser")
-            words_row = soup.findAll('tr')[1]
-            words_row['id'] = 'current-words'
-            gram_row = soup.findAll('tr')[4]
-            gram_row['class'] = 'optional-rows'
-            df_html.append(str(soup))
-        for translation in sents_gls:
-            gls.append(translation)
-        for conv_turn in conv_turns:
-            notes.append(conv_turn)
-    except ET.ParseError: # if the content string is plain text sentences, split them
-        sents = content_string.strip().decode('UTF-8').split('\n')
-        if content_string:
-            for i, sent in enumerate(sents):
-                snts.append(Sentence(sent.split(), i, len(sent.split())))
 
     # add documents and sentences in database
     if not Doc.query.filter_by(filename=filename[0]).first():  # this doc is not already added in
         doc = Doc(lang=target_language[0], filename=filename[0])
         db.session.add(doc)
         db.session.commit()
-        for sent_str in sents:
-            if isinstance(sent_str, list):
-                print("sent_str: ", " ".join(sent_str))
-                sent = Sent(content=" ".join(sent_str), doc_id=doc.id)
-            elif isinstance(sent_str, str):
-                print("sent_str: ", sent_str)
-                sent = Sent(content=sent_str, doc_id=doc.id)
-            else:
-                raise Exception("wrong sent_str type!!!!!!!!!")
+        for sent_of_tokens in sents:
+            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
             db.session.add(sent)
             db.session.commit()
 
@@ -191,29 +185,27 @@ def annotate():
 
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
-    content_str_list.clear()
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+
     form = UploadForm()
-    if request.method == "POST":
-        file = request.files['file']
-        filename.clear()
-        filename.append(file.filename)
-        secure_filename(filename[0])
-        print("filename:" + filename[0])
-        file_content = file.read()
-        content_str_list.append(file_content)
-        print(file_content)
-        print(form.language_mode.data)
-        target_language[0] = form.language_mode.data
-
     if form.validate_on_submit():
-        if not content_str_list[0]:
-            flash('Upload Failed. Please upload again', 'danger')
-        elif not target_language[0]:
-            flash('Please select language', 'danger')
-        else:
+        content_string = form.file.data.read().decode("utf-8")
+        sents = html(content_string)
+        print("content_string: ", content_string)
+        print("sents: ", sents)
+        filename = secure_filename(form.file.data.filename)
+        if not Doc.query.filter_by(filename=filename).first():  # this doc is not already added in
+            doc = Doc(lang=form.language_mode.data, filename=filename, content=content_string)
+            db.session.add(doc)
+            db.session.commit()
+            flash('Your doc has been created!', 'success')
+            for sent_of_tokens in sents:
+                sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
+                db.session.add(sent)
+                db.session.commit()
+            flash('Your sents has been created!', 'success')
             return redirect(url_for('main.annotate'))
-
-
 
     return render_template('upload.html', title='upload', form=form)
 

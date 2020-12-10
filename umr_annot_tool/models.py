@@ -51,6 +51,7 @@ class Post(db.Model):
 class Doc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False)
     lang = db.Column(db.Text, nullable=False)
     sents = db.relationship('Sent', backref='document', lazy=True)
     annotations = db.relationship('Annotation', backref='document', lazy=True)

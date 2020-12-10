@@ -14,9 +14,7 @@
 #     (the tabulate package is used, the tables in output txt file cannot adjust to the window resize, please open it in full screen when necessary)
 
 import xml.etree.ElementTree as ET
-from tabulate import tabulate
-import argparse
-from typing import Tuple
+from typing import Tuple, List, Optional
 import pandas as pd
 
 def parse_xml(xml_path):
@@ -32,13 +30,13 @@ def parse_xml(xml_path):
         return parse_toolbox_xml(xml_path)
 
 
-def parse_toolbox_xml(xml_path: str) -> Tuple:
+def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], str, str]:
     """
     parse the Arapahoe toolbox xml file
     :param xml_path: input toolbox xml file path
     :param output_path: output txt file path
     :param textonly: set to true if the output txt file only contains the tx line (raw text), false if all info needs to be included
-    :return: None
+    :return:
     """
 
     try:
@@ -91,7 +89,8 @@ def parse_toolbox_xml(xml_path: str) -> Tuple:
         tbls.append(df)
     return tx, tbls, "", ""
 
-def parse_flex_xml(xml_path: str) -> Tuple:
+
+def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]]]:
     """
     parse the Secoya and Sanapana xml file
     :param xml_path: input toolbox xml file path
@@ -180,34 +179,15 @@ def output_to_file(textonly:bool, output:str, result:Tuple) -> None:
 
 if __name__ == '__main__':
 
-    toolbox_path = '/Users/jinzhao/web-projects/umr-annotation-tool/umr_annot_tool/resources/arapahoe.xml'
-    flex_path = '/Users/jinzhao/web-projects/umr-annotation-tool/umr_annot_tool/resources/sanapana/Sanapana_1.xml'
-    # tx, tbls, _, _ = parse_toolbox_xml(toolbox_path)
-    # print(tbls)
+    toolbox_path = '/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/arapahoe.xml'
+    flex_path = '/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/Sanapana_1.xml'
 
-    tree = ET.parse(toolbox_path)
-    root = tree.getroot()
-    print(root.tag)
+    with open(flex_path, 'r') as infile:
+        content_string = infile.read()
 
+    result = parse_xml(content_string)
+    print(result)
 
-
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("input", help='the input xml file path')
-    # parser.add_argument("output", help='the output xml file path')
-    # parser.add_argument("source", help='either toolbox or flex')
-    #
-    # parser.add_argument("--textonly", help="the output txt file only shows the raw text of the tx line",
-    #                     action="store_true")
-    #
-    # args = parser.parse_args()
-    #
-    # if args.source == 'toolbox':
-    #     result = parse_toolbox_xml(args.input)
-    # else:
-    #     #  args.source == 'flex'
-    #     result = parse_flex_xml(args.input)
-    #
-    # output_to_file(args.textonly, args.output, result)
 
 
 
