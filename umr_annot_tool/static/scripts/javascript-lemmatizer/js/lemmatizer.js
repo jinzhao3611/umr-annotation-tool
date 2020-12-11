@@ -16,22 +16,42 @@ if (typeof String.endsWith !== "function") {
 var Lemmatizer = function() {
   this.wn_files = {
     noun: [
-      'static/scripts/javascript-lemmatizer/dict/index.noun.json',
-      'static/scripts/javascript-lemmatizer/dict/noun.exc.json'
+      '../static/scripts/javascript-lemmatizer/dict/index.noun.json',
+      '../static/scripts/javascript-lemmatizer/dict/noun.exc.json'
     ],
     verb: [
-      'static/scripts/javascript-lemmatizer/dict/index.verb.json',
-      'static/scripts/javascript-lemmatizer/dict/verb.exc.json'
+      '../static/scripts/javascript-lemmatizer/dict/index.verb.json',
+      '../static/scripts/javascript-lemmatizer/dict/verb.exc.json'
     ],
     adj:  [
-      'static/scripts/javascript-lemmatizer/dict/index.adj.json',
-      'static/scripts/javascript-lemmatizer/dict/adj.exc.json'
+      '../static/scripts/javascript-lemmatizer/dict/index.adj.json',
+      '../static/scripts/javascript-lemmatizer/dict/adj.exc.json'
     ],
     adv:  [
-      'static/scripts/javascript-lemmatizer/dict/index.adv.json',
-      'static/scripts/javascript-lemmatizer/dict/adv.exc.json'
+      '../static/scripts/javascript-lemmatizer/dict/index.adv.json',
+      '../static/scripts/javascript-lemmatizer/dict/adv.exc.json'
     ]
   };
+
+// var Lemmatizer = function() {
+//   this.wn_files = {
+//     noun: [
+//       '../dict/index.noun.json',
+//       '../dict/noun.exc.json'
+//     ],
+//     verb: [
+//       '../dict/index.verb.json',
+//       '../dict/verb.exc.json'
+//     ],
+//     adj:  [
+//       '../dict/index.adj.json',
+//       '../dict/adj.exc.json'
+//     ],
+//     adv:  [
+//       '../dict/index.adv.json',
+//       '../dict/adv.exc.json'
+//     ]
+//   };
 
   this.morphological_substitutions = {
     noun: [

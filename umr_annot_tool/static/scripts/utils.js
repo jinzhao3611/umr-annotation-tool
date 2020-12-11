@@ -143,8 +143,6 @@ function stripQuotes(s) {
  * @returns {*}
  */
 function strip(s) {
-    // console.log("strip is called");
-
     s = s.replace(/^\s*/, "");
     s = s.replace(/\s*$/, "");
     return s;
@@ -242,8 +240,6 @@ function set(id, value) {
  * @param value
  */
 function setInnerHTML(id, value) {
-    console.log(id);
-    console.log(value);
     var s;
     if ((s = document.getElementById(id)) != null) {
         s.innerHTML = value;
@@ -310,12 +306,17 @@ function slashProtectQuote(string) {
  * @returns {*} penman format string
  */
 function deHTML(s) {
-    s = s.replace(/<\/?(a|span)\b[^<>]*>/g, "");
+
+    s = s.replace(/&amp;/g, '&');
     s = s.replace(/&nbsp;/g, " ");
-    s = s.replace(/<br>/g, "");
     s = s.replace(/&#39;/g, '"');
     s = s.replace(/&#34;/g, '"');
 
+    s = s.replace(/&lt;/g, '<');
+    s = s.replace(/&gt;/g, '>');
+
+    s = s.replace(/<\/?(a|span|div)\b[^<>]*>/g, "");
+    s = s.replace(/<br>/g, "");
     return s;
 }
 

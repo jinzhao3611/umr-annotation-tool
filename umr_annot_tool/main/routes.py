@@ -84,91 +84,66 @@ def upload():
 
 @main.route("/annotate/<int:doc_id>", methods=['GET', 'POST'])
 def annotate(doc_id):
-    print("I am here")
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
     sents, sents_html, sent_htmls, df_html, gls, notes = html(doc.content)
     frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
-
     snt_id = 0
     if "set_sentence" in request.form:
-        snt_id = request.form["sentence_id"]
-        print("changed sent_id: ", type(snt_id))
+        snt_id = int(request.form["sentence_id"])
 
+    # load single annotation for current sentence from db used for load_history()
     try:
-        # history_sent_id = request.get_json(force=True)["history_sent_id"]
-        # print("history_sent_id: ", history_sent_id)
-        # history_sent = " ".join(snts[int(history_sent_id) - 1].words)
-        # print("history_sent: ", history_sent)
-        # sent_id = Sent.query.filter(Sent.content == history_sent).first().id
-
-        print("sent_id: ", snt_id)
-        print("doc_id: ", doc_id)
-        history_annot = Annotation.query.filter(Annotation.sent_id == snt_id+1, Annotation.doc_id == doc_id,
-                                                Annotation.user_id == current_user.id).first().annot_str
-        history_align = Annotation.query.filter(Annotation.sent_id == snt_id+1, Annotation.doc_id == doc_id,
-                                                Annotation.user_id == current_user.id).first().alignment
-        print("history_annot: ", history_annot)
-        print("history_align: ", history_align)
-        return {"history_annot": history_annot, "history_align": history_align}
+        curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id + 1, Annotation.doc_id == doc_id,
+                                              Annotation.user_id == current_user.id).first().annot_str.replace("\n", "")
     except:
-        print("loading annotations and alignments of selected sentences from database failed. ")
-
-    # load annotations for current sentence
+        curr_sent_annot = ""
     try:
-        doc_name = request.get_json(force=True)["doc_name"]
-        print("doc_name: ", doc_name)
-        doc_id = Doc.query.filter(Doc.filename == doc_name).first().id
-        print("doc_id: ", doc_id)
-        annotations = Annotation.query.filter(Annotation.doc_id == doc_id).all()
-        sentences2 = Sent.query.filter(Sent.doc_id == doc_id).all()
-        all_annots = [annot.annot_str for annot in annotations]
-        all_aligns = [annot.alignment for annot in annotations]
-        all_sents2 = [sent2.content for sent2 in sentences2]
-        print(list(zip(all_sents2, all_annots, all_aligns)))
-        return {"annotations": list(zip(all_sents2, all_annots, all_aligns))}
+        curr_sent_align = Annotation.query.filter(Annotation.sent_id == snt_id + 1, Annotation.doc_id == doc_id,
+                                              Annotation.user_id == current_user.id).first().alignment.replace("\n", "")
     except:
-        print("loading annotations and alignments from database failed. ")
+        curr_sent_align = ""
+
+    print(curr_sent_annot)
+    print(curr_sent_align)
+    # load all annotations for current document used for export_annot()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
+    all_annots = [annot.annot_str for annot in annotations]
+    all_aligns = [annot.alignment for annot in annotations]
+    all_sents = [sent2.content for sent2 in filtered_sentences]
+    exported_items = list(zip(all_sents, all_annots, all_aligns))
+    print(exported_items)
 
     # add to db
-    try:
-        amr_html = request.get_json(force=True)["amr"]
-        print("amr_html: ", amr_html)
-        db_sent_id = request.get_json(force=True)["sentence_id"]
-        print("db_sent_id: ", db_sent_id)
-        align_info = request.get_json(force=True)["align"]
-        print("align_ino:", align_info)
+    if request.method == 'POST':
+        try:
+            amr_html = request.get_json(force=True)["amr"]
+            print("amr_html: ", amr_html)
+            align_info = request.get_json(force=True)["align"]
+            print("align_ino:", align_info)
 
-        print(snts)
-        sentence2db = " ".join(snts[int(db_sent_id) - 1].words)
-        print("sentence2db: ", sentence2db)
-        sent_id = Sent.query.filter(Sent.content == sentence2db).first().id
-        print("sent_id", sent_id)
-        doc_id = Sent.query.filter(Sent.content == sentence2db).first().doc_id
-        print("doc_id", doc_id)
-        print("current_user id", current_user.id)
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id +1, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == current_user.id).first()
+            if existing:  # update the existing Annotation object
+                print("upadating existing annotation")
+                existing.annot_str = amr_html
+                existing.alignment = align_info
+                db.session.commit()
+            else:
+                annotation = Annotation(annot_str=amr_html, alignment=align_info, author=current_user, sent_id=snt_id+1,
+                                        doc_id=doc_id)
+                db.session.add(annotation)
+                db.session.commit()
+            return {"amr": amr_html}
+        except:
+            print("add current annotation and alignments to database failed")
 
-        existing = Annotation.query.filter(Annotation.sent_id == sent_id, Annotation.doc_id == doc_id,
-                                           Annotation.user_id == current_user.id).first()
-        print(existing)
-        if existing:  # update the existing Annotation object
-            print("here")
-            existing.annot_str = amr_html
-            existing.alignment = align_info
-            db.session.commit()
-        else:
-            annotation = Annotation(annot_str=amr_html, alignment=align_info, author=current_user, sent_id=sent_id,
-                                    doc_id=doc_id)
-            db.session.add(annotation)
-            db.session.commit()
-        return {"amr": amr_html}
-    except:
-        print("add current annotation and alignments to database failed")
-
-    return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=int(snt_id),
+    return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_html, gls=gls, notes=notes,
-                           frame_dict=frame_dict)
+                           frame_dict=frame_dict,
+                           curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot)
 
 
 

@@ -58,16 +58,31 @@ function initialize(frame_dict_str) {
         next_special_action = s.value;
     }
     current_mode = 'top';
+
+    // parse frame files
+    console.log(deHTML(frame_dict_str));
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
     console.log(frame_json);
 }
 
+function load_history(curr_sent_annot, curr_sent_align){
+    console.log(curr_sent_annot);
+    console.log(curr_sent_align);
+    // load history annotation for current sentence
+    console.log("html string to be loaded:", deHTML(curr_sent_annot));
+    console.log(document.getElementById('load-plain'));
+    setInnerHTML('load-plain', '(t / taste-01)');
+    console.log(document.getElementById('load-plain'));
+    console.log(document.getElementById('align'));
+    console.log("alignment string to be loaded:", curr_sent_align);
+    setInnerHTML('align', 'taste-01: t: 2-2');
+    console.log(document.getElementById('align'));
+    loadField2amr();
+}
+
 
 function conceptDropdown() {
-    // document.getElementById("concept_dropdown").classList.toggle("show");
     submit_concept();
-    // if selected tokens is a number or not
-    // let token = selection.anchorNode.nodeValue;
     let token = current_concept;
     let numfied_token = text2num(token);
     // this is to cover :quant
@@ -113,7 +128,9 @@ function getSenses(senses) {
             genLink.setAttribute("id", "xx");
             genLink.setAttribute("class", "dropdown-item");
             // genDrop.appendChild(genLink);
-            genDrop.appendChild(document.createElement("li").appendChild(genLink));
+            let genLi = document.createElement("li");
+            genLi.appendChild(genLink);
+            genDrop.appendChild(genLi);
         });
         // genDrop.classList.toggle("show");
     }
@@ -2748,18 +2765,15 @@ function defaultFilename() {
 
 function UMR2db() {
     console.log("I am here521");
-    // sent = document.getElementById('sentence').innerText;
-    var amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
-    // var sentenceAndIndice = document.getElementById('sentence').innerText;
-    // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
-    // var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
-    var sentence_id = document.getElementById('sentence_id').value;
-    var align_info = document.getElementById('align').innerText;
-    console.log(sentence_id);
+    let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
+    let align_info = document.getElementById('align').innerText;
+    let doc_id = document.getElementById('doc_id').innerText;
     console.log(amrHtml);
-    fetch('/annotate', {
+    console.log(align_info);
+
+    fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "sentence_id": sentence_id, "align": align_info})
+        body: JSON.stringify({"amr": amrHtml, "align": align_info})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -2776,31 +2790,9 @@ function firstHalfString(str) {
     return s1;
 }
 
-function load_history() {
-    console.log("I am here524");
-    // var sentenceAndIndice = document.getElementById('sentence').innerText;
-    // var sentence = firstHalfString(sentenceAndIndice); //He denied any wrongdoing .
-    var documentName = document.getElementById('filename').innerText; //"sample_snts_english.txt" doesn't need this
-    var sentence_id = document.getElementById('sentence_id').value;
-    console.log(documentName);
-    console.log(sentence_id);
-
-    fetch('/annotate', {
-        method: 'POST',
-        body: JSON.stringify({"documentName": documentName, "history_sent_id": sentence_id})
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
-        setInnerHTML('load-plain', deHTML(data["history_annot"])); //returned from server
-        setInnerHTML('align', htmlSpaceGuard(data['history_align']));
-        loadField2amr();
-    }).catch(function(error){
-        console.log("Fetch error: "+ error);
-    });
-}
 
 function export_annot() {
+    //todo delete fetch and refactor this like load_history
     console.log("export_annot is called");
     var doc_name = document.getElementById('filename').innerText
     console.log(doc_name);
@@ -3689,7 +3681,7 @@ function string2amr(s) {
  * this is used to load the penman string
  */
 function loadField2amr() {
-    console.log(loadField2amr);
+    console.log("loadField2amr is called");
     var s, s2, s3, value;
     var saved_snt = '';
     if ((s = document.getElementById('load-plain')) != null) {

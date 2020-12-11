@@ -20,45 +20,56 @@
 
 
     <style type="text/css">
-
-        @media (min-width: 992px) {
-            .dropdown-menu .dropdown-toggle:after {
-                border-top: .3em solid transparent;
-                border-right: 0;
-                border-bottom: .3em solid transparent;
-                border-left: .3em solid;
-            }
-
-            .dropdown-menu .dropdown-menu {
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            .dropdown-menu li {
-                position: relative;
-            }
-
-            .nav-item .submenu {
-                display: none;
-                position: absolute;
-                left: 100%;
-                top: -7px;
-            }
-
-            .nav-item .submenu-left {
-                right: 100%;
-                left: auto;
-            }
-
-            .dropdown-menu > li:hover {
-                background-color: #f1f1f1
-            }
-
-            .dropdown-menu > li:hover > .submenu {
-                display: block;
-            }
+        .dropdown-submenu {
+            position: relative;
         }
+
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+            margin-left: -1px;
+            -webkit-border-radius: 0 6px 6px 6px;
+            -moz-border-radius: 0 6px 6px;
+            border-radius: 0 6px 6px 6px;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-submenu>a:after {
+            display: block;
+            content: " ";
+            float: right;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            border-left-color: #ccc;
+            margin-top: 5px;
+            margin-right: -10px;
+        }
+
+        .dropdown-submenu:hover>a:after {
+            border-left-color: #fff;
+        }
+
+        .dropdown-submenu.pull-left {
+            float: none;
+        }
+
+        .dropdown-submenu.pull-left>.dropdown-menu {
+            left: -100%;
+            margin-left: 10px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            -moz-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+        }
+
     </style>
+
 {% endblock head %}
 
 
@@ -72,22 +83,28 @@
         <th class='text-muted'>File Name:</th>
         <th id="filename" style="display:inline">{{ filename }}</th>
     </tr>
+        <tr>
+        <th class='text-muted'>Doc ID in database:</th>
+        <th id="doc_id" style="display:inline">{{ doc_id }}</th>
+    </tr>
 </table>
 <hr>
 
 {# display all the sentences #}
 <div id="all-sentences" style="height: 250px; overflow-y: scroll;">
-    <script type="text/javascript">initialize("{{ frame_dict }}")</script>
-        {% autoescape off %}
-        <p>{{ sents_html }}</p>
-        {% endautoescape %}
+    <script type="text/javascript">
+        initialize("{{ frame_dict }}")
+    </script>
+    {% autoescape off %}
+    <p>{{ sents_html }}</p>
+    {% endautoescape %}
 </div>
 <hr>
 
 {# choose the sentence ID #}
 <form method="post">
     Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }}-1 value={{ snt_id }}>
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=0 max={{ sents|length-1 }} value={{ snt_id }}>
     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
 </form>
 
@@ -483,22 +500,20 @@
 {#<button onclick="generate_penman(); clearInput()">Submit Query</button>#}
 Concept:<br>
 <div class="btn-group dropright">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" onclick="conceptDropdown()"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    </button>
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown()"></button>
 
-    <ul id="concept_dropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li class="nav-item">
-            <a class="dropdown-item" id="set-root" href="javascript:submit_template_action('set_parent');">set head</a>
-        </li>
-        <li class="nav-item dropdown-li">
-            <a class="dropdown-item dropdown-toggle" id="find_lemma" data-toggle="dropdown">find lemma</a>
-            <ul id="genericDropdown" class="submenu dropdown-menu">
+    <ul id="concept_dropdown" class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+        <li class="dropdown-submenu">
+            <a class="dropdown-item" tabindex="-1"  id="find_lemma">find lemma</a>
+            <ul id="genericDropdown" class="dropdown-menu">
+                <li class="dropdown-item"><a tabindex="-1">placeholder</a></li>
             </ul>
         </li>
-        <li class="nav-item">
-            <a class="dropdown-item" id="multiple_words" href="javascript:multipleWords();">multiple words</a>
-        </li>
+
+        <li class="dropdown-divider"></li>
+
+        <li class="dropdown-item"><a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a></li>
+        <li class="dropdown-item"><a id="multiple_words" href="javascript:multipleWords();">multiple words</a></li>
     </ul>
 </div>
 <hr>
@@ -555,7 +570,7 @@ Concept:<br>
 </button>
 
 <button id="save-box">&nbsp;<a style="text-decoration:none" title="load_history"
-                               href="javascript:load_history();">load_history</a>&nbsp;
+                               href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a>&nbsp;
 </button>
 
 <button id="export-box">&nbsp;<a style="text-decoration:none" title="load"
