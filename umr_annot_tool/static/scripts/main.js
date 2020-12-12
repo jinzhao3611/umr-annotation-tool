@@ -1,9 +1,9 @@
-var current_parent;
-var current_concept;
-var current_relation;
-var current_mode;
-var current_attribute;
-var current_ne_concept;
+let current_parent;
+let current_concept;
+let current_relation;
+let current_mode;
+let current_attribute;
+let current_ne_concept;
 
 var temp_umrs = {};
 
@@ -45,14 +45,14 @@ var frame_json = {};
 
 
 function initialize(frame_dict_str) {
-    console.log("initialize is called16");
+    console.log("initialize is called");
     amr['n'] = 0;
-    var s;
 
     // loadField2amr(); //如果load里面的Direct AMR entry里什么都没有输入的话，可能这里什么都没有做
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
 
+    let s;
     //unclear what does this line do, probably has something to do with undo
     if ((s = document.getElementById('next-special-action')) != null) {
         next_special_action = s.value;
@@ -60,9 +60,7 @@ function initialize(frame_dict_str) {
     current_mode = 'top';
 
     // parse frame files
-    console.log(deHTML(frame_dict_str));
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
-    console.log(frame_json);
 }
 
 function load_history(curr_sent_annot, curr_sent_align){
@@ -88,15 +86,14 @@ function conceptDropdown() {
     // this is to cover :quant
     if (!isNaN(numfied_token)) {// if numfied_token is a number
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
-        console.log(number);
         getSenses(number);
     } else {
         if (typeof getLemma(token) !== 'undefined') {
             let lemma = getLemma(token);
-            console.log("lemma!!!!" + lemma);
+            console.log("lemma of chosen word:", lemma);
             let senses = [];
             Object.keys(frame_json).forEach(function(key) {
-                if(key.startsWith(lemma)){
+                if(key.split("-")[0] === lemma){
                     senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
                 }
             });
@@ -162,7 +159,6 @@ function docAnnot(sentenceId) {
 }
 
 function submit_concept() {
-    // current_concept = selection.anchorNode.nodeValue;
     current_concept = document.getElementById('selected_tokens').innerText;
     current_concept = current_concept.replace("'", "\'");
     console.log("current_concept is: " + current_concept);
@@ -2791,63 +2787,45 @@ function firstHalfString(str) {
 }
 
 
-function export_annot() {
-    //todo delete fetch and refactor this like load_history
-    console.log("export_annot is called");
-    var doc_name = document.getElementById('filename').innerText
-    console.log(doc_name);
-    fetch('/annotate', {
-        method: 'POST',
-        body: JSON.stringify({"doc_name": doc_name})
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        let output_array = data["annotations"];
+function export_annot(exported_items) {
+    console.log("exported_items: ", exported_items);
+    let doc_name = document.getElementById('filename').innerText
+    exported_items.forEach(e => {
+        e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
+        e[1] = e[1].replace(/&nbsp;/g, " ");
+        e[1] = e[1].replace(/<br>/g, "");
+        e[1] = e[1].replace('<div id="amr">', '');
+        e[1] = e[1].replace('</div>', '');
+    })
 
-        output_array.forEach(e => {
-            console.log(e[1]);
-            e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
-            e[1] = e[1].replace(/&nbsp;/g, " ");
-            e[1] = e[1].replace(/<br>/g, "");
-            e[1] = e[1].replace('<div id="amr">', '');
-            e[1] = e[1].replace('</div>', '');
-            console.log(e[1]);
-        })
+    let output_str = exported_items.map((a, index) =>
+        index + 1 + '\t' + a[0]
+        + "\n# sentence level graph:\n"
+        + a[1]
+        + "\n# alignment:"
+        + a[2]
+        + "\n# document level annotation:\nempty\n").join("\n\n# :: snt");
+    console.log(output_str);
 
-        console.log(output_array);
-        let output_str = data["annotations"].map((a, index) =>
-            index + 1 + '\t' + a[0]
-            + "\n# sentence level graph:\n"
-            + a[1]
-            + "\n# alignment:"
-            + a[2]
-            + "\n# document level annotation:\nempty\n").join("\n\n# :: snt");
-        console.log(output_str);
+    let filename;
+    let text = "user name: " + document.getElementById('username').innerText + '\n';
+    let curr_time = new Date();
+    text += "export time: " + curr_time.toLocaleString() + '\n\n';
+    text += '# :: snt';
+    if (window.BlobBuilder && window.saveAs) {
+        //todo: this doesn't seem to work
+        filename = doc_name.replace( '.txt', "_annot.txt");
+        filename = doc_name.replace( '.xml', "_annot.xml");
+        text += output_str
+        console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
+        var bb = new BlobBuilder();
+        bb.append(text);
+        saveAs(bb.getBlob(), filename);
+    } else {
+        console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
+    }
 
-        var filename;
 
-        var text = "user name: " + document.getElementById('username').innerText + '\n';
-        let curr_time = new Date();
-        text += "export time: " + curr_time.toLocaleString() + '\n\n';
-        text += '# :: snt';
-        if (window.BlobBuilder && window.saveAs) {
-            console.log('I am here1-1');
-
-            filename = doc_name;
-            filename += '.txt';
-            text += output_str
-            console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
-            var bb = new BlobBuilder();
-            bb.append(text);
-            saveAs(bb.getBlob(), filename);
-        } else {
-            console.log('I am here1-4');
-            console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
-        }
-
-    }).catch(function(error){
-        console.log("Fetch error: "+ error);
-    });
 }
 
 function applyProps(caller) {
@@ -3733,11 +3711,11 @@ function loadField2amr() {
 
 document.onselectionchange = function selectSpan() {
     selection = document.getSelection();
-    console.log("" + selection);
     selected_tokens.innerHTML = "";
     selected_tokens.innerHTML += selection;
-    begOffset = selection.anchorNode.parentElement.cellIndex;
-    endOffset = selection.focusNode.parentElement.cellIndex;
+    console.log("selected_tokens: ", selected_tokens);
+    begOffset = selection.anchorNode.parentElement.cellIndex + 1;
+    endOffset = selection.focusNode.parentElement.cellIndex + 1;
 };
 
 function highlightSelection() {
@@ -3754,14 +3732,6 @@ function highlightSelection() {
         //Insert the copy
         range.insertNode(node);
     }
-
-    //highlights 1 selection (for individual nodes only + Need to uncomment on the bootom)
-    //highlightRange(userSelection.getRangeAt(0));
-
-    //Save the text to a string to be used if you want to
-    /*var string1 = (userSelection.getRangeAt(0));
-    alert(string1);*/
-
 }
 
 //Function that highlights a selection and makes it clickable

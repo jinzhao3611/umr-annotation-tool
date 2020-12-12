@@ -104,7 +104,7 @@
 {# choose the sentence ID #}
 <form method="post">
     Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=0 max={{ sents|length-1 }} value={{ snt_id }}>
+    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }} value={{ snt_id }}>
     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
 </form>
 
@@ -112,17 +112,17 @@
 {% if df_html|length and 'Default' == lang %}
     <div id="sentence" style="height: 250px; overflow-y: scroll;">
         {% autoescape off %}
-        <p>{{ df_html[snt_id] }}</p>
+        <p>{{ df_html[snt_id-1] }}</p>
         {% endautoescape %}
         {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
-        <p><b>Free</b> {{ gls[snt_id] }}</p>
-        <p><b>Notes</b> {{ notes[snt_id] }}</p>
+        <p><b>Free</b> {{ gls[snt_id-1] }}</p>
+        <p><b>Notes</b> {{ notes[snt_id-1] }}</p>
     </div>
     <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
 {% else %}
     <div id="sentence">
         {% autoescape off %}
-        <p>{{ sent_htmls[snt_id] }}</p>
+        <p>{{ sent_htmls[snt_id-1] }}</p>
         {% endautoescape %}
     </div>
 {% endif %}
@@ -481,23 +481,9 @@
 <br>
 <button onclick="submit_query()">Submit</button>
 
-{#    Concept:#}
-{#    <button id="selected_tokens" onclick="conceptDropdown()" class="dropbtn"></button>#}
-{##}
-{#    <div id="concept_dropdown" class="dropdown-content">#}
-{#        <a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a>#}
-{#        <!--<a id="find_lemma" onmouseover="getSenses(0)" class="dropbtn">find lemma</a>-->#}
-{#        <a id="find_lemma" class="dropbtn">find lemma</a>#}
-{#        <a id="named_entities" onmouseover="neListDropdown()">named entities</a>#}
-{#        <a id="multiple_words" href="javascript:multipleWords();">multiple words</a>#}
-{##}
-{#    </div>#}
-{#    <div id="genericDropdown" class="dropdown-content" style="right:auto; left:20%"></div>#}
-
 
 <br>
 <br>
-{#<button onclick="generate_penman(); clearInput()">Submit Query</button>#}
 Concept:<br>
 <div class="btn-group dropright">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown()"></button>
@@ -517,6 +503,9 @@ Concept:<br>
     </ul>
 </div>
 <hr>
+
+{#todo: add current head here#}
+{#Current head: #}
 
 <div id="text-command">
     <table>
@@ -573,8 +562,8 @@ Concept:<br>
                                href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a>&nbsp;
 </button>
 
-<button id="export-box">&nbsp;<a style="text-decoration:none" title="load"
-                                 href="javascript:export_annot();">export</a>&nbsp;
+<button id="export-box">&nbsp;<a style="text-decoration:none" title="export"
+                                 href="javascript:export_annot({{ exported_items }});">export</a>&nbsp;
 </button>
 
 
