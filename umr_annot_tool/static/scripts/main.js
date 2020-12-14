@@ -61,19 +61,23 @@ function initialize(frame_dict_str) {
 
     // parse frame files
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
+
+}
+
+function curr_head(){
+    setInnerHTML('curr_head', current_parent);
 }
 
 function load_history(curr_sent_annot, curr_sent_align){
-    console.log(curr_sent_annot);
-    console.log(curr_sent_align);
+    console.log("curr_sent_annot: ", curr_sent_annot);
+    console.log("curr_sent_align: ", curr_sent_align);
     // load history annotation for current sentence
     console.log("html string to be loaded:", deHTML(curr_sent_annot));
-    console.log(document.getElementById('load-plain'));
-    setInnerHTML('load-plain', '(t / taste-01)');
+    setInnerHTML('load-plain', deHTML(curr_sent_annot));
     console.log(document.getElementById('load-plain'));
     console.log(document.getElementById('align'));
     console.log("alignment string to be loaded:", curr_sent_align);
-    setInnerHTML('align', 'taste-01: t: 2-2');
+    setInnerHTML('align', curr_sent_align);
     console.log(document.getElementById('align'));
     loadField2amr();
 }
@@ -568,6 +572,7 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
             console.log("current_parent is " + current_parent);
 
         }
+        curr_head();
 
     } else if (id == 'doc-annot') {
         current_parent = 's';
