@@ -128,358 +128,372 @@
 {% endif %}
 <hr>
 
-{% if 'English' == lang %}
-    <div class="dropdown">
-        <label for="browser">Roles</label>
-        <input list="browsers" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers">
-            <option value=":other">
-            <option value=":ARG0">
-            <option value=":ARG1">
-            <option value=":ARG2">
-            <option value=":ARG3">
-            <option value=":ARG4">
-            <option value=":ARG5">
-            <option value=":ARG6">
-            <option value=":calendar">
-            <option value=":century">
-            <option value=":day">
-            <option value=":dayperiod">
-            <option value=":decade">
-            <option value=":era">
-            <option value=":month">
-            <option value=":quarter">
-            <option value=":season">
-            <option value=":timezone">
-            <option value=":weekday">
-            <option value=":year">
-            <option value=":year2">
-            <option value=":accompanier">
-            <option value=":age">
-            <option value=":beneficiary">
-            <option value=":cause">
-            <option value=":concession">
-            <option value=":condition">
-            <option value=":consist_of">
-            <option value=":degree">
-            <option value=":destination">
-            <option value=":direction">
-            <option value=":domain">
-            <option value=":duration">
-            <option value=":example">
-            <option value=":extent">
-            <option value=":frequency">
-            <option value=":instrument">
-            <option value=":li">
-            <option value=":location">
-            <option value=":manner">
-            <option value=":medium">
-            <option value=":mod">
-            <option value=":mode">
-            <option value=":name">
-            <option value=":ord">
-            <option value=":part">
-            <option value=":path">
-            <option value=":polite">
-            <option value=":poss">
-            <option value=":product_of">
-            <option value=":purpose">
-            <option value=":quant">
-            <option value=":range">
-            <option value=":scale">
-            <option value=":source">
-            <option value=":subevent">
-            <option value=":subset">
-            <option value=":sum_of">
-            <option value=":time">
-            <option value=":topic">
-            <option value=":unit">
-            <option value=":value">
-            <option value=":wiki">
-            <option value=":op1">
-            <option value=":op2">
-            <option value=":op3">
-            <option value=":op4">
-            <option value=":op5">
-            <option value=":op6">
-            <option value=":op7">
-            <option value=":op8">
-            <option value=":op9">
-            <option value=":op10">
+<table class="table table-borderless">
+    <tbody>
+        <tr>
+            <td>
+                {% if 'English' == lang %}
+                    <div class="dropdown">
+                        <label for="browser">Roles(English)</label>
+                        <input list="browsers" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
+                        <datalist id="browsers">
+                            <option value=":other">
+                            <option value=":ARG0">
+                            <option value=":ARG1">
+                            <option value=":ARG2">
+                            <option value=":ARG3">
+                            <option value=":ARG4">
+                            <option value=":ARG5">
+                            <option value=":ARG6">
+                            <option value=":calendar">
+                            <option value=":century">
+                            <option value=":day">
+                            <option value=":dayperiod">
+                            <option value=":decade">
+                            <option value=":era">
+                            <option value=":month">
+                            <option value=":quarter">
+                            <option value=":season">
+                            <option value=":timezone">
+                            <option value=":weekday">
+                            <option value=":year">
+                            <option value=":year2">
+                            <option value=":accompanier">
+                            <option value=":age">
+                            <option value=":beneficiary">
+                            <option value=":cause">
+                            <option value=":concession">
+                            <option value=":condition">
+                            <option value=":consist_of">
+                            <option value=":degree">
+                            <option value=":destination">
+                            <option value=":direction">
+                            <option value=":domain">
+                            <option value=":duration">
+                            <option value=":example">
+                            <option value=":extent">
+                            <option value=":frequency">
+                            <option value=":instrument">
+                            <option value=":li">
+                            <option value=":location">
+                            <option value=":manner">
+                            <option value=":medium">
+                            <option value=":mod">
+                            <option value=":mode">
+                            <option value=":name">
+                            <option value=":ord">
+                            <option value=":part">
+                            <option value=":path">
+                            <option value=":polite">
+                            <option value=":poss">
+                            <option value=":product_of">
+                            <option value=":purpose">
+                            <option value=":quant">
+                            <option value=":range">
+                            <option value=":scale">
+                            <option value=":source">
+                            <option value=":subevent">
+                            <option value=":subset">
+                            <option value=":sum_of">
+                            <option value=":time">
+                            <option value=":topic">
+                            <option value=":unit">
+                            <option value=":value">
+                            <option value=":wiki">
+                            <option value=":op1">
+                            <option value=":op2">
+                            <option value=":op3">
+                            <option value=":op4">
+                            <option value=":op5">
+                            <option value=":op6">
+                            <option value=":op7">
+                            <option value=":op8">
+                            <option value=":op9">
+                            <option value=":op10">
 
-            <option value=":reason">
-            <option value=":temporal">
-            <option value=":modal">
-            <option value=":coref">
+                            <option value=":reason">
+                            <option value=":temporal">
+                            <option value=":modal">
+                            <option value=":coref">
 
-            <option value=":ARG1-of">
+                            <option value=":ARG1-of">
 
-            <option value=":before">
-            <option value=":depends-on">
-            <option value=":AFF">
-            <option value=":NEG">
-            <option value=":same-entity">
+                            <option value=":before">
+                            <option value=":depends-on">
+                            <option value=":AFF">
+                            <option value=":NEG">
+                            <option value=":same-entity">
 
-        </datalist>
-        {#        <input type="submit" onclick="submit_relation('roles1')">#}
-    </div>
-{% else %}
-    <div class="dropdown">
-        <label for="browser">Roles</label>
-        <input list="browsers" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="browsers">
-            <option value=":actor">
-            <option value=":undergoer">
-            <option value=":theme">
-            <option value=":recipient">
-            <option value=":force">
-            <option value=":causer">
-            <option value=":experiencer">
-            <option value=":stimulus">
-            <option value=":companion">
-            <option value=":material">
-            <option value=":place">
-            <option value=":start">
-            <option value=":goal">
-            <option value=":affectee">
-            <option value=":other">
-        </datalist>
-        {#        <input type="submit" onclick="submit_relation('roles2')">#}
-    </div>
-{% endif %}
+                        </datalist>
+                        {#        <input type="submit" onclick="submit_relation('roles1')">#}
+                    </div>
+                {% else %}
+                    <div class="dropdown">
+                        <label for="browser">Roles(Default)</label>
+                        <input list="browsers" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
+                        <datalist id="browsers">
+                            <option value=":actor">
+                            <option value=":undergoer">
+                            <option value=":theme">
+                            <option value=":recipient">
+                            <option value=":force">
+                            <option value=":causer">
+                            <option value=":experiencer">
+                            <option value=":stimulus">
+                            <option value=":companion">
+                            <option value=":material">
+                            <option value=":place">
+                            <option value=":start">
+                            <option value=":goal">
+                            <option value=":affectee">
+                            <option value=":other">
+                        </datalist>
+                        {#        <input type="submit" onclick="submit_relation('roles2')">#}
+                    </div>
+                {% endif %}
+
+                <div id="concept_types">
+                    <label for="browser2">Concept Types</label>
+                    <input list="browsers2" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
+                    <datalist id="browsers2">
+                        <option value='ordinal-entity'>
+                        <option value='temporal-quantity'>
+                        <option value='amr-unknown'>
+                        <option value='amr-choice'>
+                        <option value='truth-value'>
+                        <option value='name'>
+                        <option value='accompany-01'>
+                        <option value='age-01'>
+                        <option value='benefit-01'>
+                        <option value='have-concession-91'>
+                        <option value='have-condition-91'>
+                        <option value='have-degree-92'>
+                        <option value='be-destined-for-91'>
+                        <option value='last-01'>
+                        <option value='exemplify-01'>
+                        <option value='have-extent-91'>
+                        <option value='have-frequency-91'>
+                        <option value='have-instrument-91'>
+                        <option value='have-li-91'>
+                        <option value='be-located-at-91'>
+                        <option value='have-manner-91'>
+                        <option value='have-mod-91'>
+                        <option value='have-name-91'>
+                        <option value='have-ord-91'>
+                        <option value='have-part-91'>
+                        <option value='have-polarity-91'>
+                        <option value='own-01'>
+                        <option value=' have-03'>
+                        <option value='have-purpose-91'>
+                        <option value='have-quant-91'>
+                        <option value='be-from-91'>
+                        <option value='have-subevent-91'>
+                        <option value='be-temporally-at-91'>
+                        <option value='concern-02'>
+                        <option value='have-value-91'>
+                    </datalist>
+                    {#    <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
+                </div>
+
+                <div id="named_entities">
+                    <label for="browser6">Named Entity Types</label>
+                    <input list="browsers6" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
+                    <datalist id="browsers6">
+                        <option value='thing'>
+                        <option value='person'>
+                        <option value='family'>
+                        <option value='animal'>
+                        <option value='language'>
+                        <option value='nationality'>
+                        <option value='ethnic-group'>
+                        <option value='regional-group'>
+                        <option value='religious-group'>
+                        <option value='political-movement'>
+                        <option value='organization'>
+                        <option value='company'>
+                        <option value='government-organization'>
+                        <option value='military'>
+                        <option value='criminal-organization'>
+                        <option value='political-party'>
+                        <option value='market-sector'>
+                        <option value='school'>
+                        <option value='university'>
+                        <option value='research-institute'>
+                        <option value='team'>
+                        <option value='league'>
+                        <option value='location'>
+                        <option value='city'>
+                        <option value='city-district'>
+                        <option value='county'>
+                        <option value='state'>
+                        <option value='province'>
+                        <option value='territory'>
+                        <option value='country'>
+                        <option value='local-region'>
+                        <option value='country-region'>
+                        <option value='world-region'>
+                        <option value='continent'>
+                        <option value='ocean'>
+                        <option value='sea'>
+                        <option value='lake'>
+                        <option value='river'>
+                        <option value='gulf'>
+                        <option value='bay'>
+                        <option value='strait'>
+                        <option value='canal'>
+                        <option value='peninsula'>
+                        <option value='mountain'>
+                        <option value='volcano'>
+                        <option value='valley'>
+                        <option value='canyon'>
+                        <option value='island'>
+                        <option value='desert'>
+                        <option value='forest'>
+                        <option value='moon'>
+                        <option value='planet'>
+                        <option value='star'>
+                        <option value='constellation'>
+                        <option value='facility'>
+                        <option value='airport'>
+                        <option value='station'>
+                        <option value='port'>
+                        <option value='tunnel'>
+                        <option value='bridge'>
+                        <option value='road'>
+                        <option value='railway-line'>
+                        <option value='building'>
+                        <option value='theater'>
+                        <option value='museum'>
+                        <option value='palace'>
+                        <option value='hotel'>
+                        <option value='worship-place'>
+                        <option value='sports-facility'>
+                        <option value='market'>
+                        <option value='park'>
+                        <option value='zoo'>
+                        <option value='amusement-park'>
+                        <option value='event'>
+                        <option value='incident'>
+                        <option value='natural-disaster'>
+                        <option value='earthquake'>
+                        <option value='war'>
+                        <option value='conference'>
+                        <option value='game'>
+                        <option value='festival'>
+                        <option value='product'>
+                        <option value='vehicle'>
+                        <option value='ship'>
+                        <option value='aircraft'>
+                        <option value='aircraft-type'>
+                        <option value='spaceship'>
+                        <option value='car-make'>
+                        <option value='work-of-art'>
+                        <option value='picture'>
+                        <option value='music'>
+                        <option value='show'>
+                        <option value='broadcast-program'>
+                        <option value='publication'>
+                        <option value='book'>
+                        <option value='newspaper'>
+                        <option value='magazine'>
+                        <option value='journal'>
+                        <option value='natural-object'>
+                        <option value='award'>
+                        <option value='law'>
+                        <option value='court-decision'>
+                        <option value='treaty'>
+                        <option value='music-key'>
+                        <option value='musical-note'>
+                        <option value='food-dish'>
+                        <option value='writing-script'>
+                        <option value='variable'>
+                        <option value='program'>
+                        <option value='molecular-physical-entity'>
+                        <option value='small-molecule'>
+                        <option value='protein'>
+                        <option value='protein-family'>
+                        <option value='protein-segment'>
+                        <option value='amino-acid'>
+                        <option value='macro-molecular-complex'>
+                        <option value='enzyme'>
+                        <option value='nucleic-acid'>
+                        <option value='pathway'>
+                        <option value='gene'>
+                        <option value='dna-sequence'>
+                        <option value='cell'>
+                        <option value='cell-line'>
+                        <option value='species'>
+                        <option value='taxon'>
+                        <option value='disease'>
+                        <option value='medical-condition'>
+                    </datalist>
+                    {#    <input type="submit" onclick="submit_mode('add-ne')">#}
+                </div>
+                <br>
+                <button onclick="submit_query()">Add abstract concept</button>
+            </td>
+            <td>
+                <div id="real-attributes">
+                    <label for="browser4">Attributes</label>
+                    <input list="browsers4" oninput="show_attribute_values('attributes')" name="attributes" id="attributes"
+                           onfocus="this.value=''" onchange="this.blur();">
+                    <datalist id="browsers4">
+                        <option value=":Aspect">
+                        <option value=":polarity">
+                    </datalist>
+                </div>
 
 
-<div id="other-attributes">
-    <label for="browser2">Concept Types </label>
-    <input list="browsers2" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
-    <datalist id="browsers2">
-        <option value='ordinal-entity'>
-        <option value='temporal-quantity'>
-        <option value='amr-unknown'>
-        <option value='amr-choice'>
-        <option value='truth-value'>
-        <option value='name'>
-        <option value='accompany-01'>
-        <option value='age-01'>
-        <option value='benefit-01'>
-        <option value='have-concession-91'>
-        <option value='have-condition-91'>
-        <option value='have-degree-92'>
-        <option value='be-destined-for-91'>
-        <option value='last-01'>
-        <option value='exemplify-01'>
-        <option value='have-extent-91'>
-        <option value='have-frequency-91'>
-        <option value='have-instrument-91'>
-        <option value='have-li-91'>
-        <option value='be-located-at-91'>
-        <option value='have-manner-91'>
-        <option value='have-mod-91'>
-        <option value='have-name-91'>
-        <option value='have-ord-91'>
-        <option value='have-part-91'>
-        <option value='have-polarity-91'>
-        <option value='own-01'>
-        <option value=' have-03'>
-        <option value='have-purpose-91'>
-        <option value='have-quant-91'>
-        <option value='be-from-91'>
-        <option value='have-subevent-91'>
-        <option value='be-temporally-at-91'>
-        <option value='concern-02'>
-        <option value='have-value-91'>
-    </datalist>
-    {#    <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
-</div>
+                {#    attribute values of Aspect#}
+                <div class="attributes" id="aspect-attribute" style="display: none">
+                    <label for="browser1">Attribute Values</label>
+                    <input list="browsers1" name="attribute_values1" id="attribute_values1" onfocus="this.value=''"
+                           onchange="this.blur();">
+                    <datalist id="browsers1">
+                        <option value='Habitual'>
+                        <option value='Activity'>
+                        <option value='Endeavor'>
+                        <option value='Performance'>
+                    </datalist>
+                    {#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
+                </div>
 
-<div id="named_entities">
-    <label for="browser6">Named Entity Types </label>
-    <input list="browsers6" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
-    <datalist id="browsers6">
-        <option value='thing'>
-        <option value='person'>
-        <option value='family'>
-        <option value='animal'>
-        <option value='language'>
-        <option value='nationality'>
-        <option value='ethnic-group'>
-        <option value='regional-group'>
-        <option value='religious-group'>
-        <option value='political-movement'>
-        <option value='organization'>
-        <option value='company'>
-        <option value='government-organization'>
-        <option value='military'>
-        <option value='criminal-organization'>
-        <option value='political-party'>
-        <option value='market-sector'>
-        <option value='school'>
-        <option value='university'>
-        <option value='research-institute'>
-        <option value='team'>
-        <option value='league'>
-        <option value='location'>
-        <option value='city'>
-        <option value='city-district'>
-        <option value='county'>
-        <option value='state'>
-        <option value='province'>
-        <option value='territory'>
-        <option value='country'>
-        <option value='local-region'>
-        <option value='country-region'>
-        <option value='world-region'>
-        <option value='continent'>
-        <option value='ocean'>
-        <option value='sea'>
-        <option value='lake'>
-        <option value='river'>
-        <option value='gulf'>
-        <option value='bay'>
-        <option value='strait'>
-        <option value='canal'>
-        <option value='peninsula'>
-        <option value='mountain'>
-        <option value='volcano'>
-        <option value='valley'>
-        <option value='canyon'>
-        <option value='island'>
-        <option value='desert'>
-        <option value='forest'>
-        <option value='moon'>
-        <option value='planet'>
-        <option value='star'>
-        <option value='constellation'>
-        <option value='facility'>
-        <option value='airport'>
-        <option value='station'>
-        <option value='port'>
-        <option value='tunnel'>
-        <option value='bridge'>
-        <option value='road'>
-        <option value='railway-line'>
-        <option value='building'>
-        <option value='theater'>
-        <option value='museum'>
-        <option value='palace'>
-        <option value='hotel'>
-        <option value='worship-place'>
-        <option value='sports-facility'>
-        <option value='market'>
-        <option value='park'>
-        <option value='zoo'>
-        <option value='amusement-park'>
-        <option value='event'>
-        <option value='incident'>
-        <option value='natural-disaster'>
-        <option value='earthquake'>
-        <option value='war'>
-        <option value='conference'>
-        <option value='game'>
-        <option value='festival'>
-        <option value='product'>
-        <option value='vehicle'>
-        <option value='ship'>
-        <option value='aircraft'>
-        <option value='aircraft-type'>
-        <option value='spaceship'>
-        <option value='car-make'>
-        <option value='work-of-art'>
-        <option value='picture'>
-        <option value='music'>
-        <option value='show'>
-        <option value='broadcast-program'>
-        <option value='publication'>
-        <option value='book'>
-        <option value='newspaper'>
-        <option value='magazine'>
-        <option value='journal'>
-        <option value='natural-object'>
-        <option value='award'>
-        <option value='law'>
-        <option value='court-decision'>
-        <option value='treaty'>
-        <option value='music-key'>
-        <option value='musical-note'>
-        <option value='food-dish'>
-        <option value='writing-script'>
-        <option value='variable'>
-        <option value='program'>
-        <option value='molecular-physical-entity'>
-        <option value='small-molecule'>
-        <option value='protein'>
-        <option value='protein-family'>
-        <option value='protein-segment'>
-        <option value='amino-acid'>
-        <option value='macro-molecular-complex'>
-        <option value='enzyme'>
-        <option value='nucleic-acid'>
-        <option value='pathway'>
-        <option value='gene'>
-        <option value='dna-sequence'>
-        <option value='cell'>
-        <option value='cell-line'>
-        <option value='species'>
-        <option value='taxon'>
-        <option value='disease'>
-        <option value='medical-condition'>
-    </datalist>
-    {#    <input type="submit" onclick="submit_mode('add-ne')">#}
-</div>
+                {#    attribute values of polarity#}
+                <div class="attributes" id="polarity-attribute" style="display: none">
+                    <label for="browser5">Attribute Values</label>
+                    <input list="browsers5" name="attribute_values2" id="attribute_values2" onfocus="this.value=''"
+                           onchange="this.blur();">
+                    <datalist id="browsers5">
+                        <option value='-'>
+                    </datalist>
+                    {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
+                </div>
+                <br>
+                <button onclick="submit_query()">Add attribute</button>
+            </td>
+            <td>
+                <div id="constants">
+                    <label for="browser3">Constants</label>
+                    <input list="browsers3" name="constants" id="constants" onfocus="this.value=''" onchange="this.blur();">
+                    <datalist id="browsers3">
+                        <option value="imperative">
+                        <option value="expressive">
+                        <option value="interrogative">
 
-<div id="real-attributes">
-    <label for="browser4">Attributes</label>
-    <input list="browsers4" oninput="show_attribute_values('attributes')" name="attributes" id="attributes"
-           onfocus="this.value=''" onchange="this.blur();">
-    <datalist id="browsers4">
-        <option value=":Aspect">
-        <option value=":polarity">
-    </datalist>
-</div>
+                        <option value="DCT">
+                        <option value="AUTH">
+                    </datalist>
+                    {#    <input type="submit" onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">#}
+                    {# todo fix this at doc level #}
+                </div>
+                <br>
+                <button onclick="submit_query()">Add constant</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 
-{#    attribute values of Aspect#}
-<div class="attributes" id="aspect-attribute" style="display: none">
-    <label for="browser1">Attribute Values</label>
-    <input list="browsers1" name="attribute_values1" id="attribute_values1" onfocus="this.value=''"
-           onchange="this.blur();">
-    <datalist id="browsers1">
-        <option value='Habitual'>
-        <option value='Activity'>
-        <option value='Endeavor'>
-        <option value='Performance'>
-    </datalist>
-    {#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
-</div>
-
-{#    attribute values of polarity#}
-<div class="attributes" id="polarity-attribute" style="display: none">
-    <label for="browser5">Attribute Values</label>
-    <input list="browsers5" name="attribute_values2" id="attribute_values2" onfocus="this.value=''"
-           onchange="this.blur();">
-    <datalist id="browsers5">
-        <option value='-'>
-    </datalist>
-    {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
-</div>
-
-<div id="constants">
-    <label for="browser3">Constants </label>
-    <input list="browsers3" name="constants" id="constants" onfocus="this.value=''" onchange="this.blur();">
-    <datalist id="browsers3">
-        <option value="imperative">
-        <option value="expressive">
-        <option value="interrogative">
-
-        <option value="DCT">
-        <option value="AUTH">
-    </datalist>
-    {#    <input type="submit" onclick="submit_template_action(id='add-constant', document.querySelector('#browser3').value)">#}
-    {# todo fix this at doc level #}
-</div>
-
-<br>
-<button onclick="submit_query()">Submit</button>
 
 
 <br>
@@ -527,52 +541,26 @@ Current head:
     </table>
 </div>
 
-<button id="replace-box"><a style="text-decoration:none"
-                            title="replace a role, concept, string or secondary variable"
-                            href="javascript:selectTemplate('replace');">replace</a>&nbsp;
-</button>
-<button id="delete-box"><a style="text-decoration:none" title="delete"
-                           href="javascript:selectTemplate('delete');">delete</a>&nbsp;
-</button>
-<button id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a>&nbsp;
-</button>
-<button id="undo-box"><a id="undo-button" style="text-decoration:none" title="currently nothing to undo"
-                         href="javascript:undo(-1);">undo</a>&nbsp;
-</button>
-<button id="redo-box"><a id="redo-button" style="text-decoration:none" title="currently nothing to undo"
-                         href="javascript:undo(1);">redo</a>&nbsp;
-</button>
-{#    <button id="doc-level-annot">&nbsp;<a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
-{#                                   href="javascript:docAnnot(2);">doc-level-annot</a>&nbsp;</button>#}
-
-{#    <button><a id="annot-button" style="text-decoration:none" title="click to do doc-level annotation"#}
-{#               href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
-<button><a id="db" style="text-decoration:none" title="click to get current annotation in db"
-           href="javascript:UMR2db();">db</a></button>
-
-{#    </button>#}
-{#    <button id="save-box">&nbsp;<a style="text-decoration:none" title="save"#}
-{#                                     href="javascript:selectTemplate('save');reset_save('');">save</a>&nbsp;#}
-{#    </button>#}
-
-<button id="save-box">&nbsp;<a style="text-decoration:none" title="load"
-                               href="javascript:selectTemplate('load');">load</a>&nbsp;
-</button>
-
-<button id="save-box">&nbsp;<a style="text-decoration:none" title="load_history"
-                               href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a>&nbsp;
-</button>
-
-<button id="export-box">&nbsp;<a style="text-decoration:none" title="export"
-                                 href="javascript:export_annot({{ exported_items }});">export</a>&nbsp;
-</button>
-
-
-</table>
+<div>
+    <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
+    <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
+    <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
+    <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
+    <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
+    {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
+    {#<button><a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
+    <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">db</a></button>
+    <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>
+    <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>
+    <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>
+    <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
+</div>
 
 <hr>
-<p>UMR Penman Annotation:</p>
-<div id="amr"></div>
+<div>
+    <p>UMR Penman Annotation:</p>
+    <div id="amr"></div>
+</div>
 
 
 <hr>
