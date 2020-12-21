@@ -39,7 +39,6 @@ var frame_arg_descr = {}; //{"": ""}
 var is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
 var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
-var logsid = ''; //"IQrVT4Dh6mkz93W1DCxpNws9Om6qKqk0EGwhFs0x"
 var next_special_action = ''; //''
 var frame_json = {};
 
@@ -51,12 +50,6 @@ function initialize(frame_dict_str) {
     // loadField2amr(); //如果load里面的Direct AMR entry里什么都没有输入的话，可能这里什么都没有做
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
-
-    let s;
-    //unclear what does this line do, probably has something to do with undo
-    if ((s = document.getElementById('next-special-action')) != null) {
-        next_special_action = s.value;
-    }
     current_mode = 'top';
 
     // parse frame files
@@ -64,9 +57,6 @@ function initialize(frame_dict_str) {
 
 }
 
-function curr_head(){
-    setInnerHTML('curr_head', current_parent);
-}
 
 function load_history(curr_sent_annot, curr_sent_align){
     console.log("curr_sent_annot: ", curr_sent_annot);
@@ -213,17 +203,26 @@ function submit_query(){
         console.log("current_mode is: " + current_mode);
     }
 
-    let c = document.getElementById('constants').value;
-
     clearInput();
 }
 
+/**
+ * fold unselected attribute value datalist, show the selected attribute datalist
+ */
 function show_attribute_values(){
     let option = document.querySelector('#attributes').value;
     if (option === ':Aspect') {
+        document.getElementById("polarity-attribute").style.display = 'none';
+        document.getElementById("mode-attribute").style.display = 'none';
         document.getElementById("aspect-attribute").style.display = 'block';
     } else if (option === ':polarity') {
+        document.getElementById("aspect-attribute").style.display = 'none';
+        document.getElementById("mode-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'block';
+    } else if (option === ':mode'){
+        document.getElementById("aspect-attribute").style.display = 'none';
+        document.getElementById("polarity-attribute").style.display = 'none';
+        document.getElementById("mode-attribute").style.display = 'block';
     }
 }
 
@@ -547,31 +546,27 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
                 current_parent = amr[new_k];
                 console.log("current_parent is " + current_parent);
             }
-
+            // highlight(document.getElementById("amr"), [current_parent + "&nbsp;"]);
+            highlight(document.getElementById("amr"), ["\\(" + current_parent]);
             current_mode = 'add';
         }
     } else if (id == 'set_parent') {
-        // console.log("********************");
-        // console.log(current_parent);
         let test_str = "";
         test_str += selection;
-
-        console.log(selection);
-        console.log(test_str);
+        console.log("selected variable to be set to head", test_str);
 
         var k = getKeyByValue(amr, test_str);
-
         if (k.includes("v")) {
             current_parent = test_str;
             console.log("current_parent is " + current_parent);
-
         } else {
             var new_k = k.replace('c', 'v');
             current_parent = amr[new_k];
             console.log("current_parent is " + current_parent);
-
         }
-        curr_head();
+        // highlight(document.getElementById("amr"), [current_parent+"&nbsp;"]);
+        highlight(document.getElementById("amr"), ["\\(" + current_parent]);
+
 
     } else if (id == 'doc-annot') {
         current_parent = 's';
@@ -1214,39 +1209,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else {
                         add_error('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                     }
-                    /** maybe can delete? **********************************************************************************************************************/
-                    // } else if (key1 == 'sg') {
-                    //     sg();
-                    //     top = 0;
-                    // } else if (key1 == 'sa') {
-                    //     for (var i = 1; i < cc.length; i++) {
-                    //         sa(cc[i]);
-                    //     }
-                    //     top = 0;
-                    // } else if (key1 == 'sv') {
-                    //     for (var i = 1; i < cc.length; i++) {
-                    //         sv(cc[i]);
-                    //     }
-                    //     top = 0;
-                    // } else if (key1 == 'sc') {
-                    //     for (var i = 1; i < cc.length; i++) {
-                    //         sc(cc[i]);
-                    //     }
-                    //     top = 0;
-                    // } else if (key1 == 'cm') {
-                    //     for (var i = 1; i < cc.length; i++) {
-                    //         show_concept_mapping(cc[i]); // originially for inspection (testing and debugging)
-                    //     }
-                    //     top = 0;
-                    // } else if (key1 == 'sid') {
-                    //     show_AMR_editor_login();
-                    //     top = 0;
-                    // } else if (key1.match(/^(logout|exit|quit)$/i)) {
-                    //     logout(0);
-                    //     top = 0;
-                    // } else if (key1 == 'login') {
-                    //     logout(1);
-                    //     top = 0;
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
                     console.log("I am here32");
                     if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
@@ -3752,6 +3714,37 @@ function highlightSelection() {
     }
 }
 
+function highlight(elem, keywords, caseSensitive = true, cls = 'text-success') {
+  const flags = caseSensitive ? 'gi' : 'g';
+  // Sort longer matches first to avoid
+  // highlighting keywords within keywords.
+  keywords.sort((a, b) => b.length - a.length);
+  Array.from(elem.childNodes).forEach(child => {
+    const keywordRegex = RegExp(keywords.join('|'), flags);
+    console.log("console list is: ", keywords);
+    console.log("pattern is: ", keywords.join('|')+ "space?");
+    if (child.nodeType !== 3) { // not a text node
+      highlight(child, keywords, caseSensitive, cls);
+    } else if (keywordRegex.test(child.textContent)) {
+      const frag = document.createDocumentFragment();
+      let lastIdx = 0;
+      child.textContent.replace(keywordRegex, (match, idx) => {
+        const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
+        const highlighted = document.createElement('span');
+        console.log("match: ", match);
+        highlighted.textContent = match;
+        highlighted.classList.add(cls);
+        frag.appendChild(part);
+        frag.appendChild(highlighted);
+        lastIdx = idx + match.length;
+      });
+      const end = document.createTextNode(child.textContent.slice(lastIdx));
+      frag.appendChild(end);
+      child.parentNode.replaceChild(frag, child);
+    }
+  });
+}
+
 function deletenode(node) {
     var contents = document.createTextNode(node.innerText);
     node.parentNode.replaceChild(contents, node);
@@ -3855,7 +3848,6 @@ function clearInput() {
     document.getElementById('ne_types').value = '';
     document.getElementById('attributes').value = '';
     document.getElementById('attribute_values1').value = '';
-    document.getElementById('constants').value = '';
 }
 
 

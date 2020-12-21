@@ -39,11 +39,11 @@ def html(content_string:str) -> Tuple[List[List[str]], str, List[str], List[str]
 
         for df in dfs:
             df.columns = range(1, len(df.columns) + 1)
-            df_html = df.to_html(classes="table table-striped", justify='center').replace('border="1"', 'border="0"')
+            df_html = df.to_html(header=False, classes="table table-striped", justify='center').replace('border="1"', 'border="0"')
             soup = BeautifulSoup(df_html, "html.parser")
-            words_row = soup.findAll('tr')[1]
+            words_row = soup.findAll('tr')[0]
             words_row['id'] = 'current-words'
-            gram_row = soup.findAll('tr')[4]
+            gram_row = soup.findAll('tr')[3]
             gram_row['class'] = 'optional-rows'
             df_htmls.append(str(soup))
         for translation in sents_gls:
@@ -58,7 +58,7 @@ def html(content_string:str) -> Tuple[List[List[str]], str, List[str], List[str]
 
     sent_htmls = [] # a list of single sentence htmls
     for sent in sents:
-        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(index=False, classes="table table-striped", justify='center'))
+        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False, classes="table table-striped", justify='center'))
     # html string for all sentences
     return sents, sents_html, sent_htmls, df_htmls, gls, notes
 
