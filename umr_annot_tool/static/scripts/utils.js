@@ -93,8 +93,8 @@ function text2num(s){
  * @returns {*} for example, the root variable returns 1, first child of root returns 1.1
  */
 function getLocs(variable) { // b
-    var value = variables[variable];
-    if (value == undefined) {
+    let value = variables[variable];
+    if (value === undefined) {
         return undefined;
     } else if (typeof value == 'string') {
         return value; //usually it should goes in here
@@ -104,8 +104,8 @@ function getLocs(variable) { // b
         // add_log('getLocs[' + variable + '] function -> undefined');
         return undefined;
     } else {
-        var type = typeof value;
-        add_log('getLocs[' + variable + '] is of unknown type ' + type);
+        let type = typeof value;
+        console.log('getLocs[' + variable + '] is of unknown type ' + type);
         return undefined;
     }
 }
@@ -400,4 +400,18 @@ function action_on_enter(field, e, s_id) {
        && (field == 'show NE types')) {
   show_ne_types();
    }
+}
+
+
+/**
+ * used to add space for indentation purpose
+ * @param n the number of the space
+ * @returns {string} n spaces
+ */
+function n_spaces(n) {
+    let result = '';
+    for (let i = 0; i < n; i++) {
+        result += ' ';
+    }
+    return result;
 }

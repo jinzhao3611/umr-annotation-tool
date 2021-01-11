@@ -163,7 +163,16 @@
     <hr>
     <div>
         <p>UMR Penman Annotation:</p>
-        <div id="amr"></div>
+        <div id="amr">
+            <script>
+                let children = document.getElementById("amr").children; //get amr div children elements.
+                for (let i = 0, len = children.length ; i < len; i++) {
+                        document.getElementById(children[i].id).addEventListener("input", function() { //set an event listener for each element id
+                            document.getElementById("replace-new").innerHTML = document.getElementById(children[i].id).innerHTML;
+                    }, false);
+                }
+            </script>
+        </div>
     </div>
 
 
@@ -589,7 +598,7 @@
 
             <tr>
                 <td>
-                    <div id="concept_types">
+                    <div id="concepts">
                         <label for="concept_types">Abstract Concept</label>
                         <input list="abstract-concepts" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
                         <datalist id="abstract-concepts">
@@ -791,6 +800,7 @@
                                onchange="this.blur();">
                         <datalist id="polarity-attr">
                             <option value='-'>
+                            <option value='+'>
                         </datalist>
                         {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
                     </div>
@@ -849,7 +859,7 @@
 
         <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
         <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
-        <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
+<!--        <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>-->
         <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
         <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
         {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
