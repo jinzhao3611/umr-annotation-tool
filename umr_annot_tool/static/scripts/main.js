@@ -4,32 +4,36 @@ let current_relation;
 let current_mode;
 let current_attribute;
 let current_ne_concept;
+let frame_json = {};
 
-var temp_umrs = {};
+let selection;
+let begOffset;
+let endOffset;
 
-var selection;
-var begOffset;
-var endOffset;
+let umr = {}; //{n: 1, 1.c: "obligate-01", 1.v: "o", 1.s: "", 1.n: 1, …}
+let variables = {}; //{o: "1", r: "1.1", b: "1.1.1"}
+let concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
+let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
 
-var amr = {}; //{n: 1, 1.c: "obligate-01", 1.v: "o", 1.s: "", 1.n: 1, …}
-var variables = {}; //{o: "1", r: "1.1", b: "1.1.1"}
 var reserved_variables = {};
-var concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
-var variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
 var undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 var undo_index = 0; //2
 var last_state_id = 0; //3
 var state_has_changed_p = 0; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished
 var load_amr_feedback = ''; //绿色的pennman html string
 var load_amr_feedback_alert = 0; //0
-var show_amr_obj = {}; // options table {option-1-line-NEs: true, option-1-line-ORs: true, option-auto-check: true, option-auto-moveto: false}
+
+let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": false, "option-1-line-ORs": false,
+    "option-fix-font":true, "option-role-auto-case":false, "option-auto-check":true, "option-auto-moveto":true,
+    "option-provide-guidance":true, "option-confirm-delete":false, "option-check-chinese":true,
+    "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
+
 var show_amr_status = 'show'; //'show'
 var show_amr_mo_lock = ''; // ''
-var current_template = ''; //"options"
+let current_template = ''; //"top, add, options..."
 var max_show_amr_ops = 5000; // 5000
 var max_string2amr_ops = 5000; //4992
 var current_onto_popup_window = ''; //this is a Window object, not a string?
-var sentence_props = ["props-id", "props-date", "props-authors", "props-snt", "props-note"]; // ["props-id", "props-date", "props-authors", "props-snt", "props-note"]
 var saved_sentence_prop_values = ["", "", "", "", ""]; //["", "", "", "", ""]
 var previous_log_messages = {}; // {}
 var ceo_ht; // {1: 1, open.1: 0, open.1.1: 0, open.1.1.1: 0, 1.1.1: 1, 1.1: 1}
@@ -40,25 +44,44 @@ var is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
 var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
 var next_special_action = ''; //''
-var frame_json = {};
 
-
+/**
+ *
+ * @param frame_dict_str: frame json file from post
+ */
 function initialize(frame_dict_str) {
-    console.log("initialize is called");
-    amr['n'] = 0;
-
-    // loadField2amr(); //如果load里面的Direct AMR entry里什么都没有输入的话，可能这里什么都没有做
+    console.log("initialize is called6");
+    umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
     current_mode = 'top';
-
     // parse frame files
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
-
 }
 
-
+/**
+ * load the annotation for current sentence from database
+ * @param curr_sent_annot: pennman annotation directly from database, with html encoding, but no html tags
+ * @param curr_sent_align: text alignment info from database
+ */
 function load_history(curr_sent_annot, curr_sent_align){
+    // console.log("curr_sent_annot: ", curr_sent_annot);
+    // console.log("curr_sent_align: ", curr_sent_align);
+    // console.log("html string to be loaded:", deHTML(curr_sent_annot));
+    setInnerHTML('load-plain', deHTML(curr_sent_annot));
+    // console.log(document.getElementById('load-plain'));
+    // console.log(document.getElementById('align'));
+    // console.log("alignment string to be loaded:", curr_sent_align);
+    setInnerHTML('align', curr_sent_align);
+    // console.log(document.getElementById('align'));
+    loadField2amr();
+}
+
+/**
+ * not working yet
+ * @param curr_doc_annot
+ */
+function loadDocLevelHistory(curr_doc_annot){
     console.log("curr_sent_annot: ", curr_sent_annot);
     console.log("curr_sent_align: ", curr_sent_align);
     // load history annotation for current sentence
@@ -72,7 +95,18 @@ function load_history(curr_sent_annot, curr_sent_align){
     loadField2amr();
 }
 
+/**
+ * not working yet
+ * @param sentenceId
+ */
+function docAnnot(sentenceId) {
+    exec_command("top sent ence", 1);
+    submit_template_action('doc-annot');
+}
 
+/**
+ * from currently selected word, get the lemma and generate the senses menu list
+ */
 function conceptDropdown() {
     submit_concept();
     let token = current_concept;
@@ -105,6 +139,10 @@ function conceptDropdown() {
     }
 }
 
+/**
+ * takes in different senses of a lemma and generate the secondary menu of find lemma
+ * @param senses a dictionary looks like {"res": [{"name": lemma, "desc": different senses}]}
+ */
 function getSenses(senses) {
     let genDrop = document.getElementById('genericDropdown');
     genDrop.innerHTML = "";
@@ -146,18 +184,18 @@ function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-function docAnnot(sentenceId) {
-    exec_command("top sentence", 1);
-    submit_template_action('doc-annot');
-
-}
-
+/**
+ * record the current concept from the selected tokens
+ */
 function submit_concept() {
     current_concept = document.getElementById('selected_tokens').innerText;
     current_concept = current_concept.replace("'", "\'");
     console.log("current_concept is: " + current_concept);
 }
 
+/**
+ * get the info from panel
+ */
 function submit_query(){
     let r = '';
     if(document.getElementById('roles1')){
@@ -226,18 +264,18 @@ function show_attribute_values(){
     }
 }
 
-function generate_penman() {
-    submit_template_action(current_mode, c = current_concept, r = current_relation)
-}
-
+/**
+ * potentially merge this in submit_template_action or exec_command function
+ */
 function multipleWords() {
-    var c = current_concept.replace(" ", "-");
+    let c = current_concept.replace(" ", "-");
     submit_template_action("add", c)
 }
 
 /** undo *******************************************************/
 /**
  * Handle the 3 simple types, and null or undefined
+ * used to copy a dictionary
  * @param obj
  * @returns {*}
  */
@@ -276,24 +314,26 @@ function clone(obj) {
     return obj;
 }
 
+/**
+ * generate a current state with umr variable and concepts information
+ * @returns {{}}
+ */
 function cloneCurrentState() {
-    var current_state = {};
-    current_state['amr'] = clone(amr);
+    let current_state = {};
+    current_state['umr'] = clone(umr);
     current_state['variables'] = clone(variables);
     current_state['concepts'] = clone(concepts);
     last_state_id++;
     current_state['id'] = last_state_id;
-    add_log('Created state ' + last_state_id);
+    console.log('Created state ' + last_state_id);
     return current_state;
 }
 
 function revert2PrevState(previous_state) {
-    amr = previous_state['amr'];
+    umr = previous_state['umr'];
     variables = previous_state['variables'];
     concepts = previous_state['concepts'];
-    // props2template();
-    // props2screen();
-    // add_log('Reverted to state ' + previous_state['id']);
+    console.log('Reverted to state ' + previous_state['id']);
 }
 
 /**
@@ -363,35 +403,35 @@ function undo(n) {
  * @param id "top"
  */
 function selectTemplate(id) {
-    console.log("I am here 902");
+    console.log("selectTemplate id is: "+ id);
     current_template = '';
-    var actions = ["replace", "delete", "move", "save", "load"];
-    var s;
-    for (var i = 0; i < actions.length; i++) {
-        var action = actions[i];
+    let actions = ["replace", "delete", "move", "save", "load"];
+    let s;
+    for (let i = 0; i < actions.length; i++) {
+        let action = actions[i];
         if ((s = document.getElementById(action + '-template-table')) != null) {
-            if (id == action) {
+            if (id === action) {
                 s.style.display = 'inline';
                 current_template = id;
-                if ((action == 'replace') && !show_amr_status.match(/replace/)) {
+                if ((action === 'replace') && !show_amr_status.match(/replace/)) {
                     console.log("I am here 903");
                     // if clicked on replace from other button
                     show_amr('show replace');
-                } else if ((action == 'delete') && !show_amr_status.match(/delete/)) {
+                } else if ((action === 'delete') && !show_amr_status.match(/delete/)) {
                     show_amr('show delete');
                 }
             } else {
                 s.style.display = 'none';
-                if ((action == 'replace') && show_amr_status.match(/replace/)) {
+                if ((action === 'replace') && show_amr_status.match(/replace/)) {
                     show_amr('show');
-                } else if ((action == 'delete') && show_amr_status.match(/delete/)) {
+                } else if ((action === 'delete') && show_amr_status.match(/delete/)) {
                     show_amr('show');
                 }
             }
         }
     }
-    var focus_field;
-    if (id == 'move') {
+    let focus_field;
+    if (id === 'move') {
         focus_field = 'move-object';
     } else {
         focus_field = '';
@@ -427,7 +467,7 @@ function selectReplaceType(type) {
  * @param mo_lock
  */
 function fillReplaceTemplate(type, at, old_value, mo_lock) {
-    // add_log('fillReplaceTemplate ' + type + ' ' + at + ' ' + old_value + ' &lt;' + mo_lock + '&gt; ' + show_amr_mo_lock);
+    console.log('fillReplaceTemplate ' + type + ' ' + at + ' ' + old_value + ' &lt;' + mo_lock + '&gt; ' + show_amr_mo_lock);
     var s_type, s_at, s_new;
     if (((s_type = document.getElementById('replace-type')) != null)
         && ((s_at = document.getElementById('replace-at')) != null)
@@ -439,7 +479,6 @@ function fillReplaceTemplate(type, at, old_value, mo_lock) {
             s_new.value = '';
             color_amr_elem(show_amr_mo_lock, '#000000', '');
             show_amr_mo_lock = '';
-            set_guidance('<p><font style="color:blue;font-weight:bold;">In AMR above, click on concept, string or role to be replaced.</font>');
         }
         if (!same_mo_lock_p) {
             s_type.value = type;
@@ -448,12 +487,12 @@ function fillReplaceTemplate(type, at, old_value, mo_lock) {
             s_new.focus();
             show_amr_mo_lock = mo_lock;
             color_amr_elem(show_amr_mo_lock, '#0000FF', '');
-            set_guidance('<p><font style="color:blue;font-weight:bold;">In template below, enter new value and submit.</font>');
         }
     }
 }
 
 function fillDeleteTemplate(at, mo_lock) {
+    console.log("fillDeleteTemplate: at: "+ at + ", mo_lock: " + mo_lock);
     var s;
     if ((s = document.getElementById('delete-at')) != null) {
         var same_mo_lock_p = (show_amr_mo_lock == mo_lock);
@@ -515,7 +554,7 @@ function color_amr_elem(id, color, event_type) {
 function submit_template_action(id = "nothing", numbered_predicate = "") {
     console.log("submit_template_action: id: " + id + ", numbered_predicate: " + numbered_predicate);
     highlightSelection();
-    if (id == "nothing") {
+    if (id === "nothing") {
         id = current_mode;
     }
     console.log("mode is: " + id);
@@ -524,26 +563,20 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         current_concept = numbered_predicate;
     }
 
-    // add_edit_log('submit_template_action ' + id);
     var arg1, arg2, arg3, arg4, s;
-    if (id == 'top') {
-        // if ((arg1 = document.getElementById('test-predicate')) != null) {
-        //     // var concept = arg1.innerHTML;
-        //     console.log('submit_template_action ' + id + ' ' + concept);
-        //     exec_command('top ' + 'buy', 1);
-        // }
+    if (id === 'top') {
         if ((arg1 = document.getElementById('genericDropdown')) != null) {
             // var concept = arg1.innerHTML;
             console.log('submit_template_action ' + id + ' ' + current_concept);
             exec_command('top ' + current_concept, 1);
 
-            var k = getKeyByValue(amr, current_concept);
+            var k = getKeyByValue(umr, current_concept);
             if (k.includes("v")) {
                 current_parent = current_concept;
                 console.log("current_parent is " + current_parent);
             } else {
                 var new_k = k.replace('c', 'v');
-                current_parent = amr[new_k];
+                current_parent = umr[new_k];
                 console.log("current_parent is " + current_parent);
             }
             // highlight(document.getElementById("amr"), [current_parent + "&nbsp;"]);
@@ -555,13 +588,13 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         test_str += selection;
         console.log("selected variable to be set to head", test_str);
 
-        var k = getKeyByValue(amr, test_str);
+        var k = getKeyByValue(umr, test_str);
         if (k.includes("v")) {
             current_parent = test_str;
             console.log("current_parent is " + current_parent);
         } else {
             var new_k = k.replace('c', 'v');
-            current_parent = amr[new_k];
+            current_parent = umr[new_k];
             console.log("current_parent is " + current_parent);
         }
         // highlight(document.getElementById("amr"), [current_parent+"&nbsp;"]);
@@ -587,7 +620,13 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
         var role = current_relation;
         console.log(role);
         // var arg = document.getElementById('selected_tokens').innerText;
-        var arg = current_concept.toLowerCase();
+
+        // if (current_relation === ":Aspect"){
+        //     var arg = current_concept;
+        // }else{
+        //     var arg = current_concept.toLowerCase();
+        // }
+        var arg = current_concept;
         console.log(arg);
         console.log('submit_template_action ' + current_parent + ' ' + role + ' ' + arg);
 
@@ -627,33 +666,45 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
             }
             exec_command('replace ' + type + ' at ' + at + ' with ' + new_value, 1);
         }
-    } else if (id == 'delete') {
+    } else if (id === 'delete') {
+    // todo: what's the purpose of me changing this part? and why this didn't work
+        // if ((arg1 = document.getElementById('delete-at')) != null) {
+        //     // var at = arg1.value;
+        //     // var at = "w :manner beautiful";
+        //     let curr_variable_key = getKeyByValue(amr, document.getElementById('delete-at').value);
+        //     console.log('current_concept at delete is: ', document.getElementById('delete-at').value);
+        //     console.log('curr_variable_key: ', curr_variable_key);
+        //
+        //     if (curr_variable_key.includes("v")) {
+        //         var pare_variable_key = curr_variable_key.slice(0, -3) + 'v';
+        //         var curr_rel_key = curr_variable_key.replace('v', 'r');
+        //     } else {
+        //     //    todo: delete when user typed in concept instead of variable
+        //     }
+        //
+        //     var at = amr[pare_variable_key] + " " + amr[curr_rel_key] + " " + document.getElementById('delete-at').value;
+        //     if ((at_list = at.split(/\s+/)) && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
+        //         at = at_list[0] + ' ' + at_list[1] + ' "';
+        //         for (var i = 2; i < at_list.length; i++) {
+        //             at += at_list[i] + ' ';
+        //         }
+        //         at = at.replace(/\s*$/, "\"");
+        //     }
+        //     console.log('delete ' + at);
+        //     exec_command('delete ' + at, 1);
+
         if ((arg1 = document.getElementById('delete-at')) != null) {
-            // var at = arg1.value;
-            // var at = "w :manner beautiful";
-            let curr_variable_key = getKeyByValue(amr, document.getElementById('delete-at').value);
-            console.log('current_concept at delete is: ', document.getElementById('delete-at').value);
-            console.log('curr_variable_key: ', curr_variable_key);
+	     var at = arg1.value;
+	     if ((at_list = at.split(/\s+/))
+	      && (at_list.length >= 4) && (! at_list[2].match(/^"/))) {
+		at = at_list[0] + ' ' + at_list[1] + ' "';
+		for (var i=2; i<at_list.length; i++) {
+		   at += at_list[i] + ' ';
+		}
+		at = at.replace(/\s*$/, "\"");
+	     }
+	     exec_command('delete ' + at, 1);
 
-
-            if (curr_variable_key.includes("v")) {
-                var pare_variable_key = curr_variable_key.slice(0, -3) + 'v';
-                var curr_rel_key = curr_variable_key.replace('v', 'r');
-            } else {
-            //    todo: delete when user typed in concept instead of variable
-            }
-
-            var at = amr[pare_variable_key] + " " + amr[curr_rel_key] + " " + document.getElementById('delete-at').value;
-            if ((at_list = at.split(/\s+/))
-                && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
-                at = at_list[0] + ' ' + at_list[1] + ' "';
-                for (var i = 2; i < at_list.length; i++) {
-                    at += at_list[i] + ' ';
-                }
-                at = at.replace(/\s*$/, "\"");
-            }
-            console.log('delete ' + at);
-            exec_command('delete ' + at, 1);
         }
     } else if (id == 'move') {
         if (((arg1 = document.getElementById('move-object')) != null)
@@ -671,49 +722,52 @@ function submit_template_action(id = "nothing", numbered_predicate = "") {
 }
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
-    console.log("exec_command is called");
-    var last_command, command_input, s, s1, s2, s3, resize_command_p;
-    var show_amr_args = '';
-    var record_value = '';
+    let last_command, command_input;
+    let show_amr_args = '';
+    let record_value = '';
 
     if ((command_input = document.getElementById('command')) != null) {
         //resizing the command input box height
-        var clen = command_input.value.length;
+        let clen = command_input.value.length;
         if (clen > 50) {  // && show_amr_obj['option-resize-command'] // if the input is longer than a line, resize the height
-            var n_lines = Math.floor(clen / 43) + 1;
+            let n_lines = Math.floor(clen / 43) + 1;
             command_input.style.height = ((n_lines * 1.2) + 0.2) + 'em';
         }
+        // if exec_command is called from command box instead of other place, value is empty at this point
         if (!value) {
             if (command_input.value.match(/\n/)) {//if enter key is pressed
                 value = command_input.value;
             }
         }
+        console.log("exec_command is called: value: " + value + ", top: " + top);
+
+        //last_command here is always not null, potential delete
         if (value && ((last_command = document.getElementById('action')) != null)) {
-            // add_edit_log('exec_command ' + top + ' ' + value);
-            // add_log('exec_command: ' + value + ' (top: ' + top + ')');
             value = strip(value);
-            value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); //??? for Kevin: last_command ;arg0 boy -> last_command :arg0 boy
-            // value == "b :arg1 car"
+            value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); //last_command b ;arg0 boy -> last_command b :arg0 boy
+            let cc;
+            if(value.includes("(")){
+                //doc-level
+                let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
+                //example match: s1 :temporal (s1t2 :before DCT)
+                //s1 :coref (s1h :same-entity s1p)
+                //s1 :modal (s2c4 :NEG AUTH)
+                let match = pattern.exec(value);
+                cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
+            }else{
+                cc = argSplit(value);
+            }
 
 
-            var cc = argSplit(value);
-            // if(cc[0] != 'top' && cc[0].length > 2){
-            //     cc[0] = cc[0].slice(0, -4)
-            // }
+            // let cc = argSplit(value);
             console.log("cc is: " + cc);// ["b", ":arg1", "car"]
-
+            console.log("cc length is: " + cc.length);
 
             /** below are shortcut command **********************************************************************************************************************/
-            if (value == '') {
-                // empty
-            } else if ((value == 'save')
-                && ((s = document.getElementById('workset-template')) != null)
-                && s.style.display.match(/inline/)) {
-                if (((s1 = document.getElementById('save-snt-id2')) != null)
-                    && ((s2 = document.getElementById('next-workset-snt-id2')) != null)
-                    && ((s3 = document.getElementById('save-workset-snt')) != null)) {
+            if ((value === 'save') && ((s = document.getElementById('workset-template')) != null) && s.style.display.match(/inline/)) {
+                if (((s1 = document.getElementById('save-snt-id2')) != null) && ((s2 = document.getElementById('next-workset-snt-id2')) != null) && ((s3 = document.getElementById('save-workset-snt')) != null)) {
                     props2comment();
-                    s1.value = amr['props-id'] || '';
+                    s1.value = umr['props-id'] || '';
                     s2.value = s1.value;
                     s2.value = s2.value.replace(/^([a-z][a-z])_(.*)$/, "$1.$2");
                     s2.value = s2.value.replace(/^(.*)_(\d+)$/, "$1.$2");
@@ -721,18 +775,11 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     s1.value = '';
                     s3.submit();
                 }
-            } else if (value.match(/^(reload|refresh)$/)
-                && ((s = document.getElementById('workset-template')) != null)
-                && s.style.display.match(/inline/)) {
-                reload_current_workset_snt();
-            } else if (value.match(/^(top|add|add-ne|replace|delete|move|save|load|options|clear|help)$/)) {
+            } else if (value.match(/^(replace|delete|move|save|load|clear)$/)) {
                 selectTemplate(value);
                 top = 0;
             } else if (value.match(/^(delete all|delete amr|del all|del amr)$/i)) {
                 deleteAMR();
-            } else if (value.match(/^(ne|[a-z]+(-[a-z]+)*-ne)$/i)) {
-                selectTemplate('add-ne');
-                top = 0;
             } else if (value.match(/^(r|repl|ch|change)$/i)) {
                 selectTemplate('replace');
                 top = 0;
@@ -746,35 +793,24 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 undo(-1);
             } else if (value.match(/^(redo)$/i)) {
                 undo(1);
-            } else if (value.match(/^(o|opt)$/i)) {
-                selectTemplate('options');
-                top = 0;
             } else if (value.match(/^(c|cl)$/i)) {
                 selectTemplate('clear');
                 top = 0;
-            } else if (value.match(/^\s*([a-z]\d*\s+)?(show\s+roles|roles)\s*$/i)) {
-                popupRoles();
-            } else if (value.match(/^\s*([a-z]\d*\s+)?(show\s+dict|dict)\s*$/i)) {
-                popupAmrDict();
-            } else if (value.match(/^\s*([a-z]\d*\s+)?(show\s+videos?|videos?)\s*$/i)) {
-                popupVideoPage();
-            } else if (value.match(/^\s*([a-z]\d*\s+)?(show\s+)?(entity|entities|NE|NEs|NE\s+types?|types?|category|categories|class|classes)\s*$/i)) {
-                popupNETypes();
-            } else if (value.match(/^\s*([a-z]\d*\s+)?(show\s+)?(AMR\s+)?(guidelines)\s*$/i)) {
-                popupGuidelines('');
-            } else if (value.match(/^change\s+variable\s+[a-z]\d*\s+\S+$/i)) { //TODO unclear how to change variable name
+            } else if (value.match(/^change\s+variable\s+[a-z]\d*\s+\S+$/i)) { // example match: change variable t t1
+                //cc[2] is original variable, cc[3] is desired variable
                 change_var_name(cc[2], cc[3], top);
                 show_amr_args = 'show';
-            } else if (value.match(/^cv\s+[a-z]\d*\s+\S+\s*$/i)) { //TODO unclear how to change variable name
+            } else if (value.match(/^cv\s+[a-z]\d*\s+\S+\s*$/i)) { // example match: cv t t1
+                //cc[1] is original variable, cc[2] is desired variable
                 change_var_name(cc[1], cc[2], top);
                 show_amr_args = 'show';
-            } else if (value.match(/^reop\s+[a-z]\d*\s*$/i)) { //TODO unclear
+            } else if (value.match(/^reop\s+[a-z]\d*\s*$/i)) { //example match: reop t1
+                //TODO unclear
                 renorm_ops(cc[1]);
                 show_amr_args = 'show';
             } else if (value.match(/^r[rv]\b\s*(\S.*\S|\S|)\s+\S+\s*$/)) {  // replace role (or secondary variable) shortcut
-
-                var user_descr = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1");
-                var new_value = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2");
+                var user_descr = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1"); // only keep the first capturing group
+                var new_value = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2"); // only keep the second capturing group
                 var target_name = '';
                 if (value.match(/^rr/)) {
                     target_name = 'role';
@@ -786,15 +822,15 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     add_error('Ill-formed new role <font color="red">' + new_value + '</font>');
                 } else if ((target_name == 'variable') && !getLocs(new_value)) {
                     add_error('Ill-formed new variable <font color="red">' + new_value + '</font>');
-                } else if ((loc_list.length == 1) && !amr[loc_list[0] + '.r']) {
+                } else if ((loc_list.length == 1) && !umr[loc_list[0] + '.r']) {
                     add_error('No ' + target_name + ' defined for <font color="red">' + user_descr + '</font>');
                 } else if (loc_list.length == 1) {
                     var loc = loc_list[0];
                     var parent_variable = getParentVariable(loc);
-                    var role = amr[loc + '.r'];
-                    var variable = amr[loc + '.v'];
+                    var role = umr[loc + '.r'];
+                    var variable = umr[loc + '.v'];
                     var target = role || variable;
-                    var arg = amr[loc + '.v'] || amr[loc + '.command_input'] || amr[loc + '.s'];
+                    var arg = umr[loc + '.v'] || umr[loc + '.command_input'] || umr[loc + '.s'];
                     add_log('expanding "' + user_descr + '/' + loc + '" to: replace ' + target_name + ' at ' + parent_variable + ' ' + target + ' ' + arg + ' with ' + new_value);
                     exec_command(('replace ' + target_name + ' at ' + parent_variable + ' ' + target + ' ' + arg + ' with ' + new_value), 0);
                     selectTemplate('clear');
@@ -808,12 +844,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 var user_descr = value.replace(/^rs\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1");
                 var new_value = value.replace(/^rs\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2");
                 var loc_list = user_descr2locs(user_descr, 'string');
-                if ((loc_list.length == 1) && !(amr[loc_list[0] + '.s'] && amr[loc_list[0] + '.r'])) {
+                if ((loc_list.length == 1) && !(umr[loc_list[0] + '.s'] && umr[loc_list[0] + '.r'])) {
                     add_error('No string defined for <font color="red">' + user_descr + '</font>');
                 } else if (loc_list.length == 1) {
                     var loc = loc_list[0];
                     var parent_variable = getParentVariable(loc);
-                    var role = amr[loc + '.r'];
+                    var role = umr[loc + '.r'];
                     // add_log('expanding "' + user_descr + '/' + loc + '" to: replace string at ' + parent_variable + ' ' + role + ' with ' + new_value);
                     exec_command(('replace string at ' + parent_variable + ' ' + role + ' with ' + new_value), 0);
                     selectTemplate('clear');
@@ -829,11 +865,11 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 var loc_list = user_descr2locs(user_descr, 'concept');
                 if (!validEntryConcept(new_value)) {
                     add_error('Ill-formed new concept <font color="red">' + new_value + '</font>');
-                } else if ((loc_list.length == 1) && !amr[loc_list[0] + '.v']) {
+                } else if ((loc_list.length == 1) && !umr[loc_list[0] + '.v']) {
                     add_error('No concept defined for <font color="red">' + user_descr + '</font>');
                 } else if (loc_list.length == 1) {
                     var loc = loc_list[0];
-                    var variable = amr[loc + '.v'];
+                    var variable = umr[loc + '.v'];
                     // add_log('expanding "' + user_descr + '/' + loc + '" to: replace concept at ' + variable + ' with ' + new_value);
                     exec_command(('replace concept at ' + variable + ' with ' + new_value), 0);
                     state_has_changed_p = 1;
@@ -844,17 +880,16 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 } else {
                     add_error('Ambiguous concept locator <font color="red">' + user_descr + '</font>');
                 }
-            } else if (value.match(/^del\s+\S/)
-                || value.match(/^delete\s+\S+(\s+\S+)?\s*$/)) { // delete shortcut
+            } else if (value.match(/^del\s+\S/) || value.match(/^delete\s+\S+(\s+\S+)?\s*$/)) { // delete shortcut
                 // add_log('delete shortcut: ' + value + '.');
                 var user_descr = value.replace(/^(?:del|delete)\s+(\S.*\S|\S|)\s*$/, "$1");
                 var loc_list = user_descr2locs(user_descr, 'delete');
                 if (loc_list.length == 1) {
                     var loc = loc_list[0];
                     var parent_variable = getParentVariable(loc);
-                    var role = amr[loc + '.r'];
-                    var variable = amr[loc + '.v'];
-                    var arg = amr[loc + '.v'] || amr[loc + '.command_input'] || amr[loc + '.s'];
+                    var role = umr[loc + '.r'];
+                    var variable = umr[loc + '.v'];
+                    var arg = umr[loc + '.v'] || umr[loc + '.command_input'] || umr[loc + '.s'];
                     if (parent_variable) {
                         // add_log('expanding "' + user_descr + '/' + loc + '" to: delete ' + parent_variable + ' ' + role + ' ' + arg);
                         exec_command(('delete ' + parent_variable + ' ' + role + ' ' + arg), 0);
@@ -893,190 +928,195 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     }
                 }
                 top = 0;
-                /** TODO not completely clear**********************************************************************************************************************/
+                /** when cc is longer than one (unlike above)**********************************************************************************************************************/
             } else if (cc.length >= 1) {
                 console.log("I am here1");
                 // cc == ["b", ":arg1", "car"]
-                var key1 = cc[0]; //"b"
-                var ne_concept;
-                var cc2v;
-                if ((key1 == 'top') || (key1 == 'bottom') || (key1 == 'new')) {
+                let ne_concept;
+                let cc2v;
+                if ((cc[0] === 'top') || (cc[0] === 'bottom') || (cc[0] === 'new')) {
                     console.log("I am here2");
-                    if ((cc.length >= 3) && (cc[1] == '*OR*') && validEntryConcept(cc[2])) {
+                    if ((cc.length >= 3) && (cc[1] === '*OR*') && validEntryConcept(cc[2])) {
+                        // this is choice sentence: hear or see it to generate (o3 / *OR* :op1 (h / hear) :op2 (s / see))
                         console.log("I am here3");
                         addOr('top ' + value);
                         selectTemplate('');
                         show_amr_args = 'show';
-                    } else if ((cc.length >= 3) && (key1 == 'top') && (ne_concept = cc[1])
-                        && validEntryConcept(ne_concept) && (!getLocs(ne_concept))
-                        && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                    } else if ((cc.length >= 3) && (cc[0] === 'top') && (ne_concept = cc[1]) && validEntryConcept(ne_concept) && (!getLocs(ne_concept)) && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                        // top is named entity: top person Jin Zhao
                         console.log("I am here4");
-                        var ne_var = newAMR(trimConcept(ne_concept));
-                        var name_var = add_triple(ne_var, ':name', 'name', 'concept');
-                        for (var i = 2; i < cc.length; i++) {
+                        let ne_var = newAMR(trimConcept(ne_concept));
+                        let name_var = add_triple(ne_var, ':name', 'name', 'concept');
+                        for (let i = 2; i < cc.length; i++) {
                             var sub_role = ':op' + (i - 1);
                             add_triple(name_var, sub_role, cc[i], 'string');
                         }
-                        if (current_template != 'top') {
+                        if (current_template !== 'top') {
                             console.log("I am here5");
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
                     } else if (cc.length >= 2) {
+                        // this is when cc only has two element (the first probably is top)
                         console.log("I am here6");
-                        for (var i = 1; i < cc.length; i++) {
-                            var arg = cc[i];
-                            if ((key1 == 'top') && getLocs(arg)) {
-                                //when the arg already exist in amr tree
+                        for (let i = 1; i < cc.length; i++) {
+                            if ((cc[0] === 'top') && getLocs(cc[i])) {
+                                //when the arg already exist in amr tree, take out the argument as a new top (a new tree)
                                 console.log("I am here7");
-                                move_var_elem(arg, 'top', '');
+                                move_var_elem(cc[i], 'top', '');
                             } else {
+                                // when the arg is not already in tree yet
                                 console.log("I am here8");
-                                if (validEntryConcept(arg)) {
-                                    console.log("I am here9");
-                                    newAMR(trimConcept(arg));
+                                if (validEntryConcept(cc[i])) {
+                                    // create a new tree
+                                    newAMR(trimConcept(cc[i]));
                                 } else {
-                                    console.log("I am here10");
-                                    add_error('Ill-formed command "' + key1 + ' <font color="red">' + arg + '</font>" &nbsp; Argument should be last_command concept.');
+                                    console.log('Ill-formed command "' + cc[0] + ' <font color="red">' + cc[i] + '</font>" &nbsp; Argument should be last_command concept.');
                                 }
                             }
                         }
-                        if (current_template != 'top') {
+                        if (current_template !== 'top') {
                             console.log("I am here11");
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
                     }
                     /** automatic reification **********************************************************************************************************************/
-
-                } else if ((cc.length >= 3) && (cc[1] == ':domain-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                } else if ((cc.length >= 3) && (cc[1] === ':domain-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
                     cc.splice(1, 1, ':mod');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':subset') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG2-of', 'include-91');
+                } else if ((cc.length >= 3) && (cc[1] === ':subset') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG2-of', 'include-91');
                     cc.splice(0, 2, new_var, ':ARG1');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && ((cc[1] == ':subset-of') || (cc[1] == ':superset')) && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'include-91');
+                } else if ((cc.length >= 3) && ((cc[1] === ':subset-of') || (cc[1] === ':superset')) && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'include-91');
                     cc.splice(0, 2, new_var, ':ARG2');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':cause') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'cause-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':cause') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'cause-01');
                     cc.splice(0, 2, new_var, ':ARG0');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':cause-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG0-of', 'cause-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':cause-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG0-of', 'cause-01');
                     cc.splice(0, 2, new_var, ':ARG1');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':cite') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'cite-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':cite') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'cite-01');
                     cc.splice(0, 2, new_var, ':ARG2');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':cost') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'cost-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':cost') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'cost-01');
                     cc.splice(0, 2, new_var, ':ARG2');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':cost-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG2-of', 'cost-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':cost-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG2-of', 'cost-01');
                     cc.splice(0, 2, new_var, ':ARG1');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && ((cc[1] == ':except') || (cc[1] == ':prep-except')) && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG2-of', 'except-01');
+                } else if ((cc.length >= 3) && ((cc[1] === ':except') || (cc[1] === ':prep-except')) && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG2-of', 'except-01');
                     cc.splice(0, 2, new_var, ':ARG1');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':instead-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'instead-of-91');
+                } else if ((cc.length >= 3) && (cc[1] === ':instead-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'instead-of-91');
                     cc.splice(0, 2, new_var, ':ARG2');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':meaning') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG0-of', 'mean-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':meaning') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG0-of', 'mean-01');
                     cc.splice(0, 2, new_var, ':ARG1');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':meaning-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'mean-01');
+                } else if ((cc.length >= 3) && (cc[1] === ':meaning-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'mean-01');
                     cc.splice(0, 2, new_var, ':ARG0');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':role') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var role_candidate = cc[2];
-                    var role_frame;
+                } else if ((cc.length >= 3) && (cc[1] === ':role') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let role_candidate = cc[2];
+                    let role_frame;
                     if (is_have_rel_role_91_role[role_candidate]) {
                         role_frame = 'have-rel-role-91';
                     } else {
                         role_frame = 'have-org-role-91';
                     }
-                    var new_var = add_triple(cc[0], ':ARG0-of', role_frame);
+                    let new_var = add_triple(cc[0], ':ARG0-of', role_frame);
                     cc.splice(0, 2, new_var, ':ARG2');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':role-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var role_candidate_var = cc[0];
-                    var role_frame = variable2concept[role_candidate_var] || '';
+                } else if ((cc.length >= 3) && (cc[1] === ':role-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let role_candidate = cc[2]; // this line is added to original code
+                    let role_frame;
                     if (is_have_rel_role_91_role[role_candidate]) {
                         role_frame = 'have-rel-role-91';
                     } else {
                         role_frame = 'have-org-role-91';
                     }
-                    var new_var = add_triple(cc[0], ':ARG2-of', role_frame);
+                    let new_var = add_triple(cc[0], ':ARG2-of', role_frame);
                     cc.splice(0, 2, new_var, ':ARG0');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':employed-by') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG0-of', 'have-org-role-91');
+                } else if ((cc.length >= 3) && (cc[1] === ':employed-by') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG0-of', 'have-org-role-91');
                     cc.splice(0, 2, new_var, ':ARG1');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':employed-by-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ARG1-of', 'have-org-role-91');
+                } else if ((cc.length >= 3) && (cc[1] === ':employed-by-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ARG1-of', 'have-org-role-91');
                     cc.splice(0, 2, new_var, ':ARG0');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length == 3) && (cc[1] == ':ord') && getLocs(cc[0]) && cc[2].match(/^-?[1-9]\d*$/i) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':ord', 'ordinal-entity');
+                } else if ((cc.length === 3) && (cc[1] === ':ord') && getLocs(cc[0]) && cc[2].match(/^-?[1-9]\d*$/i) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':ord', 'ordinal-entity');
                     cc.splice(0, 2, new_var, ':value');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length == 3) && (cc[1] == ':xref') && getLocs(cc[0]) && cc[2].match(/^[A-Z]+:\S+/i) && show_amr_obj['option-auto-reification']) {
-                    var new_var = add_triple(cc[0], ':xref', 'xref');
+                } else if ((cc.length === 3) && (cc[1] === ':xref') && getLocs(cc[0]) && cc[2].match(/^[A-Z]+:\S+/i) && show_amr_obj['option-auto-reification']) {
+                    let new_var = add_triple(cc[0], ':xref', 'xref');
                     cc.splice(0, 2, new_var, ':value');
                     exec_command(cc.join(" "), 0);
                     selectTemplate('clear');
                     show_amr_args = 'show';
                     /** move and add **********************************************************************************************************************/
-                } else if ((cc.length == 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '-')) {
+                } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '-')) {
                     console.log("I am here12");
                     move_var_elem(cc[2], cc[0], cc[1]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
+                } else if((cc.length === 3) && cc[0].match(/^s\d*/) && cc[1].match(/^:temporal|:modal|:coref/) && cc[2].match(/^\(s\d*[a-z]\d*\s:.+\s.+\)/)){
+                    // doc_level
+                    console.log("cc here: " + cc);
+                    add_triple(cc[0], cc[1], cc[2], '');
+                    if (current_template !== 'add') {
+                        selectTemplate('clear');
+                    }
+                } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
                     && (cc[2].match(/\-$/))
                     && (cc2v = cc[2].replace(/^(.*)\-$/, "$1"))
                     && getLocs(cc2v)) {
@@ -1084,12 +1124,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     move_var_elem(cc2v, cc[0], cc[1]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length == 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
+                } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
                     console.log("I am here14");
                     add_triple(cc[0], cc[1], cc[2]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
-                } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
+                } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
                     && (cc[2].match(/\+$/))
                     && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
                     && getLocs(cc2v)) {
@@ -1125,7 +1165,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         selectTemplate('clear');
                     }
                     show_amr_args = 'show';
-                } else if (key1 == 'replace') {
+                } else if (cc[0] === 'replace') {
                     console.log("I am here20");
                     if (cc.length == 1) {
                         console.log("I am here21");
@@ -1173,10 +1213,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else {
                         add_error('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
                     }
-                } else if (key1 == 'delete') {
+                } else if (cc[0] === 'delete') {
                     console.log("I am here30");
-                    if (cc.length == 4) {
-                        if ((cc[1] == 'top') && (cc[2] == 'level')) {
+                    if (cc.length === 4) {
+                        if ((cc[1] === 'top') && (cc[2] === 'level')) {
                             delete_top_level(cc[3]);
                         } else {
                             delete_based_on_triple(cc[1], cc[2], cc[3]);
@@ -1190,14 +1230,14 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else {
                         add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
                     }
-                } else if ((key1 == 'move') || (key1 == 'mv')) {
+                } else if ((cc[0] === 'move') || (cc[0] === 'mv')) {
                     console.log("I am here31");
                     if (cc.length >= 4) {
-                        if (cc[2] == 'to') {
-                            if (cc.length == 4) {
+                        if (cc[2] === 'to') {
+                            if (cc.length === 4) {
                                 move_var_elem(cc[1], cc[3], '');
                                 show_amr_args = 'show';
-                            } else if (cc.length == 5) {
+                            } else if (cc.length === 5) {
                                 move_var_elem(cc[1], cc[3], cc[4]);
                                 show_amr_args = 'show';
                             } else {
@@ -1236,7 +1276,11 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 record_value = record_value || value;
                 // value: "b :arg1 car"
                 // last_command.innerHTML = record_value;
-                show_amr(show_amr_args);
+                let amr_id='';
+                if(document.getElementById('curr_sent_id') != null){
+                    amr_id =document.getElementById('curr_sent_id').value;
+                }
+                show_amr(show_amr_args, amr_id);
                 // show_amr_args:'show'
                 if (state_has_changed_p) {
                     console.log("I am here36");
@@ -1262,11 +1306,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     }
     //traverse amr to print the alignment info, and change doc level annotation variables
     // amr['2.v'] = 's2';
-    var alignInfo = document.getElementById('align');
-    var alignment_string = '';
-    Object.keys(amr).forEach(function (key) {
-        if (/[\\d|\\.]+c/gm.test(key) && amr[key]) {
-            alignment_string += amr[key] + ": " + amr[key.replace('c', 'v')] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+    let alignInfo;
+    if (( alignInfo = document.getElementById('align')) != null){
+        var alignment_string = '';
+        Object.keys(umr).forEach(function (key) {
+        if (/[\\d|\\.]+c/gm.test(key) && umr[key]) {
+            alignment_string += umr[key] + ": " + umr[key.replace('c', 'v')] + ": " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
             // alignment_string += (amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n')).replace(/undefined/g, 'inferred');
 
         }
@@ -1278,8 +1323,13 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         //         }
         //     }
         // }
-    });
-    alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
+        });
+        alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
+    }
+
+
+
+
 }
 
 /** log ******************************************************/
@@ -1342,8 +1392,8 @@ function add_guidance(message) {
  * @param loc "1.1.3"
  */
 function recordVariable(v, loc) {
-    if ((v != undefined) && (v != '')) {
-        var old_value = getLocs(v);
+    if ((v !== undefined) && (v !== '')) {
+        let old_value = getLocs(v);
         if (old_value) {
             variables[v] = old_value + ' ' + loc;
         } else {
@@ -1373,20 +1423,20 @@ function recordConcept(c, loc) {
 }
 
 /**
- * given concept return variable
+ * given concept return variable, but without variable counting index
  * @param concept
  * @returns {string} variable (initial)
  */
 function newVar(concept) {
-    var v;
-    concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //why is this?
-    var initial = concept.substring(0, 1).toLowerCase();
+    let v;
+    concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //example: *s -> s
+    let initial = concept.substring(0, 1).toLowerCase();
     if (!initial.match(/[a-z]/)) {
         initial = 'x';
     }
     // reserve variable 'i' for concept 'i'
     if (getLocs(initial) || reserved_variables[initial] || concept.match(/^i./i)) {
-        var index = 2;
+        let index = 2;
         v = initial + index;
         while (getLocs(v) || reserved_variables[v]) {
             index++;
@@ -1395,11 +1445,9 @@ function newVar(concept) {
     } else {
         v = initial;
     }
-
-    if (amr['n'] > 1) {
-        v = 'S2' + v;
-    }
-    return v;
+    // add the sentence number
+    let sentenceId = document.getElementById('sentence_id').value;
+    return "s"+ sentenceId + v;
 }
 
 /**
@@ -1443,13 +1491,13 @@ function user_descr2locs(s, type) {
             parent_variable = '';
         }
         console.log('user_descr2locs parent_variable: ' + parent_variable + ' role: ' + role + ' variable: ' + variable + ' string_or_concept: ' + string_or_concept);
-        for (var key in amr) {
+        for (var key in umr) {
             if (key.match(/\.v$/)) {
                 var loc = key.replace(/\.v$/, "") + '';
-                var loc_concept = amr[loc + '.c'] || '';
-                var loc_role = amr[loc + '.r'] || '';
-                var loc_string = amr[loc + '.s'] || '';
-                var loc_variable = amr[loc + '.v'] || '';
+                var loc_concept = umr[loc + '.c'] || '';
+                var loc_role = umr[loc + '.r'] || '';
+                var loc_string = umr[loc + '.s'] || '';
+                var loc_variable = umr[loc + '.v'] || '';
                 var loc_parent_variable = getParentVariable(loc + '');
                 console.log('user_descr2locs - Point D loc: ' + loc + ' loc_concept: ' + loc_concept + ' string_or_concept: ' + string_or_concept);
                 if (deleted_p(loc)
@@ -1487,23 +1535,19 @@ function user_descr2locs(s, type) {
  */
 function newAMR(concept) {
     console.log("I am here37");
-    var v = newVar(concept);
-    console.log(amr);
-    var n = amr['n']; // n is the variable number
-    amr['n'] = ++n;
-    amr[n + '.c'] = concept;
-    amr[n + '.v'] = v;
-    amr[n + '.n'] = 0;
-    amr[n + '.s'] = '';
-    amr[n + '.a'] = begOffset + "-" + endOffset;
-
-
+    let v = newVar(concept); // string initial
+    let n = umr['n']; // n is how many amr trees currently in amr
+    umr['n'] = ++n;
+    umr[n + '.c'] = concept;
+    umr[n + '.v'] = v;
+    umr[n + '.n'] = 0;
+    umr[n + '.s'] = '';
+    umr[n + '.a'] = begOffset + "-" + endOffset;
     recordVariable(v, n);
     recordConcept(concept, n);
     variable2concept[v] = concept;
     state_has_changed_p = 1;
-    console.log('new AMR: ' + concept + ' (' + n + ')' + ' var: ' + v);
-    // console.log(amr);
+    console.log('new AMR tree: '+ 'number' + n +' with head var: ' + v);
     return v;
 }
 
@@ -1533,6 +1577,12 @@ function add_triple(head, role, arg, arg_type) {
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
+        }else if(arg.includes("(")){
+            //doc_level
+            console.log("I am here40-1");
+            arg_concept = '';
+            arg_variable = '';
+            arg_string = arg;
         } else if (validEntryConcept(arg)
             && (arg_type != 'string') //I suspect this is the difference when arg is a concept or a string
             && (!role_unquoted_string_arg(role, arg, ''))
@@ -1559,19 +1609,18 @@ function add_triple(head, role, arg, arg_type) {
         // head_var_locs += '';
         var head_var_loc_list = argSplit(head_var_locs);
         var head_var_loc = head_var_loc_list[0];
-        var n_subs = amr[head_var_loc + '.n'];
-        amr[head_var_loc + '.n'] = ++n_subs;
+        var n_subs = umr[head_var_loc + '.n'];
+        umr[head_var_loc + '.n'] = ++n_subs;
         // add_log('subs ' + head_var_loc + '.n: ' + n_subs);
         var new_loc = head_var_loc + '.' + n_subs;
         // add_log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
         role = autoTrueCaseRole(role);
-        amr[new_loc + '.v'] = arg_variable;
-        amr[new_loc + '.r'] = role;
-        amr[new_loc + '.n'] = 0;
-        amr[new_loc + '.c'] = arg_concept;
-        amr[new_loc + '.s'] = arg_string;
-        amr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
-
+        umr[new_loc + '.v'] = arg_variable;
+        umr[new_loc + '.r'] = role;
+        umr[new_loc + '.n'] = 0;
+        umr[new_loc + '.c'] = arg_concept;
+        umr[new_loc + '.s'] = arg_string;
+        umr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
 
         recordVariable(arg_variable, new_loc);
         recordConcept(arg_concept, new_loc);
@@ -1666,8 +1715,8 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
                     head_var_locs += '';
                     var loc_list = argSplit(head_var_locs);
                     var loc = loc_list[0];
-                    var old_concept = amr[loc + '.c'];
-                    amr[loc + '.c'] = trimConcept(new_concept);
+                    var old_concept = umr[loc + '.c'];
+                    umr[loc + '.c'] = trimConcept(new_concept);
                     change_var_name(head_var, new_concept, 0);
                     state_has_changed_p = 1;
                     // add_log('replace concept at ' + head_var + ': ' + old_concept + ' &rarr; ' + new_concept);
@@ -1698,20 +1747,20 @@ function replace_string(key_at, head_var, role, key_with, new_string) {
                         head_var_locs += '';
                         var head_var_loc_list = argSplit(head_var_locs);
                         var head_var_loc = head_var_loc_list[0];
-                        var n_subs = amr[head_var_loc + '.n'];
+                        var n_subs = umr[head_var_loc + '.n'];
                         var string_loc = '';
                         for (var i = 1; i <= n_subs; i++) {
                             if (string_loc == '') {
                                 var sub_loc = head_var_loc + '.' + i;
-                                var sub_role = amr[sub_loc + '.r'];
+                                var sub_role = umr[sub_loc + '.r'];
                                 if (sub_role == role) {
                                     string_loc = sub_loc;
                                 }
                             }
                         }
                         if (string_loc) {
-                            var old_string = amr[string_loc + '.s'];
-                            amr[string_loc + '.s'] = new_string;
+                            var old_string = umr[string_loc + '.s'];
+                            umr[string_loc + '.s'] = new_string;
                             state_has_changed_p = 1;
                             // add_log('replace string at ' + head_var + ' ' + role + ': ' + old_string + ' &rarr; ' + new_string);
                         } else {
@@ -1749,19 +1798,19 @@ function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
                             head_var_locs += '';
                             var head_var_loc_list = argSplit(head_var_locs);
                             var head_var_loc = head_var_loc_list[0];
-                            var n_subs = amr[head_var_loc + '.n'];
+                            var n_subs = umr[head_var_loc + '.n'];
                             var role_arg_loc = '';
                             var arg2 = stripQuotes(arg);
                             var arg3 = trimConcept(arg);
                             for (var i = 1; i <= n_subs; i++) {
                                 if (role_arg_loc == '') {
                                     var sub_loc = head_var_loc + '.' + i;
-                                    var sub_role = amr[sub_loc + '.r'];
-                                    if ((!amr[sub_loc + '.d'])
+                                    var sub_role = umr[sub_loc + '.r'];
+                                    if ((!umr[sub_loc + '.d'])
                                         && (sub_role == old_role)) {
-                                        var arg_variable = amr[sub_loc + '.v'];
-                                        var arg_concept = amr[sub_loc + '.c'];
-                                        var arg_string = amr[sub_loc + '.s'];
+                                        var arg_variable = umr[sub_loc + '.v'];
+                                        var arg_concept = umr[sub_loc + '.c'];
+                                        var arg_string = umr[sub_loc + '.s'];
                                         if ((arg_variable && (arg == arg_variable))
                                             || (arg_concept && (arg == arg_concept))
                                             || (arg_concept && (arg3 == arg_concept))
@@ -1772,9 +1821,9 @@ function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
                                 }
                             }
                             if (role_arg_loc) {
-                                var old_role = amr[role_arg_loc + '.r'];
+                                var old_role = umr[role_arg_loc + '.r'];
                                 new_role = autoTrueCaseRole(new_role);
-                                amr[role_arg_loc + '.r'] = new_role;
+                                umr[role_arg_loc + '.r'] = new_role;
                                 if (new_role.match(/^:op(-\d|0|\d+\.\d)/)) {
                                     renorm_ops(head_var);
                                 }
@@ -1818,15 +1867,15 @@ function replace_variable(key_at, head_var, role, old_variable, key_with, new_va
                             head_var_locs += '';
                             var head_var_loc_list = argSplit(head_var_locs);
                             var head_var_loc = head_var_loc_list[0];
-                            var n_subs = amr[head_var_loc + '.n'];
+                            var n_subs = umr[head_var_loc + '.n'];
                             var role_arg_loc = '';
                             for (var i = 1; i <= n_subs; i++) {
                                 if (role_arg_loc == '') {
                                     var sub_loc = head_var_loc + '.' + i;
-                                    var sub_role = amr[sub_loc + '.r'];
-                                    if ((!amr[sub_loc + '.d'])
+                                    var sub_role = umr[sub_loc + '.r'];
+                                    if ((!umr[sub_loc + '.d'])
                                         && (sub_role == role)) {
-                                        var sub_variable = amr[sub_loc + '.v'];
+                                        var sub_variable = umr[sub_loc + '.v'];
                                         if (sub_variable && (old_variable == sub_variable)) {
                                             role_arg_loc = sub_loc;
                                         }
@@ -1834,11 +1883,11 @@ function replace_variable(key_at, head_var, role, old_variable, key_with, new_va
                                 }
                             }
                             if (role_arg_loc) {
-                                var sub_concept = amr[role_arg_loc + '.c'];
+                                var sub_concept = umr[role_arg_loc + '.c'];
                                 if (sub_concept) {
                                     add_error('Ill-formed replace variable command. Fifth argument should be a <span style="text-decoration:underline;">secondary</span> variable, i.e. a leaf argument without its own concept. Usage: replace variable at &lt;head-var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
                                 } else {
-                                    amr[role_arg_loc + '.v'] = new_variable;
+                                    umr[role_arg_loc + '.v'] = new_variable;
                                     state_has_changed_p = 1;
                                     // add_log('replace variable at ' + head_var + ' ' + role + ' ' + old_variable + ': ' + old_variable + ' &rarr; ' + new_variable);
                                 }
@@ -1873,7 +1922,7 @@ function replace_variable(key_at, head_var, role, old_variable, key_with, new_va
  */
 function deleted_p(loc) {
     while (1) {
-        if (amr[loc + '.d']) {
+        if (umr[loc + '.d']) {
             return 1;
         } else if (loc.match(/\d\.\d+$/)) {
             loc = loc.replace(/\.\d+$/, "");
@@ -1886,9 +1935,9 @@ function deleted_p(loc) {
 function delete_elem(loc) {
     // add_log('delete_elem ' + loc);
     var locs, concept, variable;
-    amr[loc + '.d'] = 1;
+    umr[loc + '.d'] = 1;
     state_has_changed_p = 1;
-    if ((variable = amr[loc + '.v'])
+    if ((variable = umr[loc + '.v'])
         && (locs = getLocs(variable))) {
         locs += '';
         var loc_list = argSplit(locs);
@@ -1900,14 +1949,14 @@ function delete_elem(loc) {
             }
         }
         if ((new_loc_list.length >= 1)
-            && (!amr[new_loc_list[0] + '.c'])
-            && (concept = amr[loc + '.c'])) {
-            amr[new_loc_list[0] + '.c'] = concept;
+            && (!umr[new_loc_list[0] + '.c'])
+            && (concept = umr[loc + '.c'])) {
+            umr[new_loc_list[0] + '.c'] = concept;
         }
         variables[variable] = new_loc_list.join(" ");
     }
 
-    if ((concept = amr[loc + '.c'])
+    if ((concept = umr[loc + '.c'])
         && (locs = concepts[concept])) {
         locs += '';
         var loc_list = argSplit(locs);
@@ -1929,10 +1978,10 @@ function delete_elem(loc) {
 function delete_rec(loc) {
     // add_log('delete_rec ' + loc);
     delete_elem(loc);
-    var n_subs = amr[loc + '.n'];
+    var n_subs = umr[loc + '.n'];
     for (var i = 1; i <= n_subs; i++) {
         var sub_loc = loc + '.' + i;
-        if (!amr[sub_loc + '.d']) {
+        if (!umr[sub_loc + '.d']) {
             delete_rec(sub_loc);
         }
     }
@@ -1948,19 +1997,19 @@ function delete_based_on_triple(head_var, role, arg) {
                 head_var_locs += '';
                 var head_var_loc_list = argSplit(head_var_locs);
                 var head_var_loc = head_var_loc_list[0];
-                var n_subs = amr[head_var_loc + '.n'];
+                var n_subs = umr[head_var_loc + '.n'];
                 var loc = '';
                 var arg2 = stripQuotes(arg);
                 var arg3 = trimConcept(arg);
                 for (var i = 1; i <= n_subs; i++) {
                     if (loc == '') {
                         var sub_loc = head_var_loc + '.' + i;
-                        var sub_role = amr[sub_loc + '.r'];
-                        if ((!amr[sub_loc + '.d'])
+                        var sub_role = umr[sub_loc + '.r'];
+                        if ((!umr[sub_loc + '.d'])
                             && (sub_role == role)) {
-                            var arg_variable = amr[sub_loc + '.v'];
-                            var arg_concept = amr[sub_loc + '.c'];
-                            var arg_string = amr[sub_loc + '.s'];
+                            var arg_variable = umr[sub_loc + '.v'];
+                            var arg_concept = umr[sub_loc + '.c'];
+                            var arg_string = umr[sub_loc + '.s'];
                             if ((arg_variable && (arg == arg_variable))
                                 || (arg_concept && (arg == arg_concept))
                                 || (arg_concept && (arg3 == arg_concept))
@@ -2006,7 +2055,7 @@ function delete_top_level(variable) {
  * delete the whole thing
  */
 function deleteAMR() {
-    var n = amr['n'];
+    var n = umr['n'];
     for (var i = 1; i <= n; i++) {
         delete_elem(i);
     }
@@ -2021,7 +2070,7 @@ function deleteAMR() {
 
 /** move ******************************************************/
 function move_var_elem(variable, new_head_var, role) {
-    // add_log('move ' + variable + ' ' + new_head_var + ' ' + role);
+    console.log('move variable: ' + variable + ' to new head: ' + new_head_var + ' with new role (if not empty): ' + role);
     var loc, locs, loc_list, head_var_loc, head_var_locs, head_var_loc_list;
     if (locs = getLocs(variable)) {
         locs += '';
@@ -2032,33 +2081,33 @@ function move_var_elem(variable, new_head_var, role) {
                 if ((loc_list = argSplit(locs))
                     && (loc_list.length >= 1)
                     && (loc = loc_list[0])) {
-                    if (role || (new_head_var == 'top') || (role = amr[loc + '.r'])) {
+                    if (role || (new_head_var == 'top') || (role = umr[loc + '.r'])) {
                         if ((head_var_loc_list = argSplit(head_var_locs))
                             && (head_var_loc_list.length >= 1)
                             && (head_var_loc = head_var_loc_list[0])) {
                             var n_subs, new_loc;
                             if (head_var_loc == 'top') {
-                                n_subs = amr['n'];
-                                amr['n'] = ++n_subs;
+                                n_subs = umr['n'];
+                                umr['n'] = ++n_subs;
                                 new_loc = n_subs;
                             } else {
-                                n_subs = amr[head_var_loc + '.n'];
-                                amr[head_var_loc + '.n'] = ++n_subs;
+                                n_subs = umr[head_var_loc + '.n'];
+                                umr[head_var_loc + '.n'] = ++n_subs;
                                 new_loc = head_var_loc + '.' + n_subs;
                             }
                             // add_log('move core ' + loc + ' ' + head_var_loc + ' ' + new_loc);
-                            for (var key in amr) {
+                            for (var key in umr) {
                                 var re1 = '^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$';
                                 var re2 = new_loc + '$1';
                                 var new_key = key.replace(new RegExp('^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$', ""), new_loc + '$1');
                                 // add_log('   key: ' + key + ' re1: ' + re1 + ' re2: ' + re2 + ' new_key: ' + new_key);
                                 if (new_key != key) {
-                                    amr[new_key] = amr[key];
+                                    umr[new_key] = umr[key];
                                     // add_log('move amr update: ' + key + '&rarr; ' + new_key);
                                 }
                             }
-                            amr[new_loc + '.r'] = autoTrueCaseRole(role);
-                            amr[loc + '.d'] = 1;
+                            umr[new_loc + '.r'] = autoTrueCaseRole(role);
+                            umr[loc + '.d'] = 1;
                             state_has_changed_p = 1;
                             for (var key in variables) {
                                 var old_value = getLocs(key);
@@ -2099,14 +2148,14 @@ function move_var_elem(variable, new_head_var, role) {
 }
 
 /**
+ * this is used to directly change the variable to another one
  * in dictionary variables, the original key will be assigned empty value, the new key will be assigned original value
  {o: "1", r: "1.1", b: "1.1.1", c: "1.1.1.2"} -> {o: "1", r: "", b: "1.1.1", c: "1.1.1.2", r1: "1.1"}
  */
 function change_var_name(variable, target, top) {
-    console.log("change_var_name is called");
+    console.log('change_var_name is called, variable: ' + variable + ', target: ' + target + ', top: ' + top);
     // For whole set. Target can be var or concept.
-    // add_log('change_var_name ' + variable + ' ' + target);
-    var locs, new_variable;
+    let locs, new_variable;
     if (locs = getLocs(variable)) {
         variables[variable] = '';
         if ((target.match(/^[a-z]\d*$/))
@@ -2118,7 +2167,7 @@ function change_var_name(variable, target, top) {
         var loc_list = argSplit(locs);
         for (var i = 0; i < loc_list.length; i++) {
             loc = loc_list[i];
-            amr[loc + '.v'] = new_variable;
+            umr[loc + '.v'] = new_variable;
             recordVariable(new_variable, loc);
         }
         // add_log('  variable changed to ' + new_variable);
@@ -2135,13 +2184,13 @@ function renorm_ops(variable) {
     if ((locs = getLocs(variable))
         && (loc_list = argSplit(locs))
         && (loc = loc_list[0])) {
-        n_subs = amr[loc + '.n'];
+        n_subs = umr[loc + '.n'];
         op_numbers = [];
         op_ht = {};
         for (var i = 1; i <= n_subs; i++) {
             sub_loc = loc + '.' + i;
-            if (!amr[sub_loc + '.d']) {
-                sub_role = amr[sub_loc + '.r'];
+            if (!umr[sub_loc + '.d']) {
+                sub_role = umr[sub_loc + '.r'];
                 if (sub_role.match(/^:op-?\d+(\.\d+)?$/)) {
                     op_number = sub_role.replace(/^:op(-?\d+(?:\.\d+)?)$/, "$1");
                     op_numbers.push(op_number);
@@ -2159,7 +2208,7 @@ function renorm_ops(variable) {
             op_number = op_numbers[i];
             sub_loc = op_ht[op_number];
             // add_log('get op_ht[' + op_number + '] = ' + sub_loc);
-            amr[sub_loc + '.r'] = ':op' + (i + 1);
+            umr[sub_loc + '.r'] = ':op' + (i + 1);
         }
         state_has_changed_p = 1;
         exec_command('record reop ' + variable, 1);
@@ -2173,9 +2222,9 @@ function renorm_ops(variable) {
  */
 function number_of_nodes(loc) {
     var n_nodes = 0;
-    if (!amr[loc + '.d']) {
+    if (!umr[loc + '.d']) {
         n_nodes++;
-        var n = amr[loc + '.n'];
+        var n = umr[loc + '.n'];
         for (var i = 1; i <= n; i++) {
             n_nodes += number_of_nodes(loc + '.' + i);
         }
@@ -2184,13 +2233,13 @@ function number_of_nodes(loc) {
 }
 
 function leafy_or_concept_p(loc) {
-    var concept = amr[loc + '.c'];
+    var concept = umr[loc + '.c'];
     if (concept == '*OR*') {
-        var n = amr[loc + '.n'];
+        var n = umr[loc + '.n'];
         var leafy2_p = 1;
         for (var i = 1; i <= n; i++) {
             var sub_loc = loc + '.' + i;
-            if (amr[sub_loc + '.r'].match(/^:op/)
+            if (umr[sub_loc + '.r'].match(/^:op/)
                 && (number_of_nodes(sub_loc) > 2)) {
                 leafy2_p = 0;
             }
@@ -2207,10 +2256,10 @@ function leafy_or_concept_p(loc) {
  * @returns {number}
  */
 function show_amr_new_line_p(loc) {
-    var variable = amr[loc + '.v'];
-    var concept = amr[loc + '.c'];
-    var string = amr[loc + '.s'];
-    var role = amr[loc + '.r'] || '';
+    var variable = umr[loc + '.v'];
+    var concept = umr[loc + '.c'];
+    var string = umr[loc + '.s'];
+    var role = umr[loc + '.r'] || '';
     var head_loc = '';
     var head_concept = '';
     var head_role = '';
@@ -2219,12 +2268,12 @@ function show_amr_new_line_p(loc) {
     var grand_head_concept = '';
     if (loc.match(/\.\d+$/)) {
         head_loc = loc.replace(/\.\d+$/, "");
-        head_concept = amr[head_loc + '.c'] || '';
-        head_role = amr[head_loc + '.r'] || '';
-        n = amr[head_loc + '.n'];
+        head_concept = umr[head_loc + '.c'] || '';
+        head_role = umr[head_loc + '.r'] || '';
+        n = umr[head_loc + '.n'];
         if (head_loc.match(/\.\d+$/)) {
             grand_head_loc = head_loc.replace(/\.\d+$/, "");
-            grand_head_concept = amr[grand_head_loc + '.c'] || '';
+            grand_head_concept = umr[grand_head_loc + '.c'] || '';
         }
     }
     if (role.match(/^:ARG\d+$/)) {
@@ -2260,8 +2309,8 @@ function role_unquoted_string_arg(role, arg, loc) {
     var head_role = '';
     if (loc.match(/\.\d+$/)) {
         head_loc = loc.replace(/\.\d+$/, "");
-        head_concept = amr[head_loc + '.c'] || '';
-        head_role = amr[head_loc + '.r'] || '';
+        head_concept = umr[head_loc + '.c'] || '';
+        head_role = umr[head_loc + '.r'] || '';
     }
     if (role.match(/^:op/) && (head_role == ':name')) {
         return 0;
@@ -2292,18 +2341,18 @@ function tolerate_special_concepts(s) {
  * @param ancestor_elem_id_list " "
  * @returns {string} returns a html string that represents the penman format
  */
-function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
+function show_amr_rec(loc, args, rec, ancestor_elem_id_list, n_elems_w_id) {
     // loc=1, args="show", rec=0, ancestor_elem_id_list=' '
-    // add_log('show AMR rec: ' + loc);
+    console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
 
     loc += '';
-    if (amr[loc + '.d']) {
+    if (umr[loc + '.d']) {
         // add_log('show AMR rec deleted: ' + loc);
         return '';
     } else {
-        var concept = amr[loc + '.c'];
-        var alignment_index = amr[loc + '.a'];
-        var string = amr[loc + '.s'] || '';
+        var concept = umr[loc + '.c'];
+        var alignment_index = umr[loc + '.a'];
+        var string = umr[loc + '.s'] || '';
         var quoted_string = string;
         if (!string.match(/^".*"$/)) {
             quoted_string = '"' + string + '"';
@@ -2313,13 +2362,13 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             protected_string = quoted_string;
         }
         var protected_string2 = slashProtectQuote(protected_string);
-        var role = amr[loc + '.r'] || '';
+        var role = umr[loc + '.r'] || '';
         var string_m = string;
         var string_is_number = string.match(/^\d+(?:\.\d+)?$/);
         if (!role_unquoted_string_arg(role, string, loc)) {
             string_m = quoted_string;
         }
-        var variable = amr[loc + '.v'];
+        var variable = umr[loc + '.v'];
         var arg = variable || concept || string;
         var s = '';
         var show_replace = args.match(/replace/);
@@ -2340,12 +2389,12 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             return 'MAXXED OUT';
         }
         if (rec) {
-            role = amr[loc + '.r'];
+            role = umr[loc + '.r'];
             role_m = role;
             if (show_replace) {
                 var type = 'role';
                 head_loc = loc.replace(/\.\d+$/, "");
-                head_variable = amr[head_loc + '.v'];
+                head_variable = umr[head_loc + '.v'];
                 var at = head_variable + ' ' + role + ' ' + arg;
                 var old_value = role;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
@@ -2356,14 +2405,14 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             }
         }
         if (show_delete) {
-            var n_elems_w_id = 0;
-
+            console.log("I am here45");
             elem_id = 'amr_elem_' + ++n_elems_w_id;
+            console.log("elem_id: " + elem_id);
             onmouseover_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#FF0000\',\'mo\')';
             onmouseout_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
             if (rec) {
                 head_loc = loc.replace(/\.\d+$/, "");
-                head_variable = amr[head_loc + '.v'];
+                head_variable = umr[head_loc + '.v'];
                 onclick_fc = 'fillDeleteTemplate(\'' + head_variable + ' ' + role + ' ' + arg + '\',\'' + elem_id + '\')';
             } else {
                 onclick_fc = 'fillDeleteTemplate(\'top level ' + variable + '\',\'' + elem_id + '\')';
@@ -2376,9 +2425,11 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                     show_amr_obj['elem-' + ancestor_elem_id] += ' ' + elem_id;
                 }
             }
+            console.log("onclick_fc: " + onclick_fc);
             if (role_m) {
                 role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
             }
+            console.log("role_m: " + role_m);
         } else if (show_check && (var_locs = getLocs(variable))) {
             var n = var_locs.split(" ").length;
             if (n >= 2) {
@@ -2402,7 +2453,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
                 var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
                 var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
-                concept_m = '<span id="' + elem_id + '" title="click to change" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept + '</span>';
+                concept_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept + '</span>';
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
@@ -2411,7 +2462,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             // s += '(' + variable_m + '-' + alignment_index + ' / ' + concept_m;
             s += '(' + variable_m + ' / ' + concept_m;
 
-            var n = amr[loc + '.n'];
+            var n = umr[loc + '.n'];
             var index;
             var opx_all_simple_p = 1;
             var argx_all_simple_p = 1;
@@ -2426,9 +2477,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             var ordered_indexes = new Array();
             for (var i = 1; i <= n; i++) {
                 var sub_loc = loc + '.' + i;
-                var sub_string = amr[sub_loc + '.s'];
-                var sub_role = amr[sub_loc + '.r'];
-                if (amr[sub_loc + '.d']) {
+                var sub_string = umr[sub_loc + '.s'];
+                var sub_role = umr[sub_loc + '.r'];
+                if (umr[sub_loc + '.d']) {
                     // skip deleted elem
                 } else if ((sub_role.match(/^:op([1-9]\d*)$/i))
                     && (index = sub_role.replace(/^:op([1-9]\d*)$/i, "$1"))
@@ -2481,7 +2532,8 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 var index = ordered_indexes[i];
                 var show_amr_rec_result; // this stores one amr line
                 var sub_loc = loc + '.' + index;
-                if (show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' ')) {
+                console.log("args here1: " + args);
+                if (show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' ', n_elems_w_id)) {
                     // add_log('Point D: ' + sub_loc + ' ' + show_amr_rec_result);
                     if (show_amr_new_line_p(sub_loc)) {
                         s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
@@ -2495,8 +2547,8 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             if (show_replace) {
                 var type = 'string';
                 var head_loc = loc.replace(/\.\d+$/, "");
-                var head_variable = amr[head_loc + '.v'];
-                var role = amr[loc + '.r'];
+                var head_variable = umr[head_loc + '.v'];
+                var role = umr[loc + '.r'];
                 var at = head_variable + ' ' + role;
                 var old_value = string;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
@@ -2508,7 +2560,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             } else if (show_check) {
-                var role = amr[loc + '.r'];
+                var role = umr[loc + '.r'];
                 if ((role == ':wiki') && !string.match(/^\s*(|-)\s*$/i)) {
                     var wiki_url = 'https://en.wikipedia.org/wiki/' + htmlProtect(string);
                     string_m = '"<a href="' + wiki_url + '" title="' + wiki_url + '" target="_WIKI" style="color:#000080;">' + string + '</a>"';
@@ -2519,8 +2571,8 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             if (show_replace) {  // without concept, i.e. secondary variable
                 var type = 'variable';
                 var head_loc = loc.replace(/\.\d+$/, "");
-                var head_variable = amr[head_loc + '.v'];
-                var role = amr[loc + '.r'];
+                var head_variable = umr[head_loc + '.v'];
+                var role = umr[loc + '.r'];
                 var at = head_variable + ' ' + role + ' ' + variable;
                 var old_value = variable;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
@@ -2537,6 +2589,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         if (tree_span_args) {
             s = '<span ' + tree_span_args + '>' + s + '</span>';
         }
+        console.log("s: "+ s);
         return s;
     }
 }
@@ -2544,48 +2597,36 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
 /**
  * this is the function populate the show_amr_obj with the options table content, and print out the penman format output to webpage
  * @param args "show" or "show replace" or "show delete"
+ * @param amr_id: In doc level annotation, there is amr_id
  */
-function show_amr(args) {
+function show_amr(args, amr_id='') {
+    console.log("show_amr: args: " + args + ", amr_id: " + amr_id);
     //comply with the loaded options
-    var s, checked, html_amr_s;
-    var n_elems_w_id = 0;
-    show_amr_obj = new Object();
+    let s, html_amr_s;
+    let n_elems_w_id = 0;
     max_show_amr_ops = 5000;
     show_amr_mo_lock = '';
-    var origScrollHeight = '';
-    var origScrollTop = '';
-    if ((s = document.getElementById('amr')) != null) {
+    let origScrollHeight = '';
+    let origScrollTop = '';
+    if ((s = document.getElementById('amr'+amr_id)) != null) {
         origScrollHeight = s.scrollHeight;
         origScrollTop = s.scrollTop;
-    }
-    var display_options = new Array("string-args-with-head", "1-line-NEs", "1-line-ORs", "fix-font", "role-auto-case", "auto-check", "auto-reification", "auto-moveto", "provide-guidance", "confirm-delete", "check-chinese", "resize-command");
-    for (var i = 0; i < display_options.length; i++) {
-        var display_option = display_options[i];
-        if ((s = document.getElementById(display_option)) != null) {
-            checked = s.checked;
-            show_amr_obj['option-' + display_option] = checked;
-            // console.log('set show_amr_obj for ' + display_option + ' to ' + checked);
-        }
-    }
-    if ((s = document.getElementById('variable-indentation')) != null) {
-        if (s.checked) {
-            show_amr_obj['option-indentation-style'] = 'variable';
-        } else {
-            show_amr_obj['option-indentation-style'] = 'fix';
-        }
     }
 
     //generate the pennman string
     if (args) { //args can be "show", "replace", "delete" or "check"
-        var amr_s = '';
-        var n = amr['n'];
-        console.log(amr);
+        let amr_s = '';
+        let n = umr['n'];
+        console.log(umr);
         for (var i = 1; i <= n; i++) {
             var show_amr_rec_result;
-            if (show_amr_rec_result = show_amr_rec(i, args, 0, ' ')) {
+            console.log("args here0: " + args);
+            if (show_amr_rec_result = show_amr_rec(i, args, 0, ' ', n_elems_w_id)) {
                 amr_s += show_amr_rec_result + '\n';
+                console.log("amr_s: " + amr_s);
             }
         }
+
         //should only affect save
         if ((s = document.getElementById('plain-amr')) != null) {
             s.value = deHTML(amr_s);
@@ -2596,19 +2637,19 @@ function show_amr(args) {
         if ((s = document.getElementById('plain-amr3')) != null) {
             s.value = deHTML(amr_s);
         }
-        if (amr_s == '') {
+        if (amr_s === '') {
             html_amr_s = '<i>empty umr</i>';
         } else {
             html_amr_s = amr_s;
         }
-        html_amr_s = htmlSpaceGuard(html_amr_s);
-        // html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
-        // html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
+        html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
+        //todo how is this different
+        html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
 
-        setInnerHTML('amr', html_amr_s);
+        setInnerHTML('amr'+amr_id, html_amr_s);
         show_amr_status = args;
     }
-    if ((s = document.getElementById('amr')) != null) {
+    if ((s = document.getElementById('amr'+amr_id)) != null) {
         // this is the actual output part
         var height = s.style.height;
         var intScrollTop = 0;
@@ -2645,74 +2686,11 @@ function update_amr_area_fix_color(color, var_fix_value) {
     }
 }
 
-function props2screen() {
-    // console.log("props2screen is called");
-    var s, s2, f, url, duplicate_snt_ids, duplicate_already_reannotated_p;
-    var prop_line = '';
-    var guided_snt = '';
-    if ((s = document.getElementById('foreign-snt')) != null) {
-        f = s.value;
-    }
-    if ((s = document.getElementById('duplicate-of')) != null) {
-        duplicate_snt_ids = s.value;
-    }
-    if ((s = document.getElementById('duplicate-already-reannotated')) != null) {
-        duplicate_already_reannotated_p = s.value;
-    }
-    if ((s = document.getElementById('ontonotes-snt-info-url')) != null) {
-        url = s.value;
-    }
-    if ((s = document.getElementById('guided-snt')) != null) {
-        guided_snt = s.innerHTML;
-    }
-    if ((s = document.getElementById('screen-props')) != null) {
-        var snt = guided_snt || amr['props-snt'] || '';
-        var id = amr['props-id'] || '';
-        var active_workset_p = ((s2 = document.getElementById('workset-template')) != null)
-            && (s2.style.display.match(/inline/));
-        var workset = '';
-        if (s1 = document.getElementById('workset-name3')) {
-            workset = s1.value;
-        }
-        if (snt.match(/\S/)) {
-            prop_line = '<span style="font-weight:bold">Sentence:</span> ' + snt;
-            if ((!active_workset_p) && id.match(/\S/)) { // ID already displayed in workset line.
-                prop_line += ' &nbsp; <span title="sentence ID" style="color:#999999;">(' + id + ')</span>';
-            }
-            if (f.match(/\S/)) {
-                prop_line += ' &nbsp; &nbsp; <span title="foreign sentence" style="color:#999999;">' + f + '</span>';
-            }
-            if (url.match(/\S/)) {
-                prop_line += '</td><td width="3"></td><td><table border="1" cellpadding="1" cellspacing="0"><tr style="background-color:#BBCCFF;"><td><nobr>&nbsp;<a style="text-decoration:none" title="View OntoNotes annotations for this sentence" target="_ONTONOTES" href="' + url + '"><font color="black">ON</font></a>&nbsp;</nobr></td></tr></table>';
-            }
-            if (workset && workset.match(/^dfb-\d\d\d\d$/)) {
-                var post_id = id.replace(/^.*_(\d\d\d\d)[._]\d+$/, "$1");
-                post_id = post_id.replace(/^0*/, "p");
-                thread_url = 'https://www.isi.edu/~ulf/amr/thread-viz/' + workset + '.html#' + post_id;
-                prop_line += '</td><td width="3"></td><td><table border="1" cellpadding="1" cellspacing="0"><tr style="background-color:#BBCCFF;"><td><nobr>&nbsp;<a style="text-decoration:none" title="Visualize the Thread that this sentence is part of (in new tab)" target="_THREAD_VIZ" href="' + thread_url + '"><font color="black">VT</font></a>&nbsp;</nobr></td></tr></table>';
-            }
-            if (duplicate_snt_ids) {
-                reannotation_clause = "&#xA;Do not start a new annotation on this sentence.";
-                prop_line += '</td><td width="3"></td><td><table border="1" cellpadding="1" cellspacing="0"><tr style="background-color:#FFDDDD;"><td><nobr>&nbsp;<span title="This sentence has previously been annotated as ' + duplicate_snt_ids + ' in another workset.' + reannotation_clause + '" style="color:#FF0000;font-weight:bold;border-bottom:1px dotted;">DUPLICATE</span>&nbsp;</nobr></td></tr></table>';
-            }
-        } else if (id.match(/\S/)) {
-            prop_line = '<span style="color:#999999;font-weight:bold">Sentence ID:</span> ' + id;
-        }
-        if (prop_line.match(/\S/)) {
-            prop_line = '<table width="100%" cellpadding="3" style="background-color:#E8EEFF;"><tr><td><table><tr><td>' + prop_line + '</td></tr></table></td></tr></table>';
-            prop_line += '\n<p>';
-            s.innerHTML = prop_line;
-        } else {
-            s.innerHTML = '';
-        }
-    }
-}
-
 function defaultFilename() {
     // console.log("defaultFilename is called");
-    var snt_id = amr['props-id'] || '';
+    var snt_id = umr['props-id'] || '';
     snt_id = snt_id.replace(/[^-_a-zA-Z0-9]/g, "_");
-    var authors = amr['props-authors'] || '';
+    var authors = umr['props-authors'] || '';
     var first_author = authors.replace(/^\s*([a-z]*).*$/i, "$1").toLowerCase();
     if (snt_id) {
         if (first_author) {
@@ -2730,12 +2708,32 @@ function UMR2db() {
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let align_info = document.getElementById('align').innerText;
     let doc_id = document.getElementById('doc_id').innerText;
+    let snt_id = document.getElementById('sentence_id').value;
     console.log(amrHtml);
     console.log(align_info);
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "align": align_info})
+        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data); //amr got returned from server
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
+    });
+}
+
+function docUMR2db() {
+    console.log("I am here522");
+    let doc_id = document.getElementById('doc_id').innerText;
+    let snt_id = document.getElementById('curr_sent_id').value;
+    let umrHtml = document.getElementById('amr'+snt_id).outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
+    console.log(umrHtml);
+
+    fetch(`/doclevel/${doc_id}`, {
+        method: 'POST',
+        body: JSON.stringify({"umr": umrHtml, "snt_id": snt_id})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -2805,7 +2803,7 @@ function applyProps(caller) {
                 value = value.replace(/\n/, " ");
                 value = value.replace(/\s+/, " ");
             }
-            amr[sentence_props[i]] = value;
+            umr[sentence_props[i]] = value;
         }
     }
     var new_default_filename = defaultFilename();
@@ -2821,21 +2819,11 @@ function applyProps(caller) {
             // add_log('default for ' + save_ids[i] + ': could not find element by ID');
         }
     }
-    props2screen();
     props2comment();
     hideProps();
     if (caller == 'user') {
         state_has_changed_p = 1;
         exec_command('record edit props', 1);
-    }
-}
-
-function props2template() {
-    var s;
-    for (var i = 0; i < sentence_props.length; i++) {
-        if ((s = document.getElementById(sentence_props[i])) != null) {
-            s.value = amr[sentence_props[i]] || '';
-        }
     }
 }
 
@@ -2849,7 +2837,7 @@ function props2comment() {
         prop_name = sentence_props[i];
         short_name = prop_name.replace(/^props-/, "");
         if ((s = document.getElementById(prop_name)) != null) {
-            value = amr[sentence_props[i]] || '';
+            value = umr[sentence_props[i]] || '';
             if (value.match(/\S/)) {
                 if (prop_name == 'props-note') {
                     value = value.replace(/\n/g, "\n# ::note ");
@@ -2883,9 +2871,9 @@ function resetProps() {
 
 function saveProps() {
     var snt = '';
-    if (amr['props-snt'] != '') {
+    if (umr['props-snt'] != '') {
         for (var i = 0; i < sentence_props.length; i++) {
-            saved_sentence_prop_values[i] = amr[sentence_props[i]] || '';
+            saved_sentence_prop_values[i] = umr[sentence_props[i]] || '';
             if (sentence_props[i] == 'props-snt') {
                 snt = saved_sentence_prop_values[i];
             }
@@ -3095,7 +3083,7 @@ function enable_workset_save() {
         s.value = browserUserAgent;
     }
     if ((s = document.getElementById('save-snt-id2')) != null) {
-        s.value = amr['props-id'] || '';
+        s.value = umr['props-id'] || '';
     }
 }
 
@@ -3107,18 +3095,6 @@ function load_prev_workset_snt() {
         && ((s3 = document.getElementById('next-workset-snt')) != null)) {
         // add_log('load_prev_workset_snt prev: ' + s1.value + ' curr: ' + s2.value);
         s2.value = s1.value;
-        s3.submit();
-    }
-}
-
-function reload_current_workset_snt() {
-    console.log("reload_current_workset_snt is called");
-    var s1, s2, s3;
-    if (((s1 = document.getElementById('current-workset-snt-id')) != null)
-        && ((s2 = document.getElementById('current-workset-snt-id3')) != null)
-        && ((s3 = document.getElementById('next-workset-snt')) != null)) {
-        // add_log('load_prev_workset_snt prev: ' + s1.value + ' curr: ' + s2.value);
-        s2.value = s1.innerHTML;
         s3.submit();
     }
 }
@@ -3165,9 +3141,7 @@ function save_local_amr_file(sentence = "", temp = false) {
                 }
                 text = s2.value;
                 text = text.replace(/\n/g, "\r\n");
-                //TODO: add to temporary dictionary using POST
-                // temp_umrs[sentence_id] = text;
-                // console.log(temp_umrs);
+
                 var bb = new BlobBuilder();
                 bb.append(text);
                 saveAs(bb.getBlob(), filename);
@@ -3247,7 +3221,7 @@ function indent_for_loc(loc, c, style, n) {
             if (style == 'fix') {
                 indentation += n_spaces(n);
             } else if (rem_loc.match(/\./)) {
-                if (role = amr[rem_loc + '.r']) {
+                if (role = umr[rem_loc + '.r']) {
                     role_length = role.length;
                     indentation += n_spaces(role_length + 1 + n);
                 } else {
@@ -3309,26 +3283,26 @@ function string2amr_rec(s, loc, state, ht) {
                 snt = extractValueFrom2ColonExpr(comment_line, 'snt');
                 note = extractValueFrom2ColonExpr(comment_line, 'note');
                 if (id.match(/\S/)) {
-                    amr['props-id'] = id;
-                    amr['props-date'] = '';
-                    amr['props-authors'] = '';
-                    amr['props-snt'] = '';
-                    amr['props-note'] = '';
+                    umr['props-id'] = id;
+                    umr['props-date'] = '';
+                    umr['props-authors'] = '';
+                    umr['props-snt'] = '';
+                    umr['props-note'] = '';
                 }
                 if (date.match(/\S/)) {
-                    amr['props-date'] = date;
+                    umr['props-date'] = date;
                 }
                 if (authors.match(/\S/)) {
-                    amr['props-authors'] = authors;
+                    umr['props-authors'] = authors;
                 }
                 if (snt.match(/\S/)) {
-                    amr['props-snt'] = snt;
+                    umr['props-snt'] = snt;
                 }
                 if (note.match(/\S/)) {
-                    if (amr['props-note'].match(/\S/)) {
-                        amr['props-note'] += '\n' + note;
+                    if (umr['props-note'].match(/\S/)) {
+                        umr['props-note'] += '\n' + note;
                     } else {
-                        amr['props-note'] = note;
+                        umr['props-note'] = note;
                     }
                 }
             }
@@ -3363,7 +3337,7 @@ function string2amr_rec(s, loc, state, ht) {
             if (concept.match(/^[a-zA-Z0-9][-_a-zA-Z0-9']*(?:-\d+)?$/)
                 || tolerate_special_concepts(concept)) {
                 decorated_concept = concept;
-                amr[loc + '.c'] = concept;
+                umr[loc + '.c'] = concept;
                 recordConcept(concept, loc);
                 variable2concept[variable] = concept;
             } else {
@@ -3378,33 +3352,33 @@ function string2amr_rec(s, loc, state, ht) {
                 new_concept = new_concept.replace(/([a-z])(\d)/, "$1-$2");
                 decorated_concept = '<span ' + change_concept_style + '>' + new_concept + '</span>';
                 load_amr_feedback_alert = 1;
-                amr[loc + '.c'] = new_concept;
+                umr[loc + '.c'] = new_concept;
                 recordConcept(new_concept, loc);
                 variable2concept[variable] = new_concept;
             }
             if (getLocs(variable)) {
                 new_variable = newVar(concept);
-                amr[loc + '.v'] = new_variable;
+                umr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var_style + '>' + new_variable + '</span>';
                 recordVariable(new_variable, loc);
                 load_amr_feedback_alert = 1;
             } else if (reserved_variables[variable + '.conflict']) {
-                amr[loc + '.v'] = variable;
+                umr[loc + '.v'] = variable;
                 decorated_variable = '<span ' + accept_conflict_style + '>' + variable + '</span>';
                 recordVariable(variable, loc);
             } else if (!variable.match(/^[a-z]\d*$/)) {
                 new_variable = newVar(concept);
-                amr[loc + '.v'] = new_variable;
+                umr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var2_style + '>' + new_variable + '</span>';
                 recordVariable(new_variable, loc);
                 load_amr_feedback_alert = 1;
             } else {
-                amr[loc + '.v'] = variable;
+                umr[loc + '.v'] = variable;
                 decorated_variable = variable;
                 recordVariable(variable, loc);
             }
-            amr[loc + '.s'] = '';
-            amr[loc + '.n'] = 0;
+            umr[loc + '.s'] = '';
+            umr[loc + '.n'] = 0;
             load_amr_feedback += '<span ' + accept_style + '>(' + decorated_variable + ' ' + decorated_slash + ' ' + decorated_concept + '</span>';
             s = string2amr_rec(s, loc, 'post-concept', ht); // (
             var pre_close_para_l = s.match(/^[^)]*/); // (
@@ -3423,22 +3397,22 @@ function string2amr_rec(s, loc, state, ht) {
                 load_amr_feedback_alert = 1;
             }
         } else {
-            if (amr[loc + '.r']) {
+            if (umr[loc + '.r']) {
                 var string_arg = 'MISSING-VALUE';
-                amr[loc + '.s'] = string_arg;
-                amr[loc + '.c'] = '';
-                amr[loc + '.v'] = '';
-                amr[loc + '.n'] = 0;
+                umr[loc + '.s'] = string_arg;
+                umr[loc + '.c'] = '';
+                umr[loc + '.v'] = '';
+                umr[loc + '.n'] = 0;
                 load_amr_feedback += '<span ' + insert_style + '>' + string_arg + '</span>';
                 load_amr_feedback_alert = 1;
             } else {
-                amr[loc + '.d'] = 1;
+                umr[loc + '.d'] = 1;
             }
             if (s.match(/^\(/)) { // )
                 s = s.replace(/^\(/, ""); // )
                 load_amr_feedback += ' <span ' + ignore_style + '>(</span>'; // )
                 load_amr_feedback_alert = 1;
-                if (amr[loc + '.r']) {
+                if (umr[loc + '.r']) {
                     s = string2amr_rec(s, loc, 'post-concept', ht);
                 } else {
                     s = string2amr_rec(s, loc, 'pre-open-para', ht);
@@ -3461,9 +3435,9 @@ function string2amr_rec(s, loc, state, ht) {
         var open_para_follows_p = s.match(/^\(/); //)
         var role;
         if (role_follows_p || open_para_follows_p) {
-            var n_subs = amr[loc + '.n'];
+            var n_subs = umr[loc + '.n'];
             n_subs++;
-            amr[loc + '.n'] = n_subs;
+            umr[loc + '.n'] = n_subs;
             var new_loc = loc + '.' + n_subs;
             // add_log('Point C ' + new_loc + ' ' + s + ' F: ' + load_amr_feedback);
             load_amr_feedback += '<br>' + indent_for_loc(new_loc, '&nbsp;');
@@ -3477,7 +3451,7 @@ function string2amr_rec(s, loc, state, ht) {
                 load_amr_feedback += ' <span ' + insert_style + '>' + role + '</span> ';
                 load_amr_feedback_alert = 1;
             }
-            amr[new_loc + '.r'] = autoTrueCaseRole(role);
+            umr[new_loc + '.r'] = autoTrueCaseRole(role);
             if (s.match(/^\s*\(/)) { // )
                 s = string2amr_rec(s, new_loc, 'pre-open-para', ht);
             } else {
@@ -3538,9 +3512,9 @@ function string2amr_rec(s, loc, state, ht) {
             load_amr_feedback += '<span ' + insert_style + '>' + string_arg + '</span>';
             load_amr_feedback_alert = 1;
         }
-        amr[loc + '.s'] = string_arg;
-        amr[loc + '.c'] = '';
-        amr[loc + '.v'] = variable_arg;
+        umr[loc + '.s'] = string_arg;
+        umr[loc + '.c'] = '';
+        umr[loc + '.v'] = variable_arg;
         var head_loc = loc.replace(/\.\d+$/, "");
         s = string2amr_rec(s, head_loc, 'post-concept', ht);
     }
@@ -3553,7 +3527,7 @@ function string2amr(s) {
     var loc, ps, ps_loc;
     var s_wo_comment = s.replace(/^\s*\#.*\n$/, "");
     var ht = new Object();
-    amr = new Object();
+    umr = new Object();
     variables = new Object();
     concepts = new Object();
     reserved_variables = new Object();
@@ -3573,13 +3547,13 @@ function string2amr(s) {
             }
         }
     }
-    amr['n'] = 0;
+    umr['n'] = 0;
     if (s.match(/\(/) // )
         || s.match(/^# ::id /)) {
         var prev_s_length = s.length;
         var index = 1;
         loc = index + '';
-        amr['n'] = 1;
+        umr['n'] = 1;
         load_amr_feedback = '';
         load_amr_feedback_alert = 0;
         s = string2amr_rec(s + ' ', loc, 'pre-open-para', ht);
@@ -3592,27 +3566,27 @@ function string2amr(s) {
             }
             s = string2amr_rec(s + ' ', loc, 'pre-open-para', ht);
             if (s.length < prev_s_length) {
-                amr['n'] = amr['n'] + 1;
+                umr['n'] = umr['n'] + 1;
             }
         }
         for (var key in ht) {
             // add_log ('investigating provisional-string ' + key + ' ' + ht[key]);
             if ((ps_loc = key.replace(/^provisional-string\.(\d+(?:\.\d+)*)$/, "$1"))
-                && (ps = amr[ps_loc + '.s'])
+                && (ps = umr[ps_loc + '.s'])
                 && getLocs(ps)
                 && (ps == ht[key])) {
                 // add_log('reframing provisional-string as variable ' + ps_loc + ' ' + ps + ' ' + ht[key]);
-                amr[ps_loc + '.s'] = '';
-                amr[ps_loc + '.v'] = ps;
+                umr[ps_loc + '.s'] = '';
+                umr[ps_loc + '.v'] = ps;
                 recordVariable(ps, ps_loc);
             }
         }
     } else if (s.match(/\S/)) {
-        amr['n'] = 0;
+        umr['n'] = 0;
         load_amr_feedback = '<span style="color:#999999">' + s + '</span>';
         load_amr_feedback_alert = 1;
     } else {
-        amr['n'] = 0;
+        umr['n'] = 0;
         load_amr_feedback = '';
         load_amr_feedback_alert = 0;
     }
@@ -3623,6 +3597,7 @@ function string2amr(s) {
 /* load *******************************************************/
 /**
  * this is used to load the penman string
+ * @param amr_id: In doc level annotation, there is amr_id
  */
 function loadField2amr() {
     console.log("loadField2amr is called");
@@ -3633,7 +3608,7 @@ function loadField2amr() {
         resetProps();
         applyProps('load');
         var rest = string2amr(s.value);
-        if ((!amr['props-snt']) && (saved_snt != '')) {
+        if ((!umr['props-snt']) && (saved_snt != '')) {
             restoreProps();
             applyProps('load');
         }
@@ -3648,8 +3623,6 @@ function loadField2amr() {
         if (rest.match(/\S/)) {
             add_log('Remaining text: ' + rest);
         }
-        props2template();
-        props2screen();
         if (((s2 = document.getElementById('props-id')) != null)
             && ((s3 = document.getElementById('save-filename')) != null)
             && (s3.value == '')
@@ -3658,7 +3631,7 @@ function loadField2amr() {
             s3.value = value;
         }
     }
-    console.log(amr);
+    console.log(umr);
 
     var alignArray = document.getElementById('align').innerText.trim().split(/\n/);
     var alignArrayLen = alignArray.length;
@@ -3668,10 +3641,10 @@ function loadField2amr() {
         var loaded_variable = splitted_align[1].trim();
         var loaded_align = splitted_align[2].trim();
         var loc = getLocs(loaded_variable);
-        amr[loc + '.a'] = loaded_align;
+        umr[loc + '.a'] = loaded_align;
     }
 
-    console.log(amr);
+    console.log(umr);
     show_amr('show');
 }
 
@@ -3679,7 +3652,7 @@ document.onselectionchange = function selectSpan() {
     selection = document.getSelection();
     selected_tokens.innerHTML = "";
     selected_tokens.innerHTML += selection;
-    console.log("selected_tokens: ", selected_tokens);
+    // console.log("selected_tokens: ", selected_tokens);
     begOffset = selection.anchorNode.parentElement.cellIndex + 1;
     endOffset = selection.focusNode.parentElement.cellIndex + 1;
 };
@@ -3699,9 +3672,9 @@ function highlightSelection() {
     for (let i = startIdx; i <= endIdx; i++) {
         var newNode = document.createElement("span");
 
-    // Make it highlight
+        // Make it highlight
         newNode.setAttribute("class", "text-success");
-    //Make it "Clickable"
+        //Make it "Clickable"
         newNode.onclick = function () {
             if (confirm("do you want to delete it?")) {
                 deletenode(newNode);
@@ -3709,8 +3682,12 @@ function highlightSelection() {
                 alert(tableRow.cells[i]);
             }
         };
-        newNode.appendChild(document.createTextNode(tableRow.cells[i].innerText));
-        tableRow.cells[i].replaceChild(newNode, tableRow.cells[i].firstChild)
+        let cellText = tableRow.cells[i].innerText;
+        // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
+        if (cellText !== "Attribute Values " && cellText !== "Attributes "){
+            newNode.appendChild(document.createTextNode(tableRow.cells[i].innerText));
+            tableRow.cells[i].replaceChild(newNode, tableRow.cells[i].firstChild)
+        }
     }
 }
 
@@ -3836,7 +3813,7 @@ function initialize_frame_arg_descriptions() {
 }
 
 
-function clearInput() {
+function clearInput(){
     console.log("clearInput is called");
     if(document.getElementById('roles1')){
         document.getElementById('roles1').value = '';
@@ -3849,9 +3826,6 @@ function clearInput() {
     document.getElementById('attributes').value = '';
     document.getElementById('attribute_values1').value = '';
 }
-
-
-
 
 
 

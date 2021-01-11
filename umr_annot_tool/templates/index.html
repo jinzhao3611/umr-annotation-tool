@@ -74,759 +74,794 @@
 
 
 {% block content %}
-<table>
-    <tr>
-        <th class='text-muted'>Current User:</th>
-        <th id="username">{{ current_user.username }}</th>
-    </tr>
-    <tr>
-        <th class='text-muted'>File Name:</th>
-        <th id="filename" style="display:inline">{{ filename }}</th>
-    </tr>
-        <tr>
-        <th class='text-muted'>Doc ID in database:</th>
-        <th id="doc_id" style="display:inline">{{ doc_id }}</th>
-    </tr>
-</table>
-<hr>
-
-{# display all the sentences #}
-<div id="all-sentences" style="height: 250px; overflow-y: scroll;">
-    <script type="text/javascript">
-        initialize("{{ frame_dict }}")
-    </script>
-    {% autoescape off %}
-    <p>{{ sents_html }}</p>
-    {% endautoescape %}
-</div>
-<hr>
-
-{# choose the sentence ID #}
-<form method="post">
-    Sentence ID
-    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }} value={{ snt_id }}>
-    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>
-</form>
-
-{# display the sentence with the chosen sentence ID #}
-{% if df_html|length and 'Default' == lang %}
-    <div id="sentence" style="height: 250px; overflow-y: scroll;">
-        {% autoescape off %}
-        <p>{{ df_html[snt_id-1] }}</p>
-        {% endautoescape %}
-        {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
-        <p><b>Free</b> {{ gls[snt_id-1] }}</p>
-        <p><b>Notes</b> {{ notes[snt_id-1] }}</p>
+    <div id="info" style="height: auto; overflow-y: scroll; max-height: 250px;">
+        <table>
+            <tr>
+                <th class='text-muted'>Current User:</th>
+                <th id="username">{{ current_user.username }}</th>
+            </tr>
+            <tr>
+                <th class='text-muted'>File Name:</th>
+                <th id="filename" style="display:inline">{{ filename }}</th>
+            </tr>
+                <tr>
+                <th class='text-muted'>Doc ID in database:</th>
+                <th id="doc_id" style="display:inline">{{ doc_id }}</th>
+            </tr>
+        </table>
     </div>
-    <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
-{% else %}
-    <div id="sentence">
+
+    <hr>
+
+    {# display all the sentences #}
+    <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 250px;">
+        <script type="text/javascript">
+            initialize("{{ frame_dict }}",'{{ curr_sent_annot }}','{{ curr_sent_align }}')
+        </script>
         {% autoescape off %}
-        <p>{{ sent_htmls[snt_id-1] }}</p>
+        <p>{{ sents_html }}</p>
         {% endautoescape %}
     </div>
-{% endif %}
-<hr>
+    <hr>
 
-<table class="table table-borderless">
-    <tbody>
-        <tr>
-            <td>
-                {% if 'English' == lang %}
-                    <div class="dropdown">
-                        <label for="roles1">Roles(English)</label>
-                        <input list="english-roles" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
-                        <datalist id="english-roles">
-                            <option value=":other">
-                            <option value=":ARG0">
-                            <option value=":ARG1">
-                            <option value=":ARG2">
-                            <option value=":ARG3">
-                            <option value=":ARG4">
-                            <option value=":ARG5">
-                            <option value=":ARG6">
-                            <option value=":calendar">
-                            <option value=":century">
-                            <option value=":day">
-                            <option value=":dayperiod">
-                            <option value=":decade">
-                            <option value=":era">
-                            <option value=":month">
-                            <option value=":quarter">
-                            <option value=":season">
-                            <option value=":timezone">
-                            <option value=":weekday">
-                            <option value=":year">
-                            <option value=":year2">
-                            <option value=":accompanier">
-                            <option value=":age">
-                            <option value=":beneficiary">
-                            <option value=":cause">
-                            <option value=":concession">
-                            <option value=":condition">
-                            <option value=":consist_of">
-                            <option value=":degree">
-                            <option value=":destination">
-                            <option value=":direction">
-                            <option value=":domain">
-                            <option value=":duration">
-                            <option value=":example">
-                            <option value=":extent">
-                            <option value=":frequency">
-                            <option value=":instrument">
-                            <option value=":li">
-                            <option value=":location">
-                            <option value=":manner">
-                            <option value=":medium">
-                            <option value=":mod">
-                            <option value=":name">
-                            <option value=":ord">
-                            <option value=":part">
-                            <option value=":path">
-                            <option value=":polite">
-                            <option value=":poss">
-                            <option value=":product_of">
-                            <option value=":purpose">
-                            <option value=":quant">
-                            <option value=":range">
-                            <option value=":scale">
-                            <option value=":source">
-                            <option value=":subevent">
-                            <option value=":subset">
-                            <option value=":sum_of">
-                            <option value=":time">
-                            <option value=":topic">
-                            <option value=":unit">
-                            <option value=":value">
-                            <option value=":wiki">
-                            <option value=":op1">
-                            <option value=":op2">
-                            <option value=":op3">
-                            <option value=":op4">
-                            <option value=":op5">
-                            <option value=":op6">
-                            <option value=":op7">
-                            <option value=":op8">
-                            <option value=":op9">
-                            <option value=":op10">
+    {# choose the sentence ID #}
+    {#<form method="post">#}
+    {#    Sentence ID#}
+    {#    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }} value={{ snt_id }}>#}
+    {#    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>#}
+    {#</form>#}
 
-                            <option value=":reason">
-                            <option value=":temporal">
-                            <option value=":modal">
-                            <option value=":coref">
+    {# choose the sentence ID #}
+    {#<form class="form-inline" method="post">#}
+    {#    <div class="form-group mb-2">#}
+    {#        <input type="submit" name="prev_sentence" id="prev_sentence" value="previous">#}
+    {#    </div>#}
+    {#    <div class="form-group mb-2">#}
+    {#        <label for="sentence_id">Sentence</label>#}
+    {#        <input type="text" readonly class="form-control-plaintext" name="sentence_id" id="sentence_id" value="{{ snt_id }}">#}
+    {#    </div>#}
+    {#    <div class="form-group mb-2">#}
+    {#        <input type="submit" name="next_sentence" id="next_sentence" value="next">#}
+    {#    </div>#}
+    {#</form>#}
 
-                            <option value=":ARG1-of">
+    {# choose the sentence ID #}
+    <form class="row g-3" method="post">
+        <div class="col-sm">
+            <input type="submit" name="prev_sentence" id="prev_sentence" value="previous">
+        </div>
+        <label for="sentence_id" class="col-sm col-form-label">Sentence</label>
 
-                            <option value=":before">
-                            <option value=":depends-on">
-                            <option value=":AFF">
-                            <option value=":NEG">
-                            <option value=":same-entity">
-
-                        </datalist>
-                        {#        <input type="submit" onclick="submit_relation('roles1')">#}
-                    </div>
-                {% else %}
-                    <div class="dropdown">
-                        <label for="roles2">Roles(Default)</label>
-                        <input list="default-roles" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
-                        <datalist id="default-roles">
-                            <option value=":actor">
-                            <option value=":undergoer">
-                            <option value=":theme">
-                            <option value=":recipient">
-                            <option value=":force">
-                            <option value=":causer">
-                            <option value=":experiencer">
-                            <option value=":stimulus">
-                            <option value=":companion">
-                            <option value=":material">
-                            <option value=":place">
-                            <option value=":start">
-                            <option value=":goal">
-                            <option value=":affectee">
-                            <option value=":other">
-                        </datalist>
-                        {#        <input type="submit" onclick="submit_relation('roles2')">#}
-                    </div>
-                {% endif %}
-
-            </td>
-            <td></td>
-            <td>
-                <div id="attribute_types">
-                    <label for="attributes">Attributes</label>
-                    <input list="attr-types" oninput="show_attribute_values('attributes')" name="attributes" id="attributes"
-                           onfocus="this.value=''" onchange="this.blur();">
-                    <datalist id="attr-types">
-                        <option value=":Aspect">
-                        <option value=":polarity">
-                        <option value=":mode">
-                    </datalist>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <div id="concept_types">
-                    <label for="concept_types">Abstract Concept</label>
-                    <input list="abstract-concepts" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
-                    <datalist id="abstract-concepts">
-                        <option value='ordinal-entity'>
-                        <option value='temporal-quantity'>
-                        <option value='amr-unknown'>
-                        <option value='amr-choice'>
-                        <option value='truth-value'>
-                        <option value='name'>
-                        <option value='accompany-01'>
-                        <option value='age-01'>
-                        <option value='benefit-01'>
-                        <option value='have-concession-91'>
-                        <option value='have-condition-91'>
-                        <option value='have-degree-92'>
-                        <option value='be-destined-for-91'>
-                        <option value='last-01'>
-                        <option value='exemplify-01'>
-                        <option value='have-extent-91'>
-                        <option value='have-frequency-91'>
-                        <option value='have-instrument-91'>
-                        <option value='have-li-91'>
-                        <option value='be-located-at-91'>
-                        <option value='have-manner-91'>
-                        <option value='have-mod-91'>
-                        <option value='have-name-91'>
-                        <option value='have-ord-91'>
-                        <option value='have-part-91'>
-                        <option value='have-polarity-91'>
-                        <option value='own-01'>
-                        <option value='have-03'>
-                        <option value='have-purpose-91'>
-                        <option value='have-quant-91'>
-                        <option value='be-from-91'>
-                        <option value='have-subevent-91'>
-                        <option value='be-temporally-at-91'>
-                        <option value='concern-02'>
-                        <option value='have-value-91'>
-                        <option value='person'>
-                    </datalist>
-{#                        <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
-                </div>
-            </td>
-            <td>
-                <div id="named_entities">
-                    <label for="ne_types">Named Entity Types</label>
-                    <input list="nes" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
-                    <datalist id="nes">
-                        <option value='thing'>
-                        <option value='person'>
-                        <option value='family'>
-                        <option value='animal'>
-                        <option value='language'>
-                        <option value='nationality'>
-                        <option value='ethnic-group'>
-                        <option value='regional-group'>
-                        <option value='religious-group'>
-                        <option value='political-movement'>
-                        <option value='organization'>
-                        <option value='company'>
-                        <option value='government-organization'>
-                        <option value='military'>
-                        <option value='criminal-organization'>
-                        <option value='political-party'>
-                        <option value='market-sector'>
-                        <option value='school'>
-                        <option value='university'>
-                        <option value='research-institute'>
-                        <option value='team'>
-                        <option value='league'>
-                        <option value='location'>
-                        <option value='city'>
-                        <option value='city-district'>
-                        <option value='county'>
-                        <option value='state'>
-                        <option value='province'>
-                        <option value='territory'>
-                        <option value='country'>
-                        <option value='local-region'>
-                        <option value='country-region'>
-                        <option value='world-region'>
-                        <option value='continent'>
-                        <option value='ocean'>
-                        <option value='sea'>
-                        <option value='lake'>
-                        <option value='river'>
-                        <option value='gulf'>
-                        <option value='bay'>
-                        <option value='strait'>
-                        <option value='canal'>
-                        <option value='peninsula'>
-                        <option value='mountain'>
-                        <option value='volcano'>
-                        <option value='valley'>
-                        <option value='canyon'>
-                        <option value='island'>
-                        <option value='desert'>
-                        <option value='forest'>
-                        <option value='moon'>
-                        <option value='planet'>
-                        <option value='star'>
-                        <option value='constellation'>
-                        <option value='facility'>
-                        <option value='airport'>
-                        <option value='station'>
-                        <option value='port'>
-                        <option value='tunnel'>
-                        <option value='bridge'>
-                        <option value='road'>
-                        <option value='railway-line'>
-                        <option value='building'>
-                        <option value='theater'>
-                        <option value='museum'>
-                        <option value='palace'>
-                        <option value='hotel'>
-                        <option value='worship-place'>
-                        <option value='sports-facility'>
-                        <option value='market'>
-                        <option value='park'>
-                        <option value='zoo'>
-                        <option value='amusement-park'>
-                        <option value='event'>
-                        <option value='incident'>
-                        <option value='natural-disaster'>
-                        <option value='earthquake'>
-                        <option value='war'>
-                        <option value='conference'>
-                        <option value='game'>
-                        <option value='festival'>
-                        <option value='product'>
-                        <option value='vehicle'>
-                        <option value='ship'>
-                        <option value='aircraft'>
-                        <option value='aircraft-type'>
-                        <option value='spaceship'>
-                        <option value='car-make'>
-                        <option value='work-of-art'>
-                        <option value='picture'>
-                        <option value='music'>
-                        <option value='show'>
-                        <option value='broadcast-program'>
-                        <option value='publication'>
-                        <option value='book'>
-                        <option value='newspaper'>
-                        <option value='magazine'>
-                        <option value='journal'>
-                        <option value='natural-object'>
-                        <option value='award'>
-                        <option value='law'>
-                        <option value='court-decision'>
-                        <option value='treaty'>
-                        <option value='music-key'>
-                        <option value='musical-note'>
-                        <option value='food-dish'>
-                        <option value='writing-script'>
-                        <option value='variable'>
-                        <option value='program'>
-                        <option value='molecular-physical-entity'>
-                        <option value='small-molecule'>
-                        <option value='protein'>
-                        <option value='protein-family'>
-                        <option value='protein-segment'>
-                        <option value='amino-acid'>
-                        <option value='macro-molecular-complex'>
-                        <option value='enzyme'>
-                        <option value='nucleic-acid'>
-                        <option value='pathway'>
-                        <option value='gene'>
-                        <option value='dna-sequence'>
-                        <option value='cell'>
-                        <option value='cell-line'>
-                        <option value='species'>
-                        <option value='taxon'>
-                        <option value='disease'>
-                        <option value='medical-condition'>
-                    </datalist>
-                    {#    <input type="submit" onclick="submit_mode('add-ne')">#}
-                </div>
-            </td>
-            <td>
-                {#    attribute values of Aspect#}
-                <div class="attributes" id="aspect-attribute" style="display: none">
-                    <label for="attribute_values1">Attribute Values</label>
-                    <input list="aspect-attr" name="attribute_values1" id="attribute_values1" onfocus="this.value=''"
-                           onchange="this.blur();">
-                    <datalist id="aspect-attr">
-                        <option value='Habitual'>
-                        <option value='Activity'>
-                        <option value='Endeavor'>
-                        <option value='Performance'>
-                    </datalist>
-                    {#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
-                </div>
-
-                {#    attribute values of polarity#}
-                <div class="attributes" id="polarity-attribute" style="display: none">
-                    <label for="attribute_values2">Attribute Values</label>
-                    <input list="polarity-attr" name="attribute_values2" id="attribute_values2" onfocus="this.value=''"
-                           onchange="this.blur();">
-                    <datalist id="polarity-attr">
-                        <option value='-'>
-                    </datalist>
-                    {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
-                </div>
-
-                {#    attribute values of mode#}
-                <div class="attributes" id="mode-attribute" style="display: none">
-                    <label for="attribute_values3">Attribute Values</label>
-                    <input list="mode-attr" name="attribute_values3" id="attribute_values3" onfocus="this.value=''"
-                           onchange="this.blur();">
-                    <datalist id="mode-attr">
-                        <option value="imperative">
-                        <option value="expressive">
-                        <option value="interrogative">
-                    </datalist>
-                    {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
-                </div>
-
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <button onclick="submit_query()">Add abstract concept</button>
-            </td>
-            <td>
-                Lexicalized Concept:
-                <div class="btn-group dropright">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown()"></button>
-
-                    <ul id="concept_dropdown" class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                        <li class="dropdown-submenu">
-                            <a class="dropdown-item" tabindex="-1"  id="find_lemma">find lemma</a>
-                            <ul id="genericDropdown" class="dropdown-menu">
-                                <li class="dropdown-item"><a tabindex="-1">placeholder</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown-divider"></li>
-
-                        <li class="dropdown-item"><a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a></li>
-                        <li class="dropdown-item"><a id="multiple_words" href="javascript:multipleWords();">multiple words</a></li>
-                    </ul>
-                </div>
-            </td>
-            <td>
-                <button onclick="submit_query()">Add attribute</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <div class="col-sm">
+                <input type="text" readonly class="form-control-plaintext" name="sentence_id" id="sentence_id" value="{{ snt_id }}">
+        </div>
+        <div class="col-sm">
+            <input type="submit" name="next_sentence" id="next_sentence" value="next">
+        </div>
+    </form>
 
 
+    {# display the sentence with the chosen sentence ID #}
+    {% if df_html|length and 'Default' == lang %}
+        <div id="sentence" style="height: auto; overflow-y: scroll; max-height: 250px;">
+            {% autoescape off %}
+            <p>{{ df_html[snt_id-1] }}</p>
+            {% endautoescape %}
+            {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
+            <p><b>Free</b> {{ gls[snt_id-1] }}</p>
+            <p><b>Notes</b> {{ notes[snt_id-1] }}</p>
+        </div>
+        <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
+    {% else %}
+        <div id="sentence" style="height:auto; overflow-y: scroll; max-height: 250px;">
+            {% autoescape off %}
+            <p>{{ sent_htmls[snt_id-1] }}</p>
+            {% endautoescape %}
+        </div>
+    {% endif %}
+
+    <hr>
+    <div>
+        <p>UMR Penman Annotation:</p>
+        <div id="amr"></div>
+    </div>
 
 
-<hr>
+    <hr>
+    <div id="alignment">
+        <p> Alignments:</p>
+        <p id="align"></p>
+    </div>
 
 
-<div id="text-command">
-    <table>
-        <tr>
-            <td>Enter text command:</td>
-            <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
-                          autocorrect="off"
-                          spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
-                          onkeyup="exec_command('', 1)"></textarea></td>
-            <td width="20"></td>
-        <tr>
-            <td colspan="4"><span id="error"><i></i></span></td>
-        </tr>
-        <tr style="color:#999999">
-            {#            <td>Last command:</td>#}
-            <td colspan="3"><span id="action"></span></td>
-        </tr>
-    </table>
-</div>
+    <div id="replace-template-table" style="display:none;">
+        <p>
+            <table>
+                <tbody>
+                <tr>
+                    <td>Replace</td>
+                    <td title="select type of AMR element to be replaced">&nbsp;
+                        <select id="replace-type"
+                                onchange="selectReplaceType(this[selectedIndex].text);">
+                            <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
+                            <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
+                            </option>
+                            <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
+                            <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
+                        </select>
+                    </td>
+                    <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
+                                         autocapitalize="off" id="replace-at"
+                                         value=""></td>
+                    <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
+                                           id="replace-new" value=""
+                                           onfocus="var val = this.value; this.value = ''; this.value = val;"
+                                           onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
+                                           onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
+                    </td>
+                    <td>
+                        <table border="1" cellpadding="1" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
+                                                   href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
+                                    </nobr>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </p>
+    </div>
+    <div id="delete-template-table" style="display:none;">
+        <p>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="5"></td>
+                            <td align="center">Delete AMR element</td>
+                            <td width="5"></td>
+                            <td><input size="24"
+                                       title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
+                                       autocapitalize="off" id="delete-at"
+                                       value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
+                            <td width="5"></td>
+                            <td>
+                                <table border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <nobr><a style="text-decoration:none;" title="submit delete template action"
+                                                     href="javascript:submit_template_action('delete');"><font
+                                                    color="black">delete</font></a>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="10"></td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="5"></td>
+                            <td width="5"></td>
+                            <td>
+                                <table border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
+                                                     style="text-decoration:none;"
+                                                     title="Delete entire AMR"
+                                                     href="javascript:deleteAMR();"><font
+                                                    color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
+                                                AMR&nbsp;</font></a>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="10"></td>
+            </tr>
+            </tbody>
+        </table>
+        </p>
+    </div>
+    <div id="move-template-table" style="display:none;">
+        <table>
+            <tbody>
+            <tr>
+                <td width="5"></td>
+                <td>Move</td>
+                <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
+                           id="move-object" value=""></td>
+                <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
+                                               id="move-new-head" value=""> &nbsp;
+                </td>
+                <td>
+                    <table border="1" cellpadding="1" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td>
+                                &nbsp;<a style="text-decoration:none"
+                                         title="display clickable list of AMR roles (popup)"
+                                         href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
 
-<div>
-    <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
-    <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
-    <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
-    <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
-    <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
-    {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
-    {#<button><a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
-    <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">db</a></button>
-    <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>
-    <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>
-    <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>
-    <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
-</div>
+                <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
+                           id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
+                           onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
+                <td>
+                    <table border="1" cellpadding="1" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td>&nbsp;<a title="submit move template action"
+                                         href="javascript:submit_template_action('move');"><font
+                                    color="black">submit</font></a>&nbsp;
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="load-template-table" style="display:none;">
+        {#    <div id="load-template-table" style="display:inline;">#}
+        <p>
+        <table>
+            <tbody>
+            <tr id="load-local" style="display: inline;">
+                <td style="background-color:#E8EEFF;" width="920">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td id="load-local-title"><b>Load local AMR file</b></td>
+                            <td width="10"></td>
+                            <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="Load local file" onclick="load_local_amr_file()"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
 
-<hr>
-<div>
-    <p>UMR Penman Annotation:</p>
-    <div id="amr"></div>
-</div>
+            <tr id="load-direct" style="display: inline;">
+                <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                            <textarea rows="20" cols="100" id="load-plain" name="load-plain"
+                                                      autocapitalize="off"
+                                                      autocorrect="off" spellcheck="false"
+                                                      style="overflow:auto;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="40" border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr style="background-color:#BBCCFF;">
+                                        <td align="center">
+                                            <nobr>&nbsp;<a style="text-decoration:none"
+                                                           title="click to load amr from text area"
+                                                           href="javascript:loadField2amr();recordDirectEntryLoad();"><font
+                                                    color="black">load direct AMR</font></a>&nbsp;
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </p>
+    </div>
+    <div id="save-template-table" style="display:none;">
+        <input type="hidden" id="plain-amr" name="plain-amr" value="">
 
+        <p>
+        <table style="background-color:#E8EEFF;" width="800">
+            <tbody>
+            <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
+                <td id="save-local-title"><b>Save AMR locally</b></td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr id="save-local-filename">
+                            <td>Filename (without path):</td>
+                            <td><input type="text" id="local_save_file" name="local_save_file" size="24"
+                                       style="font-size:1.1em;text-align:right;" value=""><span
+                                    style="font-size:1.1em">.txt</span></td>
+                            <td width="10"></td>
+                            <td><input type="submit" value="Save locally" onclick="save_local_amr_file(temp=true)"></td>
 
-<hr>
-<div id="alignment">
-    <p> Alignments:</p>
-    <p id="align"></p>
-</div>
-
-
-<div id="replace-template-table" style="display:none;">
-    <p>
-    <table>
-        <tbody>
-        <tr>
-            <td>Replace</td>
-            <td title="select type of AMR element to be replaced">&nbsp;
-                <select id="replace-type"
-                        onchange="selectReplaceType(this[selectedIndex].text);">
-                    <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
-                    <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
-                    </option>
-                    <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
-                    <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
-                </select>
-            </td>
-            <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
-                                 autocapitalize="off" id="replace-at"
-                                 value=""></td>
-            <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
-                                   id="replace-new" value=""
-                                   onfocus="var val = this.value; this.value = ''; this.value = val;"
-                                   onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
-                                   onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
-            </td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr>
-                        <td>
-                            <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
-                                           href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
-                            </nobr>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p></div>
-<div id="delete-template-table" style="display:none;">
-    <p>
-    <table>
-        <tbody>
-        <tr>
-            <td>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td width="5"></td>
-                        <td align="center">Delete AMR element</td>
-                        <td width="5"></td>
-                        <td><input size="24"
-                                   title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
-                                   autocapitalize="off" id="delete-at"
-                                   value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
-                        <td width="5"></td>
-                        <td>
-                            <table border="1" cellpadding="1" cellspacing="0">
-                                <tbody>
-                                <tr>
-                                    <td align="center">
-                                        <nobr><a style="text-decoration:none;" title="submit delete template action"
-                                                 href="javascript:submit_template_action('delete');"><font
-                                                color="black">&nbsp;delete&nbsp;</font></a>
-                                        </nobr>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td width="5"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td width="10"></td>
-            <td>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td width="5"></td>
-                        <td width="5"></td>
-                        <td>
-                            <table border="1" cellpadding="1" cellspacing="0">
-                                <tbody>
-                                <tr>
-                                    <td align="center">
-                                        <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
-                                                 style="text-decoration:none;"
-                                                 title="Delete entire AMR"
-                                                 href="javascript:deleteAMR();"><font
-                                                color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
-                                            AMR&nbsp;</font></a>
-                                        </nobr>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                        <td width="5"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-            <td width="10"></td>
-        </tr>
-        </tbody>
-    </table>
-    </p></div>
-<div id="move-template-table" style="display:none;">
-    <table>
-        <tbody>
-        <tr>
-            <td width="5"></td>
-            <td>Move</td>
-            <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
-                       id="move-object" value=""></td>
-            <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
-                                           id="move-new-head" value=""> &nbsp;
-            </td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr>
-                        <td>
-                            &nbsp;<a style="text-decoration:none"
-                                     title="display clickable list of AMR roles (popup)"
-                                     href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-
-            <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
-                       id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
-                       onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
-            <td>
-                <table border="1" cellpadding="1" cellspacing="0">
-                    <tbody>
-                    <tr>
-                        <td>&nbsp;<a title="submit move template action"
-                                     href="javascript:submit_template_action('move');"><font
-                                color="black">submit</font></a>&nbsp;
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div id="load-template-table" style="display:none;">
-    {#    <div id="load-template-table" style="display:inline;">#}
-    <p>
-    <table>
-        <tbody>
-        <tr id="load-local" style="display: inline;">
-            <td style="background-color:#E8EEFF;" width="920">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td id="load-local-title"><b>Load local AMR file</b></td>
-                        <td width="10"></td>
-                        <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" value="Load local file" onclick="load_local_amr_file()"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-
-        <tr id="load-direct" style="display: inline;">
-            <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
-                    </tr>
-                    <tr>
-                        <td>
-                                        <textarea rows="20" cols="100" id="load-plain" name="load-plain"
-                                                  autocapitalize="off"
-                                                  autocorrect="off" spellcheck="false"
-                                                  style="overflow:auto;"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table width="40" border="1" cellpadding="1" cellspacing="0">
-                                <tbody>
-                                <tr style="background-color:#BBCCFF;">
-                                    <td align="center">
-                                        <nobr>&nbsp;<a style="text-decoration:none"
-                                                       title="click to load amr from text area"
-                                                       href="javascript:loadField2amr();recordDirectEntryLoad();"><font
-                                                color="black">load direct AMR</font></a>&nbsp;
-                                        </nobr>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    </p>
-</div>
-<div id="save-template-table" style="display:none;">
-    <input type="hidden" id="plain-amr" name="plain-amr" value="">
-
-    <p>
-    <table style="background-color:#E8EEFF;" width="800">
-        <tbody>
-        <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
-            <td id="save-local-title"><b>Save AMR locally</b></td>
-            <td>
-                <table>
-                    <tbody>
-                    <tr id="save-local-filename">
-                        <td>Filename (without path):</td>
-                        <td><input type="text" id="local_save_file" name="local_save_file" size="24"
-                                   style="font-size:1.1em;text-align:right;" value=""><span
-                                style="font-size:1.1em">.txt</span></td>
-                        <td width="10"></td>
-                        <td><input type="submit" value="Save locally" onclick="save_local_amr_file(temp=true)"></td>
-
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr id="alt-save-locally" style="display:none" ;=""></tr>
-        </tbody>
-    </table>
-    </p>
-</div>
-
-
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr id="alt-save-locally" style="display:none" ;=""></tr>
+            </tbody>
+        </table>
+        </p>
+    </div>
 {% endblock content %}
+
+{% block content2 %}
+    <div style="height: 250px;">
+        <div id="text-command">
+            <table>
+                <tr>
+                    <td>Enter text command:</td>
+                    <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
+                                  autocorrect="off"
+                                  spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
+                                  onkeyup="exec_command('', 1)"></textarea></td>
+                    <td width="20"></td>
+                <tr>
+                    <td colspan="4"><span id="error"><i></i></span></td>
+                </tr>
+                <tr style="color:#999999">
+                    {#            <td>Last command:</td>#}
+                    <td colspan="3"><span id="action"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <table class="table table-borderless table-sm" style="height:auto; overflow-y: scroll; height: 250px;">
+        <tbody>
+            <tr>
+                <td>
+                    {% if 'English' == lang %}
+                        <div class="dropdown">
+                            <label for="roles1">Roles(English)</label>
+                            <input list="english-roles" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
+                            <datalist id="english-roles">
+                                <option value=":other">
+                                <option value=":ARG0">
+                                <option value=":ARG1">
+                                <option value=":ARG2">
+                                <option value=":ARG3">
+                                <option value=":ARG4">
+                                <option value=":ARG5">
+                                <option value=":ARG6">
+                                <option value=":calendar">
+                                <option value=":century">
+                                <option value=":day">
+                                <option value=":dayperiod">
+                                <option value=":decade">
+                                <option value=":era">
+                                <option value=":month">
+                                <option value=":quarter">
+                                <option value=":season">
+                                <option value=":timezone">
+                                <option value=":weekday">
+                                <option value=":year">
+                                <option value=":year2">
+                                <option value=":accompanier">
+                                <option value=":age">
+                                <option value=":beneficiary">
+                                <option value=":cause">
+                                <option value=":concession">
+                                <option value=":condition">
+                                <option value=":consist_of">
+                                <option value=":degree">
+                                <option value=":destination">
+                                <option value=":direction">
+                                <option value=":domain">
+                                <option value=":duration">
+                                <option value=":example">
+                                <option value=":extent">
+                                <option value=":frequency">
+                                <option value=":instrument">
+                                <option value=":li">
+                                <option value=":location">
+                                <option value=":manner">
+                                <option value=":medium">
+                                <option value=":mod">
+                                <option value=":name">
+                                <option value=":ord">
+                                <option value=":part">
+                                <option value=":path">
+                                <option value=":polite">
+                                <option value=":poss">
+                                <option value=":product_of">
+                                <option value=":purpose">
+                                <option value=":quant">
+                                <option value=":range">
+                                <option value=":scale">
+                                <option value=":source">
+                                <option value=":subevent">
+                                <option value=":subset">
+                                <option value=":sum_of">
+                                <option value=":time">
+                                <option value=":topic">
+                                <option value=":unit">
+                                <option value=":value">
+                                <option value=":wiki">
+                                <option value=":op1">
+                                <option value=":op2">
+                                <option value=":op3">
+                                <option value=":op4">
+                                <option value=":op5">
+                                <option value=":op6">
+                                <option value=":op7">
+                                <option value=":op8">
+                                <option value=":op9">
+                                <option value=":op10">
+
+                                <option value=":reason">
+                                <option value=":temporal">
+                                <option value=":modal">
+                                <option value=":coref">
+
+                                <option value=":ARG1-of">
+
+                                <option value=":before">
+                                <option value=":depends-on">
+                                <option value=":AFF">
+                                <option value=":NEG">
+                                <option value=":same-entity">
+
+                            </datalist>
+                            {#        <input type="submit" onclick="submit_relation('roles1')">#}
+                        </div>
+                    {% else %}
+                        <div class="dropdown">
+                            <label for="roles2">Roles(Default)</label>
+                            <input list="default-roles" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
+                            <datalist id="default-roles">
+                                <option value=":actor">
+                                <option value=":undergoer">
+                                <option value=":theme">
+                                <option value=":recipient">
+                                <option value=":force">
+                                <option value=":causer">
+                                <option value=":experiencer">
+                                <option value=":stimulus">
+                                <option value=":companion">
+                                <option value=":material">
+                                <option value=":place">
+                                <option value=":start">
+                                <option value=":goal">
+                                <option value=":affectee">
+                                <option value=":other">
+                            </datalist>
+                            {#        <input type="submit" onclick="submit_relation('roles2')">#}
+                        </div>
+                    {% endif %}
+
+                </td>
+                <td></td>
+                <td>
+                    <div id="attribute_types">
+                        <label for="attributes">Attributes</label>
+                        <input list="attr-types" oninput="show_attribute_values('attributes')" name="attributes" id="attributes"
+                               onfocus="this.value=''" onchange="this.blur();">
+                        <datalist id="attr-types">
+                            <option value=":Aspect">
+                            <option value=":polarity">
+                            <option value=":mode">
+                        </datalist>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div id="concept_types">
+                        <label for="concept_types">Abstract Concept</label>
+                        <input list="abstract-concepts" name="concept_types" id="concept_types" onfocus="this.value=''" onchange="this.blur();">
+                        <datalist id="abstract-concepts">
+                            <option value='ordinal-entity'>
+                            <option value='temporal-quantity'>
+                            <option value='amr-unknown'>
+                            <option value='amr-choice'>
+                            <option value='truth-value'>
+                            <option value='name'>
+                            <option value='accompany-01'>
+                            <option value='age-01'>
+                            <option value='benefit-01'>
+                            <option value='have-concession-91'>
+                            <option value='have-condition-91'>
+                            <option value='have-degree-92'>
+                            <option value='be-destined-for-91'>
+                            <option value='last-01'>
+                            <option value='exemplify-01'>
+                            <option value='have-extent-91'>
+                            <option value='have-frequency-91'>
+                            <option value='have-instrument-91'>
+                            <option value='have-li-91'>
+                            <option value='be-located-at-91'>
+                            <option value='have-manner-91'>
+                            <option value='have-mod-91'>
+                            <option value='have-name-91'>
+                            <option value='have-ord-91'>
+                            <option value='have-part-91'>
+                            <option value='have-polarity-91'>
+                            <option value='own-01'>
+                            <option value='have-03'>
+                            <option value='have-purpose-91'>
+                            <option value='have-quant-91'>
+                            <option value='be-from-91'>
+                            <option value='have-subevent-91'>
+                            <option value='be-temporally-at-91'>
+                            <option value='concern-02'>
+                            <option value='have-value-91'>
+                            <option value='person'>
+                        </datalist>
+    {#                        <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
+                    </div>
+                </td>
+                <td>
+                    <div id="named_entities">
+                        <label for="ne_types">Named Entity Types</label>
+                        <input list="nes" name="ne_types" id="ne_types" onfocus="this.value=''" onchange="this.blur();">
+                        <datalist id="nes">
+                            <option value='thing'>
+                            <option value='person'>
+                            <option value='family'>
+                            <option value='animal'>
+                            <option value='language'>
+                            <option value='nationality'>
+                            <option value='ethnic-group'>
+                            <option value='regional-group'>
+                            <option value='religious-group'>
+                            <option value='political-movement'>
+                            <option value='organization'>
+                            <option value='company'>
+                            <option value='government-organization'>
+                            <option value='military'>
+                            <option value='criminal-organization'>
+                            <option value='political-party'>
+                            <option value='market-sector'>
+                            <option value='school'>
+                            <option value='university'>
+                            <option value='research-institute'>
+                            <option value='team'>
+                            <option value='league'>
+                            <option value='location'>
+                            <option value='city'>
+                            <option value='city-district'>
+                            <option value='county'>
+                            <option value='state'>
+                            <option value='province'>
+                            <option value='territory'>
+                            <option value='country'>
+                            <option value='local-region'>
+                            <option value='country-region'>
+                            <option value='world-region'>
+                            <option value='continent'>
+                            <option value='ocean'>
+                            <option value='sea'>
+                            <option value='lake'>
+                            <option value='river'>
+                            <option value='gulf'>
+                            <option value='bay'>
+                            <option value='strait'>
+                            <option value='canal'>
+                            <option value='peninsula'>
+                            <option value='mountain'>
+                            <option value='volcano'>
+                            <option value='valley'>
+                            <option value='canyon'>
+                            <option value='island'>
+                            <option value='desert'>
+                            <option value='forest'>
+                            <option value='moon'>
+                            <option value='planet'>
+                            <option value='star'>
+                            <option value='constellation'>
+                            <option value='facility'>
+                            <option value='airport'>
+                            <option value='station'>
+                            <option value='port'>
+                            <option value='tunnel'>
+                            <option value='bridge'>
+                            <option value='road'>
+                            <option value='railway-line'>
+                            <option value='building'>
+                            <option value='theater'>
+                            <option value='museum'>
+                            <option value='palace'>
+                            <option value='hotel'>
+                            <option value='worship-place'>
+                            <option value='sports-facility'>
+                            <option value='market'>
+                            <option value='park'>
+                            <option value='zoo'>
+                            <option value='amusement-park'>
+                            <option value='event'>
+                            <option value='incident'>
+                            <option value='natural-disaster'>
+                            <option value='earthquake'>
+                            <option value='war'>
+                            <option value='conference'>
+                            <option value='game'>
+                            <option value='festival'>
+                            <option value='product'>
+                            <option value='vehicle'>
+                            <option value='ship'>
+                            <option value='aircraft'>
+                            <option value='aircraft-type'>
+                            <option value='spaceship'>
+                            <option value='car-make'>
+                            <option value='work-of-art'>
+                            <option value='picture'>
+                            <option value='music'>
+                            <option value='show'>
+                            <option value='broadcast-program'>
+                            <option value='publication'>
+                            <option value='book'>
+                            <option value='newspaper'>
+                            <option value='magazine'>
+                            <option value='journal'>
+                            <option value='natural-object'>
+                            <option value='award'>
+                            <option value='law'>
+                            <option value='court-decision'>
+                            <option value='treaty'>
+                            <option value='music-key'>
+                            <option value='musical-note'>
+                            <option value='food-dish'>
+                            <option value='writing-script'>
+                            <option value='variable'>
+                            <option value='program'>
+                            <option value='molecular-physical-entity'>
+                            <option value='small-molecule'>
+                            <option value='protein'>
+                            <option value='protein-family'>
+                            <option value='protein-segment'>
+                            <option value='amino-acid'>
+                            <option value='macro-molecular-complex'>
+                            <option value='enzyme'>
+                            <option value='nucleic-acid'>
+                            <option value='pathway'>
+                            <option value='gene'>
+                            <option value='dna-sequence'>
+                            <option value='cell'>
+                            <option value='cell-line'>
+                            <option value='species'>
+                            <option value='taxon'>
+                            <option value='disease'>
+                            <option value='medical-condition'>
+                        </datalist>
+                        {#    <input type="submit" onclick="submit_mode('add-ne')">#}
+                    </div>
+                </td>
+                <td>
+                    {#    attribute values of Aspect#}
+                    <div class="attributes" id="aspect-attribute" style="display: none">
+                        <label for="attribute_values1">Attribute Values</label>
+                        <input list="aspect-attr" name="attribute_values1" id="attribute_values1" onfocus="this.value=''"
+                               onchange="this.blur();">
+                        <datalist id="aspect-attr">
+                            <option value='Habitual'>
+                            <option value='Activity'>
+                            <option value='Endeavor'>
+                            <option value='Performance'>
+                        </datalist>
+                        {#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
+                    </div>
+
+                    {#    attribute values of polarity#}
+                    <div class="attributes" id="polarity-attribute" style="display: none">
+                        <label for="attribute_values2">Attribute Values</label>
+                        <input list="polarity-attr" name="attribute_values2" id="attribute_values2" onfocus="this.value=''"
+                               onchange="this.blur();">
+                        <datalist id="polarity-attr">
+                            <option value='-'>
+                        </datalist>
+                        {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
+                    </div>
+
+                    {#    attribute values of mode#}
+                    <div class="attributes" id="mode-attribute" style="display: none">
+                        <label for="attribute_values3">Attribute Values</label>
+                        <input list="mode-attr" name="attribute_values3" id="attribute_values3" onfocus="this.value=''"
+                               onchange="this.blur();">
+                        <datalist id="mode-attr">
+                            <option value="imperative">
+                            <option value="expressive">
+                            <option value="interrogative">
+                        </datalist>
+                        {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <button onclick="submit_query()">Add abstract concept</button>
+                </td>
+                <td>
+                    Lexicalized Concept:
+                    <div class="btn-group dropright">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown()"></button>
+
+                        <ul id="concept_dropdown" class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item" tabindex="-1"  id="find_lemma">find lemma</a>
+                                <ul id="genericDropdown" class="dropdown-menu">
+                                    <li class="dropdown-item"><a tabindex="-1">placeholder</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="dropdown-divider"></li>
+
+                            <li class="dropdown-item"><a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a></li>
+                            <li class="dropdown-item"><a id="multiple_words" href="javascript:multipleWords();">multiple words</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <button onclick="submit_query()">Add attribute</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>
+{#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>#}
+        <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
+
+        <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
+        <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
+        <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
+        <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
+        <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
+        {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
+        <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_id=doc_id) }}">doc-level-annot</a>
+{#        <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>#}
+{#        <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>#}
+    </div>
+
+    <script type="text/javascript">
+        load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}')
+    </script>
+{% endblock content2 %}
 
 
 

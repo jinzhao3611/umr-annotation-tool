@@ -118,7 +118,7 @@ function getLocs(variable) { // b
 function getParentVariable(loc) {
     if (loc.match(/\.\d+$/)) {
         var parent_loc = loc.replace(/\.\d+$/, "");
-        return amr[parent_loc + '.v'] || '';
+        return umr[parent_loc + '.v'] || '';
     } else {
         return '';
     }
@@ -279,7 +279,7 @@ function validEntryConcept(concept) {
  * @returns {*}
  */
 function trimConcept(entry_concept) {
-    return entry_concept.replace(/^(concept\.|\!)/, "");
+    return entry_concept.replace(/^(concept\.|!)/, "");
 }
 
 /**
@@ -348,9 +348,9 @@ function sloppy_match(sloppyString, referenceString) {
  * @returns {number}
  */
 function amr_is_empty() {
-    var n = amr['n'];
+    var n = umr['n'];
     for (var i = 1; i <= n; i++) {
-        if (!amr[i + '.d']) {
+        if (!umr[i + '.d']) {
             return 0;
         }
     }

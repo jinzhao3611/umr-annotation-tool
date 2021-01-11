@@ -1,5 +1,483 @@
 {% extends "layout.html" %}
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="../static/styles/default2.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/default.css" media="handheld">
+    <link rel="stylesheet" type="text/css" href="../static/styles/default.css"
+          media="only screen and (max-device-width:480px)">
+
+    <script src="../static/scripts/my_jquery.js"></script>
+
+    <script src="../static/scripts/main.js" type="text/javascript"></script>
+
+    <script src="../static/scripts/utils.js" type="text/javascript"></script>
+    <script src="../static/scripts/BlobBuilder.js"></script>
+    <script src="../static/scripts/FileSaver.js"></script>
+
+
+    <script src="../static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+    <script src="../static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+
+
+    <style type="text/css">
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -6px;
+            margin-left: -1px;
+            -webkit-border-radius: 0 6px 6px 6px;
+            -moz-border-radius: 0 6px 6px;
+            border-radius: 0 6px 6px 6px;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-submenu>a:after {
+            display: block;
+            content: " ";
+            float: right;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 5px 0 5px 5px;
+            border-left-color: #ccc;
+            margin-top: 5px;
+            margin-right: -10px;
+        }
+
+        .dropdown-submenu:hover>a:after {
+            border-left-color: #fff;
+        }
+
+        .dropdown-submenu.pull-left {
+            float: none;
+        }
+
+        .dropdown-submenu.pull-left>.dropdown-menu {
+            left: -100%;
+            margin-left: 10px;
+            -webkit-border-radius: 6px 0 6px 6px;
+            -moz-border-radius: 6px 0 6px 6px;
+            border-radius: 6px 0 6px 6px;
+        }
+
+    </style>
+
+{% endblock head %}
+
 {% block content %}
-    <p>UMR Penman Annotation:</p>
-    <div id="amr"></div>
+    <div id="info" style="height: auto; overflow-y: scroll; max-height: 250px;">
+        <script type="text/javascript">
+            initialize("{{ frame_dict }}")
+        </script>
+        <table>
+            <tr>
+                <th class='text-muted'>Current User:</th>
+                <th id="username">{{ current_user.username }}</th>
+            </tr>
+            <tr>
+                <th class='text-muted'>File Name:</th>
+                <th id="filename" style="display:inline">{{ filename }}</th>
+            </tr>
+                <tr>
+                <th class='text-muted'>Doc ID in database:</th>
+                <th id="doc_id" style="display:inline">{{ doc_id }}</th>
+            </tr>
+        </table>
+    </div>
+
+    <hr>
+    {% for pair in sent_annot_pairs %}
+        <div class="row">
+            <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
+                <p>{{ pair[0].content }}</p>
+                {% autoescape off %}
+                <p>{{ pair[1].annot_str }}</p>
+                {% endautoescape %}
+            </div>
+
+            <div class="col-sm" style="overflow-x: scroll">
+                <p>Doc-Level Annotation:</p>
+{#                    this doesnt work now#}
+                <div id="amr{{ loop.index }}"></div>
+            </div>
+{#            {% if pair[1].doc_annot == '' %}#}
+{#                <div class="col-sm" style="overflow-x: scroll">#}
+{#                    <p>Doc-Level Annotation:</p>#}
+{#                    this doesnt work now#}
+{#                    <div id="amr{{ loop.index }}">(s{{ loop.index }}&nbsp;/&nbsp;sentence)</div>#}
+{#                </div>#}
+{#            {% else %}#}
+{#                <div class="col-sm" style="overflow-x: scroll">#}
+{#                    <p>Doc-Level Annotation:</p>#}
+{#                    this doesn't work now#}
+{#                    {% autoescape off %}#}
+{#                    <p>{{ pair[1].doc_annot }}</p>#}
+{#                    {% endautoescape %}#}
+{#                </div>#}
+{#            {% endif %}#}
+
+        </div>
+    {% endfor %}
+
+
+
+    <div id="replace-template-table" style="display:none;">
+        <p>
+            <table>
+                <tbody>
+                <tr>
+                    <td>Replace</td>
+                    <td title="select type of AMR element to be replaced">&nbsp;
+                        <select id="replace-type"
+                                onchange="selectReplaceType(this[selectedIndex].text);">
+                            <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
+                            <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
+                            </option>
+                            <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
+                            <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
+                        </select>
+                    </td>
+                    <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
+                                         autocapitalize="off" id="replace-at"
+                                         value=""></td>
+                    <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
+                                           id="replace-new" value=""
+                                           onfocus="var val = this.value; this.value = ''; this.value = val;"
+                                           onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
+                                           onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
+                    </td>
+                    <td>
+                        <table border="1" cellpadding="1" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
+                                                   href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
+                                    </nobr>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </p>
+    </div>
+    <div id="delete-template-table" style="display:none;">
+        <p>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="5"></td>
+                            <td align="center">Delete AMR element</td>
+                            <td width="5"></td>
+                            <td><input size="24"
+                                       title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
+                                       autocapitalize="off" id="delete-at"
+                                       value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
+                            <td width="5"></td>
+                            <td>
+                                <table border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <nobr><a style="text-decoration:none;" title="submit delete template action"
+                                                     href="javascript:submit_template_action('delete');"><font
+                                                    color="black">&nbsp;delete&nbsp;</font></a>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="10"></td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td width="5"></td>
+                            <td width="5"></td>
+                            <td>
+                                <table border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr>
+                                        <td align="center">
+                                            <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
+                                                     style="text-decoration:none;"
+                                                     title="Delete entire AMR"
+                                                     href="javascript:deleteAMR();"><font
+                                                    color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
+                                                AMR&nbsp;</font></a>
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td width="5"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="10"></td>
+            </tr>
+            </tbody>
+        </table>
+        </p>
+    </div>
+    <div id="move-template-table" style="display:none;">
+        <table>
+            <tbody>
+            <tr>
+                <td width="5"></td>
+                <td>Move</td>
+                <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
+                           id="move-object" value=""></td>
+                <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
+                                               id="move-new-head" value=""> &nbsp;
+                </td>
+                <td>
+                    <table border="1" cellpadding="1" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td>
+                                &nbsp;<a style="text-decoration:none"
+                                         title="display clickable list of AMR roles (popup)"
+                                         href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+
+                <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
+                           id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
+                           onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
+                <td>
+                    <table border="1" cellpadding="1" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td>&nbsp;<a title="submit move template action"
+                                         href="javascript:submit_template_action('move');"><font
+                                    color="black">submit</font></a>&nbsp;
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="load-template-table" style="display:none;">
+        {#    <div id="load-template-table" style="display:inline;">#}
+        <p>
+        <table>
+            <tbody>
+            <tr id="load-local" style="display: inline;">
+                <td style="background-color:#E8EEFF;" width="920">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td id="load-local-title"><b>Load local AMR file</b></td>
+                            <td width="10"></td>
+                            <td><input type="file" id="local_load_files" name="local_load_files[]" size="80" multiple="">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="Load local file" onclick="load_local_amr_file()"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <tr id="load-direct" style="display: inline;">
+                <td id="load-direct-td" style="background-color:#E8EEFF;" width="920">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td><b>Direct AMR Entry</b> &nbsp; e.g. using cut and paste</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                            <textarea rows="20" cols="100" id="load-plain" name="load-plain"
+                                                      autocapitalize="off"
+                                                      autocorrect="off" spellcheck="false"
+                                                      style="overflow:auto;"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="40" border="1" cellpadding="1" cellspacing="0">
+                                    <tbody>
+                                    <tr style="background-color:#BBCCFF;">
+                                        <td align="center">
+                                            <nobr>&nbsp;<a style="text-decoration:none"
+                                                           title="click to load amr from text area"
+                                                           href="javascript:loadField2amr();recordDirectEntryLoad();"><font
+                                                    color="black">load direct AMR</font></a>&nbsp;
+                                            </nobr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </p>
+    </div>
+    <div id="save-template-table" style="display:none;">
+        <input type="hidden" id="plain-amr" name="plain-amr" value="">
+
+        <p>
+        <table style="background-color:#E8EEFF;" width="800">
+            <tbody>
+            <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
+                <td id="save-local-title"><b>Save AMR locally</b></td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr id="save-local-filename">
+                            <td>Filename (without path):</td>
+                            <td><input type="text" id="local_save_file" name="local_save_file" size="24"
+                                       style="font-size:1.1em;text-align:right;" value=""><span
+                                    style="font-size:1.1em">.txt</span></td>
+                            <td width="10"></td>
+                            <td><input type="submit" value="Save locally" onclick="save_local_amr_file(temp=true)"></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr id="alt-save-locally" style="display:none" ;=""></tr>
+            </tbody>
+        </table>
+        </p>
+    </div>
+
 {% endblock content %}
+
+{% block content2 %}
+    <div style="height: 250px;">
+        <div id="text-command">
+            <table>
+                <tr>
+                    <td>Enter text command:</td>
+                    <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
+                                  autocorrect="off"
+                                  spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
+                                  onkeyup="exec_command('', 1)"></textarea></td>
+                    <td width="20"></td>
+                <tr>
+                    <td colspan="4"><span id="error"><i></i></span></td>
+                </tr>
+                <tr style="color:#999999">
+                    {#            <td>Last command:</td>#}
+                    <td colspan="3"><span id="action"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <p>current sentence: <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value=1> </p>
+    </div>
+
+    <div id="temporal_relations">
+        <label for="temporal_relations">Temporal Relations</label>
+        <input list="t_relations" name="temporal_relations" id="temporal_relations" onfocus="this.value=''" onchange="this.blur();">
+        <datalist id="t_relations">
+            <option value=':before'>
+            <option value=':after'>
+            <option value=':depends-on'>
+            <option value=':overlap'>
+        </datalist>
+{#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
+    </div>
+    <div id="modal_relations">
+        <label for="modal_relations">Modal Relations</label>
+        <input list="m_relations" name="modal_relations" id="modal_relations" onfocus="this.value=''" onchange="this.blur();">
+        <datalist id="m_relations">
+            <option value=':AFF'>
+            <option value=':NEUTAFF'>
+            <option value=':PARTAFF'>
+            <option value=':NEG'>
+            <option value=':NEUTNEG'>
+            <option value=':PARTNEG'>
+        </datalist>
+{#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
+    </div>
+        <div id="coref_relations">
+        <label for="coref_relations">Coref Relations</label>
+        <input list="c_relations" name="coref_relations" id="coref_relations" onfocus="this.value=''" onchange="this.blur();">
+        <datalist id="c_relations">
+            <option value=':same-entity'>
+            <option value=':same-event'>
+            <option value=':subset-of'>
+
+        </datalist>
+{#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
+    </div>
+
+    <div id="text-command">
+        <table>
+            <tr>
+                <td>Enter args:</td>
+                <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
+                              autocorrect="off"
+                              spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
+                              onkeyup=""></textarea></td>
+                <td width="20"></td>
+            <tr>
+                <td colspan="4"><span id="error"><i></i></span></td>
+            </tr>
+            <tr style="color:#999999">
+                {#            <td>Last command:</td>#}
+                <td colspan="3"><span id="action"></span></td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    <div>
+        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>
+        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>
+        <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
+
+        <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
+        <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
+        <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
+        <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
+        <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
+        {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
+        {#<button><a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
+{#        <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>#}
+{#        <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>#}
+
+    </div>
+{% endblock content2 %}

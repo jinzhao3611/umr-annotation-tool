@@ -72,6 +72,7 @@ class Sent(db.Model):
 class Annotation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     annot_str = db.Column(db.Text, nullable=False)
+    doc_annot = db.Column(db.Text, nullable=False)
     alignment = db.Column(db.Text, nullable=False)
     sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

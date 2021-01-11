@@ -17,7 +17,7 @@ main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
 
 
-def html(content_string:str) -> Tuple[List[List[str]], str, List[str], List[str], List[str], List[str]]:
+def html(content_string: str) -> Tuple[List[List[str]], str, List[str], List[str], List[str], List[str]]:
     """
     :param content_string: raw string got read in from file, could be either flex or toolbox xml string, or a txt string
     :return: sents: a list of list of words
@@ -35,11 +35,12 @@ def html(content_string:str) -> Tuple[List[List[str]], str, List[str], List[str]
         sents, dfs, sents_gls, conv_turns = parse_xml(content_string)
         sents_df = pd.DataFrame([' '.join(sent) for sent in sents])
         sents_df.index = sents_df.index + 1
-        sents_html = sents_df.to_html(header=False, classes="table table-striped", justify='center')
+        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
 
         for df in dfs:
             df.columns = range(1, len(df.columns) + 1)
-            df_html = df.to_html(header=False, classes="table table-striped", justify='center').replace('border="1"', 'border="0"')
+            df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace('border="1"',
+                                                                                                        'border="0"')
             soup = BeautifulSoup(df_html, "html.parser")
             words_row = soup.findAll('tr')[0]
             words_row['id'] = 'current-words'
@@ -54,13 +55,16 @@ def html(content_string:str) -> Tuple[List[List[str]], str, List[str], List[str]
         sents = [sent.split() for sent in content_string.strip().split('\n')]
         sents_df = pd.DataFrame(content_string.strip().split('\n'))
         sents_df.index = sents_df.index + 1
-        sents_html = sents_df.to_html(header=False, classes="table table-striped", justify='center')
+        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
 
-    sent_htmls = [] # a list of single sentence htmls
+    sent_htmls = []  # a list of single sentence htmls
     for sent in sents:
-        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False, classes="table table-striped", justify='center'))
+        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
+                                                                                        classes="table table-striped table-sm",
+                                                                                        justify='center'))
     # html string for all sentences
     return sents, sents_html, sent_htmls, df_htmls, gls, notes
+
 
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
@@ -93,6 +97,7 @@ def upload():
             flash('Please upload a file and/or choose a language.', 'danger')
     return render_template('upload.html', title='upload', form=form)
 
+
 @main.route("/annotate/<int:doc_id>", methods=['GET', 'POST'])
 def annotate(doc_id):
     if not current_user.is_authenticated:
@@ -101,18 +106,26 @@ def annotate(doc_id):
     sents, sents_html, sent_htmls, df_html, gls, notes = html(doc.content)
     frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
     snt_id = 1
-    if "set_sentence" in request.form:
-        snt_id = int(request.form["sentence_id"])
+    # if "set_sentence" in request.form:
+    #     snt_id = int(request.form["sentence_id"])
+
+    if "prev_sentence" in request.form:
+        snt_id = max(int(request.form["sentence_id"]) - 1, 1)
+    elif "next_sentence" in request.form:
+        print("sanity check sentence id", int(request.form["sentence_id"]))
+        snt_id = min(int(request.form["sentence_id"]) + 1, len(sents))
 
     # load single annotation for current sentence from db used for load_history()
     try:
         curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
-                                              Annotation.user_id == current_user.id).first().annot_str.replace("\n", "")
+                                                  Annotation.user_id == current_user.id).first().annot_str.replace("\n",
+                                                                                                                   "")
     except:
         curr_sent_annot = ""
     try:
         curr_sent_align = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
-                                              Annotation.user_id == current_user.id).first().alignment.replace("\n", "")
+                                                  Annotation.user_id == current_user.id).first().alignment.replace("\n",
+                                                                                                                   "")
     except:
         curr_sent_align = ""
 
@@ -135,8 +148,9 @@ def annotate(doc_id):
             print("amr_html: ", amr_html)
             align_info = request.get_json(force=True)["align"]
             print("align_ino:", align_info)
-
-            existing = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            print("snt_id_info:", snt_id_info)
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
                 print("upadating existing annotation")
@@ -144,7 +158,8 @@ def annotate(doc_id):
                 existing.alignment = align_info
                 db.session.commit()
             else:
-                annotation = Annotation(annot_str=amr_html, alignment=align_info, author=current_user, sent_id=snt_id,
+                annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
+                                        sent_id=snt_id_info,
                                         doc_id=doc_id)
                 db.session.add(annotation)
                 db.session.commit()
@@ -153,15 +168,47 @@ def annotate(doc_id):
             print("add current annotation and alignments to database failed")
 
     return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                           sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_html, gls=gls, notes=notes,
+                           sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_html, gls=gls,
+                           notes=notes,
                            frame_dict=frame_dict,
-                           curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot, exported_items=exported_items)
+                           curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
+                           exported_items=exported_items)
 
 
+@main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])
+def doclevel(doc_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    doc = Doc.query.get_or_404(doc_id)
+    sents = Sent.query.filter(Sent.doc_id == doc.id).all()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
+    sent_annot_pairs = list(zip(sents, annotations))
+    print("sent_annot_pairs: ", sent_annot_pairs)
 
-@main.route("/doclevel", methods=['GET', 'POST'])
-def doclevel():
-    return render_template('doclevel.html', title='Doc Level Annotation')
+
+    # add to db
+    if request.method == 'POST':
+        try:
+            umr_html = request.get_json(force=True)["umr"]
+            print("umr_html: ", umr_html)
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            print("snt_id_info:", snt_id_info)
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == current_user.id).first()
+            if existing:  # update the existing Annotation object
+                print("upadating existing annotation")
+                existing.doc_annot = umr_html
+                db.session.commit()
+            else:
+                print("the sent level annotation of the current sent doesn't exist")
+            return {"umr": umr_html}
+        except:
+            print("add doc level annotation to database failed")
+
+
+    frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
+    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename, frame_dict=frame_dict, title='Doc Level Annotation')
+
 
 
 @main.route("/about")
@@ -169,16 +216,13 @@ def about():
     return render_template('about.html', title='About')
 
 
-# this is corresponded to corey's video home page, also thinking about making it doclevel annotation page
-
 @main.route("/")
 @main.route("/display_post")
 def display_post():
     # posts = Post.query.all()
     page = request.args.get('page', default=1, type=int)
     # posts = Post.query.paginate(page=page, per_page=2)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,
-                                                                  per_page=2)  # if we want to order the posts from the lastest to the oldest
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=2)  # if we want to order the posts from the lastest to the oldest
     return render_template('display_post.html', posts=posts)
 
 
