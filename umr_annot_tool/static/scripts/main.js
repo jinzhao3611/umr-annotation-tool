@@ -79,6 +79,9 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     // console.log(document.getElementById('align'));
     loadField2amr();
     umr = JSON.parse(curr_sent_umr);
+    if (Object.keys(umr).length === 0){
+        umr['n'] = 0;
+    }
     showAlign();
     showAnnotatedTokens();
 }
