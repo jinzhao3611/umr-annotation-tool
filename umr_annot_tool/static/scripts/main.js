@@ -1217,7 +1217,8 @@ function showAnnotatedTokens(){
                         };
                         let cellText = cell2highlight.innerText;
                         // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
-                        if (cellText !== "Attribute Values " && cellText !== "Attributes "){
+                        if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !==""){
+                            console.log("I am here highlight1");
                             newNode.appendChild(document.createTextNode(cell2highlight.innerText));
                             cell2highlight.replaceChild(newNode, cell2highlight.firstChild)
                         }
@@ -1255,13 +1256,11 @@ function showHead(){
         var parent = existingHead[0].parentNode;
         while(existingHead[0].firstChild){
             parent.insertBefore(existingHead[0].firstChild, existingHead[0]);
+        }
+        parent.removeChild(existingHead[0]);
     }
-    parent.removeChild(existingHead[0]);
-}
-
     highlight(document.getElementById("amr"), [current_parent]);
 }
-
 
 
 /** add ******************************************************/
@@ -3034,34 +3033,38 @@ function highlightSelection() {
 }
 
 function highlight(elem, keywords, caseSensitive = true, cls = 'text-success') {
-  const flags = caseSensitive ? 'gi' : 'g';
-  // Sort longer matches first to avoid
-  // highlighting keywords within keywords.
-  keywords.sort((a, b) => b.length - a.length);
-  Array.from(elem.childNodes).forEach(child => {
-    const keywordRegex = RegExp(keywords.join('|'), flags);
-    console.log("console list is: ", keywords);
-    console.log("pattern is: ", keywords.join('|')+ "space?");
-    if (child.nodeType !== 3) { // not a text node
-      highlight(child, keywords, caseSensitive, cls);
-    } else if (keywordRegex.test(child.textContent)) {
-      const frag = document.createDocumentFragment();
-      let lastIdx = 0;
-      child.textContent.replace(keywordRegex, (match, idx) => {
-        const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
-        const highlighted = document.createElement('span');
-        console.log("match: ", match);
-        highlighted.textContent = match;
-        highlighted.classList.add(cls);
-        frag.appendChild(part);
-        frag.appendChild(highlighted);
-        lastIdx = idx + match.length;
+    if(keywords[0] !== undefined){
+        const flags = caseSensitive ? 'gi' : 'g';
+      // Sort longer matches first to avoid
+      // highlighting keywords within keywords.
+      keywords.sort((a, b) => b.length - a.length);
+      Array.from(elem.childNodes).forEach(child => {
+        const keywordRegex = RegExp(keywords.join('|'), flags);
+        console.log("console list is: ", keywords);
+        console.log("pattern is: ", keywords.join('|')+ "space?");
+        console.log("first keyword: ", keywords[0] === undefined );
+        if (child.nodeType !== 3) { // not a text node
+          highlight(child, keywords, caseSensitive, cls);
+        } else if (keywordRegex.test(child.textContent)) {
+          const frag = document.createDocumentFragment();
+          let lastIdx = 0;
+          child.textContent.replace(keywordRegex, (match, idx) => {
+            const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
+            const highlighted = document.createElement('span');
+            console.log("match: ", match);
+            highlighted.textContent = match;
+            highlighted.classList.add(cls);
+            frag.appendChild(part);
+            frag.appendChild(highlighted);
+            lastIdx = idx + match.length;
+          });
+          const end = document.createTextNode(child.textContent.slice(lastIdx));
+          frag.appendChild(end);
+          child.parentNode.replaceChild(frag, child);
+        }
       });
-      const end = document.createTextNode(child.textContent.slice(lastIdx));
-      frag.appendChild(end);
-      child.parentNode.replaceChild(frag, child);
     }
-  });
+
 }
 
 function deleteNode(node) {
