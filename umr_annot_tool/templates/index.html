@@ -164,14 +164,6 @@
     <div>
         <p>UMR Penman Annotation:</p>
         <div id="amr">
-            <script>
-                let children = document.getElementById("amr").children; //get amr div children elements.
-                for (let i = 0, len = children.length ; i < len; i++) {
-                        document.getElementById(children[i].id).addEventListener("input", function() { //set an event listener for each element id
-                            document.getElementById("replace-new").innerHTML = document.getElementById(children[i].id).innerHTML;
-                    }, false);
-                }
-            </script>
         </div>
     </div>
 
@@ -870,8 +862,30 @@
 
     <script type="text/javascript">
         load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}')
+
+        document.getElementById("amr").addEventListener("input", e => {
+            console.log("event is fired1");
+            if(e.target.matches("span")){
+                console.log("event is fired2");
+                let new_value = document.getElementById(e.target.id).innerHTML; // example: freedom-01
+                // this way of dynamically changing onclick function seems ugly to me, maybe there is a better way
+                let clickfunc = e.target.getAttribute("onclick"); //example: clickfunc="fillReplaceTemplate('concept','s1f','freedom','amr_elem_3')"
+                let funname = clickfunc.substring(0, clickfunc.indexOf(",", clickfunc.indexOf(",") + 1)); // example: clickfunc="fillReplaceTemplate('concept','s1f'"
+                document.getElementById(e.target.id).setAttribute("onclick",funname+",'"+ new_value + "','" + e.target.id + "')"); //clickfunc="fillReplaceTemplate('concept','s1f','freedom-01','amr_elem_3')"
+                document.getElementById(e.target.id).click();
+            }
+        })
+
+        document.getElementById("amr").addEventListener("focusout", e => {
+            if(e.target.matches("span")){
+                submit_template_action("replace");
+            }
+        })
+
+
     </script>
 {% endblock content2 %}
+
 
 
 

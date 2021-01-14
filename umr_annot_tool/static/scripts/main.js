@@ -52,7 +52,7 @@ var next_special_action = ''; //''
  * @param frame_dict_str: frame json file from post
  */
 function initialize(frame_dict_str) {
-    console.log("initialize is called1");
+    console.log("initialize is called5");
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
@@ -211,8 +211,10 @@ function submit_query(){
     let av = '';
     if(document.getElementById('attribute_values1').value){
         av = document.getElementById('attribute_values1').value;
-    }else{
+    }else if (document.getElementById('attribute_values2').value){
         av = document.getElementById('attribute_values2').value;
+    }else{
+        av = document.getElementById('attribute_values3').value;
     }
 
     if(r){
@@ -413,21 +415,12 @@ function selectTemplate(id) {
         let action = actions[i];
         if ((s = document.getElementById(action + '-template-table')) != null) {
             if (id === action) {
-                s.style.display = 'inline';
+                s.style.display = 'none';
                 current_template = id;
                 if ((action === 'replace') && !show_amr_status.match(/replace/)) {
                     console.log("I am here 903");
                     // if clicked on replace from other button
                     show_amr('show replace');
-                    let children = document.getElementById("amr").children; //get container element children.
-                    for (let i = 0, len = children.length ; i < len; i++) {
-                        document.getElementById(children[i].id).addEventListener("input", function() {
-                            console.log("id to listen to: "+ children[i].id);
-                            console.log("editing: " + document.getElementById(children[i].id).innerHTML);
-                            document.getElementById("replace-new").innerHTML = document.getElementById(children[i].id).innerHTML;
-                            console.log("event is fired");
-                        }, false);
-                    }
                 } else if ((action === 'delete') && !show_amr_status.match(/delete/)) {
                     show_amr('show delete');
                 }
@@ -476,27 +469,14 @@ function selectReplaceType(type) {
  * @param mo_lock
  */
 function fillReplaceTemplate(type, at, old_value, mo_lock) {
-    console.log('fillReplaceTemplate ' + type + ' ' + at + ' ' + old_value + ' &lt;' + mo_lock + '&gt; ' + show_amr_mo_lock);
+    console.log('fillReplaceTemplate ' + type + ' ' + at + ' ' + old_value + ' <' + mo_lock + '> ');
     var s_type, s_at, s_new;
     if (((s_type = document.getElementById('replace-type')) != null)
         && ((s_at = document.getElementById('replace-at')) != null)
         && ((s_new = document.getElementById('replace-new')) != null)) {
-        var same_mo_lock_p = (show_amr_mo_lock === mo_lock);
-        if (show_amr_mo_lock) {
-            s_type.value = '';
-            s_at.value = '';
-            s_new.value = '';
-            color_amr_elem(show_amr_mo_lock, '#000000', '');
-            show_amr_mo_lock = '';
-        }
-        if (!same_mo_lock_p) {
-            s_type.value = type;
-            s_at.value = at;
-            s_new.value = old_value;
-            s_new.focus();
-            show_amr_mo_lock = mo_lock;
-            color_amr_elem(show_amr_mo_lock, '#0000FF', '');
-        }
+        s_type.value = type;
+        s_at.value = at;
+        s_new.value = old_value;
     }
 }
 
@@ -529,7 +509,7 @@ function fillDeleteTemplate(at, mo_lock) {
 /** coloring umr ******************************************************/
 
 function color_all_var_occurrences(variable, color) {
-    console.log("color_all_var_occurrences variable: " + variable + " color: " + color );
+    // console.log("color_all_var_occurrences variable: " + variable + " color: " + color );
     var var_locs = getLocs(variable);
     if (var_locs) {
         var list = var_locs.split(" ");
@@ -541,7 +521,7 @@ function color_all_var_occurrences(variable, color) {
 }
 
 function color_all_under_amr_elem(id, color, event_type) {
-    console.log("color_all_under_amr_elem id: " + id + " color: " + color + "event_type: " + event_type );
+    // console.log("color_all_under_amr_elem id: " + id + " color: " + color + "event_type: " + event_type );
     let list_s = show_amr_obj['elem-' + id];
     let list = list_s.split(" ");
     for (let i = 0; i < list.length; i++) {
@@ -551,7 +531,7 @@ function color_all_under_amr_elem(id, color, event_type) {
 }
 
 function color_amr_elem(id, color, event_type) {
-    console.log("color_amr_elem id: "+ id + " color: " + color + "event_type: " + event_type);
+    // console.log("color_amr_elem id: "+ id + " color: " + color + "event_type: " + event_type);
     let s;
     if ((!(show_amr_mo_lock && (event_type == 'mo')))
         && ((s = document.getElementById(id)) != null)) {
@@ -1205,29 +1185,29 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             command_input.style.height = '1.4em';
         }
     }
-    //traverse amr to print the alignment info, and change doc level annotation variables
-    // amr['2.v'] = 's2';
+}
+
+function showAlign(){
     let alignInfo;
     if (( alignInfo = document.getElementById('align')) != null){
-        var alignment_string = '';
+        let alignment_string = '';
         Object.keys(umr).forEach(function (key) {
-        if (/[\\d|\\.]+c/gm.test(key) && umr[key]) {
-            alignment_string += umr[key] + ": " + umr[key.replace('c', 'v')] + ": " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
-            // alignment_string += (amr[key] + ": " + amr[key.replace('c', 'a')] + htmlSpaceGuard('\n')).replace(/undefined/g, 'inferred');
-
-        }
-
-        // if(String(amr[key]).charAt(0)=='2'){
-        //     if(/[\\d|\\.]+v/gm.test(key)){
-        //         if(amr[key]!=='s2'){
-        //             amr[key] = 's2' + amr[key];
-        //         }
-        //     }
-        // }
+            if (/[\\d|\\.]+c/gm.test(key)) {
+                if (!(key.replace('c', 'd') in umr)){
+                    if(umr[key]){//empty c, has s
+                        alignment_string += umr[key] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+                    }else{
+                        alignment_string += umr[key.replace('c', 's')] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+                    }
+                }
+            }
         });
         alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
     }
 }
+
+
+
 
 /** add ******************************************************/
 /**
@@ -1405,7 +1385,7 @@ function addTriple(head, role, arg, arg_type) {
     head = strip(head); // b
     role = strip(role); // :arg1
     arg = strip(arg); //car
-    // add_log('  add_triple ' + head + ' ' + role + ' ' + arg);
+    console.log('addTriple: head: ' + head + ' role: ' + role + ' arg: ' + arg);
     let head_var_locs = getLocs(head); // buy-01
     let arg_var_locs;
     let arg_variable;
@@ -2163,6 +2143,7 @@ function show_amr_new_line_p(loc) {
  * @returns {number}
  */
 function role_unquoted_string_arg(role, arg, loc) {
+    // console.log("role_unquoted_string_arg: role: " + role + " arg: " + arg + " loc: "+ loc);
     let head_loc = '';
     let head_concept = '';
     let head_role = '';
@@ -2533,6 +2514,7 @@ function show_amr(args, amr_id='') {
             // add_log ('re-scroll ' + origScrollTop + '/' + origScrollHeight + ' ' + s.scrollTop + ' ' + s.scrollTop + ' ' + intScrollTop);
         }
     }
+    showAlign();
 }
 
 
@@ -2920,20 +2902,20 @@ function loadField2amr() {
             console.log('Remaining text: ' + rest);
         }
     }
+
+    // to be deleted if we can get the info from umr directly
+    // var alignArray = document.getElementById('align').innerText.trim().split(/\n/);
+    // var alignArrayLen = alignArray.length;
+    // for (var i = 0; i < alignArrayLen; i++) {
+    //     var splitted_align = alignArray[i].split(":");
+    //     var loaded_concept = splitted_align[0].trim();
+    //     var loaded_variable = splitted_align[1].trim();
+    //     var loaded_align = splitted_align[2].trim();
+    //     var loc = getLocs(loaded_variable);
+    //     umr[loc + '.a'] = loaded_align;
+    // }
     // console.log(umr);
 
-    var alignArray = document.getElementById('align').innerText.trim().split(/\n/);
-    var alignArrayLen = alignArray.length;
-    for (var i = 0; i < alignArrayLen; i++) {
-        var splitted_align = alignArray[i].split(":");
-        var loaded_concept = splitted_align[0].trim();
-        var loaded_variable = splitted_align[1].trim();
-        var loaded_align = splitted_align[2].trim();
-        var loc = getLocs(loaded_variable);
-        umr[loc + '.a'] = loaded_align;
-    }
-
-    console.log(umr);
     show_amr('show');
 }
 
