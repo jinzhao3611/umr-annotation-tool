@@ -128,7 +128,7 @@
     {# choose the sentence ID #}
     <form class="row g-3" method="post">
         <div class="col-sm">
-            <input type="submit" name="prev_sentence" id="prev_sentence" value="previous">
+            <input type="submit" name="prev_sentence" id="prev_sentence" onclick="UMR2db()" value="previous">
         </div>
         <label for="sentence_id" class="col-sm col-form-label">Sentence</label>
 
@@ -136,7 +136,7 @@
                 <input type="text" readonly class="form-control-plaintext" name="sentence_id" id="sentence_id" value="{{ snt_id }}">
         </div>
         <div class="col-sm">
-            <input type="submit" name="next_sentence" id="next_sentence" value="next">
+            <input type="submit" name="next_sentence" id="next_sentence" onclick="UMR2db()" value="next">
         </div>
     </form>
 
