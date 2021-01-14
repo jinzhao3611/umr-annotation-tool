@@ -430,7 +430,7 @@
 {% block content2 %}
     <div style="height: 250px;">
         <div id="text-command">
-            <table>
+            <table style="display:none;">
                 <tr>
                     <td>Enter text command:</td>
                     <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
@@ -861,7 +861,7 @@
     </div>
 
     <script type="text/javascript">
-        load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}')
+        load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}', '{{ curr_sent_umr|tojson|safe }}')
 
         document.getElementById("amr").addEventListener("input", e => {
             console.log("event is fired1");

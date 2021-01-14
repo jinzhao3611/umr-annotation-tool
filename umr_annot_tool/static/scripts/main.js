@@ -65,8 +65,9 @@ function initialize(frame_dict_str) {
  * load the annotation for current sentence from database
  * @param curr_sent_annot: pennman annotation directly from database, with html encoding, but no html tags
  * @param curr_sent_align: text alignment info from database
+ * @param curr_sent_umr
  */
-function load_history(curr_sent_annot, curr_sent_align){
+function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     // console.log("curr_sent_annot: ", curr_sent_annot);
     // console.log("curr_sent_align: ", curr_sent_align);
     // console.log("html string to be loaded:", deHTML(curr_sent_annot));
@@ -77,6 +78,9 @@ function load_history(curr_sent_annot, curr_sent_align){
     setInnerHTML('align', curr_sent_align);
     // console.log(document.getElementById('align'));
     loadField2amr();
+    umr = JSON.parse(curr_sent_umr);
+    showAlign();
+    showAnnotatedTokens();
 }
 
 /**
@@ -560,7 +564,7 @@ function submit_template_action(id, numbered_predicate = "") {
                 current_parent = umr[new_k];
                 console.log("current_parent is " + current_parent);
             }
-            // highlight(document.getElementById("amr"), ["\\(" + current_parent]);
+            showHead();
             current_mode = 'add';
         }
     } else if (id === 'set_parent') {
@@ -577,7 +581,7 @@ function submit_template_action(id, numbered_predicate = "") {
             current_parent = umr[new_k];
             console.log("current_parent is: " + current_parent);
         }
-        // highlight(document.getElementById("amr"), ["\\(" + current_parent]);
+        showHead();
     } else if (id === 'doc-annot') {
         // current_parent = 's';
     } else if (id === 'add') {
@@ -1187,17 +1191,54 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     }
 }
 
+function showAnnotatedTokens(){
+    console.log("showAnnotatedTokens is called");
+    console.log(umr);
+    Object.keys(umr).forEach(function (key) {
+        if (/[\\d|\\.]+a/gm.test(key)) {
+            if (!(key.replace('a', 'd') in umr)){
+                let indice = umr[key].split("-");
+                if ((parseInt(indice[0]) > 0) && (parseInt(indice[1]) > 0)){
+                    for (let i = parseInt(indice[0]); i <= parseInt(indice[1]); i++) {
+                        let cell2highlight = document.getElementById("sentence").childNodes[2].getElementsByTagName("td")[i-1];
+                        let newNode = document.createElement("span");
+                        // Make it highlight
+                        newNode.setAttribute("class", "text-success");
+                        //Make it deletable by click
+                        newNode.onclick = function () {
+                            if (confirm("do you want to delete it?")) {
+                                deleteNode(newNode);
+                            } else {
+                                alert(cell2highlight);
+                            }
+                        };
+                        let cellText = cell2highlight.innerText;
+                        // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
+                        if (cellText !== "Attribute Values " && cellText !== "Attributes "){
+                            newNode.appendChild(document.createTextNode(cell2highlight.innerText));
+                            cell2highlight.replaceChild(newNode, cell2highlight.firstChild)
+                        }
+                        console.log("new cell: " + cell2highlight);
+                    }
+                }
+            }
+        }
+    });
+
+}
 function showAlign(){
     let alignInfo;
     if (( alignInfo = document.getElementById('align')) != null){
         let alignment_string = '';
         Object.keys(umr).forEach(function (key) {
             if (/[\\d|\\.]+c/gm.test(key)) {
-                if (!(key.replace('c', 'd') in umr)){
-                    if(umr[key]){//empty c, has s
+                if (!(key.replace('c', 'd') in umr)){ // if the node is not deleted already
+                    if (umr[key.replace('c', 'a')] !== "NaN-NaN"){ //NaN appears when the same variable is added in the second time
+                        if(umr[key]){//empty c, has s
                         alignment_string += umr[key] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
-                    }else{
-                        alignment_string += umr[key.replace('c', 's')] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+                        }else{
+                            alignment_string += umr[key.replace('c', 's')] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+                        }
                     }
                 }
             }
@@ -1205,7 +1246,18 @@ function showAlign(){
         alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
     }
 }
+function showHead(){
+    let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
+    while(existingHead.length){
+        var parent = existingHead[0].parentNode;
+        while(existingHead[0].firstChild){
+            parent.insertBefore(existingHead[0].firstChild, existingHead[0]);
+    }
+    parent.removeChild(existingHead[0]);
+}
 
+    highlight(document.getElementById("amr"), [current_parent]);
+}
 
 
 
@@ -1365,6 +1417,8 @@ function newAMR(concept) {
     umr[n + '.n'] = 0;
     umr[n + '.s'] = '';
     umr[n + '.a'] = begOffset + "-" + endOffset;
+    begOffset = -1;
+    endOffset = -1;
     recordVariable(v, n);
     recordConcept(concept, n);
     variable2concept[v] = concept;
@@ -1409,11 +1463,18 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg);
             arg_variable = newVar(arg_concept);
             arg_string = '';
+            var abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
+            if(abstractConcepts.indexOf(arg_concept) > -1){ // arg-concept is an abstract concept
+                begOffset = -1;
+                endOffset = -1;
+            }
         } else if (validString(arg)) {
             console.log("I am here41");
             arg_string = arg; // car
             arg_concept = '';
             arg_variable = '';
+            begOffset = -1;
+            endOffset = -1;
         } else if (validString(stripQuotes(arg))) {
             console.log("I am here42");
             arg_string = stripQuotes(arg);
@@ -1438,6 +1499,8 @@ function addTriple(head, role, arg, arg_type) {
         umr[new_loc + '.c'] = arg_concept;
         umr[new_loc + '.s'] = arg_string;
         umr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
+        begOffset = -1;
+        endOffset = -1;
 
         recordVariable(arg_variable, new_loc);
         recordConcept(arg_concept, new_loc);
@@ -2157,7 +2220,7 @@ function role_unquoted_string_arg(role, arg, loc) {
     } else if (arg.match(/^\d+(?:\.\d+)?$/)       // number
         || arg.match(/^(-|\+)$/)     // polarity/unknown
         || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/))
-        || ((role ===':Aspect') && arg.match(/^(|Habitural|habitural|Activity|activity|Endeavor|endeavor|Performance|performance)$/))) {
+        || ((role ===':Aspect') && arg.match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance)$/))) {
         return 1;
     } else {
         return 0;
@@ -2515,6 +2578,8 @@ function show_amr(args, amr_id='') {
         }
     }
     showAlign();
+    showAnnotatedTokens();
+    showHead();
 }
 
 
@@ -2930,15 +2995,18 @@ document.onselectionchange = function selectSpan() {
 
 function highlightSelection() {
     console.log("highlightSelection is called.");
+
     var userSelection = document.getSelection();
 
     //Attempting to highlight multiple selections (for multiple nodes only + Currently removes the formatting)
     //Copy the selection onto a new element and highlight it
     // var node = highlightRange(userSelection.getRangeAt(0)/*.toString()*/);
     // Make the range into a variable so we can replace it
+
     var range = userSelection.getRangeAt(0);
     var startIdx = range.startContainer.parentNode.cellIndex;
     var endIdx = range.endContainer.parentNode.cellIndex;
+
     var tableRow = range.endContainer.parentNode.parentNode;
     for (let i = startIdx; i <= endIdx; i++) {
         var newNode = document.createElement("span");
@@ -2955,7 +3023,7 @@ function highlightSelection() {
         };
         let cellText = tableRow.cells[i].innerText;
         // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
-        if (cellText !== "Attribute Values " && cellText !== "Attributes "){
+        if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !== "Abstract Concept "){
             newNode.appendChild(document.createTextNode(tableRow.cells[i].innerText));
             tableRow.cells[i].replaceChild(newNode, tableRow.cells[i].firstChild)
         }
@@ -3346,10 +3414,11 @@ function UMR2db() {
     let snt_id = document.getElementById('sentence_id').value;
     console.log(amrHtml);
     console.log(align_info);
+    console.log(umr);
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id})
+        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {

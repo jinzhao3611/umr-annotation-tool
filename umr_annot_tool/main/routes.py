@@ -39,8 +39,9 @@ def html(content_string: str) -> Tuple[List[List[str]], str, List[str], List[str
 
         for df in dfs:
             df.columns = range(1, len(df.columns) + 1)
-            df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace('border="1"',
-                                                                                                        'border="0"')
+            df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace(
+                'border="1"',
+                'border="0"')
             soup = BeautifulSoup(df_html, "html.parser")
             words_row = soup.findAll('tr')[0]
             words_row['id'] = 'current-words'
@@ -129,8 +130,16 @@ def annotate(doc_id):
     except:
         curr_sent_align = ""
 
+    try:
+        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
+                                                Annotation.user_id == current_user.id).first().umr
+    except:
+        curr_sent_umr = {}
+
     print("curr_sent_annot", curr_sent_annot)
     print("curr_sent_align", curr_sent_align)
+    print("curr_sent_umr", curr_sent_umr)
+    print(type(curr_sent_umr))
 
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id).all()
@@ -150,17 +159,20 @@ def annotate(doc_id):
             print("align_ino:", align_info)
             snt_id_info = request.get_json(force=True)["snt_id"]
             print("snt_id_info:", snt_id_info)
+            umr_dict = request.get_json(force=True)["umr"]
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
                 print("upadating existing annotation")
                 existing.annot_str = amr_html
                 existing.alignment = align_info
+                existing.umr = umr_dict
                 db.session.commit()
             else:
                 annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
                                         sent_id=snt_id_info,
-                                        doc_id=doc_id)
+                                        doc_id=doc_id,
+                                        umr=umr_dict)
                 db.session.add(annotation)
                 db.session.commit()
             return {"amr": amr_html}
@@ -172,6 +184,7 @@ def annotate(doc_id):
                            notes=notes,
                            frame_dict=frame_dict,
                            curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
+                           curr_sent_umr=curr_sent_umr,
                            exported_items=exported_items)
 
 
@@ -184,7 +197,6 @@ def doclevel(doc_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
     sent_annot_pairs = list(zip(sents, annotations))
     print("sent_annot_pairs: ", sent_annot_pairs)
-
 
     # add to db
     if request.method == 'POST':
@@ -205,10 +217,9 @@ def doclevel(doc_id):
         except:
             print("add doc level annotation to database failed")
 
-
     frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
-    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename, frame_dict=frame_dict, title='Doc Level Annotation')
-
+    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
+                           frame_dict=frame_dict, title='Doc Level Annotation')
 
 
 @main.route("/about")
@@ -222,7 +233,8 @@ def display_post():
     # posts = Post.query.all()
     page = request.args.get('page', default=1, type=int)
     # posts = Post.query.paginate(page=page, per_page=2)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=2)  # if we want to order the posts from the lastest to the oldest
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,
+                                                                  per_page=2)  # if we want to order the posts from the lastest to the oldest
     return render_template('display_post.html', posts=posts)
 
 
