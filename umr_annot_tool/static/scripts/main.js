@@ -1259,7 +1259,7 @@ function showHead(){
         }
         parent.removeChild(existingHead[0]);
     }
-    highlight(document.getElementById("amr"), [current_parent]);
+    highlight(document.getElementById("amr"), [current_parent + " "]);
 }
 
 

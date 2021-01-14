@@ -845,7 +845,7 @@
     </table>
 
     <div>
-        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>
+        <button class="btn btn-outline-secondary" style="display:none" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>
 {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>#}
         <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
 
@@ -881,6 +881,13 @@
                 submit_template_action("replace");
             }
         })
+
+         console.log("sent number is: ", {{ sents|length }});
+        console.log("sent id is: ", document.getElementById("sentence_id").value);
+        if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){
+            console.log("show the dbbutton!!!!!");
+            document.getElementById("db").style.display = "inline";
+        }
 
 
     </script>
