@@ -101,13 +101,13 @@
             </div>
 
             <div class="col-sm" style="overflow-x: scroll">
-                <p>Doc-Level Annotation:</p>
+                <h5>Doc-Level Annotation:</h5>
 {#                    this doesnt work now#}
             {% if current_sent_pair[1].doc_annot | length %}
 {#            if current sentence doc_annotation is not empty in database, load from database#}
                 {% if loop.index == current_snt_id %}
                     {% autoescape off %}
-                        {{ pair[1].doc_annot }}
+                        {{ pair[1].doc_annot | replace('<div id="db-amr">','<div id="amr">') }}
                     {% endautoescape %}
                 {% else %}
                     {% autoescape off %}
@@ -380,6 +380,12 @@
         </table>
         </p>
     </div>
+
+    <div style="display: none">
+    this is amr to save in db:
+        <div id="db-amr">
+        </div>
+    </div>
 {% endblock content %}
 
 {% block content2 %}
@@ -487,8 +493,8 @@
     </div>
 
     <script type="text/javascript">
-        console.log("I am here jinzhao");
-        console.log('{{ current_sent_pair[1].doc_annot }}');
+        {#console.log("I am here jinzhao");#}
+        {#console.log('{{ current_sent_pair[1].doc_annot }}');#}
         {#console.log('{{ current_sent_pair[1].doc_umr|tojson|safe }}');#}
         {#console.log('{{ current_snt_id }}');#}
 
