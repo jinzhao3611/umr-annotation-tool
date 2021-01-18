@@ -1194,6 +1194,37 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     }
 }
 
+function correctAlignments(){
+    Object.keys(umr).forEach(function(key){
+        if(umr[key] === "name"){
+            console.log(umr[key]);
+            let beg = 10000;
+            let end = -1;
+            let locs = key.replace('.c','');
+            console.log(locs);
+            let pattern = new RegExp(`${locs}.\\d+.a`);
+            for(let i=0; i<Object.keys(umr).length; i++){
+                if(pattern.test(Object.keys(umr)[i])){
+                    console.log("match!"+ umr[Object.keys(umr)[i]]);
+                    let s = umr[Object.keys(umr)[i]].split('-')[0];
+                    let e = umr[Object.keys(umr)[i]].split('-')[1];
+                    console.log(s);
+                    console.log(e);
+                    if(parseInt(s) < beg){
+                        beg = s;
+                    }
+                    if(parseInt(e) > end){
+                        end = e;
+                    }
+                }
+            }
+            console.log(beg);
+            console.log(end);
+            umr[key.replace('.c','.a')] = beg + '-' + end;
+        }
+    })
+}
+
 function showAnnotatedTokens(){
     console.log("showAnnotatedTokens is called");
     console.log(umr);
@@ -1231,6 +1262,7 @@ function showAnnotatedTokens(){
 
 }
 function showAlign(){
+    correctAlignments();
     let alignInfo;
     if (( alignInfo = document.getElementById('align')) != null){
         let alignment_string = '';
@@ -1475,8 +1507,15 @@ function addTriple(head, role, arg, arg_type) {
             arg_string = arg; // "Edmond"
             arg_concept = '';
             arg_variable = '';
-            begOffset = -1;
-            endOffset = -1;
+            // this has potential problem when multiple string appears in same sentence
+            let len = document.getElementById('sentence').children[1].rows[0].cells.length
+            for (let i=0; i<len; i++){
+                if(document.getElementById('sentence').children[1].rows[0].cells[i].innerText===arg){
+                    begOffset = i;
+                    endOffset = i;
+                }
+            }
+
         } else if(validString(arg)){
             console.log("I am here41-1");
             arg_concept = trimConcept(arg.toLowerCase());
