@@ -280,7 +280,7 @@ function show_attribute_values(){
  * potentially merge this in submit_template_action or exec_command function
  */
 function multipleWords() {
-    let c = current_concept.replace(" ", "-");
+    let c = current_concept.replaceAll(" ", "-");
     submit_template_action("add", c)
 }
 
@@ -3045,9 +3045,9 @@ function highlight(elem, keywords, caseSensitive = true, cls = 'text-success') {
       keywords.sort((a, b) => b.length - a.length);
       Array.from(elem.childNodes).forEach(child => {
         const keywordRegex = RegExp(keywords.join('|'), flags);
-        console.log("console list is: ", keywords);
-        console.log("pattern is: ", keywords.join('|')+ "space?");
-        console.log("first keyword: ", keywords[0] === undefined );
+        // console.log("console list is: ", keywords);
+        // console.log("pattern is: ", keywords.join('|')+ "space?");
+        // console.log("first keyword: ", keywords[0] === undefined );
         if (child.nodeType !== 3) { // not a text node
           highlight(child, keywords, caseSensitive, cls);
         } else if (keywordRegex.test(child.textContent)) {
