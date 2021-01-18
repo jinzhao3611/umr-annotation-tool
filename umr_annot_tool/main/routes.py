@@ -154,6 +154,10 @@ def annotate(doc_id):
     if request.method == 'POST':
         try:
             amr_html = request.get_json(force=True)["amr"]
+            # get rid of the head highlight tag
+            amr_html = amr_html.replace('<span class="text-success">', '')
+            amr_html = amr_html.replace('</span>', '')
+
             print("amr_html: ", amr_html)
             align_info = request.get_json(force=True)["align"]
             print("align_ino:", align_info)
@@ -172,7 +176,7 @@ def annotate(doc_id):
                 annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
-                                        umr=umr_dict)
+                                        umr=umr_dict, doc_umr={})
                 db.session.add(annotation)
                 db.session.commit()
             return {"amr": amr_html}
@@ -205,11 +209,13 @@ def doclevel(doc_id):
             print("umr_html: ", umr_html)
             snt_id_info = request.get_json(force=True)["snt_id"]
             print("snt_id_info:", snt_id_info)
+            umr_dict = request.get_json(force=True)["umr_dict"]
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
                 print("upadating existing annotation")
                 existing.doc_annot = umr_html
+                existing.doc_umr = umr_dict
                 db.session.commit()
             else:
                 print("the sent level annotation of the current sent doesn't exist")
@@ -217,9 +223,17 @@ def doclevel(doc_id):
         except:
             print("add doc level annotation to database failed")
 
-    frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
+    current_snt_id = 1
+    if "set_sentence" in request.form:
+        current_snt_id = int(request.form["sentence_id"])
+
+    print(sent_annot_pairs[current_snt_id-1][1].doc_annot)
+    print(sent_annot_pairs[current_snt_id-1][1].doc_umr)
+    print(current_snt_id)
+
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
-                           frame_dict=frame_dict, title='Doc Level Annotation')
+                           title='Doc Level Annotation', current_snt_id=current_snt_id,
+                           current_sent_pair=sent_annot_pairs[current_snt_id-1])
 
 
 @main.route("/about")

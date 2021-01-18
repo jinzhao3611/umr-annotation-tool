@@ -14,10 +14,6 @@
     <script src="../static/scripts/FileSaver.js"></script>
 
 
-    <script src="../static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
-    <script src="../static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
-
-
     <style type="text/css">
         .dropdown-submenu {
             position: relative;
@@ -72,10 +68,9 @@
 {% endblock head %}
 
 {% block content %}
-<div style="position:relative; min-height: 100%">
     <div id="info" style="height: auto; overflow-y: scroll; max-height: 250px;">
         <script type="text/javascript">
-            initialize("{{ frame_dict }}")
+            initialize()
         </script>
         <table>
             <tr>
@@ -97,33 +92,39 @@
     {% for pair in sent_annot_pairs %}
         <div class="row">
             <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
-                <p>{{ pair[0].content }}</p>
+                <p>{{ loop.index }}. {{ pair[0].content }}</p>
                 {% autoescape off %}
-                <p>{{ pair[1].annot_str }}</p>
+                <div id="amr{{ loop.index }}" >
+                <p>{{ pair[1].annot_str | replace('<div id="amr">','') | replace('</div>','')}}</p>
+                </div>
                 {% endautoescape %}
             </div>
 
             <div class="col-sm" style="overflow-x: scroll">
                 <p>Doc-Level Annotation:</p>
 {#                    this doesnt work now#}
-                <div id="amr{{ loop.index }}"></div>
+            {% if current_sent_pair[1].doc_annot | length %}
+{#            if current sentence doc_annotation is not empty in database, load from database#}
+                {% if loop.index == current_snt_id %}
+                    {% autoescape off %}
+                        {{ pair[1].doc_annot }}
+                    {% endautoescape %}
+                {% else %}
+                    {% autoescape off %}
+                        <div id="amr_doc{{ loop.index }}" >
+                        <p>{{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','')}}</p>
+                        </div>
+                    {% endautoescape %}
+                {% endif %}
+            {% else %}
+{#          if current sentence doc_annotation is empty in database, create a sentence top #}
+                {% if loop.index == current_snt_id %}
+                    <div id="amr">(s{{ loop.index }} / sentence)<br></div>
+                {% else %}
+                    <div id="amr_doc{{ loop.index }}">(s{{ loop.index }} / sentence)<br></div>
+                {% endif %}
+            {% endif %}
             </div>
-{#            {% if pair[1].doc_annot == '' %}#}
-{#                <div class="col-sm" style="overflow-x: scroll">#}
-{#                    <p>Doc-Level Annotation:</p>#}
-{#                    this doesnt work now#}
-{#                    <div id="amr{{ loop.index }}">(s{{ loop.index }}&nbsp;/&nbsp;sentence)</div>#}
-{#                </div>#}
-{#            {% else %}#}
-{#                <div class="col-sm" style="overflow-x: scroll">#}
-{#                    <p>Doc-Level Annotation:</p>#}
-{#                    this doesn't work now#}
-{#                    {% autoescape off %}#}
-{#                    <p>{{ pair[1].doc_annot }}</p>#}
-{#                    {% endautoescape %}#}
-{#                </div>#}
-{#            {% endif %}#}
-
         </div>
     {% endfor %}
 
@@ -379,7 +380,6 @@
         </table>
         </p>
     </div>
-</div>
 {% endblock content %}
 
 {% block content2 %}
@@ -404,9 +404,12 @@
         </div>
     </div>
 
-    <div>
-        <p>current sentence: <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value=1> </p>
-    </div>
+    <form method="post">
+        <p>current sentence:
+            <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
+            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go">
+        </p>
+    </form>
 
     <div id="temporal_relations">
         <label for="temporal_relations">Temporal Relations</label>
@@ -467,7 +470,8 @@
 
     <div>
         <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>
-        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>
+{# jinja cannot accept dictionary like this, so this button doesn't work#}
+{#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');">load_history</a></button>#}
         <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
 
         <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
@@ -480,6 +484,15 @@
 {#        <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>#}
 {#        <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>#}
         <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.annotate', doc_id=doc_id) }}">sent-level-annot</a>
-
     </div>
+
+    <script type="text/javascript">
+        console.log("I am here jinzhao");
+        console.log('{{ current_sent_pair[1].doc_annot }}');
+        {#console.log('{{ current_sent_pair[1].doc_umr|tojson|safe }}');#}
+        {#console.log('{{ current_snt_id }}');#}
+
+        load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
+    </script>
+
 {% endblock content2 %}

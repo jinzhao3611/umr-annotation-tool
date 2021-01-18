@@ -75,6 +75,7 @@ class Annotation(db.Model):
     doc_annot = db.Column(db.Text, nullable=False)
     alignment = db.Column(db.Text, nullable=False)
     umr = db.Column(db.JSON, nullable=False)
+    doc_umr = db.Column(db.JSON, nullable=False)
     sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
