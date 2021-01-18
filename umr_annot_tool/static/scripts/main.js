@@ -1470,13 +1470,18 @@ function addTriple(head, role, arg, arg_type) {
                 begOffset = -1;
                 endOffset = -1;
             }
-        } else if (validString(arg)) {
+        } else if (validString(arg) && umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name'){
             console.log("I am here41");
-            arg_string = arg; // car
+            arg_string = arg; // "Edmond"
             arg_concept = '';
             arg_variable = '';
             begOffset = -1;
             endOffset = -1;
+        } else if(validString(arg)){
+            console.log("I am here41-1");
+            arg_concept = trimConcept(arg.toLowerCase());
+            arg_variable = newVar(arg_concept);
+            arg_string = '';
         } else if (validString(stripQuotes(arg))) {
             console.log("I am here42");
             arg_string = stripQuotes(arg);
