@@ -3316,11 +3316,34 @@ function export_annot(exported_items) {
     } else {
         console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
     }
-
-
 }
 
 
+function initialCommand(current_snt_id){
+    if ((command_input = document.getElementById('initial_command')) != null) {
+        let c_list = argSplit(command_input.value);
+        let arg_outer = c_list[0];
+        let arg_inner = c_list[1];
+        let role_outter = '';
+        let role_inner = '';
+        if(document.getElementById('temporal_relations').value !== ''){
+            role_inner = document.getElementById('temporal_relations').value;
+            role_outter = ':temporal';
+        }else if(document.getElementById('modal_relations').value !== ''){
+            role_inner = document.getElementById('modal_relations').value;
+            role_outter = ':modal';
+        }else{
+            role_inner = document.getElementById('coref_relations').value;
+            role_outter = ':coref';
+        }
 
+        let command1 = 's'+ current_snt_id + ' ' + role_outter + ' ' + arg_outer;
+        exec_command(command1, '1')
+
+        let command2 = arg_outer + ' ' + role_inner + ' ' + arg_inner;
+        exec_command(command2, '1')
+
+    }
+}
 
 

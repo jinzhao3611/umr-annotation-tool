@@ -417,7 +417,7 @@
         </p>
     </form>
 
-    <div id="temporal_relations">
+    <div id="t_rels">
         <label for="temporal_relations">Temporal Relations</label>
         <input list="t_relations" name="temporal_relations" id="temporal_relations" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="t_relations">
@@ -428,7 +428,7 @@
         </datalist>
 {#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
     </div>
-    <div id="modal_relations">
+    <div id="m_rels">
         <label for="modal_relations">Modal Relations</label>
         <input list="m_relations" name="modal_relations" id="modal_relations" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="m_relations">
@@ -441,7 +441,7 @@
         </datalist>
 {#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
     </div>
-        <div id="coref_relations">
+        <div id="c_rels">
         <label for="coref_relations">Coref Relations</label>
         <input list="c_relations" name="coref_relations" id="coref_relations" onfocus="this.value=''" onchange="this.blur();">
         <datalist id="c_relations">
@@ -457,10 +457,10 @@
         <table>
             <tr>
                 <td>Enter args:</td>
-                <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
+                <td><textarea class="form-control" rows="1" cols="50" id="initial_command" name="command" autocapitalize="off"
                               autocorrect="off"
                               spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
-                              onkeyup=""></textarea></td>
+                              onenter=""></textarea></td>
                 <td width="20"></td>
             <tr>
                 <td colspan="4"><span id="error"><i></i></span></td>
@@ -470,6 +470,8 @@
                 <td colspan="3"><span id="action"></span></td>
             </tr>
         </table>
+        <button onclick="initialCommand({{ current_snt_id }}); ">submit</button>
+
     </div>
 
 
