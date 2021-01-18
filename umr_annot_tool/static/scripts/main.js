@@ -84,6 +84,7 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     }
     showAlign();
     showAnnotatedTokens();
+    // undo_list.push(cloneCurrentState()); //populate undo_list
 }
 
 /**
