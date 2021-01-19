@@ -96,7 +96,7 @@
     {# display all the sentences #}
     <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 250px;">
         <script type="text/javascript">
-            initialize("{{ frame_dict }}",'{{ curr_sent_annot }}','{{ curr_sent_align }}')
+            initialize("{{ frame_dict }}", "{{ lang }}")
         </script>
         {% autoescape off %}
         <p>{{ sents_html }}</p>

@@ -1,7 +1,7 @@
 let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": false, "option-1-line-ORs": false,
     "option-fix-font":true, "option-role-auto-case":false, "option-auto-check":true, "option-auto-moveto":true,
     "option-confirm-delete":false, "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
-
+let language;
 let current_parent;
 let current_concept;
 let current_relation;
@@ -50,8 +50,10 @@ var next_special_action = ''; //''
 /**
  *
  * @param frame_dict_str: frame json file from post
+ * @param lang
  */
-function initialize(frame_dict_str) {
+function initialize(frame_dict_str, lang) {
+    language = lang;
     console.log("initialize is called5");
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
@@ -83,7 +85,9 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
         umr['n'] = 0;
     }
     showAlign();
-    showAnnotatedTokens();
+    if(language !== "Default"){
+        showAnnotatedTokens();
+    }
     // undo_list.push(cloneCurrentState()); //populate undo_list
 }
 
@@ -550,7 +554,7 @@ function color_amr_elem(id, color, event_type) {
 /** entrance ******************************************************/
 function submit_template_action(id, numbered_predicate = "") {
     console.log("submit_template_action: id: " + id + ", numbered_predicate: " + numbered_predicate);
-    highlightSelection();
+    // highlightSelection();
     if (numbered_predicate !== "") {
         current_concept = numbered_predicate;
     }
@@ -857,6 +861,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                                 if (validEntryConcept(cc[i])) {
                                     // create a new tree
                                     newAMR(trimConcept(cc[i]));
+                                } else if(language==='Default'){
+                                    newAMR(cc[i]);
                                 } else {
                                     console.log('Ill-formed command "' + cc[0] + ' <font color="red">' + cc[i] + '</font>" &nbsp; Argument should be last_command concept.');
                                 }
@@ -1150,7 +1156,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 } else {
                     console.log("I am here34");
                     if (!value.match(/^(h|help)\b/i)) {
-                        add_error('Unrecognized command: <font color="red">' + value + '</font>');
+                        console.log('Unrecognized command: <font color="red">' + value + '</font>');
                     }
                     selectTemplate('help');
                     top = 0;
@@ -1219,6 +1225,7 @@ function correctAlignments(){
             umr[key.replace('.c','.a')] = beg + '-' + end;
         }
     })
+
 }
 
 function showAnnotatedTokens(){
@@ -1484,7 +1491,8 @@ function addTriple(head, role, arg, arg_type) {
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        } else if (validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
+        } else if (language!== 'Default'
+            && validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))) {
@@ -1497,7 +1505,20 @@ function addTriple(head, role, arg, arg_type) {
                 begOffset = -1;
                 endOffset = -1;
             }
-        } else if (validString(arg) //matches all non-white space character (except ")
+        } else if (language!== 'Default'
+            && (arg_type !== 'string')
+            && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
+            && (!role.match(/^:?(li|wiki)$/))) {
+            console.log("I am here402");
+            arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            arg_variable = newVar(arg_concept); // truffle -> s1t
+            arg_string = '';
+            var abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
+            if (abstractConcepts.indexOf(arg_concept) > -1) { // arg-concept is an abstract concept
+                begOffset = -1;
+                endOffset = -1;
+            }
+        }else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
                 ||role.match(/^(:Aspect|:mode|:polarity)$/))){
             console.log("I am here41");
@@ -2625,7 +2646,9 @@ function show_amr(args) {
         }
     }
     showAlign();
-    showAnnotatedTokens();
+    if(language !== "Default"){
+        showAnnotatedTokens();
+    }
     showHead();
 }
 
@@ -2715,7 +2738,7 @@ function string2amr_rec(s, loc, state, ht) {
         if (pre_open_para_l[0].match(/\S/)) {
             load_amr_feedback_alert = 1;
         }
-        if (s.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/)) {
+        if (s.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/) || language === "Default") {
             var decorated_slash;
             s = s.replace(/^\(\s*/, "");
             var variable_l = s.match(/^[a-zA-Z0-9][-_a-zA-Z0-9']*/);
@@ -3036,8 +3059,13 @@ document.onselectionchange = function selectSpan() {
     selected_tokens.innerHTML = "";
     selected_tokens.innerHTML += selection;
     // console.log("selected_tokens: ", selected_tokens);
-    begOffset = selection.anchorNode.parentElement.cellIndex + 1;
-    endOffset = selection.focusNode.parentElement.cellIndex + 1;
+    if(language==='Default'){
+        begOffset = selection.anchorNode.parentElement.cellIndex;
+        endOffset = selection.focusNode.parentElement.cellIndex;
+    }else{
+        begOffset = selection.anchorNode.parentElement.cellIndex + 1;
+        endOffset = selection.focusNode.parentElement.cellIndex + 1;
+    }
 };
 
 function highlightSelection() {
