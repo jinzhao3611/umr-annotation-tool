@@ -63,7 +63,7 @@ class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
-    annotations = db.relationship('Annotation', backref='sentence', lazy=True)
+    # annotations = db.relationship('Annotation', backref='sentence', lazy=True)
 
 
     # def __repr__(self):
@@ -76,7 +76,8 @@ class Annotation(db.Model):
     alignment = db.Column(db.Text, nullable=False)
     umr = db.Column(db.JSON, nullable=False)
     doc_umr = db.Column(db.JSON, nullable=False)
-    sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
+    # sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
+    sent_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
 
