@@ -1144,11 +1144,11 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
                     console.log("I am here32");
                     if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
-                        add_error('In <i>add</i> command, <font color="red">' + cc[0] + '</font> is not last_command defined variable.');
+                        console.log('In <i>add</i> command, <font color="red">' + cc[0] + '</font> is not last_command defined variable.');
                     } else if (cc.length == 2) {
-                        add_error('In <i>add</i> command, there must be at least 3 arguments.');
+                        console.log('In <i>add</i> command, there must be at least 3 arguments.');
                     } else {
-                        add_error('Unrecognized <i>add</i> command.');
+                        console.log('Unrecognized <i>add</i> command.');
                     }
                 } else if (value.match(/^record /i)) { //sample match: 'record reop s1n'
                     console.log("I am here33");
@@ -1510,7 +1510,7 @@ function addTriple(head, role, arg, arg_type) {
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here402");
-            arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
             var abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
@@ -1535,12 +1535,6 @@ function addTriple(head, role, arg, arg_type) {
                     endOffset = i;
                 }
             }
-        } else if(validString(arg)){ //matches all non-white space character (except ")
-            // this if for the case He -> s1h/he
-            console.log("I am here41-1");
-            arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
-            arg_variable = newVar(arg_concept); // truffle -> s1t
-            arg_string = '';
         } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
             console.log("I am here42");
             arg_string = stripQuotes(arg);
@@ -2277,7 +2271,7 @@ function show_amr_new_line_p(loc) {
  * @returns {number}
  */
 function role_unquoted_string_arg(role, arg, loc) {
-    // console.log("role_unquoted_string_arg: role: " + role + " arg: " + arg + " loc: "+ loc);
+    console.log("role_unquoted_string_arg: role: " + role + " arg: " + arg + " loc: "+ loc);
     let head_loc = '';
     let head_concept = '';
     let head_role = '';
@@ -3543,7 +3537,8 @@ function export_annot(exported_items) {
         + a[1]
         + "\n# alignment:"
         + a[2]
-        + "\n# document level annotation:\nempty\n").join("\n\n# :: snt");
+        + "\n# document level annotation:"
+        + "\nempty\n").join("\n\n# :: snt");
     console.log(output_str);
 
     let filename;
