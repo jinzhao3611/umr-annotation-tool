@@ -145,9 +145,13 @@ def annotate(doc_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
     all_annots = [annot.annot_str for annot in annotations]
+    print("all_annots: ", all_annots)
     all_aligns = [annot.alignment for annot in annotations]
+    print("all_aligns: ", all_aligns)
     all_doc_annots = [annot.doc_annot for annot in annotations]
+    print("all_doc_annots: ", all_doc_annots)
     all_sents = [sent2.content for sent2 in filtered_sentences]
+    print("all_sents: ", all_sents)
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
@@ -199,8 +203,9 @@ def doclevel(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
-    sents = Sent.query.filter(Sent.doc_id == doc.id).all()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
+    sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id).order_by(Annotation.sent_id).all()
+    # annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
 
     sent_annot_pairs = list(zip(sents, annotations))
     print("sent_annot_pairs: ", sent_annot_pairs)
@@ -208,11 +213,26 @@ def doclevel(doc_id):
     print(annotations[0].annot_str)
     print(annotations[1].annot_str)
 
-
     sent, annot = sent_annot_pairs[0]
     print("*********")
     print('sent: ', sent.content)
     print('annot: ', annot.annot_str)
+    sent2, annot2 = sent_annot_pairs[1]
+    print("*********")
+    print('sent: ', sent2.content)
+    print('annot: ', annot2.annot_str)
+
+    # load all annotations for current document used for export_annot()
+    all_annots = [annot.annot_str for annot in annotations]
+    print("all_annots: ", all_annots)
+    all_aligns = [annot.alignment for annot in annotations]
+    print("all_aligns: ", all_aligns)
+    all_doc_annots = [annot.doc_annot for annot in annotations]
+    print("all_doc_annots: ", all_doc_annots)
+    all_sents = [sent2.content for sent2 in sents]
+    print("all_sents: ", all_sents)
+    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+    print("exported_items: ", exported_items)
 
     # add to db
     if request.method == 'POST':
@@ -239,15 +259,15 @@ def doclevel(doc_id):
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
 
-    current_sent_pair = sent_annot_pairs[current_snt_id-1]
+    current_sent_pair = sent_annot_pairs[current_snt_id - 1]
 
-    print("doc_annot: ", sent_annot_pairs[current_snt_id-1][1].doc_annot)
-    print("doc_umr: ", sent_annot_pairs[current_snt_id-1][1].doc_umr)
+    print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
+    print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
     print("current_snt_id: ", current_snt_id)
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair)
+                           current_sent_pair=current_sent_pair, exported_items=exported_items)
 
 
 @main.route("/about")

@@ -54,6 +54,14 @@ function initialize() {
     current_mode = 'top';
 }
 
+function showDefaultUmr(docLen, current_sent_id){
+    for(let i =1; i<=docLen; i++){
+        if(i !== parseInt(current_sent_id)){
+            let html_s_before = document.getElementById('amr_doc'+i).innerText;
+            document.getElementById('amr_doc'+i).innerText = docUmrTransform(html_s_before);
+        }
+    }
+}
 function docUmrTransform(html_umr_s){
     let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
@@ -3280,6 +3288,13 @@ function reset_save(control) {
     }
 }
 
+function deHTML2(s){
+    s = s.replaceAll('<div id="amr">', '');
+    s = s.replaceAll('</div>', "");
+    s = s.replaceAll('<br>', '\n');
+    s = s.replaceAll('&nbsp;', ' ');
+    return s;
+}
 
 function export_annot(exported_items) {
     console.log("exported_items: ", exported_items);
@@ -3292,13 +3307,16 @@ function export_annot(exported_items) {
         e[1] = e[1].replace('</div>', '');
     })
 
+
     let output_str = exported_items.map((a, index) =>
         index + 1 + '\t' + a[0]
         + "\n# sentence level graph:\n"
         + a[1]
         + "\n# alignment:"
         + a[2]
-        + "\n# document level annotation:\nempty\n").join("\n\n# :: snt");
+        + "\n# document level annotation:\n"
+        + deHTML2(docUmrTransform(a[3]))
+        +"\n").join("\n\n# :: snt");
     console.log(output_str);
 
     let filename;
@@ -3318,6 +3336,8 @@ function export_annot(exported_items) {
     } else {
         console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
     }
+
+
 }
 
 

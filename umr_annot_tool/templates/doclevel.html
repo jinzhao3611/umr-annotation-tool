@@ -103,7 +103,7 @@
             <div class="col-sm" style="overflow-x: scroll">
                 <h5>Doc-Level Annotation:</h5>
 {#                    this doesnt work now#}
-            {% if current_sent_pair[1].doc_annot | length %}
+            {% if pair[1].doc_annot | length %}
 {#            if current sentence doc_annotation is not empty in database, load from database#}
                 {% if loop.index == current_snt_id %}
                     {% autoescape off %}
@@ -508,6 +508,7 @@
         {#console.log('{{ current_snt_id }}');#}
 
         load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
+        showDefaultUmr({{ sent_annot_pairs | length }}, {{ current_snt_id }})
     </script>
 
 {% endblock content2 %}
