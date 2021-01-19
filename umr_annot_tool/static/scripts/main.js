@@ -1211,6 +1211,27 @@ function correctAlignments(flag){
             }
         }
 
+        if(key.match(/\d+.v/)){ // deal with coref
+            let locs_list = getLocs(umr[key]).split(' ');
+            if(locs_list.length > 1){
+                let shared_align = "";
+                for(let i = 0; i <locs_list.length; i++){
+                    if(umr[locs_list[i] + '.c'] !==""){
+                        shared_align = umr[locs_list[i] + '.a'];
+                    }
+                }
+                 for(let i = 0; i <locs_list.length; i++){
+                    if(umr[locs_list[i] + '.c'] ===""){
+                        umr[locs_list[i] + '.a'] = shared_align;
+                    }
+                }
+            }
+            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
+            || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
+                umr[key.replace('.v', '.a')] = "-1--1";
+            }
+        }
+
         if(umr[key] === "name"){
             // console.log(umr[key]);
             let beg = 10000;
