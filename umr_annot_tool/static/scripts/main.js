@@ -1,6 +1,9 @@
 let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": false, "option-1-line-ORs": false,
     "option-fix-font":true, "option-role-auto-case":false, "option-auto-check":true, "option-auto-moveto":true,
     "option-confirm-delete":false, "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
+
+let abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
+
 let language;
 let current_parent;
 let current_concept;
@@ -54,13 +57,15 @@ var next_special_action = ''; //''
  */
 function initialize(frame_dict_str, lang) {
     language = lang;
-    console.log("initialize is called5");
+    console.log("initialize is called6");
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
     current_mode = 'top';
     // parse frame files
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
+    begOffset = -1;
+    endOffset = -1;
 }
 
 /**
@@ -1193,11 +1198,19 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     }
 }
 
+
 /**
  * find the correct alignment info for abstract concept like name
  */
-function correctAlignments(){
+function correctAlignments(flag){
     Object.keys(umr).forEach(function(key){
+        if(key.match(/\d+.v/)){
+            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
+            || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
+                umr[key.replace('.v', '.a')] = "-1--1";
+            }
+        }
+
         if(umr[key] === "name"){
             // console.log(umr[key]);
             let beg = 10000;
@@ -1208,14 +1221,15 @@ function correctAlignments(){
             for(let i=0; i<Object.keys(umr).length; i++){
                 if(pattern.test(Object.keys(umr)[i])){
                     // console.log("match!"+ umr[Object.keys(umr)[i]]);
-                    let s = umr[Object.keys(umr)[i]].split('-')[0];
-                    let e = umr[Object.keys(umr)[i]].split('-')[1];
-                    // console.log(s);
-                    // console.log(e);
-                    if(parseInt(s) < beg){
+                    let s = parseInt(umr[Object.keys(umr)[i]].split('-')[0]);
+                    let e = parseInt(umr[Object.keys(umr)[i]].split('-')[1]);
+                    umr[Object.keys(umr)[i]] = s + '-' + e;
+                    console.log(s);
+                    console.log(e);
+                    if(s < beg){
                         beg = s;
                     }
-                    if(parseInt(e) > end){
+                    if(e > end){
                         end = e;
                     }
                 }
@@ -1454,6 +1468,8 @@ function newAMR(concept) {
     umr[n + '.v'] = v;
     umr[n + '.n'] = 0;
     umr[n + '.s'] = '';
+    console.log("begOffset1: ", begOffset);
+    console.log("endOffset1: ", endOffset);
     umr[n + '.a'] = begOffset + "-" + endOffset;
     begOffset = -1;
     endOffset = -1;
@@ -1500,11 +1516,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-            var abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
-            if(abstractConcepts.indexOf(arg_concept) > -1){ // arg-concept is an abstract concept
-                begOffset = -1;
-                endOffset = -1;
-            }
+
         } else if (language!== 'Default'
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1513,11 +1525,6 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-            var abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
-            if (abstractConcepts.indexOf(arg_concept) > -1) { // arg-concept is an abstract concept
-                begOffset = -1;
-                endOffset = -1;
-            }
         }else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
                 ||role.match(/^(:Aspect|:mode|:polarity)$/))){
@@ -1558,6 +1565,13 @@ function addTriple(head, role, arg, arg_type) {
         umr[new_loc + '.n'] = 0;
         umr[new_loc + '.c'] = arg_concept;
         umr[new_loc + '.s'] = arg_string;
+
+        console.log("begOffset2: ", begOffset);
+        console.log("endOffset2: ", endOffset);
+        if(umr[new_loc + '.v'] === "" && umr[new_loc + '.r'].match(/op\d+/)){ // this is hardcoding to deal with the weird bug that name entity alignments always 1 less
+            begOffset += 1;
+            endOffset += 1;
+        }
         umr[new_loc + '.a'] = begOffset + "-" + endOffset;
         begOffset = -1;
         endOffset = -1;
@@ -3047,20 +3061,30 @@ function loadField2amr() {
 
     show_amr('show');
 }
+function selectEvent(){
+    document.onselectionchange = function selectSpan() {
+        selection = document.getSelection();
+        document.getElementById('selected_tokens').innerHTML = "";
+        document.getElementById('selected_tokens').innerHTML += selection;
 
-document.onselectionchange = function selectSpan() {
-    selection = document.getSelection();
-    selected_tokens.innerHTML = "";
-    selected_tokens.innerHTML += selection;
-    // console.log("selected_tokens: ", selected_tokens);
-    if(language==='Default'){
-        begOffset = selection.anchorNode.parentElement.cellIndex;
-        endOffset = selection.focusNode.parentElement.cellIndex;
-    }else{
-        begOffset = selection.anchorNode.parentElement.cellIndex + 1;
-        endOffset = selection.focusNode.parentElement.cellIndex + 1;
-    }
-};
+        console.log("selection: ", selection.anchorNode.parentNode.tagName);
+        if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
+            // if(language==='Default'){
+            //     begOffset = selection.anchorNode.parentElement.cellIndex;
+            //     endOffset = selection.focusNode.parentElement.cellIndex;
+            // }else{
+            //     begOffset = selection.anchorNode.parentElement.cellIndex + 1;
+            //     endOffset = selection.focusNode.parentElement.cellIndex + 1;
+            // }
+
+            console.log("beg cell index: ",selection.anchorNode.parentElement.cellIndex);
+            console.log("end cell index: ",selection.focusNode.parentElement.cellIndex);
+            begOffset = selection.anchorNode.parentElement.cellIndex + 1;
+            endOffset = selection.focusNode.parentElement.cellIndex + 1;
+        }
+    };
+
+}
 
 function highlightSelection() {
     console.log("highlightSelection is called.");
