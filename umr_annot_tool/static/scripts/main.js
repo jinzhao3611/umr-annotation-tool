@@ -1257,7 +1257,9 @@ function correctAlignments(flag){
             }
             // console.log(beg);
             // console.log(end);
-            umr[key.replace('.c','.a')] = beg + '-' + end;
+            if(beg !== 10000){
+                umr[key.replace('.c','.a')] = beg + '-' + end;
+            }
         }
     })
 
