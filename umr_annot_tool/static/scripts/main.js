@@ -3520,6 +3520,20 @@ function docUMR2db() {
     });
 }
 
+function docUmrTransform(html_umr_s){
+    let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
+    let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
+    let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
+    return html_umr_s1.replace(regex2, "$1");
+}
+function deHTML2(s){
+    s = s.replaceAll('<div id="amr">', '');
+    s = s.replaceAll('</div>', "");
+    s = s.replaceAll('<br>', '\n');
+    s = s.replaceAll('&nbsp;', ' ');
+    return s;
+}
+
 function export_annot(exported_items) {
     console.log("exported_items: ", exported_items);
     let doc_name = document.getElementById('filename').innerText
@@ -3531,14 +3545,16 @@ function export_annot(exported_items) {
         e[1] = e[1].replace('</div>', '');
     })
 
+
     let output_str = exported_items.map((a, index) =>
         index + 1 + '\t' + a[0]
         + "\n# sentence level graph:\n"
         + a[1]
         + "\n# alignment:"
         + a[2]
-        + "\n# document level annotation:"
-        + "\nempty\n").join("\n\n# :: snt");
+        + "\n# document level annotation:\n"
+        + deHTML2(docUmrTransform(a[3]))
+        +"\n").join("\n\n# :: snt");
     console.log(output_str);
 
     let filename;

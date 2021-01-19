@@ -146,8 +146,9 @@ def annotate(doc_id):
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
     all_annots = [annot.annot_str for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
+    all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns)]
+    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
     # add to db
