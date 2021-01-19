@@ -30,7 +30,7 @@ def parse_xml(xml_path):
         return parse_toolbox_xml(xml_path)
 
 
-def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], str, str]:
+def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str]:
     """
     parse the Arapahoe toolbox xml file
     :param xml_path: input toolbox xml file path
@@ -49,6 +49,7 @@ def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame
     mb = list()
     ge = list()
     ps = list()
+    sents_gls = list()
 
     for refGroup in root.iter('refGroup'):
         tx_per_sentence = list()
@@ -72,6 +73,8 @@ def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame
                 mb_per_sentence.append(mb_per_word)
                 ge_per_sentence.append(ge_per_word)
                 ps_per_sentence.append(ps_per_word)
+            if txGroup.tag =='ft':
+                sents_gls.append(txGroup.text)
         tx.append(tx_per_sentence)
         mb.append(mb_per_sentence)
         ge.append(ge_per_sentence)
@@ -87,7 +90,7 @@ def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame
         df = pd.DataFrame([tx[i], [" ".join(e) for e in mb[i]], [" ".join(e) for e in ge[i]], [" ".join(e) for e in ps[i]]])
         df.index=['Words'] + rowIDs
         tbls.append(df)
-    return tx, tbls, "", ""
+    return tx, tbls, sents_gls, ""
 
 
 def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]]]:

@@ -160,10 +160,11 @@ def annotate(doc_id):
 
             print("amr_html: ", amr_html)
             align_info = request.get_json(force=True)["align"]
-            print("align_ino:", align_info)
+            print("align_ino: ", align_info)
             snt_id_info = request.get_json(force=True)["snt_id"]
-            print("snt_id_info:", snt_id_info)
+            print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
+            print("umr_dict: ", umr_dict)
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
@@ -202,6 +203,15 @@ def doclevel(doc_id):
     sent_annot_pairs = list(zip(sents, annotations))
     print("sent_annot_pairs: ", sent_annot_pairs)
 
+    print(annotations[0].annot_str)
+    print(annotations[1].annot_str)
+
+
+    sent, annot = sent_annot_pairs[0]
+    print("*********")
+    print('sent: ', sent.content)
+    print('annot: ', annot.annot_str)
+
     # add to db
     if request.method == 'POST':
         try:
@@ -213,7 +223,7 @@ def doclevel(doc_id):
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
-                print("upadating existing annotation")
+                print("updating existing annotation")
                 existing.doc_annot = umr_html
                 existing.doc_umr = umr_dict
                 db.session.commit()
@@ -227,13 +237,17 @@ def doclevel(doc_id):
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
 
-    print(sent_annot_pairs[current_snt_id-1][1].doc_annot)
-    print(sent_annot_pairs[current_snt_id-1][1].doc_umr)
-    print(current_snt_id)
+
+    current_sent_pair = sent_annot_pairs[current_snt_id-1]
+
+
+    print("doc_annot: ", sent_annot_pairs[current_snt_id-1][1].doc_annot)
+    print("doc_umr: ", sent_annot_pairs[current_snt_id-1][1].doc_umr)
+    print("current_snt_id: ", current_snt_id)
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=sent_annot_pairs[current_snt_id-1])
+                           current_sent_pair=current_sent_pair)
 
 
 @main.route("/about")

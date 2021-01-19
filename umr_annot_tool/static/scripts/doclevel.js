@@ -54,6 +54,13 @@ function initialize() {
     current_mode = 'top';
 }
 
+function docUmrTransform(html_umr_s){
+    let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
+    let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
+    let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
+    return html_umr_s1.replace(regex2, "$1");
+}
+
 /**
  * load the annotation for current sentence from database
  * @param doc_annot: pennman doc annotation directly from database, with html encoding, but no html tags
@@ -66,7 +73,6 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
     console.log("curr_doc_umr: ", curr_doc_umr);
     console.log("curr_sent_id: ", curr_sent_id);
     if(doc_annot === ""){
-        docUMR2db();
         doc_annot = `&lt;div id=&#34;amr&#34;&gt;(s${curr_sent_id} / sentence)&lt;br&gt;&lt;/div&gt;`;
     }
     setInnerHTML('load-plain', deHTML(doc_annot));
@@ -82,17 +88,16 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
 }
 
 function docUMR2db() {
-    console.log("I am here522");
+    console.log("docUMR2db is called");
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_sent_id').value;
     let umrHtml = document.getElementById('db-amr').outerHTML;
+    umrHtml = umrHtml.replace('<div id="db-amr">', '<div id="amr">');
 
     // umrHtml = umrHtml.replace(/\n/g, "<br>\n");
     umrHtml = umrHtml.replace(/\n/g, "");
     umrHtml = umrHtml.replace(/&xA;/g, "\n");
-
-
-    console.log('doc umr: ' + umrHtml);
+    console.log('doc umr to save in db: ' + umrHtml);
 
     fetch(`/doclevel/${doc_id}`, {
         method: 'POST',
@@ -2431,13 +2436,10 @@ function show_amr(args) {
         //todo how is this different
         html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
 
-        console.log("html_amr_s: " + html_amr_s);
+        console.log("html_amr_s before transform: " + html_amr_s);
         setInnerHTML('db-amr', html_amr_s);
-        let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
-        let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
-        html_amr_s = html_amr_s.replace(regex1, "$1"+ " ");
-        html_amr_s = html_amr_s.replace(regex2, "$1");
-        console.log("html_amr_s: " + html_amr_s);
+        html_amr_s = docUmrTransform(html_amr_s);
+        console.log("html_amr_s after transform: " + html_amr_s);
         setInnerHTML('amr', html_amr_s);
         show_amr_status = args;
     }
@@ -2831,7 +2833,7 @@ function string2amr(s) {
  * this is used to load the penman string
  */
 function loadField2amr() {
-    console.log("loadField2amr is called");
+    console.log("loadField2amr is called: " + document.getElementById('load-plain').value);
     var s;
     if ((s = document.getElementById('load-plain')) != null) {
         var rest = string2amr(s.value);

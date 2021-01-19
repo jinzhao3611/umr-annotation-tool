@@ -107,12 +107,20 @@
 {#            if current sentence doc_annotation is not empty in database, load from database#}
                 {% if loop.index == current_snt_id %}
                     {% autoescape off %}
-                        {{ pair[1].doc_annot | replace('<div id="db-amr">','<div id="amr">') }}
+                        {{ pair[1].doc_annot }}
                     {% endautoescape %}
                 {% else %}
+{#                <script>#}
+{#                    console.log("I am here222");#}
+{#                    html_umr_s= docUmrTransform({{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','') }});#}
+{#                    console.log(html_umr_s);#}
+{#                    let penman = document.createElement("p");#}
+{#                    penman.innerText = html_umr_s2;#}
+{#                    document.getElementById("amr_doc{{ loop.index }}").appendChild(penman);#}
+{#                </script>#}
                     {% autoescape off %}
                         <div id="amr_doc{{ loop.index }}" >
-                        <p>{{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','')}}</p>
+                            <p>{{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','')}}</p>
                         </div>
                     {% endautoescape %}
                 {% endif %}
@@ -127,7 +135,6 @@
             </div>
         </div>
     {% endfor %}
-
 
 
     <div id="replace-template-table" style="display:none;">

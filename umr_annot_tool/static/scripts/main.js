@@ -427,7 +427,6 @@ function selectTemplate(id) {
                 current_template = id;
                 if ((action === 'replace') && !show_amr_status.match(/replace/)) {
                     console.log("I am here 903");
-                    // if clicked on replace from other button
                     show_amr('show replace');
                 } else if ((action === 'delete') && !show_amr_status.match(/delete/)) {
                     show_amr('show delete');
@@ -718,8 +717,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 change_var_name(cc[1], cc[2], top);
                 show_amr_args = 'show';
             } else if (value.match(/^reop\s+[a-z]\d*\s*$/i)) { //example match: reop t1
-                //TODO unclear
-                renorm_ops(cc[1]);
+                renorm_ops(cc[1]); //reorder the op children of cc[1], could be s1n/name
                 show_amr_args = 'show';
             } else if (value.match(/^r[rv]\b\s*(\S.*\S|\S|)\s+\S+\s*$/)) {  // replace role (or secondary variable) shortcut
                 var user_descr = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1"); // only keep the first capturing group
@@ -1060,7 +1058,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         console.log("I am here21");
                         add_error('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
                     } else if (cc[1] == 'concept') {
-                        console.log("I am here22");
                         if (cc.length == 6) {
                             console.log("I am here23");
                             replace_concept(cc[2], cc[3], cc[4], cc[5]);
@@ -1068,7 +1065,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             show_amr_args = 'show';
                         } else {
                             console.log("I am here24");
-                            add_error('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
+                            console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                         }
                     } else if (cc[1] == 'string') {
                         console.log("I am here25");
@@ -1079,7 +1076,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             show_amr_args = 'show';
                         } else {
                             console.log("I am here27");
-                            add_error('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
+                            console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
                         }
                     } else if (cc[1] == 'role') {
                         console.log("I am here28");
@@ -1147,9 +1144,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else {
                         add_error('Unrecognized <i>add</i> command.');
                     }
-                } else if (value.match(/^record /i)) { //TODO unclear
+                } else if (value.match(/^record /i)) { //sample match: 'record reop s1n'
                     console.log("I am here33");
-                    record_value = value.replace(/^record\s*/, "");
+                    record_value = value.replace(/^record\s*/, ""); // 'record reop s1n' -> 'reop s1n'
                 } else {
                     console.log("I am here34");
                     if (!value.match(/^(h|help)\b/i)) {
@@ -1162,23 +1159,18 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
 
             if (top) {// the undo and redo up right corner
                 console.log("I am here35");
-                record_value = record_value || value;
+                record_value = record_value || value; //"record reop s1n"
                 // value: "b :arg1 car"
                 // last_command.innerHTML = record_value;
-                let amr_id='';
-                if(document.getElementById('curr_sent_id') != null){
-                    amr_id =document.getElementById('curr_sent_id').value;
-                }
-                show_amr(show_amr_args, amr_id);
-                // show_amr_args:'show'
+                show_amr(show_amr_args); // show_amr_args:'show'
                 if (state_has_changed_p) {
                     console.log("I am here36");
-                    var old_state = undo_list[undo_index];
+                    let old_state = undo_list[undo_index];
                     old_state['action'] = record_value;
                     undo_index++;
                     undo_list.length = undo_index;
                     undo_list[undo_index] = cloneCurrentState();
-                    var s;
+                    let s;
                     if ((s = document.getElementById('undo-button')) != null) {
                         s.title = 'undo ' + record_value;
                     }
@@ -1195,22 +1187,25 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     }
 }
 
+/**
+ * find the correct alignment info for abstract concept like name
+ */
 function correctAlignments(){
     Object.keys(umr).forEach(function(key){
         if(umr[key] === "name"){
-            console.log(umr[key]);
+            // console.log(umr[key]);
             let beg = 10000;
             let end = -1;
             let locs = key.replace('.c','');
-            console.log(locs);
+            // console.log(locs);
             let pattern = new RegExp(`${locs}.\\d+.a`);
             for(let i=0; i<Object.keys(umr).length; i++){
                 if(pattern.test(Object.keys(umr)[i])){
-                    console.log("match!"+ umr[Object.keys(umr)[i]]);
+                    // console.log("match!"+ umr[Object.keys(umr)[i]]);
                     let s = umr[Object.keys(umr)[i]].split('-')[0];
                     let e = umr[Object.keys(umr)[i]].split('-')[1];
-                    console.log(s);
-                    console.log(e);
+                    // console.log(s);
+                    // console.log(e);
                     if(parseInt(s) < beg){
                         beg = s;
                     }
@@ -1219,8 +1214,8 @@ function correctAlignments(){
                     }
                 }
             }
-            console.log(beg);
-            console.log(end);
+            // console.log(beg);
+            // console.log(end);
             umr[key.replace('.c','.a')] = beg + '-' + end;
         }
     })
@@ -1228,7 +1223,6 @@ function correctAlignments(){
 
 function showAnnotatedTokens(){
     console.log("showAnnotatedTokens is called");
-    console.log(umr);
     Object.keys(umr).forEach(function (key) {
         if (/[\\d|\\.]+a/gm.test(key)) {
             if (!(key.replace('a', 'd') in umr)){
@@ -1250,11 +1244,11 @@ function showAnnotatedTokens(){
                         let cellText = cell2highlight.innerText;
                         // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
                         if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !==""){
-                            console.log("I am here highlight1");
+                            // console.log("I am here highlight1");
                             newNode.appendChild(document.createTextNode(cell2highlight.innerText));
                             cell2highlight.replaceChild(newNode, cell2highlight.firstChild)
                         }
-                        console.log("new cell: " + cell2highlight);
+                        // console.log("new cell: " + cell2highlight);
                     }
                 }
             }
@@ -1340,12 +1334,14 @@ function newVar(concept) {
     let v;
     concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //example: *s -> s
     let initial = concept.substring(0, 1).toLowerCase();
-    let sentenceId = document.getElementById('sentence_id').value;
-    // add the sentence number
-    initial = "s"+ sentenceId + initial;
     if (!initial.match(/[a-z]/)) {
         initial = 'x';
     }
+
+    // add the sentence number s1 to initial t -> s1t
+    let sentenceId = document.getElementById('sentence_id').value;
+    initial = "s"+ sentenceId + initial;
+
     // increase index or reserve variable 'i' for concept 'i'
     if (getLocs(initial) || reserved_variables[initial] || concept.match(/^i./i)) {
         let index = 2;
@@ -1463,7 +1459,7 @@ function newAMR(concept) {
 }
 
 /**
- * populate amr, update variables and concepts
+ * add a triple to umr, update variables and concepts, reorder ops
  * @param head b
  * @param role :arg1
  * @param arg car
@@ -1475,7 +1471,7 @@ function addTriple(head, role, arg, arg_type) {
     role = strip(role); // :arg1
     arg = strip(arg); //car
     console.log('addTriple: head: ' + head + ' role: ' + role + ' arg: ' + arg);
-    let head_var_locs = getLocs(head); // buy-01
+    let head_var_locs = getLocs(head);
     let arg_var_locs;
     let arg_variable;
     let arg_concept;
@@ -1483,79 +1479,81 @@ function addTriple(head, role, arg, arg_type) {
     if (head && role && (arg !== undefined) && (arg !== '') && head_var_locs) {
         arg_var_locs = getLocs(arg);
         if (arg_var_locs && (arg_type !== 'concept') && (arg_type !== 'string') && (!role.match(/^:?(li|wiki)$/))) {
+            //todo: can be used in doc level annot? when is the situation that goes in here
             console.log("I am here39");
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        }else if(arg.includes("(")){
-            //doc_level
-            console.log("I am here40-1");
-            arg_concept = '';
-            arg_variable = '';
-            arg_string = arg;
-        } else if (validEntryConcept(arg) && (arg_type !== 'string') && (!role_unquoted_string_arg(role, arg, '')) && (!role.match(/^:?(li|wiki)$/))) {
+        } else if (validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
+            && (arg_type !== 'string')
+            && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
+            && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here40");
-            arg_concept = trimConcept(arg);
-            arg_variable = newVar(arg_concept);
+            arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
             var abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
             if(abstractConcepts.indexOf(arg_concept) > -1){ // arg-concept is an abstract concept
                 begOffset = -1;
                 endOffset = -1;
             }
-        } else if (validString(arg) && umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name'){
+        } else if (validString(arg) //matches all non-white space character (except ")
+            && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
+                ||role.match(/^(:Aspect|:mode|:polarity)$/))){
             console.log("I am here41");
-            arg_string = arg; // "Edmond"
+            arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
             arg_variable = '';
+
             // this has potential problem when multiple string appears in same sentence
             let len = document.getElementById('sentence').children[1].rows[0].cells.length
             for (let i=0; i<len; i++){
                 if(document.getElementById('sentence').children[1].rows[0].cells[i].innerText===arg){
+                    // find the beginning and ending index of string argument, to give head abstract concept alignment information
                     begOffset = i;
                     endOffset = i;
                 }
             }
-
-        } else if(validString(arg)){
+        } else if(validString(arg)){ //matches all non-white space character (except ")
+            // this if for the case He -> s1h/he
             console.log("I am here41-1");
-            arg_concept = trimConcept(arg.toLowerCase());
-            arg_variable = newVar(arg_concept);
+            arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        } else if (validString(stripQuotes(arg))) {
+        } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
             console.log("I am here42");
             arg_string = stripQuotes(arg);
             arg_concept = '';
             arg_variable = '';
         } else {
-            console.log('Ill-formed command "' + head + ' ' + role + ' <font color="red">' + arg + '</font>" &nbsp; Last argument should be a concept, string or previously defined variable.');
+            console.log('Ill-formed command "' + head + ' ' + role + '' + arg + '" &nbsp; Last argument should be a concept, string or previously defined variable.');
             return '';
         }
-        // head_var_locs += '';
-        let head_var_loc_list = argSplit(head_var_locs);
-        let head_var_loc = head_var_loc_list[0];
-        let n_subs = umr[head_var_loc + '.n'];
-        umr[head_var_loc + '.n'] = ++n_subs;
-        // add_log('subs ' + head_var_loc + '.n: ' + n_subs);
+        head_var_locs += ''; //todo: just changed here, could have consequences
+        let head_var_loc_list = argSplit(head_var_locs); // the head var could have multiple locs
+        let head_var_loc = head_var_loc_list[0]; // use the first loc of head var
+        let n_subs = umr[head_var_loc + '.n']; // how many children head var has
+        umr[head_var_loc + '.n'] = ++n_subs; // add one more children
+        // console.log('subs ' + head_var_loc + '.n: ' + n_subs);
         let new_loc = head_var_loc + '.' + n_subs;
-        // add_log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
-        role = autoTrueCaseRole(role);
+        // console.log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
+        role = autoTrueCaseRole(role); //arg9/:ARG9 -> :ARG9
         umr[new_loc + '.v'] = arg_variable;
         umr[new_loc + '.r'] = role;
         umr[new_loc + '.n'] = 0;
         umr[new_loc + '.c'] = arg_concept;
         umr[new_loc + '.s'] = arg_string;
-        umr[new_loc + '.a'] = begOffset + "-" + endOffset; // alignment_index
+        umr[new_loc + '.a'] = begOffset + "-" + endOffset;
         begOffset = -1;
         endOffset = -1;
 
-        recordVariable(arg_variable, new_loc);
-        recordConcept(arg_concept, new_loc);
-        variable2concept[arg_variable] = arg_concept;
-        state_has_changed_p = 1;
+        recordVariable(arg_variable, new_loc); // add to variables dictionary
+        recordConcept(arg_concept, new_loc); // add to concepts dictionary
+        variable2concept[arg_variable] = arg_concept; // add to variable2concept dictionary
+        state_has_changed_p = 1; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished todo:can be used to tell if command is executed completely
         if (role.match(/^:op(-\d|0|\d+\.\d)/)) {
             console.log("I am here44");
-            renorm_ops(head);
+            renorm_ops(head); //in umr, reorder :op5, :op8, :op6 to :op1, :op2, :op3
         }
         return arg_variable;
     } else {
@@ -2127,40 +2125,45 @@ function change_var_name(variable, target, top) {
     return 0;
 }
 
-// unclear
+/**
+ * reorder the op children when ops are deleted or moved
+ * @param variable a head variable that has op children
+ */
 function renorm_ops(variable) {
     let locs, loc_list, loc, n_subs, sub_loc, sub_role, op_numbers, op_ht, op_number;
     if ((locs = getLocs(variable))
         && (loc_list = argSplit(locs))
-        && (loc = loc_list[0])) {
-        n_subs = umr[loc + '.n'];
+        && (loc = loc_list[0])) { // loc of head s1n/name
+        n_subs = umr[loc + '.n']; //how many children s1n/name has
         op_numbers = [];
         op_ht = {};
-        for (let i = 1; i <= n_subs; i++) {
+        for (let i = 1; i <= n_subs; i++) { //traverse op children
             sub_loc = loc + '.' + i;
-            if (!umr[sub_loc + '.d']) {
+            if (!umr[sub_loc + '.d']) { //if not deleted already
                 sub_role = umr[sub_loc + '.r'];
-                if (sub_role.match(/^:op-?\d+(\.\d+)?$/)) {
-                    op_number = sub_role.replace(/^:op(-?\d+(?:\.\d+)?)$/, "$1");
-                    op_numbers.push(op_number);
-                    op_ht[op_number] = sub_loc;
-                    // add_log('set op_ht[' + op_number + '] = ' + sub_loc);
+                if (sub_role.match(/^:op-?\d+(\.\d+)?$/)) { //example match :op1.6
+                    op_number = sub_role.replace(/^:op(-?\d+(?:\.\d+)?)$/, "$1"); // ':op1.6' -> '1.6'
+                    op_numbers.push(op_number); //['1.6']
+                    op_ht[op_number] = sub_loc; //{'1.6': op child loc }
+                    // console.log('set op_ht[' + op_number + '] = ' + sub_loc);
                 }
             }
         }
-        // add_log('renorm_ops ' + op_numbers.join(','));
+        // console.log('renorm_ops ' + op_numbers.join(','));
         op_numbers.sort(function (a, b) {
             return a - b
-        });
-        // add_log('renorm_ops (sorted) ' + op_numbers.join(','));
+        }); // sorting a list of number in ascending order, also works with string
+
+        // console.log('renorm_ops (sorted) ' + op_numbers.join(','));
+        //in umr, reorder :op5, :op8, :op6 to :op1, :op2, :op3
         for (let i = 0; i < op_numbers.length; i++) {
             op_number = op_numbers[i];
             sub_loc = op_ht[op_number];
-            // add_log('get op_ht[' + op_number + '] = ' + sub_loc);
+            // console.log('get op_ht[' + op_number + '] = ' + sub_loc);
             umr[sub_loc + '.r'] = ':op' + (i + 1);
         }
         state_has_changed_p = 1;
-        exec_command('record reop ' + variable, 1);
+        exec_command('record reop ' + variable, 1); //has to do with undo list
     }
 }
 
@@ -2257,20 +2260,20 @@ function role_unquoted_string_arg(role, arg, loc) {
     let head_loc = '';
     let head_concept = '';
     let head_role = '';
-    if (loc.match(/\.\d+$/)) {
+    if (loc.match(/\.\d+$/)) { //example match: .999
         head_loc = loc.replace(/\.\d+$/, "");
         head_concept = umr[head_loc + '.c'] || '';
         head_role = umr[head_loc + '.r'] || '';
     }
     if (role.match(/^:op/) && (head_role === ':name')) {
-        return 0;
-    } else if (arg.match(/^\d+(?:\.\d+)?$/)       // number
-        || arg.match(/^(-|\+)$/)     // polarity/unknown
-        || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/))
+        return 0; //should be quoted
+    } else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
+        || arg.match(/^(-|\+)$/)     // polarity
+        || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/)) //mode
         || ((role ===':Aspect') && arg.match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance)$/))) {
-        return 1;
+        return 1; // should not be quoted
     } else {
-        return 0;
+        return 0;//should be quoted
     }
 }
 
@@ -2287,9 +2290,9 @@ function tolerate_special_concepts(s) {
 }
 
 /**
- * @param loc nth root in amr
+ * @param loc nth children in amr, most of the time only have 1 tree
  * @param args "show"
- * @param rec 0
+ * @param rec 0 or 1
  * @param ancestor_elem_id_list " "
  * @returns {string} returns a html string that represents the penman format
  */
@@ -2297,36 +2300,35 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
     // loc=1, args="show", rec=0, ancestor_elem_id_list=' '
     // console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
 
-    loc += '';
-    if (umr[loc + '.d']) {
-        // add_log('show AMR rec deleted: ' + loc);
+    loc += ''; // '1'
+    if (umr[loc + '.d']) { // umr['1.d'], already been deleted
+        // console.log('show AMR rec deleted: ' + loc);
         return '';
     } else {
-        var concept = umr[loc + '.c'];
-        var alignment_index = umr[loc + '.a'];
-        var string = umr[loc + '.s'] || '';
-        var quoted_string = string;
-        if (!string.match(/^".*"$/)) {
-            quoted_string = '"' + string + '"';
+        let concept = umr[loc + '.c']; // umr['1.c']
+        let alignment_index = umr[loc + '.a']; // umr['1.a']
+        let string = umr[loc + '.s'] || ''; // umr['1.s']
+        let quoted_string = string; //umr['1.s']
+        if (!string.match(/^".*"$/)) { // if there is no quotes around the string
+            quoted_string = '"' + string + '"'; // quote the string
         }
-        var protected_string = string;
-        if (string.match(/ /)) {
+        let protected_string = string; //unquoted string
+        if (string.match(/ /)) { //match a space
             protected_string = quoted_string;
         }
-        var protected_string2 = slashProtectQuote(protected_string);
-        var role = umr[loc + '.r'] || '';
+        let protected_string2 = slashProtectQuote(protected_string); //"Edmund" -> \\\"Edmund\\\"
+        var role = umr[loc + '.r'] || ''; //umr['1.r']
         var string_m = string;
         var string_is_number = string.match(/^\d+(?:\.\d+)?$/);
-        if (!role_unquoted_string_arg(role, string, loc)) {
+        if (!role_unquoted_string_arg(role, string, loc)) { //should quote
             string_m = quoted_string;
         }
-        var variable = umr[loc + '.v'];
+        var variable = umr[loc + '.v']; //umr['1.v']
         var arg = variable || concept || string;
         var s = '';
         var show_replace = args.match(/replace/);
         var show_delete = args.match(/delete/);
-        var show_check = args.match(/check/)
-            || (show_amr_obj['option-auto-check'] && (!show_replace) && (!show_delete));
+        var show_check = args.match(/check/) || (show_amr_obj['option-auto-check'] && (!show_replace) && (!show_delete));
         var concept_m = concept;
         var variable_m = variable;
         var tree_span_args = '';
@@ -2341,7 +2343,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             return 'MAXXED OUT';
         }
         if (rec) {
-            role = umr[loc + '.r'];
+            role = umr[loc + '.r']; //umr['1.v']
             role_m = role;
             if (show_replace) {
                 var type = 'role';
@@ -2392,7 +2394,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             }
         }
         if (rec) {
-            // add_log('show_amr_rec role ' + htmlProtect(role_m));
+            // console.log('show_amr_rec role ' + htmlProtect(role_m));
             s += role_m + ' ';
         }
         if (concept) {
@@ -2482,7 +2484,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 ordered_indexes
                     = ordered_indexes.concat(name_indexes, opx_indexes, argx_indexes, other_indexes);
             }
-            // add_log('ordered_indexes(' + concept + ') Point D: ' + ordered_indexes.join(', '));
+            // console.log('ordered_indexes(' + concept + ') Point D: ' + ordered_indexes.join(', '));
             for (var i = 0; i < ordered_indexes.length; i++) {
                 var index = ordered_indexes[i];
                 var show_amr_rec_result; // this stores one amr line
@@ -2522,7 +2524,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 }
             }
             s += string_m;
-        } else {
+        } else { // variable is not empty
             if (show_replace) {  // without concept, i.e. secondary variable
                 var type = 'variable';
                 var head_loc = loc.replace(/\.\d+$/, "");
@@ -2552,10 +2554,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
 /**
  * this is the function populate the show_amr_obj with the options table content, and print out the penman format output to webpage
  * @param args "show" or "show replace" or "show delete"
- * @param amr_id: In doc level annotation, there is amr_id
  */
-function show_amr(args, amr_id='') {
-    console.log("show_amr: args: " + args + ", amr_id: " + amr_id);
+function show_amr(args) {
+    console.log("show_amr is called: args: " + args );
     //comply with the loaded options
     let s, html_amr_s;
     n_elems_w_id = 0;
@@ -2563,7 +2564,7 @@ function show_amr(args, amr_id='') {
     show_amr_mo_lock = '';
     let origScrollHeight = '';
     let origScrollTop = '';
-    if ((s = document.getElementById('amr'+amr_id)) != null) {
+    if ((s = document.getElementById('amr')) != null) {
         origScrollHeight = s.scrollHeight;
         origScrollTop = s.scrollTop;
     }
@@ -2571,10 +2572,9 @@ function show_amr(args, amr_id='') {
     //generate the pennman string
     if (args) { //args can be "show", "replace", "delete" or "check"
         let amr_s = '';
-        let n = umr['n'];
-        // console.log(umr);
-        for (var i = 1; i <= n; i++) {
-            var show_amr_rec_result;
+        let n = umr['n']; // how many children currently in the tree
+        for (let i = 1; i <= n; i++) { //traverse children
+            let show_amr_rec_result;
             // console.log("args here: " + args);
             if (show_amr_rec_result = show_amr_rec(i, args, 0, ' ')) {
                 amr_s += show_amr_rec_result + '\n';
@@ -2601,10 +2601,10 @@ function show_amr(args, amr_id='') {
         //todo how is this different
         html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
 
-        setInnerHTML('amr'+amr_id, html_amr_s);
+        setInnerHTML('amr', html_amr_s);
         show_amr_status = args;
     }
-    if ((s = document.getElementById('amr'+amr_id)) != null) {
+    if ((s = document.getElementById('amr')) != null) {
         // this is the actual output part
         var height = s.style.height;
         var intScrollTop = 0;

@@ -863,6 +863,7 @@
     <script type="text/javascript">
         load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}', '{{ curr_sent_umr|tojson|safe }}');
 
+        //used to listen for the change in replace
         document.getElementById("amr").addEventListener("input", e => {
             console.log("event is fired1");
             if(e.target.matches("span")){
@@ -882,8 +883,8 @@
             }
         })
 
-         console.log("sent number is: ", {{ sents|length }});
-        console.log("sent id is: ", document.getElementById("sentence_id").value);
+        {#console.log("sent number is: ", {{ sents|length }});#}
+        {#console.log("sent id is: ", document.getElementById("sentence_id").value);#}
         if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){
             console.log("show the dbbutton!!!!!");
             document.getElementById("db").style.display = "inline";

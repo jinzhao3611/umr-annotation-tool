@@ -262,7 +262,7 @@ function listContainsCap(list) {
 }
 
 /**
- * return null when input is like "#", or "buy.01"
+ * return null when input is like "#", or "buy.01", 不能有大写字母，单引号，或者数字（arapahoe里面有）
  * @param concept
  * @returns {*}
  */
@@ -274,7 +274,7 @@ function validEntryConcept(concept) {
 // }
 
 /**
- * remove concept. or !
+ * remove "concept.truffle" -> "truffle", or "!truffle" -> "truffle"
  * @param entry_concept
  * @returns {*}
  */
@@ -283,7 +283,7 @@ function trimConcept(entry_concept) {
 }
 
 /**
- * so far I think it matches all non-white space character and as long as it's not double quote
+ * matches all non-white space character and as long as it's not double quote
  * @param string
  * @returns {*|boolean}
  */
