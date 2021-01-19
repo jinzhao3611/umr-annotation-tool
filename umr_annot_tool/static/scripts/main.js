@@ -1211,7 +1211,7 @@ function correctAlignments(flag){
             }
         }
 
-        if(key.match(/\d+.v/) && umr[key] !== ""){ // deal with coref
+        if(key.match(/\d+.v/) && umr[key] !== "" && getLocs(umr[key]) !== undefined){ // deal with coref
             let locs_list = getLocs(umr[key]).split(' ');
             if(locs_list.length > 1){
                 let shared_align = "";
