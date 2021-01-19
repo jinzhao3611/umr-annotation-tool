@@ -201,6 +201,7 @@ def doclevel(doc_id):
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).all()
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
+
     sent_annot_pairs = list(zip(sents, annotations))
     print("sent_annot_pairs: ", sent_annot_pairs)
 
@@ -238,9 +239,7 @@ def doclevel(doc_id):
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
 
-
     current_sent_pair = sent_annot_pairs[current_snt_id-1]
-
 
     print("doc_annot: ", sent_annot_pairs[current_snt_id-1][1].doc_annot)
     print("doc_umr: ", sent_annot_pairs[current_snt_id-1][1].doc_umr)

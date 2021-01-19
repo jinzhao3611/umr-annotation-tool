@@ -1062,7 +1062,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     console.log("I am here20");
                     if (cc.length == 1) {
                         console.log("I am here21");
-                        add_error('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
+                        console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
                     } else if (cc[1] == 'concept') {
                         if (cc.length == 6) {
                             console.log("I am here23");
@@ -1659,7 +1659,7 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
         let head_var_locs = getLocs(head_var);
         if (head_var_locs) {
             if (key_with === 'with') {
-                if (validEntryConcept(new_concept)) {
+                if (validEntryConcept(new_concept) || language === "Default") {
                     head_var_locs += '';
                     let loc_list = argSplit(head_var_locs);
                     let loc = loc_list[0];
