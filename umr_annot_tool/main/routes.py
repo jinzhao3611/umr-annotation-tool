@@ -178,7 +178,7 @@ def annotate(doc_id):
     print(type(curr_sent_umr))
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).all()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
     all_annots = [annot.annot_str for annot in annotations]
     print("all_annots: ", all_annots)
