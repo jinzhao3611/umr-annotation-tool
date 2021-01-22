@@ -9,43 +9,88 @@
     <img src="../static/guidelines_pics/login.png" alt="login" width="750" height="450">
     <p>After logging in, click annotate on Nav bar:</p>
     <img src="../static/guidelines_pics/homepage_after_login.png" alt="homepage_after_login" width="750" height="450">
-    <p>Choose a txt file, flex format xml or tool box format xml, choose a language, then click on both Submit and Annotate! buttons (If you find yourself stuck on this page, and nothing happened after you click on Annotate! button, chances are slow network speed, click on Annotate button again)</p>
+    <p>Choose a txt file, flex format xml or tool box format xml, choose a language, then click on Annotate button</p>
     <img src="../static/guidelines_pics/upload.png" alt="upload" width="750" height="450">
-    <p>At the following annotation page, you can select "tasted" in the sentence by double clicking or click and drag. Then there is a button appears after Concept: click the "tasted" button. </p>
+
+    <p>At the following annotation page, you can select "tasted" in the sentence by double clicking or click and drag.
+        Then there is a button appears after Lexicalized Concept on the right: click the "tasted" button. </p>
     <img src="../static/guidelines_pics/select.png" alt="select" width="750" height="450">
+
     <p>In the submenu, hover over find lemma, and click on tasted-01 in the subsubmenu: </p>
     <img src="../static/guidelines_pics/predicate.png" alt="predicate" width="750" height="450">
-    <p>Then the first line of annotation (t / taste-01) appears under UMR Penman Annotation:</p>
+
+    <p>Then the first line of annotation (t / taste-01) appears under UMR Penman Annotation, alignments section is updated, and tasted is colored, s1t is colored because it's current head:</p>
     <img src="../static/guidelines_pics/annot_1.png" alt="annot_1" width="750" height="450">
-    <p>Technically the first concept you annotate will be assumed to be the head, but you can set head by select the variable name, and click on set head submenu: </p>
-    <img src="../static/guidelines_pics/set_head.png" alt="set_head" width="750" height="450">
-    <p>Add Aspect attribute as following</p>
-    <img src="../static/guidelines_pics/attribute.png" alt="attribute" width="750" height="450">
-    <p>After select :Aspect option, the attribute value box will appear, you can choose Performance in it</p>
-    <img src="../static/guidelines_pics/attribute_value.png" alt="annot_1" width="750" height="450">
-    <p>The second line of annotation appears under UMR Penman Annotation:</p>
-    <img src="../static/guidelines_pics/annot_2.png" alt="annot_2" width="750" height="450">
-    <p>Next, let's add :ARG0</p>
-    <img src="../static/guidelines_pics/arg0.png" alt="arg0" width="750" height="450">
-    <p>Add a Person Named Entity Type:</p>
-    <img src="../static/guidelines_pics/ne_type.png" alt="ne_type" width="750" height="450">
-    <p>Select Edmund Pope, hover over find lemma on submenu, click on Edmund Pope on subsubmenu</p>
-    <img src="../static/guidelines_pics/ne_concept.png" alt="ne_concept" width="750" height="450">
-    <img src="../static/guidelines_pics/annot_3.png" alt="annot_3" width="750" height="450">
-    <p>If you want to logout or go annotate another sentence or file, and then come back, click on db button before you go </p>
-    <img src="../static/guidelines_pics/db.png" alt="db" width="750" height="450">
-    <p>You can switch to another sentence by selecting options in Sentence ID box: </p>
-    <img src="../static/guidelines_pics/switch_snt.png" alt="switch_snt" width="750" height="450">
-    <p>When you come back to sentence 1, the UMR Penman Annotation is empty:</p>
-    <img src="../static/guidelines_pics/switch_snt2.png.png" alt="switch_snt2" width="750" height="450">
-    <p>You can click on load history button, the history annotated will appear:</p>
-    <img src="../static/guidelines_pics/load_history.png" alt="annot_1" width="750" height="450">
-    <p>After you finish your annotation, click on save button, there is form appears at the bottom of the page</p>
-    <img src="../static/guidelines_pics/save.png" alt="save" width="750" height="450">
-    <p>Type in the file name and click on save locally, you should see your downloaded file in your download folder:</p>
-    <img src="../static/guidelines_pics/saved.png" alt="saved" width="750" height="450">
-    <p>If you see a 500 page, make sure you logged in and try refresh after a few seconds, sometimes it helps, sometimes it doesn't. (I am working on fixing it) </p>
-    <img src="../static/guidelines_pics/error500.png" alt="error500" width="750" height="450">
+
+    <p> Add attribute: click on Attribute box on the right, choose :Aspect, then an Attribute values box will appear
+        right below the Attribute box, and then choose Performance </p>
+    <img src="../static/guidelines_pics/attribute_1.png" alt="attribute_1" width="750" height="450">
+
+    <p>Click on Add attribute button, UMR Penman Annotation and Alignments on the left will be updated accordingly </p>
+    <img src="../static/guidelines_pics/attribute_2.png" alt="attribute_2" width="750" height="450">
+
+    <p>Add named entity: Choose :ARG0 in Roles(English) box, choose person in Named Entity Types box</p>
+    <img src="../static/guidelines_pics/addNe_1.png" alt="addNe_1" width="750" height="450">
+
+    <p>Select Edmund Pope on the left, click on Edmund Pop in lexicalized Concept on the right: </p>
+    <img src="../static/guidelines_pics/addNe_2.png" alt="addNe_2" width="750" height="450">
+
+    <p>new amr is generated on the left</p>
+    <img src="../static/guidelines_pics/addNe_3.png" alt="addNe_3" width="750" height="450">
+
+    <p>Add a concept, choose :ARG1 on the right</p>
+    <img src="../static/guidelines_pics/addConcept_1.png" alt="addConcept_1" width="750" height="450">
+
+    <p>Choose the correct sense of freedom on the right</p>
+    <img src="../static/guidelines_pics/addConcept_2.png" alt="addConcept_2" width="750" height="450">
+
+    <p>Annotation is generated, but we want sense free-04 instead of freedom, we can change it manually </p>
+    <img src="../static/guidelines_pics/addConcept_3.png" alt="addConcept_3" width="750" height="450">
+
+    <p>Rlick on the replace button on the right. </p>
+    <img src="../static/guidelines_pics/replace_1.png" alt="replace_1" width="750" height="450">
+
+    <p>Replace in place by editing in the blue box. </p>
+    <img src="../static/guidelines_pics/replace_2.png" alt="replace_2" width="750" height="450">
+
+    <p>Concept is replaced </p>
+    <img src="../static/guidelines_pics/replace_3.png" alt="replace_3" width="750" height="450">
+
+    <p>To add a concept that alreay existed in the tree, choose the variable in the tree</p>
+    <img src="../static/guidelines_pics/addCoref_1.png" alt="addCoref_1" width="750" height="450">
+
+    <p>the variable will be added in place. </p>
+    <img src="../static/guidelines_pics/addCoref_2.png" alt="addCoref_2" width="750" height="450">
+
+    <p>Add abstract concept as following </p>
+    <img src="../static/guidelines_pics/addAbstractConcept_1.png" alt="addAbstractConcept_1" width="750" height="450">
+    <img src="../static/guidelines_pics/addAbstractConcept_2.png" alt="addAbstractConcept_1" width="750" height="450">
+
+    <p>Change the head as following:</p>
+    <img src="../static/guidelines_pics/setHead_1.png" alt="setHead_1" width="750" height="450">
+    <img src="../static/guidelines_pics/setHead_2.png" alt="setHead_2" width="750" height="450">
+
+    <p>Add number as following:</p>
+    <img src="../static/guidelines_pics/addNum.png" alt="addNum" width="750" height="450">
+
+    <p>Add multiple words as following</p>
+    <img src="../static/guidelines_pics/addMultiWords_1.png" alt="addMultiWords_1" width="750" height="450">
+    <img src="../static/guidelines_pics/addMultiWords_2.png" alt="addMultiWords_2" width="750" height="450">
+
+    <p>Move to the next sentence by clicking next button, finish the annotation, click on save2db button, then move on to document level annotation by clicking on the doc-level-annot button</p>
+    <img src="../static/guidelines_pics/doc_annot.png" alt="doc_annot" width="750" height="450">
+
+
+    <p>To annotate the first sentence, make sure the current sentence box is showing 1, if not, change it to 1, and click save&go, choose the relation, and type in the arguments in Enter Args box. Click on save2db button after you finish</p>
+    <img src="../static/guidelines_pics/docTemporal.png" alt="docTemporal" width="750" height="450">
+
+    <p>This is another example:</p>
+    <img src="../static/guidelines_pics/docModal.png" alt="docModal" width="750" height="450">
+
+    <p>During or after the process of annotating, you can click on export button to save a txt file on your local computer </p>
+    <img src="../static/guidelines_pics/export.png" alt="export" width="750" height="450">
+    <img src="../static/guidelines_pics/exportedFile.png" alt="exportedFile" width="750" height="450">
+
 
 
 

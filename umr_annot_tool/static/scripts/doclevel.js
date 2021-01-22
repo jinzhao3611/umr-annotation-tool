@@ -58,7 +58,7 @@ function showDefaultUmr(docLen, current_sent_id){
     for(let i =1; i<=docLen; i++){
         if(i !== parseInt(current_sent_id)){
             let html_s_before = document.getElementById('amr_doc'+i).innerText;
-            document.getElementById('amr_doc'+i).innerText = docUmrTransform(html_s_before);
+            document.getElementById('amr_doc'+i).innerText = deHTML2(docUmrTransform(html_s_before));
         }
     }
 }
@@ -66,7 +66,84 @@ function docUmrTransform(html_umr_s){
     let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
-    return html_umr_s1.replace(regex2, "$1");
+    html_umr_s1 = html_umr_s1.replace(regex2, "$1");
+
+    if (!html_umr_s1.includes('&nbsp;')){
+        console.log("before html_fy: ", html_umr_s1);
+        html_umr_s1 = html_umr_s1.replaceAll('  ', '&nbsp;&nbsp;');
+        html_umr_s1 = html_umr_s1.replaceAll('\n', '<br>');
+        console.log("after html_fy: ", html_umr_s1);
+    }
+
+    let regexp = /&nbsp;&nbsp;:(temporal|modal|coref)\s(\(.+?\))/g;
+    let array = [...html_umr_s1.matchAll(regexp)];
+
+    let temporals = [];
+    let modals = [];
+    let corefs = [];
+    for(let i=0; i<array.length; i++){
+      if (array[i][1] === "temporal"){
+        temporals.push(array[i][2]);
+      }else if (array[i][1] === "modal"){
+        modals.push(array[i][2]);
+      }else if (array[i][1] === "coref"){
+        corefs.push(array[i][2]);
+      }
+    }
+
+    if (temporals.length ===0 && modals.length===0 && corefs.length ===0){
+        return html_umr_s1;
+    }
+
+    let html_umr_list = html_umr_s1.split('<br>');
+    let html_umr_s2 = html_umr_list[0] + "<br>\n";
+
+
+    //add temporal lines
+    if(temporals.length !== 0){
+        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:temporal (';
+        for(let i=0; i<temporals.length; i++){
+            if(i===0){
+                html_umr_s2 = html_umr_s2 + temporals[i];
+            }else{
+                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +temporals[i];
+            }
+        }
+        html_umr_s2 =html_umr_s2 + ')<br>\n';
+    }
+
+    //add modal lines
+    if(modals.length !== 0){
+        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:modal (';
+        for(let i=0; i<modals.length; i++){
+            if(i===0){
+                html_umr_s2 = html_umr_s2 + modals[i];
+            }else{
+                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +modals[i];
+            }
+        }
+        html_umr_s2 =html_umr_s2 + ')<br>\n';
+    }
+
+    //add coref lines
+    if(corefs.length !== 0){
+        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:coref (';
+        for(let i=0; i<corefs.length; i++){
+            if(i===0){
+                html_umr_s2 = html_umr_s2 + corefs[i];
+            }else{
+                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + corefs[i];
+            }
+        }
+        html_umr_s2 =html_umr_s2 + ')<br>\n';
+    }
+    html_umr_s2 =html_umr_s2 + ')<br>\n'
+
+    html_umr_s2 = html_umr_s2.replace('\)<br>\n\)<br>' , '\)\)<br>')
+
+    return html_umr_s2;
+
+
 }
 
 /**
@@ -3290,6 +3367,7 @@ function reset_save(control) {
 
 function deHTML2(s){
     s = s.replaceAll('<div id="amr">', '');
+    s = s.replaceAll('\n', "");
     s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
     s = s.replaceAll('&nbsp;', ' ');

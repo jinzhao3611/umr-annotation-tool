@@ -112,9 +112,45 @@ def annotate(doc_id):
 
     if "prev_sentence" in request.form:
         snt_id = max(int(request.form["sentence_id"]) - 1, 1)
+        print("snt_id: ", snt_id)
     elif "next_sentence" in request.form:
         print("sanity check sentence id", int(request.form["sentence_id"]))
         snt_id = min(int(request.form["sentence_id"]) + 1, len(sents))
+
+    # add to db
+    if request.method == 'POST':
+        try:
+            amr_html = request.get_json(force=True)["amr"]
+            # get rid of the head highlight tag
+            amr_html = amr_html.replace('<span class="text-success">', '')
+            amr_html = amr_html.replace('</span>', '')
+
+            print("amr_html: ", amr_html)
+            align_info = request.get_json(force=True)["align"]
+            print("align_ino: ", align_info)
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            print("snt_id_info: ", snt_id_info)
+            umr_dict = request.get_json(force=True)["umr"]
+            print("umr_dict: ", umr_dict)
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == current_user.id).first()
+            if existing:  # update the existing Annotation object
+                print("upadating existing annotation")
+                existing.annot_str = amr_html
+                existing.alignment = align_info
+                existing.umr = umr_dict
+                db.session.commit()
+            else:
+                annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
+                                        sent_id=snt_id_info,
+                                        doc_id=doc_id,
+                                        umr=umr_dict, doc_umr={})
+                db.session.add(annotation)
+                db.session.commit()
+            return {"amr": amr_html}
+        except:
+            print("add current annotation and alignments to database failed")
+
 
     # load single annotation for current sentence from db used for load_history()
     try:
@@ -155,40 +191,6 @@ def annotate(doc_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
-    # add to db
-    if request.method == 'POST':
-        try:
-            amr_html = request.get_json(force=True)["amr"]
-            # get rid of the head highlight tag
-            amr_html = amr_html.replace('<span class="text-success">', '')
-            amr_html = amr_html.replace('</span>', '')
-
-            print("amr_html: ", amr_html)
-            align_info = request.get_json(force=True)["align"]
-            print("align_ino: ", align_info)
-            snt_id_info = request.get_json(force=True)["snt_id"]
-            print("snt_id_info: ", snt_id_info)
-            umr_dict = request.get_json(force=True)["umr"]
-            print("umr_dict: ", umr_dict)
-            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == current_user.id).first()
-            if existing:  # update the existing Annotation object
-                print("upadating existing annotation")
-                existing.annot_str = amr_html
-                existing.alignment = align_info
-                existing.umr = umr_dict
-                db.session.commit()
-            else:
-                annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
-                                        sent_id=snt_id_info,
-                                        doc_id=doc_id,
-                                        umr=umr_dict, doc_umr={})
-                db.session.add(annotation)
-                db.session.commit()
-            return {"amr": amr_html}
-        except:
-            print("add current annotation and alignments to database failed")
-
     return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_html, gls=gls,
                            notes=notes,
@@ -202,6 +204,32 @@ def annotate(doc_id):
 def doclevel(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
+
+    current_snt_id = 1
+    if "set_sentence" in request.form:
+        current_snt_id = int(request.form["sentence_id"])
+
+    # add to db
+    if request.method == 'POST':
+        try:
+            umr_html = request.get_json(force=True)["umr"]
+            print("umr_html: ", umr_html)
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            print("snt_id_info:", snt_id_info)
+            umr_dict = request.get_json(force=True)["umr_dict"]
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == current_user.id).first()
+            if existing:  # update the existing Annotation object
+                print("updating existing annotation")
+                existing.doc_annot = umr_html
+                existing.doc_umr = umr_dict
+                db.session.commit()
+            else:
+                print("the sent level annotation of the current sent doesn't exist")
+            return {"umr": umr_html}
+        except:
+            print("add doc level annotation to database failed")
+
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
@@ -233,31 +261,6 @@ def doclevel(doc_id):
     print("all_sents: ", all_sents)
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
-
-    # add to db
-    if request.method == 'POST':
-        try:
-            umr_html = request.get_json(force=True)["umr"]
-            print("umr_html: ", umr_html)
-            snt_id_info = request.get_json(force=True)["snt_id"]
-            print("snt_id_info:", snt_id_info)
-            umr_dict = request.get_json(force=True)["umr_dict"]
-            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == current_user.id).first()
-            if existing:  # update the existing Annotation object
-                print("updating existing annotation")
-                existing.doc_annot = umr_html
-                existing.doc_umr = umr_dict
-                db.session.commit()
-            else:
-                print("the sent level annotation of the current sent doesn't exist")
-            return {"umr": umr_html}
-        except:
-            print("add doc level annotation to database failed")
-
-    current_snt_id = 1
-    if "set_sentence" in request.form:
-        current_snt_id = int(request.form["sentence_id"])
 
     current_sent_pair = sent_annot_pairs[current_snt_id - 1]
 

@@ -1522,40 +1522,50 @@ function addTriple(head, role, arg, arg_type) {
     let arg_variable;
     let arg_concept;
     let arg_string;
-    if (head && role && (arg !== undefined) && (arg !== '') && head_var_locs) {
+    if (head && role && (arg !== undefined) && (arg !== '')  //all three parameters exist
+        && head_var_locs) { //head already existed in variables dictionary
         arg_var_locs = getLocs(arg);
-        if (arg_var_locs && (arg_type !== 'concept') && (arg_type !== 'string') && (!role.match(/^:?(li|wiki)$/))) {
-            //todo: can be used in doc level annot? when is the situation that goes in here
-            console.log("I am here39");
+        if (arg_var_locs //argument already exist in variables dictionary
+            && (arg_type !== 'concept')
+            && (arg_type !== 'string') // arg_type is empty (is variable)
+            && (!role.match(/^:?(li|wiki)$/))) {
+            console.log("I am here40-1");
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        } else if (language!== 'Default'
+        } else if (language!== 'Default' //English
             && validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
-            && (arg_type !== 'string')
+            && (arg_type !== 'string') // arg_type is "concept" or empty (is variable)
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))) {
-            console.log("I am here40");
+            console.log("I am here40-2");
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-
-        } else if (language!== 'Default'
+        } else if (language!== 'Default' //English
+            && validEntryConcept(arg.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
-            && (!role.match(/^:?(li|wiki)$/))) {
-            console.log("I am here402");
+            && (!role.match(/^:?(li|wiki|name)$/))) {
+            console.log("I am here40-3");
+            arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            arg_variable = newVar(arg_concept); // truffle -> s1t
+            arg_string = '';
+        }else if(language === 'Default' //not English
+            && (arg_type !== 'string')
+            && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
+            && (!role.match(/^:?(li|wiki)$/))){
+            console.log("I am here40-4");
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
         }else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
                 ||role.match(/^(:Aspect|:mode|:polarity)$/))){
-            console.log("I am here41");
+            console.log("I am here40-5");
             arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
             arg_variable = '';
-
             // this has potential problem when multiple string appears in same sentence
             let len = document.getElementById('sentence').children[1].rows[0].cells.length
             for (let i=0; i<len; i++){
@@ -1566,7 +1576,7 @@ function addTriple(head, role, arg, arg_type) {
                 }
             }
         } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
-            console.log("I am here42");
+            console.log("I am here40-6");
             arg_string = stripQuotes(arg);
             arg_concept = '';
             arg_variable = '';
@@ -3527,7 +3537,7 @@ function reset_save(control) {
 }
 
 function UMR2db() {
-    console.log("I am here521");
+    console.log("UMR2db is called");
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let align_info = document.getElementById('align').innerText;
     let doc_id = document.getElementById('doc_id').innerText;
@@ -3571,8 +3581,79 @@ function docUmrTransform(html_umr_s){
     let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
-    return html_umr_s1.replace(regex2, "$1");
+    html_umr_s1 = html_umr_s1.replace(regex2, "$1");
+
+    let regexp = /&nbsp;&nbsp;:(temporal|modal|coref)\s(\(.+?\))/g;
+    let array = [...html_umr_s1.matchAll(regexp)];
+
+    let temporals = [];
+    let modals = [];
+    let corefs = [];
+    for(let i=0; i<array.length; i++){
+      if (array[i][1] === "temporal"){
+        temporals.push(array[i][2]);
+      }else if (array[i][1] === "modal"){
+        modals.push(array[i][2]);
+      }else if (array[i][1] === "coref"){
+        corefs.push(array[i][2]);
+      }
+    }
+
+    if (temporals.length ===0 && modals.length===0 && corefs.length ===0){
+        return html_umr_s1;
+    }
+
+    let html_umr_list = html_umr_s1.split('<br>');
+    let html_umr_s2 = html_umr_list[0] + "<br>\n";
+
+
+    //add temporal lines
+    if(temporals.length !== 0){
+        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:temporal (';
+        for(let i=0; i<temporals.length; i++){
+            if(i===0){
+                html_umr_s2 = html_umr_s2 + temporals[i];
+            }else{
+                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +temporals[i];
+            }
+        }
+        html_umr_s2 =html_umr_s2 + ')<br>\n';
+    }
+
+    //add modal lines
+    if(modals.length !== 0){
+        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:modal (';
+        for(let i=0; i<modals.length; i++){
+            if(i===0){
+                html_umr_s2 = html_umr_s2 + modals[i];
+            }else{
+                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +modals[i];
+            }
+        }
+        html_umr_s2 =html_umr_s2 + ')<br>\n';
+    }
+
+    //add coref lines
+    if(corefs.length !== 0){
+        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:coref (';
+        for(let i=0; i<corefs.length; i++){
+            if(i===0){
+                html_umr_s2 = html_umr_s2 + corefs[i];
+            }else{
+                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + corefs[i];
+            }
+        }
+        html_umr_s2 =html_umr_s2 + ')<br>\n';
+    }
+    html_umr_s2 =html_umr_s2 + ')<br>\n'
+
+    html_umr_s2 = html_umr_s2.replace('\)<br>\n\)<br>' , '\)\)<br>')
+
+    return html_umr_s2;
+
+
 }
+
 function deHTML2(s){
     s = s.replaceAll('<div id="amr">', '');
     s = s.replaceAll('</div>', "");
