@@ -1273,7 +1273,7 @@ function showAnnotatedTokens(){
                 let indice = umr[key].split("-");
                 if ((parseInt(indice[0]) > 0) && (parseInt(indice[1]) > 0)){
                     for (let i = parseInt(indice[0]); i <= parseInt(indice[1]); i++) {
-                        let cell2highlight = document.getElementById("sentence").childNodes[2].getElementsByTagName("td")[i-1];
+                        let cell2highlight = document.getElementById("sentence").childNodes[2].getElementsByTagName("td")[i];
                         let newNode = document.createElement("span");
                         // Make it highlight
                         newNode.setAttribute("class", "text-success");
@@ -1601,10 +1601,10 @@ function addTriple(head, role, arg, arg_type) {
 
         console.log("begOffset2: ", begOffset);
         console.log("endOffset2: ", endOffset);
-        if(umr[new_loc + '.v'] === "" && umr[new_loc + '.r'].match(/op\d+/)){ // this is hardcoding to deal with the weird bug that name entity alignments always 1 less
-            begOffset += 1;
-            endOffset += 1;
-        }
+        // if(umr[new_loc + '.v'] === "" && umr[new_loc + '.r'].match(/op\d+/)){ // this is hardcoding to deal with the weird bug that name entity alignments always 1 less
+        //     begOffset += 1;
+        //     endOffset += 1;
+        // }
         umr[new_loc + '.a'] = begOffset + "-" + endOffset;
         begOffset = -1;
         endOffset = -1;
@@ -3112,8 +3112,8 @@ function selectEvent(){
 
             console.log("beg cell index: ",selection.anchorNode.parentElement.cellIndex);
             console.log("end cell index: ",selection.focusNode.parentElement.cellIndex);
-            begOffset = selection.anchorNode.parentElement.cellIndex + 1;
-            endOffset = selection.focusNode.parentElement.cellIndex + 1;
+            begOffset = selection.anchorNode.parentElement.cellIndex;
+            endOffset = selection.focusNode.parentElement.cellIndex;
         }
     };
 

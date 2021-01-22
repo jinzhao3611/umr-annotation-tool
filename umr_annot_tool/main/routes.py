@@ -53,7 +53,7 @@ def html(content_string: str) -> Tuple[List[List[str]], str, List[str], List[str
         for conv_turn in conv_turns:
             notes.append(conv_turn)
     except ET.ParseError:  # if the content string is plain text sentences, split them into List[List[str]]
-        sents = [sent.split() for sent in content_string.strip().split('\n')]
+        sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
         sents_df = pd.DataFrame(content_string.strip().split('\n'))
         sents_df.index = sents_df.index + 1
         sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
@@ -147,6 +147,9 @@ def annotate(doc_id):
                                         umr=umr_dict, doc_umr={})
                 db.session.add(annotation)
                 db.session.commit()
+
+
+
             return {"amr": amr_html}
         except:
             print("add current annotation and alignments to database failed")
