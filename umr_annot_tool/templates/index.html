@@ -896,6 +896,16 @@
             document.getElementById("annot-button").style.display = "inline";
         }
 
+        if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){
+            console.log("hide the next button!!!!!");
+            document.getElementById("next_sentence").style.display = "none";
+        }
+
+        if (document.getElementById("sentence_id").value === "1"){
+            console.log("hide the prev button!!!!!");
+            document.getElementById("prev_sentence").style.display = "none";
+        }
+
 
     </script>
 {% endblock content2 %}
