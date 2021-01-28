@@ -3399,6 +3399,7 @@ function export_annot(exported_items) {
 
     let filename;
     let text = "user name: " + document.getElementById('username').innerText + '\n';
+    text += "user id: " + document.getElementById('user_id').innerText + '\n';
     let curr_time = new Date();
     text += "export time: " + curr_time.toLocaleString() + '\n\n';
     text += '# :: snt';

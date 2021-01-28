@@ -18,6 +18,9 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)
     annotations = db.relationship('Annotation', backref='author', lazy=True)
+    docs = db.relationship('Doc', backref='author', lazy=True)
+    sents = db.relationship('Sent', backref='author', lazy=True)
+
 
     """generate the token for resetting password with email"""
     def get_rest_token(self, expires_sec=1800): #30 minutes
@@ -55,6 +58,8 @@ class Doc(db.Model):
     lang = db.Column(db.Text, nullable=False)
     sents = db.relationship('Sent', backref='document', lazy=True)
     annotations = db.relationship('Annotation', backref='document', lazy=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 
     # def __repr__(self):
     #     return f"Post('{self.id}', '{self.sents}')"
@@ -63,6 +68,8 @@ class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
     # annotations = db.relationship('Annotation', backref='sentence', lazy=True)
 
 

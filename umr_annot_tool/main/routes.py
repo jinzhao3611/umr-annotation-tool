@@ -80,20 +80,20 @@ def upload():
             filename = secure_filename(form.file.data.filename)
             sents, _, _, _, _, _ = html(content_string)
 
-            if not Doc.query.filter_by(filename=filename).first():  # this doc is not already added in, add in db
-                doc = Doc(lang=form.language_mode.data, filename=filename, content=content_string)
+            if not Doc.query.filter_by(filename=filename, user_id=current_user.id).first():  # this doc is not already added in, add in db
+                doc = Doc(lang=form.language_mode.data, filename=filename, content=content_string, user_id=current_user.id)
                 db.session.add(doc)
                 db.session.commit()
                 flash('Your doc has been created!', 'success')
                 for sent_of_tokens in sents:
-                    sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
+                    sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=current_user.id)
                     db.session.add(sent)
                     db.session.commit()
                 flash('Your sents has been created!', 'success')
                 return redirect(url_for('main.annotate', doc_id=doc.id))
             else:
                 flash('Your doc and sents already created.', 'success')
-                return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename).first().id))
+                return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
     return render_template('upload.html', title='upload', form=form)
@@ -182,7 +182,7 @@ def annotate(doc_id):
 
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id, Sent.user_id == current_user.id).all()
     all_annots = [annot.annot_str for annot in annotations]
     print("all_annots: ", all_annots)
     all_aligns = [annot.alignment for annot in annotations]
@@ -234,7 +234,7 @@ def doclevel(doc_id):
             print("add doc level annotation to database failed")
 
     doc = Doc.query.get_or_404(doc_id)
-    sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
+    sents = Sent.query.filter(Sent.doc_id == doc.id, Sent.user_id == current_user.id).order_by(Sent.id).all()
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
     # annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
 

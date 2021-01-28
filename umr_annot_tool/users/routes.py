@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestRestForm, ResetPasswordForm
-from umr_annot_tool.models import User, Post
+from umr_annot_tool.models import User, Post, Doc
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 
 
@@ -62,8 +62,14 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+
+    historyDocs = Doc.query.filter(Doc.user_id==current_user.id).all()
+
+
+    print("historyDocs:", historyDocs)
+
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+                           image_file=image_file, form=form, historyDocs=historyDocs)
 
 @users.route("/user/<string:username>")
 def user_posts(username):

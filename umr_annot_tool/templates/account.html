@@ -1,5 +1,19 @@
 {% extends "layout.html" %}
+
 {% block content %}
+    <div class="content-section">
+        <legend class="border-bottom mb-4">Documents You Have Annotated</legend>
+        <div class="list-group">
+            {% for historyDoc in historyDocs %}
+                <a class="list-group-item list-group-item-action" title="{{ historyDoc.content }}" href="{{ url_for('main.annotate', doc_id=historyDoc.id)}}">
+                    {{historyDoc.filename}} ({{ historyDoc.lang }})
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content%}
+
+{% block content2 %}
     <div class="content-section">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ image_file }}">
@@ -54,4 +68,4 @@
             </div>
         </form>
     </div>
-{% endblock content %}
+{% endblock content2 %}
