@@ -96,23 +96,6 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     // undo_list.push(cloneCurrentState()); //populate undo_list
 }
 
-/**
- * not working yet
- * @param curr_doc_annot
- */
-function loadDocLevelHistory(curr_doc_annot){
-    console.log("curr_sent_annot: ", curr_sent_annot);
-    console.log("curr_sent_align: ", curr_sent_align);
-    // load history annotation for current sentence
-    console.log("html string to be loaded:", deHTML(curr_sent_annot));
-    setInnerHTML('load-plain', deHTML(curr_sent_annot));
-    console.log(document.getElementById('load-plain'));
-    console.log(document.getElementById('align'));
-    console.log("alignment string to be loaded:", curr_sent_align);
-    setInnerHTML('align', curr_sent_align);
-    console.log(document.getElementById('align'));
-    loadField2amr();
-}
 
 /**
  * not working yet
@@ -3688,13 +3671,12 @@ function export_annot(exported_items) {
     let filename;
     let text = "user name: " + document.getElementById('username').innerText + '\n';
     text += "user id: " + document.getElementById('user_id').innerText + '\n';
+    text += "file language: " + document.getElementById('lang').innerText + '\n';
     let curr_time = new Date();
     text += "export time: " + curr_time.toLocaleString() + '\n\n';
     text += '# :: snt';
     if (window.BlobBuilder && window.saveAs) {
-        //todo: this doesn't seem to work
-        filename = doc_name.replace( '.txt', "_annot.txt");
-        filename = doc_name.replace( '.xml', "_annot.xml");
+        filename = 'exported_' + doc_name;
         text += output_str
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();

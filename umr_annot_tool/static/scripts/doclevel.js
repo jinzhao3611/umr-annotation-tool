@@ -1,3 +1,8 @@
+let childArg = '';
+let parentArg = '';
+let selectedText;
+
+
 let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": false, "option-1-line-ORs": false,
     "option-fix-font":true, "option-role-auto-case":false, "option-auto-check":true, "option-auto-moveto":true,
     "option-confirm-delete":false, "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
@@ -2954,7 +2959,6 @@ function loadField2amr() {
 
 function highlightSelection() {
     console.log("highlightSelection is called.");
-
     var userSelection = document.getSelection();
 
     //Attempting to highlight multiple selections (for multiple nodes only + Currently removes the formatting)
@@ -2990,34 +2994,38 @@ function highlightSelection() {
 }
 
 function highlight(elem, keywords, caseSensitive = true, cls = 'text-success') {
-  const flags = caseSensitive ? 'gi' : 'g';
-  // Sort longer matches first to avoid
-  // highlighting keywords within keywords.
-  keywords.sort((a, b) => b.length - a.length);
-  Array.from(elem.childNodes).forEach(child => {
-    const keywordRegex = RegExp(keywords.join('|'), flags);
-    console.log("console list is: ", keywords);
-    console.log("pattern is: ", keywords.join('|')+ "space?");
-    if (child.nodeType !== 3) { // not a text node
-      highlight(child, keywords, caseSensitive, cls);
-    } else if (keywordRegex.test(child.textContent)) {
-      const frag = document.createDocumentFragment();
-      let lastIdx = 0;
-      child.textContent.replace(keywordRegex, (match, idx) => {
-        const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
-        const highlighted = document.createElement('span');
-        console.log("match: ", match);
-        highlighted.textContent = match;
-        highlighted.classList.add(cls);
-        frag.appendChild(part);
-        frag.appendChild(highlighted);
-        lastIdx = idx + match.length;
+    if(keywords[0] !== undefined){
+        const flags = caseSensitive ? 'gi' : 'g';
+      // Sort longer matches first to avoid
+      // highlighting keywords within keywords.
+      keywords.sort((a, b) => b.length - a.length);
+      Array.from(elem.childNodes).forEach(child => {
+        const keywordRegex = RegExp(keywords.join('|'), flags);
+        // console.log("console list is: ", keywords);
+        // console.log("pattern is: ", keywords.join('|')+ "space?");
+        // console.log("first keyword: ", keywords[0] === undefined );
+        if (child.nodeType !== 3) { // not a text node
+          highlight(child, keywords, caseSensitive, cls);
+        } else if (keywordRegex.test(child.textContent)) {
+          const frag = document.createDocumentFragment();
+          let lastIdx = 0;
+          child.textContent.replace(keywordRegex, (match, idx) => {
+            const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
+            const highlighted = document.createElement('span');
+            console.log("match: ", match);
+            highlighted.textContent = match;
+            highlighted.classList.add(cls);
+            frag.appendChild(part);
+            frag.appendChild(highlighted);
+            lastIdx = idx + match.length;
+          });
+          const end = document.createTextNode(child.textContent.slice(lastIdx));
+          frag.appendChild(end);
+          child.parentNode.replaceChild(frag, child);
+        }
       });
-      const end = document.createTextNode(child.textContent.slice(lastIdx));
-      frag.appendChild(end);
-      child.parentNode.replaceChild(frag, child);
     }
-  });
+
 }
 
 function deleteNode(node) {
@@ -3400,13 +3408,12 @@ function export_annot(exported_items) {
     let filename;
     let text = "user name: " + document.getElementById('username').innerText + '\n';
     text += "user id: " + document.getElementById('user_id').innerText + '\n';
+    text += "file language: " + document.getElementById('lang').innerText + '\n';
     let curr_time = new Date();
     text += "export time: " + curr_time.toLocaleString() + '\n\n';
     text += '# :: snt';
     if (window.BlobBuilder && window.saveAs) {
-        //todo: this doesn't seem to work
-        filename = doc_name.replace( '.txt', "_annot.txt");
-        filename = doc_name.replace( '.xml', "_annot.xml");
+        filename = 'exported_' + doc_name;
         text += output_str
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
@@ -3421,30 +3428,40 @@ function export_annot(exported_items) {
 
 
 function initialCommand(current_snt_id){
-    if ((command_input = document.getElementById('initial_command')) != null) {
-        let c_list = argSplit(command_input.value);
-        let arg_outer = c_list[0];
-        let arg_inner = c_list[1];
-        let role_outter = '';
-        let role_inner = '';
-        if(document.getElementById('temporal_relations').value !== ''){
-            role_inner = document.getElementById('temporal_relations').value;
-            role_outter = ':temporal';
-        }else if(document.getElementById('modal_relations').value !== ''){
-            role_inner = document.getElementById('modal_relations').value;
-            role_outter = ':modal';
-        }else{
-            role_inner = document.getElementById('coref_relations').value;
-            role_outter = ':coref';
-        }
+        let parentArg = document.getElementById('parentArg').value;
+        let childArg = document.getElementById('childArg').value;
+        let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0];
+        let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1];
 
-        let command1 = 's'+ current_snt_id + ' ' + role_outter + ' ' + arg_outer;
-        exec_command(command1, '1')
+        let command1 = 's'+ current_snt_id + ' ' + role_outter + ' ' + parentArg;
+        exec_command(command1, '1');
 
-        let command2 = arg_outer + ' ' + role_inner + ' ' + arg_inner;
-        exec_command(command2, '1')
+        let command2 = parentArg + ' ' + role_inner + ' ' + childArg;
+        exec_command(command2, '1');
 
-    }
+}
+
+function showBlueBox(){
+    document.getElementById('amr').parentNode.setAttribute('style', 'overflow-x: scroll; border:1px solid blue;');
+}
+
+function noteDocLevelRel(rel){
+    document.getElementById('doc-level-relations').innerText = rel;
 }
 
 
+function fillInArgs(argId){
+    selectedText = document.getSelection();
+    document.onselectionchange = function selectSpan() {
+        if(selectedText.toString() !== ''){
+            document.getElementById(argId).value = selectedText;
+            if(argId ==='childArg'){
+                void($('#content').unhighlight({element: 'span', className:'text-primary'}));
+                void($('#content').highlight(selectedText.toString(), {element: 'span', className:'text-primary'}));
+            }else if(argId ==='parentArg'){
+                void($('#content').unhighlight({element: 'span', className:'text-danger'}));
+                void($('#content').highlight(selectedText.toString(), {element: 'span', className:'text-danger'}));
+            }
+        }
+    };
+}

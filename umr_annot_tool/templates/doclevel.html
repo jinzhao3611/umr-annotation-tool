@@ -89,96 +89,54 @@
     </div>
 
     <hr>
-    {% for pair in sent_annot_pairs %}
-        <div class="row">
-            <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
-                <p>{{ loop.index }}. {{ pair[0].content }}</p>
-                {% autoescape off %}
-                <div id="amr{{ loop.index }}" >
-                <p>{{ pair[1].annot_str | replace('<div id="amr">','') | replace('</div>','')}}</p>
+    <div id="umrs">
+        {% for pair in sent_annot_pairs %}
+            <div class="row">
+                <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
+                    <p>{{ loop.index }}. {{ pair[0].content }}</p>
+                    {% autoescape off %}
+                    <div id="amr{{ loop.index }}" >
+                    <p>{{ pair[1].annot_str | replace('<div id="amr">','') | replace('</div>','')}}</p>
+                    </div>
+                    {% endautoescape %}
                 </div>
-                {% endautoescape %}
-            </div>
 
-            <div class="col-sm" style="overflow-x: scroll">
-                <h5>Doc-Level Annotation:</h5>
-            {% if pair[1].doc_annot | length %}
-{#            if current sentence doc_annotation is not empty in database, load from database#}
-                {% if loop.index == current_snt_id %}
-                    {% autoescape off %}
-                        {{ pair[1].doc_annot }}
-                    {% endautoescape %}
+                <div class="col-sm" style="overflow-x: scroll">
+                    <h5>Doc-Level Annotation:</h5>
+                {% if pair[1].doc_annot | length %}
+    {#            if current sentence doc_annotation is not empty in database, load from database#}
+                    {% if loop.index == current_snt_id %}
+                        {% autoescape off %}
+                            {{ pair[1].doc_annot }}
+                        {% endautoescape %}
+                    {% else %}
+    {#                <script>#}
+    {#                    console.log("I am here222");#}
+    {#                    html_umr_s= docUmrTransform({{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','') }});#}
+    {#                    console.log(html_umr_s);#}
+    {#                    let penman = document.createElement("p");#}
+    {#                    penman.innerText = html_umr_s2;#}
+    {#                    document.getElementById("amr_doc{{ loop.index }}").appendChild(penman);#}
+    {#                </script>#}
+                        {% autoescape off %}
+                            <div id="amr_doc{{ loop.index }}" >
+                                <p>{{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','')}}</p>
+                            </div>
+                        {% endautoescape %}
+                    {% endif %}
                 {% else %}
-{#                <script>#}
-{#                    console.log("I am here222");#}
-{#                    html_umr_s= docUmrTransform({{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','') }});#}
-{#                    console.log(html_umr_s);#}
-{#                    let penman = document.createElement("p");#}
-{#                    penman.innerText = html_umr_s2;#}
-{#                    document.getElementById("amr_doc{{ loop.index }}").appendChild(penman);#}
-{#                </script>#}
-                    {% autoescape off %}
-                        <div id="amr_doc{{ loop.index }}" >
-                            <p>{{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','')}}</p>
-                        </div>
-                    {% endautoescape %}
+    {#          if current sentence doc_annotation is empty in database, create a sentence top #}
+                    {% if loop.index == current_snt_id %}
+                        <div id="amr">(s{{ loop.index }} / sentence)<br></div>
+                    {% else %}
+                        <div id="amr_doc{{ loop.index }}">(s{{ loop.index }} / sentence)<br></div>
+                    {% endif %}
                 {% endif %}
-            {% else %}
-{#          if current sentence doc_annotation is empty in database, create a sentence top #}
-                {% if loop.index == current_snt_id %}
-                    <div id="amr">(s{{ loop.index }} / sentence)<br></div>
-                {% else %}
-                    <div id="amr_doc{{ loop.index }}">(s{{ loop.index }} / sentence)<br></div>
-                {% endif %}
-            {% endif %}
+                </div>
             </div>
-        </div>
-    {% endfor %}
-
-
-    <div id="replace-template-table" style="display:none;">
-        <p>
-            <table>
-                <tbody>
-                <tr>
-                    <td>Replace</td>
-                    <td title="select type of AMR element to be replaced">&nbsp;
-                        <select id="replace-type"
-                                onchange="selectReplaceType(this[selectedIndex].text);">
-                            <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
-                            <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
-                            </option>
-                            <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
-                            <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
-                        </select>
-                    </td>
-                    <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
-                                         autocapitalize="off" id="replace-at"
-                                         value=""></td>
-                    <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
-                                           id="replace-new" value=""
-                                           onfocus="var val = this.value; this.value = ''; this.value = val;"
-                                           onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
-                                           onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
-                    </td>
-                    <td>
-                        <table border="1" cellpadding="1" cellspacing="0">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
-                                                   href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
-                                    </nobr>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </p>
+        {% endfor %}
     </div>
+
     <div id="delete-template-table" style="display:none;">
         <p>
         <table>
@@ -387,7 +345,7 @@
         </p>
     </div>
 
-    <div style="display: none">
+    <div>
     this is amr to save in db:
         <div id="db-amr">
         </div>
@@ -423,64 +381,56 @@
         </p>
     </form>
 
-    <div id="t_rels">
-        <label for="temporal_relations">Temporal Relations</label>
-        <input list="t_relations" name="temporal_relations" id="temporal_relations" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="t_relations">
-            <option value=':before'>
-            <option value=':after'>
-            <option value=':depends-on'>
-            <option value=':overlap'>
-        </datalist>
-{#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
-    </div>
-    <div id="m_rels">
-        <label for="modal_relations">Modal Relations</label>
-        <input list="m_relations" name="modal_relations" id="modal_relations" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="m_relations">
-            <option value=':AFF'>
-            <option value=':NEUTAFF'>
-            <option value=':PARTAFF'>
-            <option value=':NEG'>
-            <option value=':NEUTNEG'>
-            <option value=':PARTNEG'>
-        </datalist>
-{#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
-    </div>
-        <div id="c_rels">
-        <label for="coref_relations">Coref Relations</label>
-        <input list="c_relations" name="coref_relations" id="coref_relations" onfocus="this.value=''" onchange="this.blur();">
-        <datalist id="c_relations">
-            <option value=':same-entity'>
-            <option value=':same-event'>
-            <option value=':subset-of'>
-
-        </datalist>
-{#            <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
+    <div class="btn-group dropright">
+        <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relations:</button>
+        <p class="dropdown-item" id="doc-level-relations"></p>
+        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" tabindex="-1" >temporal</a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :before')">:before</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :after')">:after</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :depends-on')">:depends-on</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :overlap')">:overlap</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" tabindex="-1" >modal</a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :AFF')">:AFF</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTAFF')">:NEUTAFF</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTAFF')">:PARTAFF</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEG')">:NEG</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTNEG')">:NEUTNEG</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTNEG')">:PARTNEG</a></li>
+                </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" tabindex="-1">coref</a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-entity')">:same-entity</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-event')">:same-event</a></li>
+                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :subset-of')">:subset-of</a></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <div id="text-command">
+{#    child and parent arg are switched because the child and parent concept is different here#}
         <table>
             <tr>
-                <td>Enter args:</td>
-                <td><textarea class="form-control" rows="1" cols="50" id="initial_command" name="command" autocapitalize="off"
-                              autocorrect="off"
-                              spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
-                              onenter=""></textarea></td>
-                <td width="20"></td>
-            <tr>
-                <td colspan="4"><span id="error"><i></i></span></td>
+                <td>Child:</td>
+                <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;" onfocus="fillInArgs('parentArg')"></textarea></td>
             </tr>
-            <tr style="color:#999999">
-                {#            <td>Last command:</td>#}
-                <td colspan="3"><span id="action"></span></td>
+            <tr>
+                <td>Parent:</td>
+                <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea></td>
             </tr>
         </table>
-        <button onclick="initialCommand({{ current_snt_id }}); ">submit</button>
+        <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));">submit</button>
 
     </div>
-
-
 
     <div>
         <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>
@@ -488,7 +438,6 @@
 {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');">load_history</a></button>#}
         <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
 
-        <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
         <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
         <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
         <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
@@ -501,13 +450,9 @@
     </div>
 
     <script type="text/javascript">
-        {#console.log("I am here jinzhao");#}
-        {#console.log('{{ current_sent_pair[1].doc_annot }}');#}
-        {#console.log('{{ current_sent_pair[1].doc_umr|tojson|safe }}');#}
-        {#console.log('{{ current_snt_id }}');#}
-
         load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
         showDefaultUmr({{ sent_annot_pairs | length }}, {{ current_snt_id }})
+        showBlueBox();
     </script>
 
 {% endblock content2 %}
