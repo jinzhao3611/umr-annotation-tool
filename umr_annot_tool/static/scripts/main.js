@@ -846,14 +846,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             } else {
                                 // when the arg is not already in tree yet
                                 console.log("I am here8");
-                                if (validEntryConcept(cc[i])) {
-                                    // create a new tree
-                                    newAMR(trimConcept(cc[i]));
-                                } else if(language==='Default'){
-                                    newAMR(cc[i]);
-                                } else {
-                                    console.log('Ill-formed command "' + cc[0] + ' <font color="red">' + cc[i] + '</font>" &nbsp; Argument should be last_command concept.');
-                                }
+                                newAMR(cc[i]);
                             }
                         }
                         if (current_template !== 'top') {
