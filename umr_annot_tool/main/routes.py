@@ -273,7 +273,7 @@ def doclevel(doc_id):
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair, exported_items=exported_items)
+                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang)
 
 
 @main.route("/about")
