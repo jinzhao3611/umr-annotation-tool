@@ -2341,7 +2341,7 @@ function tolerate_special_concepts(s) {
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
     // loc=1, args="show", rec=0, ancestor_elem_id_list=' '
     console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
-    console.log("umr from show_amr_rec: ", umr);
+    // console.log("umr from show_amr_rec: ", umr);
 
     loc += ''; // '1'
     if (umr[loc + '.d']) { // umr['1.d'], already been deleted
@@ -2398,7 +2398,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
                 onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
                 onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
-                role_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role + '</span>';
+                role_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role + '</span>';
             }
         }
         if (show_delete) {
