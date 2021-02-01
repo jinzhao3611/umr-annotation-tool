@@ -859,7 +859,11 @@
             console.log("event is fired1");
             if(e.target.matches("span")){
                 console.log("event is fired2");
-                let new_value = document.getElementById(e.target.id).innerHTML; // example: freedom-01
+                let inplaceBox = document.getElementById(e.target.id).innerHTML;
+                console.log('inplaceBoxe: ', inplaceBox);
+                inplaceBox = inplaceBox.replaceAll(/'/g, "\\'");
+                console.log('inplaceBoxe: ', inplaceBox);
+                let new_value = inplaceBox; // example: freedom-01
                 // this way of dynamically changing onclick function seems ugly to me, maybe there is a better way
                 let clickfunc = e.target.getAttribute("onclick"); //example: clickfunc="fillReplaceTemplate('concept','s1f','freedom','amr_elem_3')"
                 let funname = clickfunc.substring(0, clickfunc.indexOf(",", clickfunc.indexOf(",") + 1)); // example: clickfunc="fillReplaceTemplate('concept','s1f'"

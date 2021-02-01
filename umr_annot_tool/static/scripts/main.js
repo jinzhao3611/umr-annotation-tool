@@ -1686,7 +1686,8 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
         let head_var_locs = getLocs(head_var);
         if (head_var_locs) {
             if (key_with === 'with') {
-                if (validEntryConcept(new_concept) || language === "Default") {
+                // if (validEntryConcept(new_concept) || language === "Default") {
+                if (new_concept) {
                     head_var_locs += '';
                     let loc_list = argSplit(head_var_locs);
                     let loc = loc_list[0];
