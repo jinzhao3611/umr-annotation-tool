@@ -219,7 +219,7 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
 function docUMR2db() {
     console.log("docUMR2db is called");
     let doc_id = document.getElementById('doc_id').innerText;
-    let snt_id = document.getElementById('curr_sent_id').value;
+    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let umrHtml = document.getElementById('db-amr').outerHTML;
     umrHtml = umrHtml.replace('<div id="db-amr">', '<div id="amr">');
 

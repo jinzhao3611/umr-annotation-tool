@@ -212,50 +212,6 @@
         </table>
         </p>
     </div>
-    <div id="move-template-table" style="display:none;">
-        <table>
-            <tbody>
-            <tr>
-                <td width="5"></td>
-                <td>Move</td>
-                <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
-                           id="move-object" value=""></td>
-                <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
-                                               id="move-new-head" value=""> &nbsp;
-                </td>
-                <td>
-                    <table border="1" cellpadding="1" cellspacing="0">
-                        <tbody>
-                        <tr>
-                            <td>
-                                &nbsp;<a style="text-decoration:none"
-                                         title="display clickable list of AMR roles (popup)"
-                                         href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-
-                <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
-                           id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
-                           onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
-                <td>
-                    <table border="1" cellpadding="1" cellspacing="0">
-                        <tbody>
-                        <tr>
-                            <td>&nbsp;<a title="submit move template action"
-                                         href="javascript:submit_template_action('move');"><font
-                                    color="black">submit</font></a>&nbsp;
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
     <div id="load-template-table" style="display:none;">
         {#    <div id="load-template-table" style="display:inline;">#}
         <p>
@@ -349,7 +305,7 @@
         </p>
     </div>
 
-    <div>
+    <div style="display: none">
     this is amr to save in db:
         <div id="db-amr">
         </div>
@@ -357,7 +313,7 @@
 {% endblock content %}
 
 {% block content2 %}
-    <div style="height: 250px;">
+    <div style="height: 250px; display: none">
         <div id="text-command">
             <table>
                 <tr>
@@ -380,11 +336,11 @@
 
     <form method="post">
         <p>current sentence:
+            <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
             <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
-            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go">
+            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db()">
         </p>
     </form>
-
     <div class="btn-group dropright">
         <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relations:</button>
         <p class="dropdown-item" id="doc-level-relations"></p>
@@ -437,13 +393,12 @@
     </div>
 
     <div>
-        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>
+{#        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>#}
 {# jinja cannot accept dictionary like this, so this button doesn't work#}
 {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');">load_history</a></button>#}
         <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
 
         <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
-        <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>
         <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);undo(-1);">undo</a></button>
         <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);undo(1);">redo</a></button>
         {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
