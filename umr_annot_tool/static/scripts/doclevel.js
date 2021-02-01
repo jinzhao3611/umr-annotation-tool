@@ -106,6 +106,7 @@ function docUmrTransform(html_umr_s){
 
     //add temporal lines
     if(temporals.length !== 0){
+        temporals = chainUp(temporals);
         html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:temporal (';
         for(let i=0; i<temporals.length; i++){
             if(i===0){
@@ -119,6 +120,7 @@ function docUmrTransform(html_umr_s){
 
     //add modal lines
     if(modals.length !== 0){
+        modals = chainUp(modals);
         html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:modal (';
         for(let i=0; i<modals.length; i++){
             if(i===0){
@@ -132,6 +134,7 @@ function docUmrTransform(html_umr_s){
 
     //add coref lines
     if(corefs.length !== 0){
+        corefs = chainUp(corefs);
         html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:coref (';
         for(let i=0; i<corefs.length; i++){
             if(i===0){
@@ -149,6 +152,42 @@ function docUmrTransform(html_umr_s){
     return html_umr_s2;
 
 
+}
+
+function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
+    let array2 = array.map(function(ele){ //array2 = [["(s1t :before s2d)", "s1t", "s2d"], ["(s2d :before DCT)", "s2d", "DCT"]]
+        let splitted_ele = ele.split(' ');
+        let new_ele = [ele];
+        new_ele[1] = splitted_ele[0].replace('(', '');
+        new_ele[2] = splitted_ele[2].replace(')', '');
+        return new_ele;
+    });
+
+    for(let i=0; i< array2.length; i++){//array2 = [["(s1t :before (s2d :before DCT))", "s1t", "DCT"], ["", "", ""]]
+        for (let j = i+1; j<array2.length; j++){
+            if(array2[i][1] === array2[j][2] && array2[i][1]!== ''){
+              console.log(array2[i]);
+              console.log(array2[j]);
+                array2[j][0] = array2[j][0].replace(array2[j][2], array2[i][0]);
+                array2[j][2] = array2[i][2];
+                array2[i] = ['', '', ''];
+            }else if(array2[i][2] === array2[j][1] && array2[i][2] !== ''){
+            	console.log(array2[i]);
+              console.log(array2[j]);
+                array2[i][0] = array2[i][0].replace(array2[i][2], array2[j][0]);
+               	array2[i][2] = array2[j][2];
+                array2[j] = ['', '', ''];
+            }
+        }
+    }
+
+    let array3=[]; //["(s1t :before (s2d :before DCT))"]
+    for (let i=0; i < array2.length; i++){
+        if (array2[i][0]!==''){
+            array3.push(array2[i][0]);
+        }
+    }
+    return array3;
 }
 
 /**
