@@ -7,6 +7,7 @@ from utils import parse_xml
 from bs4 import BeautifulSoup
 from flask_login import current_user
 import pandas as pd
+import re
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
@@ -15,6 +16,93 @@ from umr_annot_tool.main.forms import UploadForm
 
 main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
+
+
+def amr_text2html(plain_text: str) -> str:
+    html_string = re.sub(' ', '&nbsp;', plain_text)
+    html_string = re.sub('\n', '<br>\n', html_string)
+    html_string = '<div id="amr">' + html_string + '<div>\n'
+    return html_string
+
+
+def save_export2db(content_string: str, filename: str):
+    items = content_string.split("#")
+    # user_id_match = re.match(r"user id: (\d+)", items[0].strip().split('\n')[0])
+    # user_id = user_id_match.group(1)
+    # todo add try catch AttributeError when there is no match
+    lang_match = re.match(r"file language: (.+)", items[0].strip().split('\n')[2])
+    lang = lang_match.group(1)
+
+    sent_indice = list(range(1, len(items), 4))
+    sent_annot_indice = list(range(2, len(items), 4))
+    align_indice = list(range(3, len(items), 4))
+    doc_annot_indice = list(range(4, len(items), 4))
+    sent_list = [items[i] for i in sent_indice]
+    sent_annot_list = [items[i] for i in sent_annot_indice]
+    align_list = [items[i] for i in align_indice]
+    doc_annot_list = [items[i] for i in doc_annot_indice]
+    print(sent_indice)
+    print(sent_annot_indice)
+    print(align_indice)
+    print(doc_annot_indice)
+    print(sent_list)
+    print(sent_annot_list)
+    print(align_list)
+    print(doc_annot_list)
+
+    # convert sent_list when this doc not already exist in db
+    doc_content_string = "".join([re.sub(' :: snt\d+\tSentence: ', '', sent) for sent in sent_list])
+    # print('doc_content_string: ', doc_content_string)
+    # convert align_list
+    aligns = [re.sub('alignment:', '', align).strip() for align in align_list]
+    # print('aligns: ', aligns)
+
+    sent_annots = [amr_text2html(re.sub(' sentence level graph:', '', sent_annot).strip() + '\n') for sent_annot in
+                   sent_annot_list]
+    doc_annots = [amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip() + '\n') for doc_annot in
+                  doc_annot_list]
+
+    # print(sent_annots)
+    # print(doc_annots)
+
+    # check if doc already in db:
+    # existing_doc = Doc.query.filter_by(filename=re.sub('exported_', '', filename), user_id=current_user.id).first() // do not repeat to save to db if original already exists
+    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
+
+    if existing_doc:
+        doc_id = existing_doc.id
+        existing_doc.content = doc_content_string
+    else:
+        doc = Doc(lang=lang, filename=filename, content=doc_content_string, user_id=current_user.id)
+        db.session.add(doc)
+        db.session.commit()
+        doc_id = doc.id
+        for sent_content in sent_list:
+            sent_content = re.sub(' :: snt\d+\tSentence: ', '', sent_content).strip()
+            sent = Sent(content=sent_content, doc_id=doc_id, user_id=current_user.id)
+            db.session.add(sent)
+            db.session.commit()
+
+
+    # covert sent_annot_list and doc_annot_list
+    # get the doc_id through filename
+    for i in range(len(sent_list)):
+        existing = Annotation.query.filter(Annotation.sent_id == i+1, Annotation.doc_id == doc_id,
+                                           Annotation.user_id == current_user.id).first()
+        if existing:  # update the existing Annotation object
+            print("upadating existing annotation")
+            existing.annot_str = sent_annots[i]
+            existing.doc_annot = doc_annots[i]
+            existing.alignment = aligns[i]
+            db.session.commit()
+        else:
+            annotation = Annotation(annot_str=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
+                                    author=current_user,
+                                    sent_id=i+1,
+                                    doc_id=doc_id,
+                                    umr={}, doc_umr={})
+            db.session.add(annotation)
+            db.session.commit()
 
 
 def html(content_string: str) -> Tuple[List[List[str]], str, List[str], List[str], List[str], List[str]]:
@@ -78,22 +166,28 @@ def upload():
             content_string = form.file.data.read().decode("utf-8")
             print("content_string: ", content_string)
             filename = secure_filename(form.file.data.filename)
-            sents, _, _, _, _, _ = html(content_string)
-
-            if not Doc.query.filter_by(filename=filename, user_id=current_user.id).first():  # this doc is not already added in, add in db
-                doc = Doc(lang=form.language_mode.data, filename=filename, content=content_string, user_id=current_user.id)
-                db.session.add(doc)
-                db.session.commit()
-                flash('Your doc has been created!', 'success')
-                for sent_of_tokens in sents:
-                    sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=current_user.id)
-                    db.session.add(sent)
-                    db.session.commit()
-                flash('Your sents has been created!', 'success')
-                return redirect(url_for('main.annotate', doc_id=doc.id))
+            # todo
+            if filename.startswith('exported_'): # check if uploaded file is exported files:
+                save_export2db(content_string, filename)
+                return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename,
+                                                                                    user_id=current_user.id).first().id))
             else:
-                flash('Your doc and sents already created.', 'success')
-                return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
+                sents, _, _, _, _, _ = html(content_string)
+                if not Doc.query.filter_by(filename=filename, user_id=current_user.id).first():  # this doc is not already added in, add in db
+                    doc = Doc(lang=form.language_mode.data, filename=filename, content=content_string, user_id=current_user.id)
+                    db.session.add(doc)
+                    db.session.commit()
+                    flash('Your doc has been created!', 'success')
+                    for sent_of_tokens in sents:
+                        sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=current_user.id)
+                        db.session.add(sent)
+                        db.session.commit()
+                    flash('Your sents has been created!', 'success')
+                    return redirect(url_for('main.annotate', doc_id=doc.id))
+                else:
+                    flash('Your doc and sents already created.', 'success')
+                    return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename,
+                                                                                        user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
     return render_template('upload.html', title='upload', form=form)
@@ -148,12 +242,9 @@ def annotate(doc_id):
                 db.session.add(annotation)
                 db.session.commit()
 
-
-
             return {"amr": amr_html}
         except:
             print("add current annotation and alignments to database failed")
-
 
     # load single annotation for current sentence from db used for load_history()
     try:
