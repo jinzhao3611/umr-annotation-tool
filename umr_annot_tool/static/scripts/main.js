@@ -3528,7 +3528,7 @@ function UMR2db() {
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let align_info = document.getElementById('align').innerText;
     let doc_id = document.getElementById('doc_id').innerText;
-    let snt_id = document.getElementById('sentence_id').value;
+    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     console.log(amrHtml);
     console.log(align_info);
     console.log(umr);

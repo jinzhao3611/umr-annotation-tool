@@ -201,15 +201,15 @@ def annotate(doc_id):
     sents, sents_html, sent_htmls, df_html, gls, notes = html(doc.content)
     frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
     snt_id = 1
-    # if "set_sentence" in request.form:
-    #     snt_id = int(request.form["sentence_id"])
+    if "set_sentence" in request.form:
+        snt_id = int(request.form["sentence_id"])
 
-    if "prev_sentence" in request.form:
-        snt_id = max(int(request.form["sentence_id"]) - 1, 1)
-        print("snt_id: ", snt_id)
-    elif "next_sentence" in request.form:
-        print("sanity check sentence id", int(request.form["sentence_id"]))
-        snt_id = min(int(request.form["sentence_id"]) + 1, len(sents))
+    # if "prev_sentence" in request.form:
+    #     snt_id = max(int(request.form["sentence_id"]) - 1, 1)
+    #     print("snt_id: ", snt_id)
+    # elif "next_sentence" in request.form:
+    #     print("sanity check sentence id", int(request.form["sentence_id"]))
+    #     snt_id = min(int(request.form["sentence_id"]) + 1, len(sents))
 
     # add to db
     if request.method == 'POST':

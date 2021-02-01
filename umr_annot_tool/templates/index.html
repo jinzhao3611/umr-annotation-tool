@@ -107,42 +107,28 @@
         {% endautoescape %}
     </div>
     <hr>
-
-    {# choose the sentence ID #}
-    {#<form method="post">#}
-    {#    Sentence ID#}
-    {#    <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }} value={{ snt_id }}>#}
-    {#    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go"><br>#}
-    {#</form>#}
-
-    {# choose the sentence ID #}
-    {#<form class="form-inline" method="post">#}
-    {#    <div class="form-group mb-2">#}
-    {#        <input type="submit" name="prev_sentence" id="prev_sentence" value="previous">#}
-    {#    </div>#}
-    {#    <div class="form-group mb-2">#}
-    {#        <label for="sentence_id">Sentence</label>#}
-    {#        <input type="text" readonly class="form-control-plaintext" name="sentence_id" id="sentence_id" value="{{ snt_id }}">#}
-    {#    </div>#}
-    {#    <div class="form-group mb-2">#}
-    {#        <input type="submit" name="next_sentence" id="next_sentence" value="next">#}
-    {#    </div>#}
-    {#</form>#}
-
-    {# choose the sentence ID #}
-    <form class="row g-3" method="post">
-        <div class="col-sm">
-            <input type="submit" name="prev_sentence" id="prev_sentence" onclick="UMR2db()" value="previous">
-        </div>
-        <label for="sentence_id" class="col-sm col-form-label">Sentence</label>
-
-        <div class="col-sm">
-            <input type="text" readonly class="form-control-plaintext" name="sentence_id" id="sentence_id" value="{{ snt_id }}">
-        </div>
-        <div class="col-sm">
-            <input type="submit" name="next_sentence" id="next_sentence" onclick="UMR2db()" value="next">
-        </div>
+    <form method="post">
+        <p>Sentence ID:
+            <span id="curr_shown_sent_id" style="display: none"> {{ snt_id }}</span>
+            <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }} value={{ snt_id }}>
+            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="UMR2db()"><br>
+        </p>
     </form>
+
+    {# choose the sentence ID #}
+{#    <form class="row g-3" method="post">#}
+{#        <div class="col-sm">#}
+{#            <input type="submit" name="prev_sentence" id="prev_sentence" onclick="UMR2db()" value="previous">#}
+{#        </div>#}
+{#        <label for="sentence_id" class="col-sm col-form-label">Sentence</label>#}
+{##}
+{#        <div class="col-sm">#}
+{#            <input type="text" readonly class="form-control-plaintext" name="sentence_id" id="sentence_id" value="{{ snt_id }}">#}
+{#        </div>#}
+{#        <div class="col-sm">#}
+{#            <input type="submit" name="next_sentence" id="next_sentence" onclick="UMR2db()" value="next">#}
+{#        </div>#}
+{#    </form>#}
 
 
     {# display the sentence with the chosen sentence ID #}
@@ -900,15 +886,15 @@
             document.getElementById("annot-button").style.display = "inline";
         }
 
-        if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){
-            console.log("hide the next button!!!!!");
-            document.getElementById("next_sentence").style.display = "none";
-        }
-
-        if (document.getElementById("sentence_id").value === "1"){
-            console.log("hide the prev button!!!!!");
-            document.getElementById("prev_sentence").style.display = "none";
-        }
+        {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
+        {#    console.log("hide the next button!!!!!");#}
+        {#    document.getElementById("next_sentence").style.display = "none";#}
+        {#}#}
+        {##}
+        {#if (document.getElementById("sentence_id").value === "1"){#}
+        {#    console.log("hide the prev button!!!!!");#}
+        {#    document.getElementById("prev_sentence").style.display = "none";#}
+        {#}#}
 
 
     </script>
