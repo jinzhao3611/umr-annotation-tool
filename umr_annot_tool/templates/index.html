@@ -835,7 +835,7 @@
     </table>
 
     <div>
-        <button class="btn btn-outline-secondary" style="display:none" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>
+{#        <button class="btn btn-outline-secondary" style="display:none" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>#}
 {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>#}
         <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
 
@@ -845,7 +845,7 @@
         <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
         <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
         {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
-        <a class="btn btn-outline-secondary" style="display:none" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_id=doc_id) }}" onclick="UMR2db()">doc-level-annot</a>
+        <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_id=doc_id) }}" onclick="UMR2db()">doc-level-annot</a>
 {#        <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>#}
 {#        <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>#}
     </div>
@@ -880,15 +880,15 @@
 
         {#console.log("sent number is: ", {{ sents|length }});#}
         {#console.log("sent id is: ", document.getElementById("sentence_id").value);#}
-        if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){
-            console.log("show the dbbutton!!!!!");
-            document.getElementById("db").style.display = "inline";
-        }
-
-        if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){
-            console.log("show the doc-level-annot button!!!!!");
-            document.getElementById("annot-button").style.display = "inline";
-        }
+        {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
+        {#    console.log("show the dbbutton!!!!!");#}
+        {#    document.getElementById("db").style.display = "inline";#}
+        {#}#}
+        {##}
+        {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
+        {#    console.log("show the doc-level-annot button!!!!!");#}
+        {#    document.getElementById("annot-button").style.display = "inline";#}
+        {#}#}
 
         {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
         {#    console.log("hide the next button!!!!!");#}
