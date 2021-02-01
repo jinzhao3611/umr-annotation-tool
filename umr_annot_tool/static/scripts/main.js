@@ -78,6 +78,12 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     // console.log("curr_sent_annot: ", curr_sent_annot);
     // console.log("curr_sent_align: ", curr_sent_align);
     // console.log("html string to be loaded:", deHTML(curr_sent_annot));
+    console.log("curr_sent_umr: ", curr_sent_umr);
+    umr = JSON.parse(curr_sent_umr);
+    console.log("umr parsed from json string: ", umr);
+    if (Object.keys(umr).length === 0){
+        umr['n'] = 0;
+    }
     setInnerHTML('load-plain', deHTML(curr_sent_annot));
     // console.log(document.getElementById('load-plain'));
     // console.log(document.getElementById('align'));
@@ -85,10 +91,6 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     setInnerHTML('align', curr_sent_align);
     // console.log(document.getElementById('align'));
     loadField2amr();
-    umr = JSON.parse(curr_sent_umr);
-    if (Object.keys(umr).length === 0){
-        umr['n'] = 0;
-    }
     showAlign();
     if(language !== "Default"){
         showAnnotatedTokens();
@@ -1178,7 +1180,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
 /**
  * find the correct alignment info for abstract concept like name
  */
-function correctAlignments(flag){
+function correctAlignments(){
+    console.log("umr from correctAlignments: ", umr);
     Object.keys(umr).forEach(function(key){
         if(key.match(/\d+.v/)){
             if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
@@ -1278,6 +1281,7 @@ function showAnnotatedTokens(){
 }
 function showAlign(){
     correctAlignments();
+    console.log("umr from showAlign: ", umr);
     let alignInfo;
     if (( alignInfo = document.getElementById('align')) != null){
         let alignment_string = '';
@@ -2336,7 +2340,8 @@ function tolerate_special_concepts(s) {
  */
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
     // loc=1, args="show", rec=0, ancestor_elem_id_list=' '
-    // console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
+    console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
+    console.log("umr from show_amr_rec: ", umr);
 
     loc += ''; // '1'
     if (umr[loc + '.d']) { // umr['1.d'], already been deleted
@@ -2595,6 +2600,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
  */
 function show_amr(args) {
     console.log("show_amr is called: args: " + args );
+    console.log("umr from show_amr: ", umr);
     //comply with the loaded options
     let s, html_amr_s;
     n_elems_w_id = 0;
@@ -2961,7 +2967,7 @@ function string2amr_rec(s, loc, state, ht) {
 
 function string2amr(s) {
     // old amr will be destroyed (so clone before if needed)
-    // add_edit_log('string2amr ' + s);
+    console.log('string2amr ' + s);
     var loc, ps, ps_loc;
     var s_wo_comment = s.replace(/^\s*\#.*\n$/, "");
     var ht = new Object();
@@ -3038,10 +3044,15 @@ function string2amr(s) {
  * @param amr_id: In doc level annotation, there is amr_id
  */
 function loadField2amr() {
-    console.log("loadField2amr is called");
+    console.log("umr from loadField2amr: ", umr);
     var s;
     if ((s = document.getElementById('load-plain')) != null) {
+        let loaded_umr = umr;
         var rest = string2amr(s.value);
+        if(Object.keys(umr).length> 1){
+            umr = loaded_umr;
+            console.log("umr from loadField2amr2: ", umr);
+        }
         if (!rest.match(/\S/)) {
             rest = '';
         }
