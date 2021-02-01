@@ -550,7 +550,7 @@ function submit_template_action(id, numbered_predicate = "") {
     if (id === 'top') {
         if ((document.getElementById('genericDropdown')) != null) {
             exec_command('top ' + current_concept, 1);
-            let k = getKeyByValue(umr, current_concept);
+            let k = getKeyByValue(umr, current_concept.toLowerCase());
             if (k.includes("v")) { // 1.1.v, if current_concept is variable
                 current_parent = current_concept;
                 console.log("current_parent is " + current_parent);
@@ -846,7 +846,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             } else {
                                 // when the arg is not already in tree yet
                                 console.log("I am here8");
-                                newAMR(cc[i]);
+                                newAMR(cc[i].toLowerCase());
                             }
                         }
                         if (current_template !== 'top') {
