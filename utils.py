@@ -137,9 +137,15 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
                             for item in morph:
                                 if item.attrib['type'] == 'txt':
                                     # take the text field (unlemmatized version)
-                                    cf_per_word.append(item.text)
+                                    if item.text is not None:
+                                        cf_per_word.append(item.text)
+                                    else:
+                                        cf_per_word.append('')
                                 elif item.attrib['type'] == 'gls':
-                                    gls_per_word.append(item.text)
+                                    if item.text is not None:
+                                        gls_per_word.append(item.text)
+                                    else:
+                                        gls_per_word.append('')
                                 elif item.attrib['type'] == 'msa':
                                     msa_per_word.append(item.text)
                         cf_per_sentence.append(cf_per_word)
