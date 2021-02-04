@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from flask_login import current_user
 import pandas as pd
 import re
+from itertools import accumulate
+import operator
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
@@ -120,10 +122,25 @@ def html(content_string: str) -> Tuple[List[List[str]], str, List[str], List[str
     df_htmls = []
     try:  # if the content string is xml format, parse with xml parser
         ET.fromstring(content_string)
-        sents, dfs, sents_gls, conv_turns = parse_xml(content_string)
+        sents, dfs, sents_gls, conv_turns, paragraph_groups = parse_xml(content_string)
         sents_df = pd.DataFrame([' '.join(sent) for sent in sents])
         sents_df.index = sents_df.index + 1
-        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
+
+        print('paragraph_groups', paragraph_groups)
+        sents_html = ''
+        if paragraph_groups:
+            paragraph_slice_indice = list(accumulate(paragraph_groups, operator.add))
+            print('paragraph_slice_indice', paragraph_slice_indice)
+
+            for i, slice_index in enumerate(paragraph_slice_indice):
+                sents_html += 'Paragraph: ' + str(i+1)
+                if i == 0:
+                    sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
+                else:
+                    sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
+
+        else:
+            sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
 
         for df in dfs:
             df.columns = range(1, len(df.columns) + 1)

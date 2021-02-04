@@ -30,7 +30,7 @@ def parse_xml(xml_path):
         return parse_toolbox_xml(xml_path)
 
 
-def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str]:
+def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
     """
     parse the Arapahoe toolbox xml file
     :param xml_path: input toolbox xml file path
@@ -90,10 +90,10 @@ def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame
         df = pd.DataFrame([tx[i], [" ".join(e) for e in mb[i]], [" ".join(e) for e in ge[i]], [" ".join(e) for e in ps[i]]])
         df.index=['Words'] + rowIDs
         tbls.append(df)
-    return tx, tbls, sents_gls, ""
+    return tx, tbls, sents_gls, "", []
 
 
-def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]]]:
+def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]], List[int]]:
     """
     parse the Secoya and Sanapana xml file
     :param xml_path: input toolbox xml file path
@@ -114,57 +114,61 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
     msa = list()
     sent_gls = list()
     notes = list()
+    paragraph_groups = list()
 
     for paragraph in root.iter('paragraph'): # each sentence
-        txt_per_sentence = list()
-        word_gls_per_sentence = list()
-        cf_per_sentence = list()
-        gls_per_sentence = list()
-        msa_per_sentence = list()
-        for words in paragraph.iter('words'):
-            for word in words: # each word
-                for child in word:
-                    if child.tag == 'item':
-                        if child.attrib['type'] == 'txt':
-                            txt_per_sentence.append(child.text)
-                        if child.attrib['type'] == 'gls':
-                            word_gls_per_sentence.append(child.text)
-                    elif child.tag == 'morphemes':
-                        cf_per_word = list()
-                        gls_per_word = list()
-                        msa_per_word = list()
-                        for morph in child:
-                            for item in morph:
-                                if item.attrib['type'] == 'txt':
-                                    # take the text field (unlemmatized version)
-                                    if item.text is not None:
-                                        cf_per_word.append(item.text)
-                                    else:
-                                        cf_per_word.append('')
-                                elif item.attrib['type'] == 'gls':
-                                    if item.text is not None:
-                                        gls_per_word.append(item.text)
-                                    else:
-                                        gls_per_word.append('')
-                                elif item.attrib['type'] == 'msa':
-                                    msa_per_word.append(item.text)
-                        cf_per_sentence.append(cf_per_word)
-                        gls_per_sentence.append(gls_per_word)
-                        msa_per_sentence.append(msa_per_word)
+        for phrases in paragraph.findall('phrases'): # should only have one phrases under each paragraph
+            text_id_group = list()
+            for i, word in enumerate(phrases.findall('word')): #only have one word when not grouped by paragraphs
+                txt_per_sentence = list()
+                word_gls_per_sentence = list()
+                cf_per_sentence = list()
+                gls_per_sentence = list()
+                msa_per_sentence = list()
+                for words in word.findall('words'):
+                    for word2 in words.findall('word'): # each word
+                        for child in word2:
+                            if child.tag == 'item':
+                                if child.attrib['type'] == 'txt': # words row
+                                    txt_per_sentence.append(child.text)
+                                if child.attrib['type'] == 'gls': # word gloss row
+                                    word_gls_per_sentence.append(child.text)
+                            elif child.tag == 'morphemes':
+                                cf_per_word = list()
+                                gls_per_word = list()
+                                msa_per_word = list()
+                                for morph in child:
+                                    for item in morph:
+                                        if item.attrib['type'] == 'txt': #morphemes row
+                                            # take the text field (unlemmatized version)
+                                            if item.text is not None:
+                                                cf_per_word.append(item.text)
+                                            else:
+                                                cf_per_word.append('') # morpheme gloss row
+                                        elif item.attrib['type'] == 'gls':
+                                            if item.text is not None:
+                                                gls_per_word.append(item.text)
+                                            else:
+                                                gls_per_word.append('')
+                                        elif item.attrib['type'] == 'msa': # morpheme cat row
+                                            msa_per_word.append(item.text)
+                                cf_per_sentence.append(cf_per_word)
+                                gls_per_sentence.append(gls_per_word)
+                                msa_per_sentence.append(msa_per_word)
 
-        for phrases in paragraph.iter('phrases'):
-            for word in phrases.findall('word'):
                 for item in word.findall('item'):
                     if item.attrib['type'] == 'gls' and item.attrib['lang'] =='es':
                         sent_gls.append(item.text)
                     if item.attrib['type'] == 'note':
                         notes.append(item.text)
 
-        txt.append(txt_per_sentence)
-        word_gls.append(word_gls_per_sentence)
-        cf.append(cf_per_sentence)
-        gls.append(gls_per_sentence)
-        msa.append(msa_per_sentence)
+                text_id_group.append(i)
+                txt.append(txt_per_sentence) # words row
+                word_gls.append(word_gls_per_sentence) # word gloss row
+                cf.append(cf_per_sentence) # morphemes row
+                gls.append(gls_per_sentence) # morpheme gloss row
+                msa.append(msa_per_sentence) # morpheme cat row
+            paragraph_groups.append(len(text_id_group))
 
     tbls = list()
     rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat', 'Word Gloss']
@@ -174,7 +178,7 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
         df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
         tbls.append(df)
-    return txt, tbls, sent_gls, notes
+    return txt, tbls, sent_gls, notes, paragraph_groups
 
 def output_to_file(textonly:bool, output:str, result:Tuple) -> None:
     if textonly:
