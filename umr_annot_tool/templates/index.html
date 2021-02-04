@@ -134,12 +134,22 @@
     {# display the sentence with the chosen sentence ID #}
     {% if df_html|length and 'Default' == lang %}
         <div id="sentence" style="height: auto; overflow-y: scroll; max-height: 250px;">
+            Current Line:
             {% autoescape off %}
             <p>{{ df_html[snt_id-1] }}</p>
             {% endautoescape %}
             {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
             <p><b>Free</b> {{ gls[snt_id-1] }}</p>
             <p><b>Notes</b> {{ notes[snt_id-1] }}</p>
+
+            Next Line:
+            {% autoescape off %}
+            <p>{{ df_html[snt_id] }}</p>
+            {% endautoescape %}
+            {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
+            <p><b>Free</b> {{ gls[snt_id] }}</p>
+            <p><b>Notes</b> {{ notes[snt_id] }}</p>
+
         </div>
         <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
     {% else %}
