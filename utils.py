@@ -155,7 +155,7 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
         for phrases in paragraph.iter('phrases'):
             for word in phrases.findall('word'):
                 for item in word.findall('item'):
-                    if item.attrib['type'] == 'gls':
+                    if item.attrib['type'] == 'gls' and item.attrib['lang'] =='es':
                         sent_gls.append(item.text)
                     if item.attrib['type'] == 'note':
                         notes.append(item.text)

@@ -108,7 +108,7 @@
     </div>
     <hr>
     <form method="post">
-        <p>Sentence ID:
+        <p>Line ID:
             <span id="curr_shown_sent_id" style="display: none"> {{ snt_id }}</span>
             <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ sents|length }} value={{ snt_id }}>
             <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="UMR2db()"><br>
