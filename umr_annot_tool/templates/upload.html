@@ -11,13 +11,16 @@
                         {{ form.file }}
                       </div>
                 </div>
+
+                <div>
+                    {{ form.file_format.label(class="form-check-label") }}
+                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.file_format(class="form-check-input")}}
+                </div>
                 <br>
 
-                <div class="btn-group view-opt-btn-group">
+                <div>
                     {{ form.language_mode.label(class="form-check-label") }}
-                    <div class ="input-group-text">
-                        {{ form.language_mode(class="form-check-input")}}
-                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.language_mode(class="form-check-input")}}
                 </div>
             </fieldset>
 
