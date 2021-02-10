@@ -1,12 +1,13 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestRestForm, ResetPasswordForm
+from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestRestForm, \
+    ResetPasswordForm
 from umr_annot_tool.models import User, Post, Doc
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 
-
 users = Blueprint('users', __name__)
+
 
 @users.route("/register", methods=['GET', 'POST'])
 def register():
@@ -63,27 +64,25 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
-    historyDocs = Doc.query.filter(Doc.user_id==current_user.id).all()
-
-
+    historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
     print("historyDocs:", historyDocs)
-
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs)
+
 
 @users.route("/user/<string:username>")
 def user_posts(username):
     page = request.args.get('page', default=1, type=int)
     user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user)\
-        .order_by(Post.date_posted.desc())\
+    posts = Post.query.filter_by(author=user) \
+        .order_by(Post.date_posted.desc()) \
         .paginate(page=page, per_page=2)
     return render_template('user_post.html', posts=posts, user=user)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
-    if current_user.is_authenticated: #make sure they are logged out
+    if current_user.is_authenticated:  # make sure they are logged out
         return redirect(url_for('main.display_post'))
     form = RequestRestForm()
     if form.validate_on_submit():
@@ -92,6 +91,7 @@ def reset_request():
         flash('An email has been sent with instructions to reset your password', 'info')
         return redirect(url_for('login'))
     return render_template('reset_request.html', title='Reset Password', form=form)
+
 
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):

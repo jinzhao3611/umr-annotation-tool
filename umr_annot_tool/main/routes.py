@@ -2,14 +2,8 @@ from flask import url_for, redirect, flash
 from werkzeug.utils import secure_filename
 from typing import List, Tuple
 import json
-import xml.etree.ElementTree as ET
-from utils import parse_xml
-from bs4 import BeautifulSoup
+from utils import html, process_exported_file
 from flask_login import current_user
-import pandas as pd
-import re
-from itertools import accumulate
-import operator
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
@@ -19,15 +13,18 @@ from umr_annot_tool.main.forms import UploadForm
 main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
 
-def load_file2db(filename:str, content_string:str, lang:str, sents:List[List[str]], has_annot:bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
-    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
 
+def load_file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
+    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
     if existing_doc:
         doc_id = existing_doc.id
         existing_doc.content = content_string
+        existing_doc.file_format = file_format
+        existing_doc.lang = lang
+        db.session.commit()
         flash('Your doc and sents already created.', 'success')
     else:
-        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id)
+        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id, file_format=file_format)
         db.session.add(doc)
         db.session.commit()
         doc_id = doc.id
@@ -36,9 +33,10 @@ def load_file2db(filename:str, content_string:str, lang:str, sents:List[List[str
             sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=current_user.id)
             db.session.add(sent)
             db.session.commit()
-            flash('Your sents has been created.', 'success')
+        flash('Your sents has been created.', 'success')
 
     if has_annot:
+        print("sents from annot: ", sents)
         for i in range(len(sents)):
             existing = Annotation.query.filter(Annotation.sent_id == i+1, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
@@ -56,138 +54,7 @@ def load_file2db(filename:str, content_string:str, lang:str, sents:List[List[str
                                         umr={}, doc_umr={})
                 db.session.add(annotation)
                 db.session.commit()
-                flash('Your annotations has been created.', 'success')
-
-
-def amr_text2html(plain_text: str) -> str:
-    html_string = re.sub(' ', '&nbsp;', plain_text)
-    html_string = re.sub('\n', '<br>\n', html_string)
-    html_string = '<div id="amr">' + html_string + '<div>\n'
-    return html_string
-
-
-def process_exported_file(content_string: str):
-    items = content_string.split("#")
-    # user_id_match = re.match(r"user id: (\d+)", items[0].strip().split('\n')[0])
-    # user_id = user_id_match.group(1)
-    # lang_match = re.match(r"file language: (.+)", items[0].strip().split('\n')[2])
-    # lang = lang_match.group(1)
-
-    sent_indice = list(range(1, len(items), 4))
-    sent_annot_indice = list(range(2, len(items), 4))
-    align_indice = list(range(3, len(items), 4))
-    doc_annot_indice = list(range(4, len(items), 4))
-    sent_list = [items[i] for i in sent_indice]
-    sent_annot_list = [items[i] for i in sent_annot_indice]
-    align_list = [items[i] for i in align_indice]
-    doc_annot_list = [items[i] for i in doc_annot_indice]
-    # print(sent_indice)
-    # print(sent_annot_indice)
-    # print(align_indice)
-    # print(doc_annot_indice)
-    # print(sent_list)
-    # print(sent_annot_list)
-    # print(align_list)
-    # print(doc_annot_list)
-
-    sents = []
-    for sent_content in sent_list:
-        sent_content = re.sub(' :: snt\d+\tSentence: ', '', sent_content).strip()
-        sents.append(sent_content.split())
-    print('sents: ', sents)
-
-    doc_content_string = "".join([re.sub(' :: snt\d+\tSentence: ', '', sent) for sent in sent_list])
-    print('doc_content_string: ', doc_content_string)
-    aligns = [re.sub('alignment:', '', align).strip() for align in align_list]
-    print('aligns: ', aligns)
-    sent_annots = [amr_text2html(re.sub(' sentence level graph:', '', sent_annot).strip() + '\n') for sent_annot in
-                   sent_annot_list]
-    print(sent_annots)
-    doc_annots = [amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip() + '\n') for doc_annot in
-                  doc_annot_list]
-    print(doc_annots)
-    return doc_content_string, sents, sent_annots, doc_annots, aligns
-
-
-def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, List[str], List[str], List[str], List[str]]:
-    """
-    :param file_format:
-    :param content_string: raw string got read in from file, could be either flex or toolbox xml string, or a txt string
-    :return: sents: a list of list of words
-            sents_html: html string of all sentences of one document
-            sent_htmls: a list of html strings of single sentence
-            df_htmls: a list of html strings of linguistic information of a single sentence
-            gls:
-            notes:
-    """
-    gls = []
-    notes = []
-    df_htmls = []
-    sents = []
-    sents_html = ''
-    if file_format =='plain_text':            # split content string into List[List[str]]
-        print('this is a plain text string')
-        sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
-        sents_df = pd.DataFrame(content_string.strip().split('\n'))
-        sents_df.index = sents_df.index + 1
-        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
-
-    elif file_format == 'flex1':
-        try:  # if the content string is xml format, parse with xml parser
-            ET.fromstring(content_string)
-            sents, dfs, sents_gls, conv_turns, paragraph_groups = parse_xml(content_string)
-            sents_df = pd.DataFrame([' '.join(sent) for sent in sents])
-            sents_df.index = sents_df.index + 1
-
-            print('paragraph_groups', paragraph_groups)
-            sents_html = ''
-            if paragraph_groups:
-                paragraph_slice_indice = list(accumulate(paragraph_groups, operator.add))
-                print('paragraph_slice_indice', paragraph_slice_indice)
-
-                for i, slice_index in enumerate(paragraph_slice_indice):
-                    sents_html += 'Paragraph: ' + str(i+1)
-                    if i == 0:
-                        sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
-                    else:
-                        sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
-
-            else:
-                sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
-
-            for df in dfs:
-                df.columns = range(1, len(df.columns) + 1)
-                df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace(
-                    'border="1"',
-                    'border="0"')
-                soup = BeautifulSoup(df_html, "html.parser")
-                words_row = soup.findAll('tr')[0]
-                words_row['id'] = 'current-words'
-                gram_row = soup.findAll('tr')[3]
-                gram_row['class'] = 'optional-rows'
-                df_htmls.append(str(soup))
-            for translation in sents_gls:
-                gls.append(translation)
-            for conv_turn in conv_turns:
-                notes.append(conv_turn)
-        except ET.ParseError:
-            print('not xml format')
-    # elif file_format == 'flex2':
-    #     pass
-    # elif file_format == 'flex3':
-    #     pass
-    # elif file_format == 'toolbox1':
-    #     pass
-    # elif file_format == 'toolbox2':
-    #     pass
-
-    sent_htmls = []  # a list of single sentence htmls
-    for sent in sents:
-        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
-                                                                                        classes="table table-striped table-sm",
-                                                                                        justify='center'))
-    # html string for all sentences
-    return sents, sents_html, sent_htmls, df_htmls, gls, notes
+        flash('Your annotations has been created.', 'success')
 
 
 @main.route("/upload", methods=['GET', 'POST'])
@@ -207,12 +74,12 @@ def upload():
             lang = form.language_mode.data
             print('lang: ', lang)
             if file_format == 'exported_file':  # has annotation
-                content_string, sents, sent_annots, doc_annots, aligns = process_exported_file(content_string)
-                load_file2db(filename=filename, content_string=content_string, lang=lang, sents=sents, has_annot=False, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
+                new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(content_string)
+                load_file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang, sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
                 sents, _, _, _, _, _ = html(content_string, file_format)
-                load_file2db(filename=filename, content_string=content_string, lang=lang, sents=sents, has_annot=False)
-            return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id, file_format=file_format))
+                load_file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=sents, has_annot=False)
+            return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
     return render_template('upload.html', title='upload', form=form)
@@ -222,9 +89,9 @@ def upload():
 def annotate(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    file_format = request.args.get('file_format', None)
     doc = Doc.query.get_or_404(doc_id)
-    sents, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, file_format)
+    print(doc.content)
+    sents, sents_html, sent_htmls, df_htmls, gls, notes = html(doc.content, doc.file_format)
     frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
     snt_id = 1
     if "set_sentence" in request.form:
@@ -311,8 +178,9 @@ def annotate(doc_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
+
     return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                           sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_html, gls=gls,
+                           sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_htmls, gls=gls,
                            notes=notes,
                            frame_dict=frame_dict,
                            curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
@@ -324,7 +192,6 @@ def annotate(doc_id):
 def doclevel(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-
     current_snt_id = 1
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
@@ -351,13 +218,17 @@ def doclevel(doc_id):
             print("add doc level annotation to database failed")
 
     doc = Doc.query.get_or_404(doc_id)
-    _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content)
-
     sents = Sent.query.filter(Sent.doc_id == doc.id, Sent.user_id == current_user.id).order_by(Sent.id).all()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(
+        Annotation.sent_id).all()
     # annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
 
-    sent_annot_pairs = list(zip(df_html, annotations))
+    if doc.file_format == 'plain_text':
+        sent_annot_pairs = list(zip(sents, annotations))
+    else:
+        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format)
+        sent_annot_pairs = list(zip(df_html, annotations))
+
     print("sent_annot_pairs: ", sent_annot_pairs)
 
     # print(annotations[0].annot_str)
@@ -384,16 +255,20 @@ def doclevel(doc_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
-    current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+    try:
+        current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+    except IndexError:
+        flash('You have not created sentence level annotation yet')
+        redirect(url_for('main.annotate', doc_id=doc_id))
 
     print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
     print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
-    print("current_sent_table: ", sent_annot_pairs[current_snt_id][0])
+    print("current_sent_table: ", sent_annot_pairs[current_snt_id-1][0])
     print("current_snt_id: ", current_snt_id)
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang)
+                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang, file_format=doc.file_format)
 
 
 @main.route("/about")

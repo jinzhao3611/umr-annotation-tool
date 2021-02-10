@@ -16,33 +16,169 @@
 import xml.etree.ElementTree as ET
 from typing import Tuple, List, Optional
 import pandas as pd
+from itertools import accumulate
+import operator
+from bs4 import BeautifulSoup
+import re
 
-def parse_xml(xml_path):
-    try:
-        root = ET.fromstring(xml_path) # actually xml string here
-    except ET.ParseError:
-        tree = ET.parse(xml_path)
-        root = tree.getroot()
+def amr_text2html(plain_text: str) -> str:
+    html_string = re.sub('\n', '<br>\n', plain_text)
+    html_string = '<div id="amr">' + html_string + '</div>\n'
+    return html_string
 
-    if root.tag == 'document':
-        return parse_flex_xml(xml_path)
-    elif root.tag == 'database':
-        return parse_toolbox_xml(xml_path)
+def process_exported_file(content_string: str):
+    """
+    example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/exported_sample_snts_english.txt
+    :param content_string:
+    :return: doc_content_string: Edmund Pope tasted freedom today for the first time in more than eight months .\nHe denied any wrongdoing .
+             sents: [['Edmund', 'Pope', 'tasted', 'freedom', 'today', 'for', 'the', 'first', 'time', 'in', 'more', 'than', 'eight', 'months', '.'], ['He', 'denied', 'any', 'wrongdoing', '.']]
+             sent_annots: ['<div id="amr">(s1t&nbsp;/&nbsp;taste-01)<br>\n<div>\n', '<div id="amr">(s2d&nbsp;/&nbsp;deny-01)<br>\n<div>\n']
+             doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
+             aligns: ['taste-01(s1t): 3-3', 'deny-01(s2d): 2-2']
+             user_id: 1
+             lang: English
+    """
+    items = content_string.split("#")
+    user_id_match = re.match(r"user id: (\d+)", items[0].strip().split('\n')[1])
+    user_id = user_id_match.group(1)
+    lang_match = re.match(r"file language: (.+)", items[0].strip().split('\n')[2])
+    lang = lang_match.group(1)
 
+    sent_indice = list(range(1, len(items), 4))
+    sent_annot_indice = list(range(2, len(items), 4))
+    align_indice = list(range(3, len(items), 4))
+    doc_annot_indice = list(range(4, len(items), 4))
+    sent_list = [items[i] for i in sent_indice]
+    sent_annot_list = [items[i] for i in sent_annot_indice]
+    align_list = [items[i] for i in align_indice]
+    doc_annot_list = [items[i] for i in doc_annot_indice]
+    # print(sent_indice)
+    # print(sent_annot_indice)
+    # print(align_indice)
+    # print(doc_annot_indice)
+    # print(sent_list)
+    # print(sent_annot_list)
+    # print(align_list)
+    # print(doc_annot_list)
 
-def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
+    sents = []
+    for sent_content in sent_list:
+        sent_content = re.sub(' :: snt\d+\tSentence: ', '', sent_content).strip()
+        sents.append(sent_content.split())
+    print('sents: ', sents)
+
+    doc_content_string = "".join([re.sub(' :: snt\d+\tSentence: ', '', sent) for sent in sent_list])
+    print('doc_content_string: ', doc_content_string)
+    aligns = [re.sub('alignment:', '', align).strip() for align in align_list]
+    print('aligns: ', aligns)
+    sent_annots = [amr_text2html(re.sub(' sentence level graph:', '', sent_annot).strip() + '\n') for sent_annot in
+                   sent_annot_list]
+    print(sent_annots)
+    doc_annots = [amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip() + '\n') for doc_annot in
+                  doc_annot_list]
+    print(doc_annots)
+    return doc_content_string, sents, sent_annots, doc_annots, aligns, user_id, lang
+
+def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, List[str], List[str], List[str], List[str]]:
+    """
+    :param file_format:
+    :param content_string: raw string got read in from file, could be either flex or toolbox xml string, or a txt string
+    :return: sents: [['aphleamkehlta', 'nenhlet', 'mahla', "apkehlpa'vayam", "aptenyay'a", 'yavhan'], ...]
+            sents_html: html string of all sentences of one document, it's the html of sentences preview table in annotation page
+            sent_htmls: a list of html strings of a single sentence ( linguistic information NOT included)
+            df_htmls: a list of html strings of a single sentence ( linguistic information included)
+            gls: ['Viajó un hombre, parece cazando o buscando miel', ...]
+            notes: ['RA', ...]
+    """
+    gls = []
+    notes = []
+    df_htmls = []
+    sents = []
+    sents_html = ''
+    if file_format == 'plain_text' or file_format == 'exported_file': # split content string into List[List[str]]
+        sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
+        sents_df = pd.DataFrame(content_string.strip().split('\n'))
+        sents_df.index = sents_df.index + 1
+        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
+
+    elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2']:
+        try:
+            # ET.fromstring(content_string)
+            sents, dfs, sents_gls, conv_turns, paragraph_groups = parse_xml(content_string, file_format)
+            sents_df = pd.DataFrame([' '.join(sent) for sent in sents])
+            sents_df.index = sents_df.index + 1
+            sents_html = ''
+            if paragraph_groups:
+                paragraph_slice_indice = list(accumulate(paragraph_groups, operator.add))
+                print('paragraph_slice_indice', paragraph_slice_indice)
+
+                for i, slice_index in enumerate(paragraph_slice_indice):
+                    sents_html += 'Paragraph: ' + str(i+1)
+                    if i == 0:
+                        sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
+                    else:
+                        sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
+
+            else:
+                sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
+
+            for df in dfs:
+                df.columns = range(1, len(df.columns) + 1)
+                df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace(
+                    'border="1"',
+                    'border="0"')
+                soup = BeautifulSoup(df_html, "html.parser")
+                words_row = soup.findAll('tr')[0]
+                words_row['id'] = 'current-words'
+                gram_row = soup.findAll('tr')[3]
+                gram_row['class'] = 'optional-rows'
+                df_htmls.append(str(soup))
+            for translation in sents_gls:
+                gls.append(translation)
+            for conv_turn in conv_turns:
+                notes.append(conv_turn)
+        except ET.ParseError:
+            print('not xml format')
+
+    sent_htmls = []  # a list of single sentence htmls
+    for sent in sents:
+        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
+                                                                                        classes="table table-striped table-sm",
+                                                                                        justify='center'))
+    # html string for all sentences
+    return sents, sents_html, sent_htmls, df_htmls, gls, notes
+
+def parse_xml(xml_string, file_format):
+    # try:
+    #     root = ET.fromstring(xml_string) # actually xml string here
+    # except ET.ParseError:
+    #     tree = ET.parse(xml_string)
+    #     root = tree.getroot()
+
+    # if root.tag == 'document':
+    #     return parse_flex_xml(xml_path)
+    # elif root.tag == 'database':
+    #     return parse_toolbox_xml(xml_path)
+    if file_format == 'flex1' or file_format == 'flex2':
+        return parse_flex12(xml_string, file_format)
+    elif file_format =='flex3':
+        return parse_flex3(xml_string)
+    elif 'toolbox' in file_format:
+        return parse_toolbox1(xml_string, file_format)
+
+def parse_toolbox1(xml_string: str, file_format:str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
     """
     parse the Arapahoe toolbox xml file
-    :param xml_path: input toolbox xml file path
+    :param xml_string: input toolbox xml file path
     :param output_path: output txt file path
     :param textonly: set to true if the output txt file only contains the tx line (raw text), false if all info needs to be included
     :return:
     """
 
     try:
-        root = ET.fromstring(xml_path) # actually xml string here
+        root = ET.fromstring(xml_string) # actually xml string here
     except ET.ParseError:
-        tree = ET.parse(xml_path)
+        tree = ET.parse(xml_string)
         root = tree.getroot()
 
     tx = list()
@@ -92,19 +228,18 @@ def parse_toolbox_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame
         tbls.append(df)
     return tx, tbls, sents_gls, "", []
 
-
-def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]], List[int]]:
+def parse_flex12(content_string: str, file_format: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]], List[int]]:
     """
-    parse the Secoya and Sanapana xml file
-    :param xml_path: input toolbox xml file path
-    :param output_path: output txt file path
-    :param textonly: set to true if the output txt file only contains the tx line (raw text), false if all info needs to be included
-    :return: None
+    example file: flex1: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic_Paragraphs.xml
+                flex2:  /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic.xml
+    :param file_format: what exactly does the xml file look like
+    :param content_string: input content string
+    :return:
     """
     try:
-        root = ET.fromstring(xml_path) # actually xml string here
+        root = ET.fromstring(content_string) # actually xml string here
     except ET.ParseError:
-        tree = ET.parse(xml_path)
+        tree = ET.parse(content_string)
         root = tree.getroot()
 
     txt = list()
@@ -113,7 +248,7 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
     gls = list()
     msa = list()
     sent_gls = list()
-    notes = list()
+    conversation_turns = list()
     paragraph_groups = list()
 
     for paragraph in root.iter('paragraph'): # each sentence
@@ -144,8 +279,8 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
                                             if item.text is not None:
                                                 cf_per_word.append(item.text)
                                             else:
-                                                cf_per_word.append('') # morpheme gloss row
-                                        elif item.attrib['type'] == 'gls':
+                                                cf_per_word.append('')
+                                        elif item.attrib['type'] == 'gls': # morpheme gloss row
                                             if item.text is not None:
                                                 gls_per_word.append(item.text)
                                             else:
@@ -160,7 +295,7 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
                     if item.attrib['type'] == 'gls' and item.attrib['lang'] =='es':
                         sent_gls.append(item.text)
                     if item.attrib['type'] == 'note':
-                        notes.append(item.text)
+                        conversation_turns.append(item.text)
 
                 text_id_group.append(i)
                 txt.append(txt_per_sentence) # words row
@@ -168,38 +303,97 @@ def parse_flex_xml(xml_path: str) -> Tuple[List[List[str]], List[pd.DataFrame], 
                 cf.append(cf_per_sentence) # morphemes row
                 gls.append(gls_per_sentence) # morpheme gloss row
                 msa.append(msa_per_sentence) # morpheme cat row
-            paragraph_groups.append(len(text_id_group))
+            if file_format == 'flex1':
+                paragraph_groups.append(len(text_id_group))
 
-    tbls = list()
+    dfs = list()
     rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat', 'Word Gloss']
     for i in range(len(txt)):
-        # tbl = tabulate([cf[i], gls[i], msa[i], word_gls[i]], headers=txt[i], tablefmt='orgtbl', showindex=rowIDs)
-        # tbls.append(tbl)
         df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
-        tbls.append(df)
-    return txt, tbls, sent_gls, notes, paragraph_groups
+        dfs.append(df)
+    return txt, dfs, sent_gls, conversation_turns, paragraph_groups
 
-def output_to_file(textonly:bool, output:str, result:Tuple) -> None:
-    if textonly:
-        with open(output, 'w') as outfile:
-            for sentence in result[0]:
-                outfile.write(" ".join(sentence) + '\n')
-    else:
-        with open(output, 'w') as outfile:
-            for tbl in result[1]:
-                outfile.write(tbl + '\n\n\n\n')
+def parse_flex3(xml_string:str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]], List[int]]:
+    """
+    example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_XLingPaper, align morphemes.xml
+    :param xml_string:
+    :return: txt: [['aphleamkehlta', 'nenhlet', 'mahla', "apkehlpa'vayam", "aptenyay'a", 'yavhan'], ...]
+            dfs:[[                                                  0  ...                  5
+                    Words                                 aphleamkehlta  ...             yavhan
+                    Morphemes                     ap- hle -am -ke =hlta  ...             yavhan
+                    Morpheme Gloss  2/3M.I viajar PST/HAB V1.NFUT =PHOD  ...  miel del "yavhan"
+                    Morpheme Cat                v:Any v v:Any v:Any prt  ...                sus
+                    Word Gloss                                    viajó  ...               miel], ...]
+            sent_gls: ['Viajó un hombre, parece cazando o buscando miel', ...]
+            conversation_turns: ['RA', ...]
+            paragraph_groups: [] because this format of file is not separated by paragraphs
+    """
+    try:
+        root = ET.fromstring(xml_string) # actually xml string here
+    except ET.ParseError:
+        tree = ET.parse(xml_string)
+        root = tree.getroot()
 
-if __name__ == '__main__':
+    txt = list()
+    sent_gls = list()
+    word_gls = list()
 
-    toolbox_path = '/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/arapahoe.xml'
-    flex_path = '/Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/Sanapana_1.xml'
+    cf = list()
+    gls = list()
+    msa = list()
 
-    with open(flex_path, 'r') as infile:
-        content_string = infile.read()
+    conversation_turns = list()
+    paragraph_groups = list()
 
-    result = parse_xml(content_string)
-    print(result)
+    for sentence in root.iter('phrase'):
+        txt_per_sentence = list()
+        word_gls_per_sentence = list()
+        cf_per_sentence = list()
+        gls_per_sentence = list()
+        msa_per_sentence = list()
+        for iword in sentence.iter('iword'):
+            cf_per_word = list()
+            gls_per_word = list()
+            msa_per_word = list()
+            for item in iword.findall('item'):
+                if item.attrib['type'] == 'gls':
+                    word_gls_per_sentence.append(item.text)
+                if item.attrib['type'] == 'txt':
+                    txt_per_sentence.append(iword.find('item').text)
+            for morph in iword.iter('morph'):
+                for item in morph.findall('item'):
+                    if item.attrib['type'] == 'txt':
+                        cf_per_word.append(item.text)
+                    if item.attrib['type'] == 'gls':
+                        gls_per_word.append(item.text)
+                    if item.attrib['type'] == 'msa':
+                        msa_per_word.append(item.text)
+            cf_per_sentence.append(cf_per_word)
+            gls_per_sentence.append(gls_per_word)
+            msa_per_sentence.append(msa_per_word)
+
+        for item in sentence.findall('item'):
+            if item.attrib['type'] == 'gls' and item.attrib['lang'] == 'es-free':
+                sent_gls.append(item.text)
+            if item.attrib['type'] == 'note':
+                conversation_turns.append(item.text)
+
+        txt.append(txt_per_sentence)  # words row
+        word_gls.append(word_gls_per_sentence)  # word gloss row
+        cf.append(cf_per_sentence)  # morphemes row
+        gls.append(gls_per_sentence)  # morpheme gloss row
+        msa.append(msa_per_sentence)  # morpheme cat row
+
+    dfs = list()
+    rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat', 'Word Gloss']
+    for i in range(len(txt)):
+        df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
+        df.index = ['Words'] + rowIDs
+        dfs.append(df)
+    return txt, dfs, sent_gls, conversation_turns, paragraph_groups
+
+
 
 
 

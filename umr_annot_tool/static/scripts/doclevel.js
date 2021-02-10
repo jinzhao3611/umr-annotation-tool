@@ -3482,6 +3482,7 @@ function initialCommand(current_snt_id){
 
 function showBlueBox(){
     document.getElementById('amr').parentNode.setAttribute('style', 'overflow-x: scroll; border:1px solid blue;');
+    document.getElementById('amr').focus();
 }
 
 function noteDocLevelRel(rel){

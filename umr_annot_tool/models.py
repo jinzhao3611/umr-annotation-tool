@@ -54,12 +54,12 @@ class Post(db.Model):
 class Doc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.Text, nullable=False)
+    file_format = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
     lang = db.Column(db.Text, nullable=False)
     sents = db.relationship('Sent', backref='document', lazy=True)
     annotations = db.relationship('Annotation', backref='document', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
 
     # def __repr__(self):
     #     return f"Post('{self.id}', '{self.sents}')"

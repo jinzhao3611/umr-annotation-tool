@@ -160,7 +160,11 @@
                                 <div class="row">
                                     <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
                                         {% autoescape off %}
-                                        <p>{{ loop.index }}. {{ pair[0] }}</p>
+                                        {% if file_format == 'plain_text' %}
+                                            <p>{{ loop.index }}. {{ pair[0].content }}</p>
+                                        {% else %}
+                                            <p>{{ loop.index }}. {{ pair[0] }}</p>
+                                        {% endif %}
                                         <div id="amr{{ loop.index }}" >
                                         <p>{{ pair[1].annot_str | replace('<div id="amr">','') | replace('</div>','')}}</p>
                                         </div>

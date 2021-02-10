@@ -75,22 +75,25 @@ function initialize(frame_dict_str, lang) {
  * @param curr_sent_umr
  */
 function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
-    // console.log("curr_sent_annot: ", curr_sent_annot);
-    // console.log("curr_sent_align: ", curr_sent_align);
-    // console.log("html string to be loaded:", deHTML(curr_sent_annot));
+    console.log("curr_sent_annot: ", curr_sent_annot);
+    console.log("curr_sent_align: ", curr_sent_align);
+    console.log("html string to be loaded:", deHTML(curr_sent_annot));
     console.log("curr_sent_umr: ", curr_sent_umr);
-    umr = JSON.parse(curr_sent_umr);
-    console.log("umr parsed from json string: ", umr);
-    if (Object.keys(umr).length === 0){
-        umr['n'] = 0;
+    let loaded_umr = JSON.parse(curr_sent_umr);
+    if (Object.keys(loaded_umr).length === 0){
+        loaded_umr['n'] = 0;
     }
+    console.log("umr loaded from json string: ", loaded_umr);
     setInnerHTML('load-plain', deHTML(curr_sent_annot));
     // console.log(document.getElementById('load-plain'));
     // console.log(document.getElementById('align'));
     // console.log("alignment string to be loaded:", curr_sent_align);
-    setInnerHTML('align', curr_sent_align);
+    loadField2amr(loaded_umr, curr_sent_align);
+    // string2amr(document.getElementById('load-plain').value);
+    recordDirectEntryLoad();
+
+    // setInnerHTML('align', curr_sent_align);
     // console.log(document.getElementById('align'));
-    loadField2amr();
     showAlign();
     if(language !== "Default"){
         showAnnotatedTokens();
@@ -760,18 +763,18 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     selectTemplate('clear');
                     show_amr_args = 'show';
                 } else if (loc_list.length == 0) {
-                    add_error('Could not find any string for locator <font color="red">' + user_descr + '</font>');
+                    console.log('Could not find any string for locator: ' + user_descr);
                 } else {
-                    add_error('Ambiguous string locator <font color="red">' + user_descr + '</font>');
+                    console.log('Ambiguous string locator: ' + user_descr );
                 }
             } else if (value.match(/^rc\b\s*(\S.*\S|\S|)\s+\S+\s*$/)) { // replace concept shortcut
                 var user_descr = value.replace(/^rc\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1");
                 var new_value = value.replace(/^rc\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2");
                 var loc_list = user_descr2locs(user_descr, 'concept');
                 if (!validEntryConcept(new_value)) {
-                    add_error('Ill-formed new concept <font color="red">' + new_value + '</font>');
+                    console.log('Ill-formed new concept: ' + new_value);
                 } else if ((loc_list.length == 1) && !umr[loc_list[0] + '.v']) {
-                    add_error('No concept defined for <font color="red">' + user_descr + '</font>');
+                    console.log('No concept defined for: ' + user_descr);
                 } else if (loc_list.length == 1) {
                     var loc = loc_list[0];
                     var variable = umr[loc + '.v'];
@@ -2738,9 +2741,9 @@ function extractValueFrom2ColonExpr(s, key) {
 }
 
 function string2amr_rec(s, loc, state, ht) {
-    // add_log('string2amr_rec ' + s + ' ' + loc + ' ' + state + ' ' + load_amr_feedback);
+    console.log('string2amr_rec ' + s + ' ' + loc + ' ' + state + ' ' + load_amr_feedback);
     if (max_string2amr_ops-- <= 0) {
-        add_log('string2amr_rec MAXXED out');
+        console.log('string2amr_rec MAXXED out');
         return s;
     }
     var ignore_style = 'style="color:#8888FF;font-weight:bold" title="ignored"';
@@ -2811,7 +2814,7 @@ function string2amr_rec(s, loc, state, ht) {
                 umr[loc + '.v'] = variable;
                 decorated_variable = '<span ' + accept_conflict_style + '>' + variable + '</span>';
                 recordVariable(variable, loc);
-            } else if (!variable.match(/^[a-z]\d*$/)) {
+            } else if (!variable.match(/^s\d*[a-z]\d*$/)) {
                 new_variable = newVar(concept);
                 umr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var2_style + '>' + new_variable + '</span>';
@@ -2966,9 +2969,14 @@ function string2amr_rec(s, loc, state, ht) {
     return s;
 }
 
+/**
+ *
+ * @param s : (s1t / taste-01)
+ * @returns {*}
+ */
 function string2amr(s) {
-    // old amr will be destroyed (so clone before if needed)
-    console.log('string2amr ' + s);
+    // old umr will be destroyed (so clone before if needed)
+    console.log('string2amr: ' + s);
     var loc, ps, ps_loc;
     var s_wo_comment = s.replace(/^\s*\#.*\n$/, "");
     var ht = new Object();
@@ -2976,26 +2984,25 @@ function string2amr(s) {
     variables = new Object();
     concepts = new Object();
     reserved_variables = new Object();
-    var res_vars = s_wo_comment.match(/\(\s*[a-z]\d*[ \/]/g); // )
+    var res_vars = s_wo_comment.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // ["(s1t "]
     max_string2amr_ops = 5000;
     if (res_vars) {
         for (var i = 0; i < res_vars.length; i++) {
             var variable = res_vars[i];
-            variable = variable.replace(/^\(\s*/, ""); // )
-            variable = variable.replace(/[ \/]$/, "");
+            variable = variable.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
+            variable = variable.replace(/[ \/]$/, ""); // get rid of the trailing space or /: "s1t"
             if (reserved_variables[variable]) {
                 reserved_variables[variable + '.conflict'] = 1;
-                // add_log('reserve variable: ' + variable + ' (conflict)');
+                console.log('reserve variable: ' + variable + ' (conflict)');
             } else {
                 reserved_variables[variable] = 1;
-                // add_log('reserve variable: ' + variable);
+                console.log('reserve variable: ' + variable);
             }
         }
     }
     umr['n'] = 0;
-    if (s.match(/\(/) // )
-        || s.match(/^# ::id /)) {
-        var prev_s_length = s.length;
+    if (s.match(/\(/) || s.match(/^# ::id /)) { //s = "(s1t / taste-01)"
+        var prev_s_length = s.length; // 16
         var index = 1;
         loc = index + '';
         umr['n'] = 1;
@@ -3042,25 +3049,39 @@ function string2amr(s) {
 /* load *******************************************************/
 /**
  * this is used to load the penman string
- * @param amr_id: In doc level annotation, there is amr_id
+ * @param loaded_umr
+ * @param loaded_alignment
  */
-function loadField2amr() {
+function loadField2amr(loaded_umr={}, loaded_alignment='') {
     console.log("umr from loadField2amr: ", umr);
     var s;
     if ((s = document.getElementById('load-plain')) != null) {
-        let loaded_umr = umr;
+        // let loaded_umr = umr;
         var rest = string2amr(s.value);
-        if(Object.keys(umr).length> 1){
+
+        if(Object.keys(loaded_umr).length > 1){
             umr = loaded_umr;
             console.log("umr from loadField2amr2: ", umr);
         }
+
+        //fill in the alignment information to umr
+        if(loaded_alignment){
+            console.log('loaded_alignment: ', loaded_alignment);
+            let matches = loaded_alignment.match(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm); //["(s1f): 4-4", "(s1t): 3-3"]
+            for(let i=0; i<matches.length; i++){
+                let variable = matches[i].replace(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm, '$1');
+                console.log('variable: ', variable);
+                let align_info = matches[i].replace(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm, '$2');
+                console.log('align_info: ', align_info);
+                let loc = getLocs(variable);
+                console.log('loc: ', loc);
+                umr[loc + '.a'] = align_info;
+            }
+        }
+
+
         if (!rest.match(/\S/)) {
             rest = '';
-        }
-        if (load_amr_feedback_alert) {
-            // add_log(load_amr_feedback);
-            // var html_rest = htmlSpaceGuard(rest);
-            // popup_with_html_text(load_amr_feedback, html_rest);
         }
         if (rest.match(/\S/)) {
             console.log('Remaining text: ' + rest);
@@ -3286,14 +3307,6 @@ function clearInput(){
 
 /** load*************/
 
-function hideLoadTemplate() {
-    console.log("hideLoadTemplate is called");
-    let s;
-    if ((s = document.getElementById('load-template-table')) != null) {
-        s.style.display = 'none';
-    }
-}
-
 function localLoadUpdateProgress(evt) {
     console.log("localLoadUpdateProgress is called");
     if (evt.lengthComputable) {
@@ -3308,27 +3321,25 @@ function localLoadUpdateProgress(evt) {
     }
 }
 
-function localLoaded(evt) {
-    console.log("localLoaded is called");
-    var fileString = evt.target.result;
-    if ((s = document.getElementById('info-locally-loaded')) != null) {
-        s.innerHTML = 'Loading complete (' + fileString.length + ' bytes)';
-    }
-    if ((s = document.getElementById('load-plain')) != null) {
-        s.value = fileString;
-    }
-    // add_log('Loaded AMR: ' + fileString);
-    loadField2amr();
-    state_has_changed_p = 1;
-    exec_command('record load AMR locally', 1);
-    hideLoadTemplate();
-}
+// function localLoaded(evt) {
+//     console.log("localLoaded is called");
+//     var fileString = evt.target.result;
+//     if ((s = document.getElementById('info-locally-loaded')) != null) {
+//         s.innerHTML = 'Loading complete (' + fileString.length + ' bytes)';
+//     }
+//     if ((s = document.getElementById('load-plain')) != null) {
+//         s.value = fileString;
+//     }
+//     // add_log('Loaded AMR: ' + fileString);
+//     loadField2amr();
+//     state_has_changed_p = 1;
+//     exec_command('record load AMR locally', 1);
+// }
 
 function recordDirectEntryLoad() {
     console.log("recordDirectEntryLoad is called");
     state_has_changed_p = 1;
     exec_command('record load AMR by direct entry', 1);
-    hideLoadTemplate();
 }
 
 function loadErrorHandler(evt) {
@@ -3340,95 +3351,95 @@ function loadErrorHandler(evt) {
     }
 }
 
-function load_local_amr_file(sentence_id) {
-    console.log("load_local_amr_file is called");
-    var s, scriptPath, fh;
-    var load_method = '';
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        console.log("I am here 2-1");
-        add_unique_log('Browser supports File API. Great.');
-        var file = document.getElementById('local_load_files').files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.readAsText(file, "UTF-8");
-            reader.onprogress = localLoadUpdateProgress;
-            reader.onload = localLoaded;
-            reader.onerror = loadErrorHandler;
-        } else {
-            add_error('Unable to find local file to be loaded. Did you choose a file?');
-        }
-        load_method = 'File API';
-        return;
-    }
-    add_log('This browser does not support the File API.');
-
-    if (window.ActiveXObject) {
-        console.log("I am here 2-2");
-        add_unique_log('Browser supports ActiveXObject. Good.');
-        load_method = 'ActiveXObject';
-        try {
-            var fso = new ActiveXObject("Scripting.FileSystemObject");
-            // var filePath = document.getElementById('local_load_files').files[0];
-            var filePath = document.getElementById('local_load_files').value;
-            // var filePath = `C:\\fakepath\\${sentence_id}.txt`;
-            // add_log('Loading file ' + filePath + ' ...');
-            var file = fso.OpenTextFile(filePath, 1);
-            var fileString = file.ReadAll();
-            // add_log('ActiveXObject5');
-            file.Close();
-            // add_log('Loaded AMR: ' + fileString);
-
-            document.getElementById('load-plain').value = ''
-            if ((s = document.getElementById('load-plain')) != null) {
-                s.value = fileString;
-                loadField2amr();
-                state_has_changed_p = 1;
-                exec_command('record load AMR locally', 1);
-            }
-        } catch (e) {
-            if (e.number == -2146827859) {
-                add_error('Unable to access local files due to browser security settings. '
-                    + 'To overcome this, go to Tools->Internet Options->Security->Custom Level. '
-                    + 'Find the setting for "Initialize and script ActiveX controls not marked as safe" '
-                    + 'and change it to "Enable" or "Prompt"');
-            } else {
-                add_error('Unspecified ActiveXObject load error');
-            }
-        }
-        return;
-    }
-    add_log('This browser does not support the ActiveXObject.');
-
-    /*
-   if (typeof getScriptPath == 'function') {
-  if (typeof fopen  == 'function') {
-     add_unique_log('Browser supports getScriptPath/fopen. Good.');
-     load_method = 'getScriptPath/fopen';
-         if (scriptPath = getScriptPath()) {
-    fh = fopen(scriptPath, 0);
-    if (fh != -1) {
-           var length = flength(fh);
-           var fileString = fread(fh, length);
-           fclose(fh);
-           // add_log('Loaded AMR: ' + fileString);
-    } else {
-       add_error('Unable to open file ' + scriptPath);
-    }
-     } else {
-        add_error('Unable to select file with getScriptPath.');
-     }
-  } else {
-     add_log('This browser does not support fopen.');
-  }
-   } else {
-  add_log('This browser does not support getScriptPath');
-   }
-   */
-
-    if (load_method == '') {
-        add_error('This browser does not support any of the file reading methods tried. Unable to load file.');
-    }
-}
+// function load_local_amr_file(sentence_id) {
+//     console.log("load_local_amr_file is called");
+//     var s, scriptPath, fh;
+//     var load_method = '';
+//     if (window.File && window.FileReader && window.FileList && window.Blob) {
+//         console.log("I am here 2-1");
+//         add_unique_log('Browser supports File API. Great.');
+//         var file = document.getElementById('local_load_files').files[0];
+//         if (file) {
+//             var reader = new FileReader();
+//             reader.readAsText(file, "UTF-8");
+//             reader.onprogress = localLoadUpdateProgress;
+//             reader.onload = localLoaded;
+//             reader.onerror = loadErrorHandler;
+//         } else {
+//             add_error('Unable to find local file to be loaded. Did you choose a file?');
+//         }
+//         load_method = 'File API';
+//         return;
+//     }
+//     add_log('This browser does not support the File API.');
+//
+//     if (window.ActiveXObject) {
+//         console.log("I am here 2-2");
+//         add_unique_log('Browser supports ActiveXObject. Good.');
+//         load_method = 'ActiveXObject';
+//         try {
+//             var fso = new ActiveXObject("Scripting.FileSystemObject");
+//             // var filePath = document.getElementById('local_load_files').files[0];
+//             var filePath = document.getElementById('local_load_files').value;
+//             // var filePath = `C:\\fakepath\\${sentence_id}.txt`;
+//             // add_log('Loading file ' + filePath + ' ...');
+//             var file = fso.OpenTextFile(filePath, 1);
+//             var fileString = file.ReadAll();
+//             // add_log('ActiveXObject5');
+//             file.Close();
+//             // add_log('Loaded AMR: ' + fileString);
+//
+//             document.getElementById('load-plain').value = ''
+//             if ((s = document.getElementById('load-plain')) != null) {
+//                 s.value = fileString;
+//                 loadField2amr();
+//                 state_has_changed_p = 1;
+//                 exec_command('record load AMR locally', 1);
+//             }
+//         } catch (e) {
+//             if (e.number == -2146827859) {
+//                 add_error('Unable to access local files due to browser security settings. '
+//                     + 'To overcome this, go to Tools->Internet Options->Security->Custom Level. '
+//                     + 'Find the setting for "Initialize and script ActiveX controls not marked as safe" '
+//                     + 'and change it to "Enable" or "Prompt"');
+//             } else {
+//                 add_error('Unspecified ActiveXObject load error');
+//             }
+//         }
+//         return;
+//     }
+//     add_log('This browser does not support the ActiveXObject.');
+//
+//     /*
+//    if (typeof getScriptPath == 'function') {
+//   if (typeof fopen  == 'function') {
+//      add_unique_log('Browser supports getScriptPath/fopen. Good.');
+//      load_method = 'getScriptPath/fopen';
+//          if (scriptPath = getScriptPath()) {
+//     fh = fopen(scriptPath, 0);
+//     if (fh != -1) {
+//            var length = flength(fh);
+//            var fileString = fread(fh, length);
+//            fclose(fh);
+//            // add_log('Loaded AMR: ' + fileString);
+//     } else {
+//        add_error('Unable to open file ' + scriptPath);
+//     }
+//      } else {
+//         add_error('Unable to select file with getScriptPath.');
+//      }
+//   } else {
+//      add_log('This browser does not support fopen.');
+//   }
+//    } else {
+//   add_log('This browser does not support getScriptPath');
+//    }
+//    */
+//
+//     if (load_method == '') {
+//         add_error('This browser does not support any of the file reading methods tried. Unable to load file.');
+//     }
+// }
 
 /** save*************/
 
