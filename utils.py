@@ -121,7 +121,6 @@ def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, L
 
             else:
                 sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
-
             for df in dfs:
                 df.columns = range(1, len(df.columns) + 1)
                 df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace(
@@ -163,10 +162,13 @@ def parse_xml(xml_string, file_format):
         return parse_flex12(xml_string, file_format)
     elif file_format =='flex3':
         return parse_flex3(xml_string)
-    elif 'toolbox' in file_format:
-        return parse_toolbox1(xml_string, file_format)
+    elif file_format == 'toolbox1':
+        return parse_toolbox1(xml_string)
+    elif file_format == 'toolbox2':
+        return parse_toolbox2(xml_string)
 
-def parse_toolbox1(xml_string: str, file_format:str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
+
+def parse_toolbox1(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
     """
     parse the Arapahoe toolbox xml file
     :param xml_string: input toolbox xml file path
@@ -393,7 +395,106 @@ def parse_flex3(xml_string:str) -> Tuple[List[List[str]], List[pd.DataFrame], Li
         dfs.append(df)
     return txt, dfs, sent_gls, conversation_turns, paragraph_groups
 
+def align(morph_string: str, ge_string: str, gs_string: str) -> Tuple[List[str], List[str], List[str]]:
+    toks = morph_string.strip().split()
+    ge_list = ge_string.strip().split()
+    gs_list = gs_string.strip().split()
 
+    morphs = []
+    ges = []
+    gss = []
+    temp_morphs = []
+    temp_ges = []
+    temp_gss = []
+
+    for i, tok in enumerate(toks):
+        if not tok.startswith("-") and temp_morphs:
+            if not temp_morphs[-1].endswith("-"):
+                morphs.append(" ".join(temp_morphs))
+                ges.append(" ".join(temp_ges))
+                gss.append(" ".join(temp_gss))
+                temp_morphs = []
+                temp_ges = []
+                temp_gss = []
+        temp_morphs.append(tok)
+        temp_ges.append(ge_list[i])
+        temp_gss.append(gs_list[i])
+    if temp_morphs:
+        morphs.append(" ".join(temp_morphs))
+        ges.append(" ".join(temp_ges))
+        gss.append(" ".join(temp_gss))
+
+    return morphs, ges, gss
+
+def parse_toolbox2(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[str], List[int]]:
+    """
+    parse the Arapahoe toolbox xml file
+    :param xml_string: input toolbox xml file path
+    :return:
+    """
+    sents_of_words = list()
+    sents_of_morphs = list()
+    sents_of_ges = list()
+    sents_of_gss = list()
+    sents_gls = list()
+    notes = list()
+    dfs = list()
+
+    chunks = [chunk.split('\n') for chunk in re.split('<ref>[\d\.]+</ref>', xml_string)][1:]
+    for c in chunks:
+        words = list()
+        morphs = list()
+        morph_gloss_english = list()
+        morph_gloss_spanish = list()
+        ori_morph = list()
+        ori_ge = list()
+        ori_gs = list()
+        nt_flag = True
+        f_flag = True
+        temp_notes = ""
+
+        for item in c:
+            item = item.strip()
+            if item.startswith('<trs>'):
+                words.extend(item[5:-6].split())
+            elif item.startswith('<m>'):
+                ori_morph.append(item[3:-4])
+            elif item.startswith('<ge>'):
+                ori_ge.append(item[4: -5])
+            elif item.startswith('<gs>'):
+                ori_gs.append(item[4: -5])
+            elif item.startswith('<f>'):
+                sents_gls.append(item[3: -4])
+                f_flag = False
+            elif item.startswith('<nt>'):
+                temp_notes += '\n' + item[4: -5]
+                nt_flag = False
+        notes.append(temp_notes)
+        if nt_flag:
+            notes.append("")
+        if f_flag:
+            sents_gls.append("")
+
+        for mor, ge, gs in zip(ori_morph, ori_ge, ori_gs):
+            aligned_mor, aligned_ge, aligned_gs = align(mor, ge, gs)
+            morphs.extend(aligned_mor)
+            morph_gloss_english.extend(aligned_ge)
+            morph_gloss_spanish.extend(aligned_gs)
+
+        sents_of_words.append(words)
+        sents_of_morphs.append(morphs)
+        sents_of_ges.append(morph_gloss_english)
+        sents_of_gss.append(morph_gloss_spanish)
+
+    rowIDs = ['Morphemes', 'Morpheme Gloss(English)', 'Morpheme Gloss(Spanish)']
+
+    print('first sent morph: ', sents_of_morphs[0])
+    for i in range(len(sents_of_words)):
+        df = pd.DataFrame(
+            [sents_of_words[i],  sents_of_morphs[i], sents_of_ges[i], sents_of_gss[i]])
+        df.index = ['Words'] + rowIDs
+        dfs.append(df)
+    return sents_of_words, dfs, sents_gls, notes, []
 
 
 
