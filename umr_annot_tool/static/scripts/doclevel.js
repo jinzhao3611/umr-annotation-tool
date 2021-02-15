@@ -59,6 +59,18 @@ function initialize() {
     current_mode = 'top';
 }
 
+/**
+ * change the unfocused doc level annotation
+ * from:(s1 / sentence
+  :temporal (s1t / s1t :before (DCT / DCT))
+  :temporal (s1t / s1t :after (s2d / s2d)))
+ * to: (s1 / sentence
+:temporal ((s1t :before DCT)
+(s1t :after s2d)))
+
+ * @param docLen
+ * @param current_sent_id
+ */
 function showDefaultUmr(docLen, current_sent_id){
     for(let i =1; i<=docLen; i++){
         if(i !== parseInt(current_sent_id)){
@@ -67,6 +79,13 @@ function showDefaultUmr(docLen, current_sent_id){
         }
     }
 }
+
+/**
+ * @param html_umr_s: <div id="amr">(s1 / sentence<br>&nbsp;&nbsp;:temporal (s1t / s1t :before (DCT / DCT))<br>&nbsp;&nbsp;:temporal (s1t / s1t :after (s2d / s2d)))<br></div>
+ * @returns {string|any}: <div id="amr">(s1 / sentence<br>
+&nbsp;&nbsp;:temporal ((s1t :before DCT)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after s2d)))<br>
+ */
 function docUmrTransform(html_umr_s){
     let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
@@ -150,8 +169,128 @@ function docUmrTransform(html_umr_s){
     html_umr_s2 = html_umr_s2.replace('\)<br>\n\)<br>' , '\)\)<br>')
 
     return html_umr_s2;
+}
 
+/**
+ *
+ * @param penman_s: showing_penman_html: '(s1 / sentence<br>&nbsp;&nbsp;:temporal ((s1t :before DCT)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after (s2e :before test)))<br>&nbsp;&nbsp;:modal ((s2d :AFF AUTH)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s2e :NEG AUTH))<br>&nbsp;&nbsp;:coref ((s2e :same-entity s1t)))<br>';
+ * @returns db_penman_text: "(s1 / sentence :temporal (s1t / s1t :before (DCT / DCT)) :temporal (s1t / s1t :after (s2e / s2e)) :temporal (s2e / s2e :before (test / test)) :modal (s2d / s2d :AFF (AUTH / AUTH)) :modal (s2e / s2e :NEG (AUTH / AUTH)) :coref (s2e / s2e :same-entity (s1t / s1t))"
+ */
+function inverseUmrTransform(penman_s){
+  // let penman_s = '&lt;div id=&#34;amr&#34;&gt;(s1 / sentence&lt;br&gt;  :temporal ((s1t :before DCT)&lt;br&gt;                    (s1t :after s2d)))&lt;/div&gt;';
 
+  penman_s = deHTML3(penman_s);
+
+  console.log(penman_s);
+
+  lines = penman_s.split('split_here');
+
+  lines.forEach(myFunction);
+  function myFunction(value) {
+    console.log('value: ', value);
+  }
+
+  temporal_rels = [];
+  modal_rels = [];
+  coref_rels = [];
+
+	console.log(lines.length)
+  let flag = '';
+  for(let i=0; i<lines.length; i++){
+  	lines[i] = lines[i].trim();
+  	console.log('here0: ', lines[i]);
+    if (lines[i].startsWith(":temporal")){
+      flag = ':temporal';
+    }else if(lines[i].startsWith(":modal")){
+      flag  = ':modal';
+    }else if(lines[i].startsWith(":coref")){
+      flag = ':coref';
+    }
+
+    if(flag ===':temporal'){
+      console.log('line from here0: ', lines[i])
+      item = lines[i].replace(':temporal','');
+      item = item.replaceAll('\(', '');
+      item = item.replaceAll('\)', '').trim();
+      console.log('item from here0: ', item.split(' '));
+
+      if (item.split(' ').length !== 3){
+        rels = breakNestedRels(item);
+        console.log('rels from here0: ', rels)
+        temporal_rels.push(...rels);
+      }else{
+        temporal_rels.push(item);
+      }
+    }else if(flag ===':modal'){
+    	console.log('line from here1: ', lines[i])
+      item = lines[i].replace(':modal','');
+      item = item.replaceAll('\(', '');
+      item = item.replaceAll('\)', '').trim();
+      console.log('item from here1: ', item.split(' '));
+      if (item.split(' ').length !== 3){
+        rels = breakNestedRels(item);
+        console.log('rels from here1: ', rels)
+        modal_rels.push(...rels);
+      }else{
+        modal_rels.push(item);
+      }
+    }else if(flag ===':coref'){
+      item = lines[i].replace(':coref','');
+      item = item.replaceAll('\(', '');
+      item = item.replaceAll('\)', '').trim();
+      if (item.split(' ').length !== 3){
+        rels = breakNestedRels(item);
+        coref_rels.push(...rels);
+      }else{
+        coref_rels.push(item);
+      }
+    }
+  }
+  console.log('temporal rels: ', temporal_rels);
+  console.log('modal rels: ', modal_rels);
+  console.log('coref rels: ', coref_rels);
+
+  let db_penman_text = lines[0];
+
+  temporal_rels.forEach(myFunction2);
+  function myFunction2(value) {
+  	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":temporal ($1 / $1 $2 ($3 / $3))");
+    console.log(value);
+    db_penman_text += ' ' + value;
+  }
+
+    modal_rels.forEach(myFunction3);
+  function myFunction3(value) {
+  	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":modal ($1 / $1 $2 ($3 / $3))");
+    console.log(value);
+    db_penman_text += ' ' + value;
+
+  }
+
+    coref_rels.forEach(myFunction4);
+  function myFunction4(value) {
+  	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":coref ($1 / $1 $2 ($3 / $3))");
+    console.log(value);
+    db_penman_text += ' ' + value;
+
+  }
+
+ 	console.log('db_penman_text ', db_penman_text);
+  return db_penman_text;
+}
+/**
+ * @param item: s1t :after s2e :before s3e :depends-on s4e
+ * @returns {[]}: ["s1t :before DCT", "s1t :after s2e", "s2e :before test"]
+ */
+function breakNestedRels(item){
+	let rels = [];
+	let eles = item.split(' ');
+  console.log("eles: ", eles);
+  for(let i=0; i*2+3<=eles.length; i++){
+  	console.log("i: ", i);
+  	rels.push(eles.slice(i*2, i*2+3).join(' '));
+  }
+  return rels
 }
 
 function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
@@ -204,8 +343,11 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
     if(doc_annot === ""){
         doc_annot = `&lt;div id=&#34;amr&#34;&gt;(s${curr_sent_id} / sentence)&lt;br&gt;&lt;/div&gt;`;
     }
-    setInnerHTML('load-plain', deHTML(doc_annot));
-    loadField2amr();
+
+    let transformed_doc_annot = inverseUmrTransform(doc_annot);
+    console.log('inverse transformed doc_annot: ', transformed_doc_annot);
+    setInnerHTML('load-plain', deHTML(transformed_doc_annot));
+    // setInnerHTML('load-plain', deHTML(doc_annot));
     umr = JSON.parse(curr_doc_umr);
     if (Object.keys(umr).length === 0 || Object.keys(umr).length === 1){
         umr['n'] = 1;
@@ -214,6 +356,8 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
         umr['1.n'] = 0;
         umr['1.c'] = "sentence";
     }
+    loadField2amr();
+
 }
 
 function docUMR2db() {
@@ -2966,6 +3110,7 @@ function loadField2amr() {
     var s;
     if ((s = document.getElementById('load-plain')) != null) {
         var rest = string2amr(s.value);
+        console.log('umr after rest: ', umr);
         if (!rest.match(/\S/)) {
             rest = '';
         }
@@ -3418,11 +3563,30 @@ function deHTML2(s){
     s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
     s = s.replaceAll('&nbsp;', ' ');
+    s = s.replaceAll('<i>', '');
+    s = s.replaceAll('</i>', '');
     return s;
 }
 
-function export_annot(exported_items) {
+function deHTML3(s) {
+
+    s = s.replace(/&amp;/g, '&');
+    s = s.replace(/&nbsp;/g, " ");
+    s = s.replace(/&#39;/g, '"');
+    s = s.replace(/&#34;/g, '"');
+
+    s = s.replace(/&lt;/g, '<');
+    s = s.replace(/&gt;/g, '>');
+
+    s = s.replace(/<\/?(a|span|div)\b[^<>]*>/g, "");
+    s = s.replace(/<br>/g, "split_here");
+    return s;
+}
+
+function export_annot(exported_items, content_string) {
     console.log("exported_items: ", exported_items);
+    console.log("content_string: ", content_string);
+    content_string = content_string.replaceAll('<br>', '\n');
     let doc_name = document.getElementById('filename').innerText
     exported_items.forEach(e => {
         e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
@@ -3448,12 +3612,15 @@ function export_annot(exported_items) {
     let text = "user name: " + document.getElementById('username').innerText + '\n';
     text += "user id: " + document.getElementById('user_id').innerText + '\n';
     text += "file language: " + document.getElementById('lang').innerText + '\n';
+    text += "file format: " + document.getElementById('file_format').innerText + '\n';
+    text += "Doc ID in database: " + document.getElementById('doc_id').innerText + '\n';
     let curr_time = new Date();
     text += "export time: " + curr_time.toLocaleString() + '\n\n';
     text += '# :: snt';
     if (window.BlobBuilder && window.saveAs) {
         filename = 'exported_' + doc_name;
-        text += output_str
+        text += output_str;
+        text += '\n\n' + '# Source File: \n' + content_string;
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
         bb.append(text);

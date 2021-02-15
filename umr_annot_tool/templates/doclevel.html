@@ -147,9 +147,11 @@
                 <th class='text-muted'>File Language:</th>
                 <th id="lang" style="display:inline">{{ lang }}</th>
             </tr>
-                <tr>
+            <tr>
                 <th class='text-muted'>Doc ID in database:</th>
                 <th id="doc_id" style="display:inline">{{ doc_id }}</th>
+                <th class='text-muted'>File format:</th>
+                <th id="file_format" style="display:inline">{{ file_format }}</th>
             </tr>
         </table>
     </div>
@@ -463,7 +465,7 @@
                     {#        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>#}
                     {# jinja cannot accept dictionary like this, so this button doesn't work#}
                     {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');">load_history</a></button>#}
-                            <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
+                            <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
 
                             <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
                             <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);undo(-1);">undo</a></button>
@@ -477,7 +479,7 @@
 
                         <script type="text/javascript">
                             load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
-                            showDefaultUmr({{ sent_annot_pairs | length }}, {{ current_snt_id }})
+                            showDefaultUmr({{ sent_annot_pairs | length }}, {{ current_snt_id }});
                             showBlueBox();
                         </script>
                     </div>

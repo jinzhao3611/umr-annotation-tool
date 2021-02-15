@@ -15,6 +15,8 @@
                 <div>
                     {{ form.file_format.label(class="form-check-label") }}
                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.file_format(class="form-check-input")}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.if_exported.label(class="form-check-label") }}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.if_exported(class="form-check-input")}}
                 </div>
                 <br>
 
@@ -22,6 +24,7 @@
                     {{ form.language_mode.label(class="form-check-label") }}
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.language_mode(class="form-check-input")}}
                 </div>
+
             </fieldset>
 
             <div class="input-group-append">

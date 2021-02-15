@@ -3655,15 +3655,21 @@ function docUmrTransform(html_umr_s){
 
 function deHTML2(s){
     s = s.replaceAll('<div id="amr">', '');
+    s = s.replaceAll('\n', "");
     s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
     s = s.replaceAll('&nbsp;', ' ');
+    s = s.replaceAll('<i>', '');
+    s = s.replaceAll('</i>', '');
+
     return s;
 }
 
-function export_annot(exported_items) {
+function export_annot(exported_items, content_string) {
     console.log("exported_items: ", exported_items);
-    let doc_name = document.getElementById('filename').innerText
+    console.log("content_string: ", content_string);
+    content_string = content_string.replaceAll('<br>', '\n');
+    let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {
         e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
         e[1] = e[1].replace(/&nbsp;/g, " ");
@@ -3688,12 +3694,16 @@ function export_annot(exported_items) {
     let text = "user name: " + document.getElementById('username').innerText + '\n';
     text += "user id: " + document.getElementById('user_id').innerText + '\n';
     text += "file language: " + document.getElementById('lang').innerText + '\n';
+    text += "file format: " + document.getElementById('file_format').innerText + '\n';
+    text += "Doc ID in database: " + document.getElementById('doc_id').innerText + '\n';
+
     let curr_time = new Date();
     text += "export time: " + curr_time.toLocaleString() + '\n\n';
     text += '# :: snt';
     if (window.BlobBuilder && window.saveAs) {
         filename = 'exported_' + doc_name;
-        text += output_str
+        text += output_str;
+        text += '\n\n' + '# Source File: \n' + content_string;
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
         bb.append(text);
@@ -3704,8 +3714,4 @@ function export_annot(exported_items) {
 
 
 }
-
-
-
-
 

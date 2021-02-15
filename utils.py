@@ -38,7 +38,10 @@ def process_exported_file(content_string: str):
              user_id: 1
              lang: English
     """
-    items = content_string.split("#")
+    items = content_string.split("#")[:-1]
+    doc_content_string = content_string.split("#")[-1].replace(' Source File: \n', '')
+    print('doc_content_string: ', doc_content_string)
+
     user_id_match = re.match(r"user id: (\d+)", items[0].strip().split('\n')[1])
     user_id = user_id_match.group(1)
     lang_match = re.match(r"file language: (.+)", items[0].strip().split('\n')[2])
@@ -67,14 +70,13 @@ def process_exported_file(content_string: str):
         sents.append(sent_content.split())
     print('sents: ', sents)
 
-    doc_content_string = "".join([re.sub(' :: snt\d+\tSentence: ', '', sent) for sent in sent_list])
-    print('doc_content_string: ', doc_content_string)
+    # doc_content_string = "".join([re.sub(' :: snt\d+\tSentence: ', '', sent) for sent in sent_list])
     aligns = [re.sub('alignment:', '', align).strip() for align in align_list]
     print('aligns: ', aligns)
     sent_annots = [amr_text2html(re.sub(' sentence level graph:', '', sent_annot).strip() + '\n') for sent_annot in
                    sent_annot_list]
     print(sent_annots)
-    doc_annots = [amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip() + '\n') for doc_annot in
+    doc_annots = [re.sub('\n','', amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip()) )for doc_annot in
                   doc_annot_list]
     print(doc_annots)
     return doc_content_string, sents, sent_annots, doc_annots, aligns, user_id, lang
@@ -101,7 +103,7 @@ def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, L
         sents_df.index = sents_df.index + 1
         sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
 
-    elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2']:
+    elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2', 'toolbox3']:
         try:
             # ET.fromstring(content_string)
             sents, dfs, sents_gls, conv_turns, paragraph_groups = parse_xml(content_string, file_format)
@@ -166,6 +168,8 @@ def parse_xml(xml_string, file_format):
         return parse_toolbox1(xml_string)
     elif file_format == 'toolbox2':
         return parse_toolbox2(xml_string)
+    elif file_format == 'toolbox3':
+        return parse_toolbox3(xml_string)
 
 
 def parse_toolbox1(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
@@ -496,6 +500,79 @@ def parse_toolbox2(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
         dfs.append(df)
     return sents_of_words, dfs, sents_gls, notes, []
 
+def parse_toolbox3(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[str], List[int]]:
+    """
+    parse the Arapahoe toolbox xml file
+    :param xml_string: input toolbox xml file path
+    :return:
+    """
+    sents_of_words = list()
+    sents_of_morphs = list()
+    sents_of_ges = list()
+    sents_of_gss = list()
+    sents_gls = list()
+    notes = list()
+    dfs = list()
+
+    print('chunks: ', re.split('\\ref \d+\.\d+', xml_string))
+    chunks = [chunk.split('\n') for chunk in re.split('\\\\ref \d+\.\d+', xml_string)][1:]
+    for c in chunks:
+        print('chunk from parse_toolbox3: ', c)
+        words = list()
+        morphs = list()
+        morph_gloss_english = list()
+        morph_gloss_spanish = list()
+        ori_morph = list()
+        ori_ge = list()
+        ori_gs = list()
+        nt_flag = True
+        f_flag = True
+        temp_notes = ""
+
+        for item in c:
+            item = item.strip()
+            print('item from parse_toolbox3: ', item)
+            if item.startswith('\\trs'):
+                words.extend(item[5:].split())
+                print('words from parse_toolbox3: ',words)
+            elif item.startswith('\\m'):
+                ori_morph.append(item[3:])
+            elif item.startswith('\\ge'):
+                ori_ge.append(item[4:])
+            elif item.startswith('\\gs'):
+                ori_gs.append(item[4:])
+            elif item.startswith('\\f'):
+                sents_gls.append(item[3:])
+                f_flag = False
+            elif item.startswith('\\nt'):
+                temp_notes += '\n' + item[4:]
+                nt_flag = False
+        notes.append(temp_notes)
+        if nt_flag:
+            notes.append("")
+        if f_flag:
+            sents_gls.append("")
+
+        for mor, ge, gs in zip(ori_morph, ori_ge, ori_gs):
+            aligned_mor, aligned_ge, aligned_gs = align(mor, ge, gs)
+            morphs.extend(aligned_mor)
+            morph_gloss_english.extend(aligned_ge)
+            morph_gloss_spanish.extend(aligned_gs)
+
+        sents_of_words.append(words)
+        sents_of_morphs.append(morphs)
+        sents_of_ges.append(morph_gloss_english)
+        sents_of_gss.append(morph_gloss_spanish)
+
+    print('sents from parse_toolbox3: ', sents_of_words)
+    rowIDs = ['Morphemes', 'Morpheme Gloss(English)', 'Morpheme Gloss(Spanish)']
+
+    for i in range(len(sents_of_words)):
+        df = pd.DataFrame(
+            [sents_of_words[i],  sents_of_morphs[i], sents_of_ges[i], sents_of_gss[i]])
+        df.index = ['Words'] + rowIDs
+        dfs.append(df)
+    return sents_of_words, dfs, sents_gls, notes, []
 
 
 

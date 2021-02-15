@@ -13,7 +13,6 @@ from umr_annot_tool.main.forms import UploadForm
 main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
 
-
 def load_file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
     if existing_doc:
@@ -41,7 +40,7 @@ def load_file2db(filename: str, file_format: str, content_string: str, lang: str
             existing = Annotation.query.filter(Annotation.sent_id == i+1, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
-                print("upadating existing annotation")
+                print("updating existing annotation")
                 existing.annot_str = sent_annots[i]
                 existing.doc_annot = doc_annots[i]
                 existing.alignment = aligns[i]
@@ -66,18 +65,20 @@ def upload():
     if form.validate_on_submit():
         if form.file.data and form.file.data.filename:
             content_string = form.file.data.read().decode("utf-8")
-            print("content_string: ", content_string)
+            # print("content_string: ", content_string)
             filename = secure_filename(form.file.data.filename)
             print('filename: ', filename)
             file_format = form.file_format.data
             print('file_format: ', file_format)
             lang = form.language_mode.data
             print('lang: ', lang)
-            if file_format == 'exported_file':  # has annotation
+            is_exported = form.if_exported.data
+            if is_exported:  # has annotation
                 new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(content_string)
                 load_file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang, sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
                 sents, _, _, _, _, _ = html(content_string, file_format)
+                print('sents from upload:', sents)
                 load_file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=sents, has_annot=False)
             return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
@@ -90,7 +91,7 @@ def annotate(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
-    print(doc.content)
+    print('doc content from sent level: ', doc.content)
     sents, sents_html, sent_htmls, df_htmls, gls, notes = html(doc.content, doc.file_format)
     frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
     snt_id = 1
@@ -185,7 +186,9 @@ def annotate(doc_id):
                            frame_dict=frame_dict,
                            curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
                            curr_sent_umr=curr_sent_umr,
-                           exported_items=exported_items)
+                           exported_items=exported_items,
+                           file_format=doc.file_format,
+                           content_string=doc.content.replace('\n', '<br>'))
 
 
 @main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])
@@ -221,10 +224,13 @@ def doclevel(doc_id):
     sents = Sent.query.filter(Sent.doc_id == doc.id, Sent.user_id == current_user.id).order_by(Sent.id).all()
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(
         Annotation.sent_id).all()
-    # annotations = Annotation.query.filter(Annotation.doc_id == doc.id).all()
+
+    print('doc content from doc level: ', doc.content)
 
     if doc.file_format == 'plain_text':
         sent_annot_pairs = list(zip(sents, annotations))
+        print('sents in doclevel: ', sents)
+        print('annotations in doclevel: ', annotations)
     else:
         _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format)
         sent_annot_pairs = list(zip(df_html, annotations))
@@ -233,7 +239,7 @@ def doclevel(doc_id):
 
     # print(annotations[0].annot_str)
     # print(annotations[1].annot_str)
-
+    #
     # sent, annot = sent_annot_pairs[0]
     # print("*********")
     # print('sent: ', sent.content)
@@ -242,6 +248,17 @@ def doclevel(doc_id):
     # print("*********")
     # print('sent: ', sent2.content)
     # print('annot: ', annot2.annot_str)
+
+    try:
+        current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+    except IndexError:
+        flash('You have not created sentence level annotation yet')
+        redirect(url_for('main.annotate', doc_id=doc_id))
+
+    print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
+    print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
+    print("current_sent_table: ", sent_annot_pairs[current_snt_id-1][0])
+    print("current_snt_id: ", current_snt_id)
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]
@@ -255,20 +272,10 @@ def doclevel(doc_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
-    try:
-        current_sent_pair = sent_annot_pairs[current_snt_id - 1]
-    except IndexError:
-        flash('You have not created sentence level annotation yet')
-        redirect(url_for('main.annotate', doc_id=doc_id))
-
-    print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
-    print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
-    print("current_sent_table: ", sent_annot_pairs[current_snt_id-1][0])
-    print("current_snt_id: ", current_snt_id)
-
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang, file_format=doc.file_format)
+                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang, file_format=doc.file_format,
+                           content_string=doc.content.replace('\n', '<br>'))
 
 
 @main.route("/about")
@@ -289,4 +296,4 @@ def display_post():
 
 @main.route("/guidelines")
 def guidelines():
-    return render_template('guidelines.html')
+    return render_template('user_guide.html')

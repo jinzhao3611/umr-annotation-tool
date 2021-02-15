@@ -91,6 +91,8 @@
                 <tr>
                 <th class='text-muted'>Doc ID in database:</th>
                 <th id="doc_id" style="display:inline">{{ doc_id }}</th>
+                <th class='text-muted'>File format:</th>
+                <th id="file_format" style="display:inline">{{ file_format }}</th>
             </tr>
         </table>
     </div>
@@ -846,7 +848,7 @@
     <div>
 {#        <button class="btn btn-outline-secondary" style="display:none" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>#}
 {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>#}
-        <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items }});">export</a></button>
+        <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
 
         <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">replace</a></button>
         <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
