@@ -454,7 +454,7 @@
         <tbody>
             <tr>
                 <td>
-                    {% if 'English' == lang %}
+                    {% if 'English' == lang or 'Chinese' == lang%}
                         <div class="dropdown">
                             <label for="roles1">Roles(English)</label>
                             <input list="english-roles" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
@@ -821,7 +821,7 @@
                 <td>
                     Lexicalized Concept:
                     <div class="btn-group dropright">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown()"></button>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown(`{{ lang }}`)"></button>
 
                         <ul id="concept_dropdown" class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
                             <li class="dropdown-submenu">

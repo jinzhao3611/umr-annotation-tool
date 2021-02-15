@@ -3160,10 +3160,10 @@
     "ARG1:": "destination"
   },
   "\u5230\u6765-01": {
-    "ARG0:": "what's arriving"
+    "ARG0:": "whats arriving"
   },
   "\u5230\u671f-01": {
-    "ARG0:": "what's expiring"
+    "ARG0:": "whats expiring"
   },
   "\u5230\u9f50-01": {
     "ARG0:": "arriver"
@@ -3901,7 +3901,7 @@
   },
   "\u5bf9-03": {
     "ARG0:": "person described",
-    "ARG1:": "entity arg0 hasn't done enough for"
+    "ARG1:": "entity arg0 hasnt done enough for"
   },
   "\u5bf9-04": {
     "ARG0:": "person described",
@@ -4601,7 +4601,7 @@
   },
   "\u653e\u5fc3-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't need to worry about"
+    "ARG1:": "entity arg0 doesnt need to worry about"
   },
   "\u653e\u773c-01": {
     "ARG0:": "agent",
@@ -5102,7 +5102,7 @@
     "ARG1:": "thing possessed"
   },
   "\u5bcc-02": {
-    "ARG0:": "person/entity who's rich"
+    "ARG0:": "person/entity whos rich"
   },
   "\u5bcc\u96c6-01": {
     "ARG0:": "theme"
@@ -8472,7 +8472,7 @@
   },
   "\u7981-02": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 won't survive"
+    "ARG1:": "thing arg0 wont survive"
   },
   "\u7981\u6b62-01": {
     "ARG0:": "forbidder",
@@ -9222,7 +9222,7 @@
   },
   "\u770b-06": {
     "ARG0:": "people described",
-    "ARG1:": "entity arg0 doesn't feel comfortable seeing"
+    "ARG1:": "entity arg0 doesnt feel comfortable seeing"
   },
   "\u770b-07": {
     "ARG0:": "people described",
@@ -9752,7 +9752,7 @@
   },
   "\u6765-03": {
     "ARG0:": "entity described",
-    "ARG1:": "thing can't be in time for"
+    "ARG1:": "thing cant be in time for"
   },
   "\u6765-04": {
     "ARG0:": "agent",
@@ -9897,7 +9897,7 @@
   },
   "\u79bb-03": {
     "ARG0:": "entity described",
-    "ARG1:": "entity won't work without"
+    "ARG1:": "entity wont work without"
   },
   "\u79bb-04": {
     "ARG0:": "entity described",
@@ -10786,11 +10786,11 @@
   },
   "\u6ca1-01": {
     "ARG0:": "entity described",
-    "ARG1:": "location where arg0 doesn't exist"
+    "ARG1:": "location where arg0 doesnt exist"
   },
   "\u6ca1-02": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't have"
+    "ARG1:": "entity arg0 doesnt have"
   },
   "\u6ca1\u6536-01": {
     "ARG0:": "agent",
@@ -10798,11 +10798,11 @@
   },
   "\u6ca1\u6709-01": {
     "ARG0:": "entity described",
-    "ARG1:": "location arg0 doesn't exist"
+    "ARG1:": "location arg0 doesnt exist"
   },
   "\u6ca1\u6709-02": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't have"
+    "ARG1:": "entity arg0 doesnt have"
   },
   "\u6bcf\u51b5\u6108\u4e0b-01": {
     "ARG0:": "things described"
@@ -11523,7 +11523,7 @@
     "ARG1:": "business practiced"
   },
   "\u8dd1-03": {
-    "ARG0:": "entity can't be avoided"
+    "ARG0:": "entity cant be avoided"
   },
   "\u8dd1-04": {
     "ARG0:": "agent",
@@ -14681,7 +14681,7 @@
   },
   "\u8bf4-05": {
     "ARG0:": "entity described",
-    "ARG1:": "predicate that doesn't apply to arg0"
+    "ARG1:": "predicate that doesnt apply to arg0"
   },
   "\u8bf4-06": {
     "ARG0:": "entity described"
@@ -16306,7 +16306,7 @@
     "ARG1:": "entity disguised"
   },
   "\u672a\u679c-01": {
-    "ARG0:": "entity who didn't achieve his goal"
+    "ARG0:": "entity who didnt achieve his goal"
   },
   "\u672a\u5a5a-01": {
     "ARG0:": "people described"
@@ -16429,7 +16429,7 @@
   },
   "\u65e0-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't have/doesn't exit for arg0"
+    "ARG1:": "entity arg0 doesnt have/doesnt exit for arg0"
   },
   "\u65e0-02": {
     "ARG0:": "domain",
@@ -16476,7 +16476,7 @@
   },
   "\u65e0\u6687-01": {
     "ARG0:": "people described",
-    "ARG1:": "thing arg0 doesn't have time for"
+    "ARG1:": "thing arg0 doesnt have time for"
   },
   "\u65e0\u6548-01": {
     "ARG0:": "thing described"
@@ -16489,7 +16489,7 @@
   },
   "\u65e0\u610f-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't intend to do"
+    "ARG1:": "thing arg0 doesnt intend to do"
   },
   "\u6bcb\u5eb8\u7f6e\u7591-01": {
     "ARG0:": "people described"
@@ -19623,7 +19623,7 @@
   },
   "\u589e\u6536-01": {
     "ARG0:": "entity described",
-    "ARG1:": "amount of increase in arg0's income"
+    "ARG1:": "amount of increase in arg0s income"
   },
   "\u589e\u6dfb-01": {
     "ARG0:": "agent/cause",
@@ -20404,7 +20404,7 @@
   },
   "\u81f3\u4eca-01": {
     "ARG0:": "entity described",
-    "ARG1:": "starting time arg0's been in a state up to now"
+    "ARG1:": "starting time arg0s been in a state up to now"
   },
   "\u81f4-01": {
     "ARG0:": "agent",
@@ -20722,7 +20722,7 @@
     "ARG0:": "thing known to all"
   },
   "\u4f17\u6240\u77a9\u76ee-01": {
-    "ARG0:": "entity getting everyone's attention"
+    "ARG0:": "entity getting everyones attention"
   },
   "\u4f17\u671b\u6240\u5f52-01": {
     "ARG0:": "entity described"
@@ -20747,7 +20747,7 @@
   },
   "\u77a9\u76ee-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0's eyes are fixed on"
+    "ARG1:": "entity arg0s eyes are fixed on"
   },
   "\u4e3b\u529e-01": {
     "ARG0:": "agent",
@@ -21282,7 +21282,7 @@
   },
   "\u7740\u773c-01": {
     "ARG0:": "people described",
-    "ARG1:": "thing arg0's attention is focused on",
+    "ARG1:": "thing arg0s attention is focused on",
     "ARG2:": "work arg0 is doing"
   },
   "\u7740\u91cd-01": {
@@ -21967,8 +21967,8 @@
   },
   "\u62cd-01": {
     "ARG0:": "agent",
-    "ARG1:": "content of arg0's shooting",
-    "ARG2:": "product of arg0's shooting"
+    "ARG1:": "content of arg0s shooting",
+    "ARG2:": "product of arg0s shooting"
   },
   "\u62cd-02": {
     "ARG0:": "agent",
@@ -22385,7 +22385,7 @@
   },
   "\u5fcd-02": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 can't help doing/being"
+    "ARG1:": "thing arg0 cant help doing/being"
   },
   "\u5fcd-03": {
     "ARG0:": "entity described"
@@ -22546,7 +22546,7 @@
   "\u611f\u53f9-01": {
     "ARG0:": "person described",
     "ARG1:": "feeling arg0 expresses",
-    "ARG2:": "entity arg0's feeling is directed"
+    "ARG2:": "entity arg0s feeling is directed"
   },
   "\u7d27\u63a5-01": {
     "ARG0:": "entity described",
@@ -23051,7 +23051,7 @@
   },
   "\u5ef6\u4efb-02": {
     "ARG0:": "entity described",
-    "ARG1:": "time arg0's office is extended until"
+    "ARG1:": "time arg0s office is extended until"
   },
   "\u63a8\u5c55-01": {
     "ARG0:": "agent",
@@ -23442,7 +23442,7 @@
   },
   "\u65e0\u7f18-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't have luck to do/be with"
+    "ARG1:": "entity arg0 doesnt have luck to do/be with"
   },
   "\u5178\u85cf-01": {
     "ARG0:": "collector",
@@ -23873,7 +23873,7 @@
     "ARG0:": "agent/cause",
     "ARG1:": "entity arg0 promotes",
     "ARG2:": "position arg1 is promoted to",
-    "ARG3:": "arg1's original position"
+    "ARG3:": "arg1s original position"
   },
   "\u5426\u5b9a-01": {
     "ARG0:": "entity described",
@@ -24017,7 +24017,7 @@
   },
   "\u820d\u5f97-01": {
     "ARG0:": "person described",
-    "ARG1:": "thing arg0 doesn't grudge doing"
+    "ARG1:": "thing arg0 doesnt grudge doing"
   },
   "\u9519\u5931-01": {
     "ARG0:": "entity described",
@@ -24378,7 +24378,7 @@
   },
   "\u65e0\u6240\u8c13-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing which doesn't matter to arg0"
+    "ARG1:": "thing which doesnt matter to arg0"
   },
   "\u7ffb\u9605-01": {
     "ARG0:": "reader",
@@ -25697,7 +25697,7 @@
   },
   "\u610f\u60f3\u4e0d\u5230-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't expect"
+    "ARG1:": "thing arg0 doesnt expect"
   },
   "\u51fa\u751f\u65bc-01": {
     "ARG0:": "entity described",
@@ -27617,7 +27617,7 @@
   },
   "\u6d41\u8f6c-02": {
     "ARG0:": "entity rotating",
-    "ARG1:": "entity created through arg0's rotation"
+    "ARG1:": "entity created through arg0s rotation"
   },
   "\u5b8c\u7f8e-01": {
     "ARG0:": "entity described"
@@ -29027,7 +29027,7 @@
   },
   "\u5217\u540d-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0's name is listed in"
+    "ARG1:": "thing arg0s name is listed in"
   },
   "\u5217\u540d-02": {
     "ARG0:": "agent",
@@ -30864,7 +30864,7 @@
   },
   "\u59cb\u6599\u672a\u53ca-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't anticipate"
+    "ARG1:": "thing arg0 doesnt anticipate"
   },
   "\u8bf4\u9053-01": {
     "ARG0:": "agent",
@@ -31164,7 +31164,7 @@
   },
   "\u4e0d\u660e\u7a76\u91cc-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't know the true story of"
+    "ARG1:": "thing arg0 doesnt know the true story of"
   },
   "\u6478\u900f-01": {
     "ARG0:": "agent",
@@ -31623,7 +31623,7 @@
   },
   "\u4e0d\u4ee5\u4e3a\u7136-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't think is right"
+    "ARG1:": "thing arg0 doesnt think is right"
   },
   "\u62d8\u65bc-01": {
     "ARG0:": "entity described",
@@ -33753,7 +33753,7 @@
     "ARG0:": "entity described"
   },
   "\u76ee\u7729-01": {
-    "ARG0:": "person who's dizzy"
+    "ARG0:": "person whos dizzy"
   },
   "\u76ee\u7729-02": {
     "ARG0:": "cause"
@@ -34135,7 +34135,7 @@
   },
   "\u4f3c\u61c2\u975e\u52a8-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't completely understand"
+    "ARG1:": "thing arg0 doesnt completely understand"
   },
   "\u5f00\u9986-01": {
     "ARG0:": "entity that starts operation"
@@ -34414,7 +34414,7 @@
   },
   "\u5f25\u5c01-01": {
     "ARG0:": "agent/cause",
-    "ARG1:": "exam at which arg0 covers up examinee's name"
+    "ARG1:": "exam at which arg0 covers up examinees name"
   },
   "\u91cd\u590d-01": {
     "ARG0:": "agent/cause",
@@ -35165,7 +35165,7 @@
   },
   "\u5145\u8033\u672a\u95fb-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't hear of"
+    "ARG1:": "entity arg0 doesnt hear of"
   },
   "\u8426\u7ed5-01": {
     "ARG0:": "thing described",
@@ -35518,7 +35518,7 @@
   },
   "\u60e8\u8dcc-01": {
     "ARG0:": "thing described",
-    "ARG1:": "extent of arg0's fall"
+    "ARG1:": "extent of arg0s fall"
   },
   "\u504f\u597d-01": {
     "ARG0:": "entity described",
@@ -35738,7 +35738,7 @@
     "ARG1:": "entity arg0 calls back"
   },
   "\u5e72\u683c\u4e0d\u5165-01": {
-    "ARG0:": "entities which don't mix"
+    "ARG0:": "entities which dont mix"
   },
   "\u98de\u5411-01": {
     "ARG0:": "entity described",
@@ -36401,7 +36401,7 @@
   "\u98d9\u5347-01": {
     "ARG0:": "thing described",
     "ARG1:": "level arg0 rises to",
-    "ARG2:": "arg0's original level"
+    "ARG2:": "arg0s original level"
   },
   "\u5272\u4e0b-01": {
     "ARG0:": "agent",
@@ -36420,7 +36420,7 @@
   },
   "\u54ed\u6389-01": {
     "ARG0:": "person crying",
-    "ARG1:": "thing falling because of arg0's crying"
+    "ARG1:": "thing falling because of arg0s crying"
   },
   "\u7f29\u56de-01": {
     "ARG0:": "agent",
@@ -38766,7 +38766,7 @@
   },
   "\u4e0d\u77e5\u6240\u4e91-01": {
     "ARG0:": "person described",
-    "ARG1:": "entity whose meaning arg0 doesn't understand"
+    "ARG1:": "entity whose meaning arg0 doesnt understand"
   },
   "\u60ac\u6b8a-01": {
     "ARG0:": "thing described"
@@ -38998,7 +38998,7 @@
   },
   "\u5f04\u5230-01": {
     "ARG0:": "entity described",
-    "ARG1:": "state arg0's doings lead to"
+    "ARG1:": "state arg0s doings lead to"
   },
   "\u5f04\u5230-02": {
     "ARG0:": "obtainer",
@@ -39594,7 +39594,7 @@
   },
   "\u4e0d\u89e3-01": {
     "ARG0:": "person described",
-    "ARG1:": "entity arg0 doesn't understand"
+    "ARG1:": "entity arg0 doesnt understand"
   },
   "\u6d41\u51fa-01": {
     "ARG0:": "thing described",
@@ -39692,7 +39692,7 @@
   },
   "\u5927\u610f\u4e0d\u5f97-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 shouldn't take light"
+    "ARG1:": "thing arg0 shouldnt take light"
   },
   "\u9501\u56fd-01": {
     "ARG0:": "agent/cause"
@@ -39728,7 +39728,7 @@
   },
   "\u65e0\u7f6a-01": {
     "ARG0:": "person described",
-    "ARG1:": "thing arg0 doesn't commit a crime in doing it"
+    "ARG1:": "thing arg0 doesnt commit a crime in doing it"
   },
   "\u4e50\u6b64\u4e0d\u5f7c-01": {
     "ARG0:": "entity described"
@@ -39761,7 +39761,7 @@
   "\u7531\u4e0d\u5f97-01": {
     "ARG0:": "entity described",
     "ARG1:": "person described",
-    "ARG2:": "thing arg0 doesn't let arg1 do on arg0"
+    "ARG2:": "thing arg0 doesnt let arg1 do on arg0"
   },
   "\u6b65\u4e0a\u5f8c\u5c18-01": {
     "ARG0:": "entity described"
@@ -40538,7 +40538,7 @@
   },
   "\u5931\u5f53-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't do appropriately"
+    "ARG1:": "thing arg0 doesnt do appropriately"
   },
   "\u8f6c\u653b-01": {
     "ARG0:": "person described",
@@ -40765,7 +40765,7 @@
     "ARG1:": "place arg0 tours in his prime years"
   },
   "\u4e0d\u5230-01": {
-    "ARG0:": "entity that hasn't been reached"
+    "ARG0:": "entity that hasnt been reached"
   },
   "\u9eef\u54d1-01": {
     "ARG0:": "entity described"
@@ -41214,7 +41214,7 @@
   },
   "\u62c9\u65ad-01": {
     "ARG0:": "agent",
-    "ARG1:": "thing arg0 breaks due to arg0's pulling it"
+    "ARG1:": "thing arg0 breaks due to arg0s pulling it"
   },
   "\u5439\u8d77-01": {
     "ARG0:": "thing described",
@@ -41512,7 +41512,7 @@
     "ARG0:": "thing described"
   },
   "\u770b\u6de1-01": {
-    "ARG0:": "entity that doesn't look good"
+    "ARG0:": "entity that doesnt look good"
   },
   "\u76f8\u6cbf-01": {
     "ARG0:": "people described"
@@ -41568,7 +41568,7 @@
   },
   "\u6574\u6cbb\u4e0d\u529b-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't do enough to maintain"
+    "ARG1:": "thing arg0 doesnt do enough to maintain"
   },
   "\u6311\u7a7a-01": {
     "ARG0:": "thing described",
@@ -41710,7 +41710,7 @@
   },
   "\u8fdb\u5e10-01": {
     "ARG0:": "entity described",
-    "ARG1:": "money entering arg0's account"
+    "ARG1:": "money entering arg0s account"
   },
   "\u627e\u597d-01": {
     "ARG0:": "agent",
@@ -41935,7 +41935,7 @@
   },
   "\u51fa\u6ee1-01": {
     "ARG0:": "publisher",
-    "ARG1:": "quantity arg0's publication reaches"
+    "ARG1:": "quantity arg0s publication reaches"
   },
   "\u542c\u4fe1-01": {
     "ARG0:": "person described",
@@ -42074,7 +42074,7 @@
   },
   "\u795e\u9a70-01": {
     "ARG0:": "person described",
-    "ARG1:": "entity arg0's spirit travels to"
+    "ARG1:": "entity arg0s spirit travels to"
   },
   "\u540d\u8d35-01": {
     "ARG0:": "thing described"
@@ -42765,7 +42765,7 @@
   },
   "\u6ede\u7eb3-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't pay in time"
+    "ARG1:": "thing arg0 doesnt pay in time"
   },
   "\u5782\u6cea-01": {
     "ARG0:": "person shedding tears"
@@ -42996,7 +42996,7 @@
   },
   "\u4e86\u65e0-01": {
     "ARG0:": "entity described",
-    "ARG1:": "thing arg0 doesn't have any"
+    "ARG1:": "thing arg0 doesnt have any"
   },
   "\u6536\u5bb9-01": {
     "ARG0:": "agent",
@@ -43267,7 +43267,7 @@
   },
   "\u98df\u4e4b\u65e0\u5473-01": {
     "ARG0:": "person described",
-    "ARG1:": "thing which doesn't taste good to arg0"
+    "ARG1:": "thing which doesnt taste good to arg0"
   },
   "\u55a7\u817e\u4e00\u65f6-01": {
     "ARG0:": "thing described"
@@ -43827,7 +43827,7 @@
   },
   "\u6389\u4ee5\u8f7b\u5fc3-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity arg0 doesn't pay enough attention to"
+    "ARG1:": "entity arg0 doesnt pay enough attention to"
   },
   "\u5e7f\u535a-01": {
     "ARG0:": "thing described"
@@ -43959,7 +43959,7 @@
     "ARG0:": "person described"
   },
   "\u5140-01": {
-    "ARG0:": "entity which doesn't exist"
+    "ARG0:": "entity which doesnt exist"
   },
   "\u7a77\u56f0\u6f66\u5012-01": {
     "ARG0:": "person described"
@@ -45513,7 +45513,7 @@
   },
   "\u671b\u800c\u602f\u6b65-01": {
     "ARG0:": "entity described",
-    "ARG1:": "entity in front of which arg0 doesn't dare to go ahead"
+    "ARG1:": "entity in front of which arg0 doesnt dare to go ahead"
   },
   "\u8c6a\u723d-01": {
     "ARG0:": "person described"
@@ -46117,7 +46117,7 @@
   },
   "\u4e89\u6c14-01": {
     "ARG0:": "person described",
-    "ARG1:": "person arg0 doesn't let down"
+    "ARG1:": "person arg0 doesnt let down"
   },
   "\u5e73\u5766-01": {
     "ARG0:": "thing described"
@@ -48904,7 +48904,7 @@
   },
   "\u4f24\u53ca-01": {
     "ARG0:": "cause",
-    "ARG1:": "entity that arg0 doesn't injure"
+    "ARG1:": "entity that arg0 doesnt injure"
   },
   "\u6253\u4eba-01": {
     "ARG0:": "agent"
@@ -49891,7 +49891,7 @@
   },
   "\u4e0d\u5f97\u800c\u77e5-01": {
     "ARG0:": "experiencer",
-    "ARG1:": "thing arg0 doesn't know"
+    "ARG1:": "thing arg0 doesnt know"
   },
   "\u704c\u6551-01": {
     "ARG0:": "agent"
@@ -50680,7 +50680,7 @@
   },
   "\u52a9\u9009-01": {
     "ARG0:": "agent",
-    "ARG1:": "candidate that's helped to campaign"
+    "ARG1:": "candidate thats helped to campaign"
   },
   "\u7ea2\u6da6-01": {
     "ARG0:": "entity described"
@@ -50874,7 +50874,7 @@
   },
   "\u6709\u8d1f\u4e8e-01": {
     "ARG0:": "agent",
-    "ARG1:": "entity arg0 didn't do enough for"
+    "ARG1:": "entity arg0 didnt do enough for"
   },
   "\u903c\u4f9b-01": {
     "ARG0:": "agent",
@@ -51383,7 +51383,7 @@
   },
   "\u514d\u8d39-01": {
     "ARG0:": "agent",
-    "ARG1:": "entity that's free"
+    "ARG1:": "entity thats free"
   },
   "\u5206\u9053\u626c\u9573-01": {
     "ARG0:": "entity described"
@@ -54314,7 +54314,7 @@
   },
   "\u6df7\u7136\u4e0d\u77e5-01": {
     "ARG0:": "people described",
-    "ARG1:": "thing that arg0 doesn't know"
+    "ARG1:": "thing that arg0 doesnt know"
   },
   "\u53eb\u6210-01": {
     "ARG0:": "agent",
@@ -55112,7 +55112,7 @@
   },
   "\u6709\u8d1f-01": {
     "ARG0:": "agent",
-    "ARG1:": "entity arg0 didn't do enough for"
+    "ARG1:": "entity arg0 didnt do enough for"
   },
   "\u5370\u4e0a-01": {
     "ARG0:": "agent",
@@ -55397,7 +55397,7 @@
   },
   "\u9976\u6709\u5174\u81f4-01": {
     "ARG0:": "people described",
-    "ARG1:": "entity that's interesting"
+    "ARG1:": "entity thats interesting"
   },
   "\u8fdb\u6751-01": {
     "ARG0:": "agent"
@@ -58176,7 +58176,7 @@
   },
   "\u4e13\u6cbb-01": {
     "ARG0:": "agent(doctor) or entity(medicine)",
-    "ARG1:": "Arg0's expertise"
+    "ARG1:": "Arg0s expertise"
   },
   "\u53d1\u75c5-01": {
     "ARG0:": "patient"
@@ -58930,7 +58930,7 @@
     "ARG1:": "level"
   },
   "\u9065\u9065\u65e0\u671f-01": {
-    "ARG0:": "things that won't happen in the forseeable future"
+    "ARG0:": "things that wont happen in the forseeable future"
   },
   "\u6eba\u7231-01": {
     "ARG0:": "parents or the elder who spoils kids",
@@ -59425,7 +59425,7 @@
   },
   "\u5766\u767d-01": {
     "ARG0:": "agent",
-    "ARG1:": "Arg0's confession"
+    "ARG1:": "Arg0s confession"
   },
   "\u76f2\u4eba\u6478\u8c61-01": {
     "ARG0:": "agent"
@@ -60141,7 +60141,7 @@
   },
   "\u56de\u9053-01": {
     "ARG0:": "replier",
-    "ARG1:": "content of Arg0's reply"
+    "ARG1:": "content of Arg0s reply"
   },
   "\u8f83\u771f-01": {
     "ARG0:": "agent"
@@ -60333,7 +60333,7 @@
     "ARG0:": "agent who is confused"
   },
   "\u884c\u4e0d\u901a-01": {
-    "ARG0:": "entity that won't work"
+    "ARG0:": "entity that wont work"
   },
   "\u778e\u626f-01": {
     "ARG0:": "agent or entity that is nonsense"
@@ -60392,7 +60392,7 @@
   },
   "\u4e0d\u77e5-01": {
     "ARG0:": "agent",
-    "ARG1:": "things Arg0 doesn't know"
+    "ARG1:": "things Arg0 doesnt know"
   },
   "\u5a01\u80c1\u6050\u5413-01": {
     "ARG0:": "agent"

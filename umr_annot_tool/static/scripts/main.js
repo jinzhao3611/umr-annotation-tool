@@ -114,7 +114,7 @@ function docAnnot(sentenceId) {
 /**
  * from currently selected word, get the lemma and generate the senses menu list
  */
-function conceptDropdown() {
+function conceptDropdown(lang='English') {
     submit_concept();
     let token = current_concept;
     let numfied_token = text2num(token);
@@ -123,8 +123,13 @@ function conceptDropdown() {
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
     } else {
-        if (typeof getLemma(token) !== 'undefined') {
-            let lemma = getLemma(token);
+        if (typeof getLemma(token) !== 'undefined' || lang === 'Chinese') {
+            let lemma;
+            if(lang === 'Chinese'){
+                lemma = token;
+            }else{
+                lemma = getLemma(token);
+            }
             console.log("lemma of chosen word:", lemma);
             let senses = [];
             Object.keys(frame_json).forEach(function(key) {
@@ -494,14 +499,14 @@ function fillDeleteTemplate(at, mo_lock) {
             s.value = '';
             color_all_under_amr_elem(show_amr_mo_lock, '#000000', '');
             show_amr_mo_lock = '';
-            set_guidance('<p><font style="color:red;font-weight:bold;">In AMR above, click on element to be deleted.</font>');
+            console.log('<p><font style="color:red;font-weight:bold;">In AMR above, click on element to be deleted.</font>');
         }
         if (!same_mo_lock_p) {
             s.value = at;
             show_amr_mo_lock = mo_lock;
             color_all_under_amr_elem(show_amr_mo_lock, '#FF0000', '');
             if (show_amr_obj['option-confirm-delete']) {
-                set_guidance('<p><font style="color:red;font-weight:bold;">Confirm deletion in template below.</font>');
+                console.log('<p><font style="color:red;font-weight:bold;">Confirm deletion in template below.</font>');
             } else {
                 submit_template_action('delete');
                 selectTemplate('clear');
@@ -1357,7 +1362,7 @@ function recordConcept(c, loc) {
  * @param concept
  * @returns {string} variable (initial)
  */
-function newVar(concept) {
+function newVar(concept, table_id=1) {
     let v;
     concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //example: *s -> s
     let initial = concept.substring(0, 1).toLowerCase();
@@ -1367,7 +1372,11 @@ function newVar(concept) {
 
     // add the sentence number s1 to initial t -> s1t
     let sentenceId = document.getElementById('sentence_id').value;
-    initial = "s"+ sentenceId + initial;
+    if(table_id===1){
+        initial = "s"+ sentenceId + initial;
+    }else{
+        initial = "s"+ (parseInt(sentenceId)+1) + initial;
+    }
 
     // increase index or reserve variable 'i' for concept 'i'
     if (getLocs(initial) || reserved_variables[initial] || concept.match(/^i./i)) {
@@ -1465,9 +1474,9 @@ function user_descr2locs(s, type) {
  * @param concept "buy"
  * @returns {string} return a new amr head, "b"
  */
-function newAMR(concept) {
+function newAMR(concept, table_id=1) {
     console.log("I am here37");
-    let v = newVar(concept); // string initial
+    let v = newVar(concept, table_id); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
     umr[n + '.c'] = concept;

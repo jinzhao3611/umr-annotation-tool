@@ -181,14 +181,14 @@ function inverseUmrTransform(penman_s){
 
   penman_s = deHTML3(penman_s);
 
-  console.log(penman_s);
+  // console.log(penman_s);
 
   lines = penman_s.split('split_here');
 
-  lines.forEach(myFunction);
-  function myFunction(value) {
-    console.log('value: ', value);
-  }
+  // lines.forEach(myFunction);
+  // function myFunction(value) {
+  //   console.log('value: ', value);
+  // }
 
   temporal_rels = [];
   modal_rels = [];
@@ -246,9 +246,9 @@ function inverseUmrTransform(penman_s){
       }
     }
   }
-  console.log('temporal rels: ', temporal_rels);
-  console.log('modal rels: ', modal_rels);
-  console.log('coref rels: ', coref_rels);
+  // console.log('temporal rels: ', temporal_rels);
+  // console.log('modal rels: ', modal_rels);
+  // console.log('coref rels: ', coref_rels);
 
   let db_penman_text = lines[0];
 
@@ -274,8 +274,7 @@ function inverseUmrTransform(penman_s){
     db_penman_text += ' ' + value;
 
   }
-
- 	console.log('db_penman_text ', db_penman_text);
+ 	// console.log('db_penman_text ', db_penman_text);
   return db_penman_text;
 }
 /**
@@ -345,7 +344,7 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
     }
 
     let transformed_doc_annot = inverseUmrTransform(doc_annot);
-    console.log('inverse transformed doc_annot: ', transformed_doc_annot);
+    // console.log('inverse transformed doc_annot: ', transformed_doc_annot);
     setInnerHTML('load-plain', deHTML(transformed_doc_annot));
     // setInnerHTML('load-plain', deHTML(doc_annot));
     umr = JSON.parse(curr_doc_umr);
@@ -2709,10 +2708,10 @@ function show_amr(args) {
         //todo how is this different
         html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
 
-        console.log("html_amr_s before transform: " + html_amr_s);
+        // console.log("html_amr_s before transform: " + html_amr_s);
         setInnerHTML('db-amr', html_amr_s);
         html_amr_s = docUmrTransform(html_amr_s);
-        console.log("html_amr_s after transform: " + html_amr_s);
+        // console.log("html_amr_s after transform: " + html_amr_s);
         setInnerHTML('amr', html_amr_s);
         show_amr_status = args;
     }
@@ -3106,11 +3105,11 @@ function string2amr(s) {
  * this is used to load the penman string
  */
 function loadField2amr() {
-    console.log("loadField2amr is called: " + document.getElementById('load-plain').value);
+    // console.log("loadField2amr is called: " + document.getElementById('load-plain').value);
     var s;
     if ((s = document.getElementById('load-plain')) != null) {
         var rest = string2amr(s.value);
-        console.log('umr after rest: ', umr);
+        // console.log('umr after rest: ', umr);
         if (!rest.match(/\S/)) {
             rest = '';
         }
@@ -3672,3 +3671,60 @@ function fillInArgs(argId){
         }
     };
 }
+
+function deleteBasedOnVariable(variable){
+  let locs = getLocs(variable).split(' ');
+  console.log('locs here: ', locs);
+  locs.forEach(deleteFunc);
+  function deleteFunc(loc){
+    let command = 'delete' + ' ' + umr[loc.slice(0, -2)+'.v'] + ' ' + umr[loc + '.r'] + ' ' + variable;
+    console.log('command: ', command);
+    exec_command(command, '1');
+    show_amr('show');
+  }
+}
+
+function getVariableFromUmr(all_sent_umrs) {
+    let sent_variables = [];
+    let doc_variables = [];
+    let difference_cleaned = [];
+
+    all_sent_umrs.forEach(toVariableList);
+    function toVariableList(sent_umr_dict){
+        console.log('sent_umr_dict: ', sent_umr_dict);
+        Object.keys(sent_umr_dict).forEach(function (key) {
+            // console.log(key, sent_umr_dict[key]);
+            if (key.match(/.+\.v/) ) {
+                if (sent_umr_dict[key.replace(/.v/, '.d')] !== 1){
+                    console.log('I am here88: ', key);
+                    sent_variables.push(sent_umr_dict[key]);
+                }
+            }
+        });
+    }
+    console.log('sent_variables: ', sent_variables); // ["s1t", "s2d"]
+
+    Object.keys(umr).forEach(function (key) {
+        // console.log(key, doc_umr_dict[key]);
+        if (key.match(/.+\.v/)) {
+            doc_variables.push(umr[key]);
+        }
+    });
+    console.log('doc_variables: ', doc_variables); // ["s1", "s1t", "DCT", "s1t", "s2e", "s2e", "test", "s2d", "AUTH", "s2e", "AUTH", "s2e", "s1t"]
+    let difference = doc_variables.filter(x => !sent_variables.includes(x));
+    console.log('difference: ', difference);
+
+    difference.forEach(matchRegularVariables);
+
+    function matchRegularVariables(value) {
+        if (value.match(/s[0-9][a-z][0-9]?/)) {
+            difference_cleaned.push(value); //["s2e","s2d"]
+        }
+    }
+    let difference_cleaned2 = [...new Set(difference_cleaned)];
+    console.log('difference_cleaned2: ', difference_cleaned2);
+    return difference_cleaned2; //["s2e"]
+
+}
+
+

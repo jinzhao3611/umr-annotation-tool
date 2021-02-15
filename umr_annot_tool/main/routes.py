@@ -93,7 +93,10 @@ def annotate(doc_id):
     doc = Doc.query.get_or_404(doc_id)
     print('doc content from sent level: ', doc.content)
     sents, sents_html, sent_htmls, df_htmls, gls, notes = html(doc.content, doc.file_format)
-    frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
+    if doc.lang == "Chinese":
+        frame_dict = json.load(open('umr_annot_tool/resources/frames_chinese.json', "r"))
+    else:
+        frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
     snt_id = 1
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
@@ -269,13 +272,15 @@ def doclevel(doc_id):
     print("all_doc_annots: ", all_doc_annots)
     all_sents = [sent2.content for sent2 in sents]
     print("all_sents: ", all_sents)
+    all_sent_umrs = [annot.umr for annot in annotations]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang, file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'))
+                           content_string=doc.content.replace('\n', '<br>'),
+                           all_sent_umrs=all_sent_umrs)
 
 
 @main.route("/about")
