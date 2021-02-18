@@ -4,6 +4,7 @@ let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": 
 
 let abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
 
+let table_id = 1;
 let language;
 let current_parent;
 let current_concept;
@@ -1362,7 +1363,7 @@ function recordConcept(c, loc) {
  * @param concept
  * @returns {string} variable (initial)
  */
-function newVar(concept, table_id=1) {
+function newVar(concept) {
     let v;
     concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //example: *s -> s
     let initial = concept.substring(0, 1).toLowerCase();
@@ -1474,9 +1475,9 @@ function user_descr2locs(s, type) {
  * @param concept "buy"
  * @returns {string} return a new amr head, "b"
  */
-function newAMR(concept, table_id=1) {
+function newAMR(concept) {
     console.log("I am here37");
-    let v = newVar(concept, table_id); // string initial
+    let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
     umr[n + '.c'] = concept;
@@ -1508,7 +1509,7 @@ function addTriple(head, role, arg, arg_type) {
     head = strip(head); // b
     role = strip(role); // :arg1
     arg = strip(arg); //car
-    console.log('addTriple: head: ' + head + ' role: ' + role + ' arg: ' + arg);
+    console.log('addTriple: head: ' + head + ' role: ' + role + ' arg: ' + arg + 'arg type: ' + arg_type);
     let head_var_locs = getLocs(head);
     let arg_var_locs;
     let arg_variable;
@@ -1543,7 +1544,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        }else if(language === 'Default' //not English
+        }else if((language === 'Default' || language === 'Chinese')//not English
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))){
