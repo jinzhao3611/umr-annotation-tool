@@ -56,8 +56,8 @@
         </header>
 
         <main role="main" class="container-fluid no-padding"> {# This is why the role attribute is here: https://stackoverflow.com/questions/10403138/what-is-the-purpose-of-the-role-attribute-in-html #}
-            <div class="row align-items-center" style="height: auto; padding-bottom:70px; padding-left:70px; padding-right:70px;">
-                <div id='content' class="col-md-8" style="height: auto;">
+            <div class="row align-items-center" style="height: auto; padding-bottom:5%; padding-left:5%; padding-right:5%;">
+                <div id='content' class="col-md-7" style="height: auto;">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -70,8 +70,8 @@
                     {% block content %}{% endblock %}
                 </div>
 
-                <div class="col-md-4" style="height: auto;">
-                    <div style="position:fixed; top:200px;">
+                <div class="col-md-5" style="height: auto;">
+                    <div style="position:fixed; top:10%; overflow-x: scroll; max-width: 40%">
                         {% block content2 %}{% endblock %}
                     </div>
                 </div>

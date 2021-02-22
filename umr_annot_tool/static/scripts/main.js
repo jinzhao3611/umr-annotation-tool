@@ -3120,6 +3120,11 @@ function selectEvent(){
         document.getElementById('selected_tokens').innerHTML += selection;
 
         console.log("selection: ", selection.anchorNode.parentNode.tagName);
+        console.log("selection2: ", selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id);
+
+        if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id==='table2'){
+            table_id = 2;
+        }
         if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
             // if(language==='Default'){
             //     begOffset = selection.anchorNode.parentElement.cellIndex;

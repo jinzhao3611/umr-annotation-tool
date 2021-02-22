@@ -4,6 +4,7 @@ from typing import List, Tuple
 import json
 from utils import html, process_exported_file
 from flask_login import current_user
+import os
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
@@ -299,6 +300,13 @@ def display_post():
     return render_template('display_post.html', posts=posts)
 
 
-@main.route("/guidelines")
+@main.route("/guide")
 def guidelines():
     return render_template('user_guide.html')
+
+@main.route('/guide/<path:filename>', methods=['GET', 'POST'])
+def download(filename):
+    # Appending app path to upload folder path within app root folder
+    uploads = os.path.join(main.root_path, 'resources')
+    # Returning file from appended path
+    return send_from_directory(directory=uploads, filename=filename, as_attachment=True)

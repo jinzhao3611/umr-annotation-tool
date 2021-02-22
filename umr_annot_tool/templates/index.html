@@ -145,12 +145,15 @@
             <p><b>Notes</b> {{ notes[snt_id-1] }}</p>
 
             Next Line:
-            {% autoescape off %}
-            <p>{{ df_html[snt_id] }}</p>
-            {% endautoescape %}
-            {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
-            <p><b>Free</b> {{ gls[snt_id] }}</p>
-            <p><b>Notes</b> {{ notes[snt_id] }}</p>
+            <div id="table2">
+                {% autoescape off %}
+                <p>{{ df_html[snt_id] }}</p>
+                {% endautoescape %}
+                {#            JINZHAO: 修改gls和notes的显示问题！！！！！！！！！！！#}
+                <p><b>Free</b> {{ gls[snt_id] }}</p>
+                <p><b>Notes</b> {{ notes[snt_id] }}</p>
+            </div>
+
 
         </div>
         <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
