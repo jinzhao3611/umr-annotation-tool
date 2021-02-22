@@ -2,15 +2,17 @@
 {% block content %}
     <h2>Guides</h2>
 
+    Below are sample file formats that the tool accepts:
     <ul>
-        <li>plain_text example file: <a href="" download="umr_annot_tool/resources/sample_sentences/sample_snts_english.txt">sample_snts_english.txt</a></li>
-        <li>exported_file example file: <a href="" download="umr_annot_tool/resources/sample_sentences/exported_sample_snts_english.txt">exported_sample_snts_english.txt</a></li>
-        <li>flex1 example file: <a href="" download="umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic_Paragraphs.xml">Original_Verifiable generic_Paragraphs.xml</a></li>
-        <li>flex2 example file: <a href="" download="umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic.xml">Original_Verifiable generic.xml</a></li>
-        <li>flex3 example file: <a href="" download="umr_annot_tool/resources/jens_van_gysel/Original_XLingPaper, align morphemes.xml">Original_XLingPaper, align morphemes.xml</a></li>
-        <li>toolbox1 example file: <a href="" download="umr_annot_tool/resources/sample_sentences/arapahoe.xml">arapahoe.xml</a></li>
-        <li>toolbox2 example file: <a href="" download="umr_annot_tool/resources/rosa_vallejos/04NOV2006-3.xml">04NOV2006-3.xml</a></li>
-        <li>toolbox3 example file: <a href="" download="umr_annot_tool/resources/rosa_vallejos/04NOV2006-3.txt">04NOV2006-3.txt</a></li>
+        <li>plain_text example file: <a href="{{ url_for('main.download', filename="sample_sentences/sample_snts_english.txt") }}">sample_snts_english.txt</a></li>
+        <li>flex1 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/Original_Verifiable generic_Paragraphs.xml") }}" >Original_Verifiable generic_Paragraphs.xml</a></li>
+        <li>flex2 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/Original_Verifiable generic.xml") }}" >Original_Verifiable generic.xml</a></li>
+        <li>flex3 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/Original_XLingPaper, align morphemes.xml") }}" >Original_XLingPaper, align morphemes.xml</a></li>
+        <li>toolbox1 example file: <a href="{{ url_for('main.download', filename="sample_sentences/arapahoe.xml") }}" >arapahoe.xml</a></li>
+        <li>toolbox2 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/rosa_vallejos/04NOV2006-3.xml") }}" >04NOV2006-3.xml</a></li>
+        <li>toolbox3 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/rosa_vallejos/04NOV2006-3.txt") }}" >04NOV2006-3.txt</a></li>
+        <li>exported plain_text example file: <a href="{{ url_for('main.download', filename="sample_sentences/exported_sample_snts_english.txt") }}">exported_sample_snts_english.txt</a></li>
+
     </ul>
 
 
