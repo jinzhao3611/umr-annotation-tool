@@ -20,6 +20,14 @@
 
 
     <style type="text/css">
+
+        input{
+            width: 100px;
+        }
+        body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > tr > td, body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > tr {
+            font-size: 12px;
+            width: 50px;
+        }
         .dropdown-submenu {
             position: relative;
         }
@@ -432,28 +440,28 @@
 {% endblock content %}
 
 {% block content2 %}
-    <div style="height: 250px;">
-        <div id="text-command">
-            <table style="display:none;">
-                <tr>
-                    <td>Enter text command:</td>
-                    <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
-                                  autocorrect="off"
-                                  spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
-                                  onkeyup="exec_command('', 1)"></textarea></td>
-                    <td width="20"></td>
-                <tr>
-                    <td colspan="4"><span id="error"><i></i></span></td>
-                </tr>
-                <tr style="color:#999999">
+{#    <div style="height: 250px;">#}
+{#        <div id="text-command">#}
+{#            <table style="display:none;">#}
+{#                <tr>#}
+{#                    <td>Enter text command:</td>#}
+{#                    <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"#}
+{#                                  autocorrect="off"#}
+{#                                  spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"#}
+{#                                  onkeyup="exec_command('', 1)"></textarea></td>#}
+{#                    <td width="20"></td>#}
+{#                <tr>#}
+{#                    <td colspan="4"><span id="error"><i></i></span></td>#}
+{#                </tr>#}
+{#                <tr style="color:#999999">#}
                     {#            <td>Last command:</td>#}
-                    <td colspan="3"><span id="action"></span></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+{#                    <td colspan="3"><span id="action"></span></td>#}
+{#                </tr>#}
+{#            </table>#}
+{#        </div>#}
+{#    </div>#}
 
-    <table class="table table-borderless table-sm" style="height:auto; overflow-y: scroll; height: 250px;">
+    <table style="height: 10%; width:80%">
         <tbody>
             <tr>
                 <td>
@@ -848,7 +856,7 @@
         </tbody>
     </table>
 
-    <div>
+    <div style="height: 10%; width:80%">
 {#        <button class="btn btn-outline-secondary" style="display:none" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>#}
 {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>#}
         <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
