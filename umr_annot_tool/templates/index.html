@@ -440,26 +440,26 @@
 {% endblock content %}
 
 {% block content2 %}
-{#    <div style="height: 250px;">#}
-{#        <div id="text-command">#}
-{#            <table style="display:none;">#}
-{#                <tr>#}
-{#                    <td>Enter text command:</td>#}
-{#                    <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"#}
-{#                                  autocorrect="off"#}
-{#                                  spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"#}
-{#                                  onkeyup="exec_command('', 1)"></textarea></td>#}
-{#                    <td width="20"></td>#}
-{#                <tr>#}
-{#                    <td colspan="4"><span id="error"><i></i></span></td>#}
-{#                </tr>#}
-{#                <tr style="color:#999999">#}
-                    {#            <td>Last command:</td>#}
-{#                    <td colspan="3"><span id="action"></span></td>#}
-{#                </tr>#}
-{#            </table>#}
-{#        </div>#}
-{#    </div>#}
+    <div style="height: 0px;">
+        <div id="text-command">
+            <table style="display:none;">
+                <tr>
+                    <td>Enter text command:</td>
+                    <td><textarea class="form-control" rows="1" cols="50" id="command" name="command" autocapitalize="off"
+                                  autocorrect="off"
+                                  spellcheck="false" style="resize:none;font-size:1.2em;overflow:hidden;"
+                                  onkeyup="exec_command('', 1)"></textarea></td>
+                    <td width="20"></td>
+                <tr>
+                    <td colspan="4"><span id="error"><i></i></span></td>
+                </tr>
+                <tr style="color:#999999">
+                                <td>Last command:</td>
+                    <td colspan="3"><span id="action"></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
     <table style="height: 10%; width:80%">
         <tbody>
