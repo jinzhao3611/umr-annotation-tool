@@ -93,7 +93,7 @@ def annotate(doc_id):
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
     print('doc content from sent level: ', doc.content)
-    sents, sents_html, sent_htmls, df_htmls, gls, notes = html(doc.content, doc.file_format)
+    info2display = html(doc.content, doc.file_format)
     if doc.lang == "Chinese":
         frame_dict = json.load(open('umr_annot_tool/resources/frames_chinese.json', "r"))
     else:
@@ -185,8 +185,7 @@ def annotate(doc_id):
 
 
     return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                           sents=sents, sents_html=sents_html, sent_htmls=sent_htmls, df_html=df_htmls, gls=gls,
-                           notes=notes,
+                           info2display=info2display,
                            frame_dict=frame_dict,
                            curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
                            curr_sent_umr=curr_sent_umr,
@@ -259,10 +258,10 @@ def doclevel(doc_id):
         flash('You have not created sentence level annotation yet')
         redirect(url_for('main.annotate', doc_id=doc_id))
 
-    print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
-    print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
-    print("current_sent_table: ", sent_annot_pairs[current_snt_id-1][0])
-    print("current_snt_id: ", current_snt_id)
+    # print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
+    # print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
+    # print("current_sent_table: ", sent_annot_pairs[current_snt_id-1][0])
+    # print("current_snt_id: ", current_snt_id)
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]

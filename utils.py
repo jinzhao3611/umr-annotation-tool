@@ -14,12 +14,28 @@
 #     (the tabulate package is used, the tables in output txt file cannot adjust to the window resize, please open it in full screen when necessary)
 
 import xml.etree.ElementTree as ET
-from typing import Tuple, List, Optional
+from typing import Tuple, List
 import pandas as pd
 from itertools import accumulate
 import operator
 from bs4 import BeautifulSoup
 import re
+from typing import NamedTuple
+
+class InfoToDisplay(NamedTuple):
+    sents: List[List[str]]
+    sents_html: str
+    sent_htmls: List[str]
+    df_htmls: List[str]
+    gls: List[List[str]]
+    notes: List[str]
+
+class ExtractedXMLInfo(NamedTuple):
+    sents: List[List[str]]
+    dfs: List[pd.DataFrame]
+    sents_gls: List[List[str]]
+    conv_turns: List[str]
+    paragraph_groups: List[int]
 
 def amr_text2html(plain_text: str) -> str:
     html_string = re.sub('\n', '<br>\n', plain_text)
@@ -81,7 +97,7 @@ def process_exported_file(content_string: str):
     print(doc_annots)
     return doc_content_string, sents, sent_annots, doc_annots, aligns, user_id, lang
 
-def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, List[str], List[str], List[str], List[str]]:
+def html(content_string: str, file_format: str) -> 'InfoToDisplay':
     """
     :param file_format:
     :param content_string: raw string got read in from file, could be either flex or toolbox xml string, or a txt string
@@ -120,7 +136,6 @@ def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, L
                         sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
                     else:
                         sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
-
             else:
                 sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
             for df in dfs:
@@ -147,19 +162,9 @@ def html(content_string: str, file_format: str) -> Tuple[List[List[str]], str, L
                                                                                         classes="table table-striped table-sm",
                                                                                         justify='center'))
     # html string for all sentences
-    return sents, sents_html, sent_htmls, df_htmls, gls, notes
+    return InfoToDisplay(sents, sents_html, sent_htmls, df_htmls, gls, notes)
 
-def parse_xml(xml_string, file_format):
-    # try:
-    #     root = ET.fromstring(xml_string) # actually xml string here
-    # except ET.ParseError:
-    #     tree = ET.parse(xml_string)
-    #     root = tree.getroot()
-
-    # if root.tag == 'document':
-    #     return parse_flex_xml(xml_path)
-    # elif root.tag == 'database':
-    #     return parse_toolbox_xml(xml_path)
+def parse_xml(xml_string, file_format) -> 'ExtractedXMLInfo':
     if file_format == 'flex1' or file_format == 'flex2':
         return parse_flex12(xml_string, file_format)
     elif file_format =='flex3':
@@ -171,70 +176,7 @@ def parse_xml(xml_string, file_format):
     elif file_format == 'toolbox3':
         return parse_toolbox3(xml_string)
 
-
-def parse_toolbox1(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], str, List[int]]:
-    """
-    parse the Arapahoe toolbox xml file
-    :param xml_string: input toolbox xml file path
-    :param output_path: output txt file path
-    :param textonly: set to true if the output txt file only contains the tx line (raw text), false if all info needs to be included
-    :return:
-    """
-
-    try:
-        root = ET.fromstring(xml_string) # actually xml string here
-    except ET.ParseError:
-        tree = ET.parse(xml_string)
-        root = tree.getroot()
-
-    tx = list()
-    mb = list()
-    ge = list()
-    ps = list()
-    sents_gls = list()
-
-    for refGroup in root.iter('refGroup'):
-        tx_per_sentence = list()
-        mb_per_sentence = list()
-        ge_per_sentence = list()
-        ps_per_sentence = list()
-        for txGroup in refGroup:
-            if txGroup.tag == 'txGroup':  # to exclude <ref>
-                mb_per_word = list()
-                ge_per_word = list()
-                ps_per_word = list()
-                for child in txGroup:
-                    if child.tag == 'tx':
-                        tx_per_sentence.append(child.text)
-                    elif child.tag == 'mb':
-                        mb_per_word.append(child.text)
-                    elif child.tag == 'ge':
-                        ge_per_word.append(child.text)
-                    elif child.tag == 'ps':
-                        ps_per_word.append(child.text)
-                mb_per_sentence.append(mb_per_word)
-                ge_per_sentence.append(ge_per_word)
-                ps_per_sentence.append(ps_per_word)
-            if txGroup.tag =='ft':
-                sents_gls.append(txGroup.text)
-        tx.append(tx_per_sentence)
-        mb.append(mb_per_sentence)
-        ge.append(ge_per_sentence)
-        ps.append(ps_per_sentence)
-
-    tbls = list()
-    # rowIDs = ['mb', 'ge', 'ps']
-    rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat']
-
-    for i in range(len(tx)):
-        # tbl = tabulate([mb[i], ge[i], ps[i]], headers=tx[i], tablefmt='orgtbl', showindex=rowIDs)
-        # tbls.append(tbl)
-        df = pd.DataFrame([tx[i], [" ".join(e) for e in mb[i]], [" ".join(e) for e in ge[i]], [" ".join(e) for e in ps[i]]])
-        df.index=['Words'] + rowIDs
-        tbls.append(df)
-    return tx, tbls, sents_gls, "", []
-
-def parse_flex12(content_string: str, file_format: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]], List[int]]:
+def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
     """
     example file: flex1: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic_Paragraphs.xml
                 flex2:  /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic.xml
@@ -243,7 +185,7 @@ def parse_flex12(content_string: str, file_format: str) -> Tuple[List[List[str]]
     :return:
     """
     try:
-        root = ET.fromstring(content_string) # actually xml string here
+        root = ET.fromstring(content_string)
     except ET.ParseError:
         tree = ET.parse(content_string)
         root = tree.getroot()
@@ -298,10 +240,17 @@ def parse_flex12(content_string: str, file_format: str) -> Tuple[List[List[str]]
                                 msa_per_sentence.append(msa_per_word)
 
                 for item in word.findall('item'):
-                    if item.attrib['type'] == 'gls' and item.attrib['lang'] =='es':
-                        sent_gls.append(item.text)
+                    gls_list = ['', '']
+                    conv_turn_string = ''
+                    if item.attrib['type'] == 'gls':
+                        if item.attrib['lang'] == 'en':
+                            gls_list[0] = item.text
+                        if item.attrib['lang'] == 'es':
+                            gls_list[1] = item.text
                     if item.attrib['type'] == 'note':
-                        conversation_turns.append(item.text)
+                        conv_turn_string = item.text
+                    sent_gls.append(gls_list)
+                    conversation_turns.append(conv_turn_string)
 
                 text_id_group.append(i)
                 txt.append(txt_per_sentence) # words row
@@ -318,9 +267,9 @@ def parse_flex12(content_string: str, file_format: str) -> Tuple[List[List[str]]
         df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
         dfs.append(df)
-    return txt, dfs, sent_gls, conversation_turns, paragraph_groups
+    return ExtractedXMLInfo(txt, dfs, sent_gls, conversation_turns, paragraph_groups)
 
-def parse_flex3(xml_string:str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[Optional[str]], List[int]]:
+def parse_flex3(xml_string:str) -> 'ExtractedXMLInfo':
     """
     example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_XLingPaper, align morphemes.xml
     :param xml_string:
@@ -380,10 +329,17 @@ def parse_flex3(xml_string:str) -> Tuple[List[List[str]], List[pd.DataFrame], Li
             msa_per_sentence.append(msa_per_word)
 
         for item in sentence.findall('item'):
-            if item.attrib['type'] == 'gls' and item.attrib['lang'] == 'es-free':
-                sent_gls.append(item.text)
+            gls_list = ['', '']
+            conv_turn_string = ''
+            if item.attrib['type'] == 'gls':
+                if item.attrib['lang'] == 'en-free':
+                    gls_list[0] = item.text
+                if item.attrib['lang'] == 'es-free':
+                    gls_list[1] = item.text
             if item.attrib['type'] == 'note':
-                conversation_turns.append(item.text)
+                conv_turn_string = item.text
+            sent_gls.append(gls_list)
+            conversation_turns.append(conv_turn_string)
 
         txt.append(txt_per_sentence)  # words row
         word_gls.append(word_gls_per_sentence)  # word gloss row
@@ -397,40 +353,71 @@ def parse_flex3(xml_string:str) -> Tuple[List[List[str]], List[pd.DataFrame], Li
         df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
         dfs.append(df)
-    return txt, dfs, sent_gls, conversation_turns, paragraph_groups
+    return ExtractedXMLInfo(txt, dfs, sent_gls, conversation_turns, paragraph_groups)
 
-def align(morph_string: str, ge_string: str, gs_string: str) -> Tuple[List[str], List[str], List[str]]:
-    toks = morph_string.strip().split()
-    ge_list = ge_string.strip().split()
-    gs_list = gs_string.strip().split()
+def parse_toolbox1(xml_string: str) -> 'ExtractedXMLInfo':
+    """
+    parse the Arapahoe toolbox xml file
+    :param xml_string: input toolbox xml file path
+    :param output_path: output txt file path
+    :param textonly: set to true if the output txt file only contains the tx line (raw text), false if all info needs to be included
+    :return:
+    """
 
-    morphs = []
-    ges = []
-    gss = []
-    temp_morphs = []
-    temp_ges = []
-    temp_gss = []
+    try:
+        root = ET.fromstring(xml_string) # actually xml string here
+    except ET.ParseError:
+        tree = ET.parse(xml_string)
+        root = tree.getroot()
 
-    for i, tok in enumerate(toks):
-        if not tok.startswith("-") and temp_morphs:
-            if not temp_morphs[-1].endswith("-"):
-                morphs.append(" ".join(temp_morphs))
-                ges.append(" ".join(temp_ges))
-                gss.append(" ".join(temp_gss))
-                temp_morphs = []
-                temp_ges = []
-                temp_gss = []
-        temp_morphs.append(tok)
-        temp_ges.append(ge_list[i])
-        temp_gss.append(gs_list[i])
-    if temp_morphs:
-        morphs.append(" ".join(temp_morphs))
-        ges.append(" ".join(temp_ges))
-        gss.append(" ".join(temp_gss))
+    tx = list()
+    mb = list()
+    ge = list()
+    ps = list()
+    sents_gls = list()
 
-    return morphs, ges, gss
+    for refGroup in root.iter('refGroup'):
+        tx_per_sentence = list()
+        mb_per_sentence = list()
+        ge_per_sentence = list()
+        ps_per_sentence = list()
+        for txGroup in refGroup:
+            if txGroup.tag == 'txGroup':  # to exclude <ref>
+                mb_per_word = list()
+                ge_per_word = list()
+                ps_per_word = list()
+                for child in txGroup:
+                    if child.tag == 'tx':
+                        tx_per_sentence.append(child.text)
+                    elif child.tag == 'mb':
+                        mb_per_word.append(child.text)
+                    elif child.tag == 'ge':
+                        ge_per_word.append(child.text)
+                    elif child.tag == 'ps':
+                        ps_per_word.append(child.text)
+                mb_per_sentence.append(mb_per_word)
+                ge_per_sentence.append(ge_per_word)
+                ps_per_sentence.append(ps_per_word)
+            if txGroup.tag =='ft':
+                sents_gls.append([txGroup.text, ''])
+        tx.append(tx_per_sentence)
+        mb.append(mb_per_sentence)
+        ge.append(ge_per_sentence)
+        ps.append(ps_per_sentence)
 
-def parse_toolbox2(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[str], List[int]]:
+    tbls = list()
+    # rowIDs = ['mb', 'ge', 'ps']
+    rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat']
+
+    for i in range(len(tx)):
+        # tbl = tabulate([mb[i], ge[i], ps[i]], headers=tx[i], tablefmt='orgtbl', showindex=rowIDs)
+        # tbls.append(tbl)
+        df = pd.DataFrame([tx[i], [" ".join(e) for e in mb[i]], [" ".join(e) for e in ge[i]], [" ".join(e) for e in ps[i]]])
+        df.index=['Words'] + rowIDs
+        tbls.append(df)
+    return ExtractedXMLInfo(tx, tbls, sents_gls, [""], [])
+
+def parse_toolbox2(xml_string: str) -> 'ExtractedXMLInfo':
     """
     parse the Arapahoe toolbox xml file
     :param xml_string: input toolbox xml file path
@@ -468,7 +455,7 @@ def parse_toolbox2(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
             elif item.startswith('<gs>'):
                 ori_gs.append(item[4: -5])
             elif item.startswith('<f>'):
-                sents_gls.append(item[3: -4])
+                sents_gls.append(['', item[3: -4]])
                 f_flag = False
             elif item.startswith('<nt>'):
                 temp_notes += '\n' + item[4: -5]
@@ -477,7 +464,7 @@ def parse_toolbox2(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
         if nt_flag:
             notes.append("")
         if f_flag:
-            sents_gls.append("")
+            sents_gls.append(["", ''])
 
         for mor, ge, gs in zip(ori_morph, ori_ge, ori_gs):
             aligned_mor, aligned_ge, aligned_gs = align(mor, ge, gs)
@@ -498,9 +485,9 @@ def parse_toolbox2(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
             [sents_of_words[i],  sents_of_morphs[i], sents_of_ges[i], sents_of_gss[i]])
         df.index = ['Words'] + rowIDs
         dfs.append(df)
-    return sents_of_words, dfs, sents_gls, notes, []
+    return ExtractedXMLInfo(sents_of_words, dfs, sents_gls, notes, [])
 
-def parse_toolbox3(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame], List[str], List[str], List[int]]:
+def parse_toolbox3(xml_string: str) -> 'ExtractedXMLInfo':
     """
     parse the Arapahoe toolbox xml file
     :param xml_string: input toolbox xml file path
@@ -542,7 +529,7 @@ def parse_toolbox3(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
             elif item.startswith('\\gs'):
                 ori_gs.append(item[4:])
             elif item.startswith('\\f'):
-                sents_gls.append(item[3:])
+                sents_gls.append(['', item[3:]])
                 f_flag = False
             elif item.startswith('\\nt'):
                 temp_notes += '\n' + item[4:]
@@ -551,7 +538,7 @@ def parse_toolbox3(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
         if nt_flag:
             notes.append("")
         if f_flag:
-            sents_gls.append("")
+            sents_gls.append(["", ''])
 
         for mor, ge, gs in zip(ori_morph, ori_ge, ori_gs):
             aligned_mor, aligned_ge, aligned_gs = align(mor, ge, gs)
@@ -572,7 +559,39 @@ def parse_toolbox3(xml_string: str) -> Tuple[List[List[str]], List[pd.DataFrame]
             [sents_of_words[i],  sents_of_morphs[i], sents_of_ges[i], sents_of_gss[i]])
         df.index = ['Words'] + rowIDs
         dfs.append(df)
-    return sents_of_words, dfs, sents_gls, notes, []
+    return ExtractedXMLInfo(sents_of_words, dfs, sents_gls, notes, [])
+
+def align(morph_string: str, ge_string: str, gs_string: str) -> Tuple[List[str], List[str], List[str]]:
+    toks = morph_string.strip().split()
+    ge_list = ge_string.strip().split()
+    gs_list = gs_string.strip().split()
+
+    morphs = []
+    ges = []
+    gss = []
+    temp_morphs = []
+    temp_ges = []
+    temp_gss = []
+
+    for i, tok in enumerate(toks):
+        if not tok.startswith("-") and temp_morphs:
+            if not temp_morphs[-1].endswith("-"):
+                morphs.append(" ".join(temp_morphs))
+                ges.append(" ".join(temp_ges))
+                gss.append(" ".join(temp_gss))
+                temp_morphs = []
+                temp_ges = []
+                temp_gss = []
+        temp_morphs.append(tok)
+        temp_ges.append(ge_list[i])
+        temp_gss.append(gs_list[i])
+    if temp_morphs:
+        morphs.append(" ".join(temp_morphs))
+        ges.append(" ".join(temp_ges))
+        gss.append(" ".join(temp_gss))
+
+    return morphs, ges, gss
+
 
 
 

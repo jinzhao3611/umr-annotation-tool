@@ -310,6 +310,7 @@ function deHTML(s) {
     s = s.replace(/&amp;/g, '&');
     s = s.replace(/&nbsp;/g, " ");
     s = s.replace(/&#39;/g, '"');
+    // s = s.replace(/&#39;/g, "'");
     s = s.replace(/&#34;/g, '"');
 
     s = s.replace(/&lt;/g, '<');
