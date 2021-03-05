@@ -269,14 +269,44 @@ function show_attribute_values(){
         document.getElementById("polarity-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'none';
         document.getElementById("aspect-attribute").style.display = 'block';
+        document.getElementById("refer-person-attribute").style.display = 'none';
+        document.getElementById("refer-number-attribute").style.display = 'none';
+        document.getElementById("degree-attribute").style.display = 'none';
     } else if (option === ':polarity') {
         document.getElementById("aspect-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'block';
+        document.getElementById("refer-person-attribute").style.display = 'none';
+        document.getElementById("refer-number-attribute").style.display = 'none';
+        document.getElementById("degree-attribute").style.display = 'none';
     } else if (option === ':mode'){
         document.getElementById("aspect-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'block';
+        document.getElementById("refer-person-attribute").style.display = 'none';
+        document.getElementById("refer-number-attribute").style.display = 'none';
+        document.getElementById("degree-attribute").style.display = 'none';
+    } else if (option === ':refer-person'){
+        document.getElementById("aspect-attribute").style.display = 'none';
+        document.getElementById("polarity-attribute").style.display = 'none';
+        document.getElementById("mode-attribute").style.display = 'none';
+        document.getElementById("refer-person-attribute").style.display = 'block';
+        document.getElementById("refer-number-attribute").style.display = 'none';
+        document.getElementById("degree-attribute").style.display = 'none';
+    } else if (option === ':refer-number'){
+        document.getElementById("aspect-attribute").style.display = 'none';
+        document.getElementById("polarity-attribute").style.display = 'none';
+        document.getElementById("mode-attribute").style.display = 'none';
+        document.getElementById("refer-person-attribute").style.display = 'none';
+        document.getElementById("refer-number-attribute").style.display = 'block';
+        document.getElementById("degree-attribute").style.display = 'none';
+    }else if (option === ':degree'){
+        document.getElementById("aspect-attribute").style.display = 'none';
+        document.getElementById("polarity-attribute").style.display = 'none';
+        document.getElementById("mode-attribute").style.display = 'none';
+        document.getElementById("refer-person-attribute").style.display = 'none';
+        document.getElementById("refer-number-attribute").style.display = 'none';
+        document.getElementById("degree-attribute").style.display = 'block';
     }
 }
 
@@ -1083,7 +1113,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             selectTemplate('clear');
                             show_amr_args = 'show';
                         } else {
-                            add_error('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
+                            console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
                         }
                     } else if (cc[1] == 'variable') {
                         console.log("I am here29");
@@ -1092,10 +1122,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             selectTemplate('clear');
                             show_amr_args = 'show';
                         } else {
-                            add_error('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
+                            console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
                         }
                     } else {
-                        add_error('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
+                        console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
                     }
                 } else if (cc[0] === 'delete') {
                     console.log("I am here30");
@@ -1125,13 +1155,13 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                                 move_var_elem(cc[1], cc[3], cc[4]);
                                 show_amr_args = 'show';
                             } else {
-                                add_error('Ill-formed move command. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+                                console.log('Ill-formed move command. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                             }
                         } else {
-                            add_error('Ill-formed move command. Second argument should be <i>to</i>. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+                            console.log('Ill-formed move command. Second argument should be <i>to</i>. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                         }
                     } else {
-                        add_error('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+                        console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                     }
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
                     console.log("I am here32");
