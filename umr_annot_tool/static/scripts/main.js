@@ -35,7 +35,7 @@ var load_amr_feedback_alert = 0; //0
 
 
 var show_amr_status = 'show'; //'show'
-var show_amr_mo_lock = ''; // ''
+var show_amr_mo_lock = ''; // '' affects coloring
 let current_template = ''; //"top, add, options..."
 var max_show_amr_ops = 5000; // 5000
 var max_string2amr_ops = 5000; //4992
@@ -224,8 +224,14 @@ function submit_query(){
         av = document.getElementById('attribute_values1').value;
     }else if (document.getElementById('attribute_values2').value){
         av = document.getElementById('attribute_values2').value;
-    }else{
+    }else if (document.getElementById('attribute_values3').value){
         av = document.getElementById('attribute_values3').value;
+    }else if (document.getElementById('attribute_values4').value){
+        av = document.getElementById('attribute_values4').value;
+    }else if (document.getElementById('attribute_values5').value){
+        av = document.getElementById('attribute_values5').value;
+    }else if (document.getElementById('attribute_values6').value){
+        av = document.getElementById('attribute_values6').value;
     }
 
     if(r){
@@ -506,7 +512,7 @@ function selectReplaceType(type) {
  * @param type
  * @param at
  * @param old_value
- * @param mo_lock
+ * @param mo_lock: element id of concept in amr? example: amr_elem_1
  */
 function fillReplaceTemplate(type, at, old_value, mo_lock) {
     console.log('fillReplaceTemplate ' + type + ' ' + at + ' ' + old_value + ' <' + mo_lock + '> ');
@@ -1166,7 +1172,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
                     console.log("I am here32");
                     if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
-                        console.log('In <i>add</i> command, <font color="red">' + cc[0] + '</font> is not last_command defined variable.');
+                        console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
                     } else if (cc.length == 2) {
                         console.log('In <i>add</i> command, there must be at least 3 arguments.');
                     } else {
@@ -1223,7 +1229,7 @@ function correctAlignments(){
     console.log("umr from correctAlignments: ", umr);
     Object.keys(umr).forEach(function(key){
         if(key.match(/\d+.v/)){
-            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
+            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
             || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
             }
@@ -1244,7 +1250,7 @@ function correctAlignments(){
                     }
                 }
             }
-            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
+            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
             || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
             }
@@ -1584,7 +1590,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_string = '';
         }else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
-                ||role.match(/^(:Aspect|:mode|:polarity)$/))){
+                ||role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree)$/))){
             console.log("I am here40-5");
             arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
@@ -2356,7 +2362,10 @@ function role_unquoted_string_arg(role, arg, loc) {
     } else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
         || arg.match(/^(-|\+)$/)     // polarity
         || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/)) //mode
-        || ((role ===':Aspect') && arg.match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance)$/))) {
+        || ((role ===':Aspect') && arg.match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance)$/))
+        || ((role === ':refer-person'))
+        || ((role === ':refer-number'))
+        || ((role === ':degree')) && arg.match(/^(|Intensifier|Downtoner|intensifier|downtoner)$/)) {
         return 1; // should not be quoted
     } else {
         return 0;//should be quoted
@@ -2824,11 +2833,13 @@ function string2amr_rec(s, loc, state, ht) {
             var new_variable, decorated_variable, new_concept, decorated_concept;
             if (concept.match(/^[a-zA-Z0-9][-_a-zA-Z0-9']*(?:-\d+)?$/)
                 || tolerate_special_concepts(concept)) {
+                console.log('I am here50-0');
                 decorated_concept = concept;
                 umr[loc + '.c'] = concept;
                 recordConcept(concept, loc);
                 variable2concept[variable] = concept;
             } else {
+                console.log('I am here50-1');
                 new_concept = concept.toLowerCase();
                 new_concept = new_concept.replace(/_/g, "-");
                 new_concept = new_concept.replace(/-+/g, "-");
@@ -3348,6 +3359,11 @@ function clearInput(){
     document.getElementById('ne_types').value = '';
     document.getElementById('attributes').value = '';
     document.getElementById('attribute_values1').value = '';
+    document.getElementById('attribute_values2').value = '';
+    document.getElementById('attribute_values3').value = '';
+    document.getElementById('attribute_values4').value = '';
+    document.getElementById('attribute_values5').value = '';
+    document.getElementById('attribute_values6').value = '';
 }
 
 /** load*************/

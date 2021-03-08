@@ -20,7 +20,18 @@ from itertools import accumulate
 import operator
 from bs4 import BeautifulSoup
 import re
-from typing import NamedTuple
+from typing import NamedTuple, Optional, List
+
+class InfoToDB(NamedTuple):
+    filename: str
+    file_format: str
+    content_string: str
+    lang: str
+    sents: List[List[str]]
+    has_annot: bool
+    sent_annots: Optional[List[str]]
+    doc_annots: Optional[List[str]]
+    aligns: Optional[List[str]]
 
 class InfoToDisplay(NamedTuple):
     sents: List[List[str]]
@@ -42,7 +53,7 @@ def amr_text2html(plain_text: str) -> str:
     html_string = '<div id="amr">' + html_string + '</div>\n'
     return html_string
 
-def process_exported_file(content_string: str):
+def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str], str, str]:
     """
     example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/exported_sample_snts_english.txt
     :param content_string:
