@@ -1229,7 +1229,7 @@ function correctAlignments(){
     console.log("umr from correctAlignments: ", umr);
     Object.keys(umr).forEach(function(key){
         if(key.match(/\d+.v/)){
-            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
+            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
             || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
             }
@@ -1250,7 +1250,7 @@ function correctAlignments(){
                     }
                 }
             }
-            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|expressive|interrogative|imperative|-|\+)$/))
+            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
             || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
             }
@@ -2362,7 +2362,7 @@ function role_unquoted_string_arg(role, arg, loc) {
     } else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
         || arg.match(/^(-|\+)$/)     // polarity
         || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/)) //mode
-        || ((role ===':Aspect') && arg.match(/^(|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance)$/))
+        || (role ===':Aspect')
         || ((role === ':refer-person'))
         || ((role === ':refer-number'))
         || ((role === ':degree')) && arg.match(/^(|Intensifier|Downtoner|intensifier|downtoner)$/)) {
