@@ -13,6 +13,7 @@ let current_mode;
 let current_attribute;
 let current_ne_concept;
 let frame_json = {};
+let citation_dict = {};
 
 let selection;
 let begOffset;
@@ -53,10 +54,31 @@ var next_special_action = ''; //''
 
 /**
  *
+ */
+function updateCitationDict(){
+    Object.keys(umr).forEach(function(key) {
+        if(key.match(/\d+.a/) && umr[key] !== "-1--1"){
+            let citation = umr[key.replace('.a', '.c')];
+            console.log(citation);
+            let index = parseInt(umr[key].split('-')[0]) + 1;
+            console.log(index);
+            let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
+            if(citation !== inflectedForm){
+                citation_dict[inflectedForm] = citation;
+            }
+        }
+    })
+    console.log("citation_dict: ", citation_dict);
+}
+
+/**
+ *
  * @param frame_dict_str: frame json file from post
  * @param lang
  */
 function initialize(frame_dict_str, lang) {
+    console.log('frame_dict_str:', frame_dict_str);
+    console.log('frame_dict_str_dehtml: ', deHTML(frame_dict_str));
     language = lang;
     console.log("initialize is called6");
     umr['n'] = 0;
@@ -124,7 +146,15 @@ function conceptDropdown(lang='English') {
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
     } else {
-        if (typeof getLemma(token) !== 'undefined' || lang === 'Chinese') {
+        if (typeof getLemma(token) !== 'undefined' && lang === 'Default'){
+            if (token in citation_dict){
+                let lemma = citation_dict[token]
+                getSenses({"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "not in frame files"}]});
+            }else{
+                getSenses({"res": [{"name": token, "desc": "not in citation dict"}]});
+            }
+        }
+        else if (typeof getLemma(token) !== 'undefined' || lang === 'Chinese') {
             let lemma;
             if(lang === 'Chinese'){
                 lemma = token;
@@ -314,14 +344,6 @@ function show_attribute_values(){
         document.getElementById("refer-number-attribute").style.display = 'none';
         document.getElementById("degree-attribute").style.display = 'block';
     }
-}
-
-/**
- * potentially merge this in submit_template_action or exec_command function
- */
-function multipleWords() {
-    let c = current_concept.replaceAll(" ", "-");
-    submit_template_action("add", c)
 }
 
 /** undo *******************************************************/
@@ -591,6 +613,9 @@ function submit_template_action(id, numbered_predicate = "") {
     console.log("submit_template_action: id: " + id + ", numbered_predicate: " + numbered_predicate);
     // highlightSelection();
     if (numbered_predicate !== "") {
+        if(numbered_predicate.indexOf(' ') >= 0 && id==='add'){
+            numbered_predicate = numbered_predicate.replaceAll(" ", "-");
+        }
         current_concept = numbered_predicate;
     }
     let arg1, arg2, arg3, arg4, s;
@@ -1219,6 +1244,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             command_input.style.height = '1.4em';
         }
     }
+    if(language === 'Default'){
+        updateCitationDict();
+    }
 }
 
 
@@ -1303,11 +1331,12 @@ function showAnnotatedTokens(){
                         newNode.setAttribute("class", "text-success");
                         //Make it deletable by click
                         newNode.onclick = function () {
-                            if (confirm("do you want to delete it?")) {
-                                deleteNode(newNode);
-                            } else {
-                                alert(cell2highlight);
-                            }
+                            // if (confirm("do you want to delete it?")) {
+                            //     deleteNode(newNode);
+                            // } else {
+                            //     alert(cell2highlight);
+                            // }
+                            deleteNode(newNode);
                         };
                         let cellText = cell2highlight.innerText;
                         // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
