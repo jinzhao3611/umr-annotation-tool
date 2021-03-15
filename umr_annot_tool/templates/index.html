@@ -7,6 +7,8 @@
           media="only screen and (max-device-width:480px)">
 
     <script src="../static/scripts/my_jquery.js"></script>
+    <script src="../static/scripts/sentLevelJquery.js"></script>
+
 
     <script src="../static/scripts/main.js" type="text/javascript"></script>
 
@@ -911,7 +913,7 @@
                             <option value='Process'>
                             <option value='Imperfective'>
                             <option value='Perfective'>
-                            <option value='Atelic Process'>
+                            <option value='Atelic-Process'>
                         </datalist>
                         {#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
                     </div>
@@ -924,6 +926,7 @@
                         <datalist id="polarity-attr">
                             <option value='-'>
                             <option value='+'>
+                            <option value='amr-unknown'>
                         </datalist>
                         {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
                     </div>
@@ -1008,7 +1011,6 @@
 
                             <li class="dropdown-divider"></li>
 
-                            <li class="dropdown-item"><a id="set-root" href="javascript:submit_template_action('set_parent');">set head</a></li>
                             <li class="dropdown-item"><a id="multiple_words" href="javascript:multipleWords();">multiple words</a></li>
                         </ul>
                     </div>
