@@ -116,7 +116,7 @@ def html(content_string: str, file_format: str) -> 'InfoToDisplay':
             sents_html: html string of all sentences of one document, it's the html of sentences preview table in annotation page
             sent_htmls: a list of html strings of a single sentence ( linguistic information NOT included)
             df_htmls: a list of html strings of a single sentence ( linguistic information included)
-            gls: ['Viajó un hombre, parece cazando o buscando miel', ...]
+            gls: [['', 'Viajó un hombre, parece cazando o buscando miel'], ...]
             notes: ['RA', ...]
     """
     gls = []
@@ -251,16 +251,16 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                                 msa_per_sentence.append(msa_per_word)
 
                 for item in word.findall('item'):
-                    gls_list = ['', '']
                     conv_turn_string = ''
                     if item.attrib['type'] == 'gls':
+                        gls_list = ['', '']
                         if item.attrib['lang'] == 'en':
                             gls_list[0] = item.text
                         if item.attrib['lang'] == 'es':
                             gls_list[1] = item.text
+                        sent_gls.append(gls_list)
                     if item.attrib['type'] == 'note':
                         conv_turn_string = item.text
-                    sent_gls.append(gls_list)
                     conversation_turns.append(conv_turn_string)
 
                 text_id_group.append(i)
