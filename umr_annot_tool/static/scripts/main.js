@@ -2389,7 +2389,8 @@ function role_unquoted_string_arg(role, arg, loc) {
     if (role.match(/^:op/) && (head_role === ':name')) {
         return 0; //should be quoted
     } else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
-        || arg.match(/^(-|\+)$/)     // polarity
+        // || arg.match(/^(-|\+)$/)     // polarity
+        || (role === ':polarity')
         || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/)) //mode
         || (role ===':Aspect')
         || ((role === ':refer-person'))
