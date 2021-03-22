@@ -2844,19 +2844,24 @@ function string2amr_rec(s, loc, state, ht) {
         if (pre_open_para_l[0].match(/\S/)) {
             load_amr_feedback_alert = 1;
         }
-        if (s.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/) || language === "Default") {
+        if (s.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/) || language === "Default" || language === "Chinese") {
             var decorated_slash;
-            s = s.replace(/^\(\s*/, "");
+            s = s.replace(/^\(\s*/, ""); //remove left parenthesis
             var variable_l = s.match(/^[a-zA-Z0-9][-_a-zA-Z0-9']*/);
-            s = s.replace(/^[a-zA-Z0-9][-_a-zA-Z0-9']*\s*/, "");
+            s = s.replace(/^[a-zA-Z0-9][-_a-zA-Z0-9']*\s*/, ""); //remove variable
             if (s.match(/^\//)) {
-                s = s.replace(/^\/\s*/, "");
+                s = s.replace(/^\/\s*/, ""); //remove / and trailing space of /
                 decorated_slash = '<span ' + accept_style + '>\/</span>';
             } else {
                 decorated_slash = '<span ' + insert_style + '>\/</span>';
                 load_amr_feedback_alert = 1;
             }
-            var concept_l = s.match(/^[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?/);
+            var concept_l;
+            if(language === "Chinese"){
+                concept_l = s.match(/^[:*]?[\u3000\u3400-\u4DBF\u4E00-\u9FFF]*[-_a-zA-Z0-9']*[*]?/);
+            }else{
+                concept_l = s.match(/^[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?/);
+            }
             s = s.replace(/^[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?/, "");
             var variable = variable_l[0];
             var concept = concept_l[0];
@@ -2889,21 +2894,25 @@ function string2amr_rec(s, loc, state, ht) {
                 new_variable = newVar(concept);
                 umr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var_style + '>' + new_variable + '</span>';
+                console.log("I am here90");
                 recordVariable(new_variable, loc);
                 load_amr_feedback_alert = 1;
             } else if (reserved_variables[variable + '.conflict']) {
                 umr[loc + '.v'] = variable;
                 decorated_variable = '<span ' + accept_conflict_style + '>' + variable + '</span>';
+                console.log("I am here91");
                 recordVariable(variable, loc);
             } else if (!variable.match(/^s\d*[a-z]\d*$/)) {
                 new_variable = newVar(concept);
                 umr[loc + '.v'] = new_variable;
                 decorated_variable = '<span ' + change_var2_style + '>' + new_variable + '</span>';
+                console.log("I am here92");
                 recordVariable(new_variable, loc);
                 load_amr_feedback_alert = 1;
             } else {
                 umr[loc + '.v'] = variable;
                 decorated_variable = variable;
+                console.log("I am here93");
                 recordVariable(variable, loc);
             }
             umr[loc + '.s'] = '';
