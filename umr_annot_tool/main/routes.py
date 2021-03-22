@@ -11,6 +11,8 @@ from umr_annot_tool import db
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post
 from umr_annot_tool.main.forms import UploadForm
 
+import time
+
 main = Blueprint('main', __name__)
 FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
 
@@ -144,6 +146,7 @@ def annotate(doc_id):
         except:
             print("add current annotation and alignments to database failed")
 
+    time.sleep(2) #todo: one extra second to make sure the comitting into database completed before loading from database (bug: save&go on current sentence doesn't update)
     # load single annotation for current sentence from db used for load_history()
     try:
         curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
