@@ -3220,7 +3220,8 @@ function selectEvent(){
         document.getElementById('selected_tokens').innerHTML = "";
         document.getElementById('selected_tokens').innerHTML += selection;
 
-        fetch(`/annotate/12`, { //todo: hardcode docid here
+        let doc_id = document.getElementById('doc_id').innerText;
+        fetch(`/annotate/${doc_id}`, {
             method: 'POST',
             body: JSON.stringify({"selected_word": document.getElementById('selected_tokens').innerHTML})
         }).then(function (response) {
