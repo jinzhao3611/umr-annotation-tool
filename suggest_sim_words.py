@@ -5,9 +5,7 @@ import pandas as pd
 from collections import defaultdict
 import itertools
 from typing import List,Tuple, Set, NamedTuple
-import fasttext
 import numpy as np
-import mlconjug3
 from collections.abc import ValuesView
 from parse_input_xml import parse_xml
 
@@ -131,16 +129,6 @@ def get_words_wz_similar_translation(model, word_gloss: List[List[str]], sents: 
             if tok1 != tok2:
                 cosine_similarities.append((tok1, tok2))
     return cosine_similarities
-
-#todo: added this in get_words_wz_similar_translation function to replace congugations in gloss with its lemma
-def get_conjugations_from_verb(verb: str) -> Set[str]:
-    try:
-        default_conjugator = mlconjug3.Conjugator(language='es')
-        test_verb = default_conjugator.conjugate(verb)
-        all_conjugated_forms = test_verb.iterate()
-        return set([form[-1] for form in all_conjugated_forms])
-    except ValueError: #ValueError: The supplied word: subieseis is not a valid verb in Español.
-        return set()
 
 def group_together_tuples(lst: List[Tuple[str, str]]):
     #https://stackoverflow.com/questions/42036188/merging-tuples-if-they-have-one-common-element
