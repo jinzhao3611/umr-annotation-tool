@@ -1,8 +1,8 @@
-from flask import url_for, redirect, flash, send_from_directory
+from flask import url_for, redirect, flash, send_from_directory, make_response, jsonify
 from werkzeug.utils import secure_filename
 from typing import List, Tuple
 import json
-from utils import html, process_exported_file
+from parse_input_xml import html, process_exported_file
 from flask_login import current_user
 import os
 
@@ -10,11 +10,15 @@ from flask import render_template, request, Blueprint
 from umr_annot_tool import db
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post
 from umr_annot_tool.main.forms import UploadForm
+from sqlalchemy.orm.attributes import flag_modified
+from sqlalchemy.ext.mutable import MutableDict
 
 import time
+from suggest_sim_words import generate_candidate_list, find_suggested_words
 
 main = Blueprint('main', __name__)
-FRAME_DESC_FILE = "umr_annot_tool/resources/frames-arg_descriptions.json"
+FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
+FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 
 def load_file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
@@ -49,6 +53,9 @@ def load_file2db(filename: str, file_format: str, content_string: str, lang: str
                 existing.alignment = aligns[i]
                 db.session.commit()
             else:
+                print('sent_annots from sent level: ', sent_annots)
+                print('doc_annots from sent level: ',doc_annots)
+                print('aligns from sent level: ',aligns)
                 annotation = Annotation(annot_str=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
                                         author=current_user,
                                         sent_id=i+1,
@@ -67,22 +74,17 @@ def upload():
     form = UploadForm()
     if form.validate_on_submit():
         if form.file.data and form.file.data.filename:
-            content_string = form.file.data.read().decode("utf-8")
-            # print("content_string: ", content_string)
-            filename = secure_filename(form.file.data.filename)
-            print('filename: ', filename)
-            file_format = form.file_format.data
-            print('file_format: ', file_format)
-            lang = form.language_mode.data
-            print('lang: ', lang)
+            content_string = form.file.data.read().decode("utf-8")  # print("content_string: ", content_string)
+            filename = secure_filename(form.file.data.filename)  # print('filename: ', filename)
+            file_format = form.file_format.data  # print('file_format: ', file_format)
+            lang = form.language_mode.data  # print('lang: ', lang)
             is_exported = form.if_exported.data
             if is_exported:  # has annotation
                 new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(content_string)
                 load_file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang, sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
-                sents, _, _, _, _, _ = html(content_string, file_format)
-                print('sents from upload:', sents)
-                load_file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=sents, has_annot=False)
+                info2display = html(content_string, file_format)  # print('sents from upload:', sents)
+                load_file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=info2display.sents, has_annot=False)
             return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
@@ -94,12 +96,18 @@ def annotate(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
-    print('doc content from sent level: ', doc.content)
+    word_candidates = generate_candidate_list(doc.content, doc.file_format)
+    print(word_candidates)
     info2display = html(doc.content, doc.file_format)
-    if doc.lang == "Chinese":
-        frame_dict = json.load(open('umr_annot_tool/resources/frames_chinese.json', "r"))
-    else:
-        frame_dict = json.load(open(FRAME_DESC_FILE, "r"))
+    print('info2display.sents: ', info2display.sents[:5])
+    print('info2display.gls: ', info2display.gls[:5])
+    # print('info2display.df_htmls: ', info2display.df_htmls[0])
+
+    frame_dict = {}
+    if doc.lang == "chinese":
+        frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
+    elif doc.lang == "english":
+        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
     snt_id = 1
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
@@ -111,6 +119,14 @@ def annotate(doc_id):
     #     print("sanity check sentence id", int(request.form["sentence_id"]))
     #     snt_id = min(int(request.form["sentence_id"]) + 1, len(sents))
 
+    try:
+        selected_word = request.get_json(force=True)['selected_word']  #print('selected_word: ', selected_word)
+        similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)  #print(similar_word_list)
+        res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+        return res
+    except:
+        print("no word selected")
+
     # add to db
     if request.method == 'POST':
         try:
@@ -118,7 +134,6 @@ def annotate(doc_id):
             # get rid of the head highlight tag
             amr_html = amr_html.replace('<span class="text-success">', '')
             amr_html = amr_html.replace('</span>', '')
-
             print("amr_html: ", amr_html)
             align_info = request.get_json(force=True)["align"]
             print("align_ino: ", align_info)
@@ -126,25 +141,56 @@ def annotate(doc_id):
             print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
             print("umr_dict: ", umr_dict)
+
+
+            try:
+                existing_user = User.query.filter(User.id == current_user.id).first()
+                print('curr_user before pop:', existing_user)
+                try:
+                    curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}}
+                    # curr_lexicon = {"aphleamkehlta": "test-05"}
+                    print('curr_lexicon1:', curr_lexicon)
+                    new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
+                    print('new_citation_dict:', new_citation_dict)
+                    curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
+                except: #empty lexicon
+                    curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
+
+                print('curr_lexicon2:', curr_lexicon)
+                print('curr_user:', existing_user)
+                new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
+                print('new_mutable_dict', new_mutable_dict)
+                existing_user.lexicon.update({doc.lang: new_mutable_dict})
+                print('curr_user after update:', existing_user)
+                flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
+                db.session.commit()
+            except:
+                print("error in add lexicon!!!")
+
+            print("what type?", type(current_user.lexicon))
+            print("what value?", request.get_json(force=True)["citation_dict"])
+            print("What key:", doc.lang)
+
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
-                print("upadating existing annotation")
                 existing.annot_str = amr_html
                 existing.alignment = align_info
                 existing.umr = umr_dict
+                flag_modified(existing, 'umr')
                 db.session.commit()
             else:
                 annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
                                         umr=umr_dict, doc_umr={})
+                flag_modified(annotation, 'umr')
                 db.session.add(annotation)
                 db.session.commit()
 
-            return {"amr": amr_html}
+            return None
         except:
-            print("add current annotation and alignments to database failed")
+            print("Add current annotation and alignments to database failed")
 
     time.sleep(2) #todo: one extra second to make sure the comitting into database completed before loading from database (bug: save&go on current sentence doesn't update)
     # load single annotation for current sentence from db used for load_history()
@@ -185,7 +231,13 @@ def annotate(doc_id):
     print("all_sents: ", all_sents)
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
     print("exported_items: ", exported_items)
+    print("current_user before lexicon", current_user)
 
+    try:
+        lexicon = current_user.lexicon[doc.lang]
+    except KeyError:
+        lexicon = {}
+    print('lexicon: ', lexicon)
 
     return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
@@ -194,7 +246,8 @@ def annotate(doc_id):
                            curr_sent_umr=curr_sent_umr,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'))
+                           content_string=doc.content.replace('\n', '<br>'),
+                           lexicon=lexicon)
 
 
 @main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])

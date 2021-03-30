@@ -13,7 +13,8 @@ let current_mode;
 let current_attribute;
 let current_ne_concept;
 let frame_json = {};
-let citation_dict = {};
+let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
+let similar_word_list ={};
 
 let selection;
 let begOffset;
@@ -27,6 +28,7 @@ let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
 
+let default_langs = ['default', 'sanapana', "arapahoe"]
 var reserved_variables = {};
 
 var last_state_id = 0; //3
@@ -53,18 +55,19 @@ var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 var next_special_action = ''; //''
 
 /**
- *
+ * traverse current umr and map inflection form (selected from the sentences table) and citation form (umr concept) in citation_dict
  */
 function updateCitationDict(){
-    Object.keys(umr).forEach(function(key) {
-        if(key.match(/\d+.a/) && umr[key] !== "-1--1"){
-            let citation = umr[key.replace('.a', '.c')];
-            console.log(citation);
+    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+        if(key.match(/\d+.a/) && umr[key] !== "-1--1"){ //traverse all the .a items in umr that does have alignment value
+            let citation = umr[key.replace('.a', '.c')]; //get concept
+            console.log("citation form in umr:", citation);
             let index = parseInt(umr[key].split('-')[0]) + 1;
-            console.log(index);
+            console.log("alignment of this citation form",index);
             let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
             if(citation !== inflectedForm){
                 citation_dict[inflectedForm] = citation;
+                console.log("citation_dict: ", citation_dict);
             }
         }
     })
@@ -74,13 +77,14 @@ function updateCitationDict(){
 /**
  *
  * @param frame_dict_str: frame json file from post
- * @param lang
+ * @param lang: language of this document
+ * @param lexicon
  */
-function initialize(frame_dict_str, lang) {
+function initialize(frame_dict_str, lang, lexicon) {
+    console.log("initialize is called6");
     console.log('frame_dict_str:', frame_dict_str);
     console.log('frame_dict_str_dehtml: ', deHTML(frame_dict_str));
     language = lang;
-    console.log("initialize is called6");
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     // reset_load(''); //不按load button没有用
@@ -89,6 +93,9 @@ function initialize(frame_dict_str, lang) {
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
     begOffset = -1;
     endOffset = -1;
+    console.log("passed in lexicon:", lexicon);
+    citation_dict = JSON.parse(deHTML(lexicon));
+    console.log('citation_dict from initialize: ', citation_dict);
 }
 
 /**
@@ -118,7 +125,7 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     // setInnerHTML('align', curr_sent_align);
     // console.log(document.getElementById('align'));
     showAlign();
-    if(language !== "Default"){
+    if(language === "english" || language === "chinese"){
         showAnnotatedTokens();
     }
     // undo_list.push(cloneCurrentState()); //populate undo_list
@@ -137,7 +144,7 @@ function docAnnot(sentenceId) {
 /**
  * from currently selected word, get the lemma and generate the senses menu list
  */
-function conceptDropdown(lang='English') {
+function conceptDropdown(lang='english') {
     submit_concept();
     let token = current_concept;
     let numfied_token = text2num(token);
@@ -146,17 +153,31 @@ function conceptDropdown(lang='English') {
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
     } else {
-        if (typeof getLemma(token) !== 'undefined' && lang === 'Default'){
+        if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
+            let submenu_items;
             if (token in citation_dict){
-                let lemma = citation_dict[token]
-                getSenses({"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "not in frame files"}]});
+                let lemma = citation_dict[token];
+                submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "not in frame files"}]}
+
             }else{
-                getSenses({"res": [{"name": token, "desc": "not in citation dict"}]});
+                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
             }
+
+            Object.keys(citation_dict).forEach(function(key) {
+                console.log(key);
+                console.log(similar_word_list['similar_word_list']);
+                if (similar_word_list['similar_word_list'].includes(key)){
+                    console.log(key, citation_dict[key]);
+                    submenu_items["res"].push({"name": citation_dict[key], "desc": "from citation dict"});
+                    console.log(submenu_items);
+                }
+            });
+            getSenses(submenu_items);
+
         }
-        else if (typeof getLemma(token) !== 'undefined' || lang === 'Chinese') {
+        else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
             let lemma;
-            if(lang === 'Chinese'){
+            if(lang === 'chinese'){
                 lemma = token;
             }else{
                 lemma = getLemma(token);
@@ -1244,7 +1265,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             command_input.style.height = '1.4em';
         }
     }
-    if(language === 'Default'){
+    if(default_langs.includes(language)){
         updateCitationDict();
     }
 }
@@ -1591,7 +1612,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        } else if (language!== 'Default' //English
+        } else if ((language === 'chinese' || language === 'english') //English
             && validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string') // arg_type is "concept" or empty (is variable)
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1600,7 +1621,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        } else if (language!== 'Default' //English
+        } else if ((language === 'chinese' || language === 'english') //English
             && validEntryConcept(arg.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1609,7 +1630,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        }else if((language === 'Default' || language === 'Chinese')//not English
+        }else if((default_langs.includes(language) || language === 'chinese')//not English
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))){
@@ -1764,7 +1785,7 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
         let head_var_locs = getLocs(head_var);
         if (head_var_locs) {
             if (key_with === 'with') {
-                // if (validEntryConcept(new_concept) || language === "Default") {
+                // if (validEntryConcept(new_concept) || language === "default") {
                 if (new_concept) {
                     head_var_locs += '';
                     let loc_list = argSplit(head_var_locs);
@@ -2752,7 +2773,7 @@ function show_amr(args) {
         }
     }
     showAlign();
-    if(language !== "Default"){
+    if(language === 'chinese' || language === 'english'){
         showAnnotatedTokens();
     }
     showHead();
@@ -2844,7 +2865,7 @@ function string2amr_rec(s, loc, state, ht) {
         if (pre_open_para_l[0].match(/\S/)) {
             load_amr_feedback_alert = 1;
         }
-        if (s.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/) || language === "Default" || language === "Chinese") {
+        if (s.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/) || default_langs.includes(language) || language === "chinese") {
             var decorated_slash;
             s = s.replace(/^\(\s*/, ""); //remove left parenthesis
             var variable_l = s.match(/^[a-zA-Z0-9][-_a-zA-Z0-9']*/);
@@ -2857,7 +2878,7 @@ function string2amr_rec(s, loc, state, ht) {
                 load_amr_feedback_alert = 1;
             }
             var concept_l;
-            if(language === "Chinese"){
+            if(language === "chinese"){
                 concept_l = s.match(/^[:*]?[\u3000\u3400-\u4DBF\u4E00-\u9FFF]*[-_a-zA-Z0-9']*[*]?/);
             }else{
                 concept_l = s.match(/^[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?/);
@@ -3199,6 +3220,33 @@ function selectEvent(){
         document.getElementById('selected_tokens').innerHTML = "";
         document.getElementById('selected_tokens').innerHTML += selection;
 
+        fetch(`/annotate/12`, { //todo: hardcode docid here
+            method: 'POST',
+            body: JSON.stringify({"selected_word": document.getElementById('selected_tokens').innerHTML})
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            console.log("similar_word_list: ", data); //similar word list got returned from server
+            // document.getElementById('similar_word_list').innerHTML = data['similar_word_list'];
+            similar_word_list = data;
+            const cont = document.getElementById('similar_word_list');
+            document.getElementById('simWordList').remove();
+            // create ul element and set its attributes.
+            const ul = document.createElement('ul');
+            ul.setAttribute ('class', 'list-group');
+            ul.setAttribute ('id', 'simWordList');
+
+            for (i = 0; i <= data['similar_word_list'].length - 1; i++) {
+                const li = document.createElement('li');	// create li element.
+                li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
+                li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
+                ul.appendChild(li);		// append li to ul.
+            }
+            cont.appendChild(ul);		// add ul to the container.
+        }).catch(function(error){
+            console.log("Fetch error: "+ error);
+        });
+
         console.log("selection: ", selection.anchorNode.parentNode.tagName);
         console.log("selection2: ", selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id);
 
@@ -3206,7 +3254,7 @@ function selectEvent(){
             table_id = 2;
         }
         if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
-            // if(language==='Default'){
+            // if(language==='default'){
             //     begOffset = selection.anchorNode.parentElement.cellIndex;
             //     endOffset = selection.focusNode.parentElement.cellIndex;
             // }else{
@@ -3647,11 +3695,7 @@ function UMR2db() {
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data); //amr got returned from server
+        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr, "citation_dict":citation_dict})
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });

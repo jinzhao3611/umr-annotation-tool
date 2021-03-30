@@ -3,6 +3,9 @@ from umr_annot_tool import db, login_manager
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer # email and password reset
+from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy import Column, Integer, JSON
+
 
 
 @login_manager.user_loader
@@ -16,6 +19,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    lexicon = db.Column(MutableDict.as_mutable(JSON)) #https://bugs.launchpad.net/fuel/+bug/1482658
+
     posts = db.relationship('Post', backref='author', lazy=True)
     annotations = db.relationship('Annotation', backref='author', lazy=True)
     docs = db.relationship('Doc', backref='author', lazy=True)
@@ -23,7 +28,7 @@ class User(db.Model, UserMixin):
 
 
     """generate the token for resetting password with email"""
-    def get_rest_token(self, expires_sec=1800): #30 minutes
+    def get_reset_token(self, expires_sec=1800): #30 minutes
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id}).decode('utf-8')
 
@@ -38,7 +43,7 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.username}', '{self.email}', '{self.image_file}', '{self.lexicon}')"
 
 
 class Post(db.Model):
@@ -81,8 +86,8 @@ class Annotation(db.Model):
     annot_str = db.Column(db.Text, nullable=False)
     doc_annot = db.Column(db.Text, nullable=False)
     alignment = db.Column(db.Text, nullable=False)
-    umr = db.Column(db.JSON, nullable=False)
-    doc_umr = db.Column(db.JSON, nullable=False)
+    umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
+    doc_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
     # sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
     sent_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

@@ -1,13 +1,13 @@
 # run instructions:
-# python utils.py [--textonly] input_path, output_path, source['toolbox' or 'flex']
+# python parse_input_xml.py [--textonly] input_path, output_path, source['toolbox' or 'flex']
 
 # for example:
-# python utils.py Arapahoe/text\ sample\ xml.xml arapahoe_with_morph.txt toolbox
-# python utils.py Arapahoe/text\ sample\ xml.xml arapahoe_text_only.txt toolbox  —textonly
-# python utils.py Sanapana/Text\ Sample_Sanapana.xml sanapana_with_morph.txt flex
-# python utils.py Sanapana/Text\ Sample_Sanapana.xml sanapana_text_only.txt flex  —textonly
-# python utils.py Secoya/Seywt01-102006_VerifiableGeneric.xml secoya_with_morph.txt flex
-# python utils.py Secoya/Seywt01-102006_VerifiableGeneric.xml secoya_text_only.txt flex  —textonly
+# python parse_input_xml.py Arapahoe/text\ sample\ xml.xml arapahoe_with_morph.txt toolbox
+# python parse_input_xml.py Arapahoe/text\ sample\ xml.xml arapahoe_text_only.txt toolbox  —textonly
+# python parse_input_xml.py Sanapana/Text\ Sample_Sanapana.xml sanapana_with_morph.txt flex
+# python parse_input_xml.py Sanapana/Text\ Sample_Sanapana.xml sanapana_text_only.txt flex  —textonly
+# python parse_input_xml.py Secoya/Seywt01-102006_VerifiableGeneric.xml secoya_with_morph.txt flex
+# python parse_input_xml.py Secoya/Seywt01-102006_VerifiableGeneric.xml secoya_text_only.txt flex  —textonly
 
 # 'Arapahoe/text\ sample\ xml.xml', 'Sanapana/Text\ Sample_Sanapana.xml', 'Secoya/Seywt01-102006_VerifiableGeneric.xml' are the input files sent to me
 #     (the space in the file path name needs to be escaped)

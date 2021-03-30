@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestRestForm, \
+from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, \
     ResetPasswordForm
 from umr_annot_tool.models import User, Post, Doc
 from umr_annot_tool.users.utils import save_picture, send_reset_email
@@ -16,7 +16,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password, lexicon={})
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
@@ -27,7 +27,7 @@ def register():
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.annotate'))
+        return redirect(url_for('main.account'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -84,12 +84,12 @@ def user_posts(username):
 def reset_request():
     if current_user.is_authenticated:  # make sure they are logged out
         return redirect(url_for('main.display_post'))
-    form = RequestRestForm()
+    form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         send_reset_email(user)
         flash('An email has been sent with instructions to reset your password', 'info')
-        return redirect(url_for('login'))
+        return redirect(url_for('users.login'))
     return render_template('reset_request.html', title='Reset Password', form=form)
 
 
