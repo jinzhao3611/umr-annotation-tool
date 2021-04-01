@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, \
     ResetPasswordForm
-from umr_annot_tool.models import User, Post, Doc
+from umr_annot_tool.models import User, Post, Doc, Annotation, Sent
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -59,6 +59,16 @@ def account():
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('users.account'))
+    elif request.method == 'POST':
+        try:
+            to_delete_doc_id = request.get_json(force=True)["delete_id"]
+            Annotation.query.filter(Annotation.doc_id == to_delete_doc_id,
+                                    Annotation.user_id == current_user.id).delete()
+            Sent.query.filter(Sent.doc_id == to_delete_doc_id, Sent.user_id == current_user.id).delete()
+            Doc.query.filter(Doc.id == to_delete_doc_id, Doc.user_id == current_user.id).delete()
+            db.session.commit()
+        except:
+            print("deleting doc from database is failed")
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email

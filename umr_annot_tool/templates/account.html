@@ -5,7 +5,12 @@
         function rmDoc(doc_id){
             if (confirm("Are you sure you want to delete the whole document from database?")) {
                 document.getElementById("docIdInDb-"+doc_id).remove(); //remove from list
-                //todo: remove from database
+                    fetch(`/account`, {
+                        method: 'POST',
+                        body: JSON.stringify({"delete_id": doc_id})
+                    }).catch(function(error){
+                        console.log("Fetch error: "+ error);
+                    });
             } else {
                 alert('canceled');
             }
