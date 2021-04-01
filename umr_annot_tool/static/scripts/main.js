@@ -28,7 +28,7 @@ let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
 
-let default_langs = ['default', 'sanapana', "arapahoe"]
+let default_langs = ['default', 'sanapana', "arapahoe", "navajo"]
 var reserved_variables = {};
 
 var last_state_id = 0; //3
