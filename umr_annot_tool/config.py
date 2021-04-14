@@ -17,4 +17,4 @@ class Config:
     MAIL_USERNAME = 'apikey'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     # todo: change MAIL_DEFAULT_SENDER
-    MAIL_DEFAULT_SENDER = 'jinzhao3611@gmail.com'
+    MAIL_DEFAULT_SENDER = 'no-reply@umr-tool.cs.brandeis.edu'
