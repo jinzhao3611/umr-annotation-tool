@@ -1,3 +1,4 @@
+// this file is used to highlight an unhighlight text and clear input in doc level annotation,
 $(document).ready(function(){
     //https://raw.githubusercontent.com/bartaz/sandbox.js/master/jquery.highlight.js
     jQuery.extend({
@@ -72,10 +73,6 @@ $(document).ready(function(){
         $('#content').unhighlight({element: 'span', className:'text-primary'});
         $('#content').highlight($(this).val(), {element: 'span', className:'text-primary'});
     })
-    // $('#content').highlight('s1t', {element: 'span', className:'text-danger'});
-    // $('#content').highlight('s2d', {element: 'span', className:'text-primary'});
-
-
 
     $( "#submit-doc-rel" ).click(function() { // when click submit
         $('#umrs').filter(function (){ // find umrs div

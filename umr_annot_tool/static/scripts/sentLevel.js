@@ -67,11 +67,11 @@ function updateCitationDict(){
             let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
             if(citation !== inflectedForm){
                 citation_dict[inflectedForm] = citation;
-                console.log("citation_dict: ", citation_dict);
+                // console.log("citation_dict: ", citation_dict);
             }
         }
     })
-    console.log("citation_dict: ", citation_dict);
+    // console.log("citation_dict: ", citation_dict);
 }
 
 /**
@@ -3217,27 +3217,25 @@ function loadField2amr(loaded_umr={}, loaded_alignment='') {
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
-        document.getElementById('selected_tokens').innerHTML = "";
+        document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
-        let doc_id = document.getElementById('doc_id').innerText;
+        let doc_id = document.getElementById('doc_id').innerText; //doc_id in the head of the page
         fetch(`/annotate/${doc_id}`, {
             method: 'POST',
             body: JSON.stringify({"selected_word": document.getElementById('selected_tokens').innerHTML})
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            console.log("similar_word_list: ", data); //similar word list got returned from server
-            // document.getElementById('similar_word_list').innerHTML = data['similar_word_list'];
+            // put data in display
             similar_word_list = data;
             const cont = document.getElementById('similar_word_list');
-            document.getElementById('simWordList').remove();
+            document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
             // create ul element and set its attributes.
             const ul = document.createElement('ul');
             ul.setAttribute ('class', 'list-group');
             ul.setAttribute ('id', 'simWordList');
-
-            for (i = 0; i <= data['similar_word_list'].length - 1; i++) {
+            for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
                 const li = document.createElement('li');	// create li element.
                 li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
                 li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
@@ -3248,8 +3246,8 @@ function selectEvent(){
             console.log("Fetch error: "+ error);
         });
 
-        console.log("selection: ", selection.anchorNode.parentNode.tagName);
-        console.log("selection2: ", selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id);
+        // console.log("selection: ", selection.anchorNode.parentNode.tagName);
+        // console.log("selection2: ", selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id);
 
         if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id==='table2'){
             table_id = 2;
@@ -3263,8 +3261,8 @@ function selectEvent(){
             //     endOffset = selection.focusNode.parentElement.cellIndex + 1;
             // }
 
-            console.log("beg cell index: ",selection.anchorNode.parentElement.cellIndex);
-            console.log("end cell index: ",selection.focusNode.parentElement.cellIndex);
+            // console.log("beg cell index: ",selection.anchorNode.parentElement.cellIndex);
+            // console.log("end cell index: ",selection.focusNode.parentElement.cellIndex);
             begOffset = selection.anchorNode.parentElement.cellIndex;
             endOffset = selection.focusNode.parentElement.cellIndex;
         }

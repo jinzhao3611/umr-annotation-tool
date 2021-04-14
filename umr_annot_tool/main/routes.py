@@ -97,12 +97,7 @@ def annotate(doc_id):
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
     word_candidates = generate_candidate_list(doc.content, doc.file_format)
-    print(word_candidates)
     info2display = html(doc.content, doc.file_format)
-    print('info2display.sents: ', info2display.sents[:5])
-    print('info2display.gls: ', info2display.gls[:5])
-    # print('info2display.df_htmls: ', info2display.df_htmls[0])
-
     frame_dict = {}
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
@@ -112,64 +107,39 @@ def annotate(doc_id):
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
 
-    # if "prev_sentence" in request.form:
-    #     snt_id = max(int(request.form["sentence_id"]) - 1, 1)
-    #     print("snt_id: ", snt_id)
-    # elif "next_sentence" in request.form:
-    #     print("sanity check sentence id", int(request.form["sentence_id"]))
-    #     snt_id = min(int(request.form["sentence_id"]) + 1, len(sents))
-
-    try:
-        selected_word = request.get_json(force=True)['selected_word']  #print('selected_word: ', selected_word)
-        similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)  #print(similar_word_list)
-        res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-        return res
-    except:
-        print("no word selected")
-
-    # add to db
     if request.method == 'POST':
         try:
-            amr_html = request.get_json(force=True)["amr"]
-            # get rid of the head highlight tag
-            amr_html = amr_html.replace('<span class="text-success">', '')
-            amr_html = amr_html.replace('</span>', '')
-            print("amr_html: ", amr_html)
-            align_info = request.get_json(force=True)["align"]
-            print("align_ino: ", align_info)
-            snt_id_info = request.get_json(force=True)["snt_id"]
-            print("snt_id_info: ", snt_id_info)
-            umr_dict = request.get_json(force=True)["umr"]
-            print("umr_dict: ", umr_dict)
+            selected_word = request.get_json(force=True)['selected_word']
+            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+            return res
+        except:
+            print("no word selected")
 
+        # add to db
+        try:
+            amr_html = request.get_json(force=True)["amr"]
+            amr_html = amr_html.replace('<span class="text-success">', '')  # get rid of the head highlight tag
+            amr_html = amr_html.replace('</span>', '')
+            align_info = request.get_json(force=True)["align"]
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            umr_dict = request.get_json(force=True)["umr"]
 
             try:
                 existing_user = User.query.filter(User.id == current_user.id).first()
-                print('curr_user before pop:', existing_user)
                 try:
-                    curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}}
-                    # curr_lexicon = {"aphleamkehlta": "test-05"}
-                    print('curr_lexicon1:', curr_lexicon)
+                    curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}} # curr_lexicon = {"aphleamkehlta": "test-05"}
                     new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
-                    print('new_citation_dict:', new_citation_dict)
                     curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
                 except: #empty lexicon
                     curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
 
-                print('curr_lexicon2:', curr_lexicon)
-                print('curr_user:', existing_user)
                 new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
-                print('new_mutable_dict', new_mutable_dict)
                 existing_user.lexicon.update({doc.lang: new_mutable_dict})
-                print('curr_user after update:', existing_user)
                 flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
                 db.session.commit()
             except:
                 print("error in add lexicon!!!")
-
-            print("what type?", type(current_user.lexicon))
-            print("what value?", request.get_json(force=True)["citation_dict"])
-            print("What key:", doc.lang)
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
@@ -187,12 +157,9 @@ def annotate(doc_id):
                 flag_modified(annotation, 'umr')
                 db.session.add(annotation)
                 db.session.commit()
-
-            return None
         except:
             print("Add current annotation and alignments to database failed")
 
-    time.sleep(2) #todo: one extra second to make sure the comitting into database completed before loading from database (bug: save&go on current sentence doesn't update)
     # load single annotation for current sentence from db used for load_history()
     try:
         curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
@@ -213,33 +180,21 @@ def annotate(doc_id):
     except:
         curr_sent_umr = {}
 
-    print("curr_sent_annot", curr_sent_annot)
-    print("curr_sent_align", curr_sent_align)
-    print("curr_sent_umr", curr_sent_umr)
-    print(type(curr_sent_umr))
-
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id, Sent.user_id == current_user.id).all()
     all_annots = [annot.annot_str for annot in annotations]
-    print("all_annots: ", all_annots)
     all_aligns = [annot.alignment for annot in annotations]
-    print("all_aligns: ", all_aligns)
     all_doc_annots = [annot.doc_annot for annot in annotations]
-    print("all_doc_annots: ", all_doc_annots)
     all_sents = [sent2.content for sent2 in filtered_sentences]
-    print("all_sents: ", all_sents)
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
-    print("exported_items: ", exported_items)
-    print("current_user before lexicon", current_user)
 
     try:
         lexicon = current_user.lexicon[doc.lang]
     except KeyError:
         lexicon = {}
-    print('lexicon: ', lexicon)
 
-    return render_template('index.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
+    return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=frame_dict,
                            curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
