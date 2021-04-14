@@ -42,7 +42,7 @@
     <hr>
 
     {# display all the sentences #}
-    <div id="all-sentences">
+    <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 250px;">
         <script type="text/javascript">
             initialize("{{ frame_dict }}", "{{ lang }}", `{{ lexicon }}`)
         </script>
@@ -61,7 +61,7 @@
 
     {# display the sentence with the chosen sentence ID #}
     {% if info2display.df_htmls|length and file_format != 'plain_text' %}
-        <div id="sentence">
+        <div id="sentence" style="height: auto; overflow-y: scroll; max-height: 250px;">
             Current Line:
             {% autoescape off %}
             <p>{{ info2display.df_htmls[snt_id-1] }}</p>
