@@ -223,9 +223,9 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                     for word2 in words.findall('word'): # each word
                         for child in word2:
                             if child.tag == 'item':
-                                if child.attrib['type'] == 'txt': # words row
+                                if child.attrib.get('type', '') == 'txt': # words row
                                     txt_per_sentence.append(child.text)
-                                if child.attrib['type'] == 'gls': # word gloss row
+                                if child.attrib.get('type', '') == 'gls': # word gloss row
                                     word_gls_per_sentence.append(child.text)
                             elif child.tag == 'morphemes':
                                 cf_per_word = list()
@@ -233,18 +233,18 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                                 msa_per_word = list()
                                 for morph in child:
                                     for item in morph:
-                                        if item.attrib['type'] == 'txt': #morphemes row
+                                        if item.attrib.get('type', '') == 'txt': #morphemes row
                                             # take the text field (unlemmatized version)
                                             if item.text is not None:
                                                 cf_per_word.append(item.text)
                                             else:
                                                 cf_per_word.append('')
-                                        elif item.attrib['type'] == 'gls': # morpheme gloss row
+                                        elif item.attrib.get('type', '') == 'gls': # morpheme gloss row
                                             if item.text is not None:
                                                 gls_per_word.append(item.text)
                                             else:
                                                 gls_per_word.append('')
-                                        elif item.attrib['type'] == 'msa': # morpheme cat row
+                                        elif item.attrib.get('type', '') == 'msa': # morpheme cat row
                                             msa_per_word.append(item.text)
                                 cf_per_sentence.append(cf_per_word)
                                 gls_per_sentence.append(gls_per_word)
@@ -252,14 +252,14 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
 
                 for item in word.findall('item'):
                     conv_turn_string = ''
-                    if item.attrib['type'] == 'gls':
+                    if item.attrib.get('type', '') == 'gls':
                         gls_list = ['', '']
-                        if item.attrib['lang'] == 'en':
+                        if item.attrib.get('lang', '') == 'en':
                             gls_list[0] = item.text
-                        if item.attrib['lang'] == 'es':
+                        if item.attrib.get('lang', '') == 'es':
                             gls_list[1] = item.text
                         sent_gls.append(gls_list)
-                    if item.attrib['type'] == 'note':
+                    if item.attrib.get('type', '') == 'note':
                         conv_turn_string = item.text
                     conversation_turns.append(conv_turn_string)
 
@@ -323,17 +323,17 @@ def parse_flex3(xml_string:str) -> 'ExtractedXMLInfo':
             gls_per_word = list()
             msa_per_word = list()
             for item in iword.findall('item'):
-                if item.attrib['type'] == 'gls':
+                if item.attrib.get('type', '') == 'gls':
                     word_gls_per_sentence.append(item.text)
-                if item.attrib['type'] == 'txt':
+                if item.attrib.get('type', '') == 'txt':
                     txt_per_sentence.append(iword.find('item').text)
             for morph in iword.iter('morph'):
                 for item in morph.findall('item'):
-                    if item.attrib['type'] == 'txt':
+                    if item.attrib.get('type', '') == 'txt':
                         cf_per_word.append(item.text)
-                    if item.attrib['type'] == 'gls':
+                    if item.attrib.get('type', '') == 'gls':
                         gls_per_word.append(item.text)
-                    if item.attrib['type'] == 'msa':
+                    if item.attrib.get('type', '') == 'msa':
                         msa_per_word.append(item.text)
             cf_per_sentence.append(cf_per_word)
             gls_per_sentence.append(gls_per_word)
@@ -342,12 +342,12 @@ def parse_flex3(xml_string:str) -> 'ExtractedXMLInfo':
         for item in sentence.findall('item'):
             gls_list = ['', '']
             conv_turn_string = ''
-            if item.attrib['type'] == 'gls':
-                if item.attrib['lang'] == 'en-free':
+            if item.attrib.get('type', '') == 'gls':
+                if item.attrib.get('lang', '') == 'en-free':
                     gls_list[0] = item.text
-                if item.attrib['lang'] == 'es-free':
+                if item.attrib.get('lang', '') == 'es-free':
                     gls_list[1] = item.text
-            if item.attrib['type'] == 'note':
+            if item.attrib.get('type', '') == 'note':
                 conv_turn_string = item.text
             sent_gls.append(gls_list)
             conversation_turns.append(conv_turn_string)
@@ -602,8 +602,5 @@ def align(morph_string: str, ge_string: str, gs_string: str) -> Tuple[List[str],
         gss.append(" ".join(temp_gss))
 
     return morphs, ges, gss
-
-
-
 
 
