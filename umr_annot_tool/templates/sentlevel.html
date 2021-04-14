@@ -942,13 +942,13 @@
             <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_id=doc_id) }}" onclick="UMR2db()">doc-level-annot</a>
         </div>
 
-        {% if lang != 'english' and lang != 'chinese' %}
-            <div class="content-section" id="similar_word_list" style="height: auto; overflow-y: scroll; max-height: 250px;">
-                <legend class="border-bottom mb-4">Suggested similar forms sharing same lemma</legend>
-                <ul class="list-group" id="simWordList" >
-                </ul>
-            </div>
-        {% endif %}
+{#        {% if lang != 'english' and lang != 'chinese' %}#}
+{#            <div class="content-section" id="similar_word_list" style="height: auto; overflow-y: scroll; max-height: 250px;">#}
+{#                <legend class="border-bottom mb-4">Suggested similar forms sharing same lemma</legend>#}
+{#                <ul class="list-group" id="simWordList" >#}
+{#                </ul>#}
+{#            </div>#}
+{#        {% endif %}#}
 
         <script type="text/javascript">
             load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}', '{{ curr_sent_umr|tojson|safe }}');

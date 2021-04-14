@@ -13,8 +13,8 @@ let current_mode;
 let current_attribute;
 let current_ne_concept;
 let frame_json = {};
-let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
-let similar_word_list ={};
+// let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
+// let similar_word_list ={};
 
 let selection;
 let begOffset;
@@ -54,25 +54,25 @@ var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
 var next_special_action = ''; //''
 
-/**
- * traverse current umr and map inflection form (selected from the sentences table) and citation form (umr concept) in citation_dict
- */
-function updateCitationDict(){
-    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        if(key.match(/\d+.a/) && umr[key] !== "-1--1"){ //traverse all the .a items in umr that does have alignment value
-            let citation = umr[key.replace('.a', '.c')]; //get concept
-            console.log("citation form in umr:", citation);
-            let index = parseInt(umr[key].split('-')[0]) + 1;
-            console.log("alignment of this citation form",index);
-            let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
-            if(citation !== inflectedForm){
-                citation_dict[inflectedForm] = citation;
-                // console.log("citation_dict: ", citation_dict);
-            }
-        }
-    })
-    // console.log("citation_dict: ", citation_dict);
-}
+// /**
+//  * traverse current umr and map inflection form (selected from the sentences table) and citation form (umr concept) in citation_dict
+//  */
+// function updateCitationDict(){
+//     Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+//         if(key.match(/\d+.a/) && umr[key] !== "-1--1"){ //traverse all the .a items in umr that does have alignment value
+//             let citation = umr[key.replace('.a', '.c')]; //get concept
+//             console.log("citation form in umr:", citation);
+//             let index = parseInt(umr[key].split('-')[0]) + 1;
+//             console.log("alignment of this citation form",index);
+//             let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
+//             if(citation !== inflectedForm){
+//                 citation_dict[inflectedForm] = citation;
+//                 // console.log("citation_dict: ", citation_dict);
+//             }
+//         }
+//     })
+//     // console.log("citation_dict: ", citation_dict);
+// }
 
 /**
  *
@@ -94,8 +94,8 @@ function initialize(frame_dict_str, lang, lexicon) {
     begOffset = -1;
     endOffset = -1;
     console.log("passed in lexicon:", lexicon);
-    citation_dict = JSON.parse(deHTML(lexicon));
-    console.log('citation_dict from initialize: ', citation_dict);
+    // citation_dict = JSON.parse(deHTML(lexicon));
+    // console.log('citation_dict from initialize: ', citation_dict);
 }
 
 /**
@@ -155,23 +155,25 @@ function conceptDropdown(lang='english') {
     } else {
         if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
             let submenu_items;
-            if (token in citation_dict){
-                let lemma = citation_dict[token];
-                submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "not in frame files"}]}
+            // if (token in citation_dict){
+            //     let lemma = citation_dict[token];
+            //     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "not in frame files"}]}
+            //
+            // }else{
+            //     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+            // }
+            submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
 
-            }else{
-                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
-            }
 
-            Object.keys(citation_dict).forEach(function(key) {
-                console.log(key);
-                console.log(similar_word_list['similar_word_list']);
-                if (similar_word_list['similar_word_list'].includes(key)){
-                    console.log(key, citation_dict[key]);
-                    submenu_items["res"].push({"name": citation_dict[key], "desc": "from citation dict"});
-                    console.log(submenu_items);
-                }
-            });
+            // Object.keys(citation_dict).forEach(function(key) {
+            //     console.log(key);
+            //     console.log(similar_word_list['similar_word_list']);
+            //     if (similar_word_list['similar_word_list'].includes(key)){
+            //         console.log(key, citation_dict[key]);
+            //         submenu_items["res"].push({"name": citation_dict[key], "desc": "from citation dict"});
+            //         console.log(submenu_items);
+            //     }
+            // });
             getSenses(submenu_items);
 
         }
@@ -1265,9 +1267,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             command_input.style.height = '1.4em';
         }
     }
-    if(default_langs.includes(language)){
-        updateCitationDict();
-    }
+    // if(default_langs.includes(language)){
+    //     updateCitationDict();
+    // }
 }
 
 
@@ -3227,21 +3229,21 @@ function selectEvent(){
         }).then(function (response) {
             return response.json();
         }).then(function (data) {
-            // put data in display
-            similar_word_list = data;
-            const cont = document.getElementById('similar_word_list');
-            document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
-            // create ul element and set its attributes.
-            const ul = document.createElement('ul');
-            ul.setAttribute ('class', 'list-group');
-            ul.setAttribute ('id', 'simWordList');
-            for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
-                const li = document.createElement('li');	// create li element.
-                li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
-                li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
-                ul.appendChild(li);		// append li to ul.
-            }
-            cont.appendChild(ul);		// add ul to the container.
+            // // put data in display
+            // similar_word_list = data;
+            // const cont = document.getElementById('similar_word_list');
+            // document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
+            // // create ul element and set its attributes.
+            // const ul = document.createElement('ul');
+            // ul.setAttribute ('class', 'list-group');
+            // ul.setAttribute ('id', 'simWordList');
+            // for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
+            //     const li = document.createElement('li');	// create li element.
+            //     li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
+            //     li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
+            //     ul.appendChild(li);		// append li to ul.
+            // }
+            // cont.appendChild(ul);		// add ul to the container.
         }).catch(function(error){
             console.log("Fetch error: "+ error);
         });
@@ -3694,7 +3696,8 @@ function UMR2db() {
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr, "citation_dict":citation_dict})
+        // body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr, "citation_dict":citation_dict})
+        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });

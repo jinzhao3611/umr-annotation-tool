@@ -14,7 +14,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.ext.mutable import MutableDict
 
 import time
-from suggest_sim_words import generate_candidate_list, find_suggested_words
+# from suggest_sim_words import generate_candidate_list, find_suggested_words
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
@@ -96,7 +96,7 @@ def annotate(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
-    word_candidates = generate_candidate_list(doc.content, doc.file_format)
+    # word_candidates = generate_candidate_list(doc.content, doc.file_format)
     info2display = html(doc.content, doc.file_format)
     frame_dict = {}
     if doc.lang == "chinese":
@@ -108,13 +108,13 @@ def annotate(doc_id):
         snt_id = int(request.form["sentence_id"])
 
     if request.method == 'POST':
-        try:
-            selected_word = request.get_json(force=True)['selected_word']
-            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
-            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-            return res
-        except:
-            print("no word selected")
+        # try:
+        #     selected_word = request.get_json(force=True)['selected_word']
+        #     similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+        #     res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+        #     return res
+        # except:
+        #     print("no word selected")
 
         # add to db
         try:
