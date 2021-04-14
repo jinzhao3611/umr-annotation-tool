@@ -16,5 +16,4 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'apikey'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    # todo: change MAIL_DEFAULT_SENDER
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
