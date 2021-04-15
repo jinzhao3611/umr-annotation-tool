@@ -55,7 +55,7 @@
         <p>Line ID:
             <span id="curr_shown_sent_id" style="display: none"> {{ snt_id }}</span>
             <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ info2display.sents|length }} value={{ snt_id }}>
-            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="UMR2db()"><br>
+            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go"><br>
         </p>
     </form>
 
@@ -929,6 +929,7 @@
         </table>
 
         <div style="height: 10%; width:80%">
+            <button id="umr2db" onclick="UMR2db()">save</button>
     {#        <button class="btn btn-outline-secondary" style="display:none" id="db"><a title="click to get current annotation in db" href="javascript:UMR2db();">save2db</a></button>#}
     {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}');">load_history</a></button>#}
             <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
