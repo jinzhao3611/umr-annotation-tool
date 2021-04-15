@@ -54,8 +54,8 @@ def load_file2db(filename: str, file_format: str, content_string: str, lang: str
                 db.session.commit()
             else:
                 print('sent_annots from sent level: ', sent_annots)
-                print('doc_annots from sent level: ',doc_annots)
-                print('aligns from sent level: ',aligns)
+                print('doc_annots from sent level: ', doc_annots)
+                print('aligns from sent level: ', aligns)
                 annotation = Annotation(annot_str=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
                                         author=current_user,
                                         sent_id=i+1,

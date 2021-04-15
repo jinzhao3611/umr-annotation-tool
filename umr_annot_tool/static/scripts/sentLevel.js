@@ -219,9 +219,9 @@ function getSenses(senses) {
         senses.res.forEach(function (value, index, array) {
             let genLink = document.createElement("a");
             genLink.innerHTML = value.name;
-            genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', "${value.name}"); clearInput()`);
+            genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', "${value.name}");`);
             genLink.setAttribute("title", value.desc);
-            genLink.setAttribute("id", "xx");
+            genLink.setAttribute("id", "sense");
             genLink.setAttribute("class", "dropdown-item");
             // genDrop.appendChild(genLink);
             let genLi = document.createElement("li");
@@ -315,8 +315,6 @@ function submit_query(){
         current_ne_concept = nt;
         console.log("current_mode is: " + current_mode);
     }
-
-    clearInput();
 }
 
 /**
@@ -3432,26 +3430,6 @@ function initialize_frame_arg_descriptions() {
             // add_log('record_frame_arg_descriptions ' + norm_frame + ' has_frame: ' + frame_arg_descr);
         }
     }
-}
-
-
-function clearInput(){
-    console.log("clearInput is called");
-    if(document.getElementById('roles1')){
-        document.getElementById('roles1').value = '';
-    }
-    if(document.getElementById('roles2')){
-        document.getElementById('roles2').value = '';
-    }
-    document.getElementById('concept_types').value = '';
-    document.getElementById('ne_types').value = '';
-    document.getElementById('attributes').value = '';
-    document.getElementById('attribute_values1').value = '';
-    document.getElementById('attribute_values2').value = '';
-    document.getElementById('attribute_values3').value = '';
-    document.getElementById('attribute_values4').value = '';
-    document.getElementById('attribute_values5').value = '';
-    document.getElementById('attribute_values6').value = '';
 }
 
 /** load*************/
