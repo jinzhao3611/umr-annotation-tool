@@ -153,7 +153,8 @@ function conceptDropdown(lang='english') {
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
     } else {
-        if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
+        // if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
+        if (default_langs.includes(lang)){
             let submenu_items;
             // if (token in citation_dict){
             //     let lemma = citation_dict[token];
