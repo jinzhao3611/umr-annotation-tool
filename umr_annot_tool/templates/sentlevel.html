@@ -978,30 +978,6 @@
                     submit_template_action("replace");
                 }
             })
-
-            {#console.log("sent number is: ", {{ sents|length }});#}
-            {#console.log("sent id is: ", document.getElementById("sentence_id").value);#}
-            {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
-            {#    console.log("show the dbbutton!!!!!");#}
-            {#    document.getElementById("db").style.display = "inline";#}
-            {#}#}
-            {##}
-            {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
-            {#    console.log("show the doc-level-annot button!!!!!");#}
-            {#    document.getElementById("annot-button").style.display = "inline";#}
-            {#}#}
-
-            {#if (document.getElementById("sentence_id").value === "" + {{ sents|length }}){#}
-            {#    console.log("hide the next button!!!!!");#}
-            {#    document.getElementById("next_sentence").style.display = "none";#}
-            {#}#}
-            {##}
-            {#if (document.getElementById("sentence_id").value === "1"){#}
-            {#    console.log("hide the prev button!!!!!");#}
-            {#    document.getElementById("prev_sentence").style.display = "none";#}
-            {#}#}
-
-
         </script>
     <div>
 {% endblock content2 %}
