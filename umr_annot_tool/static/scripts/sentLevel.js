@@ -176,15 +176,13 @@ function conceptDropdown(lang='english') {
             // });
             getSenses(submenu_items);
 
-        }
-        else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
+        } else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
             let lemma;
             if(lang === 'chinese'){
                 lemma = token;
             }else{
                 lemma = getLemma(token);
             }
-            console.log("lemma of chosen word:", lemma);
             let senses = [];
             Object.keys(frame_json).forEach(function(key) {
                 if(key.split("-")[0] === lemma){
@@ -213,23 +211,17 @@ function getSenses(senses) {
     submit_query(); // update the current mode if named Entity box has something filled in
     let genDrop = document.getElementById('genericDropdown');
     genDrop.innerHTML = "";
-    if (genDrop.childElementCount > 0) {
-        // genDrop.classList.toggle("show");
-    } else {
-        senses.res.forEach(function (value, index, array) {
-            let genLink = document.createElement("a");
-            genLink.innerHTML = value.name;
-            genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', "${value.name}");`);
-            genLink.setAttribute("title", value.desc);
-            genLink.setAttribute("id", "sense");
-            genLink.setAttribute("class", "dropdown-item");
-            // genDrop.appendChild(genLink);
-            let genLi = document.createElement("li");
-            genLi.appendChild(genLink);
-            genDrop.appendChild(genLi);
-        });
-        // genDrop.classList.toggle("show");
-    }
+    senses.res.forEach(function (value, index, array) {
+        let genLink = document.createElement("a");
+        genLink.innerHTML = value.name;
+        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', "${value.name}");`);
+        genLink.setAttribute("title", value.desc);
+        genLink.setAttribute("id", "sense");
+        genLink.setAttribute("class", "dropdown-item");
+        let genLi = document.createElement("li");
+        genLi.appendChild(genLink);
+        genDrop.appendChild(genLi);
+    });
 }
 
 
@@ -3220,31 +3212,31 @@ function selectEvent(){
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
-        let doc_id = document.getElementById('doc_id').innerText; //doc_id in the head of the page
-        fetch(`/annotate/${doc_id}`, {
-            method: 'POST',
-            body: JSON.stringify({"selected_word": document.getElementById('selected_tokens').innerHTML})
-        }).then(function (response) {
-            return response.json();
-        }).then(function (data) {
-            // // put data in display
-            // similar_word_list = data;
-            // const cont = document.getElementById('similar_word_list');
-            // document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
-            // // create ul element and set its attributes.
-            // const ul = document.createElement('ul');
-            // ul.setAttribute ('class', 'list-group');
-            // ul.setAttribute ('id', 'simWordList');
-            // for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
-            //     const li = document.createElement('li');	// create li element.
-            //     li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
-            //     li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
-            //     ul.appendChild(li);		// append li to ul.
-            // }
-            // cont.appendChild(ul);		// add ul to the container.
-        }).catch(function(error){
-            console.log("Fetch error: "+ error);
-        });
+        // let doc_id = document.getElementById('doc_id').innerText; //doc_id in the head of the page
+        // fetch(`/annotate/${doc_id}`, {
+        //     method: 'POST',
+        //     body: JSON.stringify({"selected_word": document.getElementById('selected_tokens').innerHTML})
+        // }).then(function (response) {
+        //     return response.json();
+        // }).then(function (data) {
+        //     // put data in display
+        //     similar_word_list = data;
+        //     const cont = document.getElementById('similar_word_list');
+        //     document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
+        //     // create ul element and set its attributes.
+        //     const ul = document.createElement('ul');
+        //     ul.setAttribute ('class', 'list-group');
+        //     ul.setAttribute ('id', 'simWordList');
+        //     for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
+        //         const li = document.createElement('li');	// create li element.
+        //         li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
+        //         li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
+        //         ul.appendChild(li);		// append li to ul.
+        //     }
+        //     cont.appendChild(ul);		// add ul to the container.
+        // }).catch(function(error){
+        //     console.log("Fetch error: "+ error);
+        // });
 
         // console.log("selection: ", selection.anchorNode.parentNode.tagName);
         // console.log("selection2: ", selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id);
