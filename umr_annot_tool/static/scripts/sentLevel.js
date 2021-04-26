@@ -105,9 +105,8 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     if (Object.keys(loaded_umr).length === 0){
         loaded_umr['n'] = 0;
     }
-    setInnerHTML('load-plain', deHTML(curr_sent_annot));
-    loadField2amr(loaded_umr, curr_sent_align);
-    recordDirectEntryLoad();
+    text2umr(loaded_umr, curr_sent_align, deHTML(curr_sent_annot));
+    recordDirectEntryLoad(); //this need to follow the line above
 
     // setInnerHTML('align', curr_sent_align);
     // console.log(document.getElementById('align'));
@@ -3142,16 +3141,15 @@ function string2amr(s) {
  * this is used to load the penman string
  * @param loaded_umr
  * @param loaded_alignment
+ * @param annotText
  */
-function loadField2amr(loaded_umr={}, loaded_alignment='') {
-    var s;
-    if ((s = document.getElementById('load-plain')) != null) {
+function text2umr(loaded_umr={}, loaded_alignment='', annotText="") {
+    if (annotText) {
         // let loaded_umr = umr;
-        var rest = string2amr(s.value);
+        let rest = string2amr(annotText);
 
         if(Object.keys(loaded_umr).length > 1){
             umr = loaded_umr;
-            console.log("umr from loadField2amr2: ", umr);
         }
 
         //fill in the alignment information to umr
@@ -3168,7 +3166,6 @@ function loadField2amr(loaded_umr={}, loaded_alignment='') {
                 umr[loc + '.a'] = align_info;
             }
         }
-
 
         if (!rest.match(/\S/)) {
             rest = '';
@@ -3326,43 +3323,6 @@ function deleteNode(node) {
     node.parentNode.replaceChild(contents, node);
 }
 
-
-// click on load button
-// function reset_load(control) {
-//     var s;
-//     if ((s = document.getElementById('load-local')) != null) {
-//         s.style.display = 'inline';
-//     }
-//     if ((s = document.getElementById('load-onto-snt')) != null) {
-//         s.style.display = 'inline';
-//     }
-//     if ((s = document.getElementById('load-direct')) != null) {
-//         s.style.display = 'inline';
-//     }
-//     if ((s = document.getElementById('load-cgi')) != null) {
-//         s.style.display = 'inline';
-//     }
-//     if ((s = document.getElementById('load-cgi2')) != null) {
-//         s.style.display = 'inline';
-//     }
-//     if ((s = document.getElementById('load-plain')) != null) {
-//         s.innerHTML = '';
-//     }
-//     if ((s = document.getElementById('info-locally-loaded')) != null) {
-//         if (window.File && window.FileReader && window.FileList && window.Blob) {
-//             // Great;
-//             s.innerHTML = '<font color="#999999">Browser supports File API.</font>';
-//         } else if (window.ActiveXObject) {
-//             s.innerHTML = '<font color="#999999">Will use ActiveXObject.</font> &nbsp; <a href="javascript:toggleInfo(\'alt-locally-loaded\');"><font color="#999999">Alternatives</font></a>';
-//         } else {
-//             s.innerHTML = 'This load method not supported by this browser. &nbsp; <a href="javascript:toggleInfo(\'alt-locally-loaded\');">Alternatives</a><br>';
-//             if ((s = document.getElementById('load-local-title')) != null) {
-//                 s.style.color = '#999999';
-//             }
-//         }
-//     }
-// }
-
 function toggleInfo(j) {
     if ((s = document.getElementById(j)) != null) {
         if (s.style.display == 'inline') {
@@ -3427,20 +3387,6 @@ function localLoadUpdateProgress(evt) {
     }
 }
 
-// function localLoaded(evt) {
-//     console.log("localLoaded is called");
-//     var fileString = evt.target.result;
-//     if ((s = document.getElementById('info-locally-loaded')) != null) {
-//         s.innerHTML = 'Loading complete (' + fileString.length + ' bytes)';
-//     }
-//     if ((s = document.getElementById('load-plain')) != null) {
-//         s.value = fileString;
-//     }
-//     // add_log('Loaded AMR: ' + fileString);
-//     loadField2amr();
-//     state_has_changed_p = 1;
-//     exec_command('record load AMR locally', 1);
-// }
 
 function recordDirectEntryLoad() {
     console.log("recordDirectEntryLoad is called");
@@ -3458,20 +3404,6 @@ function loadErrorHandler(evt) {
 }
 
 /** save*************/
-
-function localSaved(evt) {
-    console.log("localSaved is called");
-    let fileString = evt.target.result;
-    /*
-   if ((s = document.getElementById('info-locally-loaded')) != null) {
-      s.innerHTML = 'Loading complete (' + fileString.length + ' bytes)';
-   }
-   if ((s = document.getElementById('load-plain')) != null) {
-      s.value = fileString;
-   }
-   */
-    console.log('Saved AMR: ' + evt.target.result);
-}
 
 function save_local_amr_file(sentence = "", temp = false) {
     console.log(sentence);
