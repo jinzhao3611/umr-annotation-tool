@@ -2820,20 +2820,19 @@ function extractValueFrom2ColonExpr(s, key) {
 }
 
 function string2amr_rec(s, loc, state, ht) {
-    console.log('string2amr_rec ' + s + ' ' + loc + ' ' + state + ' ' + load_amr_feedback);
-    if (max_string2amr_ops-- <= 0) {
+    if (max_string2amr_ops-- <= 0) { //todo
         console.log('string2amr_rec MAXXED out');
         return s;
     }
-    var ignore_style = 'style="color:#8888FF;font-weight:bold" title="ignored"';
-    var insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"';
-    var insert_space_style = 'style="color:#FF7700;font-weight:bold" title="inserted space"';
-    var change_style = 'style="color:#FF0000;font-weight:bold"';
-    var change_var_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to avoid conflict with earlier definition"';
-    var change_var2_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to conform with variable format"';
-    var change_concept_style = 'style="color:#FF0000;font-weight:bold" title="changed concept to conform with concept format"';
-    var accept_style = 'style="color:#007700"';
-    var accept_conflict_style = 'style="color:#007700;font-weight:bold" title="conflict with later variable redefinition"';
+    let ignore_style = 'style="color:#8888FF;font-weight:bold" title="ignored"';
+    let insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"';
+    let insert_space_style = 'style="color:#FF7700;font-weight:bold" title="inserted space"';
+    let change_style = 'style="color:#FF0000;font-weight:bold"';
+    let change_var_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to avoid conflict with earlier definition"';
+    let change_var2_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to conform with variable format"';
+    let change_concept_style = 'style="color:#FF0000;font-weight:bold" title="changed concept to conform with concept format"';
+    let accept_style = 'style="color:#007700"';
+    let accept_conflict_style = 'style="color:#007700;font-weight:bold" title="conflict with later variable redefinition"';
     s = s.replace(/^\xEF\xBB\xBF/, ""); // remove any UTF-8 marker at beginning
     s = s.replace(/\n\s*\n/g, "\n"); //  remove any empty lines
     s = s.replace(/^\n/, "");
@@ -3061,53 +3060,45 @@ function string2amr_rec(s, loc, state, ht) {
 
 /**
  *
- * @param s : (s1t / taste-01)
+ * @param annotText : (s1t / taste-01)
  * @returns {*}
  */
-function string2amr(s) {
-    // old umr will be destroyed (so clone before if needed)
-    console.log('string2amr: ' + s);
-    var loc, ps, ps_loc;
-    var s_wo_comment = s.replace(/^\s*\#.*\n$/, "");
-    var ht = new Object();
-    umr = new Object();
-    variables = new Object();
-    concepts = new Object();
-    reserved_variables = new Object();
-    var res_vars = s_wo_comment.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // ["(s1t "]
-    max_string2amr_ops = 5000;
-    if (res_vars) {
-        for (var i = 0; i < res_vars.length; i++) {
-            var variable = res_vars[i];
-            variable = variable.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
-            variable = variable.replace(/[ \/]$/, ""); // get rid of the trailing space or /: "s1t"
-            if (reserved_variables[variable]) {
-                reserved_variables[variable + '.conflict'] = 1;
-                console.log('reserve variable: ' + variable + ' (conflict)');
-            } else {
-                reserved_variables[variable] = 1;
-                console.log('reserve variable: ' + variable);
-            }
+function string2amr(annotText) {
+    let loc, ps, ps_loc;
+    var ht = {}; //todo
+    umr = {};
+    variables = {};
+    concepts = {};
+    reserved_variables = {};//todo
+    max_string2amr_ops = 5000; //todo
+    let res_vars = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // ["(s1t "]
+    res_vars.forEach(function(item, index){     //populate reserved_variables
+        let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
+        variable = variable.replace(/[ \/]$/, ""); // get rid of the trailing space or /: "s1t"
+        if (reserved_variables[variable]) {
+            reserved_variables[variable + '.conflict'] = 1;
+        } else {
+            reserved_variables[variable] = 1;
         }
-    }
+    });
     umr['n'] = 0;
-    if (s.match(/\(/) || s.match(/^# ::id /)) { //s = "(s1t / taste-01)"
-        var prev_s_length = s.length; // 16
-        var index = 1;
+    if (annotText.match(/\(/)) { //annotText = "(s1t / taste-01)"
+        let prev_s_length = annotText.length; // 16
+        let index = 1;
         loc = index + '';
         umr['n'] = 1;
-        load_amr_feedback = '';
-        load_amr_feedback_alert = 0;
-        s = string2amr_rec(s + ' ', loc, 'pre-open-para', ht);
-        while (s.match(/^\s*[()]/) && (s.length < prev_s_length)) { //
+        load_amr_feedback = ''; //todo
+        load_amr_feedback_alert = 0; //todo
+        annotText = string2amr_rec(annotText + ' ', loc, 'pre-open-para', ht);
+        while (annotText.match(/^\s*[()]/) && (annotText.length < prev_s_length)) { //
             index++;
             loc = index + '';
-            prev_s_length = s.length;
-            if ((s.match(/^\s*\(/)) && (!load_amr_feedback.match(/<br>\s*$/))) { // )
+            prev_s_length = annotText.length;
+            if ((annotText.match(/^\s*\(/)) && (!load_amr_feedback.match(/<br>\s*$/))) { // )
                 load_amr_feedback += '<br>\n';
             }
-            s = string2amr_rec(s + ' ', loc, 'pre-open-para', ht);
-            if (s.length < prev_s_length) {
+            annotText = string2amr_rec(annotText + ' ', loc, 'pre-open-para', ht);
+            if (annotText.length < prev_s_length) {
                 umr['n'] = umr['n'] + 1;
             }
         }
@@ -3123,9 +3114,9 @@ function string2amr(s) {
                 recordVariable(ps, ps_loc);
             }
         }
-    } else if (s.match(/\S/)) {
+    } else if (annotText.match(/\S/)) {
         umr['n'] = 0;
-        load_amr_feedback = '<span style="color:#999999">' + s + '</span>';
+        load_amr_feedback = '<span style="color:#999999">' + annotText + '</span>';
         load_amr_feedback_alert = 1;
     } else {
         umr['n'] = 0;
@@ -3133,7 +3124,7 @@ function string2amr(s) {
         load_amr_feedback_alert = 0;
     }
     reserved_variables = new Object();
-    return strip(s);
+    return strip(annotText);
 }
 
 /* load *******************************************************/
