@@ -59,6 +59,9 @@
         </p>
     </form>
 
+    <div id="error_msg">
+    </div>
+
     {# display the sentence with the chosen sentence ID #}
     {% if info2display.df_htmls|length and file_format != 'plain_text' %}
         <div id="sentence" style="height: auto; overflow-y: scroll; max-height: 250px;">

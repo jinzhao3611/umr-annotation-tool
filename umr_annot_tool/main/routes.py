@@ -125,21 +125,21 @@ def annotate(doc_id):
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr"]
 
-            try:
-                existing_user = User.query.filter(User.id == current_user.id).first()
-                try:
-                    curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}} # curr_lexicon = {"aphleamkehlta": "test-05"}
-                    new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
-                    curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
-                except: #empty lexicon
-                    curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
-
-                new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
-                existing_user.lexicon.update({doc.lang: new_mutable_dict})
-                flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
-                db.session.commit()
-            except:
-                print("error in add lexicon!!!")
+            # try:
+            #     existing_user = User.query.filter(User.id == current_user.id).first()
+            #     try:
+            #         curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}} # curr_lexicon = {"aphleamkehlta": "test-05"}
+            #         new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
+            #         curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
+            #     except: #empty lexicon
+            #         curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
+            #
+            #     new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
+            #     existing_user.lexicon.update({doc.lang: new_mutable_dict})
+            #     flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
+            #     db.session.commit()
+            # except:
+            #     print("error in add lexicon!!!")
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
@@ -157,8 +157,15 @@ def annotate(doc_id):
                 flag_modified(annotation, 'umr')
                 db.session.add(annotation)
                 db.session.commit()
+            msg = 'Success: current annotation and alignments are added to database.'
+            msg_category = 'success'
+            print(msg)
         except:
-            print("Add current annotation and alignments to database failed")
+            msg = 'Failure: Add current annotation and alignments to database failed.'
+            msg_category = 'danger'
+            print(msg)
+        return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+
 
     # load single annotation for current sentence from db used for load_history()
     try:
