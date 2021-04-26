@@ -160,11 +160,12 @@ def annotate(doc_id):
             msg = 'Success: current annotation and alignments are added to database.'
             msg_category = 'success'
             print(msg)
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+
         except:
             msg = 'Failure: Add current annotation and alignments to database failed.'
             msg_category = 'danger'
             print(msg)
-        return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
 
 
     # load single annotation for current sentence from db used for load_history()
@@ -273,8 +274,8 @@ def doclevel(doc_id):
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
-        flash('You have not created sentence level annotation yet')
-        redirect(url_for('main.annotate', doc_id=doc_id))
+        flash('You have not created sentence level annotation yet', 'danger')
+        return redirect(url_for('main.annotate', doc_id=doc_id))
 
     # print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
     # print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
