@@ -81,9 +81,6 @@ var next_special_action = ''; //''
  * @param lexicon
  */
 function initialize(frame_dict_str, lang, lexicon) {
-    console.log("initialize is called6");
-    console.log('frame_dict_str:', frame_dict_str);
-    console.log('frame_dict_str_dehtml: ', deHTML(frame_dict_str));
     language = lang;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
@@ -93,7 +90,6 @@ function initialize(frame_dict_str, lang, lexicon) {
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
     begOffset = -1;
     endOffset = -1;
-    console.log("passed in lexicon:", lexicon);
     // citation_dict = JSON.parse(deHTML(lexicon));
     // console.log('citation_dict from initialize: ', citation_dict);
 }
@@ -105,21 +101,12 @@ function initialize(frame_dict_str, lang, lexicon) {
  * @param curr_sent_umr
  */
 function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
-    console.log("curr_sent_annot: ", curr_sent_annot);
-    console.log("curr_sent_align: ", curr_sent_align);
-    console.log("html string to be loaded:", deHTML(curr_sent_annot));
-    console.log("curr_sent_umr: ", curr_sent_umr);
     let loaded_umr = JSON.parse(curr_sent_umr);
     if (Object.keys(loaded_umr).length === 0){
         loaded_umr['n'] = 0;
     }
-    console.log("umr loaded from json string: ", loaded_umr);
     setInnerHTML('load-plain', deHTML(curr_sent_annot));
-    // console.log(document.getElementById('load-plain'));
-    // console.log(document.getElementById('align'));
-    // console.log("alignment string to be loaded:", curr_sent_align);
     loadField2amr(loaded_umr, curr_sent_align);
-    // string2amr(document.getElementById('load-plain').value);
     recordDirectEntryLoad();
 
     // setInnerHTML('align', curr_sent_align);
@@ -3157,7 +3144,6 @@ function string2amr(s) {
  * @param loaded_alignment
  */
 function loadField2amr(loaded_umr={}, loaded_alignment='') {
-    console.log("umr from loadField2amr: ", umr);
     var s;
     if ((s = document.getElementById('load-plain')) != null) {
         // let loaded_umr = umr;
@@ -3342,40 +3328,40 @@ function deleteNode(node) {
 
 
 // click on load button
-function reset_load(control) {
-    var s;
-    if ((s = document.getElementById('load-local')) != null) {
-        s.style.display = 'inline';
-    }
-    if ((s = document.getElementById('load-onto-snt')) != null) {
-        s.style.display = 'inline';
-    }
-    if ((s = document.getElementById('load-direct')) != null) {
-        s.style.display = 'inline';
-    }
-    if ((s = document.getElementById('load-cgi')) != null) {
-        s.style.display = 'inline';
-    }
-    if ((s = document.getElementById('load-cgi2')) != null) {
-        s.style.display = 'inline';
-    }
-    if ((s = document.getElementById('load-plain')) != null) {
-        s.innerHTML = '';
-    }
-    if ((s = document.getElementById('info-locally-loaded')) != null) {
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            // Great;
-            s.innerHTML = '<font color="#999999">Browser supports File API.</font>';
-        } else if (window.ActiveXObject) {
-            s.innerHTML = '<font color="#999999">Will use ActiveXObject.</font> &nbsp; <a href="javascript:toggleInfo(\'alt-locally-loaded\');"><font color="#999999">Alternatives</font></a>';
-        } else {
-            s.innerHTML = 'This load method not supported by this browser. &nbsp; <a href="javascript:toggleInfo(\'alt-locally-loaded\');">Alternatives</a><br>';
-            if ((s = document.getElementById('load-local-title')) != null) {
-                s.style.color = '#999999';
-            }
-        }
-    }
-}
+// function reset_load(control) {
+//     var s;
+//     if ((s = document.getElementById('load-local')) != null) {
+//         s.style.display = 'inline';
+//     }
+//     if ((s = document.getElementById('load-onto-snt')) != null) {
+//         s.style.display = 'inline';
+//     }
+//     if ((s = document.getElementById('load-direct')) != null) {
+//         s.style.display = 'inline';
+//     }
+//     if ((s = document.getElementById('load-cgi')) != null) {
+//         s.style.display = 'inline';
+//     }
+//     if ((s = document.getElementById('load-cgi2')) != null) {
+//         s.style.display = 'inline';
+//     }
+//     if ((s = document.getElementById('load-plain')) != null) {
+//         s.innerHTML = '';
+//     }
+//     if ((s = document.getElementById('info-locally-loaded')) != null) {
+//         if (window.File && window.FileReader && window.FileList && window.Blob) {
+//             // Great;
+//             s.innerHTML = '<font color="#999999">Browser supports File API.</font>';
+//         } else if (window.ActiveXObject) {
+//             s.innerHTML = '<font color="#999999">Will use ActiveXObject.</font> &nbsp; <a href="javascript:toggleInfo(\'alt-locally-loaded\');"><font color="#999999">Alternatives</font></a>';
+//         } else {
+//             s.innerHTML = 'This load method not supported by this browser. &nbsp; <a href="javascript:toggleInfo(\'alt-locally-loaded\');">Alternatives</a><br>';
+//             if ((s = document.getElementById('load-local-title')) != null) {
+//                 s.style.color = '#999999';
+//             }
+//         }
+//     }
+// }
 
 function toggleInfo(j) {
     if ((s = document.getElementById(j)) != null) {
@@ -3470,96 +3456,6 @@ function loadErrorHandler(evt) {
         console.log('loadErrorHandler: Unspecified error');
     }
 }
-
-// function load_local_amr_file(sentence_id) {
-//     console.log("load_local_amr_file is called");
-//     var s, scriptPath, fh;
-//     var load_method = '';
-//     if (window.File && window.FileReader && window.FileList && window.Blob) {
-//         console.log("I am here 2-1");
-//         add_unique_log('Browser supports File API. Great.');
-//         var file = document.getElementById('local_load_files').files[0];
-//         if (file) {
-//             var reader = new FileReader();
-//             reader.readAsText(file, "UTF-8");
-//             reader.onprogress = localLoadUpdateProgress;
-//             reader.onload = localLoaded;
-//             reader.onerror = loadErrorHandler;
-//         } else {
-//             add_error('Unable to find local file to be loaded. Did you choose a file?');
-//         }
-//         load_method = 'File API';
-//         return;
-//     }
-//     add_log('This browser does not support the File API.');
-//
-//     if (window.ActiveXObject) {
-//         console.log("I am here 2-2");
-//         add_unique_log('Browser supports ActiveXObject. Good.');
-//         load_method = 'ActiveXObject';
-//         try {
-//             var fso = new ActiveXObject("Scripting.FileSystemObject");
-//             // var filePath = document.getElementById('local_load_files').files[0];
-//             var filePath = document.getElementById('local_load_files').value;
-//             // var filePath = `C:\\fakepath\\${sentence_id}.txt`;
-//             // add_log('Loading file ' + filePath + ' ...');
-//             var file = fso.OpenTextFile(filePath, 1);
-//             var fileString = file.ReadAll();
-//             // add_log('ActiveXObject5');
-//             file.Close();
-//             // add_log('Loaded AMR: ' + fileString);
-//
-//             document.getElementById('load-plain').value = ''
-//             if ((s = document.getElementById('load-plain')) != null) {
-//                 s.value = fileString;
-//                 loadField2amr();
-//                 state_has_changed_p = 1;
-//                 exec_command('record load AMR locally', 1);
-//             }
-//         } catch (e) {
-//             if (e.number == -2146827859) {
-//                 add_error('Unable to access local files due to browser security settings. '
-//                     + 'To overcome this, go to Tools->Internet Options->Security->Custom Level. '
-//                     + 'Find the setting for "Initialize and script ActiveX controls not marked as safe" '
-//                     + 'and change it to "Enable" or "Prompt"');
-//             } else {
-//                 add_error('Unspecified ActiveXObject load error');
-//             }
-//         }
-//         return;
-//     }
-//     add_log('This browser does not support the ActiveXObject.');
-//
-//     /*
-//    if (typeof getScriptPath == 'function') {
-//   if (typeof fopen  == 'function') {
-//      add_unique_log('Browser supports getScriptPath/fopen. Good.');
-//      load_method = 'getScriptPath/fopen';
-//          if (scriptPath = getScriptPath()) {
-//     fh = fopen(scriptPath, 0);
-//     if (fh != -1) {
-//            var length = flength(fh);
-//            var fileString = fread(fh, length);
-//            fclose(fh);
-//            // add_log('Loaded AMR: ' + fileString);
-//     } else {
-//        add_error('Unable to open file ' + scriptPath);
-//     }
-//      } else {
-//         add_error('Unable to select file with getScriptPath.');
-//      }
-//   } else {
-//      add_log('This browser does not support fopen.');
-//   }
-//    } else {
-//   add_log('This browser does not support getScriptPath');
-//    }
-//    */
-//
-//     if (load_method == '') {
-//         add_error('This browser does not support any of the file reading methods tried. Unable to load file.');
-//     }
-// }
 
 /** save*************/
 
