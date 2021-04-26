@@ -1,13 +1,20 @@
 $(document).ready(function(){
 
-    $('body').click(function(evt){
+    //click anywhere to make the db feedback message go away
+    $('body').click(function(){
         $("#error_msg").removeClass("alert alert-success alert alert-danger").empty();
     });
 
+    // double click to set head
     $("#amr").dblclick(function(){ // when double click on element #amr
         selection = document.getSelection(); //get selection of text
         submit_template_action('set_parent'); //set text to parent
     });
+
+    //click button to set head
+    $("#set-head").click(function(){
+        submit_template_action('set_parent');
+    })
 
     // https://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
     $('#genericDropdown').on("click", "#sense", function() {
