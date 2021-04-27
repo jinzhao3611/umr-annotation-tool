@@ -29,7 +29,7 @@ def register():
         with open(filepath, 'r', encoding='utf-8') as f:
             content_string = f.read()
         print(content_string)
-        filename = 'sample_snts_english.txt'
+        filename = 'news-text-2-lorelei.txt'
         file_format = 'plain_text'
         lang = 'english'
         info2display = html(content_string, file_format)
