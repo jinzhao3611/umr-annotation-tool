@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
@@ -5,6 +7,8 @@ from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccoun
     ResetPasswordForm
 from umr_annot_tool.models import User, Post, Doc, Annotation, Sent
 from umr_annot_tool.users.utils import save_picture, send_reset_email
+
+from parse_input_xml import html
 
 users = Blueprint('users', __name__)
 
@@ -20,6 +24,26 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
+
+        filepath = Path(__file__).parent.parent.joinpath("static/sample_files/sample_snts_english.txt")
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content_string = f.read()
+        print(content_string)
+        filename = 'sample_snts_english.txt'
+        file_format = 'plain_text'
+        lang = 'english'
+        info2display = html(content_string, file_format)
+        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=user.id,
+                  file_format=file_format)
+        db.session.add(doc)
+        db.session.commit()
+        flash('Your doc has been created!', 'success')
+        for sent_of_tokens in info2display.sents:
+            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=user.id)
+            db.session.add(sent)
+            db.session.commit()
+        flash('Your sents has been created.', 'success')
+
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
 
