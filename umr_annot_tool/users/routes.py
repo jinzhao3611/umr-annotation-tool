@@ -25,7 +25,7 @@ def register():
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
 
-        filepath = Path(__file__).parent.parent.joinpath("static/sample_files/sample_snts_english.txt")
+        filepath = Path(__file__).parent.parent.joinpath("static/sample_files/news-text-2-lorelei")
         with open(filepath, 'r', encoding='utf-8') as f:
             content_string = f.read()
         print(content_string)
