@@ -28,7 +28,7 @@ let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
 
-let default_langs = ['default', 'sanapana', "arapahoe", "navajo"]
+let default_langs = ['default', 'sanapana', "arapahoe", "navajo", "secoya", "kukama"]
 var reserved_variables = {};
 
 var last_state_id = 0; //3
@@ -227,7 +227,7 @@ window.onclick = function (event) {
 };
 
 function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
+    return Object.keys(object).filter(key => object[key] === value && !(key.replace('v', 'd') in object))[0];
 }
 
 /**
@@ -1402,7 +1402,6 @@ function recordVariable(v, loc) {
         } else {
             variables[v] = loc + '';
         }
-        // console.log('variable locs for ' + v + ': ' + getLocs(v));
     }
 }
 
@@ -1572,7 +1571,6 @@ function addTriple(head, role, arg, arg_type) {
     head = strip(head); // b
     role = strip(role); // :arg1
     arg = strip(arg); //car
-    console.log('addTriple: head: ' + head + ' role: ' + role + ' arg: ' + arg + 'arg type: ' + arg_type);
     let head_var_locs = getLocs(head);
     let arg_var_locs;
     let arg_variable;
