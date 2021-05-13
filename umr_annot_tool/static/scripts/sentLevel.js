@@ -41,7 +41,6 @@ var show_amr_status = 'show'; //'show'
 var show_amr_mo_lock = ''; // '' affects coloring
 let current_template = ''; //"top, add, options..."
 var max_show_amr_ops = 5000; // 5000
-var max_string2amr_ops = 5000; //4992
 var current_onto_popup_window = ''; //this is a Window object, not a string?
 var saved_sentence_prop_values = ["", "", "", "", ""]; //["", "", "", "", ""]
 var previous_log_messages = {}; // {}
@@ -2813,10 +2812,6 @@ function extractValueFrom2ColonExpr(s, key) {
 }
 
 function string2umr_rec(annotText, loc, state, ht) {
-    if (max_string2amr_ops-- <= 0) { //todo
-        console.log('string2amr_rec MAXXED out');
-        return annotText;
-    }
     let ignore_style = 'style="color:#8888FF;font-weight:bold" title="ignored"';
     let insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"';
     let insert_space_style = 'style="color:#FF7700;font-weight:bold" title="inserted space"';
@@ -3067,7 +3062,6 @@ function string2umr(annotText) {
     variables = {};
     concepts = {};
     reserved_variables = {};//todo
-    max_string2amr_ops = 5000; //todo
     let uncleaned_root_vars = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
     uncleaned_root_vars.forEach(function(item, index){     //populate reserved_variables
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
