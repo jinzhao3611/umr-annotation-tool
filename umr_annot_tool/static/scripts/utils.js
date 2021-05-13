@@ -148,6 +148,12 @@ function strip(s) {
     return s;
 }
 
+function strip2(s) {
+    s = s.replace(/\n\s*\n/g, "\n"); //  remove any empty lines
+    s = s.replace(/^\n/, "");
+    return s;
+}
+
 /**
  * So far I think this is just python split()
  * @param s "1.1 1.2.1.1 1.2.2.1 1.2.2.2.1"

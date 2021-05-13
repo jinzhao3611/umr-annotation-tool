@@ -2673,10 +2673,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
  * @param args "show" or "show replace" or "show delete"
  */
 function show_amr(args) {
-    console.log("show_amr is called: args: " + args );
-    console.log("umr from show_amr: ", umr);
     //comply with the loaded options
-    let s, html_amr_s;
+    let s;
+    let html_amr_s;
     n_elems_w_id = 0;
     max_show_amr_ops = 5000;
     show_amr_mo_lock = '';
@@ -2811,6 +2810,14 @@ function extractValueFrom2ColonExpr(s, key) {
     }
 }
 
+/**
+ * consume content in one pair of parenthesis one time, populate load_amr_feedback, return the remaining string
+ * @param annotText
+ * @param loc
+ * @param state
+ * @param ht
+ * @returns {*}
+ */
 function string2umr_rec(annotText, loc, state, ht) {
     let ignore_style = 'style="color:#8888FF;font-weight:bold" title="ignored"';
     let insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"';
@@ -2821,13 +2828,12 @@ function string2umr_rec(annotText, loc, state, ht) {
     let change_concept_style = 'style="color:#FF0000;font-weight:bold" title="changed concept to conform with concept format"';
     let accept_style = 'style="color:#007700"';
     let accept_conflict_style = 'style="color:#007700;font-weight:bold" title="conflict with later variable redefinition"';
-    annotText = annotText.replace(/\n\s*\n/g, "\n"); //  remove any empty lines
-    annotText = annotText.replace(/^\n/, "");
+    annotText = strip2(annotText);
     if (state === 'pre-open-para') { //todo
-        let pre_open_para_l = annotText.match(/^[^(]*/);
+        let pre_open_para_list = annotText.match(/^[^(]*/);
         annotText = annotText.replace(/^[^(]*/, "");
-        load_amr_feedback += `<span ${ignore_style}>${htmlSpaceGuard(pre_open_para_l[0])}</span>`;
-        if (pre_open_para_l[0].match(/\S/)) {
+        load_amr_feedback += `<span ${ignore_style}>${htmlSpaceGuard(pre_open_para_list[0])}</span>`;
+        if (pre_open_para_list[0].match(/\S/)) {
             load_amr_feedback_alert = 1;
         }
         if (annotText.match(/^\(\s*[a-zA-Z0-9][-_a-zA-Z0-9']*(\s*\/\s*|\s+)[:*]?[a-zA-Z0-9][-_a-zA-Z0-9']*[*]?[\s)]/) // match something like (s1s / shadahast
@@ -2860,12 +2866,12 @@ function string2umr_rec(annotText, loc, state, ht) {
             let new_concept;
             let decorated_concept;
             if (concept.match(/^[a-zA-Z0-9][-_a-zA-Z0-9']*(?:-\d+)?$/)
-                || tolerate_special_concepts(concept)) {
+                || tolerate_special_concepts(concept)) { //todo
                 decorated_concept = concept;
                 umr[loc + '.c'] = concept;
                 recordConcept(concept, loc);
                 variable2concept[variable] = concept;
-            } else {
+            } else { //todo
                 new_concept = concept.toLowerCase();
                 new_concept = new_concept.replace(/_/g, "-");
                 new_concept = new_concept.replace(/-+/g, "-");
@@ -2905,7 +2911,7 @@ function string2umr_rec(annotText, loc, state, ht) {
             umr[loc + '.s'] = '';
             umr[loc + '.n'] = 0;
             load_amr_feedback += `<span ${accept_style}>(${decorated_variable} ${decorated_slash} ${decorated_concept}</span>`;
-            annotText = string2umr_rec(annotText, loc, 'post-concept', ht); // (
+            annotText = string2umr_rec(annotText, loc, 'post-concept', ht);
             var pre_close_para_l = annotText.match(/^[^)]*/); // (
             annotText = annotText.replace(/^[^)]*/, "");
             if (pre_close_para_l[0] !== '') {
@@ -2914,13 +2920,11 @@ function string2umr_rec(annotText, loc, state, ht) {
                     load_amr_feedback_alert = 1;
                 }
             }
-            if (annotText.match(/^\)/)) { // (
+            if (annotText.match(/^\)/)) { // if matched the last close parenthesis
                 annotText = annotText.replace(/^\)/, ""); // (
                 load_amr_feedback += `<span ${accept_style}>)</span>`;
-
-            } else { // (
+            } else {
                 load_amr_feedback += `<span ${insert_style}>)</span>`;
-
                 load_amr_feedback_alert = 1;
             }
         } else {
@@ -2948,10 +2952,10 @@ function string2umr_rec(annotText, loc, state, ht) {
             }
         }
     } else if (state === 'post-concept') {
-        let ignore_l = annotText.match(/^[^:()]*/);
+        let ignore_list = annotText.match(/^[^:()]*/); //ignore anything in the start position that is not : ( )
         annotText = annotText.replace(/^[^:()]*/, "");
-        if (ignore_l) {
-            let ignore = strip(ignore_l[0]);
+        if (ignore_list) {
+            let ignore = strip(ignore_list[0]);
             if (ignore !== '') {
                 load_amr_feedback += ` <span ${ignore_style}>${htmlSpaceGuard(ignore)}</span>`;
                 if (ignore.match(/\S/)) {
@@ -3075,7 +3079,7 @@ function string2umr(annotText) {
     umr['n'] = 0;
     if (annotText.match(/\(/)) { //annotText = "(s1t / taste-01)"
         let prev_s_length = annotText.length; // 16
-        let index = 1;
+        let index = 1; // keep track of how many roots (how many graphs)
         loc = index + '';
         umr['n'] = 1;
         load_amr_feedback = ''; //todo
@@ -3085,7 +3089,7 @@ function string2umr(annotText) {
             index++;
             loc = index + '';
             prev_s_length = annotText.length;
-            if ((annotText.match(/^\s*\(/)) && (!load_amr_feedback.match(/<br>\s*$/))) { // )
+            if ((annotText.match(/^\s*\(/)) && (!load_amr_feedback.match(/<br>\s*$/))) { // add a <br> when the previous graph is finished (because the remaining annotText start with open parenthesis)
                 load_amr_feedback += '<br>\n';
             }
             annotText = string2umr_rec(annotText + ' ', loc, 'pre-open-para', ht);
@@ -3125,12 +3129,11 @@ function string2umr(annotText) {
  * @param loaded_alignment
  * @param annotText
  */
-function text2umr(loaded_umr={}, loaded_alignment='', annotText="") {
+function text2umr(loaded_umr={}, loaded_alignment='', annotText="", change_umr=false) {
     if (annotText) {
-        // let loaded_umr = umr;
-        let rest = string2umr(annotText);
+        string2umr(annotText); //populated umr
 
-        if(Object.keys(loaded_umr).length > 1){
+        if(Object.keys(loaded_umr).length > 1 && change_umr){
             umr = loaded_umr;
         }
 
@@ -3148,28 +3151,7 @@ function text2umr(loaded_umr={}, loaded_alignment='', annotText="") {
                 umr[loc + '.a'] = align_info;
             }
         }
-
-        if (!rest.match(/\S/)) {
-            rest = '';
-        }
-        if (rest.match(/\S/)) {
-            console.log('Remaining text: ' + rest);
-        }
     }
-
-    // to be deleted if we can get the info from umr directly
-    // var alignArray = document.getElementById('align').innerText.trim().split(/\n/);
-    // var alignArrayLen = alignArray.length;
-    // for (var i = 0; i < alignArrayLen; i++) {
-    //     var splitted_align = alignArray[i].split(":");
-    //     var loaded_concept = splitted_align[0].trim();
-    //     var loaded_variable = splitted_align[1].trim();
-    //     var loaded_align = splitted_align[2].trim();
-    //     var loc = getLocs(loaded_variable);
-    //     umr[loc + '.a'] = loaded_align;
-    // }
-    // console.log(umr);
-
     show_amr('show');
 }
 function selectEvent(){
