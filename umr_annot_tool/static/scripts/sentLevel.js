@@ -31,7 +31,7 @@ let undo_index = 0; //2
 let default_langs = ['default', 'sanapana', "arapahoe", "navajo", "secoya", "kukama"]
 var reserved_variables = {};
 
-var last_state_id = 0; //3
+let last_state_id = 0; //for undo and redo
 var state_has_changed_p = 0; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished
 var load_amr_feedback = ''; //绿色的pennman html string
 var load_amr_feedback_alert = 0; //0
@@ -78,13 +78,12 @@ var next_special_action = ''; //''
  *
  * @param frame_dict_str: frame json file from post
  * @param lang: language of this document
- * @param lexicon
+ * @param lexicon: the temporary dictionary
  */
 function initialize(frame_dict_str, lang, lexicon) {
     language = lang;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
-    // reset_load(''); //不按load button没有用
     current_mode = 'top';
     // parse frame files
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
@@ -348,27 +347,27 @@ function show_attribute_values(){
 
 /** undo *******************************************************/
 /**
- * Handle the 3 simple types, and null or undefined
- * used to copy a dictionary
+ *  copy a plain Object, Array, Date, String, Number, or Boolean
+ *  code from https://stackoverflow.com/questions/728360/how-do-i-correctly-clone-a-javascript-object
  * @param obj
  * @returns {*}
  */
 function clone(obj) {
-    // copied from Web
+    let copy;
+    // Handle the 3 simple types, and null or undefined
     if (null == obj || "object" != typeof obj) return obj;
 
     // Handle Date
     if (obj instanceof Date) {
-        var copy = new Date();
+        copy = new Date();
         copy.setTime(obj.getTime());
         return copy;
     }
 
     // Handle Array
     if (obj instanceof Array) {
-        var copy = [];
-        var len = obj.length;
-        for (var i = 0; i < len; ++i) {
+        copy = [];
+        for (let i = 0, len = obj.length; i < len; ++i) {
             copy[i] = clone(obj[i]);
         }
         return copy;
@@ -376,15 +375,14 @@ function clone(obj) {
 
     // Handle Object
     if (obj instanceof Object) {
-        var copy = {};
-        for (var attr in obj) {
+        copy = {};
+        for (let attr in obj) {
             if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr]);
         }
         return copy;
     }
 
-    // throw new Error("Unable to copy obj! Its type isn't supported.");
-    add_log('clone error: cannot clone object ' + obj);
+    console.log(`clone error: cannot clone/copy object: ${obj}. Its type isn't supported.`);
     return obj;
 }
 
@@ -399,7 +397,6 @@ function cloneCurrentState() {
     current_state['concepts'] = clone(concepts);
     last_state_id++;
     current_state['id'] = last_state_id;
-    console.log('Created state ' + last_state_id + ' for undo and redo.');
     return current_state;
 }
 
@@ -2715,7 +2712,8 @@ function show_amr(args) {
             s.value = deHTML(amr_s);
         }
         if (amr_s === '') {
-            html_amr_s = '<i>empty umr</i>';
+            // html_amr_s = '<i>empty umr</i>';
+            amr_s = '';
         } else {
             html_amr_s = amr_s;
         }
