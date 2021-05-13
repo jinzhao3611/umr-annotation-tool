@@ -1,5 +1,5 @@
 let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": false, "option-1-line-ORs": false,
-    "option-fix-font":true, "option-role-auto-case":false, "option-auto-check":true, "option-auto-moveto":true,
+    "option-fix-font":true, "option-role-auto-case":false,  "option-auto-moveto":true,
     "option-confirm-delete":false, "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
 
 let abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
@@ -40,7 +40,6 @@ var load_amr_feedback_alert = 0; //0
 var show_amr_status = 'show'; //'show'
 var show_amr_mo_lock = ''; // '' affects coloring
 let current_template = ''; //"top, add, options..."
-var max_show_amr_ops = 5000; // 5000
 var current_onto_popup_window = ''; //this is a Window object, not a string?
 var saved_sentence_prop_values = ["", "", "", "", ""]; //["", "", "", "", ""]
 var previous_log_messages = {}; // {}
@@ -2369,13 +2368,11 @@ function show_amr_new_line_p(loc) {
  * @returns {number}
  */
 function role_unquoted_string_arg(role, arg, loc) {
-    console.log("role_unquoted_string_arg: role: " + role + " arg: " + arg + " loc: "+ loc);
     let head_loc = '';
     let head_concept = '';
     let head_role = '';
     if (loc.match(/\.\d+$/)) { //example match: .999
         head_loc = loc.replace(/\.\d+$/, "");
-        head_concept = umr[head_loc + '.c'] || '';
         head_role = umr[head_loc + '.r'] || '';
     }
     if (role.match(/^:op/) && (head_role === ':name')) {
@@ -2413,13 +2410,8 @@ function tolerate_special_concepts(s) {
  * @returns {string} returns a html string that represents the penman format
  */
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
-    // loc=1, args="show", rec=0, ancestor_elem_id_list=' '
-    console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
-    // console.log("umr from show_amr_rec: ", umr);
-
-    loc += ''; // '1'
-    if (umr[loc + '.d']) { // umr['1.d'], already been deleted
-        // console.log('show AMR rec deleted: ' + loc);
+    loc += '';
+    if (umr[loc + '.d']) { //already been deleted
         return '';
     } else {
         let concept = umr[loc + '.c']; // umr['1.c']
@@ -2445,7 +2437,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         var s = '';
         var show_replace = args.match(/replace/);
         var show_delete = args.match(/delete/);
-        var show_check = args.match(/check/) || (show_amr_obj['option-auto-check'] && (!show_replace) && (!show_delete));
+        var show_check = args.match(/check/) || ((!show_replace) && (!show_delete));
         var concept_m = concept;
         var variable_m = variable;
         var tree_span_args = '';
@@ -2456,9 +2448,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         var onclick_fc = '';
         var head_loc, head_concept, head_variable, core_concept, var_locs;
 
-        if (max_show_amr_ops-- <= 0) {
-            return 'MAXXED OUT';
-        }
         if (rec) {
             role = umr[loc + '.r']; //umr['1.v']
             role_m = role;
@@ -2529,11 +2518,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             }
-            // else if (show_head){
-            //     concept_m = concept;
-            //     variable_m = '<span style="color: #0000FF">' + variable + '</span>';
-            // }
-            // s += '(' + variable_m + '-' + alignment_index + ' / ' + concept_m;
             s += '(' + variable_m + ' / ' + concept_m;
 
             var n = umr[loc + '.n'];
@@ -2677,7 +2661,6 @@ function show_amr(args) {
     let s;
     let html_amr_s;
     n_elems_w_id = 0;
-    max_show_amr_ops = 5000;
     show_amr_mo_lock = '';
     let origScrollHeight = '';
     let origScrollTop = '';
@@ -2699,22 +2682,7 @@ function show_amr(args) {
             }
         }
 
-        //should only affect save
-        if ((s = document.getElementById('plain-amr')) != null) {
-            s.value = deHTML(amr_s);
-        }
-        if ((s = document.getElementById('plain-amr2')) != null) {
-            s.value = deHTML(amr_s);
-        }
-        if ((s = document.getElementById('plain-amr3')) != null) {
-            s.value = deHTML(amr_s);
-        }
-        if (amr_s === '') {
-            // html_amr_s = '<i>empty umr</i>';
-            amr_s = '';
-        } else {
-            html_amr_s = amr_s;
-        }
+        html_amr_s = amr_s;
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
         //todo how is this different
         html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
