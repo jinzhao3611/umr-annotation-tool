@@ -2442,7 +2442,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         var onclick_fc = '';
         var head_loc, head_concept, head_variable, core_concept, var_locs;
 
-        if (rec) {
+        if (rec) { //if recursive
             role = umr[loc + '.r']; //umr['1.v']
             role_m = role;
             if (show_replace) {
@@ -2484,7 +2484,8 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             }
             console.log("role_m: " + role_m);
         } else if (show_check && (var_locs = getLocs(variable))) {
-            var n = var_locs.split(" ").length;
+            let n = var_locs.split(" ").length;
+            //this is the place that the reentrance of the variable got the same color with the one it co-referenced
             if (n >= 2) {
                 elem_id = 'elem_var_id_' + loc;
                 onmouseover_fc = 'color_all_var_occurrences(\'' + variable + '\',\'#FF0000\')';
@@ -2494,7 +2495,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             }
         }
         if (rec) {
-            // console.log('show_amr_rec role ' + htmlProtect(role_m));
             s += role_m + ' ';
         }
         if (concept) {
@@ -2580,13 +2580,11 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                     = ordered_indexes.concat(name_indexes, opx_indexes, argx_indexes, other_indexes);
             }
             // console.log('ordered_indexes(' + concept + ') Point D: ' + ordered_indexes.join(', '));
-            for (var i = 0; i < ordered_indexes.length; i++) {
-                var index = ordered_indexes[i];
-                var show_amr_rec_result; // this stores one amr line
-                var sub_loc = loc + '.' + index;
-                // console.log("args here1: " + args);
-                if (show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' ')) {
-                    // add_log('Point D: ' + sub_loc + ' ' + show_amr_rec_result);
+            for (let i = 0; i < ordered_indexes.length; i++) {
+                let index = ordered_indexes[i];
+                let sub_loc = loc + '.' + index;
+                let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
+                if (show_amr_rec_result) {
                     if (show_amr_new_line_p(sub_loc)) {
                         s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
                     } else {
@@ -2648,7 +2646,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
 
 /**
  * this is the function populate the show_amr_obj with the options table content, and print out the penman format output to webpage
- * @param args "show" or "show replace" or "show delete"
+ * @param args "show" or "show replace" or "show delete", if args is empty string, nothing will be shown
  */
 function show_amr(args) {
     //comply with the loaded options
@@ -2668,24 +2666,21 @@ function show_amr(args) {
         let amr_s = '';
         let n = umr['n']; // how many children currently in the tree
         for (let i = 1; i <= n; i++) { //traverse children
-            let show_amr_rec_result;
-            // console.log("args here: " + args);
-            if (show_amr_rec_result = show_amr_rec(i, args, 0, ' ')) {
+            let show_amr_rec_result = show_amr_rec(i, args, 0, ' ');
+            if (show_amr_rec_result){
                 amr_s += show_amr_rec_result + '\n';
-                // console.log("amr_s: " + amr_s);
             }
         }
 
         html_amr_s = amr_s;
+        //todo: should I change the order of the two lines?
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
-        //todo how is this different
-        html_amr_s = html_amr_s.replace(/&xA;/g, "\n");
-
+        html_amr_s = html_amr_s.replace(/&xA;/g, "\n"); //&xA;, It is the equivalent to \n -> LF (Line Feed).https://stackoverflow.com/questions/5541222/what-is-the-xa-character
+        // this is the actual output part
         setInnerHTML('amr', html_amr_s);
         show_amr_status = args;
     }
     if ((s = document.getElementById('amr')) != null) {
-        // this is the actual output part
         var height = s.style.height;
         var intScrollTop = 0;
         var newScrollTop = 0;
@@ -3106,7 +3101,7 @@ function text2umr(loaded_umr={}, loaded_alignment='', annotText="", change_umr=f
         //fill in the alignment information to umr
         if(loaded_alignment){
             console.log('loaded_alignment: ', loaded_alignment);
-            let matches = loaded_alignment.match(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm); //["(s1f): 4-4", "(s1t): 3-3"]
+            let matches = loaded_alignment.match(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm); //["(s1f): 4-4", "(s1t): 3-3"] //todo: does this match that special character in navajo
             for(let i=0; i<matches.length; i++){
                 let variable = matches[i].replace(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm, '$1');
                 console.log('variable: ', variable);
@@ -3415,6 +3410,21 @@ function UMR2db() {
     console.log(amrHtml);
     console.log(align_info);
     console.log(umr);
+
+    //remove branch that contains .d
+    let locs_to_delete = []
+    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+        if(key.match(/\d+.d/) && umr[key] === 1){ //traverse all the .d items in umr that have a value of 1
+            locs_to_delete.push(key.replace("/.d/", ""));
+        }
+    });
+    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+        for (const loc of locs_to_delete){
+            if(key.startsWith(loc)){
+                delete umr.key;
+            }
+        }
+    });
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
