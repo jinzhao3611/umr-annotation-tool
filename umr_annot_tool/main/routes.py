@@ -14,7 +14,7 @@ from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.ext.mutable import MutableDict
 
 import time
-# from suggest_sim_words import generate_candidate_list, find_suggested_words
+from suggest_sim_words import generate_candidate_list, find_suggested_words
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
@@ -96,7 +96,6 @@ def annotate(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
-    # word_candidates = generate_candidate_list(doc.content, doc.file_format)
     info2display = html(doc.content, doc.file_format)
     frame_dict = {}
     if doc.lang == "chinese":
@@ -108,14 +107,6 @@ def annotate(doc_id):
         snt_id = int(request.form["sentence_id"])
 
     if request.method == 'POST':
-        # try:
-        #     selected_word = request.get_json(force=True)['selected_word']
-        #     similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
-        #     res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-        #     return res
-        # except:
-        #     print("no word selected")
-
         # add to db
         try:
             amr_html = request.get_json(force=True)["amr"]
@@ -125,21 +116,21 @@ def annotate(doc_id):
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr"]
 
-            # try:
-            #     existing_user = User.query.filter(User.id == current_user.id).first()
-            #     try:
-            #         curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}} # curr_lexicon = {"aphleamkehlta": "test-05"}
-            #         new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
-            #         curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
-            #     except: #empty lexicon
-            #         curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
-            #
-            #     new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
-            #     existing_user.lexicon.update({doc.lang: new_mutable_dict})
-            #     flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
-            #     db.session.commit()
-            # except:
-            #     print("error in add lexicon!!!")
+            try:
+                existing_user = User.query.filter(User.id == current_user.id).first()
+                try:
+                    curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}} # curr_lexicon = {"aphleamkehlta": "test-05"}
+                    new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
+                    curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
+                except: #empty lexicon
+                    curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
+
+                new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
+                existing_user.lexicon.update({doc.lang: new_mutable_dict})
+                flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
+                db.session.commit()
+            except:
+                print("error in add lexicon!!!")
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
@@ -210,7 +201,7 @@ def annotate(doc_id):
                            exported_items=exported_items,
                            file_format=doc.file_format,
                            content_string=doc.content.replace('\n', '<br>'),
-                           lexicon=lexicon)
+                           lexicon=lexicon,)
 
 
 @main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])
@@ -306,6 +297,24 @@ def doclevel(doc_id):
 def about():
     return render_template('about.html', title='About')
 
+@main.route("/lexicon/<doc_id>", methods=['GET', 'POST'])
+def lexicon(doc_id):
+    doc = Doc.query.get_or_404(doc_id)
+    if request.method == 'POST':
+        try:
+            selected_word = request.get_json(force=True)['selected_word']
+            word_candidates = generate_candidate_list(doc.content, doc.file_format)
+            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+
+            print("selected_word:", selected_word)
+            print("similar_word_list: ", similar_word_list)
+            return res
+        except:
+            print("no word selected")
+
+
+    return render_template('lexicon.html', doc_id=doc_id)
 
 @main.route("/")
 @main.route("/display_post")

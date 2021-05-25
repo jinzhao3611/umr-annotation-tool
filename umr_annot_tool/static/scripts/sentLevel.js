@@ -13,8 +13,8 @@ let current_mode;
 let current_attribute;
 let current_ne_concept;
 let frame_json = {};
-// let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
-// let similar_word_list ={};
+let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
+let similar_word_list ={};
 
 let selection;
 let begOffset;
@@ -29,48 +29,20 @@ let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1
 let undo_index = 0; //2
 
 let default_langs = ['default', 'sanapana', "arapahoe", "navajo", "secoya", "kukama"]
-var reserved_variables = {}; //variables that are already in use in the current umr graph
+let reserved_variables = {}; //variables that are already in use in the current umr graph
 
 let last_state_id = 0; //for undo and redo
-var state_has_changed_p = 0; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished
+let state_has_changed_p = 0; // one state is one action got executed
 let load_amr_feedback = ''; //pennman html string
-var load_amr_feedback_alert = 0; //0
+let load_amr_feedback_alert = 0; //0
 
 
-var show_amr_status = 'show'; //'show'
-var show_amr_mo_lock = ''; // '' affects coloring
+let show_amr_status = 'show'; //'show'
+let show_amr_mo_lock = ''; // '' affects coloring
 let current_template = ''; //"top, add, options..."
-var current_onto_popup_window = ''; //this is a Window object, not a string?
-var saved_sentence_prop_values = ["", "", "", "", ""]; //["", "", "", "", ""]
-var previous_log_messages = {}; // {}
-var ceo_ht; // {1: 1, open.1: 0, open.1.1: 0, open.1.1.1: 0, 1.1.1: 1, 1.1: 1}
-var browserUserAgent = navigator.userAgent || '';
-var frame_arg_descr = {}; //{"": ""}
 
-var is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
-var is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
-
-var next_special_action = ''; //''
-
-// /**
-//  * traverse current umr and map inflection form (selected from the sentences table) and citation form (umr concept) in citation_dict
-//  */
-// function updateCitationDict(){
-//     Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-//         if(key.match(/\d+.a/) && umr[key] !== "-1--1"){ //traverse all the .a items in umr that does have alignment value
-//             let citation = umr[key.replace('.a', '.c')]; //get concept
-//             console.log("citation form in umr:", citation);
-//             let index = parseInt(umr[key].split('-')[0]) + 1;
-//             console.log("alignment of this citation form",index);
-//             let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
-//             if(citation !== inflectedForm){
-//                 citation_dict[inflectedForm] = citation;
-//                 // console.log("citation_dict: ", citation_dict);
-//             }
-//         }
-//     })
-//     // console.log("citation_dict: ", citation_dict);
-// }
+let is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
+let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
 /**
  *
@@ -87,7 +59,7 @@ function initialize(frame_dict_str, lang, lexicon) {
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
     begOffset = -1;
     endOffset = -1;
-    // citation_dict = JSON.parse(deHTML(lexicon));
+    citation_dict = JSON.parse(deHTML(lexicon));
     // console.log('citation_dict from initialize: ', citation_dict);
 }
 
@@ -150,7 +122,7 @@ function conceptDropdown(lang='english') {
             submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
 
 
-            // Object.keys(citation_dict).forEach(function(key) {
+            // Object.keys(citation_dict.forEach(function(key) {
             //     console.log(key);
             //     console.log(similar_word_list['similar_word_list']);
             //     if (similar_word_list['similar_word_list'].includes(key)){
@@ -3121,35 +3093,6 @@ function selectEvent(){
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
-        // let doc_id = document.getElementById('doc_id').innerText; //doc_id in the head of the page
-        // fetch(`/annotate/${doc_id}`, {
-        //     method: 'POST',
-        //     body: JSON.stringify({"selected_word": document.getElementById('selected_tokens').innerHTML})
-        // }).then(function (response) {
-        //     return response.json();
-        // }).then(function (data) {
-        //     // put data in display
-        //     similar_word_list = data;
-        //     const cont = document.getElementById('similar_word_list');
-        //     document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
-        //     // create ul element and set its attributes.
-        //     const ul = document.createElement('ul');
-        //     ul.setAttribute ('class', 'list-group');
-        //     ul.setAttribute ('id', 'simWordList');
-        //     for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
-        //         const li = document.createElement('li');	// create li element.
-        //         li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
-        //         li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
-        //         ul.appendChild(li);		// append li to ul.
-        //     }
-        //     cont.appendChild(ul);		// add ul to the container.
-        // }).catch(function(error){
-        //     console.log("Fetch error: "+ error);
-        // });
-
-        // console.log("selection: ", selection.anchorNode.parentNode.tagName);
-        // console.log("selection2: ", selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id);
-
         if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id==='table2'){
             table_id = 2;
         }
@@ -3168,9 +3111,12 @@ function selectEvent(){
             endOffset = selection.focusNode.parentElement.cellIndex;
         }
     };
-
 }
-
+function get_selected_word(){
+    localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
+    localStorage.setItem('umr', JSON.stringify(umr));
+    console.log("selected word from javascript", localStorage["selected_word"]);
+}
 function highlightSelection() {
     console.log("highlightSelection is called.");
 
@@ -3428,8 +3374,8 @@ function UMR2db() {
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        // body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr, "citation_dict":citation_dict})
-        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
+        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr, "citation_dict":citation_dict})
+        // body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -3594,7 +3540,84 @@ function export_annot(exported_items, content_string) {
     } else {
         console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
     }
-
-
 }
 
+function lexicon(doc_id){
+    fetch(`/lexicon/${doc_id}`, {
+        method: 'POST',
+        body: JSON.stringify({"selected_word": localStorage["selected_word"]})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        // put data in display
+        similar_word_list = data;
+        const cont = document.getElementById('similar_word_list');
+        document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
+        // create ul element and set its attributes.
+        const ul = document.createElement('ul');
+        ul.setAttribute ('class', 'list-group');
+        ul.setAttribute ('id', 'simWordList');
+        for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
+            const li = document.createElement('li');	// create li element.
+            li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
+            li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
+            ul.appendChild(li);		// append li to ul.
+        }
+        cont.appendChild(ul);		// add ul to the container.
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
+    });
+}
+
+
+/**
+ * traverse current umr and map inflection form (selected from the sentences table) and citation form (umr concept) in citation_dict
+ */
+function updateCitationDict(){
+    let umr = JSON.parse(localStorage.getItem('umr'));
+    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+        //todo: this doesnt work, need changing
+        if(key.match(/\d+.a/) && umr[key] !== "-1--1"){ //traverse all the .a items in umr that does have alignment value
+            let citation = umr[key.replace('.a', '.c')]; //get concept
+            console.log("citation form in umr:", citation);
+            let index = parseInt(umr[key].split('-')[0]) + 1;
+            console.log("alignment of this citation form",index);
+            let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
+            if(citation !== inflectedForm){
+                citation_dict[inflectedForm] = citation;
+                // console.log("citation_dict: ", citation_dict);
+            }
+        }
+    })
+    // console.log("citation_dict: ", citation_dict);
+}
+
+function temp(){
+    citation_dict = {
+        "hlak": {"forms": ["ehlhlakama"], "pos": "v", "definitionorgloss": "sell (pl.)", "argument-structure":"ARG0: seller; ARG1: sold thing; ARG2: buyer", "coding-frames":["1[first.person]-V (> 0, 1)", "0-V (> 0, 2)", "1 > 0-V (> 0)", "0-V (> 0, 1)", "0 > 0-V (> 1)"]},
+        "hlengkes": {"forms": ["ehlhlengkeskama"]},
+        "eyv": {"forms": ["eleyvoma"]},
+        "hahln": {"forms": ["enghahlnay'a"]},
+        "hla'm": {"forms": ["enhla'moma"]},
+    }
+}
+
+function add2Lexicon(lemma){
+    console.log(lemma);
+    if(lemma in citation_dict){
+        citation_dict[lemma]["forms"].push(document.getElementById("selected_word").innerHTML);
+    }else{
+        citation_dict[lemma] = {"forms":[]};
+        citation_dict[lemma]["forms"].push(document.getElementById("selected_word").innerHTML);
+    }
+}
+
+function list_lexicon(){
+    let ul = document.createElement('ul');
+    document.getElementById('lexicon_list').appendChild(ul);
+    Object.keys(citation_dict).forEach(function (item) {
+        let li = document.createElement('li');
+        ul.appendChild(li);
+        li.innerHTML += item;
+    });
+}
