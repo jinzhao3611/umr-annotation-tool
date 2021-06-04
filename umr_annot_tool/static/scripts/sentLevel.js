@@ -3063,7 +3063,7 @@ function string2umr(annotText) {
  * @param change_umr: this is to indicate whether we inherit the umr dictionary from database, or generate through annotText
  */
 function text2umr(loaded_umr={}, loaded_alignment='', annotText="", change_umr=false) {
-    if (annotText) {
+    if (annotText && annotText!=="empty umr") { //annotText!=="empty umr" is because the older version saved <i>empty umr<i> in database sometimes
         string2umr(annotText); //populated umr
 
         if(Object.keys(loaded_umr).length > 1 && change_umr){
