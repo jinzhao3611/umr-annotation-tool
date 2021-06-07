@@ -19,7 +19,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    lexicon = db.Column(MutableDict.as_mutable(JSON)) #https://bugs.launchpad.net/fuel/+bug/1482658
 
     posts = db.relationship('Post', backref='author', lazy=True)
     annotations = db.relationship('Annotation', backref='author', lazy=True)
