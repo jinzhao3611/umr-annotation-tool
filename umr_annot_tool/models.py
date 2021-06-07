@@ -97,5 +97,9 @@ class Annotation(db.Model):
     #     return f"Post('{self.sent_level_content}', '{self.doc_level_content}')"
 
 
+class Lexicon(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    lang = db.Column(db.Text, nullable=False)
+    lexi = db.Column(MutableDict.as_mutable(JSON))
 
 

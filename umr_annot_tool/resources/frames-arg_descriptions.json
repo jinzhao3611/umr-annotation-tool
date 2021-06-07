@@ -702,7 +702,7 @@
     "ARG0": "watchful entity"
   },
   "alien-01": {
-    "ARG1": "unfamiliar thing, thing that\\'s alien",
+    "ARG1": "unfamiliar thing, thing that's alien",
     "ARG2": "perceiver, alien to whom?"
   },
   "alienate-01": {
@@ -851,7 +851,7 @@
   },
   "amount-02": {
     "ARG1": "focus",
-    "ARG2": "ground, introduced by \\'to\\'"
+    "ARG2": "ground, introduced by 'to'"
   },
   "amplify-01": {
     "ARG0": "causer of becoming louder",
@@ -1254,7 +1254,7 @@
     "ARG1": "thing stopping"
   },
   "arrive-01": {
-    "ARG1": "entity in motion / \\'comer\\'",
+    "ARG1": "entity in motion / 'comer'",
     "ARG2": "extent -- rare)",
     "ARG3": "start point -- also rare)",
     "ARG4": "end point, destination"
@@ -1639,7 +1639,7 @@
     "ARG1": "Body part, object"
   },
   "await-01": {
-    "ARG1": "wait-er (not waiter, that\\'s a different sense)",
+    "ARG1": "wait-er (not waiter, that's a different sense)",
     "ARG2": "thing waited for",
     "ARGM-TMP": "period of time waited through"
   },
@@ -1722,7 +1722,7 @@
   },
   "backfire-01": {
     "ARG1": "thing with bad result",
-    "ARG2": "\\'benefactive\\'"
+    "ARG2": "'benefactive'"
   },
   "backlash-01": {
     "ARG0": "agent, one lashing back",
@@ -2141,7 +2141,7 @@
     "ARG2": "question, topic of utterance"
   },
   "be-it-08": {
-    "ARG1": "thing at the lower end of expectation (often \\'that\\')",
+    "ARG1": "thing at the lower end of expectation (often 'that')",
     "ARG2": "domain or larger set",
     "ARG3": "benefactive/malefactive; entity needing more arg1"
   },
@@ -2614,7 +2614,7 @@
   "bid-01": {
     "ARG0": "bidder",
     "ARG1": "the target, goods",
-    "ARG2": "how much you\\'re bidding, buying price"
+    "ARG2": "how much you're bidding, buying price"
   },
   "bid-02": {
     "ARG0": "bidder",
@@ -2703,7 +2703,7 @@
   },
   "binding-affinity-91": {
     "ARG1": "binding affinity constant measured (e.g. dissociation-constant (Kd), inhibitor-constant (Ki))",
-    "ARG2": "binding affinity quantity (e.g. concentration-quantity such as \\'5 nanomolar\\')"
+    "ARG2": "binding affinity quantity (e.g. concentration-quantity such as '5 nanomolar')"
   },
   "biopsy-101": {
     "ARG0": "Doctor",
@@ -3721,7 +3721,7 @@
     "ARG2": "topic"
   },
   "bright-02": {
-    "ARG0": "light source, light itself (default if you can\\'t tell)",
+    "ARG0": "light source, light itself (default if you can't tell)",
     "ARG1": "location illuminated"
   },
   "bright-03": {
@@ -3830,7 +3830,7 @@
   },
   "broke-23": {
     "ARG1": "entity without money",
-    "ARG2": "the money arg1 doesn\\'t have"
+    "ARG2": "the money arg1 doesn't have"
   },
   "broke-ass-24": {
     "ARG1": "broke-ass (broken) thing"
@@ -4261,7 +4261,7 @@
   },
   "butler-01": {
     "ARG0": "Butler",
-    "ARG1": "Lucky person, org, event, with butler\\'s services"
+    "ARG1": "Lucky person, org, event, with butler's services"
   },
   "butt-in-01": {
     "ARG0": "nosy individual, agent"
@@ -4457,7 +4457,7 @@
   },
   "call-11": {
     "ARG0": "entity in charge, official decision maker",
-    "ARG1": "\\'the shots\\' (or related)"
+    "ARG1": "'the shots' (or related)"
   },
   "call-13": {
     "ARG0": "caller",
@@ -4667,7 +4667,7 @@
   },
   "care-02": {
     "ARG0": "liker, wanter",
-    "ARG1": "what arg0 does or doesn\\'t want/like (to do)"
+    "ARG1": "what arg0 does or doesn't want/like (to do)"
   },
   "care-03": {
     "ARG0": "care-giver",
@@ -4722,7 +4722,7 @@
     "ARG0": "carrier",
     "ARG1": "thing carried",
     "ARG2": "instrument",
-    "ARG3": "\\'with\\' reflecting back on arg0",
+    "ARG3": "'with' reflecting back on arg0",
     "ARG4": "benefactive (predicted but not seen)"
   },
   "carry-off-05": {
@@ -5509,7 +5509,7 @@
   "cinch-02": {
     "ARG0": "attacher",
     "ARG1": "thing(s) attached",
-    "ARG2": "\\'together\\' or other attribute of arg1"
+    "ARG2": "'together' or other attribute of arg1"
   },
   "cinch-03": {
     "ARG0": "cause of sureness",
@@ -5535,7 +5535,7 @@
   },
   "circulate-01": {
     "ARG0": "causer",
-    "ARG1": "thing going \\'round"
+    "ARG1": "thing going 'round"
   },
   "circumcise-01": {
     "ARG0": "agent, cause",
@@ -5714,7 +5714,7 @@
   "clear-02": {
     "ARG0": "agent, approver",
     "ARG1": "thing approved",
-    "ARG2": "semi-idiomatic: \\'the way\\'",
+    "ARG2": "semi-idiomatic: 'the way'",
     "ARG3": "entity given permission for arg1"
   },
   "clear-03": {
@@ -6266,7 +6266,7 @@
     "ARG2": "instrument"
   },
   "come-01": {
-    "ARG1": "entity in motion / \\'comer\\'",
+    "ARG1": "entity in motion / 'comer'",
     "ARG2": "extent -- rare",
     "ARG3": "start point",
     "ARG4": "end point"
@@ -6964,7 +6964,7 @@
     "ARG3": "affected entity"
   },
   "consequential-01": {
-    "ARG1": "thing that\\'s consequential",
+    "ARG1": "thing that's consequential",
     "ARG2": "To whom, what does it have import?"
   },
   "conserve-01": {
@@ -7676,7 +7676,7 @@
     "ARG0": "hitter",
     "ARG1": "hit",
     "ARG2": "instrument of hitting",
-    "ARG3": "location, usually with \\'across\\'"
+    "ARG3": "location, usually with 'across'"
   },
   "crack-07": {
     "ARG0": "entity trying",
@@ -7732,7 +7732,7 @@
   },
   "crank-up-01": {
     "ARG0": "cranker",
-    "ARG1": "what\\'s gotten more intense"
+    "ARG1": "what's gotten more intense"
   },
   "crap-01": {
     "ARG0": "Agent of crapping",
@@ -7987,7 +7987,7 @@
     "ARG0": "interrogator",
     "ARG1": "witness",
     "ARG2": "subject-matter of interrogation",
-    "ARG3": "witness\\'s role in the proceedings"
+    "ARG3": "witness's role in the proceedings"
   },
   "crosspollinate-01": {
     "ARG0": "farmer, bees, agent",
@@ -8109,7 +8109,7 @@
   },
   "cry-out-05": {
     "ARG0": "crier",
-    "ARG1": "fixed: arg0\\'s \\'eyes\\'",
+    "ARG1": "fixed: arg0's 'eyes'",
     "ARG2": "over what",
     "ARG3": "to whom"
   },
@@ -8447,7 +8447,7 @@
     "ARG2": "impelled action"
   },
   "dark-02": {
-    "ARG1": "thing that doesn\\'t reflect light",
+    "ARG1": "thing that doesn't reflect light",
     "ARG2": "specific part of arg1, if also mentioned"
   },
   "dark-03": {
@@ -8873,7 +8873,7 @@
   },
   "default-01": {
     "ARG1": "group/entity unable to pay",
-    "ARG2": "what they can\\'t pay for",
+    "ARG2": "what they can't pay for",
     "ARG3": "loaner of money",
     "ARG4": "amount of money"
   },
@@ -10897,7 +10897,7 @@
   },
   "dread-01": {
     "ARG0": "afraid entity",
-    "ARG1": "what you\\'re afraid of"
+    "ARG1": "what you're afraid of"
   },
   "dreadful-02": {
     "ARG1": "generally awful thing",
@@ -12393,8 +12393,8 @@
     "ARG1": "hole"
   },
   "exceed-01": {
-    "ARG0": "thing that\\'s more",
-    "ARG1": "thing that\\'s less",
+    "ARG0": "thing that's more",
+    "ARG1": "thing that's less",
     "ARG2": "margin, difference"
   },
   "excel-01": {
@@ -12424,8 +12424,8 @@
     "ARG2": "entity extracted from"
   },
   "excessive-02": {
-    "ARG1": "thing that\\'s excessive",
-    "ARG2": "specific attribute of arg1 that\\'s excessive"
+    "ARG1": "thing that's excessive",
+    "ARG2": "specific attribute of arg1 that's excessive"
   },
   "exchange-01": {
     "ARG0": "agent, entity trading",
@@ -13645,11 +13645,11 @@
   },
   "flake-02": {
     "ARG0": "person failing to meet obligations",
-    "ARG1": "obligation, event, coparticipant arg0 fails, often with \\'on\\'"
+    "ARG1": "obligation, event, coparticipant arg0 fails, often with 'on'"
   },
   "flake-out-03": {
     "ARG0": "agent, person failing obligations",
-    "ARG1": "obligations shirked, often with \\'on\\'"
+    "ARG1": "obligations shirked, often with 'on'"
   },
   "flame-01": {
     "ARG1": "entity flaming"
@@ -13951,7 +13951,7 @@
     "ARG0": "pilot, agentive entity capable of flight (like a bird)",
     "ARG1": "passenger, cargo",
     "ARG2": "aircraft flown, flight number, steed, non-agentive thing in motion",
-    "ARG3": "type of flight plan, mission, cognate object (like \\'a flight\\' or \\'sorties\\')",
+    "ARG3": "type of flight plan, mission, cognate object (like 'a flight' or 'sorties')",
     "ARG4": "airline"
   },
   "fly-02": {
@@ -13995,7 +13995,7 @@
     "ARG1": "thing covered with fog"
   },
   "foggy-02": {
-    "ARG1": "explicit location that is foggy (copular subject, not empty \\'it\\')"
+    "ARG1": "explicit location that is foggy (copular subject, not empty 'it')"
   },
   "foggy-03": {
     "ARG1": "entity with poor mental clarity/understanding",
@@ -14100,7 +14100,7 @@
   },
   "foot-01": {
     "ARG0": "payer",
-    "ARG1": "some variation on \\'the bill\\'"
+    "ARG1": "some variation on 'the bill'"
   },
   "forage-01": {
     "ARG0": "searcher",
@@ -15551,7 +15551,7 @@
   "gore-01": {
     "ARG0": "agent, gorer",
     "ARG1": "victim, entity gored",
-    "ARG2": "instrument, by default \\'horn\\'"
+    "ARG2": "instrument, by default 'horn'"
   },
   "gorge-01": {
     "ARG1": "entity eating",
@@ -16175,8 +16175,8 @@
     "ARG2": "benefactive"
   },
   "hang-out-06": {
-    "ARG1": "Focus person kickin\\' it, or all persons in one mention",
-    "ARG2": "Other person that arg 1 is kickin\\' it with, when separate mention"
+    "ARG1": "Focus person kickin' it, or all persons in one mention",
+    "ARG2": "Other person that arg 1 is kickin' it with, when separate mention"
   },
   "hang-up-03": {
     "ARG0": "call terminator",
@@ -16212,7 +16212,7 @@
   "happy-01": {
     "ARG0": "agent/cause/stimulus of happiness",
     "ARG1": "experiencer of happiness",
-    "ARG2": "what arg0 did to create arg1\\'s happiness (if all present)"
+    "ARG2": "what arg0 did to create arg1's happiness (if all present)"
   },
   "happy-02": {
     "ARG1": "thing bringing luck",
@@ -16281,7 +16281,7 @@
     "ARG1": "controlled"
   },
   "harp-01": {
-    "ARG0": "entity who just can\\'t let it go",
+    "ARG0": "entity who just can't let it go",
     "ARG1": "thing harped on",
     "ARG2": "listener, who is arg0 harping to?"
   },
@@ -16337,7 +16337,7 @@
     "ARG0": "carrier",
     "ARG1": "thing carried",
     "ARG2": "instrument",
-    "ARG3": "\\'with\\' reflecting back on arg0",
+    "ARG3": "'with' reflecting back on arg0",
     "ARG4": "benefactive (predicted but not seen)"
   },
   "haul-in-02": {
@@ -16371,11 +16371,11 @@
   },
   "have-08": {
     "ARG0": "agent, tackler",
-    "ARG1": "thing tackled (\\'at\\' what)"
+    "ARG1": "thing tackled ('at' what)"
   },
   "have-09": {
     "ARG0": "agent, agressor",
-    "ARG1": "fixed: (arg0\\'s) way",
+    "ARG1": "fixed: (arg0's) way",
     "ARG2": "victim/patient"
   },
   "have-10": {
@@ -16384,7 +16384,7 @@
   },
   "have-11": {
     "ARG0": "subject, entity having not yet done arg2",
-    "ARG1": "fixed: \\'yet\\'",
+    "ARG1": "fixed: 'yet'",
     "ARG2": "have yet to what (infinitival S-node complement)"
   },
   "have-a-point-09": {
@@ -16807,7 +16807,7 @@
   "hightail-01": {
     "ARG0": "entity leaving",
     "ARG1": "place left",
-    "ARG2": "fixed: \\'it\\'"
+    "ARG2": "fixed: 'it'"
   },
   "hijack-01": {
     "ARG0": "hijacker, agent",
@@ -16980,7 +16980,7 @@
     "ARG2": "benefactive"
   },
   "hold-out-09": {
-    "ARG1": "wait-er (not waiter, that\\'s the other sense)",
+    "ARG1": "wait-er (not waiter, that's the other sense)",
     "ARG2": "thing waited for",
     "ARGM-TMP": "period of time waited through"
   },
@@ -17107,7 +17107,7 @@
     "ARG0": "Agent vacuuming",
     "ARG1": "dirt, thing vacuumed up",
     "ARG2": "surface (ie, floor)",
-    "ARG3": "instrument (defaults to \\'Hoover vacuum\\')"
+    "ARG3": "instrument (defaults to 'Hoover vacuum')"
   },
   "hop-01": {
     "ARG0": "hopper",
@@ -17150,7 +17150,7 @@
     "ARG0": "Hoser, cleaner",
     "ARG1": "Dirt, thing cleaned off of surface",
     "ARG2": "surface (ie, floor, car, etc)",
-    "ARG3": "instrument (defaults to \\'hose\\')"
+    "ARG3": "instrument (defaults to 'hose')"
   },
   "hospitalize-01": {
     "ARG0": "sender",
@@ -17267,7 +17267,7 @@
   "hunker-01": {
     "ARG0": "entity hunkering",
     "ARG1": "on what, where",
-    "ARGM-DIR": "arg m; most often \\'down\\'"
+    "ARGM-DIR": "arg m; most often 'down'"
   },
   "hunt-01": {
     "ARG0": "hunter",
@@ -18107,7 +18107,7 @@
   },
   "ingratiate-01": {
     "ARG0": "sycophant",
-    "ARG1": "us. \\'self\\'",
+    "ARG1": "us. 'self'",
     "ARG2": "grateful entity"
   },
   "inhabit-01": {
@@ -18148,7 +18148,7 @@
     "ARG2": "injected into what?"
   },
   "injure-01": {
-    "ARG0": "agent, entity causing/possessing arg1\\'s injury",
+    "ARG0": "agent, entity causing/possessing arg1's injury",
     "ARG1": "injured entity (body part if arg0 is possessor)",
     "ARG2": "instrument, injured doing what"
   },
@@ -18767,7 +18767,7 @@
   },
   "jeopardize-01": {
     "ARG0": "agent, entity making a threat",
-    "ARG1": "\\'benefactive\\', entity threatened"
+    "ARG1": "'benefactive', entity threatened"
   },
   "jerk-01": {
     "ARG0": "jerker",
@@ -18831,7 +18831,7 @@
   },
   "jog-02": {
     "ARG0": "agent/cause of remembering",
-    "ARG1": "usually &quot;__\\'s memory&quot;",
+    "ARG1": "usually &quot;__'s memory&quot;",
     "ARG2": "explicit thing being remembered"
   },
   "joggle-01": {
@@ -18938,7 +18938,7 @@
   },
   "jump-06": {
     "ARG0": "entity escaping",
-    "ARG1": "entity escaped from (e.g. bail/trail); or idiomatically \\'jump ship\\'"
+    "ARG1": "entity escaped from (e.g. bail/trail); or idiomatically 'jump ship'"
   },
   "jump-07": {
     "ARG0": "jumper",
@@ -19321,7 +19321,7 @@
     "ARG2": "attribute, label itself"
   },
   "labor-01": {
-    "ARG0": "theme, \\'laborer\\' sorta but not really",
+    "ARG0": "theme, 'laborer' sorta but not really",
     "ARG1": "work, project"
   },
   "labor-02": {
@@ -19355,7 +19355,7 @@
     "ARG2": "the color itself"
   },
   "lactate-01": {
-    "ARG0": "Lactator (whether framed as \\'new mother\\' or \\'breasts\\')"
+    "ARG0": "Lactator (whether framed as 'new mother' or 'breasts')"
   },
   "ladder-01": {
     "ARG0": "unraveller",
@@ -19620,7 +19620,7 @@
   },
   "leaf-02": {
     "ARG0": "thing producing leaves",
-    "ARG1": "final state of the thing once it has leaves, \\'into __\\'"
+    "ARG1": "final state of the thing once it has leaves, 'into __'"
   },
   "leak-01": {
     "ARG0": "thing leaking",
@@ -19993,7 +19993,7 @@
   },
   "light-06": {
     "ARG1": "non-heavy entity",
-    "ARG2": "aspect of arg1 that isn\\'t heavy (if in addition)"
+    "ARG2": "aspect of arg1 that isn't heavy (if in addition)"
   },
   "light-07": {
     "ARG1": "thing reflecting more light",
@@ -20046,7 +20046,7 @@
   "liken-03": {
     "ARG0": "entity making comparison, agent",
     "ARG1": "topic",
-    "ARG2": "thing it\\'s similar to"
+    "ARG2": "thing it's similar to"
   },
   "lilt-01": {
     "ARG0": "lilter",
@@ -20392,7 +20392,7 @@
     "ARG2": "sought in, from"
   },
   "loom-01": {
-    "ARG1": "thing looming, esp \\'disaster\\'"
+    "ARG1": "thing looming, esp 'disaster'"
   },
   "loop-01": {
     "ARG0": "causer of looping",
@@ -20463,7 +20463,7 @@
     "ARG2": "with ..."
   },
   "lose-07": {
-    "ARG1": "what you\\'re not aware of",
+    "ARG1": "what you're not aware of",
     "ARG2": "unaware entity"
   },
   "lose-out-06": {
@@ -20698,7 +20698,7 @@
   "make-fun-04": {
     "ARG0": "mocker",
     "ARG1": "mocked",
-    "ARG2": "reason, what\\'s so funny"
+    "ARG2": "reason, what's so funny"
   },
   "make-it-14": {
     "ARG0": "traveller",
@@ -21307,7 +21307,7 @@
   "milk-02": {
     "ARG0": "milker, agent",
     "ARG1": "thing milked",
-    "ARG2": "for all it\\'s worth"
+    "ARG2": "for all it's worth"
   },
   "mill-01": {
     "ARG0": "grinder",
@@ -21657,7 +21657,7 @@
   "mock-01": {
     "ARG0": "mocker",
     "ARG1": "mocked",
-    "ARG2": "reason, what\\'s so funny"
+    "ARG2": "reason, what's so funny"
   },
   "model-01": {
     "ARG0": "agent, causer",
@@ -21811,7 +21811,7 @@
   "mop-01": {
     "ARG0": "mopper",
     "ARG1": "surface (ie, floor)",
-    "ARG2": "instrument (defaults to \\'mop\\')"
+    "ARG2": "instrument (defaults to 'mop')"
   },
   "mope-01": {
     "ARG0": "moper",
@@ -22978,8 +22978,8 @@
     "ARG1": "sleeping beauty"
   },
   "out-05": {
-    "ARG1": "entity who doesn\\'t have any left",
-    "ARG2": "what there isn\\'t any left of"
+    "ARG1": "entity who doesn't have any left",
+    "ARG2": "what there isn't any left of"
   },
   "out-06": {
     "ARG1": "entity that is no longer in (state/location)",
@@ -23069,8 +23069,8 @@
     "ARG1": "thing outdone"
   },
   "outnumber-01": {
-    "ARG1": "thing that\\'s more",
-    "ARG2": "thing that\\'s less",
+    "ARG1": "thing that's more",
+    "ARG2": "thing that's less",
     "ARG3": "margin, EXT"
   },
   "outpace-01": {
@@ -23122,8 +23122,8 @@
     "ARG2": "outsourced to"
   },
   "outstrip-01": {
-    "ARG0": "thing that\\'s more",
-    "ARG1": "thing that\\'s less",
+    "ARG0": "thing that's more",
+    "ARG1": "thing that's less",
     "ARG2": "margin, difference"
   },
   "outweigh-01": {
@@ -23270,7 +23270,7 @@
     "ARG2": "EXT, margin"
   },
   "overlay-01": {
-    "ARG0": "who\\'s putting what where, agent",
+    "ARG0": "who's putting what where, agent",
     "ARG1": "thing laid",
     "ARG2": "over what"
   },
@@ -23381,8 +23381,8 @@
     "ARG1": "theme, thing overstayed"
   },
   "overstep-01": {
-    "ARG0": "thing that\\'s more",
-    "ARG1": "thing that\\'s less",
+    "ARG0": "thing that's more",
+    "ARG1": "thing that's less",
     "ARG2": "margin, difference"
   },
   "overstimulate-01": {
@@ -24460,7 +24460,7 @@
     "ARG0": "piercer",
     "ARG1": "material pierced",
     "ARG2": "instrument, if arg0 is agent and also present",
-    "ARG3": "what\\'s on other side of material"
+    "ARG3": "what's on other side of material"
   },
   "pigeonhole-01": {
     "ARG0": "agent, person assigning another entity a definite role/place",
@@ -24770,7 +24770,7 @@
     "ARG1": "topic of discussion"
   },
   "play-into-ones-hands-13": {
-    "ARG0": "entity playing into arg1\\'s hands",
+    "ARG0": "entity playing into arg1's hands",
     "ARG1": "manipulator",
     "ARG2": "subject matter"
   },
@@ -26045,7 +26045,7 @@
   },
   "prostitute-01": {
     "ARG0": "prostitute, agent",
-    "ARG1": "thing being prostituted (e.g., oneself, one\\'s body, etc.)"
+    "ARG1": "thing being prostituted (e.g., oneself, one's body, etc.)"
   },
   "prostrate-01": {
     "ARG0": "agent or one who prostrates",
@@ -26386,7 +26386,7 @@
   },
   "push-03": {
     "ARG1": "aging person",
-    "ARG2": "age they\\'re nearing"
+    "ARG2": "age they're nearing"
   },
   "push-04": {
     "ARG0": "advocate",
@@ -26488,7 +26488,7 @@
   "quadruple-01": {
     "ARG0": "causer of increase",
     "ARG1": "thing increasing, rising",
-    "ARG2": "EXT, always unmentioned because it\\'s 4x",
+    "ARG2": "EXT, always unmentioned because it's 4x",
     "ARG3": "start point",
     "ARG4": "end point"
   },
@@ -27319,7 +27319,7 @@
   },
   "recession-02": {
     "ARG1": "entity suffering a recession",
-    "ARG2": "mention of \\'economic\\' or similar"
+    "ARG2": "mention of 'economic' or similar"
   },
   "recharge-01": {
     "ARG0": "cause, charger, agent",
@@ -27336,7 +27336,7 @@
   },
   "recirculate-01": {
     "ARG0": "causer",
-    "ARG1": "thing going \\'round"
+    "ARG1": "thing going 'round"
   },
   "recite-01": {
     "ARG0": "speaker",
@@ -27508,7 +27508,7 @@
   },
   "recuse-01": {
     "ARG0": "entity removing",
-    "ARG1": "thing being withdrawn (often understood as \\'self\\')",
+    "ARG1": "thing being withdrawn (often understood as 'self')",
     "ARG2": "removed from"
   },
   "recycle-01": {
@@ -27593,7 +27593,7 @@
   "redouble-01": {
     "ARG0": "causer of increase",
     "ARG1": "thing increasing, rising",
-    "ARG2": "EXT, always unmentioned because it\\'s 2x",
+    "ARG2": "EXT, always unmentioned because it's 2x",
     "ARG3": "start point",
     "ARG4": "end point"
   },
@@ -27624,7 +27624,7 @@
   },
   "reel-01": {
     "ARG1": "entity which is astounded",
-    "ARG2": "cause of reeling (us. \\'from\\')"
+    "ARG2": "cause of reeling (us. 'from')"
   },
   "reel-03": {
     "ARG0": "Reeler, causer of motion",
@@ -28067,7 +28067,7 @@
   "relate-01": {
     "ARG0": "agent, entity drawing comparison",
     "ARG1": "thing under consideration",
-    "ARG2": "what it\\'s related to"
+    "ARG2": "what it's related to"
   },
   "relate-02": {
     "ARG0": "Sayer",
@@ -28119,7 +28119,7 @@
     "ARG1": "with respect to what?"
   },
   "relevant-01": {
-    "ARG1": "thing that\\'s relevant",
+    "ARG1": "thing that's relevant",
     "ARG2": "relevant to what?"
   },
   "relieve-01": {
@@ -28569,7 +28569,7 @@
   "require-01": {
     "ARG0": "requirer",
     "ARG1": "thing required",
-    "ARG2": "required-of, required-from (\\'ablative\\')"
+    "ARG2": "required-of, required-from ('ablative')"
   },
   "requisition-01": {
     "ARG0": "demander, agent",
@@ -29340,7 +29340,7 @@
   },
   "ring-05": {
     "ARG1": "thing with truth",
-    "ARG2": "\\'true\\' or other attribute"
+    "ARG2": "'true' or other attribute"
   },
   "ring-up-03": {
     "ARG0": "recorder",
@@ -30000,7 +30000,7 @@
     "ARG0": "sandpaperer, agent",
     "ARG1": "surface sandpapered, theme",
     "ARG2": "location/source of sandpapering",
-    "ARG3": "instrument (defaults to \\'sandpaper\\')"
+    "ARG3": "instrument (defaults to 'sandpaper')"
   },
   "sandwich-01": {
     "ARG0": "sandwich builder",
@@ -30716,12 +30716,12 @@
   },
   "see-04": {
     "ARG0": "ensurer",
-    "ARG1": "fixed: \\'to it\\'",
+    "ARG1": "fixed: 'to it'",
     "ARG2": "proposition, event"
   },
   "see-05": {
     "ARG0": "first entity",
-    "ARG1": "second entity, or \\'each other\\' (or variant)"
+    "ARG1": "second entity, or 'each other' (or variant)"
   },
   "seed-01": {
     "ARG0": "the plant"
@@ -30771,7 +30771,7 @@
   "seethe-01": {
     "ARG0": "overflowing entity (container, person)",
     "ARG1": "overflowing with (emotion, substance)",
-    "ARG2": "cause, introduced by \\'over\\'"
+    "ARG2": "cause, introduced by 'over'"
   },
   "segment-01": {
     "ARG0": "agent, divider",
@@ -31235,7 +31235,7 @@
   },
   "shed-01": {
     "ARG0": "entity removing",
-    "ARG1": "thing being removed (defaults to \\'hair\\')"
+    "ARG1": "thing being removed (defaults to 'hair')"
   },
   "shed-02": {
     "ARG1": "Logical subject, patient, thing falling",
@@ -31475,12 +31475,12 @@
   },
   "short-06": {
     "ARG1": "entity not having enough",
-    "ARG2": "what arg1 doesn\\'t have enough of, amount short",
+    "ARG2": "what arg1 doesn't have enough of, amount short",
     "ARG3": "goal arg1 is short of reaching"
   },
   "short-07": {
-    "ARG1": "entity that isn\\'t long",
-    "ARG2": "domain in which arg1 isn\\'t long"
+    "ARG1": "entity that isn't long",
+    "ARG2": "domain in which arg1 isn't long"
   },
   "short-08": {
     "ARG0": "entity behaving bruskly",
@@ -31752,7 +31752,7 @@
   "sideline-01": {
     "ARG0": "person preventing, removing arg1 from participation",
     "ARG1": "entity sidelined",
-    "ARG2": "sidelined from what? mention of activity arg1 can\\'t participate in"
+    "ARG2": "sidelined from what? mention of activity arg1 can't participate in"
   },
   "sidestep-01": {
     "ARG0": "avoider",
@@ -32401,7 +32401,7 @@
     "ARG0": "first arguer",
     "ARG1": "second arguer",
     "ARG2": "topic at issue",
-    "ARG3": "usually \\'it\\'"
+    "ARG3": "usually 'it'"
   },
   "sluice-down-01": {
     "ARG0": "sluicer",
@@ -32441,7 +32441,7 @@
   },
   "smart-03": {
     "ARG1": "entity which is experiencing pain",
-    "ARG2": "cause of pain (us. \\'at\\')"
+    "ARG2": "cause of pain (us. 'at')"
   },
   "smart-04": {
     "ARG1": "sytlish thing"
@@ -32763,7 +32763,7 @@
     "ARG1": "substance ingested"
   },
   "snow-01": {
-    "ARG0": "cause of snow (no empty weather \\'it\\'s)",
+    "ARG0": "cause of snow (no empty weather 'it's)",
     "ARG1": "the snow itself",
     "ARG2": "entity, location snowed on; snowy place"
   },
@@ -32773,7 +32773,7 @@
   },
   "snowy-02": {
     "ARG0": "causer of snowiness",
-    "ARG1": "the \\'snow\\' itself (no empty weather \\'it\\'s)",
+    "ARG1": "the 'snow' itself (no empty weather 'it's)",
     "ARG2": "snowy location"
   },
   "snub-01": {
@@ -32919,7 +32919,7 @@
   },
   "solicit-01": {
     "ARG0": "solicitor",
-    "ARG1": "thing solicited (us. \\'bids\\')",
+    "ARG1": "thing solicited (us. 'bids')",
     "ARG2": "solicited from"
   },
   "solid-02": {
@@ -33005,7 +33005,7 @@
   "sour-01": {
     "ARG0": "agent, entity causing sourness",
     "ARG1": "thing becoming sour",
-    "ARG2": "\\'benefactive\\'"
+    "ARG2": "'benefactive'"
   },
   "source-01": {
     "ARG0": "obtainer",
@@ -33421,9 +33421,9 @@
   },
   "spout-off-02": {
     "ARG0": "speaker",
-    "ARG1": "explicit mention of \\'mouth\\' (or equivalent)",
-    "ARG2": "utterance iteslf (quote/ \\'that __\\')",
-    "ARG3": "subject matter of utterance (\\'about __\\')"
+    "ARG1": "explicit mention of 'mouth' (or equivalent)",
+    "ARG2": "utterance iteslf (quote/ 'that __')",
+    "ARG3": "subject matter of utterance ('about __')"
   },
   "sprain-01": {
     "ARG0": "breaker",
@@ -33945,7 +33945,7 @@
     "ARG1": "finding",
     "ARG2": "p-value (probability of null-hypothesis)",
     "ARG3": "r-squared (coefficient of determination)",
-    "ARG4": "significance test (e.g. t-test, Chi-square test, Fisher\\'s exact test)",
+    "ARG4": "significance test (e.g. t-test, Chi-square test, Fisher's exact test)",
     "ARG5": "alternative hypothesis (vs. ...)"
   },
   "stave-off-01": {
@@ -34170,7 +34170,7 @@
   },
   "stink-02": {
     "ARG1": "incompetent entity",
-    "ARG2": "what they\\'re bad at"
+    "ARG2": "what they're bad at"
   },
   "stipple-01": {
     "ARG0": "Artist",
@@ -34345,7 +34345,7 @@
     "ARG0": "mover"
   },
   "straight-04": {
-    "ARG1": "thing/entity that doesn\\'t deviate"
+    "ARG1": "thing/entity that doesn't deviate"
   },
   "straight-05": {
     "ARG1": "sexual being"
@@ -35208,7 +35208,7 @@
     "ARG1": "thing sagging."
   },
   "swag-02": {
-    "ARG0": "Agent or cause of an entity\\'s swaying",
+    "ARG0": "Agent or cause of an entity's swaying",
     "ARG1": "entity set in motion"
   },
   "swagger-01": {
@@ -35288,7 +35288,7 @@
   },
   "swear-off-03": {
     "ARG0": "swearer",
-    "ARG1": "thing you\\'re not going to do"
+    "ARG1": "thing you're not going to do"
   },
   "sweat-01": {
     "ARG0": "sweater (no, not like your grandmother made for you)",
@@ -35296,7 +35296,7 @@
   },
   "sweat-04": {
     "ARG0": "anxious entity",
-    "ARG1": "cause of anxiety (often \\'it\\')"
+    "ARG1": "cause of anxiety (often 'it')"
   },
   "sweat-off-03": {
     "ARG0": "sweat-er",
@@ -35630,7 +35630,7 @@
   "take-10": {
     "ARG0": "requirer",
     "ARG1": "thing required",
-    "ARG2": "required-of, required-from (\\'ablative\\')"
+    "ARG2": "required-of, required-from ('ablative')"
   },
   "take-14": {
     "ARG1": "thing occuring",
@@ -35666,7 +35666,7 @@
   },
   "take-35": {
     "ARG0": "entity gathering in public",
-    "ARG1": "destination, often \\'streets\\'",
+    "ARG1": "destination, often 'streets'",
     "ARG2": "secondary action/instigating factor/purpose"
   },
   "take-aback-20": {
@@ -35711,7 +35711,7 @@
   },
   "take-off-18": {
     "ARG0": "entity taking a vacation",
-    "ARG1": "\\'time\\'",
+    "ARG1": "'time'",
     "ARG2": "work, job, etc"
   },
   "take-off-19": {
@@ -36246,7 +36246,7 @@
   },
   "thick-05": {
     "ARG1": "first entity (or all)",
-    "ARG2": "second entity (or \\'each other\\')"
+    "ARG2": "second entity (or 'each other')"
   },
   "thicken-01": {
     "ARG0": "cause, agent",
@@ -36261,12 +36261,12 @@
   "thin-01": {
     "ARG0": "cause, agent",
     "ARG1": "entity getting thin",
-    "ARG2": "component parts of arg1 that aren\\'t close together"
+    "ARG2": "component parts of arg1 that aren't close together"
   },
   "thin-03": {
     "ARG0": "agent",
     "ARG1": "thin entity",
-    "ARG2": "component parts of arg1 that aren\\'t close together"
+    "ARG2": "component parts of arg1 that aren't close together"
   },
   "thin-out-02": {
     "ARG0": "cause, agent",
@@ -36314,7 +36314,7 @@
   "threaten-01": {
     "ARG0": "agent, entity making a threat",
     "ARG1": "threat",
-    "ARG2": "\\'benefactive\\', entity threatened"
+    "ARG2": "'benefactive', entity threatened"
   },
   "thrill-01": {
     "ARG0": "causer of excitement",
@@ -36649,7 +36649,7 @@
   },
   "tire-03": {
     "ARG0": "tired entity",
-    "ARG1": "what arg0 doesn\\'t want to put up with anymore"
+    "ARG1": "what arg0 doesn't want to put up with anymore"
   },
   "tire-out-02": {
     "ARG0": "causer of tiredness",
@@ -36853,7 +36853,7 @@
     "ARG0": "carrier",
     "ARG1": "thing carried",
     "ARG2": "instrument",
-    "ARG3": "\\'with\\' reflecting back on arg0",
+    "ARG3": "'with' reflecting back on arg0",
     "ARG4": "benefactive (predicted but not seen)"
   },
   "totter-01": {
@@ -36905,7 +36905,7 @@
     "ARG1": "touchy one"
   },
   "touchy-10": {
-    "ARG0": "entity who wont\\' stop touching things",
+    "ARG0": "entity who wont' stop touching things",
     "ARG1": "entity touched",
     "ARG2": "instrument (if in addition to arg0)"
   },
@@ -36970,7 +36970,7 @@
   "trace-02": {
     "ARG0": "follower",
     "ARG1": "thing followed",
-    "ARG2": "the thing\\'s source (actually destination)"
+    "ARG2": "the thing's source (actually destination)"
   },
   "track-01": {
     "ARG0": "thing following",
@@ -37365,7 +37365,7 @@
   },
   "trip-02": {
     "ARG0": "entity tripping",
-    "ARG1": "mention of \\'balls\\' or other intensifying object",
+    "ARG1": "mention of 'balls' or other intensifying object",
     "ARG2": "drug or subject matter stimulus"
   },
   "trip-03": {
@@ -37612,7 +37612,7 @@
   },
   "turn-16": {
     "ARG0": "producer",
-    "ARG1": "us. \\'profit\\'"
+    "ARG1": "us. 'profit'"
   },
   "turn-18": {
     "ARG0": "Turner",
@@ -38520,7 +38520,7 @@
   },
   "vegetate-01": {
     "ARG1": "entity in vegetative state",
-    "ARG2": "place where they\\'re vegetating"
+    "ARG2": "place where they're vegetating"
   },
   "veil-01": {
     "ARG0": "concealer, agent",
@@ -38821,7 +38821,7 @@
     "ARG1": "entity wailed about"
   },
   "wait-01": {
-    "ARG1": "wait-er (not waiter, that\\'s the other sense)",
+    "ARG1": "wait-er (not waiter, that's the other sense)",
     "ARG2": "thing waited for",
     "ARGM-TMP": "period of time waited through"
   },
@@ -38939,7 +38939,7 @@
   },
   "warm-07": {
     "ARG0": "causer of warmth",
-    "ARG1": "warm thing (not \\'it\\', if refering to empty weather pronoun)"
+    "ARG1": "warm thing (not 'it', if refering to empty weather pronoun)"
   },
   "warm-over-04": {
     "ARG0": "causer of warming",
@@ -39533,7 +39533,7 @@
     "ARG1": "thing stopping"
   },
   "wind-up-02": {
-    "ARG1": "who/what\\'s coming into a condition",
+    "ARG1": "who/what's coming into a condition",
     "ARG2": "the condition"
   },
   "wind-up-03": {
@@ -39547,7 +39547,7 @@
   },
   "wine-01": {
     "ARG0": "wine-giver",
-    "ARG1": "arg0\\'s date; wine drinker"
+    "ARG1": "arg0's date; wine drinker"
   },
   "wing-01": {
     "ARG0": "causal agent",
@@ -39556,7 +39556,7 @@
   },
   "wing-02": {
     "ARG0": "innovator",
-    "ARG1": "\\'it\\'"
+    "ARG1": "'it'"
   },
   "wink-01": {
     "ARG0": "winker",
@@ -39620,7 +39620,7 @@
   },
   "withdraw-01": {
     "ARG0": "entity removing",
-    "ARG1": "thing being withdrawn (often understood as \\'self\\')",
+    "ARG1": "thing being withdrawn (often understood as 'self')",
     "ARG2": "removed from"
   },
   "wither-01": {
@@ -40053,7 +40053,7 @@
   },
   "yield-02": {
     "ARG0": "Thing giving way",
-    "ARG1": "what\\'s lost",
+    "ARG1": "what's lost",
     "ARG2": "recipient"
   },
   "yield-03": {

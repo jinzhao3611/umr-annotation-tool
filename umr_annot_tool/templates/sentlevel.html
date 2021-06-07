@@ -44,7 +44,7 @@
     {# display all the sentences #}
     <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 250px;">
         <script type="text/javascript">
-            initialize("{{ frame_dict }}", "{{ lang }}", `{{ lexicon }}`)
+            initialize("{{ frame_dict }}", "{{ lang }}")
         </script>
         {% autoescape off %}
         <p>{{ info2display.sents_html }}</p>

@@ -2,14 +2,14 @@ from flask import url_for, redirect, flash, send_from_directory, make_response, 
 from werkzeug.utils import secure_filename
 from typing import List, Tuple
 import json
-from parse_input_xml import html, process_exported_file
+from parse_input_xml import html, process_exported_file, parse_lexicon_xml
 from flask_login import current_user
 import os
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post
-from umr_annot_tool.main.forms import UploadForm
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon
+from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.ext.mutable import MutableDict
 
@@ -20,7 +20,19 @@ main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 
-def load_file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
+def lexicon2db(lang:str, lexicon_dict:dict):
+    existing_lexicon = Lexicon.query.filter_by(lang=lang).first()
+    if existing_lexicon:
+        existing_lexicon.lexi = lexicon_dict
+        db.session.commit()
+        flash('your lexicon has been saved to db, your old lexicon for the language is overridden', 'success')
+    else:
+        lexicon_row = Lexicon(lang=lang, lexi=lexicon_dict).first()
+        db.session.add(lexicon_row)
+        db.session.commit()
+        flash('your lexicon has been saved to db', 'success')
+
+def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
     if existing_doc:
         doc_id = existing_doc.id
@@ -72,6 +84,7 @@ def upload():
         return redirect(url_for('users.login'))
 
     form = UploadForm()
+    lexicon_form = UploadLexiconForm()
     if form.validate_on_submit():
         if form.file.data and form.file.data.filename:
             content_string = form.file.data.read().decode("utf-8")  # print("content_string: ", content_string)
@@ -81,14 +94,25 @@ def upload():
             is_exported = form.if_exported.data
             if is_exported:  # has annotation
                 new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(content_string)
-                load_file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang, sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
+                file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang, sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
                 info2display = html(content_string, file_format)  # print('sents from upload:', sents)
-                load_file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=info2display.sents, has_annot=False)
+                file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=info2display.sents, has_annot=False)
             return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
-    return render_template('upload.html', title='upload', form=form)
+    if lexicon_form.validate_on_submit():
+        if lexicon_form.file.data:
+            content_string = form.file.data.read().decode("utf-8")  # print("content_string: ", content_string)
+            frames_dict, citation_dict = parse_lexicon_xml(content_string)
+            print("frames_dict:", frames_dict)
+            print("citation_dict: ", citation_dict)
+            lexicon2db(lang=lexicon_form.language_mode.data, lexicon_dict=frames_dict)
+            return redirect(url_for('users.account'))
+        else:
+            flash("please upload a lexicon file.", "danger")
+
+    return render_template('upload.html', title='upload', form=form, lexicon_form=lexicon_form)
 
 
 @main.route("/annotate/<int:doc_id>", methods=['GET', 'POST'])
@@ -102,6 +126,9 @@ def annotate(doc_id):
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":
         frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+    else:
+        frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+
     snt_id = 1
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
@@ -115,22 +142,6 @@ def annotate(doc_id):
             align_info = request.get_json(force=True)["align"]
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr"]
-
-            try:
-                existing_user = User.query.filter(User.id == current_user.id).first()
-                try:
-                    curr_lexicon = existing_user.lexicon.pop(doc.lang) # existing_user.lexicon = {"sanapana": {"aphleamkehlta": "test-05"}} # curr_lexicon = {"aphleamkehlta": "test-05"}
-                    new_citation_dict = request.get_json(force=True)["citation_dict"] #{"test1": "test-01"}
-                    curr_lexicon.update(new_citation_dict)   #{"aphleamkehlta": "test-05", "test1": "test-01"}
-                except: #empty lexicon
-                    curr_lexicon = request.get_json(force=True)["citation_dict"]  # {"test1": "test-01"}
-
-                new_mutable_dict = MutableDict.coerce(doc.lang, curr_lexicon)
-                existing_user.lexicon.update({doc.lang: new_mutable_dict})
-                flag_modified(existing_user, 'lexicon') #https://stackoverflow.com/questions/42559434/updates-to-json-field-dont-persist-to-db
-                db.session.commit()
-            except:
-                print("error in add lexicon!!!")
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
@@ -188,20 +199,15 @@ def annotate(doc_id):
     all_sents = [sent2.content for sent2 in filtered_sentences]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
-    try:
-        lexicon = current_user.lexicon[doc.lang]
-    except KeyError:
-        lexicon = {}
 
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
-                           frame_dict=frame_dict,
+                           frame_dict=json.dumps(frame_dict),
                            curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
                            curr_sent_umr=curr_sent_umr,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
-                           lexicon=lexicon,)
+                           content_string=doc.content.replace('\n', '<br>'),)
 
 
 @main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])
@@ -313,8 +319,43 @@ def lexicon(doc_id):
         except:
             print("no word selected")
 
+    lexicon_item_form = LexiconItemForm()
+    look_up_form = LookUpLexiconItemForm()
+    if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data:
+        print(lexicon_item_form.surface_form.data)
+        existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
+        print(type(existing_lexicon.lexi))
+        print(existing_lexicon.lexi)
+        new_lexicon_item = {lexicon_item_form.surface_form.data: {"lemma": lexicon_item_form.lemma.data,
+                                                                  "pos": lexicon_item_form.pos.data, "sense": [
+                {"number": lexicon_item_form.sense_number.data, "gloss": lexicon_item_form.sense_gloss.data,
+                 "args": lexicon_item_form.sense_args.data,
+                 "coding_frames": lexicon_item_form.sense_coding_frames.data}]}}
+        if existing_lexicon:
+            print("here1: ", new_lexicon_item)
+            existing_lexicon.lexi.update(new_lexicon_item)
+            db.session.commit()
+        else:
+            print("here2: ", new_lexicon_item)
+            lexicon_row = Lexicon(lang=doc.lang, lexi=new_lexicon_item).first()
+            db.session.add(lexicon_row)
+            db.session.commit()
 
-    return render_template('lexicon.html', doc_id=doc_id)
+    lexicon_item={}
+    if look_up_form.validate_on_submit():
+        existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
+        lexicon_item = existing_lexicon.lexi.get(look_up_form.surface_form.data, "doesn't exist")
+        print(lexicon_item)
+
+    frames_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+    citation_dict = {head: frames_dict[head]["lemma"] for head in frames_dict}
+    print("in routes.lexicon: ", frames_dict)
+    print("in routes.lexicon: ", citation_dict)
+
+    return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
+                           file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
+                           look_up_form=look_up_form, lexicon_item=json.dumps(lexicon_item),
+                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict))
 
 @main.route("/")
 @main.route("/display_post")

@@ -25,15 +25,35 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.language_mode(class="form-check-input")}}
                 </div>
 
-{#                <div>#}
-{#                    {{ form.lexicon_file }}#}
-{#                </div>#}
-
             </fieldset>
 
             <div class="input-group-append">
                 {{ form.submit(class="btn btn-outline-info", id="btnSubmit") }}
             </div>
         </form>
+
+        <br>
+        <br>
+        <form method="post" enctype="multipart/form-data">
+            {{ lexicon_form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Upload Lexicon</legend>
+                <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        {{ lexicon_form.file }}
+                      </div>
+
+                    <div>
+                        {{ lexicon_form.language_mode.label(class="form-check-label") }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.language_mode(class="form-check-input")}}
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="input-group-append">
+                {{ lexicon_form.submit(class="btn btn-outline-info", id="btnSubmit") }}
+            </div>
+        </form>
+
     </div>
 {% endblock content %}

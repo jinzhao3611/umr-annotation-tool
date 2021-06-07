@@ -14,6 +14,7 @@ let current_attribute;
 let current_ne_concept;
 let frame_json = {};
 let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
+let frames_dict = {};
 let similar_word_list ={};
 
 let selection;
@@ -50,7 +51,7 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
  * @param lang: language of this document
  * @param lexicon: the temporary dictionary
  */
-function initialize(frame_dict_str, lang, lexicon) {
+function initialize(frame_dict_str, lang) {
     language = lang;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
@@ -59,8 +60,12 @@ function initialize(frame_dict_str, lang, lexicon) {
     frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
     begOffset = -1;
     endOffset = -1;
-    citation_dict = JSON.parse(deHTML(lexicon));
-    // console.log('citation_dict from initialize: ', citation_dict);
+    // citation_dict = JSON.parse(localStorage.getItem('citation_dict'));
+    if(default_langs.includes(language)){
+        Object.keys(frame_json).forEach(function(key) {
+           citation_dict[key] = frame_json[key]["lemma"];
+        });
+    }
 }
 
 /**
@@ -112,15 +117,12 @@ function conceptDropdown(lang='english') {
         // if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
         if (default_langs.includes(lang)){
             let submenu_items;
-            // if (token in citation_dict){
-            //     let lemma = citation_dict[token];
-            //     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "not in frame files"}]}
-            //
-            // }else{
-            //     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
-            // }
-            submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
-
+            if (token in citation_dict){
+                let lemma = citation_dict[token];
+                submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
+            }else{
+                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+            }
 
             // Object.keys(citation_dict.forEach(function(key) {
             //     console.log(key);
@@ -133,7 +135,23 @@ function conceptDropdown(lang='english') {
             // });
             getSenses(submenu_items);
 
-        } else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
+        }else if(typeof getLemma(token) !== 'undefined' || lang === 'english'){
+            let lemma = getLemma(token);
+            let senses = [];
+            Object.keys(frame_json).forEach(function(key) {
+                if(key.split("-")[0] === lemma){
+                    senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                }
+            });
+            let submenu_items;
+            if (senses.length === 0) {
+                submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+            }else{
+                submenu_items = {"res": senses};
+            }
+            getSenses(submenu_items);
+
+        }else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
             let lemma;
             if(lang === 'chinese'){
                 lemma = token;
@@ -1205,9 +1223,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             command_input.style.height = '1.4em';
         }
     }
-    // if(default_langs.includes(language)){
-    //     updateCitationDict();
-    // }
 }
 
 
@@ -3374,7 +3389,7 @@ function UMR2db() {
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr, "citation_dict":citation_dict})
+        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
         // body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
@@ -3542,6 +3557,18 @@ function export_annot(exported_items, content_string) {
     }
 }
 
+/**
+ * Javascript equivalent of Python's get method for dictionaries: https://stackoverflow.com/questions/44184794/what-is-the-javascript-equivalent-of-pythons-get-method-for-dictionaries
+ * @param object
+ * @param key
+ * @param default_value
+ * @returns {*}
+ */
+function get(object, key, default_value) {
+    let result = object[key];
+    return (typeof result !== "undefined") ? result : default_value;
+}
+
 function lexicon(doc_id){
     fetch(`/lexicon/${doc_id}`, {
         method: 'POST',
@@ -3559,7 +3586,7 @@ function lexicon(doc_id){
         ul.setAttribute ('id', 'simWordList');
         for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
             const li = document.createElement('li');	// create li element.
-            li.innerHTML = data['similar_word_list'][i];	                        // assigning text to li using array value.
+            li.innerHTML = `${data['similar_word_list'][i]} (${get(citation_dict, data['similar_word_list'][i], "no lemma added for this word yet")})`;	                        // assigning text to li using array value.
             li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
             ul.appendChild(li);		// append li to ul.
         }
@@ -3570,54 +3597,24 @@ function lexicon(doc_id){
 }
 
 
-/**
- * traverse current umr and map inflection form (selected from the sentences table) and citation form (umr concept) in citation_dict
- */
-function updateCitationDict(){
-    let umr = JSON.parse(localStorage.getItem('umr'));
-    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        //todo: this doesnt work, need changing
-        if(key.match(/\d+.a/) && umr[key] !== "-1--1"){ //traverse all the .a items in umr that does have alignment value
-            let citation = umr[key.replace('.a', '.c')]; //get concept
-            console.log("citation form in umr:", citation);
-            let index = parseInt(umr[key].split('-')[0]) + 1;
-            console.log("alignment of this citation form",index);
-            let inflectedForm = document.querySelector(`#current-words > td:nth-child(${index})`).textContent;
-            if(citation !== inflectedForm){
-                citation_dict[inflectedForm] = citation;
-                // console.log("citation_dict: ", citation_dict);
-            }
-        }
-    })
-    // console.log("citation_dict: ", citation_dict);
+function initializeLexicon(frames, citations){
+    frames_dict = JSON.parse(deHTML(frames));
+    citation_dict = JSON.parse(deHTML(citations));
 }
 
-function temp(){
-    citation_dict = {
-        "hlak": {"forms": ["ehlhlakama"], "pos": "v", "definitionorgloss": "sell (pl.)", "argument-structure":"ARG0: seller; ARG1: sold thing; ARG2: buyer", "coding-frames":["1[first.person]-V (> 0, 1)", "0-V (> 0, 2)", "1 > 0-V (> 0)", "0-V (> 0, 1)", "0 > 0-V (> 1)"]},
-        "hlengkes": {"forms": ["ehlhlengkeskama"]},
-        "eyv": {"forms": ["eleyvoma"]},
-        "hahln": {"forms": ["enghahlnay'a"]},
-        "hla'm": {"forms": ["enhla'moma"]},
-    }
-}
 
-function add2Lexicon(lemma){
-    console.log(lemma);
-    if(lemma in citation_dict){
-        citation_dict[lemma]["forms"].push(document.getElementById("selected_word").innerHTML);
-    }else{
-        citation_dict[lemma] = {"forms":[]};
-        citation_dict[lemma]["forms"].push(document.getElementById("selected_word").innerHTML);
-    }
-}
-
-function list_lexicon(){
+function listDict(id){
+    console.log("I am here 1008");
     let ul = document.createElement('ul');
-    document.getElementById('lexicon_list').appendChild(ul);
+    document.getElementById(id).appendChild(ul);
     Object.keys(citation_dict).forEach(function (item) {
         let li = document.createElement('li');
         ul.appendChild(li);
         li.innerHTML += item;
     });
+}
+
+function prettyPrintJson(id, dict_str){
+    console.log("dict_str: ", deHTML(dict_str));
+    document.getElementById(id).innerHTML = JSON.stringify(JSON.parse(deHTML(dict_str)), undefined, 2);
 }
