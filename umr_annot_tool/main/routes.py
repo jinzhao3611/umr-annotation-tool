@@ -127,7 +127,10 @@ def annotate(doc_id):
     elif doc.lang == "english":
         frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
     else:
-        frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+        try:
+            frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+        except AttributeError:
+            frame_dict = {}
 
     snt_id = 1
     if "set_sentence" in request.form:
@@ -347,7 +350,11 @@ def lexicon(doc_id):
         lexicon_item = existing_lexicon.lexi.get(look_up_form.surface_form.data, "doesn't exist")
         print(lexicon_item)
 
-    frames_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+    try:
+        frames_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+    except AttributeError:
+        frames_dict = {}
+
     citation_dict = {head: frames_dict[head]["lemma"] for head in frames_dict}
     print("in routes.lexicon: ", frames_dict)
     print("in routes.lexicon: ", citation_dict)
