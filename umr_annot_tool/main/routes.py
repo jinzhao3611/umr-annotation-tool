@@ -27,7 +27,7 @@ def lexicon2db(lang:str, lexicon_dict:dict):
         db.session.commit()
         flash('your lexicon has been saved to db, your old lexicon for the language is overridden', 'success')
     else:
-        lexicon_row = Lexicon(lang=lang, lexi=lexicon_dict).first()
+        lexicon_row = Lexicon(lang=lang, lexi=lexicon_dict)
         db.session.add(lexicon_row)
         db.session.commit()
         flash('your lexicon has been saved to db', 'success')
@@ -337,7 +337,7 @@ def lexicon(doc_id):
             db.session.commit()
         else:
             print("here2: ", new_lexicon_item)
-            lexicon_row = Lexicon(lang=doc.lang, lexi=new_lexicon_item).first()
+            lexicon_row = Lexicon(lang=doc.lang, lexi=new_lexicon_item)
             db.session.add(lexicon_row)
             db.session.commit()
 

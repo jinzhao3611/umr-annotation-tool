@@ -13,8 +13,7 @@ let current_mode;
 let current_attribute;
 let current_ne_concept;
 let frame_json = {};
-let citation_dict = {}; //citation_dict is similar to frame_json, but it's built dynamically
-let frames_dict = {};
+let citation_dict = {}; //citation_dict is similar to frame_json
 let similar_word_list ={};
 
 let selection;
@@ -3598,7 +3597,7 @@ function lexicon(doc_id){
 
 
 function initializeLexicon(frames, citations){
-    frames_dict = JSON.parse(deHTML(frames));
+    frame_json = JSON.parse(deHTML(frames));
     citation_dict = JSON.parse(deHTML(citations));
 }
 
