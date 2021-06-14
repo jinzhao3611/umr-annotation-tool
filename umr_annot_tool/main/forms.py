@@ -29,8 +29,9 @@ class UploadLexiconForm(FlaskForm):
     submit = SubmitField('Upload')
 
 class LexiconItemForm(FlaskForm):
-    surface_form = StringField('mainheadword')
+    inflected_form = StringField('inflected form')
     lemma = StringField('lemma')
+    root = StringField('root')
     pos = StringField('part of speech')
     sense_number = TextAreaField("number")
     sense_gloss = TextAreaField("gloss")
@@ -39,5 +40,5 @@ class LexiconItemForm(FlaskForm):
     submit = SubmitField('Add')
 
 class LookUpLexiconItemForm(FlaskForm):
-    surface_form = StringField('mainheadword')
+    inflected_form = StringField('inflected form')
     submit = SubmitField('Look up')

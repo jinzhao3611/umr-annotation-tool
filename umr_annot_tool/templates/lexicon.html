@@ -62,11 +62,14 @@
             <legend class="border-bottom mb-4">Add word to lexicon</legend>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  {{ lexicon_item_form.surface_form.label}}{{ lexicon_item_form.surface_form}}<br/>
+                  {{ lexicon_item_form.inflected_form.label}}{{ lexicon_item_form.inflected_form}}<br/>
                 </div>
 
                 <div class="input-group-prepend">
                     {{ lexicon_item_form.lemma.label }}{{ lexicon_item_form.lemma }}<br/>
+                </div>
+                <div class="input-group-prepend">
+                    {{ lexicon_item_form.root.label }}{{ lexicon_item_form.root }}<br/>
                 </div>
                 <div class="input-group-prepend">
                     {{ lexicon_item_form.pos.label }}{{ lexicon_item_form.pos }}<br/>
@@ -104,7 +107,7 @@
             <legend class="border-bottom mb-4">Look up Lexicon Item </legend>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                  {{ look_up_form.surface_form.label}}{{ look_up_form.surface_form}}<br/>
+                  {{ look_up_form.inflected_form.label}}{{ look_up_form.inflected_form}}<br/>
                 </div>
             </div>
         </fieldset>

@@ -613,23 +613,21 @@ def align(morph_string: str, ge_string: str, gs_string: str) -> Tuple[List[str],
 
 def parse_entry(entry: bs4.element.Tag):
     head = entry.find("span", {"class": "mainheadword"})
-    lemma = entry.find("span", {"class": "lexemeform"})
+    word_root = entry.find("span", {"class": "lexemeform"})
     senses = entry.find("span", {"class": "senses"})
     pos = senses.find("span", {"class": "sharedgrammaticalinfo"})
 
     head_str = head.get_text(strip=True)
-    lemma_str = lemma.get_text(strip=True)
+    word_root_str = word_root.get_text(strip=True)
     pos_str = pos.get_text(strip=True)
 
     sense_contents = senses.find_all("span", {"class": "sensecontent"})
     senses_lst = [parse_sense_content(sc) for sc in sense_contents]
 
-    return {head_str: {"lemma": lemma_str, "pos": pos_str, "sense": senses_lst}}
+    return {head_str: {"root": word_root_str, "pos": pos_str, "sense": senses_lst, 'inflected_forms': []}}
 
 
 def parse_sense_content(sense_content: bs4.element.Tag):
-    sense_number = sense_content.find("span", {"class": "sensenumber"})
-    sense_number_str = sense_number.get_text(strip=True) if sense_number else None
     sense = sense_content.find("span", {"class": "sense"})
     gloss_str = sense.find("span", {"class": "definitionorgloss"}).get_text(strip=True)
     args_str = sense.find("span", {"class": "argument-structure"}).get_text(strip=True)
@@ -639,7 +637,6 @@ def parse_sense_content(sense_content: bs4.element.Tag):
     frames_str_lst = [frame.get_text(strip=True) for frame in frames]
 
     return {
-        "number": sense_number_str,
         "gloss": gloss_str,
         "args": args_str,
         "coding_frames": "#sep".join(frames_str_lst),
@@ -653,5 +650,4 @@ def parse_lexicon_xml(xml_str: str):
 
     for entry in entries:
         frames_dict.update(parse_entry(entry))
-    head_lemma_dict = {head: frames_dict[head]["lemma"] for head in frames_dict}
-    return frames_dict, head_lemma_dict
+    return frames_dict

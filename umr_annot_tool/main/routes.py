@@ -104,9 +104,8 @@ def upload():
     if lexicon_form.validate_on_submit():
         if lexicon_form.file.data:
             content_string = form.file.data.read().decode("utf-8")  # print("content_string: ", content_string)
-            frames_dict, citation_dict = parse_lexicon_xml(content_string)
+            frames_dict = parse_lexicon_xml(content_string)
             print("frames_dict:", frames_dict)
-            print("citation_dict: ", citation_dict)
             lexicon2db(lang=lexicon_form.language_mode.data, lexicon_dict=frames_dict)
             return redirect(url_for('users.account'))
         else:
@@ -326,11 +325,11 @@ def lexicon(doc_id):
     lexicon_item_form = LexiconItemForm()
     look_up_form = LookUpLexiconItemForm()
     if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data:
-        print(lexicon_item_form.surface_form.data)
+        print(lexicon_item_form.inflected_form.data)
         existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
         print(type(existing_lexicon.lexi))
         print(existing_lexicon.lexi)
-        new_lexicon_item = {lexicon_item_form.surface_form.data: {"lemma": lexicon_item_form.lemma.data,
+        new_lexicon_item = {lexicon_item_form.inflected_form.data: {"lemma": lexicon_item_form.lemma.data,
                                                                   "pos": lexicon_item_form.pos.data, "sense": [
                 {"number": lexicon_item_form.sense_number.data, "gloss": lexicon_item_form.sense_gloss.data,
                  "args": lexicon_item_form.sense_args.data,
@@ -345,10 +344,10 @@ def lexicon(doc_id):
             db.session.add(lexicon_row)
             db.session.commit()
 
-    lexicon_item={}
+    lexicon_item = {}
     if look_up_form.validate_on_submit():
         existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
-        lexicon_item = existing_lexicon.lexi.get(look_up_form.surface_form.data, "doesn't exist")
+        lexicon_item = existing_lexicon.lexi.get(look_up_form.inflected_form.data, "doesn't exist")
         print(lexicon_item)
 
     try:
@@ -356,7 +355,7 @@ def lexicon(doc_id):
     except AttributeError:
         frames_dict = {}
 
-    citation_dict = {head: frames_dict[head]["lemma"] for head in frames_dict}
+    citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in frames_dict[lemma]["inflected_forms"]}
     print("in routes.lexicon: ", frames_dict)
     print("in routes.lexicon: ", citation_dict)
 
