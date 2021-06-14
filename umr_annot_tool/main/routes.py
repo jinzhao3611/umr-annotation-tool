@@ -132,7 +132,7 @@ def annotate(doc_id):
         except AttributeError:
             frame_dict = {}
 
-    snt_id = 1
+    snt_id = int(request.args.get('snt_id', 1))
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
 
@@ -308,6 +308,7 @@ def about():
 
 @main.route("/lexicon/<doc_id>", methods=['GET', 'POST'])
 def lexicon(doc_id):
+    snt_id = int(request.args.get('snt_id', 1))
     doc = Doc.query.get_or_404(doc_id)
     if request.method == 'POST':
         try:
@@ -362,7 +363,8 @@ def lexicon(doc_id):
     return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
                            file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
                            look_up_form=look_up_form, lexicon_item=json.dumps(lexicon_item),
-                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict))
+                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
+                           snt_id=snt_id)
 
 @main.route("/")
 @main.route("/display_post")
