@@ -54,62 +54,21 @@
 {% endblock content %}
 
 {% block content2 %}
-
-
-    <form method="post" enctype="multipart/form-data">
-        {{ lexicon_item_form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Add word to lexicon</legend>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  {{ lexicon_item_form.inflected_form.label}}{{ lexicon_item_form.inflected_form}}<br/>
-                </div>
-
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.lemma.label }}{{ lexicon_item_form.lemma }}<br/>
-                </div>
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.root.label }}{{ lexicon_item_form.root }}<br/>
-                </div>
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.pos.label }}{{ lexicon_item_form.pos }}<br/>
-                </div>
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.sense_number.label }}{{ lexicon_item_form.sense_number }}<br/>
-                </div>
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.sense_gloss.label }}{{ lexicon_item_form.sense_gloss }}<br/>
-                </div>
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.sense_args.label }}{{ lexicon_item_form.sense_args }}<br/>
-                </div>
-                <div class="input-group-prepend">
-                    {{ lexicon_item_form.sense_coding_frames.label }}{{ lexicon_item_form.sense_coding_frames }}
-                </div>
-
-            </div>
-        </fieldset>
-
-        <div class="input-group-append">
-            {{ lexicon_item_form.submit(class="btn btn-outline-info", id="btnSubmit") }}
-        </div>
-    </form>
-
     <script type="text/javascript">
         document.getElementById("selected_word").innerHTML = localStorage["selected_word"];
     </script>
-    <br>
-    <br>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="lookup">
         {{ look_up_form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Look up Lexicon Item </legend>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  {{ look_up_form.inflected_form.label}}{{ look_up_form.inflected_form}}<br/>
+            <legend class="border-bottom mb-4">Look up Lexicon Entry </legend>
+                <div>
+                  {{ look_up_form.inflected_form.label }}{{ look_up_form.inflected_form(class="form-control form-control-sm")}}<br/>
                 </div>
-            </div>
+                <p>OR</p>
+                <div>
+                  {{ look_up_form.lemma_form.label }}{{ look_up_form.lemma_form(class="form-control form-control-sm")}}<br/>
+                </div>
         </fieldset>
 
         <div class="input-group-append">
@@ -117,17 +76,55 @@
         </div>
     </form>
 
-    <pre style="white-space:pre-line;" id="lookUpResult"></pre>
+    <br>
+    <br>
+    <form method="post" enctype="multipart/form-data">
+        {{ lexicon_item_form.hidden_tag() }}
+
+        <fieldset class="form-group"  id="lexiconItemForm">
+            <legend class="border-bottom mb-4">Look Up Result</legend>
+            <div class="input-group mb-4">
+                <div>
+                    {{ lexicon_item_form.lemma.label(class="form-control-label") }}&nbsp;&nbsp;&nbsp;&nbsp;{{ lexicon_item_form.lemma(class="form-control form-control-sm") }}<br/>
+                </div>
+                <div>
+                    {{ lexicon_item_form.root.label(class="form-control-label") }}&nbsp;&nbsp;&nbsp;&nbsp;{{ lexicon_item_form.root(class="form-control form-control-sm") }}<br/>
+                </div>
+                <div>
+                    {{ lexicon_item_form.pos.label(class="form-control-label") }}&nbsp;&nbsp;&nbsp;&nbsp;{{ lexicon_item_form.pos(class="form-control form-control-sm") }}<br/>
+                </div>
+
+                <div>
+                    {% for inflected_form in lexicon_item_form.inflected_forms %}
+                        {{ inflected_form.label}}&nbsp;&nbsp;&nbsp;&nbsp;{{ inflected_form.inflected_form(class="form-control form-control-sm") }}<br/>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {% for sense in lexicon_item_form.senses %}
+                        {{ sense.label(class="form-control-label")}}&nbsp;&nbsp;&nbsp;&nbsp;{{ sense }}<br/>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    {{ lexicon_item_form.update_mode.label }} {{ lexicon_item_form.update_mode(class="form-control form-control-sm")}}
+                </div>
+            </div>
+        </fieldset>
+        <div class="input-group-append">
+            {{ lexicon_item_form.submit(class="btn btn-outline-info", id="btnSubmit") }}
+        </div>
+    </form>
+    <br>
+    <button id="addNewSense">+ Add New Sense Field</button>
+    <button id="addNewInflectedForm">+ Add New Inflected Form Field</button>
+
+
 
     <hr>
     <button onclick="listDict(`showAll` )">Show Lexicon</button>
     <div id="showAll"></div>
     <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.annotate', doc_id=doc_id, snt_id=snt_id) }}">sent-level-annot</a>
-
-
-    <script>
-    prettyPrintJson(`lookUpResult`,`{{ lexicon_item }}`);
-    </script>
 
 {% endblock content2 %}
 

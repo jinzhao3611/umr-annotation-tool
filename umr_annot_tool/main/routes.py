@@ -9,7 +9,8 @@ import os
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon
-from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm
+from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
+    InflectedForm, SenseForm
 from sqlalchemy.orm.attributes import flag_modified
 from sqlalchemy.ext.mutable import MutableDict
 
@@ -20,7 +21,8 @@ main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 
-def lexicon2db(lang:str, lexicon_dict:dict):
+
+def lexicon2db(lang: str, lexicon_dict: dict):
     existing_lexicon = Lexicon.query.filter_by(lang=lang).first()
     if existing_lexicon:
         existing_lexicon.lexi = lexicon_dict
@@ -32,7 +34,9 @@ def lexicon2db(lang:str, lexicon_dict:dict):
         db.session.commit()
         flash('your lexicon has been saved to db', 'success')
 
-def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, sent_annots=None, doc_annots=None, aligns=None) -> None:
+
+def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool,
+            sent_annots=None, doc_annots=None, aligns=None) -> None:
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
     if existing_doc:
         doc_id = existing_doc.id
@@ -42,7 +46,8 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         db.session.commit()
         flash('Your doc and sents already created.', 'success')
     else:
-        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id, file_format=file_format)
+        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id,
+                  file_format=file_format)
         db.session.add(doc)
         db.session.commit()
         doc_id = doc.id
@@ -56,7 +61,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
     if has_annot:
         print("sents from annot: ", sents)
         for i in range(len(sents)):
-            existing = Annotation.query.filter(Annotation.sent_id == i+1, Annotation.doc_id == doc_id,
+            existing = Annotation.query.filter(Annotation.sent_id == i + 1, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
                 print("updating existing annotation")
@@ -70,7 +75,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
                 print('aligns from sent level: ', aligns)
                 annotation = Annotation(annot_str=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
                                         author=current_user,
-                                        sent_id=i+1,
+                                        sent_id=i + 1,
                                         doc_id=doc_id,
                                         umr={}, doc_umr={})
                 db.session.add(annotation)
@@ -93,12 +98,16 @@ def upload():
             lang = form.language_mode.data  # print('lang: ', lang)
             is_exported = form.if_exported.data
             if is_exported:  # has annotation
-                new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(content_string)
-                file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang, sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
+                new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(
+                    content_string)
+                file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
+                        sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
                 info2display = html(content_string, file_format)  # print('sents from upload:', sents)
-                file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang, sents=info2display.sents, has_annot=False)
-            return redirect(url_for('main.annotate', doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
+                file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
+                        sents=info2display.sents, has_annot=False)
+            return redirect(url_for('main.annotate',
+                                    doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
     if lexicon_form.validate_on_submit():
@@ -171,7 +180,6 @@ def annotate(doc_id):
             msg_category = 'danger'
             print(msg)
 
-
     # load single annotation for current sentence from db used for load_history()
     try:
         curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
@@ -193,14 +201,14 @@ def annotate(doc_id):
         curr_sent_umr = {}
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).order_by(Annotation.sent_id).all()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).order_by(
+        Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id, Sent.user_id == current_user.id).all()
     all_annots = [annot.annot_str for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
-
 
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
@@ -209,7 +217,7 @@ def annotate(doc_id):
                            curr_sent_umr=curr_sent_umr,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),)
+                           content_string=doc.content.replace('\n', '<br>'), )
 
 
 @main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])
@@ -296,7 +304,8 @@ def doclevel(doc_id):
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang, file_format=doc.file_format,
+                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
+                           file_format=doc.file_format,
                            content_string=doc.content.replace('\n', '<br>'),
                            all_sent_umrs=all_sent_umrs)
 
@@ -305,10 +314,17 @@ def doclevel(doc_id):
 def about():
     return render_template('about.html', title='About')
 
-@main.route("/lexicon/<doc_id>", methods=['GET', 'POST'])
-def lexicon(doc_id):
-    snt_id = int(request.args.get('snt_id', 1))
+
+@main.route("/lexiconupdate/<doc_id>", methods=['GET', 'POST'])
+def lexiconupdate(doc_id):
     doc = Doc.query.get_or_404(doc_id)
+    snt_id = int(request.args.get('snt_id', 1))
+    look_up_inflected = request.args.get('look_up_inflected', None)
+    look_up_lemma = request.args.get('look_up_lemma', None)
+    print("snt_id from lexiconupdate: ", snt_id)
+    print("look_up_lemma: ", look_up_lemma)
+
+    # generate the suggested inflected and lemma list
     if request.method == 'POST':
         try:
             selected_word = request.get_json(force=True)['selected_word']
@@ -324,46 +340,133 @@ def lexicon(doc_id):
 
     lexicon_item_form = LexiconItemForm()
     look_up_form = LookUpLexiconItemForm()
-    if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data:
-        print(lexicon_item_form.inflected_form.data)
-        existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
-        print(type(existing_lexicon.lexi))
-        print(existing_lexicon.lexi)
-        new_lexicon_item = {lexicon_item_form.inflected_form.data: {"lemma": lexicon_item_form.lemma.data,
-                                                                  "pos": lexicon_item_form.pos.data, "sense": [
-                {"number": lexicon_item_form.sense_number.data, "gloss": lexicon_item_form.sense_gloss.data,
-                 "args": lexicon_item_form.sense_args.data,
-                 "coding_frames": lexicon_item_form.sense_coding_frames.data}]}}
-        if existing_lexicon:
-            print("here1: ", new_lexicon_item)
-            existing_lexicon.lexi.update(new_lexicon_item)
-            db.session.commit()
-        else:
-            print("here2: ", new_lexicon_item)
-            lexicon_row = Lexicon(lang=doc.lang, lexi=new_lexicon_item)
-            db.session.add(lexicon_row)
-            db.session.commit()
-
-    lexicon_item = {}
-    if look_up_form.validate_on_submit():
-        existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
-        lexicon_item = existing_lexicon.lexi.get(look_up_form.inflected_form.data, "doesn't exist")
-        print(lexicon_item)
 
     try:
         frames_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
     except AttributeError:
         frames_dict = {}
 
-    citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in frames_dict[lemma]["inflected_forms"]}
+    citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in
+                     frames_dict[lemma]["inflected_forms"]}
+
+    citation_dict['madeupword1'] = "ehlhlakama"  # todo: line to be deleted, just for testing purpose
+    frames_dict["ehlhlakama"]["inflected_forms"].append(
+        "madeupword1")  # todo: line to be deleted, just for testing purpose
+    citation_dict['madeupword2'] = "ehlhlakama"  # todo: line to be deleted, just for testing purpose
+    frames_dict["ehlhlakama"]["inflected_forms"].append(
+        "madeupword2")  # todo: line to be deleted, just for testing purpose
+    citation_dict['madeupword3'] = "ehlhlakama"  # todo: line to be deleted, just for testing purpose
+    frames_dict["ehlhlakama"]["inflected_forms"].append(
+        "madeupword3")  # todo: line to be deleted, just for testing purpose
     print("in routes.lexicon: ", frames_dict)
     print("in routes.lexicon: ", citation_dict)
+
+    lexicon_item = {}
+    if look_up_inflected:
+        look_up_lemma = citation_dict.get(look_up_inflected, "")
+        lexicon_item = frames_dict.get(look_up_lemma, json.loads("{}"))
+    elif look_up_lemma:
+        lexicon_item = frames_dict.get(look_up_lemma, json.loads("{}"))
+
+    print("lexicon item: ", json.dumps(lexicon_item))
+
+    lexicon_item_form.lemma.data = look_up_lemma
+    lexicon_item_form.root.data = lexicon_item.get('root', '')
+    lexicon_item_form.pos.data = lexicon_item.get('pos', '')
+
+    for surface_form in lexicon_item.get('inflected_forms', []):
+        entry = InflectedForm()
+        entry.inflected_form = surface_form
+        lexicon_item_form.inflected_forms.append_entry(entry)
+
+    for sense in lexicon_item.get('sense', []):
+        entry = SenseForm()
+        entry.gloss = sense.get('gloss')
+        entry.args = sense.get('args')
+        entry.coding_frames = sense.get('coding_frames')
+        lexicon_item_form.senses.append_entry(entry)
+
+    if not look_up_form.inflected_form.data and not look_up_form.lemma_form.data:
+        if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data:
+            print("debug here: ", look_up_form.lemma_form.data)
+            new_lexicon_entry = {lexicon_item_form.lemma.data: {"root": lexicon_item_form.root.data,
+                                                                "pos": lexicon_item_form.pos.data,
+                                                                "inflected_forms": [lexicon_item_form.inflected_form.data],
+                                                                # todo append list
+                                                                "sense": [{"gloss": lexicon_item_form.sense_gloss.data,
+                                                                           # todo append list
+                                                                           "args": lexicon_item_form.sense_args.data,
+                                                                           # todo append list
+                                                                           "coding_frames": lexicon_item_form.sense_coding_frames.data}]
+                                                                # todo append list
+                                                                }
+                                 }
+
+            existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
+            print(type(existing_lexicon.lexi))
+            print("existing_lexicon.lexi: ", existing_lexicon.lexi)
+
+            if existing_lexicon:
+                print("here1: ", new_lexicon_entry)
+                existing_lexicon.lexi.update(new_lexicon_entry)
+                db.session.commit()
+            else:
+                print("here2: ", new_lexicon_entry)
+                lexicon_row = Lexicon(lang=doc.lang, lexi=new_lexicon_entry)
+                db.session.add(lexicon_row)
+                db.session.commit()
+
+        # elif lexicon_item_form.validate_on_submit():
+        #     deleted_lemma = request.args.get('deleted_lemma')
+        #     print("deleted_lemma", deleted_lemma)
+
+    if look_up_form.validate_on_submit() and (look_up_form.inflected_form.data or look_up_form.lemma_form.data):
+        look_up_inflected = look_up_form.inflected_form.data
+        look_up_lemma = look_up_form.lemma_form.data
+        print("going to redirect")
+        return redirect(
+            url_for('main.lexiconupdate', doc_id=doc_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma, snt_id=snt_id))
 
     return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
                            file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
                            look_up_form=look_up_form, lexicon_item=json.dumps(lexicon_item),
                            frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
                            snt_id=snt_id)
+
+
+@main.route("/lexicon/<doc_id>", methods=['GET', 'POST'])
+def lexicon(doc_id): # this route is kind of used to always clear out the look up form after redirect to lexiconupdate route, I know it's weird, but haven't found a workaround yet
+    snt_id = int(request.args.get('snt_id', 1))
+    doc = Doc.query.get_or_404(doc_id)
+    if request.method == 'POST':
+        try:
+            selected_word = request.get_json(force=True)['selected_word']
+            word_candidates = generate_candidate_list(doc.content, doc.file_format)
+            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+            print("selected_word:", selected_word)
+            print("similar_word_list: ", similar_word_list)
+            return res
+        except:
+            print("no word selected")
+
+    lexicon_item_form = LexiconItemForm()
+    look_up_form = LookUpLexiconItemForm()
+
+    lexicon_item = {}
+    if look_up_form.validate_on_submit() and (look_up_form.inflected_form.data or look_up_form.lemma_form.data):
+        look_up_inflected = look_up_form.inflected_form.data
+        look_up_lemma = look_up_form.lemma_form.data
+        print("going to redirect")
+        return redirect(
+            url_for('main.lexiconupdate', doc_id=doc_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma, snt_id=snt_id))
+
+    return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
+                           file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
+                           look_up_form=look_up_form, lexicon_item=json.dumps(lexicon_item),
+                           frames_dict={}, citation_dict={},
+                           snt_id=snt_id)
+
 
 @main.route("/")
 @main.route("/display_post")

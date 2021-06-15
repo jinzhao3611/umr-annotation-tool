@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms import BooleanField, SubmitField, SelectField, TextAreaField, StringField
+from wtforms import BooleanField, SubmitField, SelectField, TextAreaField, StringField, FieldList, FormField
 
 class UploadForm(FlaskForm):
     file = FileField()
@@ -28,17 +28,30 @@ class UploadLexiconForm(FlaskForm):
                                                      ("kukama", "kukama"),])
     submit = SubmitField('Upload')
 
+
+class SenseForm(FlaskForm):
+    gloss = TextAreaField("gloss")
+    args = TextAreaField("args")
+    coding_frames = TextAreaField("coding frames")
+
+class InflectedForm(FlaskForm):
+    inflected_form = StringField('inflected_form')
+
 class LexiconItemForm(FlaskForm):
-    inflected_form = StringField('inflected form')
     lemma = StringField('lemma')
     root = StringField('root')
     pos = StringField('part of speech')
-    sense_number = TextAreaField("number")
-    sense_gloss = TextAreaField("gloss")
-    sense_args = TextAreaField("args")
-    sense_coding_frames = TextAreaField("coding frames")
-    submit = SubmitField('Add')
+
+    inflected_forms = FieldList(FormField(InflectedForm), min_entries=0)
+    senses = FieldList(FormField(SenseForm), min_entries=0)
+
+    update_mode = SelectField('update mode', choices=[("edit", "edit current entry"),
+                                                     ("add", "add new entry"),
+                                                     ("delete", "delete current entry"),])
+
+    submit = SubmitField('Save')
 
 class LookUpLexiconItemForm(FlaskForm):
-    inflected_form = StringField('inflected form')
+    inflected_form = StringField('Type in inflected form to look up: ')
+    lemma_form = StringField('Type in lemma form to look up: ')
     submit = SubmitField('Look up')
