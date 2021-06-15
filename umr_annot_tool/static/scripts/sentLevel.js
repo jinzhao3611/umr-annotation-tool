@@ -3568,7 +3568,7 @@ function get(object, key, default_value) {
     return (typeof result !== "undefined") ? result : default_value;
 }
 
-function lexicon(doc_id){
+function suggestLemma(doc_id){
     fetch(`/lexicon/${doc_id}`, {
         method: 'POST',
         body: JSON.stringify({"selected_word": localStorage["selected_word"]})
