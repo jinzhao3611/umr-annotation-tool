@@ -61,20 +61,15 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         flash('Your sents has been created.', 'success')
 
     if has_annot:
-        print("sents from annot: ", sents)
         for i in range(len(sents)):
             existing = Annotation.query.filter(Annotation.sent_id == i + 1, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
-                print("updating existing annotation")
                 existing.annot_str = sent_annots[i]
                 existing.doc_annot = doc_annots[i]
                 existing.alignment = aligns[i]
                 db.session.commit()
             else:
-                print('sent_annots from sent level: ', sent_annots)
-                print('doc_annots from sent level: ', doc_annots)
-                print('aligns from sent level: ', aligns)
                 annotation = Annotation(annot_str=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
                                         author=current_user,
                                         sent_id=i + 1,
@@ -94,10 +89,10 @@ def upload():
     lexicon_form = UploadLexiconForm()
     if form.validate_on_submit():
         if form.file.data and form.file.data.filename:
-            content_string = form.file.data.read().decode("utf-8")  # print("content_string: ", content_string)
-            filename = secure_filename(form.file.data.filename)  # print('filename: ', filename)
-            file_format = form.file_format.data  # print('file_format: ', file_format)
-            lang = form.language_mode.data  # print('lang: ', lang)
+            content_string = form.file.data.read().decode("utf-8")
+            filename = secure_filename(form.file.data.filename)
+            file_format = form.file_format.data
+            lang = form.language_mode.data
             is_exported = form.if_exported.data
             if is_exported:  # has annotation
                 new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(
@@ -105,7 +100,7 @@ def upload():
                 file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
                         sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
-                info2display = html(content_string, file_format)  # print('sents from upload:', sents)
+                info2display = html(content_string, file_format)
                 file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
                         sents=info2display.sents, has_annot=False)
             return redirect(url_for('main.annotate',
@@ -114,9 +109,8 @@ def upload():
             flash('Please upload a file and/or choose a language.', 'danger')
     if lexicon_form.validate_on_submit():
         if lexicon_form.file.data:
-            content_string = form.file.data.read().decode("utf-8")  # print("content_string: ", content_string)
+            content_string = form.file.data.read().decode("utf-8")
             frames_dict = parse_lexicon_xml(content_string)
-            print("frames_dict:", frames_dict)
             lexicon2db(lang=lexicon_form.language_mode.data, lexicon_dict=frames_dict)
             return redirect(url_for('users.account'))
         else:
@@ -174,13 +168,11 @@ def annotate(doc_id):
                 db.session.commit()
             msg = 'Success: current annotation and alignments are added to database.'
             msg_category = 'success'
-            print(msg)
             return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
 
         except:
             msg = 'Failure: Add current annotation and alignments to database failed.'
             msg_category = 'danger'
-            print(msg)
 
     # load single annotation for current sentence from db used for load_history()
     try:
@@ -234,14 +226,11 @@ def doclevel(doc_id):
     if request.method == 'POST':
         try:
             umr_html = request.get_json(force=True)["umr"]
-            print("umr_html: ", umr_html)
             snt_id_info = request.get_json(force=True)["snt_id"]
-            print("snt_id_info:", snt_id_info)
             umr_dict = request.get_json(force=True)["umr_dict"]
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
-                print("updating existing annotation")
                 existing.doc_annot = umr_html
                 existing.doc_umr = umr_dict
                 db.session.commit()
@@ -268,41 +257,19 @@ def doclevel(doc_id):
 
     print("sent_annot_pairs: ", sent_annot_pairs)
 
-    # print(annotations[0].annot_str)
-    # print(annotations[1].annot_str)
-    #
-    # sent, annot = sent_annot_pairs[0]
-    # print("*********")
-    # print('sent: ', sent.content)
-    # print('annot: ', annot.annot_str)
-    # sent2, annot2 = sent_annot_pairs[1]
-    # print("*********")
-    # print('sent: ', sent2.content)
-    # print('annot: ', annot2.annot_str)
-
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
         return redirect(url_for('main.annotate', doc_id=doc_id))
 
-    # print("doc_annot: ", sent_annot_pairs[current_snt_id - 1][1].doc_annot)
-    # print("doc_umr: ", sent_annot_pairs[current_snt_id - 1][1].doc_umr)
-    # print("current_sent_table: ", sent_annot_pairs[current_snt_id-1][0])
-    # print("current_snt_id: ", current_snt_id)
-
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]
-    print("all_annots: ", all_annots)
     all_aligns = [annot.alignment for annot in annotations]
-    print("all_aligns: ", all_aligns)
     all_doc_annots = [annot.doc_annot for annot in annotations]
-    print("all_doc_annots: ", all_doc_annots)
     all_sents = [sent2.content for sent2 in sents]
-    print("all_sents: ", all_sents)
     all_sent_umrs = [annot.umr for annot in annotations]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
-    print("exported_items: ", exported_items)
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
@@ -384,9 +351,6 @@ def lexiconupdate(doc_id):
             word_candidates = generate_candidate_list(doc.content, doc.file_format)
             similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
             res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-
-            print("selected_word:", selected_word)
-            print("similar_word_list: ", similar_word_list)
             return res
         except:
             print("no word selected")
