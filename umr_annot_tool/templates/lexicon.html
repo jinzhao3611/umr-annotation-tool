@@ -17,39 +17,40 @@
 
     <script type="text/javascript">
         $(document).ready( function () {
-            $('#addNewInflectedForm').click(function() {
-                console.log("add new inflected form is clicked");
-                $.getJSON("{{ url_for('main.lexiconmodify', doc_id=doc_id, look_up_inflected=None, look_up_lemma=look_up_lemma, snt_id=snt_id)}}", {'add_inflected_box': true}, function (){
-                     console.log("sucess2");
-                }).done(function (json) {
-                    console.log("success");
-                 }).fail(function (jqxhr, textStatus, error) {
-                     var err = textStatus + ", " + error;
-                     console.log("Request Failed: " + err);
-                 });
+            $("#add-inflected").on('click', function(event){
+                $.ajax({
+                    url: "{{ url_for('main.lexicon_modify_inflected') }}",
+                    type : "POST",
+                    //dataType : 'json', // data type
+                    data : $("#entry-update").serialize(),
+                    success : function(result) {
+                        console.log(result);
+                        $("#forms-and-senses").html(result);
+                    },
+                    error: function(xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                    }
+                });
+                event.preventDefault();
             });
 
-            $("#addNewSense").click(function(){
-                console.log("add new sense is clicked");
-                $.getJSON("{{ url_for('main.lexiconmodify', doc_id=doc_id, look_up_inflected=None, look_up_lemma=look_up_lemma, snt_id=snt_id)}}", {'add_sense_box': true}, function (){
-                     console.log("sucess2");
-                }).done(function (json) {
-                    console.log("success");
-                 }).fail(function (jqxhr, textStatus, error) {
-                     var err = textStatus + ", " + error;
-                     console.log("Request Failed: " + err);
-                 });
+            $("#add-sense").on('click', function(event){
+                $.ajax({
+                    url: "{{ url_for('main.lexicon_modify_sense') }}",
+                    type : "POST",
+                    //dataType : 'json', // data type
+                    data : $("#entry-update").serialize(),
+                    success : function(result) {
+                        console.log(result);
+                        $("#forms-and-senses").html(result);
+                    },
+                    error: function(xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                    }
+                });
+                event.preventDefault();
             });
-
-            {#when update mode is add new entry, the lexicon item form boxes are cleared #}
-            $("#update_mode").on('change', function(){
-                if(document.getElementById('update_mode').value === 'add'){
-                    $('#lexiconItemForm').find('input').val('');
-                    $('#lexiconItemForm').find('textarea').val('');
-                }
-            })
         });
-
     </script>
 
 {% endblock head %}
@@ -119,8 +120,7 @@
     </script>
 
 
-
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="entry-update">
         {{ lexicon_item_form.hidden_tag() }}
 
         <fieldset class="form-group"  id="lexiconItemForm">
@@ -139,16 +139,13 @@
                     {{ lexicon_item_form.pos.label(class="form-control-label") }}&nbsp;&nbsp;&nbsp;&nbsp;{{ lexicon_item_form.pos(class="form-control form-control-sm") }}<br/>
                 </div>
 
-                <div>
-                    {% for inflected_form in lexicon_item_form.inflected_forms %}
-                        {{ inflected_form.label}}&nbsp;&nbsp;&nbsp;&nbsp;{{ inflected_form.inflected_form(class="form-control form-control-sm") }}<br/>
-                    {% endfor %}
-                </div>
+                <span id="forms-and-senses">{% include 'forms_and_senses.html' %}</span>
 
                 <div>
-                    {% for sense in lexicon_item_form.senses %}
-                        {{ sense.label(class="form-control-label")}}&nbsp;&nbsp;&nbsp;&nbsp;{{ sense }}<br/>
-                    {% endfor %}
+                    {{ lexicon_item_form.add_inflected(id="add-inflected", class="form-control form-control-sm") }}
+                </div>
+                <div>
+                    {{ lexicon_item_form.add_sense(id="add-sense", class="form-control form-control-sm") }}
                 </div>
             </div>
         </fieldset>
@@ -156,9 +153,6 @@
             {{ lexicon_item_form.submit(class="btn btn-outline-info", id="btnSubmit") }}
         </div>
     </form>
-    <br>
-    <button id="addNewInflectedForm">+ Add New Inflected Form Field</button>
-    <button id="addNewSense">+ Add New Sense Field</button>
     <hr>
     <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.annotate', doc_id=doc_id, snt_id=snt_id) }}">sent-level-annot</a>
 

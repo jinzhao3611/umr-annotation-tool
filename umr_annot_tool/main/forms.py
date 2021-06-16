@@ -29,6 +29,11 @@ class UploadLexiconForm(FlaskForm):
     submit = SubmitField('Upload')
 
 
+class LookUpLexiconItemForm(FlaskForm):
+    inflected_form = StringField('Type in inflected form to look up: ')
+    lemma_form = StringField('Type in lemma form to look up: ')
+    submit = SubmitField('Look up')
+
 class SenseForm(FlaskForm):
     class Meta:
         csrf = False
@@ -54,10 +59,8 @@ class LexiconItemForm(FlaskForm):
     update_mode = SelectField('update mode', choices=[("edit", "edit current entry"),
                                                      ("add", "add new entry"),
                                                      ("delete", "delete current entry"),])
+    add_inflected = SubmitField('+ Add New Inflected Form Field')
+    add_sense = SubmitField('+ Add New Sense Field')
 
     submit = SubmitField('Save')
 
-class LookUpLexiconItemForm(FlaskForm):
-    inflected_form = StringField('Type in inflected form to look up: ')
-    lemma_form = StringField('Type in lemma form to look up: ')
-    submit = SubmitField('Look up')
