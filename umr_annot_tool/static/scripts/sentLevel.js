@@ -3569,7 +3569,7 @@ function get(object, key, default_value) {
 }
 
 function suggestLemma(doc_id){
-    fetch(`/lexicon/${doc_id}`, {
+    fetch(`/lexiconupdate/${doc_id}`, {
         method: 'POST',
         body: JSON.stringify({"selected_word": localStorage["selected_word"]})
     }).then(function (response) {

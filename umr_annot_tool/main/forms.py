@@ -30,14 +30,20 @@ class UploadLexiconForm(FlaskForm):
 
 
 class SenseForm(FlaskForm):
+    class Meta:
+        csrf = False
     gloss = TextAreaField("gloss")
     args = TextAreaField("args")
     coding_frames = TextAreaField("coding frames")
 
 class InflectedForm(FlaskForm):
+    class Meta:
+        csrf = False
     inflected_form = StringField('inflected_form')
 
 class LexiconItemForm(FlaskForm):
+    class Meta:
+        csrf = False # this is to work around typeerror: argument of type 'csrftokenfield' is not iterable, see https://wtforms.readthedocs.io/en/2.3.x/csrf/
     lemma = StringField('lemma')
     root = StringField('root')
     pos = StringField('part of speech')
