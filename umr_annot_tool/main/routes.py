@@ -332,7 +332,7 @@ def get_lexicon_dicts(doc):
 
 def fill_lexicon_item_form(frames_dict, citation_dict, look_up_inflected, look_up_lemma):
     lexicon_item_form = LexiconItemForm() #this is not always empty
-    if not lexicon_item_form.lemma.data: # the following only happens when trying to lookup the first time
+    if not lexicon_item_form.lemma.data: # the following only happens when trying to lookup the first time, enter only when this is empty
         lexicon_item = {}
         if look_up_inflected:
             look_up_lemma = citation_dict.get(look_up_inflected, "")
@@ -343,7 +343,7 @@ def fill_lexicon_item_form(frames_dict, citation_dict, look_up_inflected, look_u
         print("lexicon item: ", json.dumps(lexicon_item))
 
         lexicon_item_form.lemma.data = look_up_lemma #assigned ehl to ehl-00 here
-        lexicon_item_form.root.data = lexicon_item.get('root', '')
+        lexicon_item_form.root.data = lexicon_item.get('root', '') #todo change default to None instead of ''?
         lexicon_item_form.pos.data = lexicon_item.get('pos', '')
 
         for surface_form in lexicon_item.get('inflected_forms', []):
@@ -408,12 +408,18 @@ def lexiconupdate(doc_id):
                                                                 }
                                  }
             if lexicon_item_form.update_mode.data == 'edit':
-                del frames_dict[look_up_lemma]
-                frames_dict.update(new_lexicon_entry)
+                try:
+                    del frames_dict[look_up_lemma]
+                    frames_dict.update(new_lexicon_entry)
+                    flash('This entry is edited and saved successfully', 'success')
+                except KeyError:
+                    flash('This entry is not in lexicon yet, use "add new entry" mode instead of "edit current entry" mode', 'danger')
             elif lexicon_item_form.update_mode.data == 'add':
                 frames_dict.update(new_lexicon_entry) # todo deal with homonym case
+                flash('This entry is added and saved successfully', 'success')
             elif lexicon_item_form.update_mode.data == 'delete':
                 del frames_dict[lexicon_item_form.lemma.data]
+                flash('This entry is deleted and saved successfully', 'success')
 
             citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in
                                  frames_dict[lemma]["inflected_forms"]}
@@ -451,9 +457,6 @@ def lexiconmodify(doc_id):
     snt_id = int(request.args.get('snt_id', 1))
     look_up_inflected = request.args.get('look_up_inflected', None)
     look_up_lemma = request.args.get('look_up_lemma', None)
-    print("snt_id from lexiconmodify: ", snt_id)
-    print("look_up_lemma from lexiconmodify: ", look_up_lemma)
-    print("look_up_inflected from lexiconmodify: ", look_up_inflected)
 
     frames_dict, citation_dict = get_lexicon_dicts(doc)
     lexicon_item_form = fill_lexicon_item_form(frames_dict, citation_dict, look_up_inflected, look_up_lemma)
