@@ -154,7 +154,7 @@
         </div>
     </form>
     <hr>
-    <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.annotate', doc_id=doc_id, snt_id=snt_id) }}">sent-level-annot</a>
+    <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.annotate', doc_id=doc_id, snt_id=snt_id) }}" onclick="pass_citation_dict(`{{ citation_dict }}`)">sent-level-annot</a>
 
 {% endblock content2 %}
 

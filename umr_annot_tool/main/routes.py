@@ -329,6 +329,8 @@ def polulate_lexicon_item_form_by_lookup(frames_dict, citation_dict, look_up_inf
             lexicon_item_form.senses.append_entry(entry)
     return lexicon_item_form
 
+# see https://stackoverflow.com/questions/49066046/append-entry-to-fieldlist-with-flask-wtforms-using-ajax
+# and https://stackoverflow.com/questions/51817148/dynamically-add-new-wtforms-fieldlist-entries-from-user-interface
 @main.route("/lexicon_modify_inflected", methods=['GET', 'POST'])
 def lexicon_modify_inflected():
     lexicon_item_form = LexiconItemForm()

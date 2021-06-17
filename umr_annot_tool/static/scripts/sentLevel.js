@@ -116,8 +116,8 @@ function conceptDropdown(lang='english') {
         // if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
         if (default_langs.includes(lang)){
             let submenu_items;
-            if (token in citation_dict){
-                let lemma = citation_dict[token];
+            if (token in JSON.parse(localStorage["citation_dict"])){
+                let lemma = JSON.parse(localStorage["citation_dict"])[token];
                 submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
             }else{
                 submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
@@ -3130,6 +3130,10 @@ function get_selected_word(){
     localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
     localStorage.setItem('umr', JSON.stringify(umr));
     console.log("selected word from javascript", localStorage["selected_word"]);
+}
+
+function pass_citation_dict(citation_dict){
+    localStorage.setItem('citation_dict', citation_dict);
 }
 function highlightSelection() {
     console.log("highlightSelection is called.");
