@@ -472,7 +472,6 @@ function selectTemplate(id) {
                 s.style.display = 'none';
                 current_template = id;
                 if ((action === 'replace') && !show_amr_status.match(/replace/)) {
-                    console.log("I am here 903");
                     show_amr('show replace');
                 } else if ((action === 'delete') && !show_amr_status.match(/delete/)) {
                     show_amr('show delete');
@@ -859,21 +858,17 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 }
             } else if (cc.length >= 1) {
                 /** when cc is longer than one (unlike above)**********************************************************************************************************************/
-                console.log("I am here1");
                 // cc == ["b", ":arg1", "car"]
                 let ne_concept;
                 let cc2v;
                 if ((cc[0] === 'top') || (cc[0] === 'bottom') || (cc[0] === 'new')) {
-                    console.log("I am here2");
                     if ((cc.length >= 3) && (cc[1] === '*OR*') && validEntryConcept(cc[2])) {
                         // this is choice sentence: hear or see it to generate (o3 / *OR* :op1 (h / hear) :op2 (s / see))
-                        console.log("I am here3");
                         addOr('top ' + value);
                         selectTemplate('');
                         show_amr_args = 'show';
                     } else if ((cc.length >= 3) && (cc[0] === 'top') && (ne_concept = cc[1]) && validEntryConcept(ne_concept) && (!getLocs(ne_concept)) && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
                         // top is named entity: top person Jin Zhao
-                        console.log("I am here4");
                         let ne_var = newAMR(trimConcept(ne_concept));
                         let name_var = addTriple(ne_var, ':name', 'name', 'concept');
                         for (let i = 2; i < cc.length; i++) {
@@ -881,26 +876,21 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             addTriple(name_var, sub_role, cc[i], 'string');
                         }
                         if (current_template !== 'top') {
-                            console.log("I am here5");
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
                     } else if (cc.length >= 2) {
                         // this is when cc only has two element (the first probably is top)
-                        console.log("I am here6");
                         for (let i = 1; i < cc.length; i++) {
                             if ((cc[0] === 'top') && getLocs(cc[i])) {
                                 //when the arg already exist in amr tree, take out the argument as a new top (a new tree)
-                                console.log("I am here7");
                                 move_var_elem(cc[i], 'top', '');
                             } else {
                                 // when the arg is not already in tree yet
-                                console.log("I am here8");
                                 newAMR(cc[i].toLowerCase());
                             }
                         }
                         if (current_template !== 'top') {
-                            console.log("I am here11");
                             selectTemplate('clear');
                         }
                         show_amr_args = 'show';
@@ -1029,7 +1019,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     show_amr_args = 'show';
                     /** move and add **********************************************************************************************************************/
                 } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '-')) {
-                    console.log("I am here12");
+                    
                     move_var_elem(cc[2], cc[0], cc[1]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
@@ -1044,12 +1034,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     && (cc[2].match(/\-$/))
                     && (cc2v = cc[2].replace(/^(.*)\-$/, "$1"))
                     && getLocs(cc2v)) {
-                    console.log("I am here13");
+                    
                     move_var_elem(cc2v, cc[0], cc[1]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
                 } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
-                    console.log("I am here14");
+                    
                     addTriple(cc[0], cc[1], cc[2]);
                     selectTemplate('clear');
                     show_amr_args = 'show';
@@ -1057,12 +1047,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     && (cc[2].match(/\+$/))
                     && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
                     && getLocs(cc2v)) {
-                    console.log("I am here15");
+                    
                     addTriple(cc[0], cc[1], cc2v);
                     selectTemplate('clear');
                     show_amr_args = 'show';
                 } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
-                    console.log("I am here38");
+                    
                     // this is the condition we go in 1
                     addTriple(cc[0], cc[1], cc[2], '');
                     if (current_template != 'add') {
@@ -1070,53 +1060,53 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     }
                     show_amr_args = 'show';
                 } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
-                    console.log("I am here16");
+                    
                     addOr(value);
                     selectTemplate('');
                     show_amr_args = 'show';
                 } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
-                    console.log("I am here17");
+                    
                     addNE(value);
                     if (current_template != 'add-ne') {
                         selectTemplate('clear');
                     }
                     show_amr_args = 'show';
                 } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
-                    console.log("I am here18");
+                    
                     addNE(value);
                     if (current_template != 'add-ne') {
-                        console.log("I am here19");
+                        
                         selectTemplate('clear');
                     }
                     show_amr_args = 'show';
                 } else if (cc[0] === 'replace') {
-                    console.log("I am here20");
+                    
                     if (cc.length == 1) {
-                        console.log("I am here21");
+                        
                         console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
                     } else if (cc[1] == 'concept') {
                         if (cc.length == 6) {
-                            console.log("I am here23");
+                            
                             replace_concept(cc[2], cc[3], cc[4], cc[5]);
                             selectTemplate('clear');
                             show_amr_args = 'show';
                         } else {
-                            console.log("I am here24");
+                            
                             console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                         }
                     } else if (cc[1] == 'string') {
-                        console.log("I am here25");
+                        
                         if (cc.length == 7) {
-                            console.log("I am here26");
+                            
                             replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
                             selectTemplate('clear');
                             show_amr_args = 'show';
                         } else {
-                            console.log("I am here27");
+                            
                             console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
                         }
                     } else if (cc[1] == 'role') {
-                        console.log("I am here28");
+                        
                         if (cc.length == 8) {
                             replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
                             selectTemplate('clear');
@@ -1125,7 +1115,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                             console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
                         }
                     } else if (cc[1] == 'variable') {
-                        console.log("I am here29");
+                        
                         if (cc.length == 8) {
                             replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
                             selectTemplate('clear');
@@ -1137,7 +1127,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
                     }
                 } else if (cc[0] === 'delete') {
-                    console.log("I am here30");
+                    
                     if (cc.length === 4) {
                         if ((cc[1] === 'top') && (cc[2] === 'level')) {
                             delete_top_level(cc[3]);
@@ -1154,7 +1144,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
                     }
                 } else if ((cc[0] === 'move') || (cc[0] === 'mv')) {
-                    console.log("I am here31");
+                    
                     if (cc.length >= 4) {
                         if (cc[2] === 'to') {
                             if (cc.length === 4) {
@@ -1173,7 +1163,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                     }
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
-                    console.log("I am here32");
+                    
                     if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
                         console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
                     } else if (cc.length == 2) {
@@ -1182,10 +1172,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         console.log('Unrecognized <i>add</i> command.');
                     }
                 } else if (value.match(/^record /i)) { //sample match: 'record reop s1n'
-                    console.log("I am here33");
+                    
                     record_value = value.replace(/^record\s*/, ""); // 'record reop s1n' -> 'reop s1n'
                 } else {
-                    console.log("I am here34");
+                    
                     if (!value.match(/^(h|help)\b/i)) {
                         console.log('Unrecognized command: <font color="red">' + value + '</font>');
                     }
@@ -1195,13 +1185,13 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             }
 
             if (top) {// the undo and redo up right corner
-                console.log("I am here35");
+                
                 record_value = record_value || value; //"record reop s1n"
                 // value: "b :arg1 car"
                 // last_command.innerHTML = record_value;
                 show_amr(show_amr_args); // show_amr_args:'show'
                 if (state_has_changed_p) {
-                    console.log("I am here36");
+                    
                     let old_state = undo_list[undo_index];
                     old_state['action'] = record_value;
                     undo_index++;
@@ -1513,7 +1503,7 @@ function user_descr2locs(s, type) {
  * @returns {string} return a new amr head, "b"
  */
 function newAMR(concept) {
-    console.log("I am here37");
+    
     let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
@@ -1643,7 +1633,7 @@ function addTriple(head, role, arg, arg_type) {
         variable2concept[arg_variable] = arg_concept; // add to variable2concept dictionary
         state_has_changed_p = 1; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished todo:can be used to tell if command is executed completely
         if (role.match(/^:op(-\d|0|\d+\.\d)/)) {
-            console.log("I am here44");
+            
             renorm_ops(head); //in umr, reorder :op5, :op8, :op6 to :op1, :op2, :op3
         }
         return arg_variable;
@@ -3405,7 +3395,7 @@ function UMR2db() {
 }
 
 function docUMR2db() {
-    console.log("I am here522");
+    
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_sent_id').value;
     let umrHtml = document.getElementById('amr'+snt_id).outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
@@ -3607,7 +3597,6 @@ function initializeLexicon(frames, citations){
 
 
 function listDict(id){
-    console.log("I am here 1008");
     let ul = document.createElement('ul');
     document.getElementById(id).appendChild(ul);
     Object.keys(citation_dict).forEach(function (item) {
