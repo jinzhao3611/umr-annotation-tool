@@ -2689,16 +2689,16 @@ function show_amr(args) {
  * handles the indentation
  * @param loc
  * @param c
- * @param style
- * @param n
+ * @param style : example: variable
+ * @param n: indentation space
  * @returns {string}
  */
 function indent_for_loc(loc, c, style, n) {
-    var indentation, rem_loc, role;
-    if (loc.match(/^\d+$/)) {
+    let indentation, rem_loc, role;
+    if (loc.match(/^\d+$/)) { //if loc is an integer (first level)
         indentation = '';
     } else {
-        rem_loc = loc.replace(/\.\d+$/, "");
+        rem_loc = loc.replace(/\.\d+$/, ""); //get the first level number
         if (c == undefined) {
             c = ' ';
         }
@@ -2713,16 +2713,15 @@ function indent_for_loc(loc, c, style, n) {
         indentation = '';
         while (rem_loc) {
             if (style == 'fix') {
-                indentation += n_spaces(n);
+                indentation += ' '.repeat(n);
             } else if (rem_loc.match(/\./)) {
                 if (role = umr[rem_loc + '.r']) {
-                    role_length = role.length;
-                    indentation += n_spaces(role_length + 1 + n);
+                    indentation += ' '.repeat(role.length + 1 + n);
                 } else {
-                    indentation += n_spaces(5 + n);
+                    indentation += ' '.repeat(5 + n);
                 }
             } else {
-                indentation += n_spaces(n);
+                indentation += ' '.repeat(n);
             }
             rem_loc = rem_loc.replace(/\.?\d+$/, "");
         }

@@ -418,16 +418,7 @@ function action_on_enter(field, e, s_id) {
    }
 }
 
-
-/**
- * used to add space for indentation purpose
- * @param n the number of the space
- * @returns {string} n spaces
- */
-function n_spaces(n) {
-    let result = '';
-    for (let i = 0; i < n; i++) {
-        result += ' ';
-    }
-    return result;
-}
+// N spaces. see: https://stackoverflow.com/questions/12669136/how-to-print-out-n-spaces-in-javascript
+String.prototype.repeat = function(length) {
+ return Array(length + 1).join(this);
+};
