@@ -252,24 +252,22 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                                 gls_per_sentence.append(gls_per_word)
                                 msa_per_sentence.append(msa_per_word)
 
+                gls_list = ['', '']
                 for item in word.findall('item'):
-                    conv_turn_string = ''
-                    if item.attrib.get('type', '') == 'gls':
-                        gls_list = ['', '']
-                        if item.attrib.get('lang', '') == 'en':
+                    if item.attrib.get('type') == 'gls':
+                        if item.attrib.get('lang') == 'en':
                             if item.text:
                                 gls_list[0] = item.text
-                            else:
-                                continue
-                        if item.attrib.get('lang', '') == 'es':
+                        elif item.attrib.get('lang') == 'es':
                             if item.text:
                                 gls_list[1] = item.text
-                            else:
-                                continue
-                        sent_gls.append(gls_list)
-                    if item.attrib.get('type', '') == 'note':
+                        else:
+                            print(f"unidentified language: {item.attrib.get('lang')}")
+                    conv_turn_string = ''
+                    if item.attrib.get('type') == 'note':
                         conv_turn_string = item.text
                     conversation_turns.append(conv_turn_string)
+                sent_gls.append(gls_list)
 
                 text_id_group.append(i)
                 txt.append(txt_per_sentence) # words row
