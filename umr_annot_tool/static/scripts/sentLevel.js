@@ -1615,7 +1615,6 @@ function addTriple(head, role, arg, arg_type) {
         // console.log('subs ' + head_var_loc + '.n: ' + n_subs);
         let new_loc = head_var_loc + '.' + n_subs;
         // console.log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
-        role = autoTrueCaseRole(role); //arg9/:ARG9 -> :ARG9
         umr[new_loc + '.v'] = arg_variable;
         umr[new_loc + '.r'] = role;
         umr[new_loc + '.n'] = 0;
@@ -1847,7 +1846,6 @@ function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
                             }
                             if (role_arg_loc) {
                                 var old_role = umr[role_arg_loc + '.r'];
-                                new_role = autoTrueCaseRole(new_role);
                                 umr[role_arg_loc + '.r'] = new_role;
                                 if (new_role.match(/^:op(-\d|0|\d+\.\d)/)) {
                                     renorm_ops(head_var);
@@ -2138,7 +2136,7 @@ function move_var_elem(variable, new_head_var, role) {
                                     // add_log('move amr update: ' + key + '&rarr; ' + new_key);
                                 }
                             }
-                            umr[new_loc + '.r'] = autoTrueCaseRole(role);
+                            umr[new_loc + '.r'] = role;
                             umr[loc + '.d'] = 1;
                             state_has_changed_p = 1;
                             for (var key in variables) {
@@ -2760,7 +2758,7 @@ function string2umr_rec(annotText, loc, state, ht) {
     let insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"';
     let insert_space_style = 'style="color:#FF7700;font-weight:bold" title="inserted space"';
     let change_style = 'style="color:#FF0000;font-weight:bold"';
-    let change_var_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to avoid conflict with earlier definition"';
+    let change_var_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to avoid conflict with earlier definition"'; //todo
     let change_var2_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to conform with variable format"';
     let change_concept_style = 'style="color:#FF0000;font-weight:bold" title="changed concept to conform with concept format"';
     let accept_style = 'style="color:#007700"';
@@ -2913,16 +2911,16 @@ function string2umr_rec(annotText, loc, state, ht) {
             let new_loc = loc + '.' + n_children;
             load_amr_feedback += '<br>' + indent_for_loc(new_loc, '&nbsp;');
             if (role_follows_p) {
-                let roleList = annotText.match(/^:[a-z][-_a-z0-9]*/i);
-                annotText = annotText.replace(/^:[a-z][-_a-z0-9]*/i, "");
-                role = roleList[0];
+                let roleList = annotText.match(/^:[a-z][-_a-z0-9]*/i); // match the role :actor
+                annotText = annotText.replace(/^:[a-z][-_a-z0-9]*/i, ""); // remove the matched role from the rest of the annotText string
+                role = roleList[0]; // :actor
                 load_amr_feedback += ` <span ${accept_style}>${role}</span>`;
             } else {
                 role = ':mod'; // default
                 load_amr_feedback += ` <span ${insert_style}>${role}</span> `;
                 load_amr_feedback_alert = 1;
             }
-            umr[new_loc + '.r'] = autoTrueCaseRole(role);
+            umr[new_loc + '.r'] = role;
             if (annotText.match(/^\s*\(/)) { // )
                 annotText = string2umr_rec(annotText, new_loc, 'pre-open-parenthesis', ht);
             } else {

@@ -1699,7 +1699,6 @@ function addTriple(head, role, arg, arg_type) {
         // add_log('subs ' + head_var_loc + '.n: ' + n_subs);
         let new_loc = head_var_loc + '.' + n_subs;
         // add_log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
-        role = autoTrueCaseRole(role);
         umr[new_loc + '.v'] = arg_variable;
         umr[new_loc + '.r'] = role;
         umr[new_loc + '.n'] = 0;
@@ -1920,7 +1919,6 @@ function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
                             }
                             if (role_arg_loc) {
                                 var old_role = umr[role_arg_loc + '.r'];
-                                new_role = autoTrueCaseRole(new_role);
                                 umr[role_arg_loc + '.r'] = new_role;
                                 if (new_role.match(/^:op(-\d|0|\d+\.\d)/)) {
                                     renorm_ops(head_var);
@@ -2211,7 +2209,7 @@ function move_var_elem(variable, new_head_var, role) {
                                     // add_log('move amr update: ' + key + '&rarr; ' + new_key);
                                 }
                             }
-                            umr[new_loc + '.r'] = autoTrueCaseRole(role);
+                            umr[new_loc + '.r'] = role;
                             umr[loc + '.d'] = 1;
                             state_has_changed_p = 1;
                             for (var key in variables) {
@@ -2957,7 +2955,7 @@ function string2amr_rec(s, loc, state, ht) {
                 load_amr_feedback += ' <span ' + insert_style + '>' + role + '</span> ';
                 load_amr_feedback_alert = 1;
             }
-            umr[new_loc + '.r'] = autoTrueCaseRole(role);
+            umr[new_loc + '.r'] = role;
             if (s.match(/^\s*\(/)) { // )
                 s = string2amr_rec(s, new_loc, 'pre-open-para', ht);
             } else {
