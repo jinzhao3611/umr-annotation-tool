@@ -116,11 +116,15 @@ function conceptDropdown(lang='english') {
         // if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
         if (default_langs.includes(lang)){
             let submenu_items;
-            if (token in JSON.parse(localStorage["citation_dict"])){
-                let lemma = JSON.parse(localStorage["citation_dict"])[token];
-                submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
+            if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
+                 submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
             }else{
-                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+                if (token in JSON.parse(localStorage["citation_dict"])){
+                    let lemma = JSON.parse(localStorage["citation_dict"])[token];
+                    submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
+                }else{
+                    submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+                }
             }
 
             // Object.keys(citation_dict.forEach(function(key) {
