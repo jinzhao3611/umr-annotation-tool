@@ -337,19 +337,6 @@ function deHTML(html){
 }
 
 /**
- * this function returns the true case of the role
- * @param role :arg9/:ARG9
- * @returns {*} :ARG9
- */
-function autoTrueCaseRole(role) {
-    if (show_amr_obj['option-role-auto-case']) {
-        return check_list['true-case.role.' + role.toLowerCase()] || role;
-    } else {
-        return role;
-    }
-}
-
-/**
  * only called in user_descr2locs
  * @param sloppyString
  * @param referenceString
