@@ -2754,7 +2754,7 @@ function extractValueFrom2ColonExpr(s, key) {
  */
 function string2umr_rec(annotText, loc, state, ht) {
     let ignore_style = 'style="color:#8888FF;font-weight:bold" title="ignored"';
-    let insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"';
+    let insert_style = 'style="color:#FF7700;font-weight:bold" title="inserted"'; // this is when automatically insert forward slash or :mod role
     let insert_space_style = 'style="color:#FF7700;font-weight:bold" title="inserted space"';
     let change_style = 'style="color:#FF0000;font-weight:bold"';
     let change_var_style = 'style="color:#FF0000;font-weight:bold" title="changed variable to avoid conflict with earlier definition"'; //todo
@@ -2892,7 +2892,7 @@ function string2umr_rec(annotText, loc, state, ht) {
         let ignore_list = annotText.match(/^[^:()]*/); //ignore anything in the start position that is not : ( )
         annotText = annotText.replace(/^[^:()]*/, ""); //remove anything that is not : ( ) until : ( ) appears
         if (ignore_list) {
-            let ignore = strip(ignore_list[0]);
+            let ignore = strip(ignore_list[0]); //todo: should I change this to strip2? should I strip off &nbsp;
             if (ignore !== '') {
                 load_amr_feedback += ` <span ${ignore_style}>${htmlSpaceGuard(ignore)}</span>`;
                 if (ignore.match(/\S/)) {
@@ -2914,7 +2914,7 @@ function string2umr_rec(annotText, loc, state, ht) {
                 annotText = annotText.replace(/^:[a-z][-_a-z0-9]*/i, ""); // remove the matched role from the rest of the annotText string
                 role = roleList[0]; // :actor
                 load_amr_feedback += ` <span ${accept_style}>${role}</span>`;
-            } else {
+            } else { //if there is no role follows parenthesis todo: don't allow to go here?
                 role = ':mod'; // default
                 load_amr_feedback += ` <span ${insert_style}>${role}</span> `;
                 load_amr_feedback_alert = 1;
@@ -2932,12 +2932,11 @@ function string2umr_rec(annotText, loc, state, ht) {
             annotText = annotText.replace(/^\s*/, "");
             load_amr_feedback += ' ';
         } else {
-            load_amr_feedback += `<span ${insert_space_style}> &bullet; </span>`; // caret (U+2038)
-            load_amr_feedback_alert = 1;
+            console.log("There is no space between role and post-role variable/string/concept");
         }
-        var s_comp;
-        var string_arg = '';
-        var variable_arg = '';
+        let s_comp;
+        let string_arg = '';
+        let variable_arg = '';
         if (annotText.match(/^"/)) {
             annotText = annotText.replace(/^"/, "");
             var q_max_iter = 10;
