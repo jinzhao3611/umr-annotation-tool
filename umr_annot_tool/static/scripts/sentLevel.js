@@ -116,7 +116,7 @@ function conceptDropdown(lang='english') {
         // if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
         if (default_langs.includes(lang)){
             let submenu_items;
-            if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
+            if (lang === "navajo" || "sanapana"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
                  submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
             }else{
                 if (token in JSON.parse(localStorage["citation_dict"])){
