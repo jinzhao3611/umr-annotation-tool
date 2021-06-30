@@ -2588,9 +2588,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             } else if (show_check) {
-                var role = umr[loc + '.r'];
+                let role = umr[loc + '.r'];
                 if ((role == ':wiki') && !string.match(/^\s*(|-)\s*$/i)) {
-                    var wiki_url = 'https://en.wikipedia.org/wiki/' + htmlProtect(string);
+                    let wiki_url = 'https://en.wikipedia.org/wiki/' + htmlProtect(string);
                     string_m = '"<a href="' + wiki_url + '" title="' + wiki_url + '" target="_WIKI" style="color:#000080;">' + string + '</a>"';
                 }
             }

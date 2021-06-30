@@ -2764,16 +2764,16 @@ function indent_for_loc(loc, c, style, n) {
         indentation = '';
         while (rem_loc) {
             if (style == 'fix') {
-                indentation += n_spaces(n);
+                indentation += ' '.repeat(n);
             } else if (rem_loc.match(/\./)) {
                 if (role = umr[rem_loc + '.r']) {
                     role_length = role.length;
-                    indentation += n_spaces(role_length + 1 + n);
+                    indentation += ' '.repeat(role_length + 1 + n);
                 } else {
-                    indentation += n_spaces(5 + n);
+                    indentation += ' '.repeat(5 + n);
                 }
             } else {
-                indentation += n_spaces(n);
+                indentation += ' '.repeat(n);
             }
             rem_loc = rem_loc.replace(/\.?\d+$/, "");
         }
