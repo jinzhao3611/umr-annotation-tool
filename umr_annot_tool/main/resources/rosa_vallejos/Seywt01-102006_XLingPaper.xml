@@ -1,0 +1,825 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE lingPaper PUBLIC   "-//XMLmind//DTD XLingPap//EN" "XLingPap.dtd">
+<lingPaper automaticallywrapinterlinears="yes"><frontMatter><title>Hummingbird</title><author>Rodrigo Pacaya Leví</author></frontMatter><section1 id="s1"><secTitle>Interlinear text</secTitle>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+        
+          <p>paragraph 1.1</p><example num="xID0EMKAG-1.1"><interlinear><phrase>
+            
+            <words>
+              <iword>
+                <item type="txt" lang="sey-baseline">Mimi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">mimi</item>
+                    <item type="cf" lang="sey-lexEntry">mimi</item>
+                    <item type="gls" lang="es-lexGloss">picaflor</item>
+                    <item type="gls" lang="en-lexGloss">hummingbird</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">picaflor</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">kato</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">kato</item>
+                    <item type="cf" lang="sey-lexEntry">kato</item>
+                    <item type="gls" lang="es-lexGloss">TOP</item>
+                    <item type="gls" lang="en-lexGloss">TOP</item>
+                    <item type="msa" lang="en-gramInfo">???</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">TOP</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">ʤari</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">ʤari</item>
+                    <item type="cf" lang="sey-lexEntry">ʤari<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">small</item>
+                    <item type="gls" lang="en-lexGloss">pequeño</item>
+                    <item type="msa" lang="en-gramInfo">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">pequeño</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">pĩʔa</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">pĩʔa</item>
+                    <item type="cf" lang="sey-lexEntry">pĩʔa</item>
+                    <item type="gls" lang="es-lexGloss">pájaro</item>
+                    <item type="gls" lang="en-lexGloss">little bird</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">pájaro</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">makapi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">maka</item>
+                    <item type="cf" lang="sey-lexEntry">maka<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">pequeña</item>
+                    <item type="gls" lang="en-lexGloss">small</item>
+                    <item type="msa" lang="en-gramInfo">&lt;Not Sure&gt;</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">3SG.M.PFV.ED</item>
+                    <item type="gls" lang="en-lexGloss">3SG.M.PFV.DE</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">pequeño</item>
+              </iword>
+              <iword>
+                <item type="punct" lang="sey-baseline">.</item>
+              </iword>
+            </words>
+            <item type="gls" lang="en-free">The humminbird is a small bird.</item>
+            <item type="gls" lang="es-free">(Se dice que) el picaflor es un pájaro pequeño.</item>
+          </phrase></interlinear></example>
+          <p>paragraph 1.2</p><example num="xID0EMKAG-1.2"><interlinear><phrase>
+            
+            <words>
+              <iword>
+                <item type="txt" lang="sey-baseline">weʔekɨaʔpi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">weʔe</item>
+                    <item type="cf" lang="sey-lexEntry">weʔe<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">tener</item>
+                    <item type="gls" lang="en-lexGloss">have</item>
+                    <item type="msa" lang="es-gramInfo">v</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-kɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-kɨ<object type="tHomographNumber">3</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">2/3SG.M.IPFV.EI</item>
+                    <item type="gls" lang="en-lexGloss">2/3SG.M.IPFV.IE</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-a</item>
+                    <item type="cf" lang="sey-lexEntry">-a<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">COP</item>
+                    <item type="gls" lang="en-lexGloss">COP</item>
+                    <item type="msa" lang="en-gramInfo">Attaches to any category</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">3SG.M.PFV.ED</item>
+                    <item type="gls" lang="en-lexGloss">3SG.M.PFV.DE</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">tener</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tsoa</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tsoa</item>
+                    <item type="cf" lang="sey-lexEntry">tsoa<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">largo</item>
+                    <item type="gls" lang="en-lexGloss">long</item>
+                    <item type="msa" lang="en-gramInfo">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">largo</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">õkwepɨ</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">õkwe</item>
+                    <item type="cf" lang="sey-lexEntry">õkwe<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">comer</item>
+                    <item type="gls" lang="en-lexGloss">eat</item>
+                    <item type="msa" lang="es-gramInfo">v.gen</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-pɨ<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">CLF.esf</item>
+                    <item type="gls" lang="en-lexGloss">CLF.round</item>
+                    <item type="msa" lang="es-gramInfo">isus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">pico</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">piʤo</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">piʤo</item>
+                    <item type="cf" lang="sey-lexEntry">piʤo</item>
+                    <item type="gls" lang="es-lexGloss">punta</item>
+                    <item type="gls" lang="en-lexGloss">tip</item>
+                    <item type="msa" lang="en-gramInfo">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">punta</item>
+              </iword>
+              <iword>
+                <item type="punct" lang="sey-baseline">,</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">hãopi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">hã</item>
+                    <item type="cf" lang="sey-lexEntry">hã</item>
+                    <item type="gls" lang="es-lexGloss">DEM.dist</item>
+                    <item type="gls" lang="en-lexGloss">DEM.dist</item>
+                    <item type="msa" lang="en-gramInfo">???</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-o</item>
+                    <item type="cf" lang="sey-lexEntry">-o<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">F</item>
+                    <item type="gls" lang="en-lexGloss">F</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">NOM</item>
+                    <item type="gls" lang="en-lexGloss">NOM</item>
+                    <item type="msa" lang="es-gramInfo">S/A:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">eso</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">horo</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">horo</item>
+                    <item type="cf" lang="sey-lexEntry">horo</item>
+                    <item type="gls" lang="es-lexGloss">flor</item>
+                    <item type="gls" lang="en-lexGloss">flower</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss" />
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tsanawɨ</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tsana</item>
+                    <item type="cf" lang="sey-lexEntry">tsana<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">meter</item>
+                    <item type="gls" lang="en-lexGloss">put.in</item>
+                    <item type="msa" lang="es-gramInfo">v</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-wɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-wɨ<object type="tHomographNumber">3</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">N3SG.PFV.ED</item>
+                    <item type="gls" lang="en-lexGloss">N3SG.PFV.DE</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">meter</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">huakokɨ</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">hua</item>
+                    <item type="cf" lang="sey-lexEntry">hua<object type="tHomographNumber">3</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">insertar</item>
+                    <item type="gls" lang="en-lexGloss">insert</item>
+                    <item type="msa" lang="es-gramInfo">dv</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-kɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-kɨ<object type="tHomographNumber">5</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">SG.M.IPFV</item>
+                    <item type="gls" lang="en-lexGloss">SG.M.IPFV</item>
+                    <item type="msa" lang="es-gramInfo">General</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">insertar</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tsãihãʔñe</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tsa</item>
+                    <item type="cf" lang="sey-lexEntry">tsa<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">ir</item>
+                    <item type="gls" lang="en-lexGloss">go</item>
+                    <item type="msa" lang="es-gramInfo">i-verbo</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-i</item>
+                    <item type="cf" lang="sey-lexEntry">-i<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">i.clase</item>
+                    <item type="gls" lang="en-lexGloss">i.class</item>
+                    <item type="msa" lang="es-gramInfo">Verbo</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-hã</item>
+                    <item type="cf" lang="sey-lexEntry">-hã<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">PER</item>
+                    <item type="gls" lang="en-lexGloss">PER</item>
+                    <item type="msa" lang="es-gramInfo">Adposición</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ñe</item>
+                    <item type="cf" lang="sey-lexEntry">-ʤe<object type="tHomographNumber">3</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">INF</item>
+                    <item type="gls" lang="en-lexGloss">INF</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                </morphset></morphemes>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">ũkukɨapi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">ũku</item>
+                    <item type="cf" lang="sey-lexEntry">ũku</item>
+                    <item type="gls" lang="es-lexGloss">tomar</item>
+                    <item type="gls" lang="en-lexGloss">take</item>
+                    <item type="msa" lang="es-gramInfo">v</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-kɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-kɨ<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">2/3SG.M.PFV.EI</item>
+                    <item type="gls" lang="en-lexGloss">2/3SG.M.PFV.IE</item>
+                    <item type="msa" lang="es-gramInfo">i-verbo:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-a</item>
+                    <item type="cf" lang="sey-lexEntry">-a<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">COP</item>
+                    <item type="gls" lang="en-lexGloss">COP</item>
+                    <item type="msa" lang="en-gramInfo">Attaches to any category</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">NOM</item>
+                    <item type="gls" lang="en-lexGloss">NOM</item>
+                    <item type="msa" lang="es-gramInfo">S/A:Any</item>
+                  </morph>
+                </morphset></morphemes>
+              </iword>
+              <iword>
+                <item type="punct" lang="sey-baseline">.</item>
+              </iword>
+            </words>
+            <item type="gls" lang="en-free">Its beack is long, he introduces it into the flower to suck its sweet.</item>
+            <item type="gls" lang="es-free">Tiene el pico largo, eso introduce en la flor para chupar/tomar su dulce.</item>
+          </phrase></interlinear></example>
+          <p>paragraph 1.3</p><example num="xID0EMKAG-1.3"><interlinear><phrase>
+            
+            <words>
+              <iword>
+                <item type="txt" lang="sey-baseline">kwiʔne</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">kwiʔne</item>
+                    <item type="cf" lang="sey-lexEntry">kwiʔne</item>
+                    <item type="gls" lang="es-lexGloss">también</item>
+                    <item type="gls" lang="en-lexGloss">also</item>
+                    <item type="msa" lang="en-gramInfo">???</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">también</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">etsa</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">etsa</item>
+                    <item type="cf" lang="sey-lexEntry">etsa</item>
+                    <item type="gls" lang="es-lexGloss">rápido</item>
+                    <item type="gls" lang="en-lexGloss">fast</item>
+                    <item type="msa" lang="en-gramInfo">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">rápido</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">peoreoʔto</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">peo</item>
+                    <item type="cf" lang="sey-lexEntry">peo<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">no.hay</item>
+                    <item type="gls" lang="en-lexGloss">there.is.not</item>
+                    <item type="msa" lang="es-gramInfo">cop</item>
+                  </morph>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">deo</item>
+                    <item type="cf" lang="sey-lexEntry">deo<object type="tHomographNumber">4</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">colgar</item>
+                    <item type="gls" lang="en-lexGloss">hang</item>
+                    <item type="msa" lang="es-gramInfo">dv</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-to</item>
+                    <item type="cf" lang="sey-lexEntry">-to<object type="tHomographNumber">3</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">COND</item>
+                    <item type="gls" lang="en-lexGloss">COND</item>
+                    <item type="msa" lang="es-gramInfo">Verbo</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">vacío</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">kuʔikɨaʔpi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">kuʔi</item>
+                    <item type="cf" lang="sey-lexEntry">kuʔi</item>
+                    <item type="gls" lang="es-lexGloss">andar</item>
+                    <item type="gls" lang="en-lexGloss">go.around</item>
+                    <item type="msa" lang="es-gramInfo">v</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-kɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-kɨ<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">2/3SG.M.PFV.EI</item>
+                    <item type="gls" lang="en-lexGloss">2/3SG.M.PFV.IE</item>
+                    <item type="msa" lang="es-gramInfo">i-verbo:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ãʔ</item>
+                    <item type="cf" lang="sey-lexEntry">-ãʔ</item>
+                    <item type="gls" lang="es-lexGloss">REM</item>
+                    <item type="gls" lang="en-lexGloss">REM</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">NOM</item>
+                    <item type="gls" lang="en-lexGloss">NOM</item>
+                    <item type="msa" lang="es-gramInfo">S/A:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">andan</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">ĩɨ</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">ĩ</item>
+                    <item type="cf" lang="sey-lexEntry">ĩ<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">3SG</item>
+                    <item type="gls" lang="en-lexGloss">3SG</item>
+                    <item type="msa" lang="es-gramInfo">pro</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-ɨ<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">M</item>
+                    <item type="gls" lang="en-lexGloss">M</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">a él</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">kamañapi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">kʔa</item>
+                    <item type="cf" lang="sey-lexEntry">kʔa</item>
+                    <item type="gls" lang="es-lexGloss">decir</item>
+                    <item type="gls" lang="en-lexGloss">say</item>
+                    <item type="msa" lang="es-gramInfo">v</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-maña</item>
+                    <item type="cf" lang="sey-lexEntry">-maña</item>
+                    <item type="gls" lang="es-lexGloss">DIM.PL</item>
+                    <item type="gls" lang="en-lexGloss">DIM.PL</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">INS</item>
+                    <item type="gls" lang="en-lexGloss">INS</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">dicen</item>
+              </iword>
+              <iword>
+                <item type="punct" lang="sey-baseline">.</item>
+              </iword>
+            </words>
+            <item type="gls" lang="en-free">At the same time, it moves around in the air pretty quick with his little wing.</item>
+            <item type="gls" lang="es-free">Asimismo, anda rápido en el espacio con su alita</item>
+          </phrase></interlinear></example>
+          <p>paragraph 1.4</p><example num="xID0EMKAG-1.4"><interlinear><phrase>
+            
+            <words>
+              <iword>
+                <item type="txt" lang="sey-baseline">Paʔiʤɨ</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">paʔ</item>
+                    <item type="cf" lang="sey-lexEntry">paʔ<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">existir</item>
+                    <item type="gls" lang="en-lexGloss">exist</item>
+                    <item type="msa" lang="es-gramInfo">i-verbo</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ʤɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-ʤɨ<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">N3SG.IPFV.ED</item>
+                    <item type="gls" lang="en-lexGloss">N3SG.IPFV.DE</item>
+                    <item type="msa" lang="es-gramInfo">v:Any</item>
+                  </morph>
+                </morphset></morphemes>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">hai</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">hai</item>
+                    <item type="cf" lang="sey-lexEntry">hai<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">bastante</item>
+                    <item type="gls" lang="en-lexGloss">a.lot</item>
+                    <item type="msa" lang="es-gramInfo">adv</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">grande</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">pãi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">pãi</item>
+                    <item type="cf" lang="sey-lexEntry">pãi</item>
+                    <item type="gls" lang="es-lexGloss">gente</item>
+                    <item type="gls" lang="en-lexGloss">people</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">gente</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">mimi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">mimi</item>
+                    <item type="cf" lang="sey-lexEntry">mimi</item>
+                    <item type="gls" lang="es-lexGloss">picaflor</item>
+                    <item type="gls" lang="en-lexGloss">hummingbird</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">picaflor</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tĩñehe</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tĩñe</item>
+                    <item type="cf" lang="sey-lexEntry">tĩñe</item>
+                    <item type="gls" lang="es-lexGloss">distinto</item>
+                    <item type="gls" lang="en-lexGloss">different</item>
+                    <item type="msa" lang="en-gramInfo">&lt;Not Sure&gt;</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-he</item>
+                    <item type="cf" lang="sey-lexEntry">-he</item>
+                    <item type="gls" lang="es-lexGloss">FOC</item>
+                    <item type="gls" lang="en-lexGloss">FOC</item>
+                    <item type="msa" lang="es-gramInfo">v&gt;sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">diferentes</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">paʔiowaʔi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">paʔ</item>
+                    <item type="cf" lang="sey-lexEntry">paʔ<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">existir</item>
+                    <item type="gls" lang="en-lexGloss">exist</item>
+                    <item type="msa" lang="es-gramInfo">i-verbo</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-o</item>
+                    <item type="cf" lang="sey-lexEntry">-o<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">F</item>
+                    <item type="gls" lang="en-lexGloss">F</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-waʔi</item>
+                    <item type="cf" lang="sey-lexEntry">-waʔi</item>
+                    <item type="gls" lang="es-lexGloss">PL.ANI</item>
+                    <item type="gls" lang="en-lexGloss">PL.ANI</item>
+                    <item type="msa" lang="es-gramInfo">asus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">existir</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">deokomaña</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">deo</item>
+                    <item type="cf" lang="sey-lexEntry">deo<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">hermoso</item>
+                    <item type="gls" lang="en-lexGloss">beautiful</item>
+                    <item type="msa" lang="es-gramInfo">adj</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ko</item>
+                    <item type="cf" lang="sey-lexEntry">-ko<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">F</item>
+                    <item type="gls" lang="en-lexGloss">F</item>
+                    <item type="msa" lang="es-gramInfo">asus:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-maña</item>
+                    <item type="cf" lang="sey-lexEntry">-maña</item>
+                    <item type="gls" lang="es-lexGloss">DIM.PL</item>
+                    <item type="gls" lang="en-lexGloss">DIM.PL</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">bonitos</item>
+              </iword>
+              <iword>
+                <item type="punct" lang="sey-baseline">.</item>
+              </iword>
+            </words>
+            <item type="gls" lang="en-free">There are several types of beatiful hummingbird. </item>
+            <item type="gls" lang="es-free">Existen varios tipos hermosos de picaflor.</item>
+          </phrase></interlinear></example>
+          <p>paragraph 1.5</p><example num="xID0EMKAG-1.5"><interlinear><phrase>
+            
+            <words>
+              <iword>
+                <item type="txt" lang="sey-baseline">ĩoʔwaʔi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">ĩ</item>
+                    <item type="cf" lang="sey-lexEntry">ĩ<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">3SG</item>
+                    <item type="gls" lang="en-lexGloss">3SG</item>
+                    <item type="msa" lang="es-gramInfo">pro</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-o</item>
+                    <item type="cf" lang="sey-lexEntry">-o<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">F</item>
+                    <item type="gls" lang="en-lexGloss">F</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-waʔi</item>
+                    <item type="cf" lang="sey-lexEntry">-waʔi</item>
+                    <item type="gls" lang="es-lexGloss">PL.ANI</item>
+                    <item type="gls" lang="en-lexGloss">PL.ANI</item>
+                    <item type="msa" lang="es-gramInfo">asus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tsianoa</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tsia</item>
+                    <item type="cf" lang="sey-lexEntry">tsia<object type="tHomographNumber">3</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">huevo</item>
+                    <item type="gls" lang="en-lexGloss">egg</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">noa</item>
+                    <item type="cf" lang="sey-lexEntry">noa</item>
+                    <item type="gls" lang="es-lexGloss">nido</item>
+                    <item type="gls" lang="en-lexGloss">nest</item>
+                    <item type="msa" lang="es-gramInfo">asus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">huevo</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tsuakowaʔiaʔɨ</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tsua</item>
+                    <item type="cf" lang="sey-lexEntry">tsua<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">tejer</item>
+                    <item type="gls" lang="en-lexGloss">weave</item>
+                    <item type="msa" lang="es-gramInfo">v</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ko</item>
+                    <item type="cf" lang="sey-lexEntry">-ko<object type="tHomographNumber">4</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">NZR.F</item>
+                    <item type="gls" lang="en-lexGloss">NZR.F</item>
+                    <item type="msa" lang="es-gramInfo">General</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-waʔi</item>
+                    <item type="cf" lang="sey-lexEntry">-waʔi</item>
+                    <item type="gls" lang="es-lexGloss">PL.ANI</item>
+                    <item type="gls" lang="en-lexGloss">PL.ANI</item>
+                    <item type="msa" lang="es-gramInfo">asus:Any</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-a</item>
+                    <item type="cf" lang="sey-lexEntry">-a<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">COP</item>
+                    <item type="gls" lang="en-lexGloss">COP</item>
+                    <item type="msa" lang="en-gramInfo">Attaches to any category</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-ʔɨ</item>
+                    <item type="cf" lang="sey-lexEntry">-ʔɨ<object type="tHomographNumber">2</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">N3.ED</item>
+                    <item type="gls" lang="en-lexGloss">N3.DE</item>
+                    <item type="msa" lang="es-gramInfo">cop:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">tejer</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">airo</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">airo</item>
+                    <item type="cf" lang="sey-lexEntry">airo</item>
+                    <item type="gls" lang="es-lexGloss">monte</item>
+                    <item type="gls" lang="en-lexGloss">jungle</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">monte</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">ʤɨi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">ʤɨi</item>
+                    <item type="cf" lang="sey-lexEntry">ʤɨi</item>
+                    <item type="gls" lang="es-lexGloss">algodón</item>
+                    <item type="gls" lang="en-lexGloss">cotton</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">algodón</item>
+              </iword>
+              <iword>
+                <item type="txt" lang="sey-baseline">tsɨopi</item>
+                <morphemes><morphset>
+                  <morph type="stem">
+                    <item type="txt" lang="sey-morpheme">tsɨo</item>
+                    <item type="cf" lang="sey-lexEntry">tsɨo<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">bolita</item>
+                    <item type="gls" lang="en-lexGloss">ball</item>
+                    <item type="msa" lang="es-gramInfo">sus</item>
+                  </morph>
+                  <morph type="suffix">
+                    <item type="txt" lang="sey-morpheme">-pi</item>
+                    <item type="cf" lang="sey-lexEntry">-pi<object type="tHomographNumber">1</object></item>
+                    
+                    <item type="gls" lang="es-lexGloss">INS</item>
+                    <item type="gls" lang="en-lexGloss">INS</item>
+                    <item type="msa" lang="es-gramInfo">sus:Any</item>
+                  </morph>
+                </morphset></morphemes>
+                <item type="gls" lang="es-wordGloss">bolita</item>
+              </iword>
+              <iword>
+                <item type="punct" lang="sey-baseline">.</item>
+              </iword>
+            </words>
+            <item type="gls" lang="en-free">They make their nests with balls of cotton from the jungle. </item>
+            <item type="gls" lang="es-free">Tejen sus nidos con los copos de algodón del monte.</item>
+          </phrase></interlinear></example>
+        
+      
+    
+    
+      
+      
+      
+    
+  
+</section1><backMatter><endnotes /><references /></backMatter><languages><language font-family="Charis SIL" id="en-free" /><language font-family="Charis SIL" id="en-lexGloss" /><language font-family="Charis SIL" id="en-gramInfo" /><language font-family="Charis SIL" id="es-free" /><language font-family="Charis SIL" id="es-wordGloss" /><language font-family="Charis SIL" id="es-lexGloss" /><language font-family="Charis SIL" id="es-gramInfo" /><language font-family="Charis SIL" id="sey-baseline" /><language font-family="Charis SIL" id="sey-morpheme" /><language font-family="Charis SIL" id="sey-lexEntry" /></languages><types><type id="tHomographNumber" font-size="65%" cssSpecial="vertical-align:sub" xsl-foSpecial="baseline-shift='sub'" /><type id="tLiteralTranslation" /><type id="tVariantTypes" font-family="Charis SIL" /></types></lingPaper>

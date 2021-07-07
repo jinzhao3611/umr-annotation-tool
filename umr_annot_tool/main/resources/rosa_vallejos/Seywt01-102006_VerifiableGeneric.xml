@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<document xsi:noNamespaceSchemaLocation="file:FlexInterlinear.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <interlinear-text guid="da8f7870-0b16-4ab5-9685-064d11ead000">
+    <item type="title" lang="en">Hummingbird</item>
+    <item type="title" lang="es">Picaflor/colobrí</item>
+    <item type="title" lang="sey">Mimi</item>
+    <item type="title-abbreviation" lang="en">Seywt01-102006-RP</item>
+    <item type="title-abbreviation" lang="es">Seywt01-102006-RP</item>
+    <item type="title-abbreviation" lang="sey">Seywt01-102006-RP</item>
+    <item type="source" lang="en">Rodrigo Pacaya Leví</item>
+    <item type="source" lang="es">Rodrigo Pacaya Leví</item>
+    <item type="source" lang="sey">Yëwënëwë Ra'sa </item>
+    <item type="comment" lang="en">written text</item>
+    <item type="comment" lang="es">Este hablante ha recibido varios nombres a lo largo de su vida. Cuando nació, su nombre tradicional, de clan, fue: Wati Ra'sa 'Gente de diablo', su nombre mestizo fue: Gustavo Leví Cabrera. Como a los 7 años, cuando entró a la escuela, su nombre mestizo cambió a Rodrigo Leví Cabrera. A los 22 años (en 1992, cuando le fue otorgado el DNI), su nombre oficial fue Rodrigo Pacaya Leví. A los 30 años, recibio el nombre tradicional Yëwënëwë Ra'sa 'Gente de topa'. Su fecha de nacimiento real es el 24 de enero de 1971, sin embargo, oficialmente figura como el 6 de diciembre de 1970. Existen 5 clanes tradicionales: Payaguaje, Piaguaje, Macaguaje, Ocoguaje, y Wajocapë.</item>
+    <paragraphs>
+      <paragraph>
+        <phrases>
+          <word><words>
+              <word><item type="txt" lang="sey">Mimi</item><item type="gls" lang="es">picaflor</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">mimi</item>
+                    <item type="cf" lang="sey">mimi</item>
+                    <item type="gls" lang="es">picaflor</item>
+                    <item type="gls" lang="en">hummingbird</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">kato</item><item type="gls" lang="es">TOP</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">kato</item>
+                    <item type="cf" lang="sey">kato</item>
+                    <item type="gls" lang="es">TOP</item>
+                    <item type="gls" lang="en">TOP</item>
+                    <item type="msa" lang="en">???</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">ʤari</item><item type="gls" lang="es">pequeño</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">ʤari</item>
+                    <item type="cf" lang="sey">ʤari</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">small</item>
+                    <item type="gls" lang="en">pequeño</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">pĩʔa</item><item type="gls" lang="es">pájaro</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">pĩʔa</item>
+                    <item type="cf" lang="sey">pĩʔa</item>
+                    <item type="gls" lang="es">pájaro</item>
+                    <item type="gls" lang="en">little bird</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">makapi</item><item type="gls" lang="es">pequeño</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">maka</item>
+                    <item type="cf" lang="sey">maka</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">pequeña</item>
+                    <item type="gls" lang="en">small</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">3SG.M.PFV.ED</item>
+                    <item type="gls" lang="en">3SG.M.PFV.DE</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="punct" lang="sey">.</item></word>
+            </words><item type="segnum" lang="en">1.1</item><item type="gls" lang="en">The humminbird is a small bird.</item><item type="gls" lang="es">(Se dice que) el picaflor es un pájaro pequeño.</item></word>
+          <word><words>
+              <word><item type="txt" lang="sey">weʔekɨaʔpi</item><item type="gls" lang="es">tener</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">weʔe</item>
+                    <item type="cf" lang="sey">weʔe</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">tener</item>
+                    <item type="gls" lang="en">have</item>
+                    <item type="msa" lang="es">v</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-kɨ</item>
+                    <item type="cf" lang="sey">-kɨ</item>
+                    <item type="hn" lang="sey">3</item>
+                    <item type="gls" lang="es">2/3SG.M.IPFV.EI</item>
+                    <item type="gls" lang="en">2/3SG.M.IPFV.IE</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-a</item>
+                    <item type="cf" lang="sey">-a</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">COP</item>
+                    <item type="gls" lang="en">COP</item>
+                    <item type="msa" lang="en">Attaches to any category</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">3SG.M.PFV.ED</item>
+                    <item type="gls" lang="en">3SG.M.PFV.DE</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tsoa</item><item type="gls" lang="es">largo</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tsoa</item>
+                    <item type="cf" lang="sey">tsoa</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">largo</item>
+                    <item type="gls" lang="en">long</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">õkwepɨ</item><item type="gls" lang="es">pico</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">õkwe</item>
+                    <item type="cf" lang="sey">õkwe</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">comer</item>
+                    <item type="gls" lang="en">eat</item>
+                    <item type="msa" lang="es">v.gen</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pɨ</item>
+                    <item type="cf" lang="sey">-pɨ</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">CLF.esf</item>
+                    <item type="gls" lang="en">CLF.round</item>
+                    <item type="msa" lang="es">isus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">piʤo</item><item type="gls" lang="es">punta</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">piʤo</item>
+                    <item type="cf" lang="sey">piʤo</item>
+                    <item type="gls" lang="es">punta</item>
+                    <item type="gls" lang="en">tip</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="punct" lang="sey">,</item></word>
+              <word><item type="txt" lang="sey">hãopi</item><item type="gls" lang="es">eso</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">hã</item>
+                    <item type="cf" lang="sey">hã</item>
+                    <item type="gls" lang="es">DEM.dist</item>
+                    <item type="gls" lang="en">DEM.dist</item>
+                    <item type="msa" lang="en">???</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-o</item>
+                    <item type="cf" lang="sey">-o</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">F</item>
+                    <item type="gls" lang="en">F</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">NOM</item>
+                    <item type="gls" lang="en">NOM</item>
+                    <item type="msa" lang="es">S/A:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">horo</item><item type="gls" lang="es" /><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">horo</item>
+                    <item type="cf" lang="sey">horo</item>
+                    <item type="gls" lang="es">flor</item>
+                    <item type="gls" lang="en">flower</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tsanawɨ</item><item type="gls" lang="es">meter</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tsana</item>
+                    <item type="cf" lang="sey">tsana</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">meter</item>
+                    <item type="gls" lang="en">put.in</item>
+                    <item type="msa" lang="es">v</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-wɨ</item>
+                    <item type="cf" lang="sey">-wɨ</item>
+                    <item type="hn" lang="sey">3</item>
+                    <item type="gls" lang="es">N3SG.PFV.ED</item>
+                    <item type="gls" lang="en">N3SG.PFV.DE</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">huakokɨ</item><item type="gls" lang="es">insertar</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">hua</item>
+                    <item type="cf" lang="sey">hua</item>
+                    <item type="hn" lang="sey">3</item>
+                    <item type="gls" lang="es">insertar</item>
+                    <item type="gls" lang="en">insert</item>
+                    <item type="msa" lang="es">dv</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-kɨ</item>
+                    <item type="cf" lang="sey">-kɨ</item>
+                    <item type="hn" lang="sey">5</item>
+                    <item type="gls" lang="es">SG.M.IPFV</item>
+                    <item type="gls" lang="en">SG.M.IPFV</item>
+                    <item type="msa" lang="es">General</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tsãihãʔñe</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tsa</item>
+                    <item type="cf" lang="sey">tsa</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">ir</item>
+                    <item type="gls" lang="en">go</item>
+                    <item type="msa" lang="es">i-verbo</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-i</item>
+                    <item type="cf" lang="sey">-i</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">i.clase</item>
+                    <item type="gls" lang="en">i.class</item>
+                    <item type="msa" lang="es">Verbo</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-hã</item>
+                    <item type="cf" lang="sey">-hã</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">PER</item>
+                    <item type="gls" lang="en">PER</item>
+                    <item type="msa" lang="es">Adposición</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ñe</item>
+                    <item type="cf" lang="sey">-ʤe</item>
+                    <item type="hn" lang="sey">3</item>
+                    <item type="gls" lang="es">INF</item>
+                    <item type="gls" lang="en">INF</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">ũkukɨapi</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">ũku</item>
+                    <item type="cf" lang="sey">ũku</item>
+                    <item type="gls" lang="es">tomar</item>
+                    <item type="gls" lang="en">take</item>
+                    <item type="msa" lang="es">v</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-kɨ</item>
+                    <item type="cf" lang="sey">-kɨ</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">2/3SG.M.PFV.EI</item>
+                    <item type="gls" lang="en">2/3SG.M.PFV.IE</item>
+                    <item type="msa" lang="es">i-verbo:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-a</item>
+                    <item type="cf" lang="sey">-a</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">COP</item>
+                    <item type="gls" lang="en">COP</item>
+                    <item type="msa" lang="en">Attaches to any category</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">NOM</item>
+                    <item type="gls" lang="en">NOM</item>
+                    <item type="msa" lang="es">S/A:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="punct" lang="sey">.</item></word>
+            </words><item type="segnum" lang="en">1.2</item><item type="gls" lang="en">Its beack is long, he introduces it into the flower to suck its sweet.</item><item type="gls" lang="es">Tiene el pico largo, eso introduce en la flor para chupar/tomar su dulce.</item></word>
+          <word><words>
+              <word><item type="txt" lang="sey">kwiʔne</item><item type="gls" lang="es">también</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">kwiʔne</item>
+                    <item type="cf" lang="sey">kwiʔne</item>
+                    <item type="gls" lang="es">también</item>
+                    <item type="gls" lang="en">also</item>
+                    <item type="msa" lang="en">???</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">etsa</item><item type="gls" lang="es">rápido</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">etsa</item>
+                    <item type="cf" lang="sey">etsa</item>
+                    <item type="gls" lang="es">rápido</item>
+                    <item type="gls" lang="en">fast</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">peoreoʔto</item><item type="gls" lang="es">vacío</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">peo</item>
+                    <item type="cf" lang="sey">peo</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">no.hay</item>
+                    <item type="gls" lang="en">there.is.not</item>
+                    <item type="msa" lang="es">cop</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">deo</item>
+                    <item type="cf" lang="sey">deo</item>
+                    <item type="hn" lang="sey">4</item>
+                    <item type="gls" lang="es">colgar</item>
+                    <item type="gls" lang="en">hang</item>
+                    <item type="msa" lang="es">dv</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-to</item>
+                    <item type="cf" lang="sey">-to</item>
+                    <item type="hn" lang="sey">3</item>
+                    <item type="gls" lang="es">COND</item>
+                    <item type="gls" lang="en">COND</item>
+                    <item type="msa" lang="es">Verbo</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">kuʔikɨaʔpi</item><item type="gls" lang="es">andan</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">kuʔi</item>
+                    <item type="cf" lang="sey">kuʔi</item>
+                    <item type="gls" lang="es">andar</item>
+                    <item type="gls" lang="en">go.around</item>
+                    <item type="msa" lang="es">v</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-kɨ</item>
+                    <item type="cf" lang="sey">-kɨ</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">2/3SG.M.PFV.EI</item>
+                    <item type="gls" lang="en">2/3SG.M.PFV.IE</item>
+                    <item type="msa" lang="es">i-verbo:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ãʔ</item>
+                    <item type="cf" lang="sey">-ãʔ</item>
+                    <item type="gls" lang="es">REM</item>
+                    <item type="gls" lang="en">REM</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">NOM</item>
+                    <item type="gls" lang="en">NOM</item>
+                    <item type="msa" lang="es">S/A:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">ĩɨ</item><item type="gls" lang="es">a él</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">ĩ</item>
+                    <item type="cf" lang="sey">ĩ</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">3SG</item>
+                    <item type="gls" lang="en">3SG</item>
+                    <item type="msa" lang="es">pro</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ɨ</item>
+                    <item type="cf" lang="sey">-ɨ</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">M</item>
+                    <item type="gls" lang="en">M</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">kamañapi</item><item type="gls" lang="es">dicen</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">kʔa</item>
+                    <item type="cf" lang="sey">kʔa</item>
+                    <item type="gls" lang="es">decir</item>
+                    <item type="gls" lang="en">say</item>
+                    <item type="msa" lang="es">v</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-maña</item>
+                    <item type="cf" lang="sey">-maña</item>
+                    <item type="gls" lang="es">DIM.PL</item>
+                    <item type="gls" lang="en">DIM.PL</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">INS</item>
+                    <item type="gls" lang="en">INS</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="punct" lang="sey">.</item></word>
+            </words><item type="segnum" lang="en">1.3</item><item type="gls" lang="en">At the same time, it moves around in the air pretty quick with his little wing.</item><item type="gls" lang="es">Asimismo, anda rápido en el espacio con su alita</item></word>
+          <word><words>
+              <word><item type="txt" lang="sey">Paʔiʤɨ</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">paʔ</item>
+                    <item type="cf" lang="sey">paʔ</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">existir</item>
+                    <item type="gls" lang="en">exist</item>
+                    <item type="msa" lang="es">i-verbo</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ʤɨ</item>
+                    <item type="cf" lang="sey">-ʤɨ</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">N3SG.IPFV.ED</item>
+                    <item type="gls" lang="en">N3SG.IPFV.DE</item>
+                    <item type="msa" lang="es">v:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">hai</item><item type="gls" lang="es">grande</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">hai</item>
+                    <item type="cf" lang="sey">hai</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">bastante</item>
+                    <item type="gls" lang="en">a.lot</item>
+                    <item type="msa" lang="es">adv</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">pãi</item><item type="gls" lang="es">gente</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">pãi</item>
+                    <item type="cf" lang="sey">pãi</item>
+                    <item type="gls" lang="es">gente</item>
+                    <item type="gls" lang="en">people</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">mimi</item><item type="gls" lang="es">picaflor</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">mimi</item>
+                    <item type="cf" lang="sey">mimi</item>
+                    <item type="gls" lang="es">picaflor</item>
+                    <item type="gls" lang="en">hummingbird</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tĩñehe</item><item type="gls" lang="es">diferentes</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tĩñe</item>
+                    <item type="cf" lang="sey">tĩñe</item>
+                    <item type="gls" lang="es">distinto</item>
+                    <item type="gls" lang="en">different</item>
+                    <item type="msa" lang="en">&lt;Not Sure&gt;</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-he</item>
+                    <item type="cf" lang="sey">-he</item>
+                    <item type="gls" lang="es">FOC</item>
+                    <item type="gls" lang="en">FOC</item>
+                    <item type="msa" lang="es">v&gt;sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">paʔiowaʔi</item><item type="gls" lang="es">existir</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">paʔ</item>
+                    <item type="cf" lang="sey">paʔ</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">existir</item>
+                    <item type="gls" lang="en">exist</item>
+                    <item type="msa" lang="es">i-verbo</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-o</item>
+                    <item type="cf" lang="sey">-o</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">F</item>
+                    <item type="gls" lang="en">F</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-waʔi</item>
+                    <item type="cf" lang="sey">-waʔi</item>
+                    <item type="gls" lang="es">PL.ANI</item>
+                    <item type="gls" lang="en">PL.ANI</item>
+                    <item type="msa" lang="es">asus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">deokomaña</item><item type="gls" lang="es">bonitos</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">deo</item>
+                    <item type="cf" lang="sey">deo</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">hermoso</item>
+                    <item type="gls" lang="en">beautiful</item>
+                    <item type="msa" lang="es">adj</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ko</item>
+                    <item type="cf" lang="sey">-ko</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">F</item>
+                    <item type="gls" lang="en">F</item>
+                    <item type="msa" lang="es">asus:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-maña</item>
+                    <item type="cf" lang="sey">-maña</item>
+                    <item type="gls" lang="es">DIM.PL</item>
+                    <item type="gls" lang="en">DIM.PL</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="punct" lang="sey">.</item></word>
+            </words><item type="segnum" lang="en">1.4</item><item type="gls" lang="en">There are several types of beatiful hummingbird. </item><item type="gls" lang="es">Existen varios tipos hermosos de picaflor.</item></word>
+          <word><words>
+              <word><item type="txt" lang="sey">ĩoʔwaʔi</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">ĩ</item>
+                    <item type="cf" lang="sey">ĩ</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">3SG</item>
+                    <item type="gls" lang="en">3SG</item>
+                    <item type="msa" lang="es">pro</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-o</item>
+                    <item type="cf" lang="sey">-o</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">F</item>
+                    <item type="gls" lang="en">F</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-waʔi</item>
+                    <item type="cf" lang="sey">-waʔi</item>
+                    <item type="gls" lang="es">PL.ANI</item>
+                    <item type="gls" lang="en">PL.ANI</item>
+                    <item type="msa" lang="es">asus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tsianoa</item><item type="gls" lang="es">huevo</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tsia</item>
+                    <item type="cf" lang="sey">tsia</item>
+                    <item type="hn" lang="sey">3</item>
+                    <item type="gls" lang="es">huevo</item>
+                    <item type="gls" lang="en">egg</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">noa</item>
+                    <item type="cf" lang="sey">noa</item>
+                    <item type="gls" lang="es">nido</item>
+                    <item type="gls" lang="en">nest</item>
+                    <item type="msa" lang="es">asus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tsuakowaʔiaʔɨ</item><item type="gls" lang="es">tejer</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tsua</item>
+                    <item type="cf" lang="sey">tsua</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">tejer</item>
+                    <item type="gls" lang="en">weave</item>
+                    <item type="msa" lang="es">v</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ko</item>
+                    <item type="cf" lang="sey">-ko</item>
+                    <item type="hn" lang="sey">4</item>
+                    <item type="gls" lang="es">NZR.F</item>
+                    <item type="gls" lang="en">NZR.F</item>
+                    <item type="msa" lang="es">General</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-waʔi</item>
+                    <item type="cf" lang="sey">-waʔi</item>
+                    <item type="gls" lang="es">PL.ANI</item>
+                    <item type="gls" lang="en">PL.ANI</item>
+                    <item type="msa" lang="es">asus:Any</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-a</item>
+                    <item type="cf" lang="sey">-a</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">COP</item>
+                    <item type="gls" lang="en">COP</item>
+                    <item type="msa" lang="en">Attaches to any category</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-ʔɨ</item>
+                    <item type="cf" lang="sey">-ʔɨ</item>
+                    <item type="hn" lang="sey">2</item>
+                    <item type="gls" lang="es">N3.ED</item>
+                    <item type="gls" lang="en">N3.DE</item>
+                    <item type="msa" lang="es">cop:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">airo</item><item type="gls" lang="es">monte</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">airo</item>
+                    <item type="cf" lang="sey">airo</item>
+                    <item type="gls" lang="es">monte</item>
+                    <item type="gls" lang="en">jungle</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">ʤɨi</item><item type="gls" lang="es">algodón</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">ʤɨi</item>
+                    <item type="cf" lang="sey">ʤɨi</item>
+                    <item type="gls" lang="es">algodón</item>
+                    <item type="gls" lang="en">cotton</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="txt" lang="sey">tsɨopi</item><item type="gls" lang="es">bolita</item><morphemes>
+                  <morph type="stem" guid="d7f713e8-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">tsɨo</item>
+                    <item type="cf" lang="sey">tsɨo</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">bolita</item>
+                    <item type="gls" lang="en">ball</item>
+                    <item type="msa" lang="es">sus</item>
+                  </morph>
+                  <morph type="suffix" guid="d7f713dd-e8cf-11d3-9764-00c04f186933">
+                    <item type="txt" lang="sey">-pi</item>
+                    <item type="cf" lang="sey">-pi</item>
+                    <item type="hn" lang="sey">1</item>
+                    <item type="gls" lang="es">INS</item>
+                    <item type="gls" lang="en">INS</item>
+                    <item type="msa" lang="es">sus:Any</item>
+                  </morph>
+                </morphemes></word>
+              <word><item type="punct" lang="sey">.</item></word>
+            </words><item type="segnum" lang="en">1.5</item><item type="gls" lang="en">They make their nests with balls of cotton from the jungle. </item><item type="gls" lang="es">Tejen sus nidos con los copos de algodón del monte.</item></word>
+        </phrases>
+      </paragraph>
+    </paragraphs>
+    <languages>
+      <language lang="en" font="Charis SIL" />
+      <language lang="es" font="Charis SIL" />
+      <language lang="sey" font="Charis SIL" vernacular="true" />
+    </languages>
+  </interlinear-text>
+</document>

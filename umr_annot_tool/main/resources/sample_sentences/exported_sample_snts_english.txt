@@ -1,0 +1,34 @@
+user name: Jin
+user id: 1
+file language: English
+file format: plain_text
+Doc ID in database: 1
+export time: 2/15/2021, 5:01:52 AM
+
+# :: snt1	Sentence: Edmund Pope tasted freedom today for the first time in more than eight months .
+# sentence level graph:
+(s1t / taste-01)
+
+# alignment:
+taste-01(s1t): 3-3
+
+# document level annotation:
+(s1 / sentence
+  :temporal ((s1t :before DCT))
+
+# :: snt2	Sentence: He denied any wrongdoing .
+# sentence level graph:
+(s2d / deny-01)
+
+# alignment:
+deny-01(s2d): 2-2
+
+# document level annotation:
+(s2 / sentence
+  :modal ((s2d :AFF AUTH)))
+
+
+
+# Source File: 
+Edmund Pope tasted freedom today for the first time in more than eight months .
+He denied any wrongdoing .
