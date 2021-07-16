@@ -89,7 +89,7 @@ def upload():
     lexicon_form = UploadLexiconForm()
     if form.validate_on_submit():
         if form.file.data and form.file.data.filename:
-            content_string = form.file.data.read().decode("utf-8")
+            content_string = form.file.data.read().decode(encoding="utf-8", errors="ignore")
             filename = secure_filename(form.file.data.filename)
             file_format = form.file_format.data
             lang = form.language_mode.data
