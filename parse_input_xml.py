@@ -132,7 +132,7 @@ def html(content_string: str, file_format: str) -> 'InfoToDisplay':
         sents_df.index = sents_df.index + 1
         sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
 
-    elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2', 'toolbox3']:
+    elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2', 'toolbox3', 'toolbox4']:
         try:
             # ET.fromstring(content_string)
             sents, dfs, sents_gls, conv_turns, paragraph_groups = parse_xml(content_string, file_format)
@@ -188,6 +188,8 @@ def parse_xml(xml_string, file_format) -> 'ExtractedXMLInfo':
         return parse_toolbox2(xml_string)
     elif file_format == 'toolbox3':
         return parse_toolbox3(xml_string)
+    elif file_format == 'toolbox4':
+        return parse_toolbox4(xml_string)
 
 def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
     """
@@ -670,3 +672,73 @@ def parse_lexicon_xml(xml_str: str):
     for entry in entries:
         frames_dict.update(parse_entry(entry))
     return frames_dict
+
+def parse_toolbox4(xml_string: str) -> 'ExtractedXMLInfo':
+    """
+    parse the Arapahoe toolbox xml file
+    :param xml_string: input toolbox xml file path
+    :return:
+    """
+    sents_of_words = list()
+    sents_of_morphs = list()
+    sents_of_ges = list()
+    sents_of_gss = list()
+    sents_gls = list()
+    notes = list()
+    dfs = list()
+
+    chunks = [chunk.split('\n') for chunk in re.split('\\\\ref .+-.+ \d+', xml_string)][1:]
+    for c in chunks:
+        words = list()
+        morphs = list()
+        morph_gloss_english = list()
+        morph_gloss_spanish = list()
+        ori_morph = list()
+        ori_ge = list()
+        ori_gs = list()
+        nt_flag = True
+        f_flag = True
+        temp_notes = ""
+        en_es_gloss = ['', '']
+        for item in c:
+            item = item.strip()
+            if item.startswith('\\trs'):
+                words.extend(item[5:].split())
+            elif item.startswith('\\m'):
+                ori_morph.append(item[3:])
+            elif item.startswith('\\ge'):
+                ori_ge.append(item[4:])
+            elif item.startswith('\\gs'):
+                ori_gs.append(item[4:])
+            elif item.startswith('\\fs'):
+                en_es_gloss[1] = item[4:]
+            elif item.startswith('\\fe'):
+                en_es_gloss[0] = item[4:]
+            elif item.startswith('\\nt'):
+                temp_notes += '\n' + item[4:]
+                nt_flag = False
+        notes.append(temp_notes)
+        if nt_flag:
+            notes.append("")
+        sents_gls.append(en_es_gloss)
+
+        for mor, ge, gs in zip(ori_morph, ori_ge, ori_gs):
+            aligned_mor, aligned_ge, aligned_gs = align(mor, ge, gs)
+            morphs.extend(aligned_mor)
+            morph_gloss_english.extend(aligned_ge)
+            morph_gloss_spanish.extend(aligned_gs)
+
+        sents_of_words.append(words)
+        sents_of_morphs.append(morphs)
+        sents_of_ges.append(morph_gloss_english)
+        sents_of_gss.append(morph_gloss_spanish)
+
+    print('sents from parse_toolbox4: ', sents_of_words)
+    rowIDs = ['Morphemes', 'Morpheme Gloss(English)', 'Morpheme Gloss(Spanish)']
+
+    for i in range(len(sents_of_words)):
+        df = pd.DataFrame(
+            [sents_of_words[i],  sents_of_morphs[i], sents_of_ges[i], sents_of_gss[i]])
+        df.index = ['Words'] + rowIDs
+        dfs.append(df)
+    return ExtractedXMLInfo(sents_of_words, dfs, sents_gls, notes, [])

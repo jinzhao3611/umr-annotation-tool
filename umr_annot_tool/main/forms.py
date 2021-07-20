@@ -12,7 +12,7 @@ class UploadForm(FlaskForm):
                                                      ("sanapana", "sanapana"),
                                                      ("secoya", "secoya"),
                                                      ("kukama", "kukama"),])
-    file_format = SelectField('Format', choices=[('plain_text', 'plain_text'), ('flex1', 'flex1'), ('flex2', 'flex2'), ('flex3', 'flex3'), ('toolbox1', 'toolbox1'), ('toolbox2', 'toolbox2'),  ('toolbox3', 'toolbox3')])
+    file_format = SelectField('Format', choices=[('plain_text', 'plain_text'), ('flex1', 'flex1'), ('flex2', 'flex2'), ('flex3', 'flex3'), ('toolbox1', 'toolbox1'), ('toolbox2', 'toolbox2'),  ('toolbox3', 'toolbox3'), ('toolbox4', 'toolbox4')])
     if_exported = BooleanField('exported_file')
     submit = SubmitField('Annotate')
 
