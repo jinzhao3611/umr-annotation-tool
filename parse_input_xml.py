@@ -234,6 +234,7 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                                 gls_per_word = list()
                                 msa_per_word = list()
                                 for morph in child:
+                                    morpheme_gloss = ['', '']
                                     for item in morph:
                                         if item.attrib.get('type', '') == 'txt': #morphemes row
                                             # take the text field (unlemmatized version)
@@ -242,12 +243,17 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                                             else:
                                                 cf_per_word.append('')
                                         elif item.attrib.get('type', '') == 'gls': # morpheme gloss row
-                                            if item.text is not None:
-                                                gls_per_word.append(item.text)
+                                            if item.attrib.get('lang') == 'en':
+                                                if item.text:
+                                                    morpheme_gloss[0] = item.text
+                                            elif item.attrib.get('lang') == 'es':
+                                                if item.text:
+                                                    morpheme_gloss[1] = item.text
                                             else:
-                                                gls_per_word.append('')
+                                                print(f"unidentified language: {item.attrib.get('lang')}")
                                         elif item.attrib.get('type', '') == 'msa': # morpheme cat row
                                             msa_per_word.append(item.text)
+                                    gls_per_word.append(morpheme_gloss)
                                 cf_per_sentence.append(cf_per_word)
                                 gls_per_sentence.append(gls_per_word)
                                 msa_per_sentence.append(msa_per_word)
@@ -279,9 +285,24 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                 paragraph_groups.append(len(text_id_group))
 
     dfs = list()
-    rowIDs = ['Morphemes', 'Morpheme Gloss', 'Morpheme Cat', 'Word Gloss']
+    rowIDs = ['Morphemes', 'Morpheme Gloss(en)', 'Morpheme Gloss(es)', 'Morpheme Cat', 'Word Gloss']
+    gls_en = []
+    gls_es = []
+    for sent_level_gls in gls:
+        gls_en_word_level = []
+        gls_es_word_level = []
+        for word_level_gls in sent_level_gls:
+            gls_en_morph_level = []
+            gls_es_morph_level = []
+            for morph_level_gls in word_level_gls:
+                gls_en_morph_level.append(morph_level_gls[0])
+                gls_es_morph_level.append(morph_level_gls[1])
+            gls_en_word_level.append(gls_en_morph_level)
+            gls_es_word_level.append(gls_es_morph_level)
+        gls_en.append(gls_en_word_level)
+        gls_es.append(gls_es_word_level)
     for i in range(len(txt)):
-        df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
+        df = pd.DataFrame([txt[i], [" ".join(e) for e in cf[i]], [" ".join(e) for e in gls_en[i]], [" ".join(e) for e in gls_es[i]], [" ".join(e) for e in msa[i]], word_gls[i]])
         df.index = ['Words'] + rowIDs
         dfs.append(df)
     return ExtractedXMLInfo(txt, dfs, sent_gls, conversation_turns, paragraph_groups)
