@@ -188,6 +188,8 @@ def annotate(doc_id):
     except:
         curr_sent_align = ""
 
+    #todo: why remove \n here??? this will cause problem1 in notion                                                                                                            "")
+
     try:
         curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
                                                 Annotation.user_id == current_user.id).first().umr
