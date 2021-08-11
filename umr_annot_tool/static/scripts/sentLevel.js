@@ -2988,11 +2988,14 @@ function text2umr(loaded_umr={}, loaded_alignment='', annotText="", change_umr=f
 
         //fill in the alignment information to umr
         if(loaded_alignment){
-            let matches = loaded_alignment.match(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm); //["(s1f): 4-4", "(s1t): 3-3"] //todo: does this match that special character in navajo
+            let matches = loaded_alignment.match(/\((s\d*[a-z]\d*)\):\s((\d+-\d+)|undefined)/gm); //["(s1f): 4-4", "(s1t): 3-3"]
             if(matches){
                 for(let i=0; i<matches.length; i++){
-                    let variable = matches[i].replace(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm, '$1');
+                    let variable = matches[i].replace(/\((s\d*[a-z]\d*)\):\s((\d+-\d+)|undefined)/gm, '$1');
                     let align_info = matches[i].replace(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm, '$2');
+                    if(matches[i].includes("undefined")){
+                        align_info = matches[i].replace(/\((s\d*[a-z]\d*)\):\sundefined/gm, '-1--1');
+                    }
                     let loc = getLocs(variable);
                     umr[loc + '.a'] = align_info;
                 }
