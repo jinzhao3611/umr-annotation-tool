@@ -68,8 +68,11 @@ function initialize(frame_dict, lang) {
  * @param curr_sent_umr
  */
 function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
-    umr['n'] = 0;
     umr = JSON.parse(curr_sent_umr);
+    if(Object.keys(umr).length === 0){
+        umr['n'] = 0;
+    }
+    populateUtilityDicts();
     // text2umr(deHTML(curr_sent_annot), curr_sent_align);
     show_amr('show');
     showAlign();
@@ -81,6 +84,16 @@ function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     // undo_list.push(cloneCurrentState()); //populate undo_list
 }
 
+function populateUtilityDicts(){
+        Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+        if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+            recordVariable(umr[key], key.replace(/\.v$/, "") + '');
+            variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
+        }else if(key.match(/\d+.c/)){
+            recordConcept(umr[key], key.replace(/\.v$/, "") + '');
+        }
+    });
+}
 
 /**
  * not working yet
