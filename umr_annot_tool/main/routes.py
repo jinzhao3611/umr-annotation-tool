@@ -20,6 +20,7 @@ from suggest_sim_words import generate_candidate_list, find_suggested_words
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
+FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 
 add_num_inflected = 0
 add_num_sense = 0
@@ -125,11 +126,12 @@ def annotate(doc_id):
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format)
-    frame_dict = {}
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":
         frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+    elif doc.lang == "arabic":
+        frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
         try:
             frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
