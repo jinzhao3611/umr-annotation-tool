@@ -45,18 +45,15 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
  *
  * @param frame_dict_str: frame json file from post
  * @param lang: language of this document
- * @param lexicon: the temporary dictionary
  */
-function initialize(frame_dict_str, lang) {
+function initialize(frame_dict, lang) {
     language = lang;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top';
-    // parse frame files
-    frame_json = JSON.parse(deHTML(frame_dict_str)); //there are html code for " like &#39; &#34;
+    frame_json = JSON.parse(frame_dict);
     begOffset = -1;
     endOffset = -1;
-    // citation_dict = JSON.parse(localStorage.getItem('citation_dict'));
     if(default_langs.includes(language)){
         Object.keys(frame_json).forEach(function(key) {
            citation_dict[key] = frame_json[key]["lemma"];
