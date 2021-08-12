@@ -1,3 +1,16 @@
+function getLemmaFarasa(token){
+    let settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://farasa-api.qcri.org/msa/webapi/lemma",
+                "method": "POST",
+                "headers": { "content-type": "application/json", "cache-control": "no-cache", },
+                "processData": false,
+                "data": "{\"text\":"+"\""+token+"\"}"
+            }
+    return $.ajax(settings);
+}
+
 /**
  * https://github.com/takafumir/javascript-lemmatizer#1-download-and-unzip-javascript-lemmatizer-and-then-put-it-in-your-project
  * the path of original javascript-lemmatizer/js.js code needs to be changed

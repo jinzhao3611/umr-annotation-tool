@@ -110,9 +110,8 @@ function docAnnot(sentenceId) {
 function conceptDropdown(lang='english') {
     submit_concept();
     let token = current_concept;
-    let numfied_token = text2num(token);
-    // this is to cover :quant
-    if (!isNaN(numfied_token)) {// if numfied_token is a number
+    let numfied_token = text2num(token); //return the token itself if it's not a number
+    if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
     } else {
@@ -129,55 +128,59 @@ function conceptDropdown(lang='english') {
                     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
                 }
             }
-
-            // Object.keys(citation_dict.forEach(function(key) {
-            //     console.log(key);
-            //     console.log(similar_word_list['similar_word_list']);
-            //     if (similar_word_list['similar_word_list'].includes(key)){
-            //         console.log(key, citation_dict[key]);
-            //         submenu_items["res"].push({"name": citation_dict[key], "desc": "from citation dict"});
-            //         console.log(submenu_items);
-            //     }
-            // });
             getSenses(submenu_items);
-
-        }else if(typeof getLemma(token) !== 'undefined' || lang === 'english'){
-            let lemma = getLemma(token);
-            let senses = [];
-            Object.keys(frame_json).forEach(function(key) {
-                if(key.split("-")[0] === lemma){
-                    senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
-                }
-            });
-            let submenu_items;
-            if (senses.length === 0) {
-                submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-            }else{
-                submenu_items = {"res": senses};
-            }
-            getSenses(submenu_items);
-
-        }else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
+        }else if(typeof getLemma(token) !== 'undefined'){
             let lemma;
-            if(lang === 'chinese'){
-                lemma = token;
-            }else{
+            if(lang === 'arabic'){
+                getLemmaFarasa(token).then( function(response) {
+                    lemma = response['result'][0];
+                    console.log(lemma);
+                    let senses = [];
+                    Object.keys(frame_json).forEach(function(key) {
+                        if(key.split("-")[0] === lemma){
+                            senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                        }
+                    });
+                    let submenu_items;
+                    if (senses.length === 0) {
+                        submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+                    }else{
+                        submenu_items = {"res": senses};
+                    }
+                    getSenses(submenu_items);
+                })
+            } else if(lang === 'english'){
                 lemma = getLemma(token);
-            }
-            let senses = [];
-            Object.keys(frame_json).forEach(function(key) {
-                if(key.split("-")[0] === lemma){
-                    senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                let senses = [];
+                Object.keys(frame_json).forEach(function(key) {
+                    if(key.split("-")[0] === lemma){
+                        senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                    }
+                });
+                let submenu_items;
+                if (senses.length === 0) {
+                    submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+                }else{
+                    submenu_items = {"res": senses};
                 }
-            });
-            let data;
-            if (senses.length === 0) {
-                data = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-            }else{
-                data = {"res": senses};
+                getSenses(submenu_items);
+            }else if (lang === 'chinese') {
+                lemma = token;
+                let senses = [];
+                Object.keys(frame_json).forEach(function(key) {
+                    if(key.split("-")[0] === lemma){
+                        senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                    }
+                });
+                let submenu_items;
+                if (senses.length === 0) {
+                    submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+                }else{
+                    submenu_items = {"res": senses};
+                }
+                getSenses(submenu_items);
             }
-            getSenses(data);
-        } else {
+        }else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
             getSenses(letter);
         }
@@ -230,7 +233,6 @@ function getKeyByValue(object, value) {
 function submit_concept() {
     current_concept = document.getElementById('selected_tokens').innerText;
     current_concept = current_concept.replace("'", "\'");
-    console.log("current_concept is: " + current_concept);
 }
 
 /**
@@ -869,12 +871,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 let ne_concept;
                 let cc2v;
                 if ((cc[0] === 'top') || (cc[0] === 'bottom') || (cc[0] === 'new')) {
-                    if ((cc.length >= 3) && (cc[1] === '*OR*') && validEntryConcept(cc[2])) {
-                        // this is choice sentence: hear or see it to generate (o3 / *OR* :op1 (h / hear) :op2 (s / see))
-                        addOr('top ' + value);
-                        selectTemplate('');
-                        show_amr_args = 'show';
-                    } else if ((cc.length >= 3) && (cc[0] === 'top') && (ne_concept = cc[1]) && validEntryConcept(ne_concept) && (!getLocs(ne_concept)) && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                    if ((cc.length >= 3) && (cc[0] === 'top') && (ne_concept = cc[1]) && validEntryConcept(ne_concept) && (!getLocs(ne_concept)) && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
                         // top is named entity: top person Jin Zhao
                         let ne_var = newAMR(trimConcept(ne_concept));
                         let name_var = addTriple(ne_var, ':name', 'name', 'concept');
@@ -1559,7 +1556,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        } else if ((language === 'chinese' || language === 'english') //English
+        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' ) //English
             && validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string') // arg_type is "concept" or empty (is variable)
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1568,7 +1565,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        } else if ((language === 'chinese' || language === 'english') //English
+        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' ) //English
             && validEntryConcept(arg.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1577,7 +1574,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        }else if((default_langs.includes(language) || language === 'chinese')//not English
+        }else if((default_langs.includes(language) || language === 'chinese'|| language === 'arabic' )//not English
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))){
@@ -2774,7 +2771,6 @@ function selectEvent(){
 function get_selected_word(){
     localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
     localStorage.setItem('umr', JSON.stringify(umr));
-    console.log("selected word from javascript", localStorage["selected_word"]);
 }
 
 function pass_citation_dict(citation_dict){
