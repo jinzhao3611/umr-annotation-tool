@@ -303,26 +303,6 @@ function slashProtectQuote(string) {
     return string.replace(/"/g, "\\\"");
 }
 
-// /**
-//  *
-//  * @param s penman html format string
-//  * @returns {*} penman format string
-//  */
-// function deHTML(s) {
-//
-//     s = s.replace(/&amp;/g, '&');
-//     s = s.replace(/&nbsp;/g, " ");
-//     s = s.replace(/&#39;/g, '"');
-//     // s = s.replace(/&#39;/g, "'");
-//     s = s.replace(/&#34;/g, '"');
-//
-//     s = s.replace(/&lt;/g, '<');
-//     s = s.replace(/&gt;/g, '>');
-//
-//     s = s.replace(/<\/?(a|span|div)\b[^<>]*>/g, "");
-//     s = s.replace(/<br>/g, "");
-//     return s;
-// }
 /**
  * modified from: https://stackoverflow.com/questions/5002111/how-to-strip-html-tags-from-string-in-javascript
  * @param html penman html format string
