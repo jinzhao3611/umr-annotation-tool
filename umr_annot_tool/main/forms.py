@@ -5,6 +5,7 @@ from wtforms import BooleanField, SubmitField, SelectField, TextAreaField, Strin
 class UploadForm(FlaskForm):
     file = FileField()
     language_mode = SelectField('Language', choices=[("arapahoe","arapahoe"),
+                                                     ("arabic", "arabic"),
                                                      ("chinese", "chinese"),
                                                      ("default", "default"),
                                                      ("english", "english"),
@@ -20,6 +21,7 @@ class UploadForm(FlaskForm):
 class UploadLexiconForm(FlaskForm):
     file = FileField()
     language_mode = SelectField('Language', choices=[("arapahoe","arapahoe"),
+                                                     ("arabic", "arabic"),
                                                      ("chinese", "chinese"),
                                                      ("english", "english"),
                                                      ("navajo", "navajo"),
