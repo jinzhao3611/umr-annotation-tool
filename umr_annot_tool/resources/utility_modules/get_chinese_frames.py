@@ -19,7 +19,7 @@ def parse_frame_url(index_page_url):
         frame_dict.update(parse_predicate_url(item.text, 'http://verbs.colorado.edu/chinese/cpb/html_frames/' + item['href']))
         # print(item['href'])
         # print(item.text)
-    with open('frames_chinese.json', 'w') as json_file:
+    with open('../frames_chinese.json', 'w') as json_file:
         json.dump(frame_dict, json_file)
 
 def parse_predicate_url(predicate, url):
@@ -55,8 +55,6 @@ def third_index_zero(str):
         return True
     else:
         return False
-
-
 
 if __name__ == '__main__':
     parse_frame_url('http://verbs.colorado.edu/chinese/cpb/html_frames/index.html')

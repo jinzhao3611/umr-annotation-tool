@@ -18,7 +18,7 @@ import time
 from suggest_sim_words import generate_candidate_list, find_suggested_words
 
 main = Blueprint('main', __name__)
-FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames-arg_descriptions.json"
+FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 
