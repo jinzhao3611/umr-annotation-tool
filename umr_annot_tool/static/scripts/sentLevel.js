@@ -129,7 +129,7 @@ function conceptDropdown(lang='english') {
                 }
             }
             getSenses(submenu_items);
-        }else if(typeof getLemma(token) !== 'undefined'){
+        }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
             let lemma;
             if(lang === 'arabic'){
                 getLemmaFarasa(token).then( function(response) {

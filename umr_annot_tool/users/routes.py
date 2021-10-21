@@ -51,7 +51,7 @@ def register():
 @users.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('main.account'))
+        return redirect(url_for('main.account')) #     todo: should be users.account here?
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -99,7 +99,6 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
-    print("historyDocs:", historyDocs)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs)
 

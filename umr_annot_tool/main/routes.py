@@ -101,7 +101,7 @@ def upload():
                 file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
                         sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
             else:  # doesn't have annotation
-                info2display = html(content_string, file_format)
+                info2display = html(content_string, file_format, lang=lang)
                 file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
                         sents=info2display.sents, has_annot=False)
             return redirect(url_for('main.annotate',
@@ -125,7 +125,7 @@ def annotate(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
-    info2display = html(doc.content, doc.file_format)
+    info2display = html(doc.content, doc.file_format, lang=doc.lang)
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":

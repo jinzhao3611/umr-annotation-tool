@@ -110,7 +110,7 @@ def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], Li
     print(doc_annots)
     return doc_content_string, sents, sent_annots, doc_annots, aligns, user_id, lang
 
-def html(content_string: str, file_format: str) -> 'InfoToDisplay':
+def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
     """
     :param file_format:
     :param content_string: raw string got read in from file, could be either flex or toolbox xml string, or a txt string
@@ -121,6 +121,11 @@ def html(content_string: str, file_format: str) -> 'InfoToDisplay':
             gls: [['', 'Viajó un hombre, parece cazando o buscando miel'], ...]
             notes: ['RA', ...]
     """
+    if lang == 'arabic':
+        justify = 'right'
+    else:
+        justify = 'center'
+
     gls = []
     notes = []
     df_htmls = []
@@ -130,7 +135,7 @@ def html(content_string: str, file_format: str) -> 'InfoToDisplay':
         sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
         sents_df = pd.DataFrame(content_string.strip().split('\n'))
         sents_df.index = sents_df.index + 1
-        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
+        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify=justify)
 
     elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2', 'toolbox3', 'toolbox4']:
         try:
@@ -146,14 +151,14 @@ def html(content_string: str, file_format: str) -> 'InfoToDisplay':
                 for i, slice_index in enumerate(paragraph_slice_indice):
                     sents_html += 'Paragraph: ' + str(i+1)
                     if i == 0:
-                        sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
+                        sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify=justify)
                     else:
-                        sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify='center')
+                        sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify=justify)
             else:
-                sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify='center')
+                sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify=justify)
             for df in dfs:
                 df.columns = range(1, len(df.columns) + 1)
-                df_html = df.to_html(header=False, classes="table table-striped table-sm", justify='center').replace(
+                df_html = df.to_html(header=False, classes="table table-striped table-sm", justify=justify).replace(
                     'border="1"',
                     'border="0"')
                 soup = BeautifulSoup(df_html, "html.parser")
@@ -171,9 +176,24 @@ def html(content_string: str, file_format: str) -> 'InfoToDisplay':
 
     sent_htmls = []  # a list of single sentence htmls
     for sent in sents:
-        sent_htmls.append(pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
+        target_sent_html = pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
                                                                                         classes="table table-striped table-sm",
-                                                                                        justify='center'))
+                                                                                        justify=justify)
+        if lang == 'arabic':
+            target_sent_html = re.sub(
+                r'class="dataframe table table-striped table-sm">',
+                r'class="dataframe table table-striped table-sm" dir="rtl" style="text-align:right">',
+                target_sent_html
+            )
+        sent_htmls.append(target_sent_html)
+
+    # https: // stackoverflow.com / questions / 43312995 / pandas - to - html - add - attributes - to - table - tag
+    if lang == 'arabic':
+        sents_html = re.sub(
+            r'class="dataframe table table-striped table-sm">',
+            r'class="dataframe table table-striped table-sm" dir="rtl" style="text-align:right">',
+            sents_html
+        )
     # html string for all sentences
     return InfoToDisplay(sents, sents_html, sent_htmls, df_htmls, gls, notes)
 
