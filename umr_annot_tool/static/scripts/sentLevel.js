@@ -1202,6 +1202,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     undo_index++;
                     undo_list.length = undo_index;
                     undo_list[undo_index] = cloneCurrentState();
+                    showEditHistory();
                     let s;
                     if ((s = document.getElementById('undo-button')) != null) {
                         s.title = 'undo ' + record_value;
@@ -2683,6 +2684,27 @@ function show_amr(args) {
     }
     showHead();
 }
+
+function showEditHistory(){
+    let s = "";
+    if(undo_list.length > 1){
+        for(let i=0; i<undo_list.length; i++){
+            Object.keys(undo_list[i]).forEach(function(key) {
+                if(key.match('action')){
+                    s += "show edit history" + i + ": " + undo_list[i]['action'] + " -" + document.getElementById("username").textContent + "<br>";
+                }
+            });
+        }
+    }
+    document.getElementById('eh').innerHTML = s;
+}
+function goToEdit(number_string){
+   let n = parseInt(number_string);
+   undo(n - undo_index+1);
+   showEditHistory();
+
+}
+
 
 
 /**
