@@ -256,7 +256,7 @@ def doclevel(doc_id):
         print('sents in doclevel: ', sents)
         print('annotations in doclevel: ', annotations)
     else:
-        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format)
+        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
         sent_annot_pairs = list(zip(df_html, annotations))
 
     print("sent_annot_pairs: ", sent_annot_pairs)
