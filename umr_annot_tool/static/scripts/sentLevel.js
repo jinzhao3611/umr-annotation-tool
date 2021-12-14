@@ -225,7 +225,7 @@ window.onclick = function (event) {
 };
 
 function getKeyByValue(object, value) {
-    return Object.keys(object).filter(key => object[key] === value && !(key.replace('v', 'd') in object))[0];
+    return Object.keys(object).filter(key => object[key] === value && !(key.replace(new RegExp('\..$', 'gm'), '.d') in object))[0];
 }
 
 /**
