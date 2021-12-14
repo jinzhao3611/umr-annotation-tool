@@ -91,7 +91,7 @@ function populateUtilityDicts(){
             recordVariable(umr[key], key.replace(/\.v$/, "") + '');
             variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
         }else if(key.match(/\d+.c/)){
-            recordConcept(umr[key], key.replace(/\.v$/, "") + '');
+            recordConcept(umr[key], key.replace(/\.c$/, "") + '');
         }
     });
 }
