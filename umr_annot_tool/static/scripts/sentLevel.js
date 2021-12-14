@@ -59,6 +59,7 @@ function initialize(frame_dict, lang) {
            citation_dict[key] = frame_json[key]["lemma"];
         });
     }
+    pass_citation_dict(JSON.stringify(citation_dict));
 }
 
 /**
