@@ -633,6 +633,7 @@ function submit_template_action(id, numbered_predicate = "") {
         test_str += selection;
         console.log("selected variable to be set to head: ", test_str);
 
+        test_str = test_str.trim();
         let k = getKeyByValue(umr, test_str);
         if (k.includes("v")) {
             current_parent = test_str;
