@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from umr_annot_tool.config import Config
+import logging
 
 # extensions
 db = SQLAlchemy()
@@ -16,6 +17,8 @@ mail = Mail()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    logging.basicConfig(level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %(name)s: %(message)s')
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
     app.config.from_object(Config)
 
     db.init_app(app)

@@ -5,6 +5,7 @@ import json
 from parse_input_xml import html, process_exported_file, parse_lexicon_xml
 from flask_login import current_user
 import os
+import logging
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
@@ -144,6 +145,7 @@ def annotate(doc_id):
 
     if request.method == 'POST':
         # add to db
+        logging.info("post request received")
         try:
             amr_html = request.get_json(force=True)["amr"]
             amr_html = amr_html.replace('<span class="text-success">', '')  # get rid of the head highlight tag
@@ -159,15 +161,17 @@ def annotate(doc_id):
                 existing.alignment = align_info
                 existing.umr = umr_dict
                 flag_modified(existing, 'umr')
-                db.session.commit()
+                logging.info(f"User {current_user.id} committed: {amr_html}")
+                logging.info(db.session.commit())
             else:
                 annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
                                         umr=umr_dict, doc_umr={})
                 flag_modified(annotation, 'umr')
+                logging.info(f"User {current_user.id} committed: {amr_html}")
                 db.session.add(annotation)
-                db.session.commit()
+                logging.info(db.session.commit())
             msg = 'Success: current annotation and alignments are added to database.'
             msg_category = 'success'
             return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
