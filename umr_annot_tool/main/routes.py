@@ -222,11 +222,14 @@ def annotate(doc_id):
                            content_string=doc.content.replace('\n', '<br>'), )
 
 
-@main.route("/doclevel/<int:doc_id>", methods=['GET', 'POST'])
-def doclevel(doc_id):
+@main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
+def doclevel(doc_sent_id):
+    print("docid + sentid: ", doc_sent_id)
+    doc_id = int(doc_sent_id.split("_")[0])
+    default_sent_id = int(doc_sent_id.split("_")[1])
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    current_snt_id = 1
+    current_snt_id = default_sent_id
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
 

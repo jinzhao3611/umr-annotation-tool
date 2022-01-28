@@ -367,7 +367,7 @@ function docUMR2db() {
     umrHtml = umrHtml.replace(/&xA;/g, "\n");
     console.log('doc umr to save in db: ' + umrHtml);
 
-    fetch(`/doclevel/${doc_id}`, {
+    fetch(`/doclevel/${doc_id}_${snt_id}#amr`, {
         method: 'POST',
         body: JSON.stringify({"umr": umrHtml, "snt_id": snt_id, "umr_dict": umr})
     }).then(function (response) {

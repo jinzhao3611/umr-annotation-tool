@@ -912,7 +912,7 @@
             <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
             <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
             {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
-            <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_id=doc_id) }}" onclick="UMR2db()">doc-level-annot</a>
+            <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
             {{ selected_word }}
             <a class="btn btn-outline-secondary" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="get_selected_word()">lexicon</a>
             <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:show_amr('show');">reset</a></button>
