@@ -335,11 +335,7 @@ function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
  * @param curr_sent_id:
  */
 function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
-    console.log("load_doc_history is called");
-    console.log("doc_annot: ", doc_annot);
-    console.log("curr_doc_umr: ", curr_doc_umr);
-    console.log("curr_sent_id: ", curr_sent_id);
-    if(doc_annot === ""){
+    if(doc_annot === "" || doc_annot.includes('empty umr')){ //empty umr是历史遗留问题
         doc_annot = `&lt;div id=&#34;amr&#34;&gt;(s${curr_sent_id} / sentence)&lt;br&gt;&lt;/div&gt;`;
     }
 
@@ -2697,8 +2693,9 @@ function show_amr(args) {
         if ((s = document.getElementById('plain-amr3')) != null) {
             s.value = deHTML(amr_s);
         }
+        let curr_sent_id = document.getElementById('curr_sent_id').value;
         if (amr_s === '') {
-            html_amr_s = '<i>empty umr</i>';
+            html_amr_s = `(s${curr_sent_id} / sentence)`;
         } else {
             html_amr_s = amr_s;
         }
