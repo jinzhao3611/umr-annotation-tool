@@ -57,7 +57,7 @@
 
         <main role="main" class="container-fluid no-padding"> {# This is why the role attribute is here: https://stackoverflow.com/questions/10403138/what-is-the-purpose-of-the-role-attribute-in-html #}
             <div class="row align-items-center" style="height: auto; padding-bottom:5%; padding-left:5%; padding-right:5%; margin-bottom: 20%;">
-                <div id='content' class="col-md-7" style="height: auto;">
+                <div id='content' class="col-md-9" style="height: auto;">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -70,7 +70,7 @@
                     {% block content %}{% endblock %}
                 </div>
 
-                <div class="col-md-5" style="height: auto">
+                <div class="col-md-3" style="height: auto">
                     {% block content2 %}{% endblock %}
                 </div>
             </div>
