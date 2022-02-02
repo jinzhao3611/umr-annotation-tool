@@ -451,7 +451,6 @@
                                     <option value=":same-entity">
 
                                 </datalist>
-                                {#        <input type="submit" onclick="submit_relation('roles1')">#}
                             </div>
                         {% else %}
                             <div class="dropdown">
@@ -574,23 +573,6 @@
                         {% endif %}
 
                     </td>
-                    <td></td>
-                    <td>
-                        <div id="attribute_types">
-                            <label for="attributes">Attributes</label>
-                            <input list="attr-types" oninput="show_attribute_values('attributes')" name="attributes" id="attributes"
-                                   onfocus="this.value=''" onchange="this.blur();">
-                            <datalist id="attr-types">
-                                <option value=":Aspect">
-                                <option value=":polarity">
-                                <option value=":mode">
-                                <option value=":refer-person">
-                                <option value=":refer-number">
-                                <option value=":degree">
-
-                            </datalist>
-                        </div>
-                    </td>
                 </tr>
 
                 <tr>
@@ -649,9 +631,16 @@
                                 <option value="either">
                                 <option value="neither">
                             </datalist>
-        {#                        <input type="submit" onclick="submit_abstract_concept('concept_types');">#}
                         </div>
                     </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button id="add-abs-concept" onclick="submit_query()">Add abstract concept</button>
+                    </td>
+                </tr>
+                <tr>
                     <td>
                         <div id="named_entities">
                             <label for="ne_types">Named Entity Types</label>
@@ -788,6 +777,37 @@
                             {#    <input type="submit" onclick="submit_mode('add-ne')">#}
                         </div>
                     </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lexicalized Concept:
+                        <div class="btn-group dropright">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown(`{{ lang }}`)"></button>
+                            <ul id="genericDropdown" class="dropdown-menu">
+                                <li class="dropdown-item"><a tabindex="-1">placeholder</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="attribute_types">
+                            <label for="attributes">Attributes</label>
+                            <input list="attr-types" oninput="show_attribute_values()" name="attributes" id="attributes"
+                                   onfocus="this.value=''" onchange="this.blur();">
+                            <datalist id="attr-types">
+                                <option value=":Aspect">
+                                <option value=":polarity">
+                                <option value=":mode">
+                                <option value=":refer-person">
+                                <option value=":refer-number">
+                                <option value=":degree">
+                            </datalist>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
                     <td>
                         {#    attribute values of Aspect#}
                         <div class="attributes" id="aspect-attribute" style="display: none">
@@ -881,22 +901,49 @@
 
                     </td>
                 </tr>
-
                 <tr>
                     <td>
-                        <button id="add-abs-concept" onclick="submit_query()">Add abstract concept</button>
+                        <button id="add-attr" onclick="submit_query()">Add attribute</button>
                     </td>
+                </tr>
+
+{#            simplified modal annotation #}
+                <tr>
                     <td>
-                        Lexicalized Concept:
-                        <div class="btn-group dropright">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="selected_tokens" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="conceptDropdown(`{{ lang }}`)"></button>
-                            <ul id="genericDropdown" class="dropdown-menu">
-                                <li class="dropdown-item"><a tabindex="-1">placeholder</a></li>
-                            </ul>
+                        <div id="simplified_modal">
+{#                            datalist id has to be the same with input list, input name and id has to be the same with name, but those two pairs cannot be the same, div id and label for can be named whatever#}
+                            <label for="simplified_modals">Modals</label>
+                            <input list="modals" oninput="show_modal_values()" name="simplified_modals" id="simplified_modals" onfocus="this.value=''" onchange="this.blur();">
+                            <datalist id="modals">
+                                <option value=":QUOT">
+                                <option value=":MOD">
+                                <option value=":PURP">
+                                <option value=":COND">
+                                <option value=":MODSTR">
+                            </datalist>
                         </div>
                     </td>
+                </tr>
+                <tr>
                     <td>
-                        <button id="add-attr" onclick="submit_query()">Add attribute</button>
+                        <div class="modals" id="modstr-vals" style="display:none">
+                            <label for="modstr-values1">MODSTR Values</label>
+                            <input list="modstr-values" name="modstr_values1" id="modstr-values1" onfocus="this.value=''" onchange="this.blur();">
+                            <datalist id="modstr-values">
+                                <option value="AFF">
+                                <option value="NEUTAFF">
+                                <option value="PARTAFF">
+                                <option value="NEUT">
+                                <option value="NEG">
+                                <option value="NEUTNEG">
+                                <option value="PARTNEG">
+                            </datalist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="add-modal" onclick="submit_query()">Add Modal</button>
                     </td>
                 </tr>
             </tbody>
@@ -905,19 +952,14 @@
         <div style="height: 10%; width:80%">
             <button id="umr2db" onclick="UMR2db()">save</button>
             <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
-
             <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">edit</a></button>
             <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
-    <!--        <button class="btn btn-outline-secondary" id="move-box"><a style="text-decoration:none" title="move" href="javascript:selectTemplate('move');">move</a></button>-->
             <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
             <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
-            {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
             <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
             {{ selected_word }}
             <a class="btn btn-outline-secondary" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="get_selected_word()">lexicon</a>
             <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:show_amr('show');">reset</a></button>
-
-
         </div>
 
 

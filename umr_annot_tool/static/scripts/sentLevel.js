@@ -241,7 +241,9 @@ function submit_concept() {
  */
 function submit_query(){
     let r = '';
-    if(document.getElementById('roles1')){
+    if(document.getElementById('simplified_modals').value){
+        r = document.getElementById('simplified_modals').value;
+    } else if(document.getElementById('roles1')){
         r = document.getElementById('roles1').value;
     }else if(document.getElementById('roles2')){
         r = document.getElementById('roles2').value;
@@ -266,6 +268,11 @@ function submit_query(){
     if(r){
         current_relation = r;
         current_mode = "add";
+        if(r===":MODSTR"){
+            submit_template_action('add-constant', document.getElementById('modstr-values1').value);
+            document.getElementById("modstr-vals").style.display = 'none'; //fold the modstr values box
+            document.getElementById('simplified_modals').value = ""; //clear the modals box
+        }
     }else if(a){
         current_relation = a;
         current_attribute = av;
@@ -343,6 +350,18 @@ function show_attribute_values(){
     }
 }
 
+/**
+ * fold unselected modstr value datalist, show the selected attribute datalist
+ */
+function show_modal_values(){
+    let option = document.querySelector('#simplified_modals').value;
+    if (option === ':MODSTR') {
+        document.getElementById("modstr-vals").style.display = 'block';
+    } else {
+        document.getElementById("modstr-vals").style.display = 'none';
+    }
+    document.getElementById('roles2').value = ''; // clear the roles box
+}
 /** undo *******************************************************/
 /**
  *  copy a plain Object, Array, Date, String, Number, or Boolean
@@ -1587,7 +1606,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_string = '';
         }else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
-                ||role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree)$/))){
+                ||role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree|:MODSTR)$/))){
             console.log("I am here40-5");
             arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
@@ -2352,14 +2371,17 @@ function role_unquoted_string_arg(role, arg, loc) {
     }
     if (role.match(/^:op/) && (head_role === ':name')) {
         return 0; //should be quoted
-    } else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
+    }  else if(!arg.length){ // if arg is empty string
+        return 1;
+    }  else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
         // || arg.match(/^(-|\+)$/)     // polarity
+        || (role === ':MODSTR')
         || (role === ':polarity')
         || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/)) //mode
         || (role ===':Aspect')
-        || ((role === ':refer-person'))
-        || ((role === ':refer-number'))
-        || ((role === ':degree')) && arg.match(/^(|Intensifier|Downtoner|intensifier|downtoner)$/)) {
+        || (role === ':refer-person')
+        || (role === ':refer-number')
+        || ((role === ':degree') && arg.match(/^(|Intensifier|Downtoner|intensifier|downtoner)$/))) {
         return 1; // should not be quoted
     } else {
         return 0;//should be quoted
