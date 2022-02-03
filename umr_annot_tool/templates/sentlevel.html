@@ -960,6 +960,16 @@
                         </div>
                     </td>
                 </tr>
+                <script>
+                       let graphDict = JSON.parse(localStorage['partial_graphs']);
+                       let list = document.getElementById('partial-graph');
+                       Object.keys(graphDict).forEach(function(key) {
+                            let option = document.createElement('option');
+                            option.value = key;
+                            list.appendChild(option);
+                        });
+
+                </script>
 
                 <tr>
                     <td>
