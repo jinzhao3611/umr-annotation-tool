@@ -3306,3 +3306,43 @@ function prettyPrintJson(id, dict_str){
     console.log("dict_str: ", deHTML(dict_str));
     document.getElementById(id).innerHTML = JSON.stringify(JSON.parse(deHTML(dict_str)), undefined, 2);
 }
+
+
+function recordPartialGraph(){
+    let graphDict = {};
+    let graphName = document.getElementById("save-partial-graph").value.split(" ")[0];
+    let graphHead = document.getElementById("save-partial-graph").value.split(" ")[1];
+    console.log("selected variable to be partial graph: ", graphHead);
+    console.log("partial graph name: ", graphName);
+    let k = getKeyByValue(umr, graphHead);
+    console.log("key: ", k);
+
+    Object.keys(umr).forEach(function(key) {
+        if(key.startsWith(k.replace('v', ''))){
+           graphDict[key.substring(k.length-1, key.length)] = umr[key];
+        }
+    });
+    console.log("partial_graph: ", graphDict);
+    let partial_graphs = {};
+    partial_graphs[graphName] = graphDict;
+    localStorage.setItem('partial_graphs', JSON.stringify(partial_graphs));
+}
+
+function addPartialGraph(){
+   let graphName= document.getElementById("partial-graphs").value;
+   let graphDict = JSON.parse(localStorage['partial_graphs'])[graphName];
+   let current_parent_loc = getKeyByValue(umr, current_parent);
+   let role;
+   if(document.getElementById('roles2')){
+       role = document.getElementById('roles2').value;
+   }else if(document.getElementById('roles1')){
+       role = document.getElementById('roles1').value;
+   }
+   graphDict['r'] = role;
+
+   Object.keys(graphDict).forEach(function(key) {
+       umr[current_parent_loc.substring(0, current_parent_loc.length-1)  + (umr[current_parent_loc.replace('v', 'n')] + 1) + '.'+ key] = graphDict[key];
+   });
+   umr[current_parent_loc.replace('v', 'n')] = umr[current_parent_loc.replace('v', 'n')] + 1;
+   show_amr('show');
+}

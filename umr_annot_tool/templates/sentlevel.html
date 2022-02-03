@@ -100,6 +100,10 @@
     <div>
         <p>UMR Penman Annotation:</p>
         <button id="set-head">set head</button>
+        <div>
+            <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph">
+            <button id="save-partial-graph-btn" onclick="recordPartialGraph()">Save</button>
+        </div>
         <div id="amr">
         </div>
     </div>
@@ -944,6 +948,22 @@
                 <tr>
                     <td>
                         <button id="add-modal" onclick="submit_query()">Add Modal</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div id="partial-graph-names">
+                            <label for="partial-graphs">Partial Graphs</label>
+                            <input list="partial-graph" name="graphs" id="partial-graphs" onfocus="this.value=''" onchange="this.blur();">
+                            <datalist id="partial-graph">
+                            </datalist>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <button id="add-partial-graph" onclick="addPartialGraph()">Add partial graph</button>
                     </td>
                 </tr>
             </tbody>
