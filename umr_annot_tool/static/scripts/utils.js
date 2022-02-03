@@ -326,7 +326,8 @@ function deHTML(html){
     tmp.innerHTML = html;
     let cleaned_html =  tmp.textContent || tmp.innerText || ""; // no HTML character references in cleaned html
     cleaned_html = cleaned_html.replace(/<\/?[^>]+(>|$)/g, "");
-    cleaned_html = cleaned_html.replaceAll(/&nbsp;/g, " ");
+    // cleaned_html = cleaned_html.replaceAll(/&nbsp;/g, " "); //somehow this line doesn't always work
+    cleaned_html = cleaned_html.replaceAll(`\xa0`, ' ')
     return cleaned_html
 }
 
