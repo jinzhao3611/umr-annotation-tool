@@ -11,8 +11,8 @@ let current_relation;
 let current_mode;
 let current_attribute;
 let current_ne_concept;
-let frame_json = {};
-let citation_dict = {}; //citation_dict is similar to frame_json
+let frame_json = {};// key is lemma form, value is the frame (including all the inflected form)
+let citation_dict = {}; //key is inflected form, value is lemma form
 let similar_word_list ={};
 
 let selection;
@@ -55,10 +55,12 @@ function initialize(frame_dict, lang) {
     endOffset = -1;
     if(default_langs.includes(language)){
         Object.keys(frame_json).forEach(function(key) {
-           citation_dict[key] = frame_json[key]["lemma"];
+            frame_json[key]['inflected_forms'].forEach(function(item){
+                citation_dict[item] = key;
+            });
         });
     }
-    pass_citation_dict(JSON.stringify(citation_dict));
+    pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage ready to pass to another page
 }
 
 /**
