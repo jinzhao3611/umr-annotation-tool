@@ -75,18 +75,19 @@ function showDefaultUmr(docLen, current_sent_id){
     for(let i =1; i<=docLen; i++){
         if(i !== parseInt(current_sent_id)){
             let html_s_before = document.getElementById('amr_doc'+i).innerText;
-            document.getElementById('amr_doc'+i).innerText = deHTML2(docUmrTransform(html_s_before));
+            document.getElementById('amr_doc'+i).innerText = deHTML2(docUmrTransform(html_s_before, false));
         }
     }
 }
 
 /**
  * @param html_umr_s: <div id="amr">(s1 / sentence<br>&nbsp;&nbsp;:temporal (s1t / s1t :before (DCT / DCT))<br>&nbsp;&nbsp;:temporal (s1t / s1t :after (s2d / s2d)))<br></div>
+ * @param nested: boolean, if nested form like in the paper "Developing Uniform Meaning Representation for Natural Language Processing"
  * @returns {string|any}: <div id="amr">(s1 / sentence<br>
-&nbsp;&nbsp;:temporal ((s1t :before DCT)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after s2d)))<br>
+ &nbsp;&nbsp;:temporal ((s1t :before DCT)<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after s2d)))<br>
  */
-function docUmrTransform(html_umr_s){
+function docUmrTransform(html_umr_s, nested){
     let regex1 = /([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
@@ -122,10 +123,11 @@ function docUmrTransform(html_umr_s){
     let html_umr_list = html_umr_s1.split('<br>');
     let html_umr_s2 = html_umr_list[0] + "<br>\n";
 
-
-    //add temporal lines
+      //add temporal lines
     if(temporals.length !== 0){
-        temporals = chainUp(temporals);
+        if(nested){
+            temporals = chainUp(temporals);
+        }
         html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:temporal (';
         for(let i=0; i<temporals.length; i++){
             if(i===0){
@@ -139,7 +141,9 @@ function docUmrTransform(html_umr_s){
 
     //add modal lines
     if(modals.length !== 0){
-        modals = chainUp(modals);
+        if(nested){
+            modals = chainUp(modals);
+        }
         html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:modal (';
         for(let i=0; i<modals.length; i++){
             if(i===0){
@@ -153,7 +157,9 @@ function docUmrTransform(html_umr_s){
 
     //add coref lines
     if(corefs.length !== 0){
-        corefs = chainUp(corefs);
+        if(nested){
+            corefs = chainUp(corefs);
+        }
         html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:coref (';
         for(let i=0; i<corefs.length; i++){
             if(i===0){
@@ -335,15 +341,16 @@ function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
  * @param curr_sent_id:
  */
 function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
+    let modal_triples = generateModalUmr(`amr${curr_sent_id}`); //returns a list of triples, umr is changed to sentLevel umr
+    let modal_triples_strings = modal_triples.map(t => t.join(" "));
+
     if(doc_annot === "" || doc_annot.includes('empty umr')){ //empty umr是历史遗留问题
         doc_annot = `&lt;div id=&#34;amr&#34;&gt;(s${curr_sent_id} / sentence)&lt;br&gt;&lt;/div&gt;`;
     }
 
-    let transformed_doc_annot = inverseUmrTransform(doc_annot);
-    // console.log('inverse transformed doc_annot: ', transformed_doc_annot);
+    let transformed_doc_annot = inverseUmrTransform(doc_annot); //doc_annot is triples graph, tranformed_doc_annot is penman format graph
     setInnerHTML('load-plain', deHTML(transformed_doc_annot));
-    // setInnerHTML('load-plain', deHTML(doc_annot));
-    umr = JSON.parse(curr_doc_umr);
+    umr = JSON.parse(curr_doc_umr);//umr is from database
     if (Object.keys(umr).length === 0 || Object.keys(umr).length === 1){
         umr['n'] = 1;
         umr['1.v'] = "s"+curr_sent_id; // number change with current sentence
@@ -351,8 +358,21 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
         umr['1.n'] = 0;
         umr['1.c'] = "sentence";
     }
-    loadField2amr();
+    loadField2amr();//umr is not changed here, due to the change of code in loadField2amr()
+    let current_triples = getTriplesFromUmr(umr);
+    let current_triples_strings = current_triples.map(t => t.join(" "));
 
+    modal_triples_strings = modal_triples_strings.filter(function(val) {
+      return current_triples_strings.indexOf(val) === -1;
+    });
+    modal_triples = modal_triples_strings.map(s => s.split(" "));
+
+    for (let i = 0; i < modal_triples.length; i++) {
+        exec_command(`s${curr_sent_id} :modal ${modal_triples[i][0]}`, '1');
+        exec_command(`${modal_triples[i][0]} ${modal_triples[i][1]} ${modal_triples[i][2]}`, '1');
+        show_amr('show');
+    }
+    show_amr();
 }
 
 function docUMR2db() {
@@ -2705,7 +2725,7 @@ function show_amr(args) {
 
         // console.log("html_amr_s before transform: " + html_amr_s);
         setInnerHTML('db-amr', html_amr_s);
-        html_amr_s = docUmrTransform(html_amr_s);
+        html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         // console.log("html_amr_s after transform: " + html_amr_s);
         setInnerHTML('amr', html_amr_s);
         show_amr_status = args;
@@ -3598,7 +3618,7 @@ function export_annot(exported_items, content_string) {
         + "\n# alignment:"
         + a[2]
         + "\n# document level annotation:\n"
-        + deHTML2(docUmrTransform(a[3]))
+        + deHTML2(docUmrTransform(a[3]), false) //todo: change docUmrTransform, because we don't want nested anymore
         +"\n").join("\n\n# :: snt");
     console.log(output_str);
 
