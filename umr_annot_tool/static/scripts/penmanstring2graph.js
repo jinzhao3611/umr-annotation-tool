@@ -168,7 +168,7 @@ function string2umr_recursive(annotText, loc, state, ht) {
 
 /**
  * annotText got cut into pieces in this process, part of the annotText got cut off when it's got parsed successfully, and the leftover annotText string is the string to be parsed into umr
- * @param annotText : annotated string: (s1t / taste-01)
+ * @param annotText : String (s1t / taste-01)
  * @returns {*}
  */
 function string2umr(annotText) {
