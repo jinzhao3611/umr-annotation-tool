@@ -2825,8 +2825,7 @@ function selectEvent(){
 }
 function get_selected_word(){
     localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
-    localStorage.setItem('umr', JSON.stringify(umr));
-}
+ }
 
 function pass_citation_dict(citation_dict){
     localStorage.setItem('citation_dict', citation_dict);
