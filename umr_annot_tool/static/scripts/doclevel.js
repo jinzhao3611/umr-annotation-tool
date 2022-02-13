@@ -53,7 +53,6 @@ var next_special_action = ''; //''
  * @param frame_dict_str: frame json file from post
  */
 function initialize() {
-    console.log("initialize is called5");
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top';
@@ -260,7 +259,7 @@ function inverseUmrTransform(penman_s){
 
   temporal_rels.forEach(myFunction2);
   function myFunction2(value) {
-  	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":temporal ($1 / $1 $2 ($3 / $3))");
+  	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":temporal ($1 / $1 $2 ($3 / $3))"); //'s1p :before s2d' -> :temporal (s1p / s1p :before (s2d / s2d))
     console.log(value);
     db_penman_text += ' ' + value;
   }
@@ -284,8 +283,10 @@ function inverseUmrTransform(penman_s){
   return db_penman_text;
 }
 /**
- * @param item: s1t :after s2e :before s3e :depends-on s4e
- * @returns {[]}: ["s1t :before DCT", "s1t :after s2e", "s2e :before test"]
+ // * @param item: s1t :after s2e :before s3e :depends-on s4e
+ // * @returns {[]}: ["s1t :before DCT", "s1t :after s2e", "s2e :before test"]
+ * @param item: "s2d / s2d :after s1t / s1t"
+ * @returns: ['s2d / s2d', 's2d :after s1t', 's1t / s1t']
  */
 function breakNestedRels(item){
 	let rels = [];
@@ -298,6 +299,11 @@ function breakNestedRels(item){
   return rels
 }
 
+/**
+ * this function turns triples into nested chains
+ * @param array
+ * @returns {*[]}
+ */
 function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
     let array2 = array.map(function(ele){ //array2 = [["(s1t :before s2d)", "s1t", "s2d"], ["(s2d :before DCT)", "s2d", "DCT"]]
         let splitted_ele = ele.split(' ');
@@ -2418,15 +2424,14 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
     // loc=1, args="show", rec=0, ancestor_elem_id_list=' '
     // console.log('show AMR rec: loc: ' + loc + ", args: " + args + ", rec: " + rec + ", ancestor_elem_id_list: " + ancestor_elem_id_list);
 
-    loc += '';
-    if (umr[loc + '.d']) {
-        // add_log('show AMR rec deleted: ' + loc);
+    loc += ''; //turn number into string
+    if (umr[loc + '.d']) { //if this node has already been deleted
         return '';
     } else {
-        var concept = umr[loc + '.c'];
-        var alignment_index = umr[loc + '.a'];
-        var string = umr[loc + '.s'] || '';
-        var quoted_string = string;
+        var concept = umr[loc + '.c']; //1.c: "nenhlet"
+        var alignment_index = umr[loc + '.a']; //1.a: "2-2"
+        var string = umr[loc + '.s'] || ''; //1.s: ""
+        var quoted_string = string; //1.s: ""
         if (!string.match(/^".*"$/)) {
             quoted_string = '"' + string + '"';
         }
@@ -2685,8 +2690,8 @@ function show_amr(args) {
     let origScrollHeight = '';
     let origScrollTop = '';
     if ((s = document.getElementById('amr')) != null) {
-        origScrollHeight = s.scrollHeight;
-        origScrollTop = s.scrollTop;
+        origScrollHeight = s.scrollHeight; //0 when there is no graph
+        origScrollTop = s.scrollTop; //0 when there is no graph
     }
 
     //generate the pennman string
