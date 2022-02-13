@@ -138,9 +138,9 @@ function conceptDropdown(lang='english') {
                     lemma = response['result'][0];
                     console.log(lemma);
                     let senses = [];
-                    Object.keys(frame_json).forEach(function(key) {
+                    Object.keys(frame_dict).forEach(function(key) {
                         if(key.split("-")[0] === lemma){
-                            senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                            senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
                         }
                     });
                     let submenu_items;
@@ -154,9 +154,9 @@ function conceptDropdown(lang='english') {
             } else if(lang === 'english'){
                 lemma = getLemma(token);
                 let senses = [];
-                Object.keys(frame_json).forEach(function(key) {
+                Object.keys(frame_dict).forEach(function(key) {
                     if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                        senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
                     }
                 });
                 let submenu_items;
@@ -169,9 +169,9 @@ function conceptDropdown(lang='english') {
             }else if (lang === 'chinese') {
                 lemma = token;
                 let senses = [];
-                Object.keys(frame_json).forEach(function(key) {
+                Object.keys(frame_dict).forEach(function(key) {
                     if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":JSON.stringify(frame_json[key])})
+                        senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
                     }
                 });
                 let submenu_items;
@@ -3289,7 +3289,7 @@ function suggestLemma(doc_id){
 
 
 function initializeLexicon(frames, citations){
-    frame_json = JSON.parse(deHTML(frames));
+    frame_dict = JSON.parse(deHTML(frames));
     citation_dict = JSON.parse(deHTML(citations));
 }
 
