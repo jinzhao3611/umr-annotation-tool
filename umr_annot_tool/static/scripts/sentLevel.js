@@ -3061,13 +3061,10 @@ function reset_save(control) {
     }
 }
 
-function UMR2db() {
-    let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
-    let align_info = document.getElementById('align').innerText;
-    let doc_id = document.getElementById('doc_id').innerText;
-    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
-
-    //remove branch that contains .d
+/**
+ * remove branch that contains .d
+ */
+function removeDeletedFromUmr(){
     let locs_to_delete = []
     Object.keys(umr).forEach(function(key) { //traverse all the items in umr
         if(key.match(/\d+.d/) && umr[key] === 1){ //traverse all the .d items in umr that have a value of 1
@@ -3081,6 +3078,19 @@ function UMR2db() {
             }
         }
     });
+}
+
+/**
+ * pass all the information that need to be saved in database back to routes.py
+ * @constructor
+ */
+function UMR2db() {
+    let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
+    let align_info = document.getElementById('align').innerText;
+    let doc_id = document.getElementById('doc_id').innerText;
+    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+
+    removeDeletedFromUmr();
 
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
