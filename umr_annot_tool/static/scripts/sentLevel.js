@@ -3097,7 +3097,6 @@ function UMR2db() {
         return response.json();
     }).then(function (data) {
         setInnerHTML("error_msg", data["msg"]);
-        document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });
