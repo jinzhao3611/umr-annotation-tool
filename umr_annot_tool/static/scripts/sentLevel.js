@@ -2,7 +2,6 @@ let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": 
     "option-fix-font":true, "option-role-auto-case":false,  "option-auto-moveto":true,
     "option-confirm-delete":false, "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
 let abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
-//https://stackoverflow.com/questions/15861088/regex-to-match-only-language-chars-all-language
 let table_id = 1;
 let language;
 let current_parent;
@@ -48,19 +47,19 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 function initialize(frame_json, lang) {
     language = lang; // assign language of the document
     umr['n'] = 0; //clear the current graph
-    undo_list.push(cloneCurrentState()); //populate undo_list todo probably don't need this
+    undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top'; //reset the current mode to add root
-    frame_dict = JSON.parse(frame_json);
+    frame_dict = JSON.parse(frame_json); //potentially have two different formats: one is the frames_english file, one is lexicon file: sample file: Flex lexicon for frame files.xml
     begOffset = -1;
     endOffset = -1;
-    if(default_langs.includes(language)){ // if langauge is one of the default languages
+    if(default_langs.includes(language)){ // if langauge is one of the default languages, populate citation_dict into dictionary: key: inflected_form, value:lemma_form (used in getLemma)
         Object.keys(frame_dict).forEach(function(key) {
             frame_dict[key]['inflected_forms'].forEach(function(item){
                 citation_dict[item] = key;
             });
         });
     }
-    pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage ready to pass to another page
+    pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage in order to pass to another page
 }
 
 /**
