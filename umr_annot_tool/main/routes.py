@@ -1,6 +1,6 @@
 from flask import url_for, redirect, flash, send_from_directory, make_response, jsonify
 from werkzeug.utils import secure_filename
-from typing import List, Tuple
+from typing import List
 import json
 from parse_input_xml import html, process_exported_file, parse_lexicon_xml
 from flask_login import current_user
@@ -13,18 +13,12 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm
 from sqlalchemy.orm.attributes import flag_modified
-from sqlalchemy.ext.mutable import MutableDict
-
-import time
 from suggest_sim_words import generate_candidate_list, find_suggested_words
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
-
-add_num_inflected = 0
-add_num_sense = 0
 
 def lexicon2db(lang: str, lexicon_dict: dict):
     existing_lexicon = Lexicon.query.filter_by(lang=lang).first()
