@@ -11,7 +11,7 @@ let current_relation;
 let current_mode;
 let current_attribute;
 let current_ne_concept;
-let frame_json = {};// key is lemma form, value is the frame (including all the inflected form)
+let frame_dict = {};// key is lemma form, value is the frame (including all the inflected form)
 let citation_dict = {}; //key is inflected form, value is lemma form
 let similar_word_list ={};
 
@@ -42,20 +42,20 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 
 /**
  *
- * @param frame_dict_str: frame json file from post
+ * @param frame_json: frame json file from post
  * @param lang: language of this document
  */
-function initialize(frame_dict, lang) {
-    language = lang;
-    umr['n'] = 0;
-    undo_list.push(cloneCurrentState()); //populate undo_list
-    current_mode = 'top';
-    frame_json = JSON.parse(frame_dict);
+function initialize(frame_json, lang) {
+    language = lang; // assign language of the document
+    umr['n'] = 0; //clear the current graph
+    undo_list.push(cloneCurrentState()); //populate undo_list todo probably don't need this
+    current_mode = 'top'; //reset the current mode to add root
+    frame_dict = JSON.parse(frame_json);
     begOffset = -1;
     endOffset = -1;
-    if(default_langs.includes(language)){
-        Object.keys(frame_json).forEach(function(key) {
-            frame_json[key]['inflected_forms'].forEach(function(item){
+    if(default_langs.includes(language)){ // if langauge is one of the default languages
+        Object.keys(frame_dict).forEach(function(key) {
+            frame_dict[key]['inflected_forms'].forEach(function(item){
                 citation_dict[item] = key;
             });
         });
