@@ -121,6 +121,7 @@ def sentlevel(doc_id):
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
+    # find the correct frame_dict for current annotation
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":
@@ -128,9 +129,9 @@ def sentlevel(doc_id):
     elif doc.lang == "arabic":
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
-        try:
+        try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
             frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
-        except AttributeError:
+        except AttributeError: #there is no frame_dict for this language at all
             frame_dict = {}
 
     snt_id = int(request.args.get('snt_id', 1))
