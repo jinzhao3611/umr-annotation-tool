@@ -71,21 +71,24 @@ function initialize(frame_json, lang) {
  */
 function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
     umr = JSON.parse(curr_sent_umr);
-    if(Object.keys(umr).length === 0){
-        umr['n'] = 0;
+    if(Object.keys(umr).length === 0){ // if the parsed curr_sent_umr is empty
+        umr['n'] = 0; //initialize umr here
     }
-    populateUtilityDicts();
+    populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     // text2umr(deHTML(curr_sent_annot), curr_sent_align);
     show_amr('show');
     showAlign();
     state_has_changed_p = 1;
-    exec_command('record load AMR by direct entry', 1); // add action load AMR by direct entry to states list
+    exec_command('record load umr from database', 1); // add action:  "load umr from database" to states list
     if(language === "english" || language === "chinese"){
         showAnnotatedTokens();
     }
     // undo_list.push(cloneCurrentState()); //populate undo_list
 }
 
+/**
+ * based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
+ */
 function populateUtilityDicts(){
         Object.keys(umr).forEach(function(key) { //traverse all the items in umr
         if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
@@ -110,15 +113,14 @@ function docAnnot(sentenceId) {
  * from currently selected word, get the lemma and generate the senses menu list
  */
 function conceptDropdown(lang='english') {
-    submit_concept();
+    submit_concept(); //record the current concept from the selected tokens
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
     if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
-    } else {
-        // if (typeof getLemma(token) !== 'undefined' && default_langs.includes(lang)){
-        if (default_langs.includes(lang)){
+    } else { //if concept is not a number
+        if (default_langs.includes(lang)){ // if lang is one of the default languages
             let submenu_items;
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
                  submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
@@ -413,7 +415,7 @@ function cloneCurrentState() {
     current_state['umr'] = clone(umr);
     current_state['variables'] = clone(variables);
     current_state['concepts'] = clone(concepts);
-    last_state_id++;
+    last_state_id++; //global variable keep count of state id
     current_state['id'] = last_state_id;
     return current_state;
 }
@@ -491,7 +493,6 @@ function undo(n) {
  * @param id "top"
  */
 function selectTemplate(id) {
-    console.log("selectTemplate id is: "+ id);
     current_template = '';
     let actions = ["replace", "delete", "move", "save", "load"];
     let s;
@@ -562,6 +563,11 @@ function fillReplaceTemplate(type, at, old_value, mo_lock) {
     }
 }
 
+/**
+ *
+ * @param at "s1t :actor s1f"
+ * @param mo_lock "amr_elem_6", this is also element id
+ */
 function fillDeleteTemplate(at, mo_lock) {
     console.log("fillDeleteTemplate: at: "+ at + ", mo_lock: " + mo_lock);
     var s;
@@ -590,8 +596,12 @@ function fillDeleteTemplate(at, mo_lock) {
 
 /** coloring umr ******************************************************/
 
+/**
+ *
+ * @param variable
+ * @param color
+ */
 function color_all_var_occurrences(variable, color) {
-    // console.log("color_all_var_occurrences variable: " + variable + " color: " + color );
     var var_locs = getLocs(variable);
     if (var_locs) {
         var list = var_locs.split(" ");
@@ -602,8 +612,13 @@ function color_all_var_occurrences(variable, color) {
     }
 }
 
+/**
+ *
+ * @param id "amr_elem_6"
+ * @param color "#FF0000"
+ * @param event_type ""
+ */
 function color_all_under_amr_elem(id, color, event_type) {
-    // console.log("color_all_under_amr_elem id: " + id + " color: " + color + "event_type: " + event_type );
     let list_s = show_amr_obj['elem-' + id];
     let list = list_s.split(" ");
     for (let i = 0; i < list.length; i++) {
@@ -612,10 +627,15 @@ function color_all_under_amr_elem(id, color, event_type) {
     }
 }
 
+/**
+ * given element id and color, color the element
+ * @param id "amr_elem_6"
+ * @param color "#FF0000"
+ * @param event_type ""
+ */
 function color_amr_elem(id, color, event_type) {
-    // console.log("color_amr_elem id: "+ id + " color: " + color + "event_type: " + event_type);
     let s;
-    if ((!(show_amr_mo_lock && (event_type == 'mo')))
+    if ((!(show_amr_mo_lock && (event_type == 'mo'))) //either show_amr_mo_lock is empty, or event_type is not 'mo'
         && ((s = document.getElementById(id)) != null)) {
         s.style.color = color;
     }
@@ -624,7 +644,6 @@ function color_amr_elem(id, color, event_type) {
 
 /** entrance ******************************************************/
 function submit_template_action(id, numbered_predicate = "") {
-    console.log("submit_template_action: id: " + id + ", numbered_predicate: " + numbered_predicate);
     // highlightSelection();
     if (numbered_predicate !== "") {
         if(numbered_predicate.indexOf(' ') >= 0 && id==='add'){
@@ -1246,9 +1265,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
  * find the correct alignment info for abstract concept like name
  */
 function correctAlignments(){
-    console.log("umr from correctAlignments: ", umr);
     Object.keys(umr).forEach(function(key){
-        if(key.match(/\d+.v/)){
+        if(key.match(/\d+.v/)){ // abstract concepts have "-1--1" alignment
             if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
             || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
@@ -1289,8 +1307,6 @@ function correctAlignments(){
                     let s = parseInt(umr[Object.keys(umr)[i]].split('-')[0]);
                     let e = parseInt(umr[Object.keys(umr)[i]].split('-')[1]);
                     umr[Object.keys(umr)[i]] = s + '-' + e;
-                    console.log(s);
-                    console.log(e);
                     if(s < beg){
                         beg = s;
                     }
@@ -1299,8 +1315,6 @@ function correctAlignments(){
                     }
                 }
             }
-            // console.log(beg);
-            // console.log(end);
             if(beg !== 10000){
                 umr[key.replace('.c','.a')] = beg + '-' + end;
             }
@@ -1310,7 +1324,6 @@ function correctAlignments(){
 }
 
 function showAnnotatedTokens(){
-    console.log("showAnnotatedTokens is called");
     Object.keys(umr).forEach(function (key) {
         if (/[\\d|\\.]+a/gm.test(key)) {
             if (!(key.replace('a', 'd') in umr)){
@@ -1347,7 +1360,6 @@ function showAnnotatedTokens(){
 }
 function showAlign(){
     correctAlignments();
-    console.log("umr from showAlign: ", umr);
     let alignInfo;
     if (( alignInfo = document.getElementById('align')) != null){
         let alignment_string = '';
@@ -2403,19 +2415,19 @@ function tolerate_special_concepts(s) {
 /**
  * @param loc nth children in amr, most of the time only have 1 tree
  * @param args "show"
- * @param rec 0 or 1
- * @param ancestor_elem_id_list " "
+ * @param rec 0 or 1 , if rec, meaning there are ancestors, current is not top, if rec is false, current is top
+ * @param ancestor_elem_id_list something like "amr_elem_1 amr_elem_2", it will be used to populate show_amr_obj[ele-amr_elem_1], which is used to generate html strings
  * @returns {string} returns a html string that represents the penman format
  */
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
     loc += '';
-    if (umr[loc + '.d']) { //already been deleted
+    if (umr[loc + '.d']) { //if this node has already been deleted
         return '';
     } else {
-        let concept = umr[loc + '.c']; // umr['1.c']
-        let alignment_index = umr[loc + '.a']; // umr['1.a']
-        let string = umr[loc + '.s'] || ''; // umr['1.s']
-        let quoted_string = string; //umr['1.s']
+        let concept = umr[loc + '.c']; // umr['1.c'] 1.c: "nenhlet"
+        let alignment_index = umr[loc + '.a'] || ''; // umr['1.a'] 1.a: "2-2"
+        let string = umr[loc + '.s'] || ''; // umr['1.s'] 1.s: ""
+        let quoted_string = string; //umr['1.s'] 1.s: ""
         if (!string.match(/^".*"$/)) { // if there is no quotes around the string
             quoted_string = '"' + string + '"'; // quote the string
         }
@@ -2425,20 +2437,20 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         }
         let protected_string2 = slashProtectQuote(protected_string); //"Edmund" -> \\\"Edmund\\\"
         var role = umr[loc + '.r'] || ''; //umr['1.r']
-        var string_m = string;
-        var string_is_number = string.match(/^\d+(?:\.\d+)?$/);
+        let string_m = string;
+        let string_is_number = string.match(/^\d+(?:\.\d+)?$/);
         if (!role_unquoted_string_arg(role, string, loc)) { //should quote
             string_m = quoted_string;
         }
-        var variable = umr[loc + '.v']; //umr['1.v']
-        var arg = variable || concept || string;
-        var s = '';
+        let variable = umr[loc + '.v']; //umr['1.v'] 1.v: "s1n"
+        let arg = variable || concept || string;
+        let s = '';
         var show_replace = args.match(/replace/);
         var show_delete = args.match(/delete/);
         var show_check = args.match(/check/) || ((!show_replace) && (!show_delete));
-        var concept_m = concept;
-        var variable_m = variable;
-        var tree_span_args = '';
+        var concept_m = concept; //concept string surrounded by html string
+        var variable_m = variable; // variable string surrounded by html string
+        var tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
         var role_m = '';
         var elem_id = '';
         var onmouseover_fc = '';
@@ -2464,7 +2476,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         }
         if (show_delete) {
             elem_id = 'amr_elem_' + ++n_elems_w_id;
-            console.log("elem_id: " + elem_id);
             onmouseover_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#FF0000\',\'mo\')';
             onmouseout_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
             if (rec) {
@@ -2482,11 +2493,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                     show_amr_obj['elem-' + ancestor_elem_id] += ' ' + elem_id;
                 }
             }
-            console.log("onclick_fc: " + onclick_fc);
             if (role_m) {
                 role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
             }
-            console.log("role_m: " + role_m);
         } else if (show_check && (var_locs = getLocs(variable))) {
             // let n = var_locs.split(" ").length;
             // //this is the place that the reentrance of the variable got the same color with the one it co-referenced
@@ -2653,23 +2662,23 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
  * @param args "show" or "show replace" or "show delete", if args is empty string, nothing will be shown
  */
 function show_amr(args) {
-    let s;
-    let html_amr_s;
-    n_elems_w_id = 0;
-    show_amr_mo_lock = '';
+    let s; //DOM element that contains umr
+    let html_amr_s; //html string of the umr penman graph
+    n_elems_w_id = 0; //todo
+    show_amr_mo_lock = ''; //todo
     let origScrollHeight = '';
     let origScrollTop = '';
-    if ((s = document.getElementById('amr')) != null) {
+    if ((s = document.getElementById('amr')) != null) { // the div that contains the umr penman graph
         origScrollHeight = s.scrollHeight;
         origScrollTop = s.scrollTop;
     }
 
     //generate the pennman string
     if (args) { //args can be "show", "replace", "delete" or "check"
-        let amr_s = '';
+        let amr_s = ''; // html string of the umr penman graph
         let n = umr['n']; // how many children currently in the tree
         for (let i = 1; i <= n; i++) { //traverse children
-            let show_amr_rec_result = show_amr_rec(i, args, 0, ' ');
+            let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
             if (show_amr_rec_result){
                 amr_s += show_amr_rec_result + '\n';
             }
@@ -2722,14 +2731,13 @@ function showEditHistory(){
     }
     document.getElementById('eh').innerHTML = s;
 }
+
+//todo: put this in hyper link later, instead of clicking on button
 function goToEdit(number_string){
    let n = parseInt(number_string);
    undo(n - undo_index+1);
    showEditHistory();
-
 }
-
-
 
 /**
  * handles the indentation
@@ -3054,14 +3062,10 @@ function reset_save(control) {
 }
 
 function UMR2db() {
-    console.log("UMR2db is called");
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let align_info = document.getElementById('align').innerText;
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
-    console.log(amrHtml);
-    console.log(align_info);
-    console.log(umr);
 
     //remove branch that contains .d
     let locs_to_delete = []
@@ -3081,31 +3085,11 @@ function UMR2db() {
     fetch(`/annotate/${doc_id}`, {
         method: 'POST',
         body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
-        // body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         setInnerHTML("error_msg", data["msg"]);
         document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
-    }).catch(function(error){
-        console.log("Fetch error: "+ error);
-    });
-}
-
-function docUMR2db() {
-    
-    let doc_id = document.getElementById('doc_id').innerText;
-    let snt_id = document.getElementById('curr_sent_id').value;
-    let umrHtml = document.getElementById('amr'+snt_id).outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
-    console.log(umrHtml);
-
-    fetch(`/doclevel/${doc_id}`, {
-        method: 'POST',
-        body: JSON.stringify({"umr": umrHtml, "snt_id": snt_id})
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data); //amr got returned from server
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });
