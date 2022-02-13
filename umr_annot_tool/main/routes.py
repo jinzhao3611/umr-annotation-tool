@@ -115,8 +115,8 @@ def upload():
     return render_template('upload.html', title='upload', form=form, lexicon_form=lexicon_form)
 
 
-@main.route("/annotate/<int:doc_id>", methods=['GET', 'POST'])
-def annotate(doc_id):
+@main.route("/sentlevel/<int:doc_id>", methods=['GET', 'POST'])
+def sentlevel(doc_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     doc = Doc.query.get_or_404(doc_id)
