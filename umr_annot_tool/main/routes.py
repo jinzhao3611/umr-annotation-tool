@@ -99,7 +99,7 @@ def upload():
                 info2display = html(content_string, file_format, lang=lang)
                 file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
                         sents=info2display.sents, has_annot=False)
-            return redirect(url_for('main.annotate',
+            return redirect(url_for('main.sentlevel',
                                     doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
             flash('Please upload a file and/or choose a language.', 'danger')
@@ -267,7 +267,7 @@ def doclevel(doc_sent_id):
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.annotate', doc_id=doc_id))
+        return redirect(url_for('main.sentlevel', doc_id=doc_id))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]
