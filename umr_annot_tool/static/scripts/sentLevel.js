@@ -2444,14 +2444,13 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         let variable = umr[loc + '.v']; //umr['1.v'] 1.v: "s1n"
         let arg = variable || concept || string;
         let s = '';
-        var show_replace = args.match(/replace/);
-        var show_delete = args.match(/delete/);
-        var show_check = args.match(/check/) || ((!show_replace) && (!show_delete));
-        var concept_m = concept; //concept string surrounded by html string
-        var variable_m = variable; // variable string surrounded by html string
-        var tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
-        var role_m = '';
-        var elem_id = '';
+        let show_replace = args.match(/replace/);
+        let show_delete = args.match(/delete/);
+        let concept_m = concept; //concept string surrounded by html string
+        let variable_m = variable; // variable string surrounded by html string
+        let tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
+        let role_m = ''; // role string surrounded by html string
+        let elem_id = '';
         var onmouseover_fc = '';
         var onmouseout_fc = '';
         var onclick_fc = '';
@@ -2495,16 +2494,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             if (role_m) {
                 role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
             }
-        } else if (show_check && (var_locs = getLocs(variable))) {
-            // let n = var_locs.split(" ").length;
-            // //this is the place that the reentrance of the variable got the same color with the one it co-referenced
-            // if (n >= 2) {
-            //     elem_id = 'elem_var_id_' + loc;
-            //     onmouseover_fc = 'color_all_var_occurrences(\'' + variable + '\',\'#FF0000\')';
-            //     onmouseout_fc = 'color_all_var_occurrences(\'' + variable + '\',\'#000000\')';
-            //     var title = 'variable ' + variable + ' occurs ' + n + ' times in this AMR';
-            //     variable_m = '<span title="' + title + '" id="' + elem_id + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
-            // }
         }
         if (rec) {
             s += role_m + ' ';
@@ -2621,12 +2610,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             } else if (show_delete) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
-            } else if (show_check) {
-                let role = umr[loc + '.r'];
-                if ((role == ':wiki') && !string.match(/^\s*(|-)\s*$/i)) {
-                    let wiki_url = 'https://en.wikipedia.org/wiki/' + htmlProtect(string);
-                    string_m = '"<a href="' + wiki_url + '" title="' + wiki_url + '" target="_WIKI" style="color:#000080;">' + string + '</a>"';
-                }
             }
             s += string_m;
         } else { // variable is not empty
