@@ -2533,16 +2533,6 @@ function selectEvent(){
             table_id = 2;
         }
         if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
-            // if(language==='default'){
-            //     begOffset = selection.anchorNode.parentElement.cellIndex;
-            //     endOffset = selection.focusNode.parentElement.cellIndex;
-            // }else{
-            //     begOffset = selection.anchorNode.parentElement.cellIndex + 1;
-            //     endOffset = selection.focusNode.parentElement.cellIndex + 1;
-            // }
-
-            // console.log("beg cell index: ",selection.anchorNode.parentElement.cellIndex);
-            // console.log("end cell index: ",selection.focusNode.parentElement.cellIndex);
             begOffset = selection.anchorNode.parentElement.cellIndex;
             endOffset = selection.focusNode.parentElement.cellIndex;
         }
