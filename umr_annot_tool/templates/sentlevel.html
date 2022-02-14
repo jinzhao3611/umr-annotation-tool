@@ -166,77 +166,6 @@
             </table>
         </p>
     </div>
-    <div id="delete-template-table" style="display:none;">
-        <p>
-        <table>
-            <tbody>
-            <tr>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td width="5"></td>
-                            <td align="center">Delete AMR element</td>
-                            <td width="5"></td>
-                            <td><input size="24"
-                                       title="describe the item to be deleted, &quot;top level &lt;variable&gt;&quot; or &quot;&lt;parent-variable&gt; &lt;role&gt; &lt;variable&gt;&quot;, e.g. &quot;w :ARG0 b&quot; to delete :ARG0, b, and everything below"
-                                       autocapitalize="off" id="delete-at"
-                                       value="" onkeypress="action_on_enter('submit delete', event, 'delete-at');"></td>
-                            <td width="5"></td>
-                            <td>
-                                <table border="1" cellpadding="1" cellspacing="0">
-                                    <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            <nobr><a style="text-decoration:none;" title="submit delete template action"
-                                                     href="javascript:submit_template_action('delete');"><font
-                                                    color="black">delete</font></a>
-                                            </nobr>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td width="5"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td width="10"></td>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td width="5"></td>
-                            <td width="5"></td>
-                            <td>
-                                <table border="1" cellpadding="1" cellspacing="0">
-                                    <tbody>
-                                    <tr>
-                                        <td align="center">
-                                            <nobr><a typostyle="font-size:1.2em;font-weight:bold;text-decoration:none"
-                                                     style="text-decoration:none;"
-                                                     title="Delete entire AMR"
-                                                     href="javascript:deleteAMR();"><font
-                                                    color="black">&nbsp;delete&nbsp;<br>&nbsp;entire
-                                                AMR&nbsp;</font></a>
-                                            </nobr>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td width="5"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-                <td width="10"></td>
-            </tr>
-            </tbody>
-        </table>
-        </p>
-    </div>
     <div id="move-template-table" style="display:none;">
         <table>
             <tbody>
@@ -978,8 +907,8 @@
         <div style="height: 10%; width:80%">
             <button id="umr2db" onclick="UMR2db()">save</button>
             <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
-            <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:selectTemplate('replace');">edit</a></button>
-            <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
+            <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:changeShowStatus('replace');">edit</a></button>
+            <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
             <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
             <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
             <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
