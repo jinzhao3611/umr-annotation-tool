@@ -122,34 +122,6 @@
         <p id="edit_history"></p>
     </div>
 
-
-    <div id="save-template-table" style="display:none;">
-        <p>
-        <table style="background-color:#E8EEFF;" width="800">
-            <tbody>
-            <tr id="save-local-tooltip" title="Typically in the default download directory on your computer">
-                <td id="save-local-title"><b>Save AMR locally</b></td>
-                <td>
-                    <table>
-                        <tbody>
-                        <tr id="save-local-filename">
-                            <td>Filename (without path):</td>
-                            <td><input type="text" id="local_save_file" name="local_save_file" size="24"
-                                       style="font-size:1.1em;text-align:right;" value=""><span
-                                    style="font-size:1.1em">.txt</span></td>
-                            <td width="10"></td>
-                            <td><input type="submit" value="Save locally" onclick="save_local_amr_file(temp=true)"></td>
-
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            <tr id="alt-save-locally" style="display:none" ;=""></tr>
-            </tbody>
-        </table>
-        </p>
-    </div>
 {% endblock content %}
 
 {% block content2 %}

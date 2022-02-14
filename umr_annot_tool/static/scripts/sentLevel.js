@@ -2678,86 +2678,6 @@ function loadErrorHandler(evt) {
     }
 }
 
-/** save*************/
-
-function save_local_amr_file(sentence = "", temp = false) {
-    console.log(sentence);
-    if ((s = document.getElementById('local_save_file')) != null) {
-        s.focus();
-    }
-    var s, s2, s3, filename;
-    var comment = '';
-    var text = '# :: snt \t';
-    if (window.BlobBuilder && window.saveAs) {
-        console.log('I am here1-1');
-        if ((s2 = document.getElementById('plain-amr')) != null) {
-            console.log('I am here1-2');
-            if ((s3 = document.getElementById('comment')) != null) {
-                console.log('I am here1-3');
-                comment = s3.value;
-            }
-            filename = document.getElementById('local_save_file').value;
-
-            // filename = filename.replace(/\.txt$/, "");
-            // filename = filename.replace(/[^-_a-zA-Z0-9]/g, "_");
-            filename += '.txt';
-
-            if (temp) {
-                // text += document.getElementById('current-words').innerText.replace("Words\t", "")
-                text += sentence;
-                text += '\n';
-
-                add_log('Saving file ' + filename + ' on your computer, typically in default download directory');
-                if (comment.match(/\S/)) {
-                    text += comment + '\n';
-                }
-                text += s2.value;
-                text = text.replace(/\n/g, "\r\n");
-                var bb = new BlobBuilder();
-                bb.append(text);
-                saveAs(bb.getBlob(), filename);
-            } else {
-                if (comment.match(/\S/)) {
-                    text += comment + '\n';
-                }
-                text = s2.value;
-                text = text.replace(/\n/g, "\r\n");
-
-                var bb = new BlobBuilder();
-                bb.append(text);
-                saveAs(bb.getBlob(), filename);
-            }
-
-        }
-    } else {
-        console.log('I am here1-4');
-        add_error('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
-        if ((s = document.getElementById('alt-save-locally')) != null) {
-            console.log('I am here1-5');
-            s.style.display = 'inline';
-        }
-    }
-}
-
-function reset_save(control) {
-    console.log("reset_save is called");
-    let s;
-    if (!(window.BlobBuilder && window.saveAs)) {
-        if ((s = document.getElementById('alt-save-locally')) != null) {
-            s.style.display = 'none';
-        }
-        if ((s = document.getElementById('save-local-title')) != null) {
-            s.style.color = '#999999';
-        }
-        if ((s = document.getElementById('save-local-filename')) != null) {
-            s.style.color = '#999999';
-        }
-        if ((s = document.getElementById('save-local-tooltip')) != null) {
-            s.title = 'This browser does not support the API required for this method. (BlobBuilder and saveAs)';
-        }
-    }
-}
-
 /**
  * remove branch that contains .d
  */
@@ -2891,8 +2811,6 @@ function deHTML2(s){
 }
 
 function export_annot(exported_items, content_string) {
-    console.log("exported_items: ", exported_items);
-    console.log("content_string: ", content_string);
     content_string = content_string.replaceAll('<br>', '\n');
     let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {
