@@ -99,15 +99,6 @@ function populateUtilityDicts(){
 }
 
 /**
- * not working yet
- * @param sentenceId
- */
-function docAnnot(sentenceId) {
-    exec_command("top sent ence", 1);
-    submit_template_action('doc-annot');
-}
-
-/**
  * from currently selected word, get the lemma and generate the senses menu list
  */
 function conceptDropdown(lang='english') {
@@ -2494,18 +2485,6 @@ function indent_for_loc(loc, c, style, n) {
     return indentation;
 }
 
-function extractValueFrom2ColonExpr(s, key) {
-    console.log("extractValueFrom2ColonExpr is called");
-    // add_log('extractValueFrom2ColonExpr ' + key + ' ' + s);
-    if (s.match(new RegExp('::' + key + ' '))) {
-        let value = s.replace(new RegExp('^.*::' + key + ' '), "");
-        value = value.replace(/^(.*?)::.*$/, "$1");
-        return strip(value);
-    } else {
-        return '';
-    }
-}
-
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
@@ -2911,12 +2890,6 @@ function listDict(id){
         li.innerHTML += item;
     });
 }
-
-function prettyPrintJson(id, dict_str){
-    console.log("dict_str: ", deHTML(dict_str));
-    document.getElementById(id).innerHTML = JSON.stringify(JSON.parse(deHTML(dict_str)), undefined, 2);
-}
-
 
 function recordPartialGraph(){
     let graphDict = {};
