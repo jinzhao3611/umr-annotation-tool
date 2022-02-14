@@ -2929,3 +2929,11 @@ function addPartialGraph(){
    umr[current_parent_loc.replace('v', 'n')] = umr[current_parent_loc.replace('v', 'n')] + 1;
    show_amr('show');
 }
+
+function colorAnnotatedSents(annotated_sent_ids){
+    JSON.parse(annotated_sent_ids).forEach(n => {
+        document.querySelector(`#all-sentences > table > tbody > tr:nth-child(${n}) > td`).setAttribute("style", "color: green");
+    })
+
+
+}
