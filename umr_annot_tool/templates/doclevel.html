@@ -485,7 +485,7 @@
                             {#<button><a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
                     {#        <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>#}
                     {#        <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>#}
-                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.annotate', doc_id=doc_id) }}">sent-level-annot</a>
+                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_id=doc_id) }}">sent-level-annot</a>
                         </div>
 
                         <script type="text/javascript">
