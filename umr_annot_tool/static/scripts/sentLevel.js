@@ -504,22 +504,6 @@ function changeShowStatus(action){
     }
 }
 
-/**
- * this is the title of the input of replace form
- * @param type
- */
-function selectReplaceType(type) {
-    let s;
-    if ((s = document.getElementById('replace-at')) != null) {
-        if (type === 'concept') {
-            s.title = 'type in the variable of the concept to be replaced, e.g. s';
-        } else if (type === 'string') {
-            s.title = 'type in the pair (head-variable :role) of the string or number to be replaced, e.g. n2 :value (without parentheses)';
-        } else if (type === 'role') {
-            s.title = 'type in the triple (head-variable :old-role arg) of the role to be replaced. arg can be a variable, concept, or string, e.g. s :ARG0 b (without parentheses or quotes)';
-        }
-    }
-}
 
 /**
  * this function does nothing for now, only eventlistner in sentLevelJquery use this function name to regex the parameters
@@ -560,7 +544,6 @@ function fillDeleteTemplate(at, mo_lock) {
 /** coloring umr ******************************************************/
 
 /**
- *
  * @param variable
  * @param color
  */
