@@ -2229,6 +2229,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
+            } else {
+                let frames = JSON.stringify(frame_dict[concept]);
+                concept_m = `<span title=${frames}>` + concept_m + '</span>';
             }
             s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
 
