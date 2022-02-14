@@ -2687,13 +2687,14 @@ function UMR2db() {
 
     removeDeletedFromUmr();
 
-    fetch(`/annotate/${doc_id}`, {
+    fetch(`/sentlevel/${doc_id}`, {
         method: 'POST',
         body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         setInnerHTML("error_msg", data["msg"]);
+        document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });
