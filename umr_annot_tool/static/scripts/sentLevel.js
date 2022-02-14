@@ -522,21 +522,13 @@ function selectReplaceType(type) {
 }
 
 /**
- * @param type
- * @param at
- * @param old_value
+ * this function does nothing for now, only eventlistner in sentLevelJquery use this function name to regex the parameters
+ * @param type 'concept', 'role', 'string'
+ * @param at variable
+ * @param new_value concept
  * @param mo_lock: element id of concept in amr? example: amr_elem_1
  */
-function fillReplaceTemplate(type, at, old_value, mo_lock) {
-    console.log('fillReplaceTemplate ' + type + ' ' + at + ' ' + old_value + ' <' + mo_lock + '> ');
-    var s_type, s_at, s_new;
-    if (((s_type = document.getElementById('replace-type')) != null)
-        && ((s_at = document.getElementById('replace-at')) != null)
-        && ((s_new = document.getElementById('replace-new')) != null)) {
-        s_type.value = type;
-        s_at.value = at;
-        s_new.value = old_value;
-    }
+function fillReplaceTemplate(type, at, new_value, mo_lock) {
 }
 
 /**
@@ -661,28 +653,6 @@ function submit_template_action(id, numbered_predicate = "") {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
     } else if (id === 'add-ne') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_ne_concept + ' ' + current_concept, 1);
-    } else if (id === 'replace') {
-        if (((arg1 = document.getElementById('replace-type')) != null)
-            && ((arg2 = document.getElementById('replace-at')) != null)
-            && ((arg3 = document.getElementById('replace-new')) != null)) {
-            let type = arg1.value;
-            let at = arg2.value;
-            let new_value = arg3.value;
-
-            // changing role is not allowed
-            // let at_list = at.split(/\s+/);
-            // if ((type === 'role') && (at_list) && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
-            //     at = at_list[0] + ' ' + at_list[1] + ' "';
-            //     for (let i = 2; i < at_list.length; i++) {
-            //         at += at_list[i] + ' ';
-            //     }
-            //     at = at.replace(/\s*$/, "\"");
-            // }
-            if ((type === 'string') && new_value.match(/ /)) {
-                new_value = '"' + new_value + '"';
-            }
-            exec_command('replace ' + type + ' at ' + at + ' with ' + new_value, 1);
-        }
     }
     // if ((s = document.getElementById('command')) != null) {
     //     s.focus();
@@ -2380,7 +2350,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
                 var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
                 var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
-                string_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
+                string_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
             } else if (show_delete) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';

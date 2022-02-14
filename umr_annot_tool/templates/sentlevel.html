@@ -123,49 +123,6 @@
     </div>
 
 
-    <div id="replace-template-table" style="display:none;">
-        <p>
-            <table>
-                <tbody>
-                <tr>
-                    <td>Replace</td>
-                    <td title="select type of AMR element to be replaced">&nbsp;
-                        <select id="replace-type"
-                                onchange="selectReplaceType(this[selectedIndex].text);">
-                            <option value="concept" title="replace a concept, e.g. want-01" selected="">concept</option>
-                            <option value="string" title="replace a string, e.g. &quot;John&quot; or a number, e.g. 2">string
-                            </option>
-                            <option value="role" title="replace a role, e.g. :ARG0 or :time">role</option>
-                            <option value="variable" title="replace a secondary variable, e.g. h">variable</option>
-                        </select>
-                    </td>
-                    <td>&nbsp; at <input size="10" title="type in the variable of the concept to be replaced, e.g. s"
-                                         autocapitalize="off" id="replace-at"
-                                         value=""></td>
-                    <td>&nbsp; with <input size="25" title="type in new value" autocapitalize="off" style="font-size:1.2em"
-                                           id="replace-new" value=""
-                                           onfocus="var val = this.value; this.value = ''; this.value = val;"
-                                           onkeyup="action_on_enter('show roles', event, 'replace-new');action_on_enter('show NE types', event, 'replace-new');"
-                                           onkeypress="action_on_enter('submit replace', event, 'replace-new');"> &nbsp;
-                    </td>
-                    <td>
-                        <table border="1" cellpadding="1" cellspacing="0">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <nobr>&nbsp;<a style="text-decoration:none" title="submit replace template action"
-                                                   href="javascript:submit_template_action('replace');"><font color="black">submit</font></a>&nbsp;
-                                    </nobr>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </p>
-    </div>
     <div id="load-template-table" style="display:none;">
         <p>
         <table>
@@ -877,30 +834,6 @@
         <script type="text/javascript">
             load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}', '{{ curr_sent_umr|tojson|safe }}');
             selectEvent();
-
-            //used to listen for the change in replace
-            document.getElementById("amr").addEventListener("input", e => {
-                console.log("event is fired1");
-                if(e.target.matches("span")){
-                    console.log("event is fired2");
-                    let inplaceBox = document.getElementById(e.target.id).innerHTML;
-                    console.log('inplaceBoxe: ', inplaceBox);
-                    inplaceBox = inplaceBox.replaceAll(/'/g, "\\'");
-                    console.log('inplaceBoxe: ', inplaceBox);
-                    let new_value = inplaceBox; // example: freedom-01
-                    // this way of dynamically changing onclick function seems ugly to me, maybe there is a better way
-                    let clickfunc = e.target.getAttribute("onclick"); //example: clickfunc="fillReplaceTemplate('concept','s1f','freedom','amr_elem_3')"
-                    let funname = clickfunc.substring(0, clickfunc.indexOf(",", clickfunc.indexOf(",") + 1)); // example: clickfunc="fillReplaceTemplate('concept','s1f'"
-                    document.getElementById(e.target.id).setAttribute("onclick",funname+",'"+ new_value + "','" + e.target.id + "')"); //clickfunc="fillReplaceTemplate('concept','s1f','freedom-01','amr_elem_3')"
-                    document.getElementById(e.target.id).click();
-                }
-            })
-
-            document.getElementById("amr").addEventListener("focusout", e => {
-                if(e.target.matches("span")){
-                    submit_template_action("replace");
-                }
-            })
         </script>
     <div>
 {% endblock content2 %}
