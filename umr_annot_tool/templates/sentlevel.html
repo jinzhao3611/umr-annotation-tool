@@ -166,50 +166,6 @@
             </table>
         </p>
     </div>
-    <div id="move-template-table" style="display:none;">
-        <table>
-            <tbody>
-            <tr>
-                <td width="5"></td>
-                <td>Move</td>
-                <td><input size="2" title="type in variable, e.g. b" autocapitalize="off"
-                           id="move-object" value=""></td>
-                <td>&nbsp; to new head: <input size="2" title="type in variable of new head, e.g. s" autocapitalize="off"
-                                               id="move-new-head" value=""> &nbsp;
-                </td>
-                <td>
-                    <table border="1" cellpadding="1" cellspacing="0">
-                        <tbody>
-                        <tr>
-                            <td>
-                                &nbsp;<a style="text-decoration:none"
-                                         title="display clickable list of AMR roles (popup)"
-                                         href="javascript:popupRoles();"><font color="black">role (if new):</font></a>&nbsp;
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-
-                <td><input size="12" title="type in role, e.g. :ARG0 or :time" autocapitalize="off"
-                           id="move-role" value="" onkeyup="action_on_enter('show roles', event, 'move-role');"
-                           onkeypress="action_on_enter('submit move', event, 'move-role');"></td>
-                <td>
-                    <table border="1" cellpadding="1" cellspacing="0">
-                        <tbody>
-                        <tr>
-                            <td>&nbsp;<a title="submit move template action"
-                                         href="javascript:submit_template_action('move');"><font
-                                    color="black">submit</font></a>&nbsp;
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
     <div id="load-template-table" style="display:none;">
         <p>
         <table>

@@ -615,7 +615,6 @@ function color_amr_elem(id, color, event_type) {
 
 /** entrance ******************************************************/
 function submit_template_action(id, numbered_predicate = "") {
-    // highlightSelection();
     if (numbered_predicate !== "") {
         if(numbered_predicate.indexOf(' ') >= 0 && id==='add'){
             numbered_predicate = numbered_predicate.replaceAll(" ", "-");
@@ -684,16 +683,6 @@ function submit_template_action(id, numbered_predicate = "") {
             }
             exec_command('replace ' + type + ' at ' + at + ' with ' + new_value, 1);
         }
-    } else if (id === 'move') {
-        // move will not be invoked because move is not allowed
-        if (((arg1 = document.getElementById('move-object')) != null)
-            && ((arg2 = document.getElementById('move-new-head')) != null)
-            && ((arg3 = document.getElementById('move-role')) != null)) {
-            var mv_object = arg1.value;
-            var new_head = arg2.value;
-            var role = arg3.value;
-            exec_command('move ' + mv_object + ' to ' + new_head + ' ' + role, 1);
-        }
     }
     // if ((s = document.getElementById('command')) != null) {
     //     s.focus();
@@ -736,7 +725,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             }
 
             /** below are shortcut command **********************************************************************************************************************/
-            if (value.match(/^(replace|delete|move|save|load|clear)$/)) {
+            if (value.match(/^(replace|delete|save|load|clear)$/)) {
                 changeShowStatus(value);
                 top = 0;
             } else if (value.match(/^(delete all|delete amr|del all|del amr)$/i)) {
@@ -876,13 +865,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     } else if (cc.length >= 2) {
                         // this is when cc only has two element (the first probably is top)
                         for (let i = 1; i < cc.length; i++) {
-                            if ((cc[0] === 'top') && getLocs(cc[i])) {
-                                //when the arg already exist in amr tree, take out the argument as a new top (a new tree)
-                                move_var_elem(cc[i], 'top', '');
-                            } else {
-                                // when the arg is not already in tree yet
-                                newAMR(cc[i].toLowerCase());
-                            }
+                            newAMR(cc[i].toLowerCase());
                         }
                         show_amr_args = 'show';
                     }
@@ -991,21 +974,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     exec_command(cc.join(" "), 0);
                     show_amr_args = 'show';
                     /** move and add **********************************************************************************************************************/
-                } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '-')) {
-                    
-                    move_var_elem(cc[2], cc[0], cc[1]);
-                    show_amr_args = 'show';
                 } else if((cc.length === 3) && cc[0].match(/^s\d*/) && cc[1].match(/^:temporal|:modal|:coref/) && cc[2].match(/^\(s\d*[a-z]\d*\s:.+\s.+\)/)){
                     // doc_level
                     console.log("cc here: " + cc);
                     addTriple(cc[0], cc[1], cc[2], '');
-                } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
-                    && (cc[2].match(/\-$/))
-                    && (cc2v = cc[2].replace(/^(.*)\-$/, "$1"))
-                    && getLocs(cc2v)) {
-                    
-                    move_var_elem(cc2v, cc[0], cc[1]);
-                    show_amr_args = 'show';
                 } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
                     
                     addTriple(cc[0], cc[1], cc[2]);
@@ -1087,25 +1059,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                         show_amr_args = 'show delete';
                     } else {
                         add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
-                    }
-                } else if ((cc[0] === 'move') || (cc[0] === 'mv')) {
-                    
-                    if (cc.length >= 4) {
-                        if (cc[2] === 'to') {
-                            if (cc.length === 4) {
-                                move_var_elem(cc[1], cc[3], '');
-                                show_amr_args = 'show';
-                            } else if (cc.length === 5) {
-                                move_var_elem(cc[1], cc[3], cc[4]);
-                                show_amr_args = 'show';
-                            } else {
-                                console.log('Ill-formed move command. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
-                            }
-                        } else {
-                            console.log('Ill-formed move command. Second argument should be <i>to</i>. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
-                        }
-                    } else {
-                        console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
                     }
                 } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
                     
@@ -2031,84 +1984,6 @@ function deleteAMR() {
     exec_command('record delete amr', 1);
 }
 
-// not allowed
-function move_var_elem(variable, new_head_var, role) {
-    console.log('move variable: ' + variable + ' to new head: ' + new_head_var + ' with new role (if not empty): ' + role);
-    var loc, locs, loc_list, head_var_loc, head_var_locs, head_var_loc_list;
-    if (locs = getLocs(variable)) {
-        locs += '';
-        if ((head_var_locs = getLocs(new_head_var))
-            || ((new_head_var == 'top') && (head_var_locs = 'top'))) {
-            head_var_locs += '';
-            if ((role == '') || role.match(/^:[a-z]/i)) {
-                if ((loc_list = argSplit(locs))
-                    && (loc_list.length >= 1)
-                    && (loc = loc_list[0])) {
-                    if (role || (new_head_var == 'top') || (role = umr[loc + '.r'])) {
-                        if ((head_var_loc_list = argSplit(head_var_locs))
-                            && (head_var_loc_list.length >= 1)
-                            && (head_var_loc = head_var_loc_list[0])) {
-                            var n_subs, new_loc;
-                            if (head_var_loc == 'top') {
-                                n_subs = umr['n'];
-                                umr['n'] = ++n_subs;
-                                new_loc = n_subs;
-                            } else {
-                                n_subs = umr[head_var_loc + '.n'];
-                                umr[head_var_loc + '.n'] = ++n_subs;
-                                new_loc = head_var_loc + '.' + n_subs;
-                            }
-                            // add_log('move core ' + loc + ' ' + head_var_loc + ' ' + new_loc);
-                            for (var key in umr) {
-                                var re1 = '^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$';
-                                var re2 = new_loc + '$1';
-                                var new_key = key.replace(new RegExp('^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$', ""), new_loc + '$1');
-                                // add_log('   key: ' + key + ' re1: ' + re1 + ' re2: ' + re2 + ' new_key: ' + new_key);
-                                if (new_key != key) {
-                                    umr[new_key] = umr[key];
-                                    // add_log('move amr update: ' + key + '&rarr; ' + new_key);
-                                }
-                            }
-                            umr[new_loc + '.r'] = role;
-                            umr[loc + '.d'] = 1;
-                            state_has_changed_p = 1;
-                            for (var key in variables) {
-                                var old_value = getLocs(key);
-                                var old_value2 = ' ' + old_value + ' ';
-                                var new_value = strip(old_value2.replace(new RegExp(' ' + regexGuard(loc) + '((\\.\\d+)*)' + ' ', ""), ' ' + new_loc + '$1 '));
-                                if (old_value != new_value) {
-                                    variables[key] = new_value;
-                                    // add_log('move variable update for ' + key + ': ' + old_value + ' &rarr; ' + new_value);
-                                }
-                            }
-                            for (var key in concepts) {
-                                var old_value = concepts[key];
-                                var old_value2 = ' ' + old_value + ' ';
-                                var new_value = strip(old_value2.replace(new RegExp(' ' + regexGuard(loc) + '((\\.\\d+)*)' + ' ', ""), ' ' + new_loc + '$1 '));
-                                if (old_value != new_value) {
-                                    concepts[key] = new_value;
-                                    // add_log('move concept update for ' + key + ': ' + old_value + ' &rarr; ' + new_value);
-                                }
-                            }
-                        } else {
-                            add_error('Could not find AMR with variable ' + new_head_var);
-                        }
-                    } else {
-                        add_error('Ill-formed move command. To move the tree of variable ' + variable + ', a fourth argument is neccessary to provide a proper role, starting with a colon. Usage: move &lt;var&gt; to &lt;new-head-var&gt; &lt;role&gt;');
-                    }
-                } else {
-                    add_error('Could not find AMR with variable ' + variable);
-                }
-            } else {
-                add_error('Ill-formed move command. Fourth argument should be a role starting with a colon. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
-            }
-        } else {
-            add_error('Ill-formed move command. Third argument should be a defined variable. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
-        }
-    } else {
-        add_error('Ill-formed move command. First argument should be a defined variable. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
-    }
-}
 
 /**
  * this is used to directly change the variable to another one
