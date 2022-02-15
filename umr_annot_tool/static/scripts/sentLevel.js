@@ -1005,12 +1005,11 @@ function newVar(concept) {
 }
 
 /**
- * populate variables, concepts, variable2concept, and amr
+ * populate variables, concepts, variable2concept, and umr
  * @param concept "buy"
  * @returns {string} return a new amr head, "b"
  */
-function newAMR(concept) {
-    
+function newUMR(concept) {
     let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
@@ -1201,7 +1200,7 @@ function addOr(value) {
         console.log('Ill-formed concept following *OR*: ' + ill_formed_concepts[0]);
     } else {
         if (head_var === 'top') {
-            or_var = newAMR(key_or);
+            or_var = newUMR(key_or);
         } else {
             or_var = addTriple(head_var, role, key_or, 'concept');
         }
