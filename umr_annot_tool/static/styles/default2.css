@@ -88,11 +88,3 @@ body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > 
     overflow-y: scroll;
     max-height: 250px;
 }
-
-#sentence table{
-    display: block;
-}
-
-#sentence table tbody tr td{
-    display: inline-block;
-}
