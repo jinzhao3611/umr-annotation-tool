@@ -653,14 +653,13 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         // cc == ["b", ":arg1", "car"]
         let ne_concept;
         let cc2v;
-        if ((cc[0] === 'top') || (cc[0] === 'bottom') || (cc[0] === 'new')) {
+        if (cc[0] === 'top'){
             if ((cc.length >= 3)
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
                 && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
-                // top is named entity: top person Jin Zhao
                 let ne_var = newUMR(trimConcept(ne_concept));
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
                 for (let i = 2; i < cc.length; i++) {
@@ -675,14 +674,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 }
                 show_amr_args = 'show';
             }
-        } else if((cc.length === 3) && cc[0].match(/^s\d*/) && cc[1].match(/^:temporal|:modal|:coref/) && cc[2].match(/^\(s\d*[a-z]\d*\s:.+\s.+\)/)){
-            // doc_level
-            console.log("cc here: " + cc);
-            addTriple(cc[0], cc[1], cc[2], '');
-        } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
-
-            addTriple(cc[0], cc[1], cc[2]);
-            show_amr_args = 'show';
         } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
             && (cc[2].match(/\+$/))
             && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
