@@ -29,7 +29,7 @@ let default_langs = ['default', 'sanapana', "arapahoe", "navajo", "secoya", "kuk
 let variablesInUse = {}; //variables that are already in use in the current umr graph
 
 let last_state_id = 0; //for undo and redo
-let state_has_changed_p = 0; // one state is one action got executed
+let state_has_changed_p = 0; // related to undo list, it becomes 1 when four core dictionaries are populated
 
 let show_umr_status = 'show'; //'show'
 let show_amr_mo_lock = ''; // '' affects coloring
@@ -627,430 +627,181 @@ function submit_template_action(id, numbered_predicate = "") {
     } else if (id === 'add-ne') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_ne_concept + ' ' + current_concept, 1);
     }
-    // if ((s = document.getElementById('command')) != null) {
-    //     s.focus();
-    // }
+
 }
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
-    let last_command, command_input;
     let show_amr_args = '';
     let record_value = '';
 
-    if ((command_input = document.getElementById('command')) != null) {
-        //resizing the command input box height
-        let clen = command_input.value.length;
-        if (clen > 50) {  // && show_amr_obj['option-resize-command'] // if the input is longer than a line, resize the height
-            let n_lines = Math.floor(clen / 43) + 1;
-            command_input.style.height = ((n_lines * 1.2) + 0.2) + 'em';
+    if (value) {
+        value = strip(value);
+        value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
+        let cc;
+        if(value.includes("(")){
+            //doc-level
+            let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
+            //example match: s1 :temporal (s1t2 :before DCT)
+            //s1 :coref (s1h :same-entity s1p)
+            //s1 :modal (s2c4 :NEG AUTH)
+            let match = pattern.exec(value);
+            cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
+        }else{
+            cc = argSplit(value);
         }
-        // if exec_command is called from command box instead of other place, value is empty at this point
-        if (!value) {
-            if (command_input.value.match(/\n/)) {//if enter key is pressed
-                value = command_input.value;
-            }
-        }
 
-        if (value) {
-            value = strip(value);
-            value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
-            let cc;
-            if(value.includes("(")){
-                //doc-level
-                let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
-                //example match: s1 :temporal (s1t2 :before DCT)
-                //s1 :coref (s1h :same-entity s1p)
-                //s1 :modal (s2c4 :NEG AUTH)
-                let match = pattern.exec(value);
-                cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
-            }else{
-                cc = argSplit(value);
+        // cc == ["b", ":arg1", "car"]
+        let ne_concept;
+        let cc2v;
+        if ((cc[0] === 'top') || (cc[0] === 'bottom') || (cc[0] === 'new')) {
+            if ((cc.length >= 3)
+                && (cc[0] === 'top')
+                && (ne_concept = cc[1])
+                && validEntryConcept(ne_concept)
+                && (!getLocs(ne_concept))
+                && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                // top is named entity: top person Jin Zhao
+                let ne_var = newUMR(trimConcept(ne_concept));
+                let name_var = addTriple(ne_var, ':name', 'name', 'concept');
+                for (let i = 2; i < cc.length; i++) {
+                    let sub_role = ':op' + (i - 1);
+                    addTriple(name_var, sub_role, cc[i], 'string');
+                }
+                show_amr_args = 'show';
+            } else if (cc.length >= 2) {
+                // this is when cc only has two element (the first probably is top)
+                for (let i = 1; i < cc.length; i++) {
+                    newUMR(cc[i].toLowerCase());
+                }
+                show_amr_args = 'show';
             }
+        } else if((cc.length === 3) && cc[0].match(/^s\d*/) && cc[1].match(/^:temporal|:modal|:coref/) && cc[2].match(/^\(s\d*[a-z]\d*\s:.+\s.+\)/)){
+            // doc_level
+            console.log("cc here: " + cc);
+            addTriple(cc[0], cc[1], cc[2], '');
+        } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
 
-            /** below are shortcut command **********************************************************************************************************************/
-            if (value.match(/^(replace|delete|save|load|clear)$/)) {
-                changeShowStatus(value);
-                top = 0;
-            } else if (value.match(/^(delete all|delete amr|del all|del amr)$/i)) {
-                deleteAMR();
-            } else if (value.match(/^(r|repl|ch|change)$/i)) {
-                changeShowStatus('replace');
-                top = 0;
-            } else if (value.match(/^(d|de|del|rm|remove)$/i)) {
-                changeShowStatus('delete');
-                top = 0;
-            } else if (value.match(/^(m|mv)$/i)) {
-                top = 0;
-            } else if (value.match(/^(u|undo)$/i)) {
-                undo(-1);
-            } else if (value.match(/^(redo)$/i)) {
-                undo(1);
-            } else if (value.match(/^(c|cl)$/i)) {
-                top = 0;
-            } else if (value.match(/^change\s+variable\s+[a-z]\d*\s+\S+$/i)) { // example match: change variable t t1
-                //cc[2] is original variable, cc[3] is desired variable
-                change_var_name(cc[2], cc[3], top);
+            addTriple(cc[0], cc[1], cc[2]);
+            show_amr_args = 'show';
+        } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
+            && (cc[2].match(/\+$/))
+            && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
+            && getLocs(cc2v)) {
+
+                addTriple(cc[0], cc[1], cc2v);
                 show_amr_args = 'show';
-            } else if (value.match(/^cv\s+[a-z]\d*\s+\S+\s*$/i)) { // example match: cv t t1
-                //cc[1] is original variable, cc[2] is desired variable
-                change_var_name(cc[1], cc[2], top);
+            } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
+
+                // this is the condition we go in 1
+                addTriple(cc[0], cc[1], cc[2], '');
                 show_amr_args = 'show';
-            } else if (value.match(/^reop\s+[a-z]\d*\s*$/i)) { //example match: reop t1
-                renorm_ops(cc[1]); //reorder the op children of cc[1], could be s1n/name
+            } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
+
+                addOr(value);
                 show_amr_args = 'show';
-            } else if (value.match(/^r[rv]\b\s*(\S.*\S|\S|)\s+\S+\s*$/)) {  // replace role (or secondary variable) shortcut
-                var user_descr = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1"); // only keep the first capturing group
-                var new_value = value.replace(/^r[rv]\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2"); // only keep the second capturing group
-                var target_name = '';
-                if (value.match(/^rr/)) {
-                    target_name = 'role';
-                } else if (value.match(/^rv/)) {
-                    target_name = 'variable';
-                }
-                var loc_list = user_descr2locs(user_descr, target_name);
-                if ((target_name == 'role') && !new_value.match(/^:[a-z]/i)) {
-                    console.log('Ill-formed new role <font color="red">' + new_value + '</font>');
-                } else if ((target_name == 'variable') && !getLocs(new_value)) {
-                    console.log('Ill-formed new variable <font color="red">' + new_value + '</font>');
-                } else if ((loc_list.length == 1) && !umr[loc_list[0] + '.r']) {
-                    console.log('No ' + target_name + ' defined for <font color="red">' + user_descr + '</font>');
-                } else if (loc_list.length == 1) {
-                    var loc = loc_list[0];
-                    var parent_variable = getParentVariable(loc);
-                    var role = umr[loc + '.r'];
-                    var variable = umr[loc + '.v'];
-                    var target = role || variable;
-                    var arg = umr[loc + '.v'] || umr[loc + '.command_input'] || umr[loc + '.s'];
-                    add_log('expanding "' + user_descr + '/' + loc + '" to: replace ' + target_name + ' at ' + parent_variable + ' ' + target + ' ' + arg + ' with ' + new_value);
-                    exec_command(('replace ' + target_name + ' at ' + parent_variable + ' ' + target + ' ' + arg + ' with ' + new_value), 0);
-                    show_amr_args = 'show';
-                } else if (loc_list.length == 0) {
-                    add_error('Could not find any ' + target_name + ' for locator <font color="red">' + user_descr + '</font>');
-                } else {
-                    add_error('Ambiguous ' + target_name + ' locator <font color="red">' + user_descr + '</font>');
-                }
-            } else if (value.match(/^rs\b\s*(\S.*\S|\S|)\s*$/)) { // replace string shortcut
-                var user_descr = value.replace(/^rs\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1");
-                var new_value = value.replace(/^rs\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2");
-                var loc_list = user_descr2locs(user_descr, 'string');
-                if ((loc_list.length == 1) && !(umr[loc_list[0] + '.s'] && umr[loc_list[0] + '.r'])) {
-                    add_error('No string defined for <font color="red">' + user_descr + '</font>');
-                } else if (loc_list.length == 1) {
-                    var loc = loc_list[0];
-                    var parent_variable = getParentVariable(loc);
-                    var role = umr[loc + '.r'];
-                    // add_log('expanding "' + user_descr + '/' + loc + '" to: replace string at ' + parent_variable + ' ' + role + ' with ' + new_value);
-                    exec_command(('replace string at ' + parent_variable + ' ' + role + ' with ' + new_value), 0);
-                    show_amr_args = 'show';
-                } else if (loc_list.length == 0) {
-                    console.log('Could not find any string for locator: ' + user_descr);
-                } else {
-                    console.log('Ambiguous string locator: ' + user_descr );
-                }
-            } else if (value.match(/^rc\b\s*(\S.*\S|\S|)\s+\S+\s*$/)) { // replace concept shortcut
-                var user_descr = value.replace(/^rc\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$1");
-                var new_value = value.replace(/^rc\b\s*(\S.*\S|\S|)\s+(\S+)\s*$/, "$2");
-                var loc_list = user_descr2locs(user_descr, 'concept');
-                if (!validEntryConcept(new_value)) {
-                    console.log('Ill-formed new concept: ' + new_value);
-                } else if ((loc_list.length == 1) && !umr[loc_list[0] + '.v']) {
-                    console.log('No concept defined for: ' + user_descr);
-                } else if (loc_list.length == 1) {
-                    var loc = loc_list[0];
-                    var variable = umr[loc + '.v'];
-                    // add_log('expanding "' + user_descr + '/' + loc + '" to: replace concept at ' + variable + ' with ' + new_value);
-                    exec_command(('replace concept at ' + variable + ' with ' + new_value), 0);
-                    state_has_changed_p = 1;
-                    show_amr_args = 'show';
-                } else if (loc_list.length == 0) {
-                    add_error('Could not find any concept for locator <font color="red">' + user_descr + '</font>');
-                } else {
-                    add_error('Ambiguous concept locator <font color="red">' + user_descr + '</font>');
-                }
-            } else if (value.match(/^del\s+\S/) || value.match(/^delete\s+\S+(\s+\S+)?\s*$/)) { // delete shortcut
-                // add_log('delete shortcut: ' + value + '.');
-                var user_descr = value.replace(/^(?:del|delete)\s+(\S.*\S|\S|)\s*$/, "$1");
-                var loc_list = user_descr2locs(user_descr, 'delete');
-                if (loc_list.length == 1) {
-                    var loc = loc_list[0];
-                    var parent_variable = getParentVariable(loc);
-                    var role = umr[loc + '.r'];
-                    var variable = umr[loc + '.v'];
-                    var arg = umr[loc + '.v'] || umr[loc + '.command_input'] || umr[loc + '.s'];
-                    if (parent_variable) {
-                        // add_log('expanding "' + user_descr + '/' + loc + '" to: delete ' + parent_variable + ' ' + role + ' ' + arg);
-                        exec_command(('delete ' + parent_variable + ' ' + role + ' ' + arg), 0);
-                    } else {
-                        // add_log('expanding "' + user_descr + '/' + loc + '" to: delete top level ' + variable);
-                        exec_command(('delete top level ' + variable), 0);
-                    }
-                    show_amr_args = 'show';
-                } else if (loc_list.length == 0) {
-                    add_error('Could not find anything to delete for locator <font color="red">' + user_descr + '</font>');
-                } else {
-                    add_error('Ambiguous deletion locator <font color="red">' + user_descr + '</font>');
-                }
-            } else if (cc.length >= 1) {
-                /** when cc is longer than one (unlike above)**********************************************************************************************************************/
-                // cc == ["b", ":arg1", "car"]
-                let ne_concept;
-                let cc2v;
-                if ((cc[0] === 'top') || (cc[0] === 'bottom') || (cc[0] === 'new')) {
-                    if ((cc.length >= 3) && (cc[0] === 'top') && (ne_concept = cc[1]) && validEntryConcept(ne_concept) && (!getLocs(ne_concept)) && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
-                        // top is named entity: top person Jin Zhao
-                        let ne_var = newAMR(trimConcept(ne_concept));
-                        let name_var = addTriple(ne_var, ':name', 'name', 'concept');
-                        for (let i = 2; i < cc.length; i++) {
-                            var sub_role = ':op' + (i - 1);
-                            addTriple(name_var, sub_role, cc[i], 'string');
-                        }
+            } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
+                addNE(value);
+                show_amr_args = 'show';
+            } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
+                addNE(value);
+                show_amr_args = 'show';
+            } else if (cc[0] === 'replace') {
+
+                if (cc.length == 1) {
+
+                    console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
+                } else if (cc[1] == 'concept') {
+                    if (cc.length == 6) {
+
+                        replace_concept(cc[2], cc[3], cc[4], cc[5]);
                         show_amr_args = 'show';
-                    } else if (cc.length >= 2) {
-                        // this is when cc only has two element (the first probably is top)
-                        for (let i = 1; i < cc.length; i++) {
-                            newAMR(cc[i].toLowerCase());
-                        }
+                    } else {
+
+                        console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
+                    }
+                } else if (cc[1] == 'string') {
+
+                    if (cc.length == 7) {
+
+                        replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
                         show_amr_args = 'show';
-                    }
-                    /** automatic reification **********************************************************************************************************************/
-                } else if ((cc.length >= 3) && (cc[1] === ':domain-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    cc.splice(1, 1, ':mod');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':subset') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG2-of', 'include-91');
-                    cc.splice(0, 2, new_var, ':ARG1');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && ((cc[1] === ':subset-of') || (cc[1] === ':superset')) && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'include-91');
-                    cc.splice(0, 2, new_var, ':ARG2');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':cause') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'cause-01');
-                    cc.splice(0, 2, new_var, ':ARG0');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':cause-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG0-of', 'cause-01');
-                    cc.splice(0, 2, new_var, ':ARG1');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':cite') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'cite-01');
-                    cc.splice(0, 2, new_var, ':ARG2');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':cost') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'cost-01');
-                    cc.splice(0, 2, new_var, ':ARG2');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':cost-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG2-of', 'cost-01');
-                    cc.splice(0, 2, new_var, ':ARG1');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && ((cc[1] === ':except') || (cc[1] === ':prep-except')) && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG2-of', 'except-01');
-                    cc.splice(0, 2, new_var, ':ARG1');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':instead-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'instead-of-91');
-                    cc.splice(0, 2, new_var, ':ARG2');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':meaning') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG0-of', 'mean-01');
-                    cc.splice(0, 2, new_var, ':ARG1');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':meaning-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'mean-01');
-                    cc.splice(0, 2, new_var, ':ARG0');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':role') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let role_candidate = cc[2];
-                    let role_frame;
-                    if (is_have_rel_role_91_role[role_candidate]) {
-                        role_frame = 'have-rel-role-91';
                     } else {
-                        role_frame = 'have-org-role-91';
+
+                        console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
                     }
-                    let new_var = addTriple(cc[0], ':ARG0-of', role_frame);
-                    cc.splice(0, 2, new_var, ':ARG2');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':role-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let role_candidate = cc[2]; // this line is added to original code
-                    let role_frame;
-                    if (is_have_rel_role_91_role[role_candidate]) {
-                        role_frame = 'have-rel-role-91';
+                } else if (cc[1] == 'role') {
+
+                    if (cc.length == 8) {
+                        replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
+                        show_amr_args = 'show';
                     } else {
-                        role_frame = 'have-org-role-91';
+                        console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
                     }
-                    let new_var = addTriple(cc[0], ':ARG2-of', role_frame);
-                    cc.splice(0, 2, new_var, ':ARG0');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':employed-by') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG0-of', 'have-org-role-91');
-                    cc.splice(0, 2, new_var, ':ARG1');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] === ':employed-by-of') && getLocs(cc[0]) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ARG1-of', 'have-org-role-91');
-                    cc.splice(0, 2, new_var, ':ARG0');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length === 3) && (cc[1] === ':ord') && getLocs(cc[0]) && cc[2].match(/^-?[1-9]\d*$/i) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':ord', 'ordinal-entity');
-                    cc.splice(0, 2, new_var, ':value');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                } else if ((cc.length === 3) && (cc[1] === ':xref') && getLocs(cc[0]) && cc[2].match(/^[A-Z]+:\S+/i) && show_amr_obj['option-auto-reification']) {
-                    let new_var = addTriple(cc[0], ':xref', 'xref');
-                    cc.splice(0, 2, new_var, ':value');
-                    exec_command(cc.join(" "), 0);
-                    show_amr_args = 'show';
-                    /** move and add **********************************************************************************************************************/
-                } else if((cc.length === 3) && cc[0].match(/^s\d*/) && cc[1].match(/^:temporal|:modal|:coref/) && cc[2].match(/^\(s\d*[a-z]\d*\s:.+\s.+\)/)){
-                    // doc_level
-                    console.log("cc here: " + cc);
-                    addTriple(cc[0], cc[1], cc[2], '');
-                } else if ((cc.length === 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && getLocs(cc[2]) && (cc[3] == '+')) {
-                    
-                    addTriple(cc[0], cc[1], cc[2]);
-                    show_amr_args = 'show';
-                } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
-                    && (cc[2].match(/\+$/))
-                    && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
-                    && getLocs(cc2v)) {
-                    
-                    addTriple(cc[0], cc[1], cc2v);
-                    show_amr_args = 'show';
-                } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
-                    
-                    // this is the condition we go in 1
-                    addTriple(cc[0], cc[1], cc[2], '');
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
-                    
-                    addOr(value);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
-                    addNE(value);
-                    show_amr_args = 'show';
-                } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
-                    addNE(value);
-                    show_amr_args = 'show';
-                } else if (cc[0] === 'replace') {
-                    
-                    if (cc.length == 1) {
-                        
-                        console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
-                    } else if (cc[1] == 'concept') {
-                        if (cc.length == 6) {
-                            
-                            replace_concept(cc[2], cc[3], cc[4], cc[5]);
-                            show_amr_args = 'show';
-                        } else {
-                            
-                            console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
-                        }
-                    } else if (cc[1] == 'string') {
-                        
-                        if (cc.length == 7) {
-                            
-                            replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
-                            show_amr_args = 'show';
-                        } else {
-                            
-                            console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
-                        }
-                    } else if (cc[1] == 'role') {
-                        
-                        if (cc.length == 8) {
-                            replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
-                            show_amr_args = 'show';
-                        } else {
-                            console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
-                        }
-                    } else if (cc[1] == 'variable') {
-                        
-                        if (cc.length == 8) {
-                            replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
-                            show_amr_args = 'show';
-                        } else {
-                            console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
-                        }
+                } else if (cc[1] == 'variable') {
+
+                    if (cc.length == 8) {
+                        replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
+                        show_amr_args = 'show';
                     } else {
-                        console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
+                        console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
                     }
-                } else if (cc[0] === 'delete') {
-                    
-                    if (cc.length === 4) {
-                        if ((cc[1] === 'top') && (cc[2] === 'level')) {
-                            delete_top_level(cc[3]);
-                        } else {
-                            delete_based_on_triple(cc[1], cc[2], cc[3]);
-                        }
-                        changeShowStatus('delete');
-                        show_amr_args = 'show delete';
-                    } else {
-                        add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
-                    }
-                } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
-                    
-                    if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
-                        console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
-                    } else if (cc.length == 2) {
-                        console.log('In <i>add</i> command, there must be at least 3 arguments.');
-                    } else {
-                        console.log('Unrecognized <i>add</i> command.');
-                    }
-                } else if (value.match(/^record /i)) { //sample match: 'record reop s1n'
-                    
-                    record_value = value.replace(/^record\s*/, ""); // 'record reop s1n' -> 'reop s1n'
                 } else {
-                    
-                    if (!value.match(/^(h|help)\b/i)) {
-                        console.log('Unrecognized command: <font color="red">' + value + '</font>');
-                    }
-                    top = 0;
+                    console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
                 }
+            } else if (cc[0] === 'delete') {
+
+                if (cc.length === 4) {
+                    if ((cc[1] === 'top') && (cc[2] === 'level')) {
+                        delete_top_level(cc[3]);
+                    } else {
+                        delete_based_on_triple(cc[1], cc[2], cc[3]);
+                    }
+                    changeShowStatus('delete');
+                    show_amr_args = 'show delete';
+                } else {
+                    add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
+                }
+            } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
+
+                if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
+                    console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
+                } else if (cc.length == 2) {
+                    console.log('In <i>add</i> command, there must be at least 3 arguments.');
+                } else {
+                    console.log('Unrecognized <i>add</i> command.');
+                }
+            } else if (value.match(/^record /i)) { //sample match: 'record reop s1n'
+
+                record_value = value.replace(/^record\s*/, ""); // 'record reop s1n' -> 'reop s1n'
+            } else {
+
+                if (!value.match(/^(h|help)\b/i)) {
+                    console.log('Unrecognized command: <font color="red">' + value + '</font>');
+                }
+                top = 0;
             }
 
-            if (top) {// the undo and redo up right corner
-                
-                record_value = record_value || value; //"record reop s1n"
-                // value: "b :arg1 car"
-                // last_command.innerHTML = record_value;
-                show_amr(show_amr_args); // show_amr_args:'show'
-                if (state_has_changed_p) {
-                    
-                    let old_state = undo_list[undo_index];
-                    old_state['action'] = record_value;
-                    undo_index++;
-                    undo_list.length = undo_index;
-                    undo_list[undo_index] = cloneCurrentState();
-                    showEditHistory();
-                    let s;
-                    if ((s = document.getElementById('undo-button')) != null) {
-                        s.title = 'undo ' + record_value;
-                    }
-                    if ((s = document.getElementById('redo-button')) != null) {
-                        s.title = 'currently nothing to redo';
-                    }
-                    state_has_changed_p = 0;
+        if (top) {
+            record_value = record_value || value; //"record reop s1n"
+            // value: "b :arg1 car"
+            // last_command.innerHTML = record_value;
+            show_amr(show_amr_args); // show_amr_args:'show'
+            if (state_has_changed_p) {
+                let old_state = undo_list[undo_index];
+                old_state['action'] = record_value;
+                undo_index++;
+                undo_list.length = undo_index;
+                undo_list[undo_index] = cloneCurrentState();
+                showEditHistory();
+                let s;
+                if ((s = document.getElementById('undo-button')) != null) {
+                    s.title = 'undo ' + record_value;
                 }
+                if ((s = document.getElementById('redo-button')) != null) {
+                    s.title = 'currently nothing to redo';
+                }
+                state_has_changed_p = 0;
             }
-            command_input.value = '';
-            // if (show_amr_obj['option-resize-command'])
-            command_input.style.height = '1.4em';
         }
     }
 }
@@ -1226,7 +977,6 @@ function recordConcept(c, loc) {
  */
 function newVar(concept) {
     let v;
-    concept = concept.replace(/^[:*!]([a-z])/i, "$1"); //example: *s -> s
     let initial = concept.substring(0, 1).toLowerCase();
     if (!initial.match(/[a-z]/)) {
         initial = 'x';
@@ -1234,7 +984,7 @@ function newVar(concept) {
 
     // add the sentence number s1 to initial t -> s1t
     let sentenceId = document.getElementById('sentence_id').value;
-    if(table_id===1){
+    if(table_id===1){ // this is deal with the two sentence display in under-resource languages
         initial = "s"+ sentenceId + initial;
     }else{
         initial = "s"+ (parseInt(sentenceId)+1) + initial;
@@ -1255,83 +1005,6 @@ function newVar(concept) {
 }
 
 /**
- * @param s: rs Edmond with , rc taste with buy, rv t, rr , del t, delete performance
- * @param type could be "string", "variable", "concept", or "delete"
- * @returns {Array} 1, 1.1, 1.1.1, 1.2, 1.2.1, 1.3, 1.4, 1.4.2, 1.4.2.1, 1.5
- */
-function user_descr2locs(s, type) {
-    s = s.replace(/\s+with$/, ""); //example match:"  with"
-    let cc = argSplit(s);
-    let var_locs;
-    let result_locs = [];
-    let sloppy_locs = [];
-    let error_p = 0;
-    if ((cc.length === 1) && (var_locs = getLocs(cc[0]))) {
-        let loc_list = argSplit(var_locs);
-        result_locs.push(loc_list[0]);
-    } else {
-        let parent_variable = '';
-        let role = '';
-        let variable = '';
-        let string_or_concept = '';
-        for (let i = 0; i < cc.length; i++) {
-            if (getLocs(cc[i]) && (parent_variable === '') && (role === '') && (variable === '') && (string_or_concept === '')) {
-                parent_variable = cc[i];
-            } else if (cc[i].match(/^:[a-z]/i) && (role === '') && (variable === '') && (string_or_concept === '')) {
-                role = cc[i];
-            } else if ((role || parent_variable) && (variable === '') && (string_or_concept === '') && getLocs(cc[i])) {
-                variable = cc[i];
-            } else if (string_or_concept === '') {
-                string_or_concept = cc[i];
-                string_or_concept = string_or_concept.replace(/^!/, "");
-                string_or_concept = string_or_concept.replace(/^"(.*)"$/, "$1");
-            } else {
-                error_p = 1;
-            }
-        }
-        if (parent_variable && !(role || variable || string_or_concept)) {
-            variable = parent_variable;
-            parent_variable = '';
-        }
-        console.log('user_descr2locs parent_variable: ' + parent_variable + ' role: ' + role + ' variable: ' + variable + ' string_or_concept: ' + string_or_concept);
-        for (let key in umr) {
-            if (key.match(/\.v$/)) {
-                let loc = key.replace(/\.v$/, "") + '';
-                let loc_concept = umr[loc + '.c'] || '';
-                let loc_role = umr[loc + '.r'] || '';
-                let loc_string = umr[loc + '.s'] || '';
-                let loc_variable = umr[loc + '.v'] || '';
-                let loc_parent_variable = getParentVariable(loc + '');
-                console.log('user_descr2locs - Point D loc: ' + loc + ' loc_concept: ' + loc_concept + ' string_or_concept: ' + string_or_concept);
-                if (deleted_p(loc)
-                    || ((type === 'role') && !loc_role)           // no role to be replaced (top level)
-                    || ((type === 'string') && !loc_string)         // no string to be replaced
-                    || ((type === 'concept') && !loc_concept)        // no concept to be replaced
-                    || ((type === 'variable') && !loc_variable)) {    // no variable to be replaced
-                    // no match -> do nothing
-                } else if (((parent_variable === '') || (parent_variable === loc_parent_variable))
-                    && ((role === '') || (role.toLowerCase() === loc_role.toLowerCase()))
-                    && ((variable === '') || (variable === loc_variable))
-                    && ((string_or_concept === '') || (string_or_concept === loc_string) || (string_or_concept === loc_concept))) {
-                    result_locs.push(loc);
-                } else if (((parent_variable === '') || (parent_variable === loc_parent_variable))
-                    && ((role === '') || sloppy_match(role, loc_role))
-                    && ((variable === '') || (variable === loc_variable))
-                    && ((string_or_concept === '') || sloppy_match(string_or_concept, loc_string) || sloppy_match(string_or_concept, loc_concept))) {
-                    sloppy_locs.push(loc);
-                }
-            }
-        }
-    }
-    console.log('user_descr2locs(' + s + '): ' + result_locs.join(", "));
-    if (result_locs.length === 0) {
-        return sloppy_locs;
-    } else {
-        return result_locs;
-    }
-}
-
-/**
  * populate variables, concepts, variable2concept, and amr
  * @param concept "buy"
  * @returns {string} return a new amr head, "b"
@@ -1345,8 +1018,6 @@ function newAMR(concept) {
     umr[n + '.v'] = v;
     umr[n + '.n'] = 0;
     umr[n + '.s'] = '';
-    console.log("begOffset1: ", begOffset);
-    console.log("endOffset1: ", endOffset);
     umr[n + '.a'] = begOffset + "-" + endOffset;
     begOffset = -1;
     endOffset = -1;
@@ -1354,7 +1025,6 @@ function newAMR(concept) {
     recordConcept(concept, n);
     variable2concept[v] = concept;
     state_has_changed_p = 1;
-    console.log('new AMR tree: '+ 'number' + n +' with head var: ' + v);
     return v;
 }
 
@@ -2943,4 +2613,12 @@ function changeSetting(){
     show_amr_obj['option-1-line-NEs'] = !show_amr_obj['option-1-line-NEs'];
     // show_amr_obj['option-string-args-with-head'] = !show_amr_obj['option-string-args-with-head'];
     show_amr("show");
+}
+
+/**
+ * this is a temporary function, the purpose is to test execute command function
+ */
+function submit_command(){
+    let value = document.getElementById('command').value;
+    exec_command(value, 1);
 }
