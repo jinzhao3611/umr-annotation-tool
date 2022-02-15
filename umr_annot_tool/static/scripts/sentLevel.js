@@ -579,14 +579,13 @@ function color_amr_elem(id, color, event_type) {
 
 
 /** entrance ******************************************************/
-function submit_template_action(id, numbered_predicate = "") {
-    if (numbered_predicate !== "") {
-        if(numbered_predicate.indexOf(' ') >= 0 && id==='add'){
-            numbered_predicate = numbered_predicate.replaceAll(" ", "-");
+function submit_template_action(id, tokens = "") {
+    if (tokens !== "") { //multiword expression
+        if(tokens.indexOf(' ') >= 0 && id==='add'){
+            tokens = tokens.replaceAll(" ", "-");
         }
-        current_concept = numbered_predicate;
+        current_concept = tokens;
     }
-    let arg1, arg2, arg3, arg4, s;
     if (id === 'top') {
         if ((document.getElementById('genericDropdown')) != null) {
             exec_command('top ' + current_concept, 1);
@@ -618,21 +617,22 @@ function submit_template_action(id, numbered_predicate = "") {
             console.log("current_parent is: " + current_parent);
         }
         showHead();
-    } else if (id === 'doc-annot') {
-        // current_parent = 's';
     } else if (id === 'add') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
     } else if (id === 'add-constant') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
     } else if (id === 'add-ne') {
-        exec_command(current_parent + ' ' + current_relation + ' ' + current_ne_concept + ' ' + current_concept, 1);
+        if(typeof current_relation === 'undefined'){
+            exec_command('top'  + ' ' + current_ne_concept + ' ' + current_concept, 1);
+        }else{
+            exec_command(current_parent + ' ' + current_relation + ' ' + current_ne_concept + ' ' + current_concept, 1);
+        }
     }
 
 }
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     let show_amr_args = '';
-    let record_value = '';
 
     if (value) {
         value = strip(value);
@@ -770,32 +770,24 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 } else {
                     console.log('Unrecognized <i>add</i> command.');
                 }
-            } else if (value.match(/^record /i)) { //sample match: 'record reop s1n'
-
-                record_value = value.replace(/^record\s*/, ""); // 'record reop s1n' -> 'reop s1n'
             } else {
-
-                if (!value.match(/^(h|help)\b/i)) {
-                    console.log('Unrecognized command: <font color="red">' + value + '</font>');
-                }
+                console.log('Unrecognized command:' + value);
                 top = 0;
             }
 
         if (top) {
-            record_value = record_value || value; //"record reop s1n"
             // value: "b :arg1 car"
-            // last_command.innerHTML = record_value;
             show_amr(show_amr_args); // show_amr_args:'show'
             if (state_has_changed_p) {
                 let old_state = undo_list[undo_index];
-                old_state['action'] = record_value;
+                old_state['action'] = value;
                 undo_index++;
                 undo_list.length = undo_index;
                 undo_list[undo_index] = cloneCurrentState();
                 showEditHistory();
                 let s;
                 if ((s = document.getElementById('undo-button')) != null) {
-                    s.title = 'undo ' + record_value;
+                    s.title = 'undo ' + value;
                 }
                 if ((s = document.getElementById('redo-button')) != null) {
                     s.title = 'currently nothing to redo';
