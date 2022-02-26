@@ -28,11 +28,10 @@ def register():
         filepath = Path(__file__).parent.parent.joinpath("static/sample_files/news-text-2-lorelei.txt")
         with open(filepath, 'r', encoding='utf-8') as f:
             content_string = f.read()
-        print(content_string)
         filename = 'news-text-2-lorelei.txt'
         file_format = 'plain_text'
         lang = 'english'
-        info2display = html(content_string, file_format)
+        info2display = html(content_string, file_format, lang)
         doc = Doc(lang=lang, filename=filename, content=content_string, user_id=user.id,
                   file_format=file_format)
         db.session.add(doc)
