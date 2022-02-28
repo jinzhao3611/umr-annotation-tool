@@ -1,14 +1,18 @@
 from pathlib import Path
 
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, \
-    ResetPasswordForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent
+from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project
 from umr_annot_tool.users.utils import save_picture, send_reset_email
+from umr_annot_tool.permission import EditProjectPermission
+from sqlalchemy.orm.attributes import flag_modified
+import logging
 
 from parse_input_xml import html
+from flask_principal import Permission, RoleNeed, identity_changed, Identity, AnonymousIdentity
+
 
 users = Blueprint('users', __name__)
 
@@ -56,6 +60,7 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
+            identity_changed.send(current_app._get_current_object(), identity=Identity(user.id)) #this is where the @identity_loaded.connect_via(app) decorator function got called
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.upload'))
         else:
@@ -66,6 +71,12 @@ def login():
 @users.route("/logout")
 def logout():
     logout_user()
+    # Remove session keys set by Flask-Principal
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+    # Tell Flask-Principal the user is anonymous
+    identity_changed.send(current_app._get_current_object(), identity=AnonymousIdentity())
+
     return redirect(url_for('main.display_post'))
 
 
@@ -84,11 +95,39 @@ def account():
         return redirect(url_for('users.account'))
     elif request.method == 'POST':
         try:
+            # click on the x sign to delete a single document
             to_delete_doc_id = request.get_json(force=True)["delete_id"]
-            Annotation.query.filter(Annotation.doc_id == to_delete_doc_id,
-                                    Annotation.user_id == current_user.id).delete()
-            Sent.query.filter(Sent.doc_id == to_delete_doc_id, Sent.user_id == current_user.id).delete()
-            Doc.query.filter(Doc.id == to_delete_doc_id, Doc.user_id == current_user.id).delete()
+            if to_delete_doc_id and to_delete_doc_id != 0:
+                Annotation.query.filter(Annotation.doc_id == to_delete_doc_id,
+                                        Annotation.user_id == current_user.id).delete()
+                Sent.query.filter(Sent.doc_id == to_delete_doc_id, Sent.user_id == current_user.id).delete()
+                Doc.query.filter(Doc.id == to_delete_doc_id, Doc.user_id == current_user.id).delete()
+
+            # click on the x sign to delete all documents under a project
+            to_delete_project_id = request.get_json(force=True)["delete_project"]
+            if to_delete_project_id and to_delete_project_id !=0:
+                Projectuser.query.filter(Projectuser.project_id == to_delete_project_id, Projectuser.user_id == current_user.id).delete()
+                Project.query.filter(Project.id==to_delete_project_id).delete()
+                to_delete_doc_ids = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
+                for to_delete_doc in to_delete_doc_ids:
+                    Annotation.query.filter(Annotation.doc_id == to_delete_doc.id, Annotation.user_id == current_user.id).delete()
+                    Sent.query.filter(Sent.doc_id == to_delete_doc.id, Sent.user_id == current_user.id).delete()
+                    Doc.query.filter(Doc.id == to_delete_doc.id, Doc.user_id == current_user.id).delete()
+
+            # click on add new project button to add new project
+            new_project_name = request.get_json(force=True)["new_project_name"]
+            if new_project_name:
+                new_project = Project(project_name=new_project_name)
+                db.session.add(new_project)
+                db.session.commit()
+
+                user_project = Projectuser(project_name=new_project_name, user_id=current_user.id, is_admin=True, is_member=False, project_id=new_project.id)
+                db.session.add(user_project)
+                db.session.commit()
+                admin_projects = Projectuser.query.filter(Projectuser.user_id == current_user.id,
+                                                          Projectuser.project_name == new_project_name,
+                                                          Projectuser.is_admin == True).first()
+                return make_response(jsonify({"adminProjectId": admin_projects.project_id}), 200)
             db.session.commit()
         except:
             print("deleting doc from database is failed")
@@ -97,10 +136,67 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
+    adminProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.is_admin == True).all()
+    memberProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.is_member == True).all()
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form, historyDocs=historyDocs)
+                           image_file=image_file, form=form, historyDocs=historyDocs,
+                           adminProjects=adminProjects, memberProjects=memberProjects)
 
+@login_required
+@users.route("/project/<int:project_id>", methods=['GET', 'POST'])
+def project(project_id):
+    if request.method == 'POST':
+        try:
+            update_doc_id = request.get_json(force=True)["update_doc_id"]
+            update_doc_project_id = request.get_json(force=True)["update_doc_project_id"]
+            new_member_name = request.get_json(force=True)["new_member_name"]
+            remove_member_id = request.get_json(force=True)["remove_member_id"]
+            if new_member_name:
+                try:
+                    new_member_user_id = User.query.filter(User.username==new_member_name).first().id
+                    project_name = Project.query.filter(Project.id==project_id).first().project_name
+                    projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, is_admin=False, is_member=True, project_id=project_id)
+                    db.session.add(projectuser)
+                    db.session.commit()
+                    return make_response(jsonify({"new_member_user_id": new_member_user_id}), 200)
+                except:
+                    print('username does not exist')
+                    return redirect(url_for('users.project', project_id=project_id))
+            elif remove_member_id !=0:
+                Projectuser.query.filter(Projectuser.user_id==remove_member_id, Projectuser.project_id==project_id).delete()
+                db.session.commit()
+            else:
+                doc = Doc.query.filter(Doc.id == update_doc_id, Doc.user_id == current_user.id).first()
+                doc.project_id = update_doc_project_id
+                flag_modified(doc, 'project_id')
+                logging.info(f"doc {doc.id} committed: project{doc.project_id}")
+                logging.info(db.session.commit())
+                db.session.commit()
+        except:
+            print("updating project in database is failed")
+
+    project_admin_row = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin == True).first()
+    project_admin = User.query.filter(User.id==project_admin_row.user_id).first()
+    project_members_rows = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_member == True).all()
+    project_members = []
+    for row in project_members_rows:
+        project_members.append(User.query.filter(User.id==row.user_id).first())
+
+    project_permission = EditProjectPermission(project_id)
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+
+    projectDocs = Doc.query.filter(Doc.user_id == project_admin_row.user_id, Doc.project_id == project_id).all()
+    otherDocs = Doc.query.filter(Doc.user_id == project_admin_row.user_id, Doc.project_id == 0).all()
+
+    if admin_permission.can() and project_permission.can():
+        return render_template('admin_project.html', title='admin_project', project_name=project_name, project_id=project_id,
+                               project_admin=project_admin, project_members=project_members,
+                               projectDocs=projectDocs, otherDocs=otherDocs)
+    else:
+        return render_template('member_project.html', title='admin_project', project_name=project_name, project_id=project_id,
+                               project_admin=project_admin, project_members=project_members,
+                               projectDocs=projectDocs)
 
 @users.route("/user/<string:username>")
 def user_posts(username):

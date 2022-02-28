@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from umr_annot_tool.config import Config
 import logging
+from flask_principal import Principal
 
 # extensions
 db = SQLAlchemy()
@@ -38,5 +39,6 @@ def create_app(config_class=Config):
     app.register_blueprint(main)
     app.register_blueprint(errors)
 
+    Principal(app)
 
     return app
