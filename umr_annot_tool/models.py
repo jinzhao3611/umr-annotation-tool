@@ -24,6 +24,8 @@ class User(db.Model, UserMixin):
     annotations = db.relationship('Annotation', backref='author', lazy=True)
     docs = db.relationship('Doc', backref='author', lazy=True)
     sents = db.relationship('Sent', backref='author', lazy=True)
+    projectusers = db.relationship('Projectuser', backref='author', lazy=True)
+
 
 
     """generate the token for resetting password with email"""
@@ -64,9 +66,11 @@ class Doc(db.Model):
     sents = db.relationship('Sent', backref='document', lazy=True)
     annotations = db.relationship('Annotation', backref='document', lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
 
-    # def __repr__(self):
-    #     return f"Post('{self.id}', '{self.sents}')"
+
+    def __repr__(self):
+        return f"Doc('{self.id}')"
 
 class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -74,11 +78,8 @@ class Sent(db.Model):
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    # annotations = db.relationship('Annotation', backref='sentence', lazy=True)
-
-
-    # def __repr__(self):
-    #     return f"Post('{self.id}', '{self.content}')"
+    def __repr__(self):
+        return f"Sent('{self.id}')"
 
 class Annotation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -92,8 +93,8 @@ class Annotation(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
 
-    # def __repr__(self):
-    #     return f"Post('{self.sent_level_content}', '{self.doc_level_content}')"
+    def __repr__(self):
+        return f"Annot('{self.id}'"
 
 
 class Lexicon(db.Model):
@@ -101,4 +102,19 @@ class Lexicon(db.Model):
     lang = db.Column(db.Text, nullable=False)
     lexi = db.Column(MutableDict.as_mutable(JSON))
 
+class Projectuser(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_name = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    is_admin = db.Column(db.Boolean, nullable=False)
+    is_member = db.Column(db.Boolean, nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
+
+
+class Project(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_name = db.Column(db.Text, nullable=False)
+
+    projectusers = db.relationship('Projectuser', backref="project", lazy=True)
+    docs = db.relationship('Doc', backref='project', lazy=True)
