@@ -15,7 +15,8 @@ from flask_principal import Permission, RoleNeed, identity_changed, Identity, An
 
 
 users = Blueprint('users', __name__)
-
+# Create a permission with a single Need, in this case a RoleNeed.
+admin_permission = Permission(RoleNeed('admin'))
 
 @users.route("/register", methods=['GET', 'POST'])
 def register():
