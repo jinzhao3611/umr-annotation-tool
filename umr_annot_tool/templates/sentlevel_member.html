@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/default2.css') }}">
+    <script src="../static/scripts/sentLevelJquery.js"></script>
+    <script src="../static/scripts/sentLevel.js" type="text/javascript"></script>
+    <script src="../static/scripts/utils.js" type="text/javascript"></script>
+    <script src="../static/scripts/penmanstring2graph.js" type="text/javascript"></script>
+    <script src="../static/scripts/BlobBuilder.js"></script>
+    <script src="../static/scripts/FileSaver.js"></script>
+
+    <script src="../static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+    <script src="../static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+{% endblock head %}
+
+
+{% block content %}
+    <div id="info">
+        <table>
+            <tr>
+                <th class='text-muted'>Current User:</th>
+                <th id="username">{{ current_user.username }}</th>
+                <th class='text-muted'>User ID:</th>
+                <th id="user_id">{{ current_user.id }}</th>
+            </tr>
+            <tr>
+                <th class='text-muted'>File Name:</th>
+                <th id="filename" style="display:inline">{{ filename }}</th>
+                <th class='text-muted'>File Language:</th>
+                <th id="lang" style="display:inline">{{ lang }}</th>
+            </tr>
+                <tr>
+                <th class='text-muted'>Doc ID in database:</th>
+                <th id="doc_id" style="display:inline">{{ doc_id }}</th>
+                <th class='text-muted'>File format:</th>
+                <th id="file_format" style="display:inline">{{ file_format }}</th>
+            </tr>
+            </tr>
+            <tr>
+                <th class='text-muted'>Project Name:</th>
+                <th id="project_name" style="display:inline">{{ project_name }}</th>
+                <th class='text-muted'>Project Admin:</th>
+                <th id="project_admin" style="display:inline">{{ admin.username }}</th>
+            </tr>
+        </table>
+    </div>
+    <hr>
+
+    {# display all the sentences #}
+    <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 250px;">
+        <script type="text/javascript">
+            initialize({{ frame_dict|tojson|safe }}, "{{ lang }}")
+        </script>
+        {% autoescape off %}
+        <p>{{ info2display.sents_html }}</p>
+        {% endautoescape %}
+    </div>
+    <hr>
+    <form method="post">
+        <p>Line ID:
+            <span id="curr_shown_sent_id" style="display: none"> {{ snt_id }}</span>
+            <input type="number" name="sentence_id" id="sentence_id" size=8 min=1 max={{ info2display.sents|length }} value={{ snt_id }}>
+            <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go"><br>
+        </p>
+    </form>
+
+    <div id="error_msg">
+    </div>
+
+    {# display the sentence with the chosen sentence ID #}
+    {% if info2display.df_htmls|length and file_format != 'plain_text' %}
+        <div id="sentence">
+            Current Line:
+            {% autoescape off %}
+            <p>{{ info2display.df_htmls[snt_id-1] }}</p>
+            {% endautoescape %}
+            <p><b>Free(en)</b> {{ info2display.gls[snt_id-1][0] }}</p>
+            <p><b>Free(es)</b> {{ info2display.gls[snt_id-1][1] }}</p>
+            <p><b>Notes</b> {{ info2display.notes[snt_id-1] }}</p>
+
+            {% if snt_id < info2display.df_htmls|length %}
+                Next Line:
+                <div id="table2">
+                    {% autoescape off %}
+                    <p>{{ info2display.df_htmls[snt_id] }}</p>
+                    {% endautoescape %}
+                    <p><b>Free(en)</b> {{ info2display.gls[snt_id][0] }}</p>
+                    <p><b>Free(es)</b> {{ info2display.gls[snt_id][1] }}</p>
+                    <p><b>Notes</b> {{ info2display.notes[snt_id] }}</p>
+                </div>
+            {% endif %}
+
+        </div>
+        <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
+    {% else %}
+        <div id="sentence">
+            {% autoescape off %}
+            <p>{{ info2display.sent_htmls[snt_id-1] }}</p>
+            {% endautoescape %}
+        </div>
+    {% endif %}
+
+    <hr>
+    <div>
+        <p>UMR Penman Annotation:</p>
+        <button id="set-head">set head</button>
+        <div>
+            <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph">
+            <button id="save-partial-graph-btn" onclick="recordPartialGraph()">Save</button>
+        </div>
+        <div id="amr">
+        </div>
+    </div>
+
+
+    <hr>
+    <div id="alignment">
+        <p> Alignments:</p>
+        <p id="align"></p>
+    </div>
+
+    <hr>
+    <div>
+        <p> Edit History:</p>
+        <div id="eh"></div>
+        <p id="edit_history"></p>
+    </div>
+
+{% endblock content %}
+
+{% block content2 %}
+    <div style="position:fixed; top:30%;">
+
+        <div style="height: 10%; width:80%">
+            <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
+            <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
+            <button class="btn btn-outline-secondary" id="one-line-ne"><a title="one-line-ne" href="javascript:changeSetting();">one-line NE</a></button>
+        </div>
+
+
+        <script type="text/javascript">
+            colorAnnotatedSents('{{ annotated_sent_ids }}');
+            load_history('{{ curr_sent_annot }}','{{ curr_sent_align }}', '{{ curr_sent_umr|tojson|safe }}');
+            selectEvent();
+        </script>
+    <div>
+{% endblock content2 %}
+
+
+
+
+

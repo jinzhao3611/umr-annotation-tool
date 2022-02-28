@@ -1,4 +1,5 @@
 from flask import url_for, redirect, flash, send_from_directory, make_response, jsonify
+from flask_principal import Permission, RoleNeed
 from werkzeug.utils import secure_filename
 from typing import List
 import json
@@ -9,11 +10,12 @@ import logging
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm
 from sqlalchemy.orm.attributes import flag_modified
 from suggest_sim_words import generate_candidate_list, find_suggested_words
+from umr_annot_tool.permission import EditProjectPermission
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
@@ -177,14 +179,12 @@ def sentlevel(doc_id):
 
     # load single annotation for current sentence from db used for load_history()
     try:
-        curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
-                                                  Annotation.user_id == current_user.id).first().annot_str.replace("\n",
+        curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().annot_str.replace("\n",
                                                                                                                    "")
     except:
         curr_sent_annot = ""
     try:
-        curr_sent_align = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
-                                                  Annotation.user_id == current_user.id).first().alignment.replace("\n",
+        curr_sent_align = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().alignment.replace("\n",
                                                                                                                    "")
     except:
         curr_sent_align = ""
@@ -192,13 +192,12 @@ def sentlevel(doc_id):
     #todo: why remove \n here??? this will cause problem1 in notion                                                                                                            "")
 
     try:
-        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id,
-                                                Annotation.user_id == current_user.id).first().umr
+        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().umr
     except:
         curr_sent_umr = {}
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == current_user.id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by(
         Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id, Sent.user_id == current_user.id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations] #this is used to color annotated sentences
@@ -208,15 +207,39 @@ def sentlevel(doc_id):
     all_sents = [sent2.content for sent2 in filtered_sentences]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
-    return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                           info2display=info2display,
-                           frame_dict=json.dumps(frame_dict),
-                           curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
-                           curr_sent_umr=curr_sent_umr,
-                           exported_items=exported_items,
-                           file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
-                           annotated_sent_ids= annotated_sent_ids)
+    #check who is the admin of the project containing this file:
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+
+    project_permission = EditProjectPermission(project_id)
+    admin_permission = Permission(RoleNeed('admin'))
+
+    if admin_permission.can() and project_permission.can():
+        return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
+                               info2display=info2display,
+                               frame_dict=json.dumps(frame_dict),
+                               curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
+                               curr_sent_umr=curr_sent_umr,
+                               exported_items=exported_items,
+                               file_format=doc.file_format,
+                               content_string=doc.content.replace('\n', '<br>'),
+                               annotated_sent_ids= annotated_sent_ids,
+                               project_name=project_name,
+                               admin=admin)
+    else:
+        return render_template('sentlevel_member.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
+                               info2display=info2display,
+                               frame_dict=json.dumps(frame_dict),
+                               curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
+                               curr_sent_umr=curr_sent_umr,
+                               exported_items=exported_items,
+                               file_format=doc.file_format,
+                               content_string=doc.content.replace('\n', '<br>'),
+                               annotated_sent_ids=annotated_sent_ids,
+                               project_name=project_name,
+                               admin=admin)
 
 
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
@@ -279,12 +302,33 @@ def doclevel(doc_sent_id):
     all_sent_umrs = [annot.umr for annot in annotations]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
-    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
-                           title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
-                           file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
-                           all_sent_umrs=all_sent_umrs)
+    #check who is the admin of the project containing this file:
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+
+    project_permission = EditProjectPermission(project_id)
+    admin_permission = Permission(RoleNeed('admin'))
+
+    if admin_permission.can() and project_permission.can():
+        return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
+                               title='Doc Level Annotation', current_snt_id=current_snt_id,
+                               current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
+                               file_format=doc.file_format,
+                               content_string=doc.content.replace('\n', '<br>'),
+                               all_sent_umrs=all_sent_umrs,
+                               project_name=project_name,
+                               admin=admin)
+    else:
+        return render_template('doclevel_member.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
+                               title='Doc Level Annotation', current_snt_id=current_snt_id,
+                               current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
+                               file_format=doc.file_format,
+                               content_string=doc.content.replace('\n', '<br>'),
+                               all_sent_umrs=all_sent_umrs,
+                               project_name=project_name,
+                               admin=admin)
 
 
 @main.route("/about")
