@@ -3,7 +3,7 @@ from pathlib import Path
 from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm
 from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from umr_annot_tool.permission import EditProjectPermission
@@ -238,3 +238,31 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+@users.route('/search/<string:project_id>', methods=['GET', 'POST'])
+def search(project_id):
+    member_id = request.args.get('member_id', 0)
+    search_umr_form = SearchUmrForm()
+    umr_results = []
+
+    if search_umr_form.validate_on_submit():
+        concept = search_umr_form.concept.data
+        word = search_umr_form.word.data
+        triple = search_umr_form.triple.data
+        if concept: #search for this concept in database
+            docs = Doc.query.filter(Doc.project_id==project_id, Doc.user_id==member_id).all()
+            doc_ids = [doc.id for doc in docs]
+            for doc_id in doc_ids:
+                annots = Annotation.query.filter(Annotation.doc_id==doc_id, Annotation.user_id==member_id).all()
+                for annot in annots:
+                    umr_dict = dict(annot.umr) #todo: to implement the word, I need a lemmatizer, and think about how to implement triple
+                    for value in umr_dict.values():
+                        if concept in str(value):
+                            umr_results.append(annot.annot_str)
+                            print(doc_id)
+                            print(annot.id)
+        elif word:
+            print("lala", word)
+        elif triple:
+            print(triple)
+    return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results)

@@ -115,7 +115,8 @@ function addNewMember(project_id){
         li.setAttribute("id", `projectMember-${newMemberUserId}`);
 
         let a = document.createElement("a");
-        a.setAttribute("href", ``);
+        a.setAttribute("href", `/search/${project_id}?member_id=${newMemberUserId}`);
+        a.setAttribute("title", "click on member to search their annotation");
         a.innerText = member_name + "(member)";
         li.append(a);
 

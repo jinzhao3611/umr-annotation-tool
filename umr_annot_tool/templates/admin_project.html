@@ -48,7 +48,7 @@
         <button onclick="addNewMember({{ project_id }})">add new member</button>
         <ul class="list-group" id="all-members">
             <li class="list-group-item d-flex justify-content-between align-items-center" id="projectMember-{{ project_admin.id }}">
-                <a href="">
+                <a title="click on member to search their annotation" href="{{ url_for('users.search', project_id=project_id, member_id=project_admin.id) }}">
                     {{project_admin.username}} (admin)
                 </a>
                 <span class="badge">
@@ -59,7 +59,7 @@
             </li>
             {% for project_member in project_members %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectMember-{{ project_member.id }}">
-                    <a href="">
+                    <a title="click on member to search their annotation" href="{{ url_for('users.search', project_id=project_id, member_id=project_member.id) }}">
                         {{project_member.username}}(member)
                     </a>
                     <span class="badge">
