@@ -41,7 +41,7 @@
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
                             {% if current_user.is_authenticated %} {# this is the links that got displayed when the user is authenticated#}
-                                <a class="nav-item nav-link" href="{{ url_for('main.upload') }}">Annotate</a>
+                                <a class="nav-item nav-link" href="{{ url_for('main.upload') }}">Upload</a>
                                 <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
                                 <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
                                 <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
