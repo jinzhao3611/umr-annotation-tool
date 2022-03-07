@@ -73,5 +73,5 @@ class ResetPasswordForm(FlaskForm):
 class SearchUmrForm(FlaskForm):
     concept = StringField('Type in concept (can be full or partial string): ')
     word = StringField('Type in word (can be full or partial string): ')
-    triple = StringField('Type in logical triple (in the form of * :ARG1 eat-01 or * :ARG1 eat-01):')
+    triple = StringField('Type in logical triple (in the form of * :ARG1 eat-01 or * :ARG1 ate):')
     submit = SubmitField('Search')
