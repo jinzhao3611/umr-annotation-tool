@@ -13,6 +13,8 @@ import logging
 from parse_input_xml import html
 from flask_principal import Permission, RoleNeed, identity_changed, Identity, AnonymousIdentity
 
+from lemminflect import getLemma
+
 
 users = Blueprint('users', __name__)
 # Create a permission with a single Need, in this case a RoleNeed.
@@ -249,20 +251,25 @@ def search(project_id):
         concept = search_umr_form.concept.data
         word = search_umr_form.word.data
         triple = search_umr_form.triple.data
-        if concept: #search for this concept in database
-            docs = Doc.query.filter(Doc.project_id==project_id, Doc.user_id==member_id).all()
-            doc_ids = [doc.id for doc in docs]
-            for doc_id in doc_ids:
-                annots = Annotation.query.filter(Annotation.doc_id==doc_id, Annotation.user_id==member_id).all()
-                for annot in annots:
-                    umr_dict = dict(annot.umr) #todo: to implement the word, I need a lemmatizer, and think about how to implement triple
-                    for value in umr_dict.values():
-                        if concept in str(value):
-                            umr_results.append(annot.annot_str)
-                            print(doc_id)
-                            print(annot.id)
-        elif word:
-            print("lala", word)
-        elif triple:
-            print(triple)
+
+        h, r, c = "", "", ""
+
+        if triple:
+            h, r, c = triple.split()
+
+        docs = Doc.query.filter(Doc.project_id == project_id, Doc.user_id == member_id).all()
+        doc_ids = [doc.id for doc in docs]
+        for doc_id in doc_ids:
+            annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()
+            for annot in annots:
+                umr_dict = dict(annot.umr)
+                for value in umr_dict.values():
+                    if (concept and concept in str(value)) or (word and getLemma(word, upos="VERB")[0] in str(value)):
+                        umr_results.append(annot.annot_str)
+                    elif triple:
+                        if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
+                            k = list(umr_dict.keys())[list(umr_dict.values()).index(value)]
+                            if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
+                                umr_results.append(annot.annot_str)
+
     return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results)
