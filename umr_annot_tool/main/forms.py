@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
-from wtforms import BooleanField, SubmitField, SelectField, TextAreaField, StringField, FieldList, FormField
+from wtforms import BooleanField, SubmitField, SelectField, TextAreaField, StringField, FieldList, FormField, MultipleFileField
 
 class UploadForm(FlaskForm):
-    file = FileField()
+    files = MultipleFileField('File(s) Upload')
     language_mode = SelectField('Language', choices=[("arapahoe","arapahoe"),
                                                      ("arabic", "arabic"),
                                                      ("chinese", "chinese"),

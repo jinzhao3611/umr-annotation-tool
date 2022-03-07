@@ -86,25 +86,27 @@ def upload():
     form = UploadForm()
     lexicon_form = UploadLexiconForm()
     if form.validate_on_submit():
-        if form.file.data and form.file.data.filename:
-            content_string = form.file.data.read().decode(encoding="utf-8", errors="ignore")
-            filename = secure_filename(form.file.data.filename)
-            file_format = form.file_format.data
-            lang = form.language_mode.data
-            is_exported = form.if_exported.data
-            if is_exported:  # has annotation
-                new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(
-                    content_string)
-                file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                        sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
-            else:  # doesn't have annotation
-                info2display = html(content_string, file_format, lang=lang)
-                file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
-                        sents=info2display.sents, has_annot=False)
+        if form.files.data and form.files.data[0].filename:
+            for form_file in form.files.data:
+                content_string = form_file.read().decode(encoding="utf-8", errors="ignore")
+                filename = secure_filename(form_file.filename)
+                file_format = form.file_format.data
+                lang = form.language_mode.data
+                is_exported = form.if_exported.data
+                if is_exported:  # has annotation
+                    new_content_string, sents, sent_annots, doc_annots, aligns, new_user_id, new_lang = process_exported_file(
+                        content_string)
+                    file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
+                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
+                else:  # doesn't have annotation
+                    info2display = html(content_string, file_format, lang=lang)
+                    file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
+                            sents=info2display.sents, has_annot=False)
+
             return redirect(url_for('main.sentlevel',
-                                    doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
+                                        doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
         else:
-            flash('Please upload a file and/or choose a language.', 'danger')
+            flash('Please upload a file and choose a language.', 'danger')
     if lexicon_form.validate_on_submit():
         if lexicon_form.file.data:
             content_string = form.file.data.read().decode("utf-8")
@@ -208,10 +210,15 @@ def sentlevel(doc_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
-    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
-    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().user_id
-    admin = User.query.filter(User.id == admin_id).first()
+    try:
+        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
+        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().user_id
+        admin = User.query.filter(User.id == admin_id).first()
+    except:
+        project_id=0
+        project_name=""
+        admin=current_user
 
     project_permission = EditProjectPermission(project_id)
     admin_permission = Permission(RoleNeed('admin'))
