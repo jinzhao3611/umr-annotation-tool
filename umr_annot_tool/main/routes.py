@@ -477,11 +477,12 @@ def lexiconupdate(doc_id):
                 db.session.add(lexicon_row)
                 db.session.commit()
 
+    autocomplete_lemmas = list(citation_dict.values())
     return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
                            file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
                            look_up_form=look_up_form,
                            frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                           snt_id=snt_id, look_up_lemma=look_up_lemma)
+                           snt_id=snt_id, look_up_lemma=look_up_lemma, autocomplete_lemmas=json.dumps(autocomplete_lemmas))
 
 @main.route("/")
 @main.route("/display_post")
