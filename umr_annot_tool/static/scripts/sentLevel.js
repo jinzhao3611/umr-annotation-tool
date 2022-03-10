@@ -1769,17 +1769,6 @@ function role_unquoted_string_arg(role, arg, loc) {
     }
 }
 
-function tolerate_special_concepts(s) {
-    if (s.match(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|I|\*OR\*)$/)) {
-        return 1;
-    }
-    if (s.match(/^:[a-z]/i)) { //todo: when matching something like :l
-        console.log(`from tolerate_special_concepts: ${s}`);
-        return 1;
-    }
-    return 0;
-}
-
 /**
  * @param loc nth children in amr, most of the time only have 1 tree
  * @param args "show"
