@@ -47,7 +47,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         flash('Your doc and sents already created.', 'success')
     else:
         doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id,
-                  file_format=file_format)
+                  file_format=file_format, project_id=0)
         db.session.add(doc)
         db.session.commit()
         doc_id = doc.id
