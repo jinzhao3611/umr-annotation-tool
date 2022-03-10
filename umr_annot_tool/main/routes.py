@@ -223,7 +223,7 @@ def sentlevel(doc_id):
     project_permission = EditProjectPermission(project_id)
     admin_permission = Permission(RoleNeed('admin'))
 
-    if admin_permission.can() and project_permission.can():
+    if (admin_permission.can() and project_permission.can()) or project_id==0:
         return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                                info2display=info2display,
                                frame_dict=json.dumps(frame_dict),
