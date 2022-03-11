@@ -416,7 +416,7 @@
 
                         <div>
                             <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
-                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_id=doc_id) }}">sent-level-annot</a>
+                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id) }}">sent-level-annot</a>
                         </div>
 
                         <script type="text/javascript">
