@@ -179,20 +179,6 @@ def sentlevel(doc_id):
             msg = 'Failure: Add current annotation and alignments to database failed.'
             msg_category = 'danger'
 
-    # load single annotation for current sentence from db used for load_history()
-    try:
-        curr_sent_annot = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().annot_str.replace("\n",
-                                                                                                                   "")
-    except:
-        curr_sent_annot = ""
-    try:
-        curr_sent_align = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().alignment.replace("\n",
-                                                                                                                   "")
-    except:
-        curr_sent_align = ""
-
-    #todo: why remove \n here??? this will cause problem1 in notion                                                                                                            "")
-
     try:
         curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().umr
     except:
@@ -227,7 +213,6 @@ def sentlevel(doc_id):
         return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                                info2display=info2display,
                                frame_dict=json.dumps(frame_dict),
-                               curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
                                curr_sent_umr=curr_sent_umr,
                                exported_items=exported_items,
                                file_format=doc.file_format,
@@ -239,7 +224,6 @@ def sentlevel(doc_id):
         return render_template('sentlevel_member.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                                info2display=info2display,
                                frame_dict=json.dumps(frame_dict),
-                               curr_sent_align=curr_sent_align, curr_sent_annot=curr_sent_annot,
                                curr_sent_umr=curr_sent_umr,
                                exported_items=exported_items,
                                file_format=doc.file_format,

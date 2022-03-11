@@ -62,17 +62,14 @@ function initialize(frame_json, lang) {
 
 /**
  * load the annotation for current sentence from database
- * @param curr_sent_annot: pennman annotation directly from database, with html encoding, but no html tags
- * @param curr_sent_align: text alignment info from database
  * @param curr_sent_umr
  */
-function load_history(curr_sent_annot, curr_sent_align, curr_sent_umr){
+function load_history(curr_sent_umr){
     umr = JSON.parse(curr_sent_umr);
     if(Object.keys(umr).length === 0){ // if the parsed curr_sent_umr is empty
         umr['n'] = 0; //initialize umr here
     }
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
-    // text2umr(deHTML(curr_sent_annot), curr_sent_align);
     show_amr('show');
     showAlign();
     state_has_changed_p = 1;
