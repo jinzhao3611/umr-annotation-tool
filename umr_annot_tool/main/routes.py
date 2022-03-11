@@ -271,8 +271,6 @@ def doclevel(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(
         Annotation.sent_id).all()
 
-    print('doc content from doc level: ', doc.content)
-
     if doc.file_format == 'plain_text':
         sent_annot_pairs = list(zip(sents, annotations))
         print('sents in doclevel: ', sents)
@@ -299,14 +297,21 @@ def doclevel(doc_sent_id):
 
     #check who is the admin of the project containing this file:
     project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
-    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().user_id
-    admin = User.query.filter(User.id == admin_id).first()
+    try:
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
+        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                            Projectuser.is_admin == True).first().user_id
+        admin = User.query.filter(User.id == admin_id).first()
+    except AttributeError:
+        project_id=0
+        project_name = ""
+        admin=current_user
+
 
     project_permission = EditProjectPermission(project_id)
     admin_permission = Permission(RoleNeed('admin'))
 
-    if admin_permission.can() and project_permission.can():
+    if (admin_permission.can() and project_permission.can()) or project_id==0:
         return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, filename=doc.filename,
                                title='Doc Level Annotation', current_snt_id=current_snt_id,
                                current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
