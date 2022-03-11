@@ -479,19 +479,11 @@
                         </div>
 
                         <div>
-                    {#        <button class="btn btn-outline-secondary" id="db"><a title="click to get current annotation in db" href="javascript:docUMR2db();">save2db</a></button>#}
-                    {# jinja cannot accept dictionary like this, so this button doesn't work#}
-                    {#        <button class="btn btn-outline-secondary" id="save-box"><a style="text-decoration:none" title="load_history" href="javascript:load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');">load_history</a></button>#}
                             <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
-
                             <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
                             <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);undo(-1);">undo</a></button>
                             <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);undo(1);">redo</a></button>
-                            {#<button class="btn btn-outline-secondary" id="doc-level-annot"><a id="annot-button" title="click to do doc-level annotation" href="javascript:docAnnot(2);">doc-level-annot</a></button>#}
-                            {#<button><a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel') }}">doc-level-annot</a></button>#}
-                    {#        <button class="btn btn-outline-secondary" id="save-box"><a title="save" href="javascript:selectTemplate('save');reset_save('');">save</a></button>#}
-                    {#        <button class="btn btn-outline-secondary" id="save-box"><a title="load" href="javascript:selectTemplate('load');">load</a></button>#}
-                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_id=doc_id) }}">sent-level-annot</a>
+                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id) }}">sent-level-annot</a>
                         </div>
 
                         <script type="text/javascript">

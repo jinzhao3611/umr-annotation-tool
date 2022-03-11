@@ -11,7 +11,7 @@
         <ul class="list-group" id="projectDocs">
             {% for projectDoc in projectDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectDoc-{{ projectDoc.id }}">
-                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevel', doc_id=projectDoc.id)}}">
+                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=projectDoc.id ~ '_1')}}">
                         {{projectDoc.filename}}
                     </a>
                 </li>

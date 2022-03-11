@@ -104,7 +104,7 @@ def upload():
                             sents=info2display.sents, has_annot=False)
 
             return redirect(url_for('main.sentlevel',
-                                        doc_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id))
+                                        doc_sent_id=Doc.query.filter_by(filename=filename, user_id=current_user.id).first().id+"_1"))
         else:
             flash('Please upload a file and choose a language.', 'danger')
     if lexicon_form.validate_on_submit():
@@ -119,10 +119,13 @@ def upload():
     return render_template('upload.html', title='upload', form=form, lexicon_form=lexicon_form)
 
 
-@main.route("/sentlevel/<int:doc_id>", methods=['GET', 'POST'])
-def sentlevel(doc_id):
+@main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
+def sentlevel(doc_sent_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
+    doc_id = int(doc_sent_id.split("_")[0])
+    default_sent_id = int(doc_sent_id.split("_")[1])
+
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
     # find the correct frame_dict for current annotation
@@ -138,7 +141,7 @@ def sentlevel(doc_id):
         except AttributeError: #there is no frame_dict for this language at all
             frame_dict = {}
 
-    snt_id = int(request.args.get('snt_id', 1))
+    snt_id = int(request.args.get('snt_id', default_sent_id))
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
 
@@ -235,7 +238,8 @@ def sentlevel(doc_id):
 
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevel(doc_sent_id):
-    print("docid + sentid: ", doc_sent_id)
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
     if not current_user.is_authenticated:
@@ -283,7 +287,7 @@ def doclevel(doc_sent_id):
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevel', doc_id=doc_id))
+        return redirect(url_for('main.sentlevel', doc_sent_id=doc_id+'_'+current_snt_id))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]
