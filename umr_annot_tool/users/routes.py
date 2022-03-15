@@ -122,12 +122,12 @@ def account():
                 db.session.add(new_project)
                 db.session.commit()
 
-                user_project = Projectuser(project_name=new_project_name, user_id=current_user.id, is_admin=True, is_member=False, project_id=new_project.id)
+                user_project = Projectuser(project_name=new_project_name, user_id=current_user.id, permission="admin", project_id=new_project.id)
                 db.session.add(user_project)
                 db.session.commit()
                 admin_projects = Projectuser.query.filter(Projectuser.user_id == current_user.id,
                                                           Projectuser.project_name == new_project_name,
-                                                          Projectuser.is_admin == True).first()
+                                                          Projectuser.permission == "admin").first()
                 return make_response(jsonify({"adminProjectId": admin_projects.project_id}), 200)
             db.session.commit()
         except:
@@ -137,8 +137,8 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
-    adminProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.is_admin == True).all()
-    memberProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.is_member == True).all()
+    adminProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.permission == "admin").all()
+    memberProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.permission == "admin").all()
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs,
@@ -147,17 +147,21 @@ def account():
 @login_required
 @users.route("/project/<int:project_id>", methods=['GET', 'POST'])
 def project(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
     if request.method == 'POST':
         try:
             update_doc_id = request.get_json(force=True)["update_doc_id"]
             update_doc_project_id = request.get_json(force=True)["update_doc_project_id"]
             new_member_name = request.get_json(force=True)["new_member_name"]
             remove_member_id = request.get_json(force=True)["remove_member_id"]
+            edit_permission_memeber_id = request.get_json(force=True)["edit_permission_member_id"]
+            edit_permission = request.get_json(force=True)["edit_permission"]
             if new_member_name:
                 try:
                     new_member_user_id = User.query.filter(User.username==new_member_name).first().id
                     project_name = Project.query.filter(Project.id==project_id).first().project_name
-                    projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, is_admin=False, is_member=True, project_id=project_id)
+                    projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="admin", project_id=project_id)
                     db.session.add(projectuser)
                     db.session.commit()
                     return make_response(jsonify({"new_member_user_id": new_member_user_id}), 200)
@@ -167,22 +171,32 @@ def project(project_id):
             elif remove_member_id !=0:
                 Projectuser.query.filter(Projectuser.user_id==remove_member_id, Projectuser.project_id==project_id).delete()
                 db.session.commit()
-            else:
+            elif update_doc_project_id !=0:
                 doc = Doc.query.filter(Doc.id == update_doc_id, Doc.user_id == current_user.id).first()
                 doc.project_id = update_doc_project_id
                 flag_modified(doc, 'project_id')
                 logging.info(f"doc {doc.id} committed: project{doc.project_id}")
                 logging.info(db.session.commit())
                 db.session.commit()
+            elif edit_permission and edit_permission_memeber_id!=0:
+                projectuser = Projectuser.query.filter(Projectuser.user_id == edit_permission_memeber_id, Projectuser.project_id==project_id).first()
+                projectuser.permission = edit_permission
+                flag_modified(projectuser, 'project_id')
+                logging.info(f"project {projectuser.id} permission changed to {projectuser.permission}")
+                logging.info(db.session.commit())
+                db.session.commit()
         except:
             print("updating project in database is failed")
 
-    project_admin_row = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin == True).first()
-    project_admin = User.query.filter(User.id==project_admin_row.user_id).first()
-    project_members_rows = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_member == True).all()
-    project_members = []
-    for row in project_members_rows:
-        project_members.append(User.query.filter(User.id==row.user_id).first())
+    project_admin_row = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission == "admin").first()
+    project_members = Projectuser.query.filter(Projectuser.project_id == project_id).all()
+    members = []
+    permissions = []
+    member_ids = []
+    for row in project_members:
+        members.append(User.query.filter(User.id==row.user_id).first())
+        permissions.append(row.permission)
+        member_ids.append(row.user_id)
 
     project_permission = EditProjectPermission(project_id)
     project_name = Project.query.filter(Project.id==project_id).first().project_name
@@ -192,11 +206,11 @@ def project(project_id):
 
     if admin_permission.can() and project_permission.can():
         return render_template('admin_project.html', title='admin_project', project_name=project_name, project_id=project_id,
-                               project_admin=project_admin, project_members=project_members,
+                                members=members, permissions=permissions, member_ids=member_ids,
                                projectDocs=projectDocs, otherDocs=otherDocs)
     else:
         return render_template('member_project.html', title='admin_project', project_name=project_name, project_id=project_id,
-                               project_admin=project_admin, project_members=project_members,
+                                members=members, permissions=permissions, member_ids=member_ids,
                                projectDocs=projectDocs)
 
 @users.route("/user/<string:username>")
@@ -241,6 +255,8 @@ def reset_token(token):
 
 @users.route('/search/<string:project_id>', methods=['GET', 'POST'])
 def search(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
     member_id = request.args.get('member_id', 0)
     search_umr_form = SearchUmrForm()
     umr_results = []

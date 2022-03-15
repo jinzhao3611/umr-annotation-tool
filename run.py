@@ -16,7 +16,7 @@ def on_identity_loaded(sender, identity):
         project_rows = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
         if project_rows: #current user doesn't have any projects
             for row in project_rows:
-                if row.is_admin:
+                if row.permission == "admin":
                     identity.provides.add(RoleNeed("admin"))
                     identity.provides.add(EditProjectNeed(row.project_id))
 

@@ -19,6 +19,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    # created_at = db.Column(db.DateTime)
+    # last_login = db.Column(db.DateTime, default=db.func.now())
 
     posts = db.relationship('Post', backref='author', lazy=True)
     annotations = db.relationship('Annotation', backref='author', lazy=True)
@@ -106,9 +108,8 @@ class Projectuser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    is_admin = db.Column(db.Boolean, nullable=False)
-    is_member = db.Column(db.Boolean, nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    permission = db.Column(db.Text)
 
 
 

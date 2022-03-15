@@ -201,8 +201,8 @@ def sentlevel(doc_sent_id):
     #check who is the admin of the project containing this file:
     try:
         project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
-        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().user_id
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
     except:
         project_id=0
@@ -298,9 +298,9 @@ def doclevel(doc_sent_id):
     #check who is the admin of the project containing this file:
     project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
     try:
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.is_admin==True).first().project_name
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
-                                            Projectuser.is_admin == True).first().user_id
+                                            Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
     except AttributeError:
         project_id=0
