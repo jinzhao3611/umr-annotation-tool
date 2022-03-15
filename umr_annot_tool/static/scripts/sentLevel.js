@@ -36,6 +36,7 @@ let show_amr_mo_lock = ''; // '' affects coloring
 
 let is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
+let customizedAttrList = ["aspect-attr", "refer-person-attr", "refer-number-attr", "modstr-values"];
 
 /**
  *
@@ -58,6 +59,23 @@ function initialize(frame_json, lang) {
         });
     }
     pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage in order to pass to another page
+}
+
+function customizeOptions(){
+    for (let index in customizedAttrList){
+        let attr = customizedAttrList[index];
+        if(attr in localStorage){
+            let optionList = document.getElementById(attr).children;
+            let settings  = JSON.parse(localStorage[attr]);
+            for(let i=0; i<optionList.length; i++){
+                console.log(optionList[i].value);
+                console.log(settings[optionList[i].value]);
+                if(!settings[optionList[i].value]){
+                    optionList[i].remove();
+                }
+            }
+        }
+    }
 }
 
 /**

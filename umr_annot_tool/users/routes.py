@@ -270,4 +270,39 @@ def search(project_id):
                             if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
                                 umr_results.append(annot.annot_str)
 
-    return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results)
+# annotation lattices
+@users.route('/discourse', methods=['GET', 'POST'])
+def discourse():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    return render_template('discourse.html')
+
+@users.route('/aspect', methods=['GET', 'POST'])
+def aspect():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    return render_template('aspect.html')
+
+@users.route('/person', methods=['GET', 'POST'])
+def person():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    return render_template('person.html')
+
+@users.route('/number', methods=['GET', 'POST'])
+def number():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    return render_template('number.html')
+
+@users.route('/modal', methods=['GET', 'POST'])
+def modal():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    return render_template('modal.html')
+
+@users.route('/modification', methods=['GET', 'POST'])
+def modification():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    return render_template('modification.html')

@@ -233,6 +233,9 @@
                                     <option value=":depends-on">
                                     <option value=":same-entity">
 
+                                    <option value=":topic">
+                                    <option value=":consist-of">
+
                                 </datalist>
                             </div>
                         {% else %}
@@ -350,8 +353,9 @@
                                     <option value=":example">
                                     <option value=":li">
                                     <option value=":polite">
+                                    <option value=":topic">
+                                    <option value=":consist-of">
                                 </datalist>
-                                {#        <input type="submit" onclick="submit_relation('roles2')">#}
                             </div>
                         {% endif %}
 
@@ -599,14 +603,28 @@
                                    onchange="this.blur();">
                             <datalist id="aspect-attr">
                                 <option value='Habitual'>
+                                <option value='Imperfective'>
+                                <option value='Process'>
+                                <option value='Atelic Process'>
+                                <option value='Perfective'>
+                                <option value='State'>
                                 <option value='Activity'>
                                 <option value='Endeavor'>
                                 <option value='Performance'>
-                                <option value='State'>
-                                <option value='Process'>
-                                <option value='Imperfective'>
-                                <option value='Perfective'>
-                                <option value='Atelic-Process'>
+                                <option value='Reversible State'>
+                                <option value='Irreversible State'>
+                                <option value='Inherent State'>
+                                <option value='Point State'>
+                                <option value='Undirected Activity'>
+                                <option value='Directed Activity'>
+                                <option value='Semelfactive'>
+                                <option value='Undirected Endeavor'>
+                                <option value='Directed Endeavor'>
+                                <option value='Incremental Accomplishment'>
+                                <option value='Nonincremental Accomplishment'>
+                                <option value='Directed Achievement'>
+                                <option value='Reversible Directed Achievement'>
+                                <option value='Irreversible Directed Achievement'>
                             </datalist>
                             {#    <input type="submit" onclick="submit_attribute('attribute_values1'); clearInput(); ">#}
                         </div>
@@ -643,13 +661,13 @@
                             <input list="refer-person-attr" name="attribute_values4" id="attribute_values4" onfocus="this.value=''"
                                    onchange="this.blur();">
                             <datalist id="refer-person-attr">
+                                <option value="non-3rd">
+                                <option value="non-1st">
                                 <option value="1st">
                                 <option value="2nd">
                                 <option value="3rd">
-                                <option value="non-1st">
-                                <option value="non-3rd">
-                                <option value="Incl.">
-                                <option value="Excl.">
+                                <option value="incl.">
+                                <option value="excl.">
                             </datalist>
                             {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
                         </div>
@@ -661,10 +679,14 @@
                                    onchange="this.blur();">
                             <datalist id="refer-number-attr">
                                 <option value="Singular">
-                                <option value="Dual">
-                                <option value="Trial">
+                                <option value="Non-singular">
                                 <option value="Paucal">
                                 <option value="Plural">
+                                <option value="Dual">
+                                <option value="Non-dual Paucal">
+                                <option value="Greater Plural">
+                                <option value="Trial">
+                                <option value="Non-trial Paucal">
                             </datalist>
                             {#    <input type="submit" onclick="submit_attribute('attribute_values2')">#}
                         </div>
@@ -700,8 +722,6 @@
                             <datalist id="modals">
                                 <option value=":QUOT">
                                 <option value=":MOD">
-                                <option value=":PURP">
-                                <option value=":COND">
                                 <option value=":MODSTR">
                             </datalist>
                         </div>
@@ -713,13 +733,24 @@
                             <label for="modstr-values1">MODSTR Values</label>
                             <input list="modstr-values" name="modstr_values1" id="modstr-values1" onfocus="this.value=''" onchange="this.blur();">
                             <datalist id="modstr-values">
-                                <option value="AFF">
-                                <option value="NEUTAFF">
-                                <option value="PARTAFF">
-                                <option value="NEUT">
-                                <option value="NEG">
-                                <option value="NEUTNEG">
-                                <option value="PARTNEG">
+                                <option value="Non-NeutAff">
+                                <option value="Non-FullAff">
+                                <option value="Non-NeutNeg">
+                                <option value="Non-FullNeg">
+                                <option value="FullAff">
+                                <option value="PrtAff">
+                                <option value="NeutAff">
+                                <option value="FullNeg">
+                                <option value="PrtNeg">
+                                <option value="NeutNeg">
+                                <option value="Strong-PrtAff">
+                                <option value="Weak-PrtAff">
+                                <option value="Strong-NeutAff">
+                                <option value="Weak-NeutAff">
+                                <option value="Strong-PrtNeg">
+                                <option value="Weak-PrtNeg">
+                                <option value="Strong-NeutNeg">
+                                <option value="Weak-NeutNeg">
                             </datalist>
                         </div>
                     </td>
@@ -777,6 +808,7 @@
             colorAnnotatedSents('{{ annotated_sent_ids }}');
             load_history('{{ curr_sent_umr|tojson|safe }}');
             selectEvent();
+            customizeOptions();
         </script>
     <div>
 {% endblock content2 %}
