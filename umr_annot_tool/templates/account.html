@@ -7,40 +7,23 @@
 
 {% block content %}
      <div class="content-section">
-        <legend class="border-bottom mb-4">Projects(admin)</legend>
+        <legend class="border-bottom mb-4">Projects</legend>
         <input type="text" id="typed_project_name">
         <button onclick="addProj()">add new project</button>
         <ul class="list-group" id="adminDocs">
-            {% for adminProject in adminProjects %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" id="project-{{ adminProject.project_id }}">
-                    <a href="{{ url_for('users.project', project_id=adminProject.project_id)}}">
-                        {{adminProject.project_name}}
+            {% for project in projects %}
+                <li class="list-group-item d-flex justify-content-between align-items-center" id="project-{{ project.project_id }}">
+                    <a href="{{ url_for('users.project', project_id=project.project_id)}}">
+                        {{project.project_name}} ({{ project.permission }})
                     </a>
-
-                    <label class="switch" title="public viewable">
-                      <input type="checkbox">
-                      <span class="slider"></span>
-                    </label>
+                    {% if project.permission == 'admin' %}
+                        <label class="switch" title="public viewable: if this button is switched on, not only members of this project, any registered users from other projects can see your annotation through search">
+                          <input type="checkbox">
+                          <span class="slider"></span>
+                        </label>
+                    {% endif %}
                     <span class="badge">
-                        <span class="btn btn-xs btn-default" onclick="rmProj({{ adminProject.project_id }}); event.stopPropagation();">
-                            x
-                        </span>
-                    </span>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div class="content-section">
-        <legend class="border-bottom mb-4">Projects(member)</legend>
-        <ul class="list-group">
-            {% for memberProject in memberProjects %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" id="project-{{ memberProject.project_id }}">
-                    <a href="{{ url_for('users.project', project_id=memberProject.project_id)}}">
-                        {{memberProject.project_name}}
-                    </a>
-                    <span class="badge">
-                        <span class="btn btn-xs btn-default" onclick="rmProj({{ memberProject.project_id }}); event.stopPropagation();">
+                        <span class="btn btn-xs btn-default" onclick="rmProj({{ project.project_id }}); event.stopPropagation();">
                             x
                         </span>
                     </span>

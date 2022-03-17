@@ -1,4 +1,7 @@
 function rmDoc(doc_id){
+    //to remove an unassigned document,1. all annotations in annotation table with the doc_id will be deleted
+    //2. all sents in sent table with the doc_id will be deleted
+    //3. all docs in doc table with the doc_id will be deleted
     if (confirm("Are you sure you want to delete the whole document from database?")) {
         document.getElementById("docIdInDb-"+doc_id).remove(); //remove from list
         fetch(`/account`, {
@@ -73,10 +76,23 @@ function addProj(){
         li.setAttribute("class", "list-group-item d-flex justify-content-between align-items-center");
         li.setAttribute("id", `project-${adminProjectId}`);
 
+        //project name (permission status)
         let a = document.createElement("a");
         a.setAttribute("href", `/project/${adminProjectId}`);
-        a.innerText = project_name;
+        a.innerText = project_name + "(admin)"; //because the user created this project default to have admin permission
         li.append(a);
+        //public viewable toggle button
+        let label = document.createElement('label');
+        label.setAttribute("class", "switch");
+        label.setAttribute('title', 'public viewable: if this button is switched on, not only members of this project, any registered users from other projects can see your annotation through search');
+        let input = document.createElement('input');
+        input.setAttribute('type', 'checkbox');
+        let span3=document.createElement('span');
+        span3.setAttribute('class', 'slider');
+        label.append(input);
+        label.append(span3);
+        li.append(label);
+        //delete project button
         let span1 = document.createElement('span');
         span1.setAttribute("class", "badge");
         let span2 = document.createElement('span');
@@ -85,6 +101,7 @@ function addProj(){
         span2.innerText = "x";
         span1.append(span2);
         li.append(span1);
+
         ul.append(li);
     }).catch(function(error){
         console.log("Fetch error: "+ error);
@@ -95,7 +112,7 @@ function rmProj(project_id){
     //to remove a project: 1, remove all rows contains the project_id in projectuser table;
     // 2. remove the row with the project_id as id in project table
     // 3. remove all the docs under the project: that include rows in annotation, sent and doc tables
-    if (confirm("Are you sure you want to delete the every document under this project from database?")) {
+    if (confirm("Are you sure you want to delete the every document and annotation under this project from database?")) {
         document.getElementById("project-"+project_id).remove(); //remove project from list
         fetch(`/account`, {
             method: 'POST',
