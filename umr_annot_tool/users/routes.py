@@ -4,7 +4,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project
+from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from umr_annot_tool.permission import EditProjectPermission
 from sqlalchemy.orm.attributes import flag_modified
@@ -98,7 +98,7 @@ def account():
         try:
             # click on the x sign to delete a single document
             to_delete_doc_id = request.get_json(force=True)["delete_id"]
-            if to_delete_doc_id and to_delete_doc_id != 0:
+            if to_delete_doc_id != 0:
                 Annotation.query.filter(Annotation.doc_id == to_delete_doc_id,
                                         Annotation.user_id == current_user.id).delete()
                 Sent.query.filter(Sent.doc_id == to_delete_doc_id, Sent.user_id == current_user.id).delete()
@@ -106,19 +106,25 @@ def account():
 
             # click on the x sign to delete all documents under a project
             to_delete_project_id = request.get_json(force=True)["delete_project"]
-            if to_delete_project_id and to_delete_project_id !=0:
-                Projectuser.query.filter(Projectuser.project_id == to_delete_project_id, Projectuser.user_id == current_user.id).delete()
+            print("to_delete_project_id", to_delete_project_id)
+            if to_delete_project_id !=0:
+                Projectuser.query.filter(Projectuser.project_id == to_delete_project_id).delete()
                 Project.query.filter(Project.id==to_delete_project_id).delete()
                 to_delete_doc_ids = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
                 for to_delete_doc in to_delete_doc_ids:
-                    Annotation.query.filter(Annotation.doc_id == to_delete_doc.id, Annotation.user_id == current_user.id).delete()
-                    Sent.query.filter(Sent.doc_id == to_delete_doc.id, Sent.user_id == current_user.id).delete()
-                    Doc.query.filter(Doc.id == to_delete_doc.id, Doc.user_id == current_user.id).delete()
+                    Annotation.query.filter(Annotation.doc_id == to_delete_doc.id).delete()
+                    Sent.query.filter(Sent.doc_id == to_delete_doc.id).delete()
+                    Doc.query.filter(Doc.id == to_delete_doc.id).delete()
 
             # click on add new project button to add new project
             new_project_name = request.get_json(force=True)["new_project_name"]
             if new_project_name:
-                new_project = Project(project_name=new_project_name)
+                hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
+                qc = User(username=f"{new_project_name}_{current_user.id}_qc", email=f'{new_project_name}@qc.com', password=hashed_password)
+                db.session.add(qc)
+                db.session.commit()
+
+                new_project = Project(project_name=new_project_name, qc=qc.id)
                 db.session.add(new_project)
                 db.session.commit()
 
@@ -131,18 +137,17 @@ def account():
                 return make_response(jsonify({"adminProjectId": admin_projects.project_id}), 200)
             db.session.commit()
         except:
-            print("deleting doc from database is failed")
+            print("deleting doc from database failed")
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
-    adminProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.permission == "admin").all()
-    memberProjects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.permission == "admin").all()
+    projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs,
-                           adminProjects=adminProjects, memberProjects=memberProjects)
+                           projects=projects)
 
 @login_required
 @users.route("/project/<int:project_id>", methods=['GET', 'POST'])
@@ -152,43 +157,91 @@ def project(project_id):
     if request.method == 'POST':
         try:
             update_doc_id = request.get_json(force=True)["update_doc_id"]
+            print("update_doc_id:", update_doc_id)
             update_doc_project_id = request.get_json(force=True)["update_doc_project_id"]
+            print("update_doc_project_id:", update_doc_project_id)
             new_member_name = request.get_json(force=True)["new_member_name"]
+            print("new_member_name", new_member_name)
             remove_member_id = request.get_json(force=True)["remove_member_id"]
-            edit_permission_memeber_id = request.get_json(force=True)["edit_permission_member_id"]
+            print("remove_member_id", remove_member_id)
+            edit_permission_member_id = request.get_json(force=True)["edit_permission_member_id"]
+            print("edit_permission_member_id", edit_permission_member_id)
             edit_permission = request.get_json(force=True)["edit_permission"]
+            print("edit_permission:", edit_permission)
+            annotated_doc_id = request.get_json(force=True)["annotated_doc_id"]
+            print("annotated_doc_id:", annotated_doc_id)
+            delete_annot_doc_id = request.get_json(force=True)["delete_annot_doc_id"]
+            print("delete_annot_doc_id:", delete_annot_doc_id)
+            add_qc_doc_id = request.get_json(force=True)["add_qc_doc_id"]
+            print("add_qc_doc_id:", add_qc_doc_id)
+            rm_qc_doc_id=request.get_json(force=True)["rm_qc_doc_id"]
+            print("rm_qc_doc_id", rm_qc_doc_id)
             if new_member_name:
                 try:
                     new_member_user_id = User.query.filter(User.username==new_member_name).first().id
                     project_name = Project.query.filter(Project.id==project_id).first().project_name
-                    projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="admin", project_id=project_id)
+                    projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="view", project_id=project_id)
                     db.session.add(projectuser)
                     db.session.commit()
-                    return make_response(jsonify({"new_member_user_id": new_member_user_id}), 200)
+                    # return make_response(jsonify({"new_member_user_id": new_member_user_id}), 200)
                 except:
                     print('username does not exist')
                     return redirect(url_for('users.project', project_id=project_id))
             elif remove_member_id !=0:
                 Projectuser.query.filter(Projectuser.user_id==remove_member_id, Projectuser.project_id==project_id).delete()
                 db.session.commit()
-            elif update_doc_project_id !=0:
+            elif update_doc_id !=0:
+                print("haha")
                 doc = Doc.query.filter(Doc.id == update_doc_id, Doc.user_id == current_user.id).first()
+                print(doc)
+                print(doc.project_id)
                 doc.project_id = update_doc_project_id
+                print(doc.project_id)
                 flag_modified(doc, 'project_id')
                 logging.info(f"doc {doc.id} committed: project{doc.project_id}")
                 logging.info(db.session.commit())
                 db.session.commit()
-            elif edit_permission and edit_permission_memeber_id!=0:
-                projectuser = Projectuser.query.filter(Projectuser.user_id == edit_permission_memeber_id, Projectuser.project_id==project_id).first()
+            elif edit_permission and edit_permission_member_id!=0:
+                projectuser = Projectuser.query.filter(Projectuser.user_id == edit_permission_member_id, Projectuser.project_id==project_id).first()
                 projectuser.permission = edit_permission
                 flag_modified(projectuser, 'project_id')
                 logging.info(f"project {projectuser.id} permission changed to {projectuser.permission}")
                 logging.info(db.session.commit())
                 db.session.commit()
+            elif annotated_doc_id !=0:
+                print("I am here 33")
+                if not Annotation.query.filter(Annotation.doc_id==annotated_doc_id, Annotation.user_id==current_user.id).all():
+                    annotation = Annotation(annot_str='', doc_annot='', alignment='', author=current_user,
+                                            sent_id=1,
+                                            doc_id=annotated_doc_id,
+                                            umr={}, doc_umr={})
+                    logging.info(f"User {current_user.id} committed:")
+                    db.session.add(annotation)
+                    logging.info(db.session.commit())
+            elif delete_annot_doc_id !=0:
+                print("I am here 34")
+                Annotation.query.filter(Annotation.user_id==current_user.id, Annotation.doc_id==delete_annot_doc_id).delete()
+                logging.info(db.session.commit())
+            elif add_qc_doc_id !=0: # add to Quality Control
+                qc_id = Project.query.filter(Project.id == project_id).first().qc
+                qc = User.query.filter(User.id==qc_id).first()
+                member_annotations = Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == current_user.id).all()
+                for a in member_annotations:
+                    qc_annotation = Annotation(annot_str=a.annot_str, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
+                                            sent_id=a.sent_id, doc_id=a.doc_id, umr=a.umr, doc_umr=a.doc_umr)
+                    db.session.add(qc_annotation)
+                docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
+                db.session.add(docqc)
+                logging.info(db.session.commit())
+            elif rm_qc_doc_id != 0: # delete from Quality Control
+                current_qc_id = Project.query.filter(Project.id==project_id).first().qc
+                Annotation.query.filter(Annotation.user_id==current_qc_id, Annotation.doc_id==rm_qc_doc_id).delete()
+                Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==rm_qc_doc_id).delete()
+                logging.info(db.session.commit())
         except:
             print("updating project in database is failed")
 
-    project_admin_row = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission == "admin").first()
+
     project_members = Projectuser.query.filter(Projectuser.project_id == project_id).all()
     members = []
     permissions = []
@@ -201,17 +254,37 @@ def project(project_id):
     project_permission = EditProjectPermission(project_id)
     project_name = Project.query.filter(Project.id==project_id).first().project_name
 
-    projectDocs = Doc.query.filter(Doc.user_id == project_admin_row.user_id, Doc.project_id == project_id).all()
-    otherDocs = Doc.query.filter(Doc.user_id == project_admin_row.user_id, Doc.project_id == 0).all()
+    projectDocs = Doc.query.filter(Doc.project_id == project_id).all()
+    checked_out_by = [''] # add a dummy index because the loop index in jinja2 starts from 1
+    unassignedDocs = Doc.query.filter(Doc.project_id == 0, Doc.user_id==current_user.id).all()
+    qcAnnotations = Annotation.query.filter(Annotation.user_id==Project.query.get(int(project_id)).qc, Annotation.sent_id==1).all() #when add to my annotation, anntation row of sent1 got added in Annotation table, therefore check if there is annotation for sent1
+    qcDocs = []
+    qcUploaders = [''] #dummy name in the beginning because jinja loop index start from 1
+    for qca in qcAnnotations:
+        qcDocs.append(Doc.query.filter(Doc.id==qca.doc_id).first())
+        uploader_id = Docqc.query.filter(Docqc.doc_id==qca.doc_id, Docqc.project_id==project_id).first().upload_member_id
+        qcUploaders.append(User.query.filter(User.id==uploader_id).first().username)
+    annotatedDocs = []
+    for projectDoc in projectDocs:
+        if Annotation.query.filter(Annotation.doc_id == projectDoc.id, Annotation.user_id==current_user.id).all():
+            annotatedDocs.append(projectDoc)
+        checked_out_docs = Annotation.query.filter(Annotation.doc_id == projectDoc.id).all()
+        current_checked_out_by = set()
+        if checked_out_docs:
+            for d in checked_out_docs:
+                user_name = User.query.filter(User.id==d.user_id).first().username
+                if not user_name.endswith('_qc'):
+                    current_checked_out_by.add(user_name)
+        checked_out_by.append(list(current_checked_out_by))
 
     if admin_permission.can() and project_permission.can():
         return render_template('admin_project.html', title='admin_project', project_name=project_name, project_id=project_id,
-                                members=members, permissions=permissions, member_ids=member_ids,
-                               projectDocs=projectDocs, otherDocs=otherDocs)
+                                members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
+                               projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs)
     else:
         return render_template('member_project.html', title='admin_project', project_name=project_name, project_id=project_id,
-                                members=members, permissions=permissions, member_ids=member_ids,
-                               projectDocs=projectDocs)
+                                members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
+                               projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs)
 
 @users.route("/user/<string:username>")
 def user_posts(username):
@@ -260,6 +333,7 @@ def search(project_id):
     member_id = request.args.get('member_id', 0)
     search_umr_form = SearchUmrForm()
     umr_results = []
+    sent_results = []
 
     if search_umr_form.validate_on_submit():
         concept = search_umr_form.concept.data
@@ -279,12 +353,21 @@ def search(project_id):
                 umr_dict = dict(annot.umr)
                 for value in umr_dict.values():
                     if (concept and concept in str(value)) or (word and getLemma(word, upos="VERB")[0] in str(value)):
+                        # todo: bug: sent didn't got returned
+                        sent = Sent.query.filter(Sent.id == annot.sent_id).first()
                         umr_results.append(annot.annot_str)
+                        sent_results.append(sent)
                     elif triple:
                         if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
                             k = list(umr_dict.keys())[list(umr_dict.values()).index(value)]
                             if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
+                                sent = Sent.query.filter(Sent.id == annot.sent_id).first()
                                 umr_results.append(annot.annot_str)
+                                sent_results.append(sent)
+
+    return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results = sent_results)
+
+
 
 # annotation lattices
 @users.route('/discourse', methods=['GET', 'POST'])
