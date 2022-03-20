@@ -145,6 +145,7 @@ def sentlevel(doc_sent_id):
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
 
+    curr_annotation_string = Annotation.query.filter(Annotation.doc_id==doc.id, Annotation.sent_id==snt_id, Annotation.user_id==current_user.id).first().annot_str.strip()
     if request.method == 'POST':
         # add to db
         logging.info("post request received")
@@ -222,7 +223,8 @@ def sentlevel(doc_sent_id):
                                content_string=doc.content.replace('\n', '<br>'),
                                annotated_sent_ids= annotated_sent_ids,
                                project_name=project_name,
-                               admin=admin)
+                               admin=admin,
+                               curr_annotation_string=curr_annotation_string)
     else:
         return render_template('sentlevel_member.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                                info2display=info2display,
