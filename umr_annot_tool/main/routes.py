@@ -183,7 +183,7 @@ def sentlevel(doc_sent_id):
             msg_category = 'danger'
 
     try:
-        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id).first().umr
+        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id, Annotation.user_id==current_user.id).first().umr
     except:
         curr_sent_umr = {}
 
