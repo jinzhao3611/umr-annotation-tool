@@ -242,32 +242,20 @@ def sentlevel(doc_sent_id):
         project_name=""
         admin=current_user
 
-    project_permission = EditProjectPermission(project_id)
-    admin_permission = Permission(RoleNeed('admin'))
+    # project_permission = EditProjectPermission(project_id)
+    # admin_permission = Permission(RoleNeed('admin'))
 
-    if (admin_permission.can() and project_permission.can()) or project_id==0: #unassigned documents belong to project_id 0
-        return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                               info2display=info2display,
-                               frame_dict=json.dumps(frame_dict),
-                               curr_sent_umr=curr_sent_umr,
-                               exported_items=exported_items,
-                               file_format=doc.file_format,
-                               content_string=doc.content.replace('\n', '<br>'),
-                               annotated_sent_ids= annotated_sent_ids,
-                               project_name=project_name,
-                               admin=admin,
-                               curr_annotation_string=curr_annotation_string)
-    else:
-        return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                               info2display=info2display,
-                               frame_dict=json.dumps(frame_dict),
-                               curr_sent_umr=curr_sent_umr,
-                               exported_items=exported_items,
-                               file_format=doc.file_format,
-                               content_string=doc.content.replace('\n', '<br>'),
-                               annotated_sent_ids=annotated_sent_ids,
-                               project_name=project_name,
-                               admin=admin)
+    return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
+                           info2display=info2display,
+                           frame_dict=json.dumps(frame_dict),
+                           curr_sent_umr=curr_sent_umr,
+                           exported_items=exported_items,
+                           file_format=doc.file_format,
+                           content_string=doc.content.replace('\n', '<br>'),
+                           annotated_sent_ids= annotated_sent_ids,
+                           project_name=project_name,
+                           admin=admin,
+                           curr_annotation_string=curr_annotation_string)
 
 @main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevelview(doc_sent_id):
