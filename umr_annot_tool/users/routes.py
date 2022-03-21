@@ -209,15 +209,29 @@ def project(project_id):
                 logging.info(f"project {projectuser.id} permission changed to {projectuser.permission}")
                 logging.info(db.session.commit())
                 db.session.commit()
-            elif annotated_doc_id !=0:
+            elif annotated_doc_id !=0: #add to My Annotations
                 print("I am here 33")
+                # find dummy user
+                dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
+                print(dummy_user_id)
                 if not Annotation.query.filter(Annotation.doc_id==annotated_doc_id, Annotation.user_id==current_user.id).all():
-                    annotation = Annotation(annot_str='', doc_annot='', alignment='', author=current_user,
-                                            sent_id=1,
-                                            doc_id=annotated_doc_id,
-                                            umr={}, doc_umr={})
+                    for i in range(len(Sent.query.filter(Sent.doc_id==annotated_doc_id).all())):
+                        # find the annotation rows belong to dummy
+                        dummy_annotation = Annotation.query.filter(Annotation.doc_id==annotated_doc_id, Annotation.sent_id==i+1, Annotation.user_id==dummy_user_id).first()
+                        if dummy_annotation:
+                            print('I am here 35')
+                            annotation = Annotation(annot_str=dummy_annotation.annot_str, doc_annot=dummy_annotation.doc_annot, alignment=dummy_annotation.alignment, author=current_user,
+                                                sent_id=dummy_annotation.sent_id, doc_id=dummy_annotation.doc_id, umr=dummy_annotation.umr, doc_umr=dummy_annotation.doc_umr)
+                            db.session.add(annotation)
+                        else:
+                            print('I am here 36')
+                            annotation = Annotation(annot_str='',
+                                                    doc_annot='',
+                                                    alignment='', author=current_user,
+                                                    sent_id=i+1, doc_id=annotated_doc_id,
+                                                    umr={}, doc_umr={})
+                            db.session.add(annotation)
                     logging.info(f"User {current_user.id} committed:")
-                    db.session.add(annotation)
                     logging.info(db.session.commit())
             elif delete_annot_doc_id !=0:
                 print("I am here 34")
@@ -277,6 +291,7 @@ def project(project_id):
                 if not user_name.endswith('_qc') and user_name != 'dummy_user':
                     current_checked_out_by.add(user_name)
         checked_out_by.append(list(current_checked_out_by))
+    print('annotatedDocs: ', annotatedDocs)
 
     if admin_permission.can() and project_permission.can():
         return render_template('admin_project.html', title='admin_project', project_name=project_name, project_id=project_id,
