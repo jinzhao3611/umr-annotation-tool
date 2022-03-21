@@ -98,11 +98,12 @@ def account():
         try:
             # click on the x sign to delete a single document
             to_delete_doc_id = request.get_json(force=True)["delete_id"]
-            if to_delete_doc_id != 0:
-                Annotation.query.filter(Annotation.doc_id == to_delete_doc_id,
-                                        Annotation.user_id == current_user.id).delete()
-                Sent.query.filter(Sent.doc_id == to_delete_doc_id, Sent.user_id == current_user.id).delete()
-                Doc.query.filter(Doc.id == to_delete_doc_id, Doc.user_id == current_user.id).delete()
+            print("to_delete_doc_id: ", to_delete_doc_id)
+            if to_delete_doc_id != 0: #delete whole document include everybody's annotation
+                Docqc.query.filter(Docqc.doc_id == to_delete_doc_id).delete()
+                Annotation.query.filter(Annotation.doc_id == to_delete_doc_id).delete()
+                Sent.query.filter(Sent.doc_id == to_delete_doc_id).delete()
+                Doc.query.filter(Doc.id == to_delete_doc_id).delete()
 
             # click on the x sign to delete all documents under a project
             to_delete_project_id = request.get_json(force=True)["delete_project"]
