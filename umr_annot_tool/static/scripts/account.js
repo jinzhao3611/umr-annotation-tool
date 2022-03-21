@@ -13,7 +13,6 @@ function rmDoc(doc_id){
     } else {
         alert('canceled');
     }
-    location.reload();
 }
 
 function addDocToProj(doc_id, project_id){
