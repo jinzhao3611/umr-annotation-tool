@@ -20,7 +20,7 @@ from itertools import accumulate
 import operator
 import bs4
 from bs4 import BeautifulSoup
-import re
+import re, regex
 from typing import NamedTuple, Optional, List
 import json
 
@@ -55,7 +55,39 @@ def amr_text2html(plain_text: str) -> str:
     html_string = '<div id="amr">' + html_string + '</div>\n'
     return html_string
 
-def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str], str, str]:
+def process_exported_file_temporary(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str]]:
+    """
+    example file:
+    :param content_string:
+    :return: doc_content_string: Edmund Pope tasted freedom today for the first time in more than eight months .\nHe denied any wrongdoing .
+             sents: [['Edmund', 'Pope', 'tasted', 'freedom', 'today', 'for', 'the', 'first', 'time', 'in', 'more', 'than', 'eight', 'months', '.'], ['He', 'denied', 'any', 'wrongdoing', '.']]
+             sent_annots: ['<div id="amr">(s1t&nbsp;/&nbsp;taste-01)<br>\n<div>\n', '<div id="amr">(s2d&nbsp;/&nbsp;deny-01)<br>\n<div>\n']
+             doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
+             aligns: ['taste-01(s1t): 3-3', 'deny-01(s2d): 2-2']
+    """
+    doc_content_string = ""
+    sents = []
+    sent_annots = []
+    doc_annots = []
+    aligns=[]
+    root = ET.fromstring(content_string)
+    for child in root:
+        if child.tag =='sntamr':
+            for child2 in child:
+                if child2.tag == 'amr':
+                    amr = regex.sub(r'(\()([a-z][0-9]? /)', rf'\1s{str(len(sent_annots)+1)}\2', child2.text)
+                    sent_annots.append(amr)
+
+                elif child2.tag == 'sentence':
+                    doc_content_string += '\n'+child2.text
+                    sents.append(child2.text.split())
+                    doc_annots.append("")
+                    aligns.append("")
+
+    return doc_content_string.strip(), sents, sent_annots, doc_annots, aligns
+
+
+def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str]]:
     """
     example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/exported_sample_snts_english.txt
     :param content_string:
@@ -64,8 +96,6 @@ def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], Li
              sent_annots: ['<div id="amr">(s1t&nbsp;/&nbsp;taste-01)<br>\n<div>\n', '<div id="amr">(s2d&nbsp;/&nbsp;deny-01)<br>\n<div>\n']
              doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
              aligns: ['taste-01(s1t): 3-3', 'deny-01(s2d): 2-2']
-             user_id: 1
-             lang: English
     """
     items = content_string.split("#")[:-1]
     doc_content_string = content_string.split("#")[-1].replace(' Source File: \n', '')
@@ -108,7 +138,7 @@ def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], Li
     doc_annots = [re.sub('\n','', amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip()) )for doc_annot in
                   doc_annot_list]
     print(doc_annots)
-    return doc_content_string, sents, sent_annots, doc_annots, aligns, user_id, lang
+    return doc_content_string, sents, sent_annots, doc_annots, aligns
 
 def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
     """
@@ -131,7 +161,7 @@ def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
     df_htmls = []
     sents = []
     sents_html = ''
-    if file_format == 'plain_text' or file_format == 'exported_file': # split content string into List[List[str]]
+    if file_format == 'plain_text' or file_format == 'exported_file' or file_format== 'temporary': # split content string into List[List[str]]
         sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
         sents_df = pd.DataFrame(content_string.strip().split('\n'))
         sents_df.index = sents_df.index + 1
