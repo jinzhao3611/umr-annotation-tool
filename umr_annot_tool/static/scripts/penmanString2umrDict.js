@@ -5,9 +5,10 @@ let allLanguageChars = "\\u0041-\\u005A\\u0061-\\u007A\\u00AA\\u00B5\\u00BA\\u00
  * @param annotText
  * @param loc: location of the node being processed now
  * @param state
+ * @param umr_dict: umr dictionary needed to be populated
  * @returns {*}
  */
-function string2umr_recursive(annotText, loc, state) {
+function string2umr_recursive(annotText, loc, state, umr_dict) {
     annotText = strip2(annotText);
     if (state === 'pre-open-parenthesis') {
         annotText = annotText.replace(/^[^(]*/, ""); // remove everything at the start point until the open parenthesis
@@ -33,7 +34,7 @@ function string2umr_recursive(annotText, loc, state) {
             // THIS BLOCK ADD 1.c and RECORD CONCEPT
             let pattern5 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*(?:-\\d+)?$` //match something like quick-01
             if (concept.match(new RegExp(pattern5))) { //match something like quick-01, or quick
-                umr[loc + '.c'] = concept;
+                umr_dict[loc + '.c'] = concept;
                 recordConcept(concept, loc);
                 variable2concept[variable] = concept;
             } else { //todo: how to envoke this
@@ -46,47 +47,53 @@ function string2umr_recursive(annotText, loc, state) {
                 }
                 new_concept = new_concept.replace(/(\d)\D+$/, "$1");
                 new_concept = new_concept.replace(/([a-z])(\d)/, "$1-$2");
-                umr[loc + '.c'] = new_concept;
+                umr_dict[loc + '.c'] = new_concept;
                 recordConcept(new_concept, loc);
                 variable2concept[variable] = new_concept;
             }
             // THIS BLOCK ADD 1.v AND RECORD VARIABLE
             if (getLocs(variable)) { // if variable already exists
                 new_variable = newVar(concept);
-                umr[loc + '.v'] = new_variable;
+                umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
             } else if (variablesInUse[variable + '.conflict']) {
-                umr[loc + '.v'] = variable;
+                umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
             } else if (!variable.match(/^s\d*[a-z]\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
                 new_variable = newVar(concept);
-                umr[loc + '.v'] = new_variable;
+                umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
             } else { //this is the most common case
-                umr[loc + '.v'] = variable;
+                umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
             }
-            umr[loc + '.s'] = '';
-            umr[loc + '.n'] = 0;
-            annotText = string2umr_recursive(annotText, loc, 'post-concept');
+            umr_dict[loc + '.s'] = '';
+            umr_dict[loc + '.n'] = 0;
+            let result = string2umr_recursive(annotText, loc, 'post-concept', umr_dict);
+            annotText = result[0];
+            umr_dict = result[1];
             annotText = annotText.replace(/^[^)]*/, ""); // remove anything that is not ) at the start positions until ) appears
             annotText = annotText.replace(/^\)/, ""); // remove ) at the start position
         } else {
-            if (umr[loc + '.r']) {
+            if (umr_dict[loc + '.r']) {
                 var string_arg = 'MISSING-VALUE';
-                umr[loc + '.s'] = string_arg;
-                umr[loc + '.c'] = '';
-                umr[loc + '.v'] = '';
-                umr[loc + '.n'] = 0;
+                umr_dict[loc + '.s'] = string_arg;
+                umr_dict[loc + '.c'] = '';
+                umr_dict[loc + '.v'] = '';
+                umr_dict[loc + '.n'] = 0;
             } else {
-                umr[loc + '.d'] = 1;
+                umr_dict[loc + '.d'] = 1;
             }
             if (annotText.match(/^\(/)) { // )
                 annotText = annotText.replace(/^\(/, ""); // )
-                if (umr[loc + '.r']) {
-                    annotText = string2umr_recursive(annotText, loc, 'post-concept');
+                if (umr_dict[loc + '.r']) {
+                    let result = string2umr_recursive(annotText, loc, 'post-concept', umr_dict);
+                    annotText = result[0];
+                    umr_dict = result[1];
                 } else {
-                    annotText = string2umr_recursive(annotText, loc, 'pre-open-parenthesis');
+                    let result = string2umr_recursive(annotText, loc, 'pre-open-parenthesis', umr_dict);
+                    annotText = result[0];
+                    umr_dict = result[1];
                 }
             }
         }
@@ -96,9 +103,9 @@ function string2umr_recursive(annotText, loc, state) {
         let open_para_follows_p = annotText.match(/^\(/); // match ( in the beginning
         let role;
         if (role_follows_p || open_para_follows_p) {
-            let n_children = umr[loc + '.n'];
+            let n_children = umr_dict[loc + '.n'];
             n_children++;
-            umr[loc + '.n'] = n_children;
+            umr_dict[loc + '.n'] = n_children;
             let new_loc = loc + '.' + n_children;
             if (role_follows_p) {
                 let roleList = annotText.match(/^:[a-z][-_a-z0-9]*/i); // match the role :actor
@@ -107,13 +114,19 @@ function string2umr_recursive(annotText, loc, state) {
             } else { //if there is no role follows parenthesis todo: don't allow to go here?
                 role = ':mod'; // default
             }
-            umr[new_loc + '.r'] = role;
+            umr_dict[new_loc + '.r'] = role;
             if (annotText.match(/^\s*\(/)) { // match ( with or without space in the begining
-                annotText = string2umr_recursive(annotText, new_loc, 'pre-open-parenthesis');
+                let result = string2umr_recursive(annotText, new_loc, 'pre-open-parenthesis', umr_dict);
+                annotText = result[0];
+                umr_dict = result[1];
             } else {
-                annotText = string2umr_recursive(annotText, new_loc, 'post-role');
+                let result = string2umr_recursive(annotText, new_loc, 'post-role', umr_dict);
+                annotText = result[0];
+                umr_dict = result[1];
             }
-            annotText = string2umr_recursive(annotText, loc, 'post-concept');
+            let result = string2umr_recursive(annotText, loc, 'post-concept', umr_dict);
+            annotText = result[0];
+            umr_dict = result[1];
         }
     } else if (state == 'post-role') { // expecting string, number, or variable
         if (annotText.match(/^\s/)) {
@@ -153,13 +166,15 @@ function string2umr_recursive(annotText, loc, state) {
         } else {
             string_arg = 'MISSING-VALUE';
         }
-        umr[loc + '.s'] = string_arg;
-        umr[loc + '.c'] = '';
-        umr[loc + '.v'] = variable_arg;
+        umr_dict[loc + '.s'] = string_arg;
+        umr_dict[loc + '.c'] = '';
+        umr_dict[loc + '.v'] = variable_arg;
         var head_loc = loc.replace(/\.\d+$/, "");
-        annotText = string2umr_recursive(annotText, head_loc, 'post-concept');
+        let result = string2umr_recursive(annotText, head_loc, 'post-concept', umr_dict);
+        annotText = result[0];
+        umr_dict = result[1];
     }
-    return annotText;
+    return [annotText, umr_dict];
 }
 
 /**
@@ -169,8 +184,8 @@ function string2umr_recursive(annotText, loc, state) {
  */
 function string2umr(annotText) {
     let loc; // current graph location we are dealing with
-    umr = {};
-    umr['n'] = 0;
+    let umr_dict = {};
+    umr_dict['n'] = 0;
     variables = {};
     concepts = {};
     variablesInUse = {};
@@ -190,22 +205,26 @@ function string2umr(annotText) {
         let prev_s_length = annotText.length; // 16
         let root_index = 1; // keep track of how many roots (how many graphs)
         loc = root_index + '';
-        umr['n'] = 1;
-        annotText = string2umr_recursive(annotText + ' ', loc, 'pre-open-parenthesis');
+        umr_dict['n'] = 1;
+        let result = string2umr_recursive(annotText + ' ', loc, 'pre-open-parenthesis', umr_dict);
+        annotText = result[0];
+        umr_dict = result[1];
         while (annotText.match(/^\s*[()]/) && (annotText.length < prev_s_length)) { // match ( ) regardless of space, and the annotText gets shorter
             root_index++;
             loc = root_index + '';
             prev_s_length = annotText.length;
-            annotText = string2umr_recursive(annotText + ' ', loc, 'pre-open-parenthesis');
+            let result = string2umr_recursive(annotText + ' ', loc, 'pre-open-parenthesis', umr_dict);
+            annotText = result[0];
+            umr_dict = result[1];
             if (annotText.length < prev_s_length) {
-                umr['n'] = umr['n'] + 1;
+                umr_dict['n'] = umr_dict['n'] + 1;
             }
         }
     } else {
-        umr['n'] = 0;
+        umr_dict['n'] = 0;
     }
     variablesInUse = new Object();
-    return strip(annotText);
+    return umr_dict;
 }
 
 /**
@@ -215,7 +234,7 @@ function string2umr(annotText) {
  */
 function text2umr(annotText="", loaded_alignment='') {
     if (annotText && annotText!=="empty umr") { //annotText!=="empty umr" is because the older version saved <i>empty umr<i> in database sometimes
-        string2umr(annotText); //populated umr
+        umr = string2umr(annotText); //populated umr
 
         //fill in the alignment information to umr
         if(loaded_alignment){
