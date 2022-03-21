@@ -274,7 +274,7 @@ def project(project_id):
         if checked_out_docs:
             for d in checked_out_docs:
                 user_name = User.query.filter(User.id==d.user_id).first().username
-                if not user_name.endswith('_qc'):
+                if not user_name.endswith('_qc') and user_name != 'dummy_user':
                     current_checked_out_by.add(user_name)
         checked_out_by.append(list(current_checked_out_by))
 
