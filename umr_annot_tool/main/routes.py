@@ -223,7 +223,7 @@ def sentlevel(doc_sent_id):
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by(
         Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id, Sent.user_id == current_user.id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations] #this is used to color annotated sentences
     all_annots = [annot.annot_str for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
@@ -285,7 +285,7 @@ def sentlevelview(doc_sent_id):
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by(
         Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id, Sent.user_id == current_user.id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations] #this is used to color annotated sentences
     all_annots = [annot.annot_str for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]

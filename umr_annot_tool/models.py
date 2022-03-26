@@ -25,7 +25,6 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
     annotations = db.relationship('Annotation', backref='author', lazy=True)
     docs = db.relationship('Doc', backref='author', lazy=True)
-    sents = db.relationship('Sent', backref='author', lazy=True)
     projectusers = db.relationship('Projectuser', backref='author', lazy=True)
     projects = db.relationship('Project', backref='author', lazy=True)
     docqcs = db.relationship('Docqc', backref='author', lazy=True)
@@ -81,7 +80,6 @@ class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
         return f"Sent('{self.id}')"
