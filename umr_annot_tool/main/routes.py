@@ -53,7 +53,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         doc_id = doc.id
         flash('Your doc has been created!', 'success')
         for sent_of_tokens in sents:
-            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=current_user.id)
+            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
             db.session.add(sent)
             db.session.commit()
         flash('Your sents has been created.', 'success')

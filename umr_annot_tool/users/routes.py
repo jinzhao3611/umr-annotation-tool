@@ -43,7 +43,7 @@ def register():
         db.session.commit()
         flash('Your doc has been created!', 'success')
         for sent_of_tokens in info2display.sents:
-            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id, user_id=user.id)
+            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
             db.session.add(sent)
             db.session.commit()
         flash('Your sents has been created.', 'success')
