@@ -194,11 +194,12 @@ def project(project_id):
             if new_member_name:
                 try: #add new member
                     new_member_user_id = User.query.filter(User.username==new_member_name).first().id
-                    project_name = Project.query.filter(Project.id==project_id).first().project_name
-                    projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="view", project_id=project_id)
-                    db.session.add(projectuser)
-                    db.session.commit()
-                    # return make_response(jsonify({"new_member_user_id": new_member_user_id}), 200)
+                    existing_member_of_this_project = Projectuser.query.filter(Projectuser.user_id==new_member_user_id, Projectuser.project_id==project_id).first()
+                    if not existing_member_of_this_project:
+                        project_name = Project.query.filter(Project.id==project_id).first().project_name
+                        projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="view", project_id=project_id)
+                        db.session.add(projectuser)
+                        db.session.commit()
                 except:
                     print('username does not exist')
             elif remove_member_id !=0:
