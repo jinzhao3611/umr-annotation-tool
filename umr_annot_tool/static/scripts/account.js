@@ -60,10 +60,13 @@ function addDocToProj(doc_id, project_id){
         "annotated_doc_id": 0,
         "delete_annot_doc_id": 0,
         "add_qc_doc_id": 0,
-        "rm_qc_doc_id": 0})
+        "rm_qc_doc_id": 0,
+        "add_da_doc_id": 0,
+        "rm_da_doc_id": 0,})
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });
+    location.reload();
     location.reload();
 }
 
@@ -93,7 +96,9 @@ function removeDocFromProj(doc_id, project_id){
                 "annotated_doc_id": 0,
                 "delete_annot_doc_id": 0,
                 "add_qc_doc_id": 0,
-                "rm_qc_doc_id": 0
+                "rm_qc_doc_id": 0,
+                "add_da_doc_id": 0,
+                "rm_da_doc_id": 0,
             })
         }).catch(function (error) {
             console.log("Fetch error: " + error);
@@ -183,7 +188,9 @@ function addNewMember(project_id){
             "annotated_doc_id": 0,
             "delete_annot_doc_id": 0,
             "add_qc_doc_id": 0,
-            "rm_qc_doc_id": 0})
+            "rm_qc_doc_id": 0,
+        "add_da_doc_id": 0,
+        "rm_da_doc_id": 0,})
     }).then(function(response){
         return response.json()
     }).then(function(data){
@@ -230,7 +237,9 @@ function rmMember(member_id, project_id){
                 "annotated_doc_id": 0,
                 "delete_annot_doc_id": 0,
                 "add_qc_doc_id": 0,
-                "rm_qc_doc_id": 0
+                "rm_qc_doc_id": 0,
+                "add_da_doc_id": 0,
+                "rm_da_doc_id": 0,
             })
         }).catch(function(error){
             console.log("Fetch error: "+ error);
@@ -276,7 +285,9 @@ function change_permission(project_id){
                 "annotated_doc_id": 0,
                 "delete_annot_doc_id": 0,
                 "add_qc_doc_id": 0,
-                "rm_qc_doc_id": 0})
+                "rm_qc_doc_id": 0,
+                "add_da_doc_id": 0,
+                "rm_da_doc_id": 0,})
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
@@ -285,4 +296,170 @@ function change_permission(project_id){
             });
         });
     }
+}
+
+
+function addToMyAnnotation(doc_id, project_id){
+    //add an empty annotation row in annotation table for sent1 of current doc
+     fetch(`/project/${project_id}`, {
+        method: 'POST',
+        body: JSON.stringify({"remove_member_id": 0,
+        "new_member_name": "",
+        "update_doc_id": 0,
+        "update_doc_project_id": 0,
+        "edit_permission_member_id": 0,
+        "edit_permission": "",
+        "annotated_doc_id": doc_id,
+        "delete_annot_doc_id": 0,
+        "add_qc_doc_id": 0,
+        "rm_qc_doc_id": 0,
+        "add_da_doc_id": 0,
+        "rm_da_doc_id": 0,})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
+    });
+    location.reload();
+}
+
+function removeFromMyAnnotation(doc_id, project_id){
+    if (confirm("Are you sure you want to remove this doc from project and delete all your annotations from database? Removal cannot be reversed")) {
+         fetch(`/project/${project_id}`, {
+            method: 'POST',
+            body: JSON.stringify({"remove_member_id": 0,
+            "new_member_name": "",
+            "update_doc_id": 0,
+            "update_doc_project_id": 0,
+            "edit_permission_member_id": 0,
+            "edit_permission": "",
+            "annotated_doc_id": 0,
+            "delete_annot_doc_id": doc_id,
+            "add_qc_doc_id": 0,
+            "rm_qc_doc_id": 0,
+            "add_da_doc_id": 0,
+            "rm_da_doc_id": 0,})
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+        }).catch(function(error){
+            console.log("Fetch error: "+ error);
+        });
+    }else {
+        alert('canceled');
+    }
+    location.reload();
+}
+
+function addToQc(doc_id, project_id){
+    if (confirm("Are you sure you want to upload to Quality control?")) {
+         fetch(`/project/${project_id}`, {
+            method: 'POST',
+            body: JSON.stringify({"remove_member_id": 0,
+            "new_member_name": "",
+            "update_doc_id": 0,
+            "update_doc_project_id": 0,
+            "edit_permission_member_id": 0,
+            "edit_permission": "",
+            "annotated_doc_id": 0,
+            "delete_annot_doc_id": 0,
+            "add_qc_doc_id": doc_id,
+            "rm_qc_doc_id": 0,
+            "add_da_doc_id": 0,
+            "rm_da_doc_id": 0,})
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            document.getElementById('error_msg').innerText = 'test';
+            console.log(data);
+            if(data['msg']){
+                document.getElementById('error_msg').innerText = data['msg'];
+            }else{
+                location.reload();
+            }
+        }).catch(function(error){
+            console.log("Fetch error: "+ error);
+        });
+    } else {
+        alert('canceled');
+    }
+}
+
+function rmFromQc(doc_id, project_id){
+    //1. remove corresponding line in docqc table
+    //2. remove corresponding lien in annotation table
+    if (confirm("Are you sure you want to remove this qc file? removal cannot be reversed")) {
+        fetch(`/project/${project_id}`, {
+            method: 'POST',
+            body: JSON.stringify({"remove_member_id": 0,
+            "new_member_name": "",
+            "update_doc_id": 0,
+            "update_doc_project_id": 0,
+            "edit_permission_member_id": 0,
+            "edit_permission": "",
+            "annotated_doc_id": 0,
+            "delete_annot_doc_id": 0,
+            "add_qc_doc_id": 0,
+            "rm_qc_doc_id": doc_id,
+            "add_da_doc_id": 0,
+            "rm_da_doc_id": 0,})
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+        }).catch(function(error){
+            console.log("Fetch error: "+ error);
+        });
+    } else {
+        alert('canceled');
+    }
+    location.reload();
+}
+
+function addToDa(doc_id, project_id){
+     fetch(`/project/${project_id}`, {
+        method: 'POST',
+        body: JSON.stringify({"remove_member_id": 0,
+        "new_member_name": "",
+        "update_doc_id": 0,
+        "update_doc_project_id": 0,
+        "edit_permission_member_id": 0,
+        "edit_permission": "",
+        "annotated_doc_id": 0,
+        "delete_annot_doc_id": 0,
+        "add_qc_doc_id": 0,
+        "rm_qc_doc_id": 0,
+        "add_da_doc_id": doc_id,
+        "rm_da_doc_id": 0,})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
+    });
+    location.reload();
+}
+
+function rmFromDa(doc_id, project_id){
+     fetch(`/project/${project_id}`, {
+        method: 'POST',
+        body: JSON.stringify({"remove_member_id": 0,
+        "new_member_name": "",
+        "update_doc_id": 0,
+        "update_doc_project_id": 0,
+        "edit_permission_member_id": 0,
+        "edit_permission": "",
+        "annotated_doc_id": 0,
+        "delete_annot_doc_id": 0,
+        "add_qc_doc_id": 0,
+        "rm_qc_doc_id": 0,
+        "add_da_doc_id": 0,
+        "rm_da_doc_id": doc_id,})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+    }).catch(function(error){
+        console.log("Fetch error: "+ error);
+    });
+    location.reload();
 }

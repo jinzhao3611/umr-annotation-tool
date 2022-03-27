@@ -4,7 +4,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc
+from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from umr_annot_tool.permission import EditProjectPermission
 from sqlalchemy.orm.attributes import flag_modified
@@ -99,27 +99,37 @@ def account():
             # click on the x sign to delete a single document
             to_delete_doc_id = request.get_json(force=True)["delete_id"]
             print("to_delete_doc_id: ", to_delete_doc_id)
+            # click on the x sign to delete all documents under a project
+            to_delete_project_id = request.get_json(force=True)["delete_project"]
+            print("to_delete_project_id", to_delete_project_id)
+            # click on add new project button to add new project
+            new_project_name = request.get_json(force=True)["new_project_name"]
+
             if to_delete_doc_id != 0: #delete whole document include everybody's annotation
                 Docqc.query.filter(Docqc.doc_id == to_delete_doc_id).delete()
                 Annotation.query.filter(Annotation.doc_id == to_delete_doc_id).delete()
                 Sent.query.filter(Sent.doc_id == to_delete_doc_id).delete()
                 Doc.query.filter(Doc.id == to_delete_doc_id).delete()
-
-            # click on the x sign to delete all documents under a project
-            to_delete_project_id = request.get_json(force=True)["delete_project"]
-            print("to_delete_project_id", to_delete_project_id)
-            if to_delete_project_id !=0:
+            elif to_delete_project_id !=0:
+                Docda.query.filter(Docda.project_id==to_delete_project_id).delete()
+                print("Docda deleted")
+                Docqc.query.filter(Docqc.project_id==to_delete_project_id).delete()
+                print("Cocqc deleted")
+                qc_id = Project.query.filter(Project.id==to_delete_project_id).first().qc
+                print("Got the qc user id in User of this project")
                 Projectuser.query.filter(Projectuser.project_id == to_delete_project_id).delete()
+                print("Projectuser deleted")
                 Project.query.filter(Project.id==to_delete_project_id).delete()
+                print("Project deleted")
                 to_delete_doc_ids = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
+                print("got all docs of this project")
                 for to_delete_doc in to_delete_doc_ids:
                     Annotation.query.filter(Annotation.doc_id == to_delete_doc.id).delete()
                     Sent.query.filter(Sent.doc_id == to_delete_doc.id).delete()
                     Doc.query.filter(Doc.id == to_delete_doc.id).delete()
-
-            # click on add new project button to add new project
-            new_project_name = request.get_json(force=True)["new_project_name"]
-            if new_project_name:
+                User.query.filter(User.id == qc_id).delete()
+                print("user deleted")
+            elif new_project_name:
                 hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
                 qc = User(username=f"{new_project_name}_{current_user.id}_qc", email=f'{new_project_name}@qc.com', password=hashed_password)
                 db.session.add(qc)
@@ -142,8 +152,8 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
 
+    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
     return render_template('account.html', title='Account',
@@ -177,8 +187,12 @@ def project(project_id):
             print("add_qc_doc_id:", add_qc_doc_id)
             rm_qc_doc_id=request.get_json(force=True)["rm_qc_doc_id"]
             print("rm_qc_doc_id", rm_qc_doc_id)
+            add_da_doc_id = request.get_json(force=True)["add_da_doc_id"]
+            print("add_da_doc_id: ", add_da_doc_id)
+            rm_da_doc_id = request.get_json(force=True)["rm_da_doc_id"]
+            print("rm_da_doc_id: ", rm_da_doc_id)
             if new_member_name:
-                try:
+                try: #add new member
                     new_member_user_id = User.query.filter(User.username==new_member_name).first().id
                     project_name = Project.query.filter(Project.id==project_id).first().project_name
                     projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="view", project_id=project_id)
@@ -187,7 +201,6 @@ def project(project_id):
                     # return make_response(jsonify({"new_member_user_id": new_member_user_id}), 200)
                 except:
                     print('username does not exist')
-                    return redirect(url_for('users.project', project_id=project_id))
             elif remove_member_id !=0:
                 Projectuser.query.filter(Projectuser.user_id==remove_member_id, Projectuser.project_id==project_id).delete()
                 db.session.commit()
@@ -237,25 +250,46 @@ def project(project_id):
                 print("I am here 34")
                 Annotation.query.filter(Annotation.user_id==current_user.id, Annotation.doc_id==delete_annot_doc_id).delete()
                 logging.info(db.session.commit())
+                flash("file is removed from My Annotations")
             elif add_qc_doc_id !=0: # add to Quality Control
                 qc_id = Project.query.filter(Project.id == project_id).first().qc
                 qc = User.query.filter(User.id==qc_id).first()
-                member_annotations = Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == current_user.id).all()
-                for a in member_annotations:
-                    qc_annotation = Annotation(annot_str=a.annot_str, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
-                                            sent_id=a.sent_id, doc_id=a.doc_id, umr=a.umr, doc_umr=a.doc_umr)
-                    db.session.add(qc_annotation)
-                docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
-                db.session.add(docqc)
-                logging.info(db.session.commit())
+                # check existing:
+                if not (Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == qc_id).all()):
+                    print("I am here 70")
+                    member_annotations = Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == current_user.id).all()
+                    for a in member_annotations:
+                        qc_annotation = Annotation(annot_str=a.annot_str, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
+                                                sent_id=a.sent_id, doc_id=a.doc_id, umr=a.umr, doc_umr=a.doc_umr)
+                        db.session.add(qc_annotation)
+                    docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
+                    db.session.add(docqc)
+                    logging.info(db.session.commit())
+                else:
+                    return make_response(jsonify({"msg": 'this file already exist in Quality Control, add to double annotated files instead'}), 200)
             elif rm_qc_doc_id != 0: # delete from Quality Control
                 current_qc_id = Project.query.filter(Project.id==project_id).first().qc
                 Annotation.query.filter(Annotation.user_id==current_qc_id, Annotation.doc_id==rm_qc_doc_id).delete()
                 Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==rm_qc_doc_id).delete()
                 logging.info(db.session.commit())
+                return redirect(url_for('users.project', project_id=project_id))
+            elif add_da_doc_id !=0:
+                #check existing:
+                if not Docda.query.filter(Docda.project_id==project_id, Docda.user_id==current_user.id, Docda.doc_id==add_da_doc_id).all():
+                    docda = Docda(project_id=project_id, user_id=current_user.id, doc_id=add_da_doc_id)
+                    db.session.add(docda)
+                    docqc = Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==add_da_doc_id, Docqc.upload_member_id!=current_user.id).first()
+                    print("docqc: ", docqc)
+                    if docqc: #if there is a qc version of this doc already
+                        docda_qc = Docda(project_id=project_id, user_id=docqc.upload_member_id, doc_id=add_da_doc_id)
+                        db.session.add(docda_qc)
+                    logging.info(db.session.commit())
+            elif rm_da_doc_id != 0:
+                Docda.query.filter(Docda.project_id==project_id, Docda.user_id==current_user.id, Docda.doc_id==rm_da_doc_id).delete()
+                logging.info(db.session.commit())
         except:
             print("updating project in database is failed")
-
+        return redirect(url_for('users.project', project_id=project_id))
 
     project_members = Projectuser.query.filter(Projectuser.project_id == project_id).all()
     members = []
@@ -268,6 +302,13 @@ def project(project_id):
 
     project_permission = EditProjectPermission(project_id)
     project_name = Project.query.filter(Project.id==project_id).first().project_name
+
+    daDocs = Docda.query.filter(Docda.project_id == project_id).all()
+    daUploaders = ['']
+    daFilenames = ['']
+    for daDoc in daDocs:
+        daUploaders.append(User.query.filter(User.id == daDoc.user_id).first().username)
+        daFilenames.append(Doc.query.filter(Doc.id == daDoc.doc_id).first().filename)
 
     projectDocs = Doc.query.filter(Doc.project_id == project_id).all()
     checked_out_by = [''] # add a dummy index because the loop index in jinja2 starts from 1
@@ -292,15 +333,20 @@ def project(project_id):
                     current_checked_out_by.add(user_name)
         checked_out_by.append(list(current_checked_out_by))
     print('annotatedDocs: ', annotatedDocs)
+    print('length annotatedDocs: ', len(annotatedDocs))
 
     if admin_permission.can() and project_permission.can():
+        print('I am here 61')
         return render_template('admin_project.html', title='admin_project', project_name=project_name, project_id=project_id,
                                 members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
-                               projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs)
+                               projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
+                               daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames)
     else:
-        return render_template('member_project.html', title='admin_project', project_name=project_name, project_id=project_id,
+        print('I am here 62')
+        return render_template('member_project.html', title='member_project', project_name=project_name, project_id=project_id,
                                 members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
-                               projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs)
+                               projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
+                               daDocs=daDocs, daUploaders=daUploaders, daFilenames=daFilenames)
 
 @users.route("/user/<string:username>")
 def user_posts(username):

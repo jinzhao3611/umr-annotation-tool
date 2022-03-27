@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     projectusers = db.relationship('Projectuser', backref='author', lazy=True)
     projects = db.relationship('Project', backref='author', lazy=True)
     docqcs = db.relationship('Docqc', backref='author', lazy=True)
+    docdas = db.relationship('Docda', backref='author', lazy=True)
 
 
 
@@ -72,6 +73,7 @@ class Doc(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
 
     docqcs = db.relationship('Docqc', backref='doc', lazy=True)
+    docdas = db.relationship('Docda', backref='doc', lazy=True)
 
     def __repr__(self):
         return f"Doc('{self.id}')"
@@ -122,6 +124,7 @@ class Project(db.Model):
     projectusers = db.relationship('Projectuser', backref="project", lazy=True)
     docs = db.relationship('Doc', backref='project', lazy=True)
     docqcs = db.relationship('Docqc', backref='project', lazy=True)
+    docdas = db.relationship('Docda', backref='project', lazy=True)
 
 
 class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder
@@ -130,4 +133,10 @@ class Docqc(db.Model): # this table is used to document which member in the proj
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     upload_member_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+
+class Docda(db.Model):
+    id = db.Column(db.Integer, primary_key=True) #maybe not necessary
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
 

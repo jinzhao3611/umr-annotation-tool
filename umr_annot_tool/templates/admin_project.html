@@ -11,7 +11,7 @@
         <ul class="list-group" id="projectDocs">
             {% for projectDoc in projectDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectDoc-{{ projectDoc.id }}">
-                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1')}}">
+                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ projectDoc.user_id)}}">
                         {{projectDoc.filename}}
                     </a>
                     <span class="badge">
@@ -37,7 +37,7 @@
         <ul class="list-group" id="unassignedDocs">
             {% for unassignedDoc in unassignedDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="unassignedDoc-{{ unassignedDoc.id }}">
-                    <a title="{{ unassignedDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=unassignedDoc.id ~ '_1')}}">
+                    <a title="{{ unassignedDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=unassignedDoc.id ~ '_1_' ~ unassignedDoc.user_id)}}">
                         {{unassignedDoc.filename}}
                     </a>
                     <span class="badge">
@@ -64,6 +64,11 @@
                         </span>
                     </span>
                     <span class="badge">
+                        <span class="btn btn-xs btn-default" onclick="addToDa({{ annotatedDoc.id }}, `{{ project_id }}`); event.stopPropagation();">
+                            add to Double Annotated Files
+                        </span>
+                    </span>
+                    <span class="badge">
                         <span class="btn btn-xs btn-default" onclick="removeFromMyAnnotation({{ annotatedDoc.id }}, `{{ project_id }}`); event.stopPropagation();">
                             delete from My Annotations
                         </span>
@@ -71,6 +76,9 @@
                 </li>
             {% endfor %}
         </ul>
+    </div>
+
+    <div id="error_msg">
     </div>
 
     <div class="content-section">
@@ -97,16 +105,16 @@
     <div class="content-section">
         <legend class="border-bottom mb-4">Double Annotated Files</legend>
         <ul class="list-group" id="otherDocs">
-            {% for qcDoc in qcDocs %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ qcDoc.id }}">
-                    <a title="{{ qcDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=qcDoc.id ~ '_1')}}">
-                        {{qcDoc.filename}}
+            {% for daDoc in daDocs %}
+                <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
+                    <a href="{{ url_for('main.sentlevelview', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
+                        {{ daFilenames[loop.index] }}
                     </a>
                     <span class="badge">
-                        uploaded by {{ qcUploaders[loop.index] }}
+                        uploaded by {{ daUploaders[loop.index] }}
                     </span>
                     <span class="badge">
-                        <span class="btn btn-xs btn-default" onclick="rmFromQc({{ qcDoc.id }}, `{{ project_id }}`); event.stopPropagation();">
+                        <span class="btn btn-xs btn-default" onclick="rmFromDa({{ daDoc.doc_id }}, `{{ project_id }}`); event.stopPropagation();">
                             delete from Double Annotated Files
                         </span>
                     </span>

@@ -263,6 +263,7 @@ def sentlevelview(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
+    other_user_id = int(doc_sent_id.split("_")[2])
 
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
@@ -278,12 +279,12 @@ def sentlevelview(doc_sent_id):
     except AttributeError:
         curr_annotation_string = ""
     try:
-        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id, Annotation.user_id==current_user.id).first().umr
+        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id, Annotation.user_id==other_user_id).first().umr
     except:
         curr_sent_umr = {}
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by( #todo:这里是不是少了个当前user id
         Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations] #this is used to color annotated sentences
@@ -445,7 +446,7 @@ def doclevelview(doc_sent_id):
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id)))
+        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) + '_' + str(current_user.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]
