@@ -82,8 +82,12 @@ function customizeOptions(){
  * load the annotation for current sentence from database
  * @param curr_sent_umr
  */
-function load_history(curr_sent_umr){
-    umr = JSON.parse(curr_sent_umr);
+function load_history(curr_sent_umr, curr_annotation_string){
+    if(curr_sent_umr === "{}" && curr_annotation_string){ //if current umr field is empty but the annot_str field is not, this happens when upload file with existing annotations
+        umr = string2umr(curr_annotation_string);
+    }else{
+        umr = JSON.parse(curr_sent_umr);
+    }
     if(Object.keys(umr).length === 0){ // if the parsed curr_sent_umr is empty
         umr['n'] = 0; //initialize umr here
     }
