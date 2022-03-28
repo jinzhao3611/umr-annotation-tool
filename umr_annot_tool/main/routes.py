@@ -241,9 +241,11 @@ def sentlevel(doc_sent_id):
         project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
+        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
     except:
         project_name=""
         admin=current_user
+        permission = ""
 
 
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
@@ -257,7 +259,8 @@ def sentlevel(doc_sent_id):
                            project_name=project_name,
                            admin=admin,
                            curr_annotation_string=curr_annotation_string,
-                           owner=owner)
+                           owner=owner,
+                           permission=permission)
 
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevel(doc_sent_id):
