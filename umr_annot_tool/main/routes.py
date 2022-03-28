@@ -212,7 +212,7 @@ def sentlevel(doc_sent_id):
             return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
-            flash('Failure: Add current annotation and alignments to database failed.', 'danger')
+            print('Failure: Add current annotation and alignments to database failed.')
 
     try:
         curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
