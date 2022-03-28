@@ -36,6 +36,7 @@ let show_amr_mo_lock = ''; // '' affects coloring
 
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let customizedAttrList = ["aspect-attr", "refer-person-attr", "refer-number-attr", "modstr-values"];
+let docAnnot=false;
 
 /**
  *
@@ -1890,7 +1891,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
-            } else {
+            } else if (!docAnnot){ //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
                 let frames = JSON.stringify(frame_dict[concept]);
                 concept_m = `<span title=${frames}>` + concept_m + '</span>';
             }
@@ -1967,10 +1968,18 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 let sub_loc = loc + '.' + index;
                 let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
                 if (show_amr_rec_result) {
-                    if (show_amr_new_line_sent(sub_loc)) {
-                        s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
-                    } else {
-                        s += ' ' + show_amr_rec_result;
+                    if (docAnnot){
+                        if (show_amr_new_line_doc(sub_loc)) {
+                            s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
+                        } else {
+                            s += ' ' + show_amr_rec_result;
+                        }
+                    }else{
+                        if (show_amr_new_line_sent(sub_loc)) {
+                            s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
+                        } else {
+                            s += ' ' + show_amr_rec_result;
+                        }
                     }
                 }
             }
@@ -2050,6 +2059,9 @@ function show_amr(args) {
         html_amr_s = amr_s;
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
         // this is the actual output part
+        if(docAnnot){
+            html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
+        }
         setInnerHTML('amr', html_amr_s);
         show_umr_status = args;
     }
@@ -2065,7 +2077,6 @@ function show_amr(args) {
                 } else if (newScrollTop > s.scrollHeight) {
                     newScrollTop = s.scrollHeight;
                 }
-                intScrollTop = s.scrollTop;
                 s.scrollTop = newScrollTop;
             }
             // add_log ('re-scroll ' + origScrollTop + '/' + origScrollHeight + ' ' + s.scrollTop + ' ' + s.scrollTop + ' ' + intScrollTop);

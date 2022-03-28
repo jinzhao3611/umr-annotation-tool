@@ -14,6 +14,7 @@ function fillInSentAnnots(sentAnnotUmrs){
 }
 
 function initializeDoc() {
+    docAnnot=true;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top';
@@ -528,4 +529,13 @@ function fillInArgs(argId){
             }
         }
     };
+}
+
+function show_amr_new_line_doc(loc) {
+    let role = umr[loc + '.r'] || '';
+    if(role.match(/^(:temporal|:modal|:coref)$/)){
+        return 1;
+    }else{
+        return 0;
+    }
 }
