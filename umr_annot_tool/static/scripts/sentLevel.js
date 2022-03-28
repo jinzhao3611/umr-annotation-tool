@@ -2322,6 +2322,7 @@ function loadErrorHandler(evt) {
  */
 function UMR2db() {
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
+    let annot_str = deHTML(amrHtml);
     let align_info = document.getElementById('align').innerText;
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
@@ -2330,7 +2331,7 @@ function UMR2db() {
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": amrHtml, "align": align_info, "snt_id": snt_id, "umr": umr})
+        body: JSON.stringify({"amr": annot_str, "align": align_info, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
