@@ -155,7 +155,7 @@
                         <input type="hidden" name="rm_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_user_id" value=0>
 
-                        {% if permission == 'admin' %}
+                        {% if permission in ['admin', 'edit'] %}
                             <input type="submit" value="delete from My Annotations" onclick="return confirm('Are you sure you want to remove this doc from project and delete all your annotations from database? Removal cannot be reversed');">
                         {% else %}
                             <input type="submit" value="delete from My Annotations" disabled>
@@ -194,7 +194,7 @@
                         <input type="hidden" name="rm_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_user_id" value=0>
 
-                        {% if permission == 'admin' %}
+                        {% if permission in ['admin', 'edit'] %}
                             <input type="submit" value="delete from Quality Control" onclick="return confirm('Are you sure you want to remove this qc file? removal cannot be reversed');">
                         {% else %}
                             <input type="submit" value="delete from Quality Control" disabled>
@@ -229,7 +229,7 @@
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value={{ daDoc.doc_id }}>
                         <input type="hidden" name="rm_da_user_id" value={{ daDoc.user_id }}>
-                        {% if permission == 'admin' %}
+                        {% if permission in ['admin', 'edit'] %}
                             <input type="submit" value="delete from Double Annotated Files" onclick="return confirm('Are you sure you want to remove this file? removal cannot be reversed');">
                         {% else %}
                             <input type="submit" value="delete from Double Annotated Files" disabled>
