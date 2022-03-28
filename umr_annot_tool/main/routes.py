@@ -156,6 +156,8 @@ def sentlevel(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
+    owner_user_id =current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner = User.query.get_or_404(owner_user_id)
 
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
@@ -176,7 +178,6 @@ def sentlevel(doc_sent_id):
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
 
-    curr_annotation_string = Annotation.query.filter(Annotation.doc_id==doc.id, Annotation.sent_id==snt_id, Annotation.user_id==current_user.id).first().annot_str.strip()
     if request.method == 'POST':
         # add to db
         logging.info("post request received")
@@ -209,14 +210,18 @@ def sentlevel(doc_sent_id):
             msg = 'Success: current annotation and alignments are added to database.'
             msg_category = 'success'
             return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
-
-        except:
-            msg = 'Failure: Add current annotation and alignments to database failed.'
-            msg_category = 'danger'
+        except Exception as e:
+            print(e)
+            flash('Failure: Add current annotation and alignments to database failed.', 'danger')
 
     try:
-        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id, Annotation.user_id==current_user.id).first().umr
-    except:
+        curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
+                                                         Annotation.user_id == owner_user_id).first()
+        curr_annotation_string = curr_annotation.annot_str.strip()
+        curr_sent_umr = curr_annotation.umr
+    except Exception as e:
+        print(e)
+        curr_annotation_string= ""
         curr_sent_umr = {}
 
     # load all annotations for current document used for export_annot()
@@ -237,7 +242,6 @@ def sentlevel(doc_sent_id):
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
     except:
-        project_id=0
         project_name=""
         admin=current_user
 
@@ -252,66 +256,8 @@ def sentlevel(doc_sent_id):
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            admin=admin,
-                           curr_annotation_string=curr_annotation_string)
-
-@main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
-def sentlevelview(doc_sent_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    doc_id = int(doc_sent_id.split("_")[0])
-    default_sent_id = int(doc_sent_id.split("_")[1])
-    other_user_id = int(doc_sent_id.split("_")[2])
-
-    doc = Doc.query.get_or_404(doc_id)
-    info2display = html(doc.content, doc.file_format, lang=doc.lang)
-
-    snt_id = int(request.args.get('snt_id', default_sent_id))
-    if "set_sentence" in request.form:
-        snt_id = int(request.form["sentence_id"])
-
-    dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
-    try:
-        curr_annotation_string = Annotation.query.filter(Annotation.doc_id==doc.id, Annotation.sent_id==snt_id, Annotation.user_id==dummy_user_id).first().annot_str.strip()
-        print('curr_annotation_string from view: ', curr_annotation_string)
-    except AttributeError:
-        curr_annotation_string = ""
-    try:
-        curr_sent_umr = Annotation.query.filter(Annotation.sent_id == snt_id, Annotation.doc_id == doc_id, Annotation.user_id==other_user_id).first().umr
-    except:
-        curr_sent_umr = {}
-
-    # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by( #todo:这里是不是少了个当前user id
-        Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
-    annotated_sent_ids = [annot.sent_id for annot in annotations] #this is used to color annotated sentences
-    all_annots = [annot.annot_str for annot in annotations]
-    all_aligns = [annot.alignment for annot in annotations]
-    all_doc_annots = [annot.doc_annot for annot in annotations]
-    all_sents = [sent2.content for sent2 in filtered_sentences]
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
-
-    #check who is the admin of the project containing this file:
-    try:
-        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
-        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
-        admin = User.query.filter(User.id == admin_id).first()
-    except:
-        project_name=""
-        admin=current_user
-
-    return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
-                               info2display=info2display,
-                               frame_dict=json.dumps({}),
-                               curr_sent_umr=curr_sent_umr,
-                               exported_items=exported_items,
-                               file_format=doc.file_format,
-                               content_string=doc.content.replace('\n', '<br>'),
-                               annotated_sent_ids=annotated_sent_ids,
-                               project_name=project_name,
-                               admin=admin,
-                               curr_annotation_string=curr_annotation_string)
+                           curr_annotation_string=curr_annotation_string,
+                           owner=owner)
 
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevel(doc_sent_id):
@@ -428,7 +374,7 @@ def doclevelview(doc_sent_id):
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) + '_' + str(current_user.id)))
+        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) + '_' + str(current_user.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]

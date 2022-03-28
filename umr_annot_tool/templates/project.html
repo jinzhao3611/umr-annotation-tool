@@ -11,7 +11,7 @@
         <ul class="list-group" id="projectDocs">
             {% for projectDoc in projectDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectDoc-{{ projectDoc.id }}">
-                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ projectDoc.user_id)}}">
+                    <a title="{{ projectDoc.content }}" href="javascript:alert('please add to My Annotations to annotate');">
                         {{projectDoc.filename}}
                     </a>
                     <span class="badge">
@@ -68,7 +68,7 @@
             <ul class="list-group" id="unassignedDocs">
                 {% for unassignedDoc in unassignedDocs %}
                     <li class="list-group-item d-flex justify-content-between align-items-center" id="unassignedDoc-{{ unassignedDoc.id }}">
-                        <a title="{{ unassignedDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=unassignedDoc.id ~ '_1_' ~ unassignedDoc.user_id)}}">
+                        <a title="{{ unassignedDoc.content }}" href="javascript:alert('Please add to a project first before annotating');">
                             {{unassignedDoc.filename}}
                         </a>
                         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
@@ -97,7 +97,8 @@
         <ul class="list-group" id="annotatedDocs">
             {% for annotatedDoc in annotatedDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="annotatedDoc-{{ annotatedDoc.id }}">
-                    <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1')}}">
+                    <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1_0')}}">
+{# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
                         {{annotatedDoc.filename}}
                     </a>
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
@@ -173,7 +174,7 @@
         <ul class="list-group" id="otherDocs">
             {% for qcDoc in qcDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ qcDoc.id }}">
-                    <a title="{{ qcDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=qcDoc.id ~ '_1')}}">
+                    <a title="{{ qcDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=qcDoc.id ~ '_1_' ~ qcDoc.user_id)}}">
                         {{qcDoc.filename}}
                     </a>
                     <span class="badge">
@@ -209,7 +210,7 @@
         <ul class="list-group" id="otherDocs">
             {% for daDoc in daDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
-                    <a href="{{ url_for('main.sentlevelview', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
+                    <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
                         {{ daFilenames[loop.index] }}
                     </a>
                     <span class="badge">

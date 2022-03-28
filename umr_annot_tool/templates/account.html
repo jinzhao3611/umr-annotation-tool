@@ -46,7 +46,7 @@
         <ul class="list-group">
             {% for historyDoc in historyDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="docIdInDb-{{ historyDoc.id }}">
-                    <a title="{{ historyDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=historyDoc.id~ '_1')}}">
+                    <a title="{{ historyDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=historyDoc.id~ '_1_' ~ historyDoc.user_id)}}">
                         {{historyDoc.filename}}
                     </a>
                     <form action="{{ url_for('users.account')}}" method="post">
