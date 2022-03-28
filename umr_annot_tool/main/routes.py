@@ -296,7 +296,7 @@ def doclevel(doc_sent_id):
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     print('sents: ', sents)
-    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == current_user.id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.umr for annot in annotations]
 
@@ -313,7 +313,7 @@ def doclevel(doc_sent_id):
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id)))
+        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.annot_str for annot in annotations]
