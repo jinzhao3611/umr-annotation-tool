@@ -334,7 +334,6 @@ def doclevel(doc_sent_id):
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
     except AttributeError:
-        project_id=0
         project_name = ""
         admin=current_user
 

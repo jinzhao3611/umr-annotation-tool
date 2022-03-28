@@ -698,7 +698,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 addTriple(cc[0], cc[1], cc2v);
                 show_amr_args = 'show';
         } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
-
             // this is the condition we go in 1
             addTriple(cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
@@ -791,7 +790,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 undo_index++;
                 undo_list.length = undo_index;
                 undo_list[undo_index] = cloneCurrentState();
-                showEditHistory();
+                // showEditHistory();
                 let s;
                 if ((s = document.getElementById('undo-button')) != null) {
                     s.title = 'undo ' + value;
@@ -1031,7 +1030,7 @@ function newUMR(concept) {
  * @param head b
  * @param role :arg1
  * @param arg car
- * @param arg_type concept, string
+ * @param arg_type concept, string, '' (potentially there are other types)
  * @returns {*} arg_variable
  */
 function addTriple(head, role, arg, arg_type) {
@@ -1048,13 +1047,13 @@ function addTriple(head, role, arg, arg_type) {
         arg_var_locs = getLocs(arg);
         if (arg_var_locs //argument already exist in variables dictionary
             && (arg_type !== 'concept')
-            && (arg_type !== 'string') // arg_type is empty (is variable)
+            && (arg_type !== 'string') // arg_type is '' (is variable)
             && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here40-1");
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' ) //English
+        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
             && validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string') // arg_type is "concept" or empty (is variable)
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1063,7 +1062,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' ) //English
+        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
             && validEntryConcept(arg.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1096,6 +1095,11 @@ function addTriple(head, role, arg, arg_type) {
                     endOffset = i;
                 }
             }
+        }else if (validString(arg)) {
+            //doc level
+            arg_string = arg;
+            arg_concept = arg;
+            arg_variable = arg;
         } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
             console.log("I am here40-6");
             arg_string = stripQuotes(arg);
