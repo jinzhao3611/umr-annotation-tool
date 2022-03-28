@@ -190,21 +190,21 @@ def sentlevel(doc_sent_id):
             umr_dict = request.get_json(force=True)["umr"]
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == current_user.id).first()
+                                               Annotation.user_id == owner.id).first()
             if existing:  # update the existing Annotation object
                 existing.annot_str = amr_html
                 existing.alignment = align_info
                 existing.umr = umr_dict
                 flag_modified(existing, 'umr')
-                logging.info(f"User {current_user.id} committed: {amr_html}")
+                logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
             else:
-                annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=current_user,
+                annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=owner,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
                                         umr=umr_dict, doc_umr={})
                 flag_modified(annotation, 'umr')
-                logging.info(f"User {current_user.id} committed: {amr_html}")
+                logging.info(f"User {owner.id} committed: {amr_html}")
                 db.session.add(annotation)
                 logging.info(db.session.commit())
             msg = 'Success: current annotation and alignments are added to database.'
