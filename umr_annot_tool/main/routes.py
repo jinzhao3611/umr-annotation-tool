@@ -228,7 +228,7 @@ def sentlevel(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by(
         Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
-    annotated_sent_ids = [annot.sent_id for annot in annotations] #this is used to color annotated sentences
+    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.umr!={} or annot.annot_str)] #this is used to color annotated sentences
     all_annots = [annot.annot_str for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
