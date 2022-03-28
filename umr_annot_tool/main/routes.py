@@ -3,7 +3,7 @@ from flask_principal import Permission, RoleNeed
 from werkzeug.utils import secure_filename
 from typing import List
 import json
-from parse_input_xml import html, process_exported_file, parse_lexicon_xml, process_exported_file_temporary
+from parse_input_xml import html, process_exported_file, parse_lexicon_xml, process_exported_file_isi_editor
 from flask_login import current_user
 import os
 import logging
@@ -98,8 +98,8 @@ def upload():
                 lang = form.language_mode.data
                 is_exported = form.if_exported.data
                 if is_exported:  # has annotation
-                    if file_format == 'temporary':
-                        new_content_string, sents, sent_annots, doc_annots, aligns = process_exported_file_temporary(
+                    if file_format == 'isi_editor':
+                        new_content_string, sents, sent_annots, doc_annots, aligns = process_exported_file_isi_editor(
                             content_string)
                     else:
                         new_content_string, sents, sent_annots, doc_annots, aligns = process_exported_file(
@@ -303,7 +303,7 @@ def doclevel(doc_sent_id):
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.umr for annot in annotations]
 
-    if doc.file_format == 'plain_text' or 'temporary':
+    if doc.file_format == 'plain_text' or 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
         print('sents in doclevel: ', sents)
         print('annotations in doclevel: ', annotations)
@@ -369,7 +369,7 @@ def doclevelview(doc_sent_id):
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.umr for annot in annotations]
 
-    if doc.file_format == 'plain_text' or 'temporary':
+    if doc.file_format == 'plain_text' or 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
         print('sents in doclevel: ', sents)
         print('annotations in doclevel: ', annotations)

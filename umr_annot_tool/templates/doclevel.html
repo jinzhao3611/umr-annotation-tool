@@ -168,7 +168,7 @@
                             <div class="row">
                                 <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
                                     {% autoescape off %}
-                                    {% if file_format == 'plain_text' or file_format =='temporary' %}
+                                    {% if file_format == 'plain_text' or file_format =='isi_editor' %}
                                         <p>{{ loop.index }}. {{ pair[0].content }}</p>
                                     {% else %}
                                         <p>{{ loop.index }}. {{ pair[0] }}</p>

@@ -55,7 +55,7 @@ def amr_text2html(plain_text: str) -> str:
     html_string = '<div id="amr">' + html_string + '</div>\n'
     return html_string
 
-def process_exported_file_temporary(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str]]:
+def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str]]:
     """
     example file:
     :param content_string:
@@ -161,7 +161,7 @@ def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
     df_htmls = []
     sents = []
     sents_html = ''
-    if file_format == 'plain_text' or file_format == 'exported_file' or file_format== 'temporary': # split content string into List[List[str]]
+    if file_format == 'plain_text' or file_format == 'exported_file' or file_format== 'isi_editor': # split content string into List[List[str]]
         sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
         sents_df = pd.DataFrame(content_string.strip().split('\n'))
         sents_df.index = sents_df.index + 1
