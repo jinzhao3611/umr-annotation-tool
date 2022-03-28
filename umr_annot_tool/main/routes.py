@@ -268,8 +268,9 @@ def doclevel(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner = User.query.get_or_404(owner_user_id)
+
     current_snt_id = default_sent_id
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
@@ -342,7 +343,8 @@ def doclevel(doc_sent_id):
                            content_string=doc.content.replace('\n', '<br>'),
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
-                           admin=admin)
+                           admin=admin,
+                           owner=owner)
 
 @main.route("/doclevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevelview(doc_sent_id):
