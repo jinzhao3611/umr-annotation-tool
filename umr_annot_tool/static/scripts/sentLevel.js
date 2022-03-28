@@ -34,7 +34,6 @@ let state_has_changed_p = 0; // related to undo list, it becomes 1 when four cor
 let show_umr_status = 'show'; //'show'
 let show_amr_mo_lock = ''; // '' affects coloring
 
-let is_have_rel_role_91_role = {}; //ancestor: 1; aunt: 1; baby: 1
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let customizedAttrList = ["aspect-attr", "refer-person-attr", "refer-number-attr", "modstr-values"];
 
@@ -81,6 +80,7 @@ function customizeOptions(){
 /**
  * load the annotation for current sentence from database
  * @param curr_sent_umr
+ * @param curr_annotation_string
  */
 function load_history(curr_sent_umr, curr_annotation_string){
     if(curr_sent_umr === "{}" && curr_annotation_string){ //if current umr field is empty but the annot_str field is not, this happens when upload file with existing annotations
@@ -95,11 +95,9 @@ function load_history(curr_sent_umr, curr_annotation_string){
     show_amr('show');
     showAlign();
     state_has_changed_p = 1;
-    exec_command('record load umr from database', 1); // add action:  "load umr from database" to states list
     if(language === "english" || language === "chinese"){
         showAnnotatedTokens();
     }
-    // undo_list.push(cloneCurrentState()); //populate undo_list
 }
 
 /**
@@ -697,93 +695,92 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             && (cc[2].match(/\+$/))
             && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
             && getLocs(cc2v)) {
-
                 addTriple(cc[0], cc[1], cc2v);
                 show_amr_args = 'show';
-            } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
+        } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
 
-                // this is the condition we go in 1
-                addTriple(cc[0], cc[1], cc[2], '');
-                show_amr_args = 'show';
-            } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
+            // this is the condition we go in 1
+            addTriple(cc[0], cc[1], cc[2], '');
+            show_amr_args = 'show';
+        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
 
-                addOr(value);
-                show_amr_args = 'show';
-            } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
-                addNE(value);
-                show_amr_args = 'show';
-            } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
-                addNE(value);
-                show_amr_args = 'show';
-            } else if (cc[0] === 'replace') {
+            addOr(value);
+            show_amr_args = 'show';
+        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
+            addNE(value);
+            show_amr_args = 'show';
+        } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
+            addNE(value);
+            show_amr_args = 'show';
+        } else if (cc[0] === 'replace') {
 
-                if (cc.length == 1) {
+            if (cc.length == 1) {
 
-                    console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
-                } else if (cc[1] == 'concept') {
-                    if (cc.length == 6) {
+                console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
+            } else if (cc[1] == 'concept') {
+                if (cc.length == 6) {
 
-                        replace_concept(cc[2], cc[3], cc[4], cc[5]);
-                        show_amr_args = 'show';
-                    } else {
-
-                        console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
-                    }
-                } else if (cc[1] == 'string') {
-
-                    if (cc.length == 7) {
-
-                        replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
-                        show_amr_args = 'show';
-                    } else {
-
-                        console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
-                    }
-                } else if (cc[1] == 'role') {
-
-                    if (cc.length == 8) {
-                        replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
-                        show_amr_args = 'show';
-                    } else {
-                        console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
-                    }
-                } else if (cc[1] == 'variable') {
-
-                    if (cc.length == 8) {
-                        replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
-                        show_amr_args = 'show';
-                    } else {
-                        console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
-                    }
+                    replace_concept(cc[2], cc[3], cc[4], cc[5]);
+                    show_amr_args = 'show';
                 } else {
-                    console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
+
+                    console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                 }
-            } else if (cc[0] === 'delete') {
+            } else if (cc[1] == 'string') {
 
-                if (cc.length === 4) {
-                    if ((cc[1] === 'top') && (cc[2] === 'level')) {
-                        delete_top_level(cc[3]);
-                    } else {
-                        delete_based_on_triple(cc[1], cc[2], cc[3]);
-                    }
-                    changeShowStatus('delete');
-                    show_amr_args = 'show delete';
+                if (cc.length == 7) {
+
+                    replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
+                    show_amr_args = 'show';
                 } else {
-                    add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
+
+                    console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
                 }
-            } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
+            } else if (cc[1] == 'role') {
 
-                if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
-                    console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
-                } else if (cc.length == 2) {
-                    console.log('In <i>add</i> command, there must be at least 3 arguments.');
+                if (cc.length == 8) {
+                    replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
+                    show_amr_args = 'show';
                 } else {
-                    console.log('Unrecognized <i>add</i> command.');
+                    console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
+                }
+            } else if (cc[1] == 'variable') {
+
+                if (cc.length == 8) {
+                    replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
+                    show_amr_args = 'show';
+                } else {
+                    console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
                 }
             } else {
-                console.log('Unrecognized command:' + value);
-                top = 0;
+                console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
             }
+        } else if (cc[0] === 'delete') {
+
+            if (cc.length === 4) {
+                if ((cc[1] === 'top') && (cc[2] === 'level')) {
+                    delete_top_level(cc[3]);
+                } else {
+                    delete_based_on_triple(cc[1], cc[2], cc[3]);
+                }
+                changeShowStatus('delete');
+                show_amr_args = 'show delete';
+            } else {
+                add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
+            }
+        } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
+
+            if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
+                console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
+            } else if (cc.length == 2) {
+                console.log('In <i>add</i> command, there must be at least 3 arguments.');
+            } else {
+                console.log('Unrecognized <i>add</i> command.');
+            }
+        } else {
+            console.log('Unrecognized command:' + value);
+            top = 0;
+        }
 
         if (top) {
             // value: "b :arg1 car"
@@ -914,7 +911,7 @@ function showAlign(){
         Object.keys(umr).forEach(function (key) {
             if (/[\\d|\\.]+c/gm.test(key)) {
                 if (!(key.replace('c', 'd') in umr)){ // if the node is not deleted already
-                    if (umr[key.replace('c', 'a')] !== "NaN-NaN"){ //NaN appears when the same variable is added in the second time
+                    if (umr[key.replace('c', 'a')] !== "NaN-NaN" && typeof umr[key.replace('c', 'a')] !== "undefined"){ //NaN appears when the same variable is added in the second time, undefined appears when there no such key
                         if(umr[key]){//empty c, has s
                         alignment_string += umr[key] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
                         }else{
@@ -1713,7 +1710,7 @@ function leafy_or_concept_p(loc) {
  * @param loc: 1.1
  * @returns {number}
  */
-function show_amr_new_line_p(loc) {
+function show_amr_new_line_sent(loc) {
     let variable = umr[loc + '.v'];
     let concept = umr[loc + '.c'];
     let string = umr[loc + '.s'];
@@ -1918,14 +1915,14 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                     && (index = sub_role.replace(/^:op([1-9]\d*)$/i, "$1")) //get "1" of :op1
                     && (!opx_order[index])) {
                     opx_order[index] = i;
-                    if (show_amr_new_line_p(sub_loc)) {
+                    if (show_amr_new_line_sent(sub_loc)) {
                         opx_all_simple_p = 0;
                     }
                 } else if ((sub_role.match(/^:arg(\d+)$/i))
                     && (index = sub_role.replace(/^:arg(\d+)$/i, "$1"))
                     && (!argx_order[index])) {
                     argx_order[index] = i; //argindex is the ith children (arg0 is 2nd children)
-                    if (show_amr_new_line_p(sub_loc)) {
+                    if (show_amr_new_line_sent(sub_loc)) {
                         argx_all_simple_p = 0;
                     }
                 } else if (sub_role === ':name') {
@@ -1966,7 +1963,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 let sub_loc = loc + '.' + index;
                 let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
                 if (show_amr_rec_result) {
-                    if (show_amr_new_line_p(sub_loc)) {
+                    if (show_amr_new_line_sent(sub_loc)) {
                         s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
                     } else {
                         s += ' ' + show_amr_rec_result;
@@ -2047,9 +2044,7 @@ function show_amr(args) {
         }
 
         html_amr_s = amr_s;
-        //todo: should I change the order of the two lines?
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
-        html_amr_s = html_amr_s.replace(/&xA;/g, "\n"); //&xA;, It is the equivalent to \n -> LF (Line Feed).https://stackoverflow.com/questions/5541222/what-is-the-xa-character
         // this is the actual output part
         setInnerHTML('amr', html_amr_s);
         show_umr_status = args;
@@ -2319,24 +2314,7 @@ function loadErrorHandler(evt) {
     }
 }
 
-/**
- * remove branch that contains .d
- */
-function removeDeletedFromUmr(){
-    let locs_to_delete = []
-    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        if(key.match(/\d+.d/) && umr[key] === 1){ //traverse all the .d items in umr that have a value of 1
-            locs_to_delete.push(key.replace("/.d/", ""));
-        }
-    });
-    Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        for (const loc of locs_to_delete){
-            if(key.startsWith(loc)){
-                delete umr.key;
-            }
-        }
-    });
-}
+
 
 /**
  * pass all the information that need to be saved in database back to routes.py
@@ -2349,8 +2327,6 @@ function UMR2db() {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
-
-    removeDeletedFromUmr();
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
