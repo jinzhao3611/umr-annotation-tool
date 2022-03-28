@@ -102,16 +102,29 @@
     {% endif %}
 
     <hr>
-    <div>
-        <p>UMR Penman Annotation:</p>
-        <button id="set-head">set head</button>
-        <div>
-            <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph">
-            <button id="save-partial-graph-btn" onclick="recordPartialGraph()">Save</button>
-        </div>
-        <div id="amr">
-        </div>
-    </div>
+        {% if permission in ['admin', 'edit'] %}
+            <div>
+                <p>UMR Penman Annotation:</p>
+                <button id="set-head" >set head</button>
+                <div>
+                    <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph" >
+                    <button id="save-partial-graph-btn" onclick="recordPartialGraph()" >Save</button>
+                </div>
+                <div id="amr">
+                </div>
+            </div>
+        {% else %}
+            <div>
+                <p>UMR Penman Annotation:</p>
+                <button id="set-head" disabled>set head</button>
+                <div>
+                    <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph" disabled>
+                    <button id="save-partial-graph-btn" onclick="recordPartialGraph()" disabled>Save</button>
+                </div>
+                <div id="amr">
+                </div>
+            </div>
+        {% endif %}
 
 
     <hr>
@@ -799,7 +812,7 @@
                 <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
                 <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
                 <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
-                <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
+                <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
                 <a class="btn btn-outline-secondary" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
                 <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:show_amr('show');">reset</a></button>
                 <button class="btn btn-outline-secondary" id="one-line-ne"><a title="one-line-ne" href="javascript:changeSetting();">one-line NE</a></button>
@@ -976,7 +989,7 @@
             <button class="btn btn-outline-secondary" id="delete-box" disabled>delete</button>
             <button class="btn btn-outline-secondary" id="undo-box" disabled>undo</button>
             <button class="btn btn-outline-secondary" id="redo-box" disabled>redo</button>
-            <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
+            <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
             <a class="btn btn-outline-secondary" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
             <button class="btn btn-outline-secondary" id="reset-box" disabled>reset</button>
             <button class="btn btn-outline-secondary" id="one-line-ne"><a title="one-line-ne" href="javascript:changeSetting();">one-line NE</a></button>
@@ -988,7 +1001,7 @@
 
         <script type="text/javascript">
             colorAnnotatedSents('{{ annotated_sent_ids }}');
-            load_history('{{ curr_sent_umr|tojson|safe }}');
+            load_history('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`);
             selectEvent();
             customizeOptions();
         </script>

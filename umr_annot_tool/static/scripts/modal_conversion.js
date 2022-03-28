@@ -354,7 +354,7 @@ function generateModalUmr(id){
     let triples = [];
     let html_string = document.getElementById(id).innerHTML;
     html_string = deHTML(html_string);
-    string2umr(html_string);
+    umr = string2umr(html_string);
 
     let quotingVerbsFlag = false;
     Object.keys(umr).forEach(function(key){
