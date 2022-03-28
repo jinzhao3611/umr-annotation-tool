@@ -156,7 +156,7 @@ def sentlevel(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id =current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
     doc = Doc.query.get_or_404(doc_id)
@@ -241,7 +241,10 @@ def sentlevel(doc_sent_id):
         project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
-        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+        if owner.id == current_user.id:
+            permission = 'edit' #this means got into the sentlevel page through My Annotations
+        else:
+            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
     except:
         project_name=""
         admin=current_user

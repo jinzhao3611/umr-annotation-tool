@@ -97,7 +97,7 @@
         <ul class="list-group" id="annotatedDocs">
             {% for annotatedDoc in annotatedDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="annotatedDoc-{{ annotatedDoc.id }}">
-                    <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1_' ~ annotatedDoc.user_id)}}">
+                    <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1_0')}}">
 {# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
                         {{annotatedDoc.filename}}
                     </a>
