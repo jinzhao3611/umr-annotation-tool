@@ -15,7 +15,6 @@ from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItem
     InflectedForm, SenseForm
 from sqlalchemy.orm.attributes import flag_modified
 from suggest_sim_words import generate_candidate_list, find_suggested_words
-from umr_annot_tool.permission import EditProjectPermission
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
@@ -242,8 +241,6 @@ def sentlevel(doc_sent_id):
         project_name=""
         admin=current_user
 
-    # project_permission = EditProjectPermission(project_id)
-    # admin_permission = Permission(RoleNeed('admin'))
 
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
@@ -388,30 +385,15 @@ def doclevel(doc_sent_id):
         project_name = ""
         admin=current_user
 
-
-    project_permission = EditProjectPermission(project_id)
-    admin_permission = Permission(RoleNeed('admin'))
-
-    if (admin_permission.can() and project_permission.can()) or project_id==0:
-        return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
-                               filename=doc.filename,
-                               title='Doc Level Annotation', current_snt_id=current_snt_id,
-                               current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
-                               file_format=doc.file_format,
-                               content_string=doc.content.replace('\n', '<br>'),
-                               all_sent_umrs=all_sent_umrs,
-                               project_name=project_name,
-                               admin=admin)
-    else:
-        return render_template('doclevelview.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
-                               filename=doc.filename,
-                               title='Doc Level Annotation', current_snt_id=current_snt_id,
-                               current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
-                               file_format=doc.file_format,
-                               content_string=doc.content.replace('\n', '<br>'),
-                               all_sent_umrs=all_sent_umrs,
-                               project_name=project_name,
-                               admin=admin)
+    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
+                           filename=doc.filename,
+                           title='Doc Level Annotation', current_snt_id=current_snt_id,
+                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
+                           file_format=doc.file_format,
+                           content_string=doc.content.replace('\n', '<br>'),
+                           all_sent_umrs=all_sent_umrs,
+                           project_name=project_name,
+                           admin=admin)
 
 @main.route("/doclevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevelview(doc_sent_id):

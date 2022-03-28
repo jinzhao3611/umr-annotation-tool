@@ -6,7 +6,6 @@ from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm
 from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda
 from umr_annot_tool.users.utils import save_picture, send_reset_email
-from umr_annot_tool.permission import EditProjectPermission
 from sqlalchemy.orm.attributes import flag_modified
 import logging
 
@@ -17,8 +16,6 @@ from lemminflect import getLemma
 
 
 users = Blueprint('users', __name__)
-# Create a permission with a single Need, in this case a RoleNeed.
-admin_permission = Permission(RoleNeed('admin'))
 
 @users.route("/register", methods=['GET', 'POST'])
 def register():
@@ -136,7 +133,7 @@ def account():
                 db.session.commit()
             db.session.commit()
         except Exception as e:
-            flash("Project name already exist, change to a unique name")
+            flash("Project name already exist, change to a unique name", 'info')
             print(e)
             print("deleting doc from database failed")
         return redirect(url_for('users.account'))
@@ -174,10 +171,14 @@ def project(project_id):
             print("add_qc_doc_id:", add_qc_doc_id)
             rm_qc_doc_id= int(request.form["rm_qc_doc_id"])
             print("rm_qc_doc_id", rm_qc_doc_id)
+            rm_qc_user_id = int(request.form["rm_qc_user_id"])
+            print("rm_qc_user_id", rm_qc_user_id)
             add_da_doc_id = int(request.form["add_da_doc_id"])
             print("add_da_doc_id: ", add_da_doc_id)
             rm_da_doc_id = int(request.form["rm_da_doc_id"])
             print("rm_da_doc_id: ", rm_da_doc_id)
+            rm_da_user_id = int(request.form["rm_da_user_id"])
+            print("rm_da_user_id: ", rm_da_user_id)
             if new_member_name:
                 try: #add new member
                     new_member_user_id = User.query.filter(User.username==new_member_name).first().id
@@ -231,7 +232,7 @@ def project(project_id):
                 print("I am here 34")
                 Annotation.query.filter(Annotation.user_id==current_user.id, Annotation.doc_id==delete_annot_doc_id).delete()
                 logging.info(db.session.commit())
-                flash("file is removed from My Annotations")
+                flash("file is removed from My Annotations", 'info')
             elif add_qc_doc_id !=0: # add to Quality Control
                 qc_id = Project.query.filter(Project.id == project_id).first().qc
                 qc = User.query.filter(User.id==qc_id).first()
@@ -247,8 +248,8 @@ def project(project_id):
                     db.session.add(docqc)
                     logging.info(db.session.commit())
                 else:
-                    return make_response(jsonify({"msg": 'this file already exist in Quality Control, add to double annotated files instead'}), 200)
-            elif rm_qc_doc_id != 0: # delete from Quality Control
+                    flash('this file already exist in Quality Control, add to double annotated files instead', 'info')
+            elif rm_qc_doc_id != 0 and rm_qc_user_id !=0: # delete from Quality Control
                 current_qc_id = Project.query.filter(Project.id==project_id).first().qc
                 Annotation.query.filter(Annotation.user_id==current_qc_id, Annotation.doc_id==rm_qc_doc_id).delete()
                 Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==rm_qc_doc_id).delete()
@@ -262,11 +263,14 @@ def project(project_id):
                     docqc = Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==add_da_doc_id, Docqc.upload_member_id!=current_user.id).first()
                     print("docqc: ", docqc)
                     if docqc: #if there is a qc version of this doc already
-                        docda_qc = Docda(project_id=project_id, user_id=docqc.upload_member_id, doc_id=add_da_doc_id)
-                        db.session.add(docda_qc)
+                        if not Docda.query.filter(Docda.project_id == project_id, Docda.user_id == docqc.upload_member_id,
+                                                  Docda.doc_id == add_da_doc_id).all(): #if this qc version not already in docda already
+                            docda_qc = Docda(project_id=project_id, user_id=docqc.upload_member_id, doc_id=add_da_doc_id)
+                            db.session.add(docda_qc)
                     logging.info(db.session.commit())
-            elif rm_da_doc_id != 0:
-                Docda.query.filter(Docda.project_id==project_id, Docda.user_id==current_user.id, Docda.doc_id==rm_da_doc_id).delete()
+            elif rm_da_doc_id != 0 and rm_da_user_id != 0:
+                print("I am here 66")
+                Docda.query.filter(Docda.project_id==project_id, Docda.user_id==rm_da_user_id, Docda.doc_id==rm_da_doc_id).delete()
                 logging.info(db.session.commit())
         except Exception as e:
             print(e)
@@ -299,7 +303,8 @@ def project(project_id):
         permissions.append(row.permission)
         member_ids.append(row.user_id)
 
-    project_permission = EditProjectPermission(project_id)
+    current_permission = Projectuser.query.filter(Projectuser.user_id == current_user.id,
+                                                  Projectuser.project_id == project_id).first().permission
     project_name = Project.query.filter(Project.id==project_id).first().project_name
 
     daDocs = Docda.query.filter(Docda.project_id == project_id).all()
@@ -334,18 +339,10 @@ def project(project_id):
     print('annotatedDocs: ', annotatedDocs)
     print('length annotatedDocs: ', len(annotatedDocs))
 
-    if admin_permission.can() and project_permission.can():
-        print('I am here 61')
-        return render_template('admin_project.html', title='admin_project', project_name=project_name, project_id=project_id,
-                                members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
-                               projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
-                               daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission='admin')
-    else:
-        print('I am here 62')
-        return render_template('member_project.html', title='member_project', project_name=project_name, project_id=project_id,
-                                members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
-                               projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
-                               daDocs=daDocs, daUploaders=daUploaders, daFilenames=daFilenames, permission='edit')
+    return render_template('project.html', title='admin_project', project_name=project_name, project_id=project_id,
+                            members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
+                           projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
+                           daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission)
 
 @users.route("/user/<string:username>")
 def user_posts(username):

@@ -27,9 +27,11 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
-                        {% if permission == 'admin' %}
+                        <input type="hidden" name="rm_da_user_id" value=0>
+                        {% if permission in ['admin', 'edit', 'annotate'] %}
                             <input type="submit" value="add to My Annotations">
                         {% else %}
                             <input type="submit" value="add to My Annotations" disabled>
@@ -45,8 +47,10 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
+                        <input type="hidden" name="rm_da_user_id" value=0>
                         {% if permission == 'admin' %}
                             <input type="submit" value="remove from project">
                         {% else %}
@@ -60,32 +64,32 @@
 
     <div class="content-section">
         <legend class="border-bottom mb-4">Unassigned Documents</legend>
-        <ul class="list-group" id="unassignedDocs">
-            {% for unassignedDoc in unassignedDocs %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" id="unassignedDoc-{{ unassignedDoc.id }}">
-                    <a title="{{ unassignedDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=unassignedDoc.id ~ '_1_' ~ unassignedDoc.user_id)}}">
-                        {{unassignedDoc.filename}}
-                    </a>
-                    <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
-                        <input type="hidden" name="remove_member_id" value=0>
-                        <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value={{ unassignedDoc.id }}>
-                        <input type="hidden" name="update_doc_project_id" value={{ project_id }}>
-                        <input type="hidden" name="annotated_doc_id" value=0>
-                        <input type="hidden" name="delete_annot_doc_id" value=0>
-                        <input type="hidden" name="add_qc_doc_id" value=0>
-                        <input type="hidden" name="rm_qc_doc_id" value=0>
-                        <input type="hidden" name="add_da_doc_id" value=0>
-                        <input type="hidden" name="rm_da_doc_id" value=0>
-                        {% if permission == 'admin' %}
+        {% if permission == 'admin' %}
+            <ul class="list-group" id="unassignedDocs">
+                {% for unassignedDoc in unassignedDocs %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center" id="unassignedDoc-{{ unassignedDoc.id }}">
+                        <a title="{{ unassignedDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=unassignedDoc.id ~ '_1_' ~ unassignedDoc.user_id)}}">
+                            {{unassignedDoc.filename}}
+                        </a>
+                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
+                            <input type="hidden" name="remove_member_id" value=0>
+                            <input type="hidden" name="new_member_name" value="">
+                            <input type="hidden" name="update_doc_id" value={{ unassignedDoc.id }}>
+                            <input type="hidden" name="update_doc_project_id" value={{ project_id }}>
+                            <input type="hidden" name="annotated_doc_id" value=0>
+                            <input type="hidden" name="delete_annot_doc_id" value=0>
+                            <input type="hidden" name="add_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_user_id" value=0>
+                            <input type="hidden" name="add_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_user_id" value=0>
                             <input type="submit" value="add to current project">
-                        {% else %}
-                            <input type="submit" value="add to current project" disabled>
-                        {% endif %}
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </div>
 
     <div class="content-section">
@@ -105,9 +109,12 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value={{ annotatedDoc.id }}>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
-                        {% if permission == 'admin' %}
+                        <input type="hidden" name="rm_da_user_id" value=0>
+
+                        {% if permission in ['admin', 'edit', 'annotate'] %}
                             <input type="submit" value="add to Quality Control" onclick="return confirm('Are you sure you want to upload to Quality control?');">
                         {% else %}
                             <input type="submit" value="add to Quality Control" disabled>
@@ -122,9 +129,12 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value={{ annotatedDoc.id }}>
                         <input type="hidden" name="rm_da_doc_id" value=0>
-                        {% if permission == 'admin' %}
+                        <input type="hidden" name="rm_da_user_id" value=0>
+
+                        {% if permission in ['admin', 'edit', 'annotate'] %}
                             <input type="submit" value="add to Double Annotated Files">
                         {% else %}
                             <input type="submit" value="add to Double Annotated Files" disabled>
@@ -139,8 +149,11 @@
                         <input type="hidden" name="delete_annot_doc_id" value={{ annotatedDoc.id }}>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
+                        <input type="hidden" name="rm_da_user_id" value=0>
+
                         {% if permission == 'admin' %}
                             <input type="submit" value="delete from My Annotations" onclick="return confirm('Are you sure you want to remove this doc from project and delete all your annotations from database? Removal cannot be reversed');">
                         {% else %}
@@ -175,8 +188,11 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value={{ qcDoc.id }}>
+                        <input type="hidden" name="rm_qc_user_id" value={{ qcDoc.id }}>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
+                        <input type="hidden" name="rm_da_user_id" value=0>
+
                         {% if permission == 'admin' %}
                             <input type="submit" value="delete from Quality Control" onclick="return confirm('Are you sure you want to remove this qc file? removal cannot be reversed');">
                         {% else %}
@@ -208,8 +224,10 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value={{ daDoc.doc_id }}>
+                        <input type="hidden" name="rm_da_user_id" value={{ daDoc.user_id }}>
                         {% if permission == 'admin' %}
                             <input type="submit" value="delete from Double Annotated Files" onclick="return confirm('Are you sure you want to remove this file? removal cannot be reversed');">
                         {% else %}
@@ -233,8 +251,11 @@
             <input type="hidden" name="delete_annot_doc_id" value=0>
             <input type="hidden" name="add_qc_doc_id" value=0>
             <input type="hidden" name="rm_qc_doc_id" value=0>
+            <input type="hidden" name="rm_qc_user_id" value=0>
             <input type="hidden" name="add_da_doc_id" value=0>
             <input type="hidden" name="rm_da_doc_id" value=0>
+            <input type="hidden" name="rm_da_user_id" value=0>
+
             {% if permission == 'admin' %}
                 <input type="submit" value="add new member">
             {% else %}
@@ -247,15 +268,27 @@
                     <a title="click on member to search their annotation" href="{{ url_for('users.search', project_id=project_id, member_id=member.id) }}">
                         {{member.username}}
                     </a>
-                    <span class="badge">
-                        <label for="permission">permissions:</label>
-                        <select name="permission" id="permission-{{ member.id }}">
-                          <option value="view">view</option>
-                          <option value="annotate">annotate</option>
-                          <option value="edit">edit</option>
-                          <option value="admin">admin</option>
-                        </select>
-                    </span>
+                    {% if permission in ['admin'] %}
+                        <span class="badge">
+                            <label for="permission">permissions:</label>
+                            <select name="permission" id="permission-{{ member.id }}">
+                              <option value="view">view</option>
+                              <option value="annotate">annotate</option>
+                              <option value="edit">edit</option>
+                              <option value="admin">admin</option>
+                            </select>
+                        </span>
+                    {% else %}
+                        <span class="badge">
+                            <label for="permission">permissions:</label>
+                            <select name="permission" id="permission-{{ member.id }}">
+                              <option value="view" disabled>view</option>
+                              <option value="annotate" disabled>annotate</option>
+                              <option value="edit" disabled>edit</option>
+                              <option value="admin" disabled>admin</option>
+                            </select>
+                        </span>
+                    {% endif %}
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                         <input type="hidden" name="remove_member_id" value={{ member.id }}>
                         <input type="hidden" name="new_member_name" value="">
@@ -265,8 +298,11 @@
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
                         <input type="hidden" name="rm_qc_doc_id" value=0>
+                        <input type="hidden" name="rm_qc_user_id" value=0>
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
+                        <input type="hidden" name="rm_da_user_id" value=0>
+
                         {% if permission == 'admin' %}
                             <input type="submit" value="remove member" onclick="return confirm('Are you sure you want to remove this user from this project?')">
                         {% else %}

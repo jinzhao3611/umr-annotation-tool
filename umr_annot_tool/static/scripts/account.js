@@ -6,11 +6,24 @@
 function display_permission(permissions, member_ids){
     for (let j in permissions){
         let optionList = document.getElementById(`permission-${member_ids[j]}`).children;
-        for(let i=0; i<optionList.length; i++){
-            if(optionList[i].value===permissions[j]){
-                optionList[i].setAttribute('selected', 'selected');
+        if (permissions[j] ==='admin'){//if current is admin, cannot change the permission at all
+            for(let i=0; i<optionList.length; i++){
+                if(optionList[i].value===permissions[j]){
+                    optionList[i].setAttribute('selected', 'selected');
+                }else{
+                    optionList[i].setAttribute('disabled', '');
+                }
+            }
+        }else{//if current is not admin, grey out admin: can only change permission to option other than admin(edit, annotate, view)
+            for(let i=0; i<optionList.length; i++){
+                if(optionList[i].value===permissions[j]){
+                    optionList[i].setAttribute('selected', 'selected');
+                }else if(optionList[i].value==='admin'){
+                    optionList[i].setAttribute('disabled', '');
+                }
             }
         }
+
     }
 }
 
