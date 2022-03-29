@@ -328,15 +328,20 @@ def doclevel(doc_sent_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
-    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
     try:
+        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
         project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
+        if owner.id == current_user.id:
+            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+        else:
+            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
     except AttributeError:
         project_name = ""
         admin=current_user
+        permission = ""
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
@@ -347,7 +352,8 @@ def doclevel(doc_sent_id):
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
-                           owner=owner)
+                           owner=owner,
+                           permission=permission)
 
 @main.route("/doclevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevelview(doc_sent_id):
