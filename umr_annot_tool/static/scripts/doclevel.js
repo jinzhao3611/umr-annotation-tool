@@ -306,6 +306,17 @@ function load_doc_history(curr_doc_umr, curr_sent_id){
         recordConcept('sentence', "1");
         variable2concept[`s${curr_sent_id}s0`] = 'sentence';
         state_has_changed_p = 1;
+    }else{
+        variables = {};
+        concepts = {};
+        variable2concept = {};
+        for (const[key, value] of Object.entries(umr)){
+            if(key.endsWith('v') && value.startsWith('s')){
+                variables[value] = key.replace(".v", '');
+                variable2concept[value] = umr[key.replace(".v", ".c")];
+                concepts[umr[key.replace(".v", ".c")]] = key.replace(".v", '');
+            }
+        }
     }
 
     let current_triples = getTriplesFromUmr(umr);
