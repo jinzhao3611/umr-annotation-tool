@@ -2343,6 +2343,7 @@ function loadErrorHandler(evt) {
  * @constructor
  */
 function UMR2db() {
+    show_amr('amr'); //to prevent delete/replace mode html string got in database
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let annot_str = deHTML(amrHtml);
     let align_info = document.getElementById('align').innerText;

@@ -325,6 +325,7 @@ function load_doc_history(curr_doc_umr, curr_sent_id){
 }
 
 function docUMR2db(owner_id) {
+    show_amr('amr'); //to prevent delete/replace mode html string got in database
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let doc_annot_str = document.getElementById('amr').innerHTML;
