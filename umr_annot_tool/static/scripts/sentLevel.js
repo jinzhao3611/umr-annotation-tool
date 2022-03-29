@@ -981,12 +981,14 @@ function newVar(concept) {
         initial = 'x';
     }
 
-    // add the sentence number s1 to initial t -> s1t
-    let sentenceId = document.getElementById('sentence_id').value;
-    if(table_id===1){ // this is deal with the two sentence display in under-resource languages
-        initial = "s"+ sentenceId + initial;
-    }else{
-        initial = "s"+ (parseInt(sentenceId)+1) + initial;
+    if (!docAnnot){
+            // add the sentence number s1 to initial t -> s1t
+        let sentenceId = document.getElementById('sentence_id').value;
+        if(table_id===1){ // this is deal with the two sentence display in under-resource languages
+            initial = "s"+ sentenceId + initial;
+        }else{
+            initial = "s"+ (parseInt(sentenceId)+1) + initial;
+        }
     }
 
     // increase index or reserve variable 'i' for concept 'i'
@@ -1049,8 +1051,8 @@ function addTriple(head, role, arg, arg_type) {
         if (arg_var_locs //argument already exist in variables dictionary
             && (arg_type !== 'concept')
             && (arg_type !== 'string') // arg_type is '' (is variable)
-            && (!role.match(/^:?(li|wiki)$/))) {
-            console.log("I am here40-1");
+            && (!role.match(/^:?(li|wiki)$/))
+            && (!docAnnot)) {
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
@@ -1096,9 +1098,8 @@ function addTriple(head, role, arg, arg_type) {
                     endOffset = i;
                 }
             }
-        }else if (validString(arg)) {
-            //doc level
-            arg_string = arg;
+        }else if (validString(arg) && docAnnot) {
+            arg_string = '';
             arg_concept = arg;
             arg_variable = arg;
         } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
@@ -1110,9 +1111,14 @@ function addTriple(head, role, arg, arg_type) {
             console.log('Ill-formed command "' + head + ' ' + role + '' + arg + '" &nbsp; Last argument should be a concept, string or previously defined variable.');
             return '';
         }
-        head_var_locs += ''; //todo: just changed here, could have consequences
+        head_var_locs += '';
         let head_var_loc_list = argSplit(head_var_locs); // the head var could have multiple locs
-        let head_var_loc = head_var_loc_list[0]; // use the first loc of head var
+        let head_var_loc = '';
+        if(docAnnot){
+            head_var_loc = head_var_loc_list[head_var_loc_list.length - 1]; // use the first loc of head var
+        }else{
+            head_var_loc = head_var_loc_list[0]; // use the first loc of head var
+        }
         let n_subs = umr[head_var_loc + '.n']; // how many children head var has
         umr[head_var_loc + '.n'] = ++n_subs; // add one more children
         // console.log('subs ' + head_var_loc + '.n: ' + n_subs);
@@ -1522,7 +1528,6 @@ function delete_rec(loc) {
  * @param arg freedom
  */
 function delete_based_on_triple(head_var, role, arg) {
-    console.log('delete ' + head_var + ' ' + role + ' ' + arg);
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
         if (role.match(/^:[a-z]/i)) {
@@ -2345,6 +2350,7 @@ function UMR2db() {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
+    umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
