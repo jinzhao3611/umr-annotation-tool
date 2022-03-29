@@ -355,49 +355,6 @@ function docUMR2db(owner_id) {
     });
 }
 
-/**
- * this function takes in a template id (the name on the button) and return the form to fill out, potentially get rid of this entirely
- * @param id "top"
- */
-function selectTemplate(id) {
-    console.log("selectTemplate id is: "+ id);
-    current_template = '';
-    let actions = ["replace", "delete", "move", "save", "load"];
-    let s;
-    for (let i = 0; i < actions.length; i++) {
-        let action = actions[i];
-        if ((s = document.getElementById(action + '-template-table')) != null) {
-            if (id === action) {
-                s.style.display = 'none';
-                current_template = id;
-                if ((action === 'replace') && !show_amr_status.match(/replace/)) {
-                    console.log("I am here 903");
-                    // if clicked on replace from other button
-                    show_amr('show replace');
-                } else if ((action === 'delete') && !show_amr_status.match(/delete/)) {
-                    show_amr('show delete');
-                }
-            } else {
-                s.style.display = 'none';
-                if ((action === 'replace') && show_amr_status.match(/replace/)) {
-                    show_amr('show');
-                } else if ((action === 'delete') && show_amr_status.match(/delete/)) {
-                    show_amr('show');
-                }
-            }
-        }
-    }
-    let focus_field;
-    if (id === 'move') {
-        focus_field = 'move-object';
-    } else {
-        focus_field = '';
-    }
-    if (focus_field && ((s = document.getElementById(focus_field)) != null)) {
-        s.focus();
-    }
-}
-
 function clearInput(){
     console.log("clearInput is called");
     if(document.getElementById('roles1')){
