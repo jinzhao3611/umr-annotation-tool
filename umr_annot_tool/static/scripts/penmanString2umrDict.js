@@ -52,7 +52,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                 variable2concept[variable] = new_concept;
             }
             // THIS BLOCK ADD 1.v AND RECORD VARIABLE
-            if (getLocs(variable)) { // if variable already exists
+            if (getLocs(variable) && !docAnnot) { // if variable already exists
                 new_variable = newVar(concept);
                 umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
@@ -183,6 +183,11 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
  * @returns {*}
  */
 function string2umr(annotText) {
+    //DCT, AUTH, ROOT: this is a hack rather than a fix: the reason of doing this is when docUmr2db, DCT is causing trouble when string2umr_recursive, and became MISSING-VALUE
+    annotText = annotText.replace(/DCT/g, 's10000d');
+    annotText = annotText.replace(/AUTH/g, 's10000a');
+    annotText = annotText.replace(/ROOT/g, 's10000r');
+
     let loc; // current graph location we are dealing with
     let umr_dict = {};
     umr_dict['n'] = 0;
@@ -224,6 +229,17 @@ function string2umr(annotText) {
         umr_dict['n'] = 0;
     }
     variablesInUse = new Object();
+
+    //change back to DCT, AUTH, ROOT: the reason of doing this is when docUmr2db, DCT is causing trouble when string2umr_recursive, and became MISSING-VALUE
+    for (const[key, value] of Object.entries(umr_dict)){
+        if(value==="s10000d"){
+            umr_dict[key] = 'DCT';
+        }else if(value==="s10000a"){
+            umr_dict[key] = 'AUTH';
+        }else if(value==="s10000r"){
+            umr_dict[key] = 'ROOT';
+        }
+    }
     return umr_dict;
 }
 

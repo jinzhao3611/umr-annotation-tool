@@ -283,13 +283,16 @@ def doclevel(doc_sent_id):
         try:
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr_dict"]
+            print("umr_dict: ", umr_dict)
             doc_annot_str = request.get_json(force=True)["doc_annot_str"]
+            print("doc_annot_str: ", doc_annot_str)
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner_user_id).first()
             if existing:  # update the existing Annotation object
                 existing.doc_umr = umr_dict
                 existing.doc_annot = doc_annot_str
                 flag_modified(existing, 'doc_umr')
+                flag_modified(existing, 'doc_annot')
                 db.session.commit()
             else:
                 print("the sent level annotation of the current sent doesn't exist")
