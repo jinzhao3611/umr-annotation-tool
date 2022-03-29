@@ -278,9 +278,8 @@
 
                         <div>
                             <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
-                            <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
-                            <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);undo(-1);">undo</a></button>
-                            <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);undo(1);">redo</a></button>
+                            <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
+                            <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
                             <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
                         </div>
 

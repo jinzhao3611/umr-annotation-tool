@@ -2607,3 +2607,7 @@ function submit_command(){
     let value = document.getElementById('command').value;
     exec_command(value, 1);
 }
+
+function reset(){
+    show_amr('show');
+}
