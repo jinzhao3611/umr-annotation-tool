@@ -341,6 +341,12 @@ function docUMR2db(owner_id) {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let doc_annot_str = document.getElementById('amr').innerHTML;
 
+    //this purpose of these 3 lines is to remove .d items in dictionary before saving
+    docAnnot=false;
+    let penmanStr = show_amr('show');
+    docAnnot=true;
+    umr = string2umr(penmanStr);
+
     fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
         method: 'POST',
         body: JSON.stringify({"snt_id": snt_id, "umr_dict": umr, "doc_annot_str": doc_annot_str})
