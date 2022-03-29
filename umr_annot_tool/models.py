@@ -119,7 +119,7 @@ class Projectuser(db.Model):
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, nullable=False)
-    qc = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    qc_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     projectusers = db.relationship('Projectuser', backref="project", lazy=True)
     docs = db.relationship('Doc', backref='project', lazy=True)

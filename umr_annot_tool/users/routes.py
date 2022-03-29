@@ -109,7 +109,7 @@ def account():
             elif to_delete_project_id !=0:
                 Docda.query.filter(Docda.project_id==to_delete_project_id).delete()
                 Docqc.query.filter(Docqc.project_id==to_delete_project_id).delete()
-                qc_id = Project.query.filter(Project.id==to_delete_project_id).first().qc
+                qc_id = Project.query.filter(Project.id==to_delete_project_id).first().qc_user_id
                 Projectuser.query.filter(Projectuser.project_id == to_delete_project_id).delete()
                 Project.query.filter(Project.id==to_delete_project_id).delete()
                 to_delete_doc_ids = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
@@ -120,11 +120,11 @@ def account():
                 User.query.filter(User.id == qc_id).delete()
             elif new_project_name:
                 hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
-                qc = User(username=f"{new_project_name}_{current_user.id}_qc", email=f'{new_project_name}@qc.com', password=hashed_password)
-                db.session.add(qc)
+                qc_user = User(username=f"{new_project_name}_{current_user.id}_qc", email=f'{new_project_name}@qc.com', password=hashed_password)
+                db.session.add(qc_user)
                 db.session.commit()
 
-                new_project = Project(project_name=new_project_name, qc=qc.id)
+                new_project = Project(project_name=new_project_name, qc_user_id=qc_user.id)
                 db.session.add(new_project)
                 db.session.commit()
 
@@ -235,7 +235,7 @@ def project(project_id):
                 logging.info(db.session.commit())
                 flash("file is removed from My Annotations", 'info')
             elif add_qc_doc_id !=0: # add to Quality Control
-                qc_id = Project.query.filter(Project.id == project_id).first().qc
+                qc_id = Project.query.filter(Project.id == project_id).first().qc_user_id
                 qc = User.query.filter(User.id==qc_id).first()
                 # check existing:
                 if not (Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == qc_id).all()):
@@ -251,7 +251,7 @@ def project(project_id):
                 else:
                     flash('this file already exist in Quality Control, add to double annotated files instead', 'info')
             elif rm_qc_doc_id != 0 and rm_qc_user_id !=0: # delete from Quality Control
-                current_qc_id = Project.query.filter(Project.id==project_id).first().qc
+                current_qc_id = Project.query.filter(Project.id==project_id).first().qc_user_id
                 Annotation.query.filter(Annotation.user_id==current_qc_id, Annotation.doc_id==rm_qc_doc_id).delete()
                 Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==rm_qc_doc_id).delete()
                 logging.info(db.session.commit())
@@ -318,7 +318,7 @@ def project(project_id):
     projectDocs = Doc.query.filter(Doc.project_id == project_id).all()
     checked_out_by = [''] # add a dummy index because the loop index in jinja2 starts from 1
     unassignedDocs = Doc.query.filter(Doc.project_id == 0, Doc.user_id==current_user.id).all()
-    qcAnnotations = Annotation.query.filter(Annotation.user_id==Project.query.get(int(project_id)).qc, Annotation.sent_id==1).all() #when add to my annotation, anntation row of sent1 got added in Annotation table, therefore check if there is annotation for sent1
+    qcAnnotations = Annotation.query.filter(Annotation.user_id == Project.query.get(int(project_id)).qc_user_id, Annotation.sent_id == 1).all() #when add to my annotation, anntation row of sent1 got added in Annotation table, therefore check if there is annotation for sent1
     qcDocs = []
     qcUploaders = [''] #dummy name in the beginning because jinja loop index start from 1
     for qca in qcAnnotations:
