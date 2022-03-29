@@ -2093,7 +2093,7 @@ function show_amr(args) {
         }
         showHead();
     }
-
+    return deHTML(html_amr_s);
 }
 
 function showEditHistory(){
