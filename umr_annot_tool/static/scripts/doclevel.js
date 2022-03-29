@@ -293,7 +293,7 @@ function load_doc_history(curr_doc_umr, curr_sent_id){
     umr = JSON.parse(curr_doc_umr);//umr is from database
     if (Object.keys(umr).length === 0 || Object.keys(umr).length === 1){
         umr['n'] = 1;
-        umr['1.v'] = "s"+curr_sent_id; // number change with current sentence
+        umr['1.v'] = "s"+curr_sent_id+'s0'; // number change with current sentence
         umr['1.s'] = "";
         umr['1.n'] = 0;
         umr['1.c'] = "sentence";
@@ -302,9 +302,9 @@ function load_doc_history(curr_doc_umr, curr_sent_id){
         variables = {};
         concepts = {};
         // populate with (s1 / sentence)
-        recordVariable(`s${curr_sent_id}`, "1");
+        recordVariable(`s${curr_sent_id}s0`, "1");
         recordConcept('sentence', "1");
-        variable2concept[`s${curr_sent_id}`] = 'sentence';
+        variable2concept[`s${curr_sent_id}s0`] = 'sentence';
         state_has_changed_p = 1;
     }
 
@@ -317,7 +317,7 @@ function load_doc_history(curr_doc_umr, curr_sent_id){
     modal_triples = modal_triples_strings.map(s => s.split(" "));
 
     for (let i = 0; i < modal_triples.length; i++) {
-        exec_command(`s${curr_sent_id} :modal ${modal_triples[i][0]}`, '1');
+        exec_command(`s${curr_sent_id}s0 :modal ${modal_triples[i][0]}`, '1');
         exec_command(`${modal_triples[i][0]} ${modal_triples[i][1]} ${modal_triples[i][2]}`, '1');
         show_amr('show');
     }
@@ -416,7 +416,7 @@ function initialCommand(current_snt_id){
         let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0];
         let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1];
 
-        let command1 = 's'+ current_snt_id + ' ' + role_outter + ' ' + parentArg;
+        let command1 = 's'+ current_snt_id +'s0' + ' ' + role_outter + ' ' + parentArg;
         exec_command(command1, '1');
 
         let command2 = parentArg + ' ' + role_inner + ' ' + childArg;

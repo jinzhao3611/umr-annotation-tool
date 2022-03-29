@@ -194,9 +194,9 @@
                                     {% else %}
                     {#          if current sentence doc_annotation is empty in database, create a sentence top #}
                                         {% if loop.index == current_snt_id %}
-                                            <div id="amr">(s{{ loop.index }} / sentence)<br></div>
+                                            <div id="amr">(s{{ loop.index }}s0 / sentence)<br></div>
                                         {% else %}
-                                            <div id="amr_doc{{ loop.index }}">(s{{ loop.index }} / sentence)<br></div>
+                                            <div id="amr_doc{{ loop.index }}">(s{{ loop.index }}s0 / sentence)<br></div>
                                         {% endif %}
                                     {% endif %}
                                 </div>
