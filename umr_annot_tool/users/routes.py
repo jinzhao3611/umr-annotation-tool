@@ -188,8 +188,9 @@ def project(project_id):
                         projectuser = Projectuser(project_name=project_name, user_id=new_member_user_id, permission="view", project_id=project_id)
                         db.session.add(projectuser)
                         db.session.commit()
-                except:
-                    print('username does not exist')
+                except Exception as e:
+                    flash('username does not exist', 'danger')
+                    print(e)
             elif remove_member_id !=0:
                 Projectuser.query.filter(Projectuser.user_id==remove_member_id, Projectuser.project_id==project_id).delete()
                 db.session.commit()
