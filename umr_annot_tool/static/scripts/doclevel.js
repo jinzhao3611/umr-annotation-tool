@@ -21,27 +21,6 @@ function initializeDoc() {
 }
 
 /**
- * change the unfocused doc level annotation
- * from:(s1 / sentence
-  :temporal (s1t / s1t :before (DCT / DCT))
-  :temporal (s1t / s1t :after (s2d / s2d)))
- * to: (s1 / sentence
-:temporal ((s1t :before DCT)
-(s1t :after s2d)))
-
- * @param docLen
- * @param current_sent_id
- */
-function showDefaultUmr(docLen, current_sent_id){
-    for(let i =1; i<=docLen; i++){
-        if(i !== parseInt(current_sent_id)){
-            let html_s_before = document.getElementById('amr_doc'+i).innerText;
-            document.getElementById('amr_doc'+i).innerText = deHTML2(docUmrTransform(html_s_before, false));
-        }
-    }
-}
-
-/**
  * @param html_umr_s: <div id="amr">(s1 / sentence<br>&nbsp;&nbsp;:temporal (s1t / s1t :before (DCT / DCT))<br>&nbsp;&nbsp;:temporal (s1t / s1t :after (s2d / s2d)))<br></div>
  * @param nested: boolean, if nested form like in the paper "Developing Uniform Meaning Representation for Natural Language Processing"
  * @returns {string|any}: <div id="amr">(s1 / sentence<br>
@@ -304,11 +283,10 @@ function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
 
 /**
  * load the annotation for current sentence from database
- * @param doc_annot: pennman doc annotation directly from database, with html encoding, but no html tags
  * @param curr_doc_umr: dictionary
  * @param curr_sent_id:
  */
-function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
+function load_doc_history(curr_doc_umr, curr_sent_id){
     let modal_triples = generateModalUmr(`amr${curr_sent_id}`); //returns a list of triples, umr is changed to sentLevel umr
     let modal_triples_strings = modal_triples.map(t => t.join(" "));
 
@@ -333,7 +311,7 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
     let current_triples = getTriplesFromUmr(umr);
     let current_triples_strings = current_triples.map(t => t.join(" "));
 
-    modal_triples_strings = modal_triples_strings.filter(function(val) {
+    modal_triples_strings = modal_triples_strings.filter(function(val) { // deduplicate the modal triple strings that already in doc annotation
       return current_triples_strings.indexOf(val) === -1;
     });
     modal_triples = modal_triples_strings.map(s => s.split(" "));
@@ -343,28 +321,17 @@ function load_doc_history(doc_annot, curr_doc_umr, curr_sent_id){
         exec_command(`${modal_triples[i][0]} ${modal_triples[i][1]} ${modal_triples[i][2]}`, '1');
         show_amr('show');
     }
-    show_amr();
+    show_amr('show');
 }
 
-function docUMR2db() {
-    console.log("docUMR2db is called");
+function docUMR2db(owner_id) {
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
-    let umrHtml = document.getElementById('db-amr').outerHTML;
-    umrHtml = umrHtml.replace('<div id="db-amr">', '<div id="amr">');
+    let doc_annot_str = document.getElementById('amr').innerHTML;
 
-    // umrHtml = umrHtml.replace(/\n/g, "<br>\n");
-    umrHtml = umrHtml.replace(/\n/g, "");
-    umrHtml = umrHtml.replace(/&xA;/g, "\n");
-    console.log('doc umr to save in db: ' + umrHtml);
-
-    fetch(`/doclevel/${doc_id}_${snt_id}#amr`, {
+    fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
         method: 'POST',
-        body: JSON.stringify({"umr": umrHtml, "snt_id": snt_id, "umr_dict": umr})
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data); //amr got returned from server
+        body: JSON.stringify({"snt_id": snt_id, "umr_dict": umr, "doc_annot_str": doc_annot_str})
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });
@@ -440,55 +407,6 @@ function deHTML3(s) {
     s = s.replace(/<\/?(a|span|div)\b[^<>]*>/g, "");
     s = s.replace(/<br>/g, "split_here");
     return s;
-}
-
-function export_annot(exported_items, content_string) {
-    console.log("exported_items: ", exported_items);
-    console.log("content_string: ", content_string);
-    content_string = content_string.replaceAll('<br>', '\n');
-    let doc_name = document.getElementById('filename').innerText;
-    exported_items.forEach(e => {
-        e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
-        e[1] = e[1].replace(/&nbsp;/g, " ");
-        e[1] = e[1].replace(/<br>/g, "");
-        e[1] = e[1].replace('<div id="amr">', '');
-        e[1] = e[1].replace('</div>', '');
-    })
-
-
-    let output_str = exported_items.map((a, index) =>
-        index + 1 + '\t' + a[0]
-        + "\n# sentence level graph:\n"
-        + a[1]
-        + "\n# alignment:"
-        + a[2]
-        + "\n# document level annotation:\n"
-        + deHTML2(docUmrTransform(a[3]), false) //todo: change docUmrTransform, because we don't want nested anymore
-        +"\n").join("\n\n# :: snt");
-    console.log(output_str);
-
-    let filename;
-    let text = "user name: " + document.getElementById('username').innerText + '\n';
-    text += "user id: " + document.getElementById('user_id').innerText + '\n';
-    text += "file language: " + document.getElementById('lang').innerText + '\n';
-    text += "file format: " + document.getElementById('file_format').innerText + '\n';
-    text += "Doc ID in database: " + document.getElementById('doc_id').innerText + '\n';
-    let curr_time = new Date();
-    text += "export time: " + curr_time.toLocaleString() + '\n\n';
-    text += '# :: snt';
-    if (window.BlobBuilder && window.saveAs) {
-        filename = 'exported_' + doc_name;
-        text += output_str;
-        text += '\n\n' + '# Source File: \n' + content_string;
-        console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
-        var bb = new BlobBuilder();
-        bb.append(text);
-        saveAs(bb.getBlob(), filename);
-    } else {
-        console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
-    }
-
-
 }
 
 

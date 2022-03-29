@@ -807,7 +807,7 @@
             </table>
             <div style="height: 10%; width:80%">
                 <button id="umr2db" onclick="UMR2db()">save</button>
-                <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
+                <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
                 <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:changeShowStatus('replace');">edit</a></button>
                 <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
                 <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>

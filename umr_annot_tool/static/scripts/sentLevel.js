@@ -2067,7 +2067,6 @@ function show_amr(args) {
     }
     if ((s = document.getElementById('amr')) != null) {
         var height = s.style.height;
-        var intScrollTop = 0;
         var newScrollTop = 0;
         if ((height != undefined) && height.match(/^\d+/)) {
             if (origScrollTop != 0) {
@@ -2082,11 +2081,14 @@ function show_amr(args) {
             // add_log ('re-scroll ' + origScrollTop + '/' + origScrollHeight + ' ' + s.scrollTop + ' ' + s.scrollTop + ' ' + intScrollTop);
         }
     }
-    showAlign();
-    if(language === 'chinese' || language === 'english'){
-        showAnnotatedTokens();
+    if(!docAnnot){
+        showAlign();
+        if(language === 'chinese' || language === 'english'){
+            showAnnotatedTokens();
+        }
+        showHead();
     }
-    showHead();
+
 }
 
 function showEditHistory(){
@@ -2465,9 +2467,8 @@ function export_annot(exported_items, content_string) {
         + "\n# alignment:"
         + a[2]
         + "\n# document level annotation:\n"
-        + deHTML2(docUmrTransform(a[3]))
+        + deHTML2(a[3])
         +"\n").join("\n\n# :: snt");
-    console.log(output_str);
 
     let filename;
     let text = "user name: " + document.getElementById('username').innerText + '\n';

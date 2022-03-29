@@ -181,13 +181,13 @@
                                     {% if pair[1].doc_annot | length %}
                     {#            if current sentence doc_annotation is not empty in database, load from database#}
                                         {% if loop.index == current_snt_id %}
-                                            {% autoescape off %}
-                                                {{ pair[1].doc_annot }}
+                                            {% autoescape false %}
+                                                <div id="amr">{{ pair[1].doc_annot }}<br></div>
                                             {% endautoescape %}
                                         {% else %}
-                                            {% autoescape off %}
+                                            {% autoescape false %}
                                                 <div id="amr_doc{{ loop.index }}" >
-                                                    <p>{{ pair[1].doc_annot | replace('<div id="amr">','') | replace('</div>','')}}</p>
+                                                    <p>{{ pair[1].doc_annot | safe }}</p>
                                                 </div>
                                             {% endautoescape %}
                                         {% endif %}
@@ -203,12 +203,6 @@
                             </div>
                         {% endfor %}
                     </div>
-
-                    <div style="display: none">
-                    this is amr to save in db:
-                        <div id="db-amr">
-                        </div>
-                    </div>
                 </div>
 
                 <div id='menu' class="col-md-4" style="height: auto;"  >
@@ -217,7 +211,7 @@
                             <p>current sentence:
                                 <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
                                 <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
-                                <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db()">
+                                <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db({{ owner.id }})">
                             </p>
                         </form>
                         <div class="btn-group dropright">
@@ -283,7 +277,7 @@
                         </div>
 
                         <div>
-                            <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
+                            <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
                             <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:selectTemplate('delete');">delete</a></button>
                             <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);undo(-1);">undo</a></button>
                             <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);undo(1);">redo</a></button>
@@ -292,8 +286,7 @@
 
                         <script type="text/javascript">
                             fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                            load_doc_history('{{ current_sent_pair[1].doc_annot }}', '{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
-                            showDefaultUmr({{ sent_annot_pairs | length }}, {{ current_snt_id }});
+                            load_doc_history('{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
                             showBlueBox();
                         </script>
                     </div>

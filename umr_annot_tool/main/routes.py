@@ -225,9 +225,9 @@ def sentlevel(doc_sent_id):
         curr_sent_umr = {}
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.umr!={} or annot.annot_str)] #this is used to color annotated sentences
     all_annots = [annot.annot_str for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
@@ -281,32 +281,30 @@ def doclevel(doc_sent_id):
     # add to db
     if request.method == 'POST':
         try:
-            umr_html = request.get_json(force=True)["umr"]
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr_dict"]
+            doc_annot_str = request.get_json(force=True)["doc_annot_str"]
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == current_user.id).first()
+                                               Annotation.user_id == owner_user_id).first()
             if existing:  # update the existing Annotation object
-                existing.doc_annot = umr_html
                 existing.doc_umr = umr_dict
+                existing.doc_annot = doc_annot_str
+                flag_modified(existing, 'doc_umr')
                 db.session.commit()
             else:
                 print("the sent level annotation of the current sent doesn't exist")
-            return {"umr": umr_html}
-        except:
+        except Exception as e:
+            print(e)
             print("add doc level annotation to database failed")
 
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
-    print('sents: ', sents)
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.umr for annot in annotations]
 
     if doc.file_format == 'plain_text' or 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
-        print('sents in doclevel: ', sents)
-        print('annotations in doclevel: ', annotations)
     else:
         _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
         sent_annot_pairs = list(zip(df_html, annotations))
