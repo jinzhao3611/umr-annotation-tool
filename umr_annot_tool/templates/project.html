@@ -9,8 +9,8 @@
     {% if permission in ['admin'] %}
         <div class="row">
             <div class="col-sm-12 text-center">
-                <button class="btn btn-default btn-lg"><a href="{{ url_for('main.upload_document', current_project_id=project_id) }}">Upload a Document</a></button>
-                <button class="btn btn-default btn-lg"><a href="{{ url_for('main.upload_lexicon', current_project_id=project_id) }}">Upload a Lexicon File</a></button>
+                <button class="btn btn-default" type="button"><a href="{{ url_for('main.upload_document', current_project_id=project_id) }}">Upload a Document</a></button>
+                <button class="btn btn-default" type="button"><a href="{{ url_for('main.upload_lexicon', current_project_id=project_id) }}">Upload a Lexicon File</a></button>
              </div>
         </div>
     {% else %}
@@ -23,10 +23,11 @@
     {% endif %}
 
 
-
     <div class="content-section">
         <legend class="border-bottom mb-4" title="documents uploaded by admin">Documents in {{ project_name }}</legend>
-        <ul class="list-group" id="projectDocs">
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDocumentsInProject" aria-expanded="false" aria-controls="collapseDocumentsInProject">collapse</button>
+        <div class="collapse" id="collapseDocumentsInProject">
+            <ul class="list-group" id="projectDocs">
             {% for projectDoc in projectDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectDoc-{{ projectDoc.id }}">
                     <a title="{{ projectDoc.content }}" href="javascript:alert('please add to My Annotations to annotate');">
@@ -75,78 +76,83 @@
                     </form>
                 </li>
             {% endfor %}
-        </ul>
+    </ul>
+        </div>
     </div>
 
     <div class="content-section">
         <legend class="border-bottom mb-4">My Annotations</legend>
-        <ul class="list-group" id="annotatedDocs">
-            {% for annotatedDoc in annotatedDocs %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" id="annotatedDoc-{{ annotatedDoc.id }}">
-                    <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1_0')}}">
-{# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
-                        {{annotatedDoc.filename}}
-                    </a>
-                    <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
-                        <input type="hidden" name="remove_member_id" value=0>
-                        <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="annotated_doc_id" value=0>
-                        <input type="hidden" name="delete_annot_doc_id" value=0>
-                        <input type="hidden" name="add_qc_doc_id" value={{ annotatedDoc.id }}>
-                        <input type="hidden" name="rm_qc_doc_id" value=0>
-                        <input type="hidden" name="rm_qc_user_id" value=0>
-                        <input type="hidden" name="add_da_doc_id" value=0>
-                        <input type="hidden" name="rm_da_doc_id" value=0>
-                        <input type="hidden" name="rm_da_user_id" value=0>
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseMyAnnotations" aria-expanded="false" aria-controls="collapseMyAnnotations">collapse</button>
+        <div class="collapse" id="collapseMyAnnotations">
+            <ul class="list-group" id="annotatedDocs">
+                {% for annotatedDoc in annotatedDocs %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center" id="annotatedDoc-{{ annotatedDoc.id }}">
+                        <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1_0')}}">
+    {# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
+                            {{annotatedDoc.filename}}
+                        </a>
+                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
+                            <input type="hidden" name="remove_member_id" value=0>
+                            <input type="hidden" name="new_member_name" value="">
+                            <input type="hidden" name="update_doc_id" value=0>
+                            <input type="hidden" name="annotated_doc_id" value=0>
+                            <input type="hidden" name="delete_annot_doc_id" value=0>
+                            <input type="hidden" name="add_qc_doc_id" value={{ annotatedDoc.id }}>
+                            <input type="hidden" name="rm_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_user_id" value=0>
+                            <input type="hidden" name="add_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_user_id" value=0>
 
-                        {% if permission in ['admin', 'edit', 'annotate'] %}
-                            <input type="submit" value="add to Quality Control" onclick="return confirm('Are you sure you want to upload to Quality control?');">
-                        {% else %}
-                            <input type="submit" value="add to Quality Control" disabled>
-                        {% endif %}
-                    </form>
-                    <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
-                        <input type="hidden" name="remove_member_id" value=0>
-                        <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="annotated_doc_id" value=0>
-                        <input type="hidden" name="delete_annot_doc_id" value=0>
-                        <input type="hidden" name="add_qc_doc_id" value=0>
-                        <input type="hidden" name="rm_qc_doc_id" value=0>
-                        <input type="hidden" name="rm_qc_user_id" value=0>
-                        <input type="hidden" name="add_da_doc_id" value={{ annotatedDoc.id }}>
-                        <input type="hidden" name="rm_da_doc_id" value=0>
-                        <input type="hidden" name="rm_da_user_id" value=0>
+                            {% if permission in ['admin', 'edit', 'annotate'] %}
+                                <input type="submit" value="add to Quality Control" onclick="return confirm('Are you sure you want to upload to Quality control?');">
+                            {% else %}
+                                <input type="submit" value="add to Quality Control" disabled>
+                            {% endif %}
+                        </form>
+                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
+                            <input type="hidden" name="remove_member_id" value=0>
+                            <input type="hidden" name="new_member_name" value="">
+                            <input type="hidden" name="update_doc_id" value=0>
+                            <input type="hidden" name="annotated_doc_id" value=0>
+                            <input type="hidden" name="delete_annot_doc_id" value=0>
+                            <input type="hidden" name="add_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_user_id" value=0>
+                            <input type="hidden" name="add_da_doc_id" value={{ annotatedDoc.id }}>
+                            <input type="hidden" name="rm_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_user_id" value=0>
 
-                        {% if permission in ['admin', 'edit', 'annotate'] %}
-                            <input type="submit" value="add to Double Annotated Files">
-                        {% else %}
-                            <input type="submit" value="add to Double Annotated Files" disabled>
-                        {% endif %}
-                    </form>
-                    <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
-                        <input type="hidden" name="remove_member_id" value=0>
-                        <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="annotated_doc_id" value=0>
-                        <input type="hidden" name="delete_annot_doc_id" value={{ annotatedDoc.id }}>
-                        <input type="hidden" name="add_qc_doc_id" value=0>
-                        <input type="hidden" name="rm_qc_doc_id" value=0>
-                        <input type="hidden" name="rm_qc_user_id" value=0>
-                        <input type="hidden" name="add_da_doc_id" value=0>
-                        <input type="hidden" name="rm_da_doc_id" value=0>
-                        <input type="hidden" name="rm_da_user_id" value=0>
+                            {% if permission in ['admin', 'edit', 'annotate'] %}
+                                <input type="submit" value="add to Double Annotated Files">
+                            {% else %}
+                                <input type="submit" value="add to Double Annotated Files" disabled>
+                            {% endif %}
+                        </form>
+                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
+                            <input type="hidden" name="remove_member_id" value=0>
+                            <input type="hidden" name="new_member_name" value="">
+                            <input type="hidden" name="update_doc_id" value=0>
+                            <input type="hidden" name="annotated_doc_id" value=0>
+                            <input type="hidden" name="delete_annot_doc_id" value={{ annotatedDoc.id }}>
+                            <input type="hidden" name="add_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_doc_id" value=0>
+                            <input type="hidden" name="rm_qc_user_id" value=0>
+                            <input type="hidden" name="add_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_doc_id" value=0>
+                            <input type="hidden" name="rm_da_user_id" value=0>
 
-                        {% if permission in ['admin', 'edit'] %}
-                            <input type="submit" value="delete from My Annotations" onclick="return confirm('Are you sure you want to remove this doc from project and delete all your annotations from database? Removal cannot be reversed');">
-                        {% else %}
-                            <input type="submit" value="delete from My Annotations" disabled>
-                        {% endif %}
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+                            {% if permission in ['admin', 'edit'] %}
+                                <input type="submit" value="delete from My Annotations" onclick="return confirm('Are you sure you want to remove this doc from project and delete all your annotations from database? Removal cannot be reversed');">
+                            {% else %}
+                                <input type="submit" value="delete from My Annotations" disabled>
+                            {% endif %}
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
     </div>
 
     <div id="error_msg">
@@ -154,7 +160,9 @@
 
     <div class="content-section">
         <legend class="border-bottom mb-4">Quality Control</legend>
-        <ul class="list-group" id="otherDocs">
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseQualityControl" aria-expanded="false" aria-controls="collapseQualityControl">collapse</button>
+        <div class="collapse" id="collapseQualityControl">
+            <ul class="list-group" id="otherDocs">
             {% for qcDoc in qcDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ qcDoc.id }}">
                     <a title="{{ qcDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=qcDoc.id ~ '_1_' ~ qcDoc.user_id)}}">
@@ -185,11 +193,14 @@
                 </li>
             {% endfor %}
         </ul>
+        </div>
     </div>
 
     <div class="content-section">
         <legend class="border-bottom mb-4">Double Annotated Files</legend>
-        <ul class="list-group" id="otherDocs">
+            <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDoubleAnnotated" aria-expanded="false" aria-controls="collapseDoubleAnnotated">collapse</button>
+        <div class="collapse" id="collapseDoubleAnnotated">
+            <ul class="list-group" id="otherDocs">
             {% for daDoc in daDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
                     <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
@@ -218,10 +229,73 @@
                     </form>
                 </li>
             {% endfor %}
-        </ul>
+    </ul>
+        </div>
     </div>
 
 
+    <div class="content-section">
+        <legend class="border-bottom mb-4">Annotation Lattices</legend>
+        <ul class="list-group" id="otherDocs">
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a title="click on member to search their annotation" href="{{ url_for('users.discourse') }}">
+                    Discourse Relations
+                </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a title="click on member to search their annotation" href="{{ url_for('users.aspect') }}">
+                    Aspect
+                </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a title="click on member to search their annotation" href="{{ url_for('users.person') }}">
+                    Person
+                </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a title="click on member to search their annotation" href="{{ url_for('users.number') }}">
+                    Number
+                </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a title="click on member to search their annotation" href="{{ url_for('users.modal') }}">
+                    Modal strength
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        display_permission({{ permissions | safe}}, {{ member_ids | safe }});
+        change_permission({{ project_id }})
+    </script>
+
+{% endblock content%}
+
+{% block content2 %}
+    <div class="content-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Change project name</legend>
+                <div class="form-group">
+                    {{ form.projectname.label(class="form-control-label") }}
+                    {% if form.projectname.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.projectname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.projectname(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
     <div class="content-section">
         <legend class="border-bottom mb-4"> {{ project_name }} admin and members</legend>
         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
@@ -294,67 +368,5 @@
         </ul>
     </div>
 
-    <div class="content-section">
-        <legend class="border-bottom mb-4">Annotation Lattices</legend>
-        <ul class="list-group" id="otherDocs">
-            <li class="list-group-item d-flex justify-content-between align-items-center" >
-                <a title="click on member to search their annotation" href="{{ url_for('users.discourse') }}">
-                    Discourse Relations
-                </a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" >
-                <a title="click on member to search their annotation" href="{{ url_for('users.aspect') }}">
-                    Aspect
-                </a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" >
-                <a title="click on member to search their annotation" href="{{ url_for('users.person') }}">
-                    Person
-                </a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" >
-                <a title="click on member to search their annotation" href="{{ url_for('users.number') }}">
-                    Number
-                </a>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center" >
-                <a title="click on member to search their annotation" href="{{ url_for('users.modal') }}">
-                    Modal strength
-                </a>
-            </li>
-        </ul>
-    </div>
-    <script type="text/javascript">
-        display_permission({{ permissions | safe}}, {{ member_ids | safe }});
-        change_permission({{ project_id }})
-    </script>
-
-{% endblock content%}
-
-{% block content2 %}
-    <div class="content-section">
-        <form method="POST" action="" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Change project name</legend>
-                <div class="form-group">
-                    {{ form.projectname.label(class="form-control-label") }}
-                    {% if form.projectname.errors %}
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.projectname.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.projectname(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-            </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
-        </form>
-    </div>
 {% endblock content2 %}
 
