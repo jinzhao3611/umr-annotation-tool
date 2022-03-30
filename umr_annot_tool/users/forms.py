@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
-from umr_annot_tool.models import User
+from umr_annot_tool.models import User, Projectuser
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
@@ -53,6 +53,17 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
+
+class UpdateProjectForm(FlaskForm):
+    projectname = StringField('Project name',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    submit = SubmitField('Update')
+
+    def validate_projectname(self, projectname):
+        project = Projectuser.query.filter(Projectuser.project_name == projectname.data,
+                                           Projectuser.user_id == current_user.id).first()
+        if project:
+            raise ValidationError(f'This projectname already exists in your projects. Please choose a different one.')
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email',

@@ -3,7 +3,7 @@ from pathlib import Path
 from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm
+from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm, UpdateProjectForm
 from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
@@ -138,7 +138,22 @@ def account():
 def project(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    if request.method == 'POST':
+    form = UpdateProjectForm()
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+
+    if form.validate_on_submit():
+        print("I am here 33")
+        p = Project.query.filter(Project.id==project_id).first()
+        p.project_name = form.projectname.data
+        flag_modified(p, 'project_name')
+        pus = Projectuser.query.filter(Projectuser.project_id==project_id).all()
+        for pu in pus:
+            pu.project_name = form.projectname.data
+            flag_modified(pu, 'project_name')
+        db.session.commit()
+        flash('Project name has been updated!', 'success')
+        return redirect(url_for('users.project', project_id=project_id))
+    elif request.method == 'POST':
         try:
             new_member_name = request.form["new_member_name"]
             print("new_member_name", new_member_name)
@@ -266,7 +281,7 @@ def project(project_id):
             projectuser = Projectuser.query.filter(Projectuser.user_id == edit_permission_member_id,
                                                    Projectuser.project_id == project_id).first()
             projectuser.permission = edit_permission
-            flag_modified(projectuser, 'project_id')
+            flag_modified(projectuser, 'permission')
             logging.info(f"project {projectuser.id} permission changed to {projectuser.permission}")
             logging.info(db.session.commit())
             db.session.commit()
@@ -274,6 +289,8 @@ def project(project_id):
             print(e)
             print("permission change failed")
         return redirect(url_for('users.project', project_id=project_id))
+    elif request.method == 'GET':
+        form.projectname.data = project_name
 
 
     project_members = Projectuser.query.filter(Projectuser.project_id == project_id).all()
@@ -287,8 +304,6 @@ def project(project_id):
 
     current_permission = Projectuser.query.filter(Projectuser.user_id == current_user.id,
                                                   Projectuser.project_id == project_id).first().permission
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-
     daDocs = Docda.query.filter(Docda.project_id == project_id).all()
     daUploaders = ['']
     daFilenames = ['']
@@ -323,7 +338,8 @@ def project(project_id):
     return render_template('project.html', title='project', project_name=project_name, project_id=project_id,
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
                            projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
-                           daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission)
+                           daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission,
+                           form=form)
 
 @users.route("/user/<string:username>")
 def user_posts(username):

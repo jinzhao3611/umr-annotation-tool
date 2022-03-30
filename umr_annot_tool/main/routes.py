@@ -148,7 +148,7 @@ def upload_document(current_project_id):
                 for i, annot in enumerate(annotations):
                     annot.sent_umr = sentUmrDicts[i]
                     annot.doc_umr = docUmrDicts[i]
-                    flag_modified(annot, 'umr')
+                    flag_modified(annot, 'sent_umr')
                     flag_modified(annot, 'doc_umr')
                     db.session.add(annot)
                 logging.info(db.session.commit())
