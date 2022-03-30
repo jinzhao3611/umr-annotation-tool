@@ -233,8 +233,8 @@ def project(project_id):
                     print("I am here 70")
                     member_annotations = Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == current_user.id).all()
                     for a in member_annotations:
-                        qc_annotation = Annotation(annot_str=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
-                                                   sent_id=a.sent_id, doc_id=a.doc_id, umr=a.sent_umr, doc_umr=a.doc_umr)
+                        qc_annotation = Annotation(sent_annot=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
+                                                   sent_id=a.sent_id, doc_id=a.doc_id, sent_umr=a.sent_umr, doc_umr=a.doc_umr)
                         db.session.add(qc_annotation)
                     docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
                     db.session.add(docqc)
