@@ -23,7 +23,6 @@ function display_permission(permissions, member_ids){
                 }
             }
         }
-
     }
 }
 

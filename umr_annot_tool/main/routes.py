@@ -223,7 +223,7 @@ def sentlevel(doc_sent_id):
                 existing.sent_annot = amr_html
                 existing.alignment = align_info
                 existing.sent_umr = umr_dict
-                flag_modified(existing, 'umr')
+                flag_modified(existing, 'sent_umr')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
             else:

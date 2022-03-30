@@ -310,10 +310,12 @@ def project(project_id):
     checked_out_by = [''] # add a dummy index because the loop index in jinja2 starts from 1
     qcAnnotations = Annotation.query.filter(Annotation.user_id == Project.query.get(int(project_id)).qc_user_id, Annotation.sent_id == 1).all() #when add to my annotation, anntation row of sent1 got added in Annotation table, therefore check if there is annotation for sent1
     qcDocs = []
-    qcUploaders = [''] #dummy name in the beginning because jinja loop index start from 1
+    qcUploaders = []
+    qcUploaderIds = []
     for qca in qcAnnotations:
         qcDocs.append(Doc.query.filter(Doc.id==qca.doc_id).first())
         uploader_id = Docqc.query.filter(Docqc.doc_id==qca.doc_id, Docqc.project_id==project_id).first().upload_member_id
+        qcUploaderIds.append(uploader_id)
         qcUploaders.append(User.query.filter(User.id==uploader_id).first().username)
     annotatedDocs = []
     for projectDoc in projectDocs:
@@ -331,7 +333,7 @@ def project(project_id):
 
     return render_template('project.html', title='project', project_name=project_name, project_id=project_id,
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
-                           projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
+                           projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, qcUploaderIds=qcUploaderIds, annotatedDocs=annotatedDocs,
                            daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission,
                            form=form)
 
