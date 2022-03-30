@@ -92,7 +92,7 @@
             {% endif %}
 
         </div>
-        <button id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
+        <button class="btn btn-info btn-sm" id="show-more-info" onclick="toggleRow('optional-rows'); changeButton('show-more-info'); ">show less info</button>
     {% else %}
         <div id="sentence">
             {% autoescape off %}
@@ -105,10 +105,10 @@
         {% if permission in ['admin', 'edit'] %}
             <div>
                 <p>UMR Penman Annotation:</p>
-                <button id="set-head" >set head</button>
+                <button class="btn btn-info btn-sm" id="set-head" >set head</button>
                 <div>
                     <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph" >
-                    <button id="save-partial-graph-btn" onclick="recordPartialGraph()" >Save</button>
+                    <button class="btn btn-info btn-sm" id="save-partial-graph-btn" onclick="recordPartialGraph()">Save</button>
                 </div>
                 <div id="amr">
                 </div>
@@ -116,10 +116,10 @@
         {% else %}
             <div>
                 <p>UMR Penman Annotation:</p>
-                <button id="set-head" disabled>set head</button>
+                <button class="btn btn-info btn-sm" id="set-head" disabled>set head</button>
                 <div>
                     <input type="text" style="width: 340px;" id="save-partial-graph" placeholder="Enter name and head for the partial graph" disabled>
-                    <button id="save-partial-graph-btn" onclick="recordPartialGraph()" disabled>Save</button>
+                    <button class="btn btn-info btn-sm" id="save-partial-graph-btn" onclick="recordPartialGraph()" disabled>Save</button>
                 </div>
                 <div id="amr">
                 </div>
@@ -134,24 +134,30 @@
     </div>
 
     <hr>
-    <div>
-        <p> Edit History:</p>
-        <div id="eh"></div>
-        <textarea id="edit_history"></textarea>
-        <button type="button" onclick="goToEdit(document.getElementById('edit_history').value)">enter the edit number</button>
+        {% if permission in ['admin', 'edit'] %}
+            <div>
+                <p> Edit History:</p>
+                <div id="eh"></div>
+                <textarea id="edit_history"></textarea>
+                <button class="btn btn-info btn-sm" type="button" onclick="goToEdit(document.getElementById('edit_history').value)">enter the edit number</button>
 
-        <p id="edit_history"></p>
-    </div>
+                <p id="edit_history"></p>
+            </div>
+        {% else %}
+            <div>
+                <p> Edit History:</p>
+                <div id="eh"></div>
+                <textarea id="edit_history" disabled></textarea>
+                <button class="btn btn-info btn-sm" type="button" onclick="goToEdit(document.getElementById('edit_history').value)" disabled>enter the edit number</button>
+
+                <p id="edit_history"></p>
+            </div>
+        {% endif %}
 
 {% endblock content %}
 
 {% block content2 %}
-    <div style="position:fixed; top:18%;">
-        <div>
-            <textarea class="form-control" rows="1" cols="50" id="command" name="command" style="display: none"></textarea>
-            <button id="command-button" onclick="submit_command()" style="display: none">Command</button>
-        </div>
-
+    <div style="position:fixed; top:10%;">
         {% if permission in ['admin', 'edit'] %}
             <table style="height: 10%; width:80%">
                 <tbody>
@@ -441,7 +447,7 @@
 
                     <tr>
                         <td>
-                            <button id="add-abs-concept" onclick="submit_query()">Add abstract concept</button>
+                            <button class="btn btn-info btn-sm" id="add-abs-concept" onclick="submit_query()">Add abstract concept</button>
                         </td>
                     </tr>
                     <tr>
@@ -725,7 +731,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button id="add-attr" onclick="submit_query()">Add attribute</button>
+                            <button class="btn btn-info btn-sm" id="add-attr" onclick="submit_query()">Add attribute</button>
                         </td>
                     </tr>
 
@@ -774,7 +780,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button id="add-modal" onclick="submit_query()">Add Modal</button>
+                            <button class="btn btn-info btn-sm" id="add-modal" onclick="submit_query()">Add Modal</button>
                         </td>
                     </tr>
                     <tr>
@@ -800,23 +806,26 @@
 
                     <tr>
                         <td>
-                            <button id="add-partial-graph" onclick="addPartialGraph()">Add partial graph</button>
+                            <button class="btn btn-info btn-sm" id="add-partial-graph" onclick="addPartialGraph()">Add partial graph</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <hr>
             <div style="height: 10%; width:80%">
-                <button id="umr2db" onclick="UMR2db()">save</button>
-                <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
-                <button class="btn btn-outline-secondary" id="replace-box"><a title="replace a role, concept, string or secondary variable" href="javascript:changeShowStatus('replace');">edit</a></button>
-                <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
-                <button class="btn btn-outline-secondary" id="undo-box"><a id="undo-button" title="currently nothing to undo" href="javascript:undo(-1);">undo</a></button>
-                <button class="btn btn-outline-secondary" id="redo-box"><a id="redo-button" title="currently nothing to undo" href="javascript:undo(1);">redo</a></button>
-                <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
-                <a class="btn btn-outline-secondary" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
-                <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
-                <button class="btn btn-outline-secondary" id="one-line-ne"><a title="one-line-ne" href="javascript:changeSetting();">one-line NE</a></button>
-                <button class="btn btn-outline-secondary" id="search"><a title="search" href="{{ url_for('users.search', project_id=0) }}">search</a></button>
+                <button class="btn btn-info btn-sm" id="umr2db" onclick="UMR2db()">save</button>
+                <button class="btn btn-info btn-sm" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
+                <button class="btn btn-info btn-sm" id="replace-box" onclick="changeShowStatus('replace');">edit</button>
+                <button class="btn btn-info btn-sm" id="delete-box" onclick="changeShowStatus('delete');">delete</button>
+                <button class="btn btn-info btn-sm" id="undo-button" title="currently nothing to undo" onclick="undo(-1);">undo</button>
+                <button class="btn btn-info btn-sm" id="redo-button" title="currently nothing to undo" onclick="undo(1);">redo</button>
+                <button class="btn btn-info btn-sm" id="reset-box" onclick="reset();">reset</button>
+                <button class="btn btn-info btn-sm" id="one-line-ne" onclick="changeSetting();">one-line NE</button>
+                <hr>
+                <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
+                <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
+                <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" onclick="UMR2db()">search</a>
+                <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">back to project</a>
             </div>
         {% else %}
             <table style="height: 10%; width:80%">
@@ -848,7 +857,7 @@
 
                 <tr>
                     <td>
-                        <button id="add-abs-concept" onclick="submit_query()" disabled>Add abstract concept</button>
+                        <button class="btn btn-info btn-sm" id="add-abs-concept" onclick="submit_query()" disabled>Add abstract concept</button>
                     </td>
                 </tr>
                 <tr>
@@ -929,7 +938,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <button id="add-attr" onclick="submit_query()" disabled>Add attribute</button>
+                        <button class="btn btn-info btn-sm" id="add-attr" onclick="submit_query()" disabled>Add attribute</button>
                     </td>
                 </tr>
 
@@ -953,7 +962,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <button id="add-modal" onclick="submit_query()" disabled>Add Modal</button>
+                        <button class="btn btn-info btn-sm" id="add-modal" onclick="submit_query()" disabled>Add Modal</button>
                     </td>
                 </tr>
                 <tr>
@@ -977,26 +986,27 @@
 
                 <tr>
                     <td>
-                        <button id="add-partial-graph" onclick="addPartialGraph()" disabled>Add partial graph</button>
+                        <button class="btn btn-info btn-sm" id="add-partial-graph" onclick="addPartialGraph()" disabled>Add partial graph</button>
                     </td>
                 </tr>
             </tbody>
         </table>
             <div style="height: 10%; width:80%">
-            <button class="btn btn-outline-secondary" id="umr2db" onclick="UMR2db()" disabled>save</button>
-            <button class="btn btn-outline-secondary" id="export-box"><a style="text-decoration:none" title="export" href="javascript:export_annot({{ exported_items}}, `{{content_string }}`);">export</a></button>
-            <button class="btn btn-outline-secondary" id="replace-box" disabled>edit</button>
-            <button class="btn btn-outline-secondary" id="delete-box" disabled>delete</button>
-            <button class="btn btn-outline-secondary" id="undo-box" disabled>undo</button>
-            <button class="btn btn-outline-secondary" id="redo-box" disabled>redo</button>
-            <a class="btn btn-outline-secondary" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc-level-annot</a>
-            <a class="btn btn-outline-secondary" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
-            <button class="btn btn-outline-secondary" id="reset-box" disabled>reset</button>
-            <button class="btn btn-outline-secondary" id="one-line-ne"><a title="one-line-ne" href="javascript:changeSetting();">one-line NE</a></button>
-            <button class="btn btn-outline-secondary" id="search"><a title="search" href="{{ url_for('users.search', project_id=0) }}">search</a></button>
+                <button class="btn btn-info btn-sm" id="umr2db" onclick="UMR2db()" disabled>save</button>
+                <button class="btn btn-info btn-sm" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
+                <button class="btn btn-info btn-sm" id="replace-box" onclick="changeShowStatus('replace');" disabled>edit</button>
+                <button class="btn btn-info btn-sm" id="delete-box" onclick="changeShowStatus('delete');" disabled>delete</button>
+                <button class="btn btn-info btn-sm" id="undo-button" title="currently nothing to undo" onclick="undo(-1);" disabled>undo</button>
+                <button class="btn btn-info btn-sm" id="redo-button" title="currently nothing to undo" onclick="undo(1);" disabled>redo</button>
+                <button class="btn btn-info btn-sm" id="reset-box" onclick="reset();"disabled>reset</button>
+                <button class="btn btn-info btn-sm" id="one-line-ne" onclick="changeSetting();">one-line NE</button>
+                <hr>
+                <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
+                <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
+                <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" onclick="UMR2db()">search</a>
+                <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">back to project</a>
         </div>
         {% endif %}
-
 
 
         <script type="text/javascript">

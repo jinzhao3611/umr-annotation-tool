@@ -264,19 +264,14 @@ def sentlevel(doc_sent_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
-    try:
-        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
-        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
-        admin = User.query.filter(User.id == admin_id).first()
-        if owner.id == current_user.id:
-            permission = 'edit' #this means got into the sentlevel page through My Annotations
-        else:
-            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
-    except:
-        project_name=""
-        admin=current_user
-        permission = ""
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+    if owner.id == current_user.id:
+        permission = 'edit' #this means got into the sentlevel page through My Annotations
+    else:
+        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
 
 
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
@@ -288,6 +283,7 @@ def sentlevel(doc_sent_id):
                            content_string=doc.content.replace('\n', '<br>'),
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
+                           project_id=project_id,
                            admin=admin,
                            curr_annotation_string=curr_annotation_string,
                            owner=owner,
@@ -343,19 +339,14 @@ def sentlevelview(doc_sent_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
-    try:
-        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
-        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
-        admin = User.query.filter(User.id == admin_id).first()
-        if owner.id == current_user.id:
-            permission = 'edit' #this means got into the sentlevel page through My Annotations
-        else:
-            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
-    except:
-        project_name=""
-        admin=current_user
-        permission = ""
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+    if owner.id == current_user.id:
+        permission = 'edit' #this means got into the sentlevel page through My Annotations
+    else:
+        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
 
 
     return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
@@ -367,6 +358,7 @@ def sentlevelview(doc_sent_id):
                            content_string=doc.content.replace('\n', '<br>'),
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
+                           project_id=project_id,
                            admin=admin,
                            curr_annotation_string=curr_annotation_string,
                            owner=owner,
