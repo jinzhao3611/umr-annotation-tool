@@ -293,6 +293,85 @@ def sentlevel(doc_sent_id):
                            owner=owner,
                            permission=permission)
 
+@main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
+def sentlevelview(doc_sent_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    doc_id = int(doc_sent_id.split("_")[0])
+    default_sent_id = int(doc_sent_id.split("_")[1])
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner = User.query.get_or_404(owner_user_id)
+
+    doc = Doc.query.get_or_404(doc_id)
+    info2display = html(doc.content, doc.file_format, lang=doc.lang)
+    # find the correct frame_dict for current annotation
+    if doc.lang == "chinese":
+        frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
+    elif doc.lang == "english":
+        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+    elif doc.lang == "arabic":
+        frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
+    else:
+        try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
+            frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+        except AttributeError: #there is no frame_dict for this language at all
+            frame_dict = {}
+
+    snt_id = int(request.args.get('snt_id', default_sent_id))
+    if "set_sentence" in request.form:
+        snt_id = int(request.form["sentence_id"])
+
+    try:
+        curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
+                                                         Annotation.user_id == owner_user_id).first()
+        curr_annotation_string = curr_annotation.sent_annot.strip()
+        curr_sent_umr = curr_annotation.sent_umr
+    except Exception as e:
+        print(e)
+        curr_annotation_string= ""
+        curr_sent_umr = {}
+
+    # load all annotations for current document used for export_annot()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
+        Annotation.sent_id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
+    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
+    all_annots = [annot.sent_annot for annot in annotations]
+    all_aligns = [annot.alignment for annot in annotations]
+    all_doc_annots = [annot.doc_annot for annot in annotations]
+    all_sents = [sent2.content for sent2 in filtered_sentences]
+    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+
+    #check who is the admin of the project containing this file:
+    try:
+        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
+        admin = User.query.filter(User.id == admin_id).first()
+        if owner.id == current_user.id:
+            permission = 'edit' #this means got into the sentlevel page through My Annotations
+        else:
+            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+    except:
+        project_name=""
+        admin=current_user
+        permission = ""
+
+
+    return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
+                           info2display=info2display,
+                           frame_dict=json.dumps(frame_dict),
+                           curr_sent_umr=curr_sent_umr,
+                           exported_items=exported_items,
+                           file_format=doc.file_format,
+                           content_string=doc.content.replace('\n', '<br>'),
+                           annotated_sent_ids= annotated_sent_ids,
+                           project_name=project_name,
+                           admin=admin,
+                           curr_annotation_string=curr_annotation_string,
+                           owner=owner,
+                           permission=permission)
+
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevel(doc_sent_id):
     if not current_user.is_authenticated:
@@ -389,34 +468,30 @@ def doclevelview(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner = User.query.get_or_404(owner_user_id)
+
     current_snt_id = default_sent_id
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
 
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
-    print('sents: ', sents)
-    dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
-    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == dummy_user_id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
     if doc.file_format == 'plain_text' or 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
-        print('sents in doclevel: ', sents)
-        print('annotations in doclevel: ', annotations)
     else:
         _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
         sent_annot_pairs = list(zip(df_html, annotations))
-
 
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) + '_' + str(current_user.id)))
+        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.sent_annot for annot in annotations]
@@ -427,15 +502,20 @@ def doclevelview(doc_sent_id):
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
-    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
     try:
+        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
         project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
+        if owner.id == current_user.id:
+            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+        else:
+            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
     except AttributeError:
         project_name = ""
         admin=current_user
+        permission = ""
 
     return render_template('doclevelview.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
@@ -445,8 +525,9 @@ def doclevelview(doc_sent_id):
                            content_string=doc.content.replace('\n', '<br>'),
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
-                           admin=admin)
-
+                           admin=admin,
+                           owner=owner,
+                           permission=permission)
 
 @main.route("/about")
 def about():
