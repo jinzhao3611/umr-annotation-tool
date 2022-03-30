@@ -204,15 +204,16 @@
             <ul class="list-group" id="otherDocs">
             {% for daDoc in daDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
-                    {% if daUploaders[loop.index] == current_user.username %}
-                        <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
-                            {{ daFilenames[loop.index0] }}
-                        </a>
-                    {% else %}
-                        <a href="{{ url_for('main.sentlevelview', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
-                            {{ daFilenames[loop.index0] }}
-                        </a>
-                    {% endif %}
+{#                this commented out code is meant to give uploader the permission to annotate, but we decided nobody can annotate Double Annotated Files, but the problem is the da files are pointers to My Annotation Files, if user change ma files, da files are changed as well#}
+{#                    {% if daUploaders[loop.index] == current_user.username %}#}
+{#                        <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">#}
+{#                            {{ daFilenames[loop.index0] }}#}
+{#                        </a>#}
+{#                    {% else %}#}
+                    <a href="{{ url_for('main.sentlevelview', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
+                        {{ daFilenames[loop.index0] }}
+                    </a>
+{#                    {% endif %}#}
                     <span class="badge">
                         uploaded by {{ daUploaders[loop.index0] }}
                     </span>
