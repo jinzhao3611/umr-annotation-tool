@@ -37,7 +37,7 @@ def lexicon2db(project_id:int, lexicon_dict: dict):
 
 def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int,
             sent_annots=None, doc_annots=None, aligns=None) -> int:
-    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
+    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id, project_id=current_project_id).first()
     if existing_doc:
         doc_id = existing_doc.id
         existing_doc.content = content_string
