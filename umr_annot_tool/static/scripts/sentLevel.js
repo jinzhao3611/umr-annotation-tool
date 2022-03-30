@@ -2435,8 +2435,8 @@ function get(object, key, default_value) {
     return (typeof result !== "undefined") ? result : default_value;
 }
 
-function suggestLemma(doc_id){
-    fetch(`/lexiconupdate/${doc_id}`, {
+function suggestLemma(project_id, doc_id, snt_id){
+    fetch(`/lexiconupdate/${project_id}?doc_id=${doc_id}&snt_id=${snt_id}`, {
         method: 'POST',
         body: JSON.stringify({"selected_word": localStorage["selected_word"]})
     }).then(function (response) {
@@ -2466,6 +2466,8 @@ function suggestLemma(doc_id){
 function initializeLexicon(frames, citations){
     frame_dict = JSON.parse(deHTML(frames));
     citation_dict = JSON.parse(deHTML(citations));
+    console.log("frame_dict: ", frame_dict);
+    console.log("citation_dict: ", citation_dict);
 }
 
 

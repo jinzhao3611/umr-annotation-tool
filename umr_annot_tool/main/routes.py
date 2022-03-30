@@ -526,12 +526,12 @@ def doclevelview(doc_sent_id):
 def about():
     return render_template('about.html', title='About')
 
-def get_lexicon_dicts(doc):
+def get_lexicon_dicts(project_id:int):
     try:
-        frames_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+        frames_dict = Lexicon.query.filter(Lexicon.project_id==project_id).first().lexi
     except AttributeError:
         frames_dict = {}
-        flash(f'there is no existing lexicon for {doc.lang}, you can start to add now', 'success')
+        flash(f'there is no existing lexicon for current project, you can start to add now', 'success')
 
     citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in
                      frames_dict[lemma]["inflected_forms"]}
@@ -587,12 +587,19 @@ def lexicon_modify_sense():
     return render_template('forms_and_senses.html', lexicon_item_form=lexicon_item_form)
 
 
-@main.route("/lexiconupdate/<doc_id>", methods=['GET', 'POST'])
-def lexiconupdate(doc_id):
-    doc = Doc.query.get_or_404(doc_id) # used for get the language
+@main.route("/lexiconupdate/<project_id>", methods=['GET', 'POST'])
+def lexiconupdate(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))
+    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
+    doc = Doc.query.get_or_404(doc_id)
+
     if request.method == 'POST': # handle the suggested inflected and lemma list
         try:
             selected_word = request.get_json(force=True)['selected_word']
+            print("selected_word: ", selected_word)
             word_candidates = generate_candidate_list(doc.content, doc.file_format)
             similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
             res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
@@ -600,12 +607,10 @@ def lexiconupdate(doc_id):
         except:
             print("no word selected")
 
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-
     look_up_inflected = request.args.get('look_up_inflected', None)
     look_up_lemma = request.args.get('look_up_lemma', None)
 
-    frames_dict, citation_dict = get_lexicon_dicts(doc)
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)
 
     look_up_form = LookUpLexiconItemForm()
     lexicon_item_form = polulate_lexicon_item_form_by_lookup(frames_dict, citation_dict, look_up_inflected, look_up_lemma)
@@ -614,23 +619,22 @@ def lexiconupdate(doc_id):
         look_up_inflected = look_up_form.inflected_form.data
         look_up_lemma = look_up_form.lemma_form.data
         return redirect(
-            url_for('main.lexiconupdate', doc_id=doc_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma, snt_id=snt_id))
+            url_for('main.lexiconupdate', project_id=project_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma,
+                    doc_id=doc_id, snt_id=snt_id))
 
     if lexicon_item_form.add_inflected.data: #clicked on Add New Inflected Form Field button
         getattr(lexicon_item_form, 'inflected_forms').append_entry()
-        return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
-                               file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
+        return render_template('lexicon.html', project_id=project_id, project_name=project_name, lexicon_item_form=lexicon_item_form,
                                look_up_form=look_up_form,
                                frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                               snt_id=snt_id, look_up_lemma=look_up_lemma)
+                               doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
 
     if lexicon_item_form.add_sense.data:#clicked on Add New Inflected Form Field button
         getattr(lexicon_item_form, 'senses').append_entry()
-        return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
-                               file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
+        return render_template('lexicon.html', project_id=project_id, project_name=project_name, lexicon_item_form=lexicon_item_form,
                                look_up_form=look_up_form,
                                frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                               snt_id=snt_id, look_up_lemma=look_up_lemma)
+                               doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
 
     if not look_up_form.inflected_form.data and not look_up_form.lemma_form.data: #if lookup form is empty
         if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data: # if click on save and lemma in form is not empty
@@ -659,21 +663,21 @@ def lexiconupdate(doc_id):
             citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in frames_dict[lemma]["inflected_forms"]}
 
             #add to database
-            existing_lexicon = Lexicon.query.filter_by(lang=doc.lang).first()
+            existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
             if existing_lexicon:
                 existing_lexicon.lexi = frames_dict
+                flag_modified(existing_lexicon, 'lexi')
                 db.session.commit()
             else:
-                lexicon_row = Lexicon(lang=doc.lang, lexi=new_lexicon_entry)
+                lexicon_row = Lexicon(project_id=project_id, lexi=new_lexicon_entry)
                 db.session.add(lexicon_row)
                 db.session.commit()
 
     autocomplete_lemmas = list(citation_dict.values())
-    return render_template('lexicon.html', doc_id=doc_id, filename=doc.filename, lang=doc.lang,
-                           file_format=doc.file_format, lexicon_item_form=lexicon_item_form,
+    return render_template('lexicon.html', project_id=project_id, project_name=project_name, lexicon_item_form=lexicon_item_form,
                            look_up_form=look_up_form,
                            frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                           snt_id=snt_id, look_up_lemma=look_up_lemma, autocomplete_lemmas=json.dumps(autocomplete_lemmas))
+                           doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma, autocomplete_lemmas=json.dumps(autocomplete_lemmas))
 
 @main.route("/")
 @main.route("/display_post")

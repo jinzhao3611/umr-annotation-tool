@@ -58,26 +58,16 @@
     <div id="info">
         <script type="text/javascript">
             initializeLexicon(`{{ frames_dict }}`, `{{ citation_dict }}`);
-            suggestLemma("{{ doc_id }}");
+            suggestLemma("{{ project_id }}", "{{ doc_id }}", "{{ snt_id }}");
         </script>
         <table>
             <tr>
                 <th class='text-muted'>Current User:</th>
                 <th id="username">{{ current_user.username }}</th>
-                <th class='text-muted'>User ID:</th>
-                <th id="user_id">{{ current_user.id }}</th>
             </tr>
             <tr>
-                <th class='text-muted'>File Name:</th>
-                <th id="filename" style="display:inline">{{ filename }}</th>
-                <th class='text-muted'>File Language:</th>
-                <th id="lang" style="display:inline">{{ lang }}</th>
-            </tr>
-                <tr>
-                <th class='text-muted'>Doc ID in database:</th>
-                <th id="doc_id" style="display:inline">{{ doc_id }}</th>
-                <th class='text-muted'>File format:</th>
-                <th id="file_format" style="display:inline">{{ file_format }}</th>
+                <th class='text-muted'>Project Name:</th>
+                <th id="project_name">{{ project_name }}</th>
             </tr>
         </table>
     </div>
@@ -153,7 +143,7 @@
         </div>
     </form>
     <hr>
-    <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_id=doc_id, snt_id=snt_id) }}" onclick="pass_citation_dict(`{{ citation_dict }}`)">sent-level-annot</a>
+    <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ current_user.id) }}" onclick="pass_citation_dict(`{{ citation_dict }}`)">sent-level-annot</a>
     <script type="text/javascript">autocomplete(document.getElementById("lemma_form"), {{ autocomplete_lemmas|safe }});</script>
 
 {% endblock content2 %}
