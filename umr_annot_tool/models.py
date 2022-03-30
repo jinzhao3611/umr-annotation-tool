@@ -107,7 +107,7 @@ class Lexicon(db.Model):
     lang = db.Column(db.Text, nullable=False)
     lexi = db.Column(MutableDict.as_mutable(JSON))
 
-class Projectuser(db.Model):
+class Projectuser(db.Model): #this table keeps track of each user's permission for each project
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -116,7 +116,7 @@ class Projectuser(db.Model):
 
 
 
-class Project(db.Model):
+class Project(db.Model): #this table keeps track of the Project and the qc user id for this project
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, nullable=False)
     qc_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -127,7 +127,7 @@ class Project(db.Model):
     docdas = db.relationship('Docda', backref='project', lazy=True)
 
 
-class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder
+class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder, because once the file is uploaded, the file will be duplicated and put under project qc user
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
