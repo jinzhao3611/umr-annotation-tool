@@ -141,11 +141,7 @@
                             <input type="hidden" name="rm_da_doc_id" value=0>
                             <input type="hidden" name="rm_da_user_id" value=0>
 
-                            {% if permission in ['admin', 'edit'] %}
-                                <input type="submit" value="delete from My Annotations" onclick="return confirm('Are you sure you want to remove this doc from project and delete all your annotations from database? Removal cannot be reversed');">
-                            {% else %}
-                                <input type="submit" value="delete from My Annotations" disabled>
-                            {% endif %}
+                            <input type="submit" value="delete from My Annotations">
                         </form>
                     </li>
                 {% endfor %}
