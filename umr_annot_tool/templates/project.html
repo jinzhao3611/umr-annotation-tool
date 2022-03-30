@@ -160,7 +160,7 @@
             <ul class="list-group" id="otherDocs">
             {% for qcDoc in qcDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ qcDoc.id }}">
-                    {% if permission in ['admin'] %}
+                    {% if permission in ['admin', 'edit'] %}
                     <a title="{{ qcDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=qcDoc.id ~ '_1_' ~ qcUploaderIds[loop.index0])}}">
                         {{qcDoc.filename}}
                     </a>
