@@ -142,10 +142,8 @@ def project(project_id):
         try:
             new_member_name = request.form["new_member_name"]
             print("new_member_name", new_member_name)
-            update_doc_id = int(request.form["update_doc_id"])
+            update_doc_id = int(request.form["update_doc_id"]) #delete from project
             print("update_doc_id:", update_doc_id)
-            update_doc_project_id = int(request.form["update_doc_project_id"])
-            print("update_doc_project_id:", update_doc_project_id)
             remove_member_id = int(request.form["remove_member_id"])
             print("remove_member_id", remove_member_id)
             annotated_doc_id = int(request.form["annotated_doc_id"])
@@ -179,15 +177,13 @@ def project(project_id):
             elif remove_member_id !=0:
                 Projectuser.query.filter(Projectuser.user_id==remove_member_id, Projectuser.project_id==project_id).delete()
                 db.session.commit()
-            elif update_doc_id !=0:
+            elif update_doc_id !=0: #delete this doc: including all annotations, sents, docqcs, and docdas
                 print("haha")
-                doc = Doc.query.filter(Doc.id == update_doc_id, Doc.user_id == current_user.id).first()
-                print(doc)
-                print(doc.project_id)
-                doc.project_id = update_doc_project_id
-                print(doc.project_id)
-                flag_modified(doc, 'project_id')
-                logging.info(f"doc {doc.id} committed: project{doc.project_id}")
+                Annotation.query.filter(Annotation.doc_id==update_doc_id).delete()
+                Sent.query.filter(Sent.doc_id==update_doc_id).delete()
+                Docqc.query.filter(Docqc.doc_id==update_doc_id).delete()
+                Docda.query.filter(Docda.doc_id==update_doc_id).delete()
+                Doc.query.filter(Doc.id == update_doc_id, Doc.user_id == current_user.id).delete()
                 logging.info(db.session.commit())
                 db.session.commit()
             elif annotated_doc_id !=0: #add to My Annotations
@@ -302,7 +298,6 @@ def project(project_id):
 
     projectDocs = Doc.query.filter(Doc.project_id == project_id).all()
     checked_out_by = [''] # add a dummy index because the loop index in jinja2 starts from 1
-    unassignedDocs = Doc.query.filter(Doc.project_id == 0, Doc.user_id==current_user.id).all()
     qcAnnotations = Annotation.query.filter(Annotation.user_id == Project.query.get(int(project_id)).qc_user_id, Annotation.sent_id == 1).all() #when add to my annotation, anntation row of sent1 got added in Annotation table, therefore check if there is annotation for sent1
     qcDocs = []
     qcUploaders = [''] #dummy name in the beginning because jinja loop index start from 1
@@ -327,7 +322,7 @@ def project(project_id):
 
     return render_template('project.html', title='project', project_name=project_name, project_id=project_id,
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
-                           projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
+                           projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
                            daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission)
 
 @users.route("/user/<string:username>")

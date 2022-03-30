@@ -40,7 +40,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value={{ projectDoc.id }}>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -60,7 +59,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value={{ projectDoc.id }}>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -70,44 +68,14 @@
                         <input type="hidden" name="rm_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_user_id" value=0>
                         {% if permission == 'admin' %}
-                            <input type="submit" value="remove from project">
+                            <input type="submit" value="delete">
                         {% else %}
-                            <input type="submit" value="remove from project" disabled>
+                            <input type="submit" value="delete" disabled>
                         {% endif %}
                     </form>
                 </li>
             {% endfor %}
         </ul>
-    </div>
-
-    <div class="content-section">
-        <legend class="border-bottom mb-4">Unassigned Documents</legend>
-        {% if permission == 'admin' %}
-            <ul class="list-group" id="unassignedDocs">
-                {% for unassignedDoc in unassignedDocs %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center" id="unassignedDoc-{{ unassignedDoc.id }}">
-                        <a title="{{ unassignedDoc.content }}" href="javascript:alert('Please add to a project first before annotating');">
-                            {{unassignedDoc.filename}}
-                        </a>
-                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
-                            <input type="hidden" name="remove_member_id" value=0>
-                            <input type="hidden" name="new_member_name" value="">
-                            <input type="hidden" name="update_doc_id" value={{ unassignedDoc.id }}>
-                            <input type="hidden" name="update_doc_project_id" value={{ project_id }}>
-                            <input type="hidden" name="annotated_doc_id" value=0>
-                            <input type="hidden" name="delete_annot_doc_id" value=0>
-                            <input type="hidden" name="add_qc_doc_id" value=0>
-                            <input type="hidden" name="rm_qc_doc_id" value=0>
-                            <input type="hidden" name="rm_qc_user_id" value=0>
-                            <input type="hidden" name="add_da_doc_id" value=0>
-                            <input type="hidden" name="rm_da_doc_id" value=0>
-                            <input type="hidden" name="rm_da_user_id" value=0>
-                            <input type="submit" value="add to current project">
-                        </form>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
     </div>
 
     <div class="content-section">
@@ -123,7 +91,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value={{ annotatedDoc.id }}>
@@ -143,7 +110,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -163,7 +129,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value={{ annotatedDoc.id }}>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -202,7 +167,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -238,7 +202,6 @@
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -265,7 +228,6 @@
             <input type="hidden" name="remove_member_id" value=0>
             <input name="new_member_name" value="">
             <input type="hidden" name="update_doc_id" value=0>
-            <input type="hidden" name="update_doc_project_id" value=0>
             <input type="hidden" name="annotated_doc_id" value=0>
             <input type="hidden" name="delete_annot_doc_id" value=0>
             <input type="hidden" name="add_qc_doc_id" value=0>
@@ -312,7 +274,6 @@
                         <input type="hidden" name="remove_member_id" value={{ member.id }}>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value=0>
-                        <input type="hidden" name="update_doc_project_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
