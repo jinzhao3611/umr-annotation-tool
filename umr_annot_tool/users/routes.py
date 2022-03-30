@@ -93,18 +93,9 @@ def account():
         return redirect(url_for('users.account'))
     elif request.method == 'POST':
         try:
-            to_delete_doc_id = int(request.form["delete_id"])
-            print("to_delete_doc_id: ", to_delete_doc_id)
             to_delete_project_id = int(request.form["delete_project"])
             print("to_delete_project_id: ", to_delete_project_id)
-
-            if to_delete_doc_id != 0: #delete whole document include everybody's annotation
-                Annotation.query.filter(Annotation.doc_id == to_delete_doc_id).delete()
-                Sent.query.filter(Sent.doc_id == to_delete_doc_id).delete()
-                Docda.query.filter(Docda.doc_id == to_delete_doc_id).delete()
-                Docqc.query.filter(Docqc.doc_id == to_delete_doc_id).delete()
-                Doc.query.filter(Doc.id == to_delete_doc_id).delete()
-            elif to_delete_project_id !=0:
+            if to_delete_project_id !=0:
                 Docda.query.filter(Docda.project_id==to_delete_project_id).delete()
                 Docqc.query.filter(Docqc.project_id==to_delete_project_id).delete()
                 qc_id = Project.query.filter(Project.id==to_delete_project_id).first().qc_user_id
@@ -129,9 +120,13 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
+    belongToProject=[]
+    for hds in historyDocs:
+        belongToProject.append(Project.query.get_or_404(hds.project_id).project_name)
+    print("belongToProject: ", belongToProject)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs,
-                           projects=projects)
+                           projects=projects, belongToProject=belongToProject)
 
 @login_required
 @users.route("/project/<int:project_id>", methods=['GET', 'POST'])

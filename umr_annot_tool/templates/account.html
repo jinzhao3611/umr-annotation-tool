@@ -21,7 +21,6 @@
                         </label>
                     {% endif %}
                     <form action="{{ url_for('users.account')}}" method="post">
-                        <input type="hidden" name="delete_id" value=0>
                         <input type="hidden" name="delete_project" value={{ project.project_id }}>
                         {% if project.permission == 'admin' %}
                             <input type="submit" value="x">
@@ -40,13 +39,8 @@
             {% for historyDoc in historyDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="docIdInDb-{{ historyDoc.id }}">
                     <a title="{{ historyDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=historyDoc.id~ '_1_' ~ historyDoc.user_id)}}">
-                        {{historyDoc.filename}}
+                        {{historyDoc.filename}} ({{ belongToProject[loop.index0]}})
                     </a>
-                    <form action="{{ url_for('users.account')}}" method="post">
-                        <input type="hidden" name="delete_id" value={{ historyDoc.id }}>
-                        <input type="hidden" name="delete_project" value=0>
-                        <input type="submit" value="x" onclick="return confirm('Caution: you will delete every annotation related to this file')">
-                    </form>
                 </li>
             {% endfor %}
         </ul>
