@@ -309,7 +309,7 @@
             <button class="btn btn-info btn-sm" id="reset-box" onclick="reset();"disabled>reset</button>
             <button class="btn btn-info btn-sm" id="one-line-ne" onclick="changeSetting();">one-line NE</button>
             <hr>
-            <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
+            <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevelview', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
             <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconupdate', doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon</a>
             <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" onclick="UMR2db()">search</a>
             <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">back to project</a>
