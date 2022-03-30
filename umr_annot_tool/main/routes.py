@@ -21,14 +21,15 @@ FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 
-def lexicon2db(lang: str, lexicon_dict: dict):
-    existing_lexicon = Lexicon.query.filter_by(lang=lang).first()
+def lexicon2db(project_id:int, lexicon_dict: dict):
+    existing_lexicon = Lexicon.query.filter(Lexicon.project_id==project_id).first()
     if existing_lexicon:
         existing_lexicon.lexi = lexicon_dict
+        flag_modified(existing_lexicon, 'lexi')
         db.session.commit()
         flash('your lexicon has been saved to db, your old lexicon for the language is overridden', 'success')
     else:
-        lexicon_row = Lexicon(lang=lang, lexi=lexicon_dict)
+        lexicon_row = Lexicon(project_id=project_id, lexi=lexicon_dict)
         db.session.add(lexicon_row)
         db.session.commit()
         flash('your lexicon has been saved to db', 'success')
@@ -170,10 +171,10 @@ def upload_lexicon(current_project_id):
         if lexicon_form.file.data:
             content_string = lexicon_form.file.data.read().decode("utf-8")
             frames_dict = parse_lexicon_xml(content_string)
-            lexicon2db(lang=lexicon_form.language_mode.data, lexicon_dict=frames_dict)
-            return redirect(url_for('users.account'))
+            lexicon2db(project_id=current_project_id, lexicon_dict=frames_dict)
+            return redirect(url_for('users.project', project_id=current_project_id))
         else:
-            flash("please upload a lexicon file, if you have one", "danger")
+            flash("please upload a lexicon file", "danger")
 
     return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form)
 

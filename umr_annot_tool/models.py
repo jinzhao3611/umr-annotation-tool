@@ -104,8 +104,8 @@ class Annotation(db.Model):
 
 class Lexicon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    lang = db.Column(db.Text, nullable=False)
-    lexi = db.Column(MutableDict.as_mutable(JSON))
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    lexi = db.Column(MutableDict.as_mutable(JSON), nullable=False)
 
 class Projectuser(db.Model): #this table keeps track of each user's permission for each project
     id = db.Column(db.Integer, primary_key=True)
@@ -122,6 +122,7 @@ class Project(db.Model): #this table keeps track of the Project and the qc user 
     qc_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     projectusers = db.relationship('Projectuser', backref="project", lazy=True)
+    lexicons = db.relationship('Lexicon', backref="project", lazy=True)
     docs = db.relationship('Doc', backref='project', lazy=True)
     docqcs = db.relationship('Docqc', backref='project', lazy=True)
     docdas = db.relationship('Docda', backref='project', lazy=True)
