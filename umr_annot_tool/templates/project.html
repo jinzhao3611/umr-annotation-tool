@@ -22,11 +22,10 @@
         </div>
     {% endif %}
 
-
     <div class="content-section">
         <legend class="border-bottom mb-4" title="documents uploaded by admin">Documents in {{ project_name }}</legend>
-        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDocumentsInProject" aria-expanded="false" aria-controls="collapseDocumentsInProject">collapse</button>
-        <div class="collapse" id="collapseDocumentsInProject">
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDocumentsInProject" aria-expanded="true" aria-controls="collapseDocumentsInProject">collapse</button>
+        <div class="collapse show" id="collapseDocumentsInProject">
             <ul class="list-group" id="projectDocs">
             {% for projectDoc in projectDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectDoc-{{ projectDoc.id }}">
@@ -82,8 +81,8 @@
 
     <div class="content-section">
         <legend class="border-bottom mb-4">My Annotations</legend>
-        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseMyAnnotations" aria-expanded="false" aria-controls="collapseMyAnnotations">collapse</button>
-        <div class="collapse" id="collapseMyAnnotations">
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseMyAnnotations" aria-expanded="true" aria-controls="collapseMyAnnotations">collapse</button>
+        <div class="collapse show" id="collapseMyAnnotations">
             <ul class="list-group" id="annotatedDocs">
                 {% for annotatedDoc in annotatedDocs %}
                     <li class="list-group-item d-flex justify-content-between align-items-center" id="annotatedDoc-{{ annotatedDoc.id }}">
@@ -160,8 +159,8 @@
 
     <div class="content-section">
         <legend class="border-bottom mb-4">Quality Control</legend>
-        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseQualityControl" aria-expanded="false" aria-controls="collapseQualityControl">collapse</button>
-        <div class="collapse" id="collapseQualityControl">
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseQualityControl" aria-expanded="true" aria-controls="collapseQualityControl">collapse</button>
+        <div class="collapse show" id="collapseQualityControl">
             <ul class="list-group" id="otherDocs">
             {% for qcDoc in qcDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ qcDoc.id }}">
@@ -204,8 +203,8 @@
 
     <div class="content-section">
         <legend class="border-bottom mb-4">Double Annotated Files</legend>
-            <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDoubleAnnotated" aria-expanded="false" aria-controls="collapseDoubleAnnotated">collapse</button>
-        <div class="collapse" id="collapseDoubleAnnotated">
+            <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDoubleAnnotated" aria-expanded="true" aria-controls="collapseDoubleAnnotated">collapse</button>
+        <div class="collapse show" id="collapseDoubleAnnotated">
             <ul class="list-group" id="otherDocs">
             {% for daDoc in daDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
