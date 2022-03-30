@@ -188,6 +188,16 @@ def sentlevel(doc_sent_id):
     owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
+    #check who is the admin of the project containing this file:
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+    if owner.id == current_user.id:
+        permission = 'edit' #this means got into the sentlevel page through My Annotations
+    else:
+        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
     # find the correct frame_dict for current annotation
@@ -199,7 +209,7 @@ def sentlevel(doc_sent_id):
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
         try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
-            frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+            frame_dict = Lexicon.query.filter_by(project_id=project_id).first().lexi
         except AttributeError: #there is no frame_dict for this language at all
             frame_dict = {}
 
@@ -264,17 +274,6 @@ def sentlevel(doc_sent_id):
     all_sents = [sent2.content for sent2 in filtered_sentences]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
-    #check who is the admin of the project containing this file:
-    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
-    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
-    admin = User.query.filter(User.id == admin_id).first()
-    if owner.id == current_user.id:
-        permission = 'edit' #this means got into the sentlevel page through My Annotations
-    else:
-        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
-
-
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
@@ -299,6 +298,19 @@ def sentlevelview(doc_sent_id):
     owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
+    # check who is the admin of the project containing this file:
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                            Projectuser.permission == "admin").first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                        Projectuser.permission == "admin").first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+    if owner.id == current_user.id:
+        permission = 'edit'  # this means got into the sentlevel page through My Annotations
+    else:
+        permission = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                              Projectuser.user_id == current_user.id).first().permission
+
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
     # find the correct frame_dict for current annotation
@@ -310,7 +322,7 @@ def sentlevelview(doc_sent_id):
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
         try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
-            frame_dict = Lexicon.query.filter_by(lang=doc.lang).first().lexi
+            frame_dict = Lexicon.query.filter_by(project_id=project_id).first().lexi
         except AttributeError: #there is no frame_dict for this language at all
             frame_dict = {}
 
@@ -338,16 +350,6 @@ def sentlevelview(doc_sent_id):
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
-
-    #check who is the admin of the project containing this file:
-    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
-    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
-    admin = User.query.filter(User.id == admin_id).first()
-    if owner.id == current_user.id:
-        permission = 'edit' #this means got into the sentlevel page through My Annotations
-    else:
-        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
 
 
     return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
