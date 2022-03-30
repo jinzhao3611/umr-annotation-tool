@@ -209,9 +209,15 @@
             <ul class="list-group" id="otherDocs">
             {% for daDoc in daDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
-                    <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
-                        {{ daFilenames[loop.index] }}
-                    </a>
+                    {% if daUploaders[loop.index] == current_user.username %}
+                        <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
+                            {{ daFilenames[loop.index] }}
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('main.sentlevelview', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
+                            {{ daFilenames[loop.index] }}
+                        </a>
+                    {% endif %}
                     <span class="badge">
                         uploaded by {{ daUploaders[loop.index] }}
                     </span>
