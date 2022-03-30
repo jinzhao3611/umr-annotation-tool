@@ -67,13 +67,14 @@ class Doc(db.Model):
     file_format = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
     lang = db.Column(db.Text, nullable=False)
+
     sents = db.relationship('Sent', backref='document', lazy=True)
     annotations = db.relationship('Annotation', backref='document', lazy=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
-
     docqcs = db.relationship('Docqc', backref='doc', lazy=True)
     docdas = db.relationship('Docda', backref='doc', lazy=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
     def __repr__(self):
         return f"Doc('{self.id}')"
@@ -88,12 +89,11 @@ class Sent(db.Model):
 
 class Annotation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    annot_str = db.Column(db.Text, nullable=False)
+    sent_annot = db.Column(db.Text, nullable=False)
     doc_annot = db.Column(db.Text, nullable=False)
     alignment = db.Column(db.Text, nullable=False)
-    umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
+    sent_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
     doc_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
-    # sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
     sent_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
@@ -112,7 +112,7 @@ class Projectuser(db.Model): #this table keeps track of each user's permission f
     project_name = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
-    permission = db.Column(db.Text, default="view")
+    permission = db.Column(db.Text, default="view", nullable=False)
 
 
 
