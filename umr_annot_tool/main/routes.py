@@ -34,7 +34,7 @@ def lexicon2db(lang: str, lexicon_dict: dict):
         flash('your lexicon has been saved to db', 'success')
 
 
-def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool,
+def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int,
             sent_annots=None, doc_annots=None, aligns=None) -> int:
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id).first()
     if existing_doc:
@@ -46,7 +46,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         flash('Your doc and sents already created.', 'success')
     else:
         doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id,
-                  file_format=file_format, project_id=0)
+                  file_format=file_format, project_id=current_project_id)
         db.session.add(doc)
         db.session.commit()
         doc_id = doc.id
@@ -62,17 +62,17 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
             existing = Annotation.query.filter(Annotation.sent_id == i + 1, Annotation.doc_id == doc_id,
                                                Annotation.user_id == current_user.id).first()
             if existing:  # update the existing Annotation object
-                existing.annot_str = sent_annots[i]
+                existing.sent_annot = sent_annots[i]
                 existing.doc_annot = doc_annots[i]
                 existing.alignment = aligns[i]
                 db.session.commit()
             else:
                 dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-                annotation = Annotation(annot_str=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
+                annotation = Annotation(sent_annot=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
                                         user_id=dummy_user_id, #uploaded documents are unassigned document first, the annotation of unassigned documents has user_id of dummy_user, unassigned document has user_id of the uploader/admin
                                         sent_id=i + 1, #sentence id counts from 1
                                         doc_id=doc_id,
-                                        umr={}, doc_umr={})
+                                        sent_umr={}, doc_umr={})
                 db.session.add(annotation)
                 db.session.commit()
         flash('Your annotations has been created.', 'success')
@@ -104,12 +104,11 @@ def new_project():
         return redirect(url_for('users.account'))
     return render_template('new_project.html', form=form, title='create project')
 
-@main.route("/upload", methods=['GET', 'POST'])
-def upload():
+@main.route("/upload_document/<int:current_project_id>", methods=['GET', 'POST'])
+def upload_document(current_project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     form = UploadForm()
-    lexicon_form = UploadLexiconForm()
     sent_annots = []
     doc_annots = []
     doc_id = 0
@@ -133,45 +132,50 @@ def upload():
                     print('sent_annots:', sent_annots[0])
                     print(len(sent_annots))
                     doc_id = file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns)
+                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id)
                 else:  # doesn't have annotation
                     info2display = html(content_string, file_format, lang=lang)
                     doc_id = file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
-                            sents=info2display.sents, has_annot=False)
+                            sents=info2display.sents, has_annot=False, current_project_id=current_project_id)
+            try:  # when uploaded file already come with annotation, convert strings to umr and save to database
+                dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
+                doc_id = request.get_json(force=True)["doc_id"]
+                sentUmrDicts = json.loads(request.get_json(force=True)["sentUmrDicts"])
+                docUmrDicts = json.loads(request.get_json(force=True)["docUmrDicts"])
+                annotations = Annotation.query.filter(Annotation.doc_id == doc_id,
+                                                      Annotation.user_id == dummy_user_id).order_by(
+                    Annotation.sent_id).all()
+                for i, annot in enumerate(annotations):
+                    annot.sent_umr = sentUmrDicts[i]
+                    annot.doc_umr = docUmrDicts[i]
+                    flag_modified(annot, 'umr')
+                    flag_modified(annot, 'doc_umr')
+                    db.session.add(annot)
+                logging.info(db.session.commit())
+            except:
+                print("convert strings to umr to database failed")
+
+            return redirect(url_for('users.project', project_id=current_project_id))
         else:
-            flash('Please upload a file and choose a language.', 'danger')
+            flash('Please upload a file.', 'danger')
+
+    return render_template('upload_document.html', title='upload', form=form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
+
+@main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
+def upload_lexicon(current_project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    lexicon_form = UploadLexiconForm()
     if lexicon_form.validate_on_submit():
         if lexicon_form.file.data:
-            content_string = form.file.data.read().decode("utf-8")
+            content_string = lexicon_form.file.data.read().decode("utf-8")
             frames_dict = parse_lexicon_xml(content_string)
             lexicon2db(lang=lexicon_form.language_mode.data, lexicon_dict=frames_dict)
             return redirect(url_for('users.account'))
         else:
             flash("please upload a lexicon file, if you have one", "danger")
 
-    try:
-        dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
-        print(dummy_user_id)
-        doc_id = request.get_json(force=True)["doc_id"]
-        print(doc_id)
-        sentUmrDicts = json.loads(request.get_json(force=True)["sentUmrDicts"])
-        docUmrDicts = json.loads(request.get_json(force=True)["docUmrDicts"])
-
-        print("sentUmrDicts: ", sentUmrDicts[0])
-        print("docUmrDicts: ", docUmrDicts)
-        annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == dummy_user_id).order_by(Annotation.sent_id).all()
-        print(annotations)
-        for i, annot in enumerate(annotations):
-            annot.umr = sentUmrDicts[i]
-            annot.doc_umr = docUmrDicts[i]
-            flag_modified(annot, 'umr')
-            flag_modified(annot, 'doc_umr')
-            db.session.add(annot)
-        logging.info(db.session.commit())
-    except:
-        print("convert strings to umr to database failed")
-
-    return render_template('upload.html', title='upload', form=form, lexicon_form=lexicon_form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
+    return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form)
 
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
@@ -216,17 +220,17 @@ def sentlevel(doc_sent_id):
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner.id).first()
             if existing:  # update the existing Annotation object
-                existing.annot_str = amr_html
+                existing.sent_annot = amr_html
                 existing.alignment = align_info
-                existing.umr = umr_dict
+                existing.sent_umr = umr_dict
                 flag_modified(existing, 'umr')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
             else:
-                annotation = Annotation(annot_str=amr_html, doc_annot='', alignment=align_info, author=owner,
+                annotation = Annotation(sent_annot=amr_html, doc_annot='', alignment=align_info, author=owner,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
-                                        umr=umr_dict, doc_umr={})
+                                        sent_umr=umr_dict, doc_umr={})
                 flag_modified(annotation, 'umr')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 db.session.add(annotation)
@@ -241,8 +245,8 @@ def sentlevel(doc_sent_id):
     try:
         curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
                                                          Annotation.user_id == owner_user_id).first()
-        curr_annotation_string = curr_annotation.annot_str.strip()
-        curr_sent_umr = curr_annotation.umr
+        curr_annotation_string = curr_annotation.sent_annot.strip()
+        curr_sent_umr = curr_annotation.sent_umr
     except Exception as e:
         print(e)
         curr_annotation_string= ""
@@ -252,8 +256,8 @@ def sentlevel(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
-    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.umr!={} or annot.annot_str)] #this is used to color annotated sentences
-    all_annots = [annot.annot_str for annot in annotations]
+    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
+    all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
@@ -328,7 +332,7 @@ def doclevel(doc_sent_id):
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
-    sentAnnotUmrs = [annot.umr for annot in annotations]
+    sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
     if doc.file_format == 'plain_text' or 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
@@ -344,11 +348,11 @@ def doclevel(doc_sent_id):
         return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
 
     # load all annotations for current document used for export_annot()
-    all_annots = [annot.annot_str for annot in annotations]
+    all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in sents]
-    all_sent_umrs = [annot.umr for annot in annotations]
+    all_sent_umrs = [annot.sent_umr for annot in annotations]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
@@ -397,7 +401,7 @@ def doclevelview(doc_sent_id):
     dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == dummy_user_id).order_by(
         Annotation.sent_id).all()
-    sentAnnotUmrs = [annot.umr for annot in annotations]
+    sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
     if doc.file_format == 'plain_text' or 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
@@ -415,11 +419,11 @@ def doclevelview(doc_sent_id):
         return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) + '_' + str(current_user.id)))
 
     # load all annotations for current document used for export_annot()
-    all_annots = [annot.annot_str for annot in annotations]
+    all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in sents]
-    all_sent_umrs = [annot.umr for annot in annotations]
+    all_sent_umrs = [annot.sent_umr for annot in annotations]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:

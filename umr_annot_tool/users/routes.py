@@ -60,7 +60,7 @@ def login():
             login_user(user, remember=form.remember.data)
             identity_changed.send(current_app._get_current_object(), identity=Identity(user.id)) #this is where the @identity_loaded.connect_via(app) decorator function got called
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('main.upload'))
+            return redirect(next_page) if next_page else redirect(url_for('users.account'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -201,16 +201,16 @@ def project(project_id):
                         dummy_annotation = Annotation.query.filter(Annotation.doc_id==annotated_doc_id, Annotation.sent_id==i+1, Annotation.user_id==dummy_user_id).first()
                         if dummy_annotation:
                             print('I am here 35')
-                            annotation = Annotation(annot_str=dummy_annotation.annot_str, doc_annot=dummy_annotation.doc_annot, alignment=dummy_annotation.alignment, author=current_user,
-                                                sent_id=dummy_annotation.sent_id, doc_id=dummy_annotation.doc_id, umr=dummy_annotation.umr, doc_umr=dummy_annotation.doc_umr)
+                            annotation = Annotation(sent_annot=dummy_annotation.sent_annot, doc_annot=dummy_annotation.doc_annot, alignment=dummy_annotation.alignment, author=current_user,
+                                                    sent_id=dummy_annotation.sent_id, doc_id=dummy_annotation.doc_id, sent_umr=dummy_annotation.sent_umr, doc_umr=dummy_annotation.doc_umr)
                             db.session.add(annotation)
                         else:
                             print('I am here 36')
-                            annotation = Annotation(annot_str='',
+                            annotation = Annotation(sent_annot='',
                                                     doc_annot='',
                                                     alignment='', author=current_user,
                                                     sent_id=i+1, doc_id=annotated_doc_id,
-                                                    umr={}, doc_umr={})
+                                                    sent_umr={}, doc_umr={})
                             db.session.add(annotation)
                     logging.info(f"User {current_user.id} committed:")
                     logging.info(db.session.commit())
@@ -227,8 +227,8 @@ def project(project_id):
                     print("I am here 70")
                     member_annotations = Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == current_user.id).all()
                     for a in member_annotations:
-                        qc_annotation = Annotation(annot_str=a.annot_str, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
-                                                sent_id=a.sent_id, doc_id=a.doc_id, umr=a.umr, doc_umr=a.doc_umr)
+                        qc_annotation = Annotation(annot_str=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
+                                                   sent_id=a.sent_id, doc_id=a.doc_id, umr=a.sent_umr, doc_umr=a.doc_umr)
                         db.session.add(qc_annotation)
                     docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
                     db.session.add(docqc)
@@ -325,7 +325,7 @@ def project(project_id):
     print('annotatedDocs: ', annotatedDocs)
     print('length annotatedDocs: ', len(annotatedDocs))
 
-    return render_template('project.html', title='admin_project', project_name=project_name, project_id=project_id,
+    return render_template('project.html', title='project', project_name=project_name, project_id=project_id,
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
                            projectDocs=projectDocs, unassignedDocs=unassignedDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, annotatedDocs=annotatedDocs,
                            daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission)
@@ -394,19 +394,19 @@ def search(project_id):
         for doc_id in doc_ids:
             annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()
             for annot in annots:
-                umr_dict = dict(annot.umr)
+                umr_dict = dict(annot.sent_umr)
                 for value in umr_dict.values():
                     if (concept and concept in str(value)) or (word and getLemma(word, upos="VERB")[0] in str(value)):
                         # todo: bug: sent didn't got returned
                         sent = Sent.query.filter(Sent.id == annot.sent_id).first()
-                        umr_results.append(annot.annot_str)
+                        umr_results.append(annot.sent_annot)
                         sent_results.append(sent)
                     elif triple:
                         if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
                             k = list(umr_dict.keys())[list(umr_dict.values()).index(value)]
                             if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
                                 sent = Sent.query.filter(Sent.id == annot.sent_id).first()
-                                umr_results.append(annot.annot_str)
+                                umr_results.append(annot.sent_annot)
                                 sent_results.append(sent)
 
     return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results = sent_results)

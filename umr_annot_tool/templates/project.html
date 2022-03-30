@@ -6,6 +6,24 @@
 
 {% block content %}
 
+    {% if permission in ['admin'] %}
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-default btn-lg"><a href="{{ url_for('main.upload_document', current_project_id=project_id) }}">Upload a Document</a></button>
+                <button class="btn btn-default btn-lg"><a href="{{ url_for('main.upload_lexicon', current_project_id=project_id) }}">Upload a Lexicon File</a></button>
+             </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-default btn-lg" disabled>Upload a Document</button>
+                <button class="btn btn-default btn-lg" disabled>Upload a Lexicon File</button>
+             </div>
+        </div>
+    {% endif %}
+
+
+
     <div class="content-section">
         <legend class="border-bottom mb-4" title="documents uploaded by admin">Documents in {{ project_name }}</legend>
         <ul class="list-group" id="projectDocs">
