@@ -2343,7 +2343,7 @@ function loadErrorHandler(evt) {
  * @constructor
  */
 function UMR2db() {
-    show_amr('amr'); //to prevent delete/replace mode html string got in database
+    show_amr('show'); //to prevent delete/replace mode html string got in database
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let annot_str = deHTML(amrHtml);
     let align_info = document.getElementById('align').innerText;
@@ -2351,7 +2351,9 @@ function UMR2db() {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
-    umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
+    if(annot_str!==''){
+        umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
+    }
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
@@ -2362,7 +2364,7 @@ function UMR2db() {
         setInnerHTML("error_msg", data["msg"]);
         document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(function(error){
-        console.log("Fetch error: "+ error);
+        console.log("Fetch error from UMR2db: "+ error);
     });
 }
 

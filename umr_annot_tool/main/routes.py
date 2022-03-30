@@ -183,6 +183,7 @@ def upload_lexicon(current_project_id):
 def sentlevel(doc_sent_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
+
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
     owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
@@ -190,13 +191,10 @@ def sentlevel(doc_sent_id):
 
     #check who is the admin of the project containing this file:
     project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
     admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
     admin = User.query.filter(User.id == admin_id).first()
-    if owner.id == current_user.id:
-        permission = 'edit' #this means got into the sentlevel page through My Annotations
-    else:
-        permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+    permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
 
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
@@ -224,9 +222,13 @@ def sentlevel(doc_sent_id):
             amr_html = request.get_json(force=True)["amr"]
             amr_html = amr_html.replace('<span class="text-success">', '')  # get rid of the head highlight tag
             amr_html = amr_html.replace('</span>', '')
+            print("amr_html: ", amr_html)
             align_info = request.get_json(force=True)["align"]
+            print("align_info: ", align_info)
             snt_id_info = request.get_json(force=True)["snt_id"]
+            print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
+            print("umr_dict: ", umr_dict)
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner.id).first()
