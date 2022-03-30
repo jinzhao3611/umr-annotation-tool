@@ -264,10 +264,6 @@
             </li>
         </ul>
     </div>
-    <script type="text/javascript">
-        display_permission({{ permissions | safe}}, {{ member_ids | safe }});
-        change_permission({{ project_id }})
-    </script>
 
 {% endblock content%}
 
@@ -297,7 +293,7 @@
         </form>
     </div>
     <div class="content-section">
-        <legend class="border-bottom mb-4"> {{ project_name }} admin and members</legend>
+        <legend class="border-bottom mb-4"> {{ project_name }} members</legend>
         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
             <input type="hidden" name="remove_member_id" value=0>
             <input name="new_member_name" value="">
@@ -367,6 +363,10 @@
             {% endfor %}
         </ul>
     </div>
+    <script type="text/javascript">
+        display_permission({{ permissions | safe}}, {{ member_ids | safe }});
+        change_permission({{ project_id }})
+    </script>
 
 {% endblock content2 %}
 

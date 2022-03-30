@@ -327,8 +327,7 @@ def project(project_id):
                 if not user_name.endswith('_qc') and user_name != 'dummy_user':
                     current_checked_out_by.add(user_name)
         checked_out_by.append(list(current_checked_out_by))
-    print('annotatedDocs: ', annotatedDocs)
-    print('length annotatedDocs: ', len(annotatedDocs))
+
 
     return render_template('project.html', title='project', project_name=project_name, project_id=project_id,
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
