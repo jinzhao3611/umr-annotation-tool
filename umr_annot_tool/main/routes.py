@@ -1,5 +1,4 @@
 from flask import url_for, redirect, flash, send_from_directory, make_response, jsonify
-from flask_principal import Permission, RoleNeed
 from werkzeug.utils import secure_filename
 from typing import List
 import json
@@ -7,12 +6,13 @@ from parse_input_xml import html, process_exported_file, parse_lexicon_xml, proc
 from flask_login import current_user
 import os
 import logging
+from datetime import datetime
 
 from flask import render_template, request, Blueprint
-from umr_annot_tool import db
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser
+from umr_annot_tool import db, bcrypt
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
-    InflectedForm, SenseForm
+    InflectedForm, SenseForm, CreateProjectForm
 from sqlalchemy.orm.attributes import flag_modified
 from suggest_sim_words import generate_candidate_list, find_suggested_words
 
@@ -78,10 +78,34 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         flash('Your annotations has been created.', 'success')
     return doc_id
 
+@main.route("/new_project", methods=['GET', 'POST'])
+def new_project():
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    form = CreateProjectForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
+        qc_user = User(username=f"{form.projectname.data}_qc", email=f'{form.projectname.data}{datetime.now().strftime("%H%M%S")}{datetime.today().strftime("%d%m%Y")}@qc.com',
+                       password=hashed_password) #the reason of using datetime is to make everybody's email different, this will cause an sqlalchemy error even before checking if there is same project name in this user's project
+        db.session.add(qc_user)
+        db.session.commit()
+
+        project = Project(project_name=form.projectname.data, qc_user_id=qc_user.id)
+        db.session.add(project)
+        db.session.commit()
+
+        user_project = Projectuser(project_name=form.projectname.data, user_id=current_user.id, permission="admin",
+                                   project_id=project.id)
+        db.session.add(user_project)
+        db.session.commit()
+
+        flash(f'{form.projectname.data} has been created.', 'success')
+
+        return redirect(url_for('users.account'))
+    return render_template('new_project.html', form=form, title='create project')
 
 @main.route("/upload", methods=['GET', 'POST'])
 def upload():
-    print("called again")
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     form = UploadForm()

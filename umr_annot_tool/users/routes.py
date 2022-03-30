@@ -97,8 +97,6 @@ def account():
             print("to_delete_doc_id: ", to_delete_doc_id)
             to_delete_project_id = int(request.form["delete_project"])
             print("to_delete_project_id: ", to_delete_project_id)
-            new_project_name = request.form["new_project_name"]
-            print("new_project_name: ", new_project_name)
 
             if to_delete_doc_id != 0: #delete whole document include everybody's annotation
                 Annotation.query.filter(Annotation.doc_id == to_delete_doc_id).delete()
@@ -118,19 +116,6 @@ def account():
                     Sent.query.filter(Sent.doc_id == to_delete_doc.id).delete()
                     Doc.query.filter(Doc.id == to_delete_doc.id).delete()
                 User.query.filter(User.id == qc_id).delete()
-            elif new_project_name:
-                hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
-                qc_user = User(username=f"{new_project_name}_{current_user.id}_qc", email=f'{new_project_name}@qc.com', password=hashed_password)
-                db.session.add(qc_user)
-                db.session.commit()
-
-                new_project = Project(project_name=new_project_name, qc_user_id=qc_user.id)
-                db.session.add(new_project)
-                db.session.commit()
-
-                user_project = Projectuser(project_name=new_project_name, user_id=current_user.id, permission="admin", project_id=new_project.id)
-                db.session.add(user_project)
-                db.session.commit()
             db.session.commit()
         except Exception as e:
             flash("Project name already exist, change to a unique name", 'info')

@@ -8,12 +8,6 @@
 {% block content %}
      <div class="content-section">
         <legend class="border-bottom mb-4">Projects</legend>
-         <form action="{{ url_for('users.account')}}" method="post">
-            <input type="hidden" name="delete_id" value=0>
-            <input type="hidden" name="delete_project" value=0>
-            <input name="new_project_name">
-            <input type="submit" value="add new project">
-        </form>
         <ul class="list-group" id="adminDocs">
             {% for project in projects %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="project-{{ project.project_id }}">
@@ -29,7 +23,6 @@
                     <form action="{{ url_for('users.account')}}" method="post">
                         <input type="hidden" name="delete_id" value=0>
                         <input type="hidden" name="delete_project" value={{ project.project_id }}>
-                        <input type="hidden" name="new_project_name" value="">
                         {% if project.permission == 'admin' %}
                             <input type="submit" value="x">
                         {% else %}
@@ -52,7 +45,6 @@
                     <form action="{{ url_for('users.account')}}" method="post">
                         <input type="hidden" name="delete_id" value={{ historyDoc.id }}>
                         <input type="hidden" name="delete_project" value=0>
-                        <input type="hidden" name="new_project_name" value="">
                         <input type="submit" value="x" onclick="return confirm('Caution: you will delete every annotation related to this file')">
                     </form>
                 </li>

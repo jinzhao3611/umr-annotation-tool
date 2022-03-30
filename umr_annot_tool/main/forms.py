@@ -1,6 +1,10 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField
 from wtforms import BooleanField, SubmitField, SelectField, TextAreaField, StringField, FieldList, FormField, MultipleFileField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from umr_annot_tool.models import Projectuser
+from flask_login import current_user
+
 
 class UploadForm(FlaskForm):
     files = MultipleFileField('File(s) Upload')
@@ -65,4 +69,16 @@ class LexiconItemForm(FlaskForm):
     add_sense = SubmitField('+ Add New Sense Field')
 
     submit = SubmitField('Save')
+
+
+class CreateProjectForm(FlaskForm):
+    class Meta:
+        csrf = False
+    projectname = StringField('Projectname', validators=[DataRequired(), Length(min=2, max=20)])
+    submit = SubmitField('Create')
+
+    def validate_projectname(self, projectname):
+        project = Projectuser.query.filter(Projectuser.project_name==projectname.data, Projectuser.user_id==current_user.id).first()
+        if project:
+            raise ValidationError(f'This projectname already exists in your projects. Please choose a different one.')
 
