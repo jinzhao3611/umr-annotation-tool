@@ -300,8 +300,8 @@ def project(project_id):
     current_permission = Projectuser.query.filter(Projectuser.user_id == current_user.id,
                                                   Projectuser.project_id == project_id).first().permission
     daDocs = Docda.query.filter(Docda.project_id == project_id).all()
-    daUploaders = ['']
-    daFilenames = ['']
+    daUploaders = []
+    daFilenames = []
     for daDoc in daDocs:
         daUploaders.append(User.query.filter(User.id == daDoc.user_id).first().username)
         daFilenames.append(Doc.query.filter(Doc.id == daDoc.doc_id).first().filename)
