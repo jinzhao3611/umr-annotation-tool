@@ -211,15 +211,15 @@
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="qcDoc-{{ daDoc.doc_id }}">
                     {% if daUploaders[loop.index] == current_user.username %}
                         <a href="{{ url_for('main.sentlevel', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
-                            {{ daFilenames[loop.index] }}
+                            {{ daFilenames[loop.index0] }}
                         </a>
                     {% else %}
                         <a href="{{ url_for('main.sentlevelview', doc_sent_id=daDoc.doc_id ~ '_1_' ~ daDoc.user_id)}}">
-                            {{ daFilenames[loop.index] }}
+                            {{ daFilenames[loop.index0] }}
                         </a>
                     {% endif %}
                     <span class="badge">
-                        uploaded by {{ daUploaders[loop.index] }}
+                        uploaded by {{ daUploaders[loop.index0] }}
                     </span>
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                         <input type="hidden" name="remove_member_id" value=0>
@@ -301,7 +301,11 @@
                 </div>
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {% if permission in ['admin', 'edit'] %}
+                    {{ form.submit(class="btn btn-outline-info") }}
+                {% else %}
+                    {{ form.submit(class="btn btn-outline-info", disabled=true) }}
+                {% endif %}
             </div>
         </form>
     </div>
