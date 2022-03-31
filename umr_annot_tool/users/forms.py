@@ -7,7 +7,7 @@ from umr_annot_tool.models import User, Projectuser
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
+                           validators=[DataRequired(), Length(min=2, max=60)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -36,7 +36,7 @@ class LoginForm(FlaskForm):
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
-                           validators=[DataRequired(), Length(min=2, max=20)])
+                           validators=[DataRequired(), Length(min=2, max=60)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
@@ -56,7 +56,7 @@ class UpdateAccountForm(FlaskForm):
 
 class UpdateProjectForm(FlaskForm):
     projectname = StringField('Project name',
-                           validators=[DataRequired(), Length(min=2, max=20)])
+                           validators=[DataRequired(), Length(min=2, max=60)])
     submit = SubmitField('Update')
 
     def validate_projectname(self, projectname):
