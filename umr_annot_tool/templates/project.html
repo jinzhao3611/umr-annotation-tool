@@ -29,11 +29,11 @@
             <ul class="list-group" id="projectDocs">
             {% for projectDoc in projectDocs %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="projectDoc-{{ projectDoc.id }}">
-                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ projectDoc.user_id ) }}">
+                    <a title="{{ projectDoc.content }}" href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ dummy_user_id ) }}">
                         {{projectDoc.filename}}
                     </a>
                     <span class="badge">
-                            checked out by: {{ checked_out_by[loop.index] }}
+                            checked out by: {{ checked_out_by[loop.index0] }}
                     </span>
 
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">

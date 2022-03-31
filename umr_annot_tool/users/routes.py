@@ -307,7 +307,7 @@ def project(project_id):
         daFilenames.append(Doc.query.filter(Doc.id == daDoc.doc_id).first().filename)
 
     projectDocs = Doc.query.filter(Doc.project_id == project_id).all()
-    checked_out_by = [''] # add a dummy index because the loop index in jinja2 starts from 1
+    checked_out_by = []
     qcAnnotations = Annotation.query.filter(Annotation.user_id == Project.query.get(int(project_id)).qc_user_id, Annotation.sent_id == 1).all() #when add to my annotation, anntation row of sent1 got added in Annotation table, therefore check if there is annotation for sent1
     qcDocs = []
     qcUploaders = []
@@ -329,13 +329,13 @@ def project(project_id):
                 if not user_name.endswith('_qc') and user_name != 'dummy_user':
                     current_checked_out_by.add(user_name)
         checked_out_by.append(list(current_checked_out_by))
-
+    dummy_user_id = User.query.filter(User.username=='dummy_user').first().id
 
     return render_template('project.html', title='project', project_name=project_name, project_id=project_id,
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
                            projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, qcUploaderIds=qcUploaderIds, annotatedDocs=annotatedDocs,
                            daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission,
-                           form=form)
+                           form=form, dummy_user_id=dummy_user_id)
 
 @users.route("/user/<string:username>")
 def user_posts(username):
