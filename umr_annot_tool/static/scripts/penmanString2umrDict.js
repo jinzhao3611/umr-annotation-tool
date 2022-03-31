@@ -187,6 +187,7 @@ function string2umr(annotText) {
     annotText = annotText.replace(/DCT/g, 's10000d');
     annotText = annotText.replace(/AUTH/g, 's10000a');
     annotText = annotText.replace(/ROOT/g, 's10000r');
+    annotText = decodeHtmlUnicode(annotText);// this function is used to convert &#34; to ", or it will cause matching errors
 
     let loc; // current graph location we are dealing with
     let umr_dict = {};

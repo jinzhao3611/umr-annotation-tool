@@ -164,6 +164,13 @@ function strip2(s) {
     return s;
 }
 
+//decode html unicode decimal code: this function is used to convert &#34; to ", or it will cause matching errors in string2umr
+function decodeHtmlUnicode(str) {
+    return str.replace(/&#(\d+);/g, function(match, dec) {
+        return String.fromCharCode(dec);
+    });
+}
+
 /**
  * So far I think this is just python split()
  * @param s "1.1 1.2.1.1 1.2.2.1 1.2.2.2.1"
