@@ -4,7 +4,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm, UpdateProjectForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda
+from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda, Lattice
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
@@ -96,6 +96,7 @@ def account():
             to_delete_project_id = int(request.form["delete_project"])
             print("to_delete_project_id: ", to_delete_project_id)
             if to_delete_project_id !=0:
+                Lattice.query.filter_by(project_id=to_delete_project_id).delete()
                 Docda.query.filter(Docda.project_id==to_delete_project_id).delete()
                 Docqc.query.filter(Docqc.project_id==to_delete_project_id).delete()
                 qc_id = Project.query.filter(Project.id==to_delete_project_id).first().qc_user_id
@@ -421,38 +422,93 @@ def search(project_id):
 
 
 # annotation lattices
-@users.route('/discourse', methods=['GET', 'POST'])
-def discourse():
+@users.route('/discourse/<int:project_id>', methods=['GET', 'POST'])
+def discourse(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    return render_template('discourse.html')
+    if request.method == 'POST':
+        try:
+            discourse_setting = request.get_json(force=True)['lattice_setting']
+            lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            lattice_setting.discourse = discourse_setting
+            print("discourse_setting: ", discourse_setting)
+            flag_modified(lattice_setting, 'discourse')
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("get modal setting error")
+    return render_template('discourse.html', project_id=project_id)
 
-@users.route('/aspect', methods=['GET', 'POST'])
-def aspect():
+@users.route('/aspect/<int:project_id>', methods=['GET', 'POST'])
+def aspect(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    return render_template('aspect.html')
+    if request.method == 'POST':
+        try:
+            aspect_setting = request.get_json(force=True)['lattice_setting']
+            lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            lattice_setting.aspect = aspect_setting
+            print("aspect_setting: ", aspect_setting)
+            flag_modified(lattice_setting, 'aspect')
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("get aspect setting error")
+    return render_template('aspect.html', project_id=project_id)
 
-@users.route('/person', methods=['GET', 'POST'])
-def person():
+@users.route('/person/<int:project_id>', methods=['GET', 'POST'])
+def person(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    return render_template('person.html')
+    if request.method == 'POST':
+        try:
+            person_setting = request.get_json(force=True)['lattice_setting']
+            lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            lattice_setting.person = person_setting
+            print("person_setting: ", person_setting)
+            flag_modified(lattice_setting, 'person')
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("get person setting error")
+    return render_template('person.html', project_id=project_id)
 
-@users.route('/number', methods=['GET', 'POST'])
-def number():
+@users.route('/number/<int:project_id>', methods=['GET', 'POST'])
+def number(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    return render_template('number.html')
+    if request.method == 'POST':
+        try:
+            number_setting = request.get_json(force=True)['lattice_setting']
+            lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            lattice_setting.number = number_setting
+            print("number_setting: ", number_setting)
+            flag_modified(lattice_setting, 'number')
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("get number setting error")
+    return render_template('number.html', project_id=project_id)
 
-@users.route('/modal', methods=['GET', 'POST'])
-def modal():
+@users.route('/modal/<int:project_id>', methods=['GET', 'POST'])
+def modal(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    return render_template('modal.html')
+    if request.method == 'POST':
+        try:
+            modal_setting = request.get_json(force=True)['lattice_setting']
+            lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            lattice_setting.modal = modal_setting
+            print("modal_setting: ", modal_setting)
+            flag_modified(lattice_setting, 'modal')
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("get modal setting error")
+    return render_template('modal.html', project_id=project_id)
 
-@users.route('/modification', methods=['GET', 'POST'])
-def modification():
+@users.route('/modification/<int:project_id>', methods=['GET', 'POST'])
+def modification(project_id): #there is no post here like the previous ones, because users are not allowed to toggle off any modification items in the dropdown menu
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    return render_template('modification.html')
+    return render_template('modification.html', project_id=project_id)

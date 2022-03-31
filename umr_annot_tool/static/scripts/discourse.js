@@ -99,7 +99,7 @@ renderChart(data)
     { id: ':apprehensive', parents: ['exclusive-disj'] },
     { id: 'consecutive', parents: ['and'] },
     { id: 'additive', parents: ['and'] },
-    { id: 'unexpected co-occurrence', parents: ['and+unexpected', 'but'] },
+    { id: 'unexpected-co-occurrence', parents: ['and+unexpected', 'but'] },
     { id: 'contrast-01', parents: ['and+contrast', 'but'] },
   ],
   [
@@ -110,8 +110,8 @@ renderChart(data)
     { id: ':temporal', parents: ['consecutive', 'additive'] },
     { id: ':pure-addition', parents: ['additive'] },
     { id: 'substitute-01', parents: ['additive'] },
-    { id: ':concession', parents: ['unexpected co-occurrence'] },
-    { id: ':concessive-condition', parents: ['unexpected co-occurrence'] },
+    { id: ':concession', parents: ['unexpected-co-occurrence'] },
+    { id: ':concessive-condition', parents: ['unexpected-co-occurrence'] },
     { id: ':subtraction', parents: ['contrast-01'] },
 
   ]

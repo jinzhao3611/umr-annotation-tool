@@ -35,7 +35,6 @@ let show_umr_status = 'show'; //'show'
 let show_amr_mo_lock = ''; // '' affects coloring
 
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
-let customizedAttrList = ["aspect-attr", "refer-person-attr", "refer-number-attr", "modstr-values"];
 let docAnnot=false;
 
 /**
@@ -61,18 +60,26 @@ function initialize(frame_json, lang) {
     pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage in order to pass to another page
 }
 
-function customizeOptions(){
-    for (let index in customizedAttrList){
-        let attr = customizedAttrList[index];
-        if(attr in localStorage){
-            let optionList = document.getElementById(attr).children;
-            let settings  = JSON.parse(localStorage[attr]);
-            for(let i=0; i<optionList.length; i++){
-                console.log(optionList[i].value);
-                console.log(settings[optionList[i].value]);
-                if(!settings[optionList[i].value]){
-                    optionList[i].remove();
-                }
+function customizeOptions(settingsJSON, attrId){
+    let settings = JSON.parse(settingsJSON);
+    console.log("settings: ", settings);
+    console.log("length of settings: ", Object.keys(settings).length);
+    console.log("attrId: ", attrId);
+    let optionList=[];
+    if(attrId==="default-roles_abstract-concepts"){
+        let optionList1 = document.getElementById("default-roles").children;
+        let optionList2 = document.getElementById("abstract-concepts").children;
+        optionList = [optionList1, optionList2];
+    }else{
+        optionList = [document.getElementById(attrId).children];
+    }
+    console.log("length of optionList: ", optionList.length);
+    for (let i in optionList){
+        for(let j=0; j<optionList[i].length; j++){
+            console.log("item: ", optionList[i][j].value);
+            if(!settings[optionList[i][j].value]){
+                console.log("to be removed", optionList[i][j].value);
+                optionList[i][j].remove();
             }
         }
     }

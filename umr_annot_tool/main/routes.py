@@ -10,7 +10,7 @@ from datetime import datetime
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm
 from sqlalchemy.orm.attributes import flag_modified
@@ -98,6 +98,10 @@ def new_project():
         user_project = Projectuser(project_name=form.projectname.data, user_id=current_user.id, permission="admin",
                                    project_id=project.id)
         db.session.add(user_project)
+        db.session.commit()
+
+        lattice = Lattice(project_id=project.id, aspect={}, person={}, number={}, modal={}, discourse={})
+        db.session.add(lattice)
         db.session.commit()
 
         flash(f'{form.projectname.data} has been created.', 'success')
@@ -276,6 +280,13 @@ def sentlevel(doc_sent_id):
     all_sents = [sent2.content for sent2 in filtered_sentences]
     exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
+    lattice = Lattice.query.filter(Lattice.project_id == project_id).first()
+    aspectSettingsJSON = lattice.aspect
+    personSettingsJSON = lattice.person
+    numberSettingsJSON = lattice.number
+    modalSettingsJSON = lattice.modal
+    discourseSettingsJSON = lattice.discourse
+
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
@@ -289,7 +300,9 @@ def sentlevel(doc_sent_id):
                            admin=admin,
                            curr_annotation_string=curr_annotation_string,
                            owner=owner,
-                           permission=permission)
+                           permission=permission,
+                           aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
+                           numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON)
 
 @main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevelview(doc_sent_id):
