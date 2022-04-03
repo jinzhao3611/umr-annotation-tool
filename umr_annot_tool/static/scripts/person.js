@@ -49,30 +49,34 @@ renderChart(data)
   })}
 
   ${tangleLayout.nodes.map(
-    n => `
-    <foreignObject x="${n.x -12}" y="${n.y - n.height / 2 - 18}" width="20" height="20">
+    n => {
+      console.log(n.id); 
+      let s = '';
+      if(!['person'].includes(n.id)){
+        s += `<foreignObject x="${n.x -12}" y="${n.y - n.height / 2 - 18}" width="20" height="20">
         <xhtml:label class="switch">
           <input id="${n.id}" type="checkbox" checked>
         </xhtml:label>
-    </foreignObject>
+    </foreignObject>`;}
+      
+        return s + `<path class="selectable node" data-id="${
+          n.id
+        }" stroke="black" stroke-width="8" d="M${n.x} ${n.y - n.height / 2} L${
+          n.x
+        } ${n.y + n.height / 2}"/>
+        <path class="node" stroke="white" stroke-width="4" d="M${n.x} ${n.y -
+          n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
     
-    <path class="selectable node" data-id="${
-      n.id
-    }" stroke="black" stroke-width="8" d="M${n.x} ${n.y - n.height / 2} L${
-      n.x
-    } ${n.y + n.height / 2}"/>
-    <path class="node" stroke="white" stroke-width="4" d="M${n.x} ${n.y -
-      n.height / 2} L${n.x} ${n.y + n.height / 2}"/>
-
-    <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y -
-      n.height / 2 -
-      4}" stroke="${background_color}" stroke-width="2">${n.id}
-    </text>
-    
-    <text x="${n.x + 4}" y="${n.y -
-      n.height / 2 -
-      4}" style="pointer-events: none;">${n.id}</text>
-  `
+        <text class="selectable" data-id="${n.id}" x="${n.x + 4}" y="${n.y -
+          n.height / 2 -
+          4}" stroke="${background_color}" stroke-width="2">${n.id}
+        </text>
+        
+        <text x="${n.x + 4}" y="${n.y -
+          n.height / 2 -
+          4}" style="pointer-events: none;">${n.id}</text>
+      `;
+    }
   )}
 
   </svg>`;
