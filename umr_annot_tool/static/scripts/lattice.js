@@ -12,6 +12,11 @@ function fetchLatticeSetting(route, project_id){
     fetch(`/${route}/${project_id}`, {
         method: 'POST',
         body: JSON.stringify({"lattice_setting": settings}),
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        document.getElementById("error_msg").innerHTML = data["msg"];
+        document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(error => console.error('Modal Setting Error:', error));
 }
 

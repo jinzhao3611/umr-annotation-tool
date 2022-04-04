@@ -435,12 +435,12 @@ def discourse(project_id):
             print("discourse_setting: ", discourse_setting)
             flag_modified(lattice_setting, 'discourse')
             db.session.commit()
-            flash('Discourse setting applied successfully', 'success')
-            return redirect(url_for('users.project', project_id=project_id))
+            msg = 'Discourse settings are applied successfully.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
             print("get modal setting error")
-            flash('get modal setting error', 'danger')
     return render_template('discourse.html', project_id=project_id, current_setting=json.dumps(Lattice.query.filter(Lattice.project_id == project_id).first().discourse))
 
 @users.route('/aspect/<int:project_id>', methods=['GET', 'POST'])
@@ -455,12 +455,12 @@ def aspect(project_id):
             print("aspect_setting: ", aspect_setting)
             flag_modified(lattice_setting, 'aspect')
             db.session.commit()
-            flash('Aspect setting applied successfully', 'success')
-            return redirect(url_for('users.project', project_id=project_id))
+            msg = 'Aspect settings are applied successfully.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
             print("get aspect setting error")
-            flash('get aspect setting error', 'danger')
     return render_template('aspect.html', project_id=project_id, current_setting=json.dumps(Lattice.query.filter(Lattice.project_id == project_id).first().aspect))
 
 @users.route('/person/<int:project_id>', methods=['GET', 'POST'])
@@ -475,12 +475,12 @@ def person(project_id):
             print("person_setting: ", person_setting)
             flag_modified(lattice_setting, 'person')
             db.session.commit()
-            flash('Person setting applied successfully', 'success')
-            return redirect(url_for('users.project', project_id=project_id))
+            msg = 'Person settings are applied successfully.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
             print("get person setting error")
-            flash('get person setting error', 'danger')
     return render_template('person.html', project_id=project_id, current_setting=json.dumps(Lattice.query.filter(Lattice.project_id == project_id).first().person))
 
 @users.route('/number/<int:project_id>', methods=['GET', 'POST'])
@@ -495,12 +495,12 @@ def number(project_id):
             print("number_setting: ", number_setting)
             flag_modified(lattice_setting, 'number')
             db.session.commit()
-            flash('Number setting applied successfully', 'success')
-            return redirect(url_for('users.project', project_id=project_id))
+            msg = 'Number settings are applied successfully.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
             print("get number setting error")
-            flash('get number setting error', 'danger')
     return render_template('number.html', project_id=project_id, current_setting=json.dumps(Lattice.query.filter(Lattice.project_id == project_id).first().number))
 
 @users.route('/modal/<int:project_id>', methods=['GET', 'POST'])
@@ -514,13 +514,12 @@ def modal(project_id):
             lattice_setting.modal = modal_setting
             flag_modified(lattice_setting, 'modal')
             db.session.commit()
-            print("modal_setting: ", modal_setting)
-            flash('Modal setting applied successfully', 'success')
-            return redirect(url_for('users.project', project_id=project_id))
+            msg = 'Modal settings are applied successfully.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
             print("get modal setting error")
-            flash("get modal setting error", 'danger')
     return render_template('modal.html', project_id=project_id, current_setting=json.dumps(Lattice.query.filter(Lattice.project_id == project_id).first().modal))
 
 @users.route('/modification/<int:project_id>', methods=['GET', 'POST'])
