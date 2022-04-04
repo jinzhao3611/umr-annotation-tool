@@ -77,9 +77,9 @@ function customizeOptions(settingsJSON, attrId){
     for (let i in optionList){
         for(let j=0; j<optionList[i].length; j++){
             console.log("item: ", optionList[i][j].value);
-            if(!settings[optionList[i][j].value]){
+            if(settings[optionList[i][j].value]===false){
                 console.log("to be removed", optionList[i][j].value);
-                optionList[i][j].remove();
+                optionList[i][j].disabled = true;
             }
         }
     }
