@@ -127,6 +127,7 @@ class Project(db.Model): #this table keeps track of the Project and the qc user 
     docqcs = db.relationship('Docqc', backref='project', lazy=True)
     docdas = db.relationship('Docda', backref='project', lazy=True)
     lattices = db.relationship('Lattice', backref='project', lazy=True)
+    partialgraphs = db.relationship('Partialgraph', backref='project', lazy=True)
 
 
 class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder, because once the file is uploaded, the file will be duplicated and put under project qc user
@@ -150,3 +151,8 @@ class Lattice(db.Model):
     number = db.Column(MutableDict.as_mutable(JSON), nullable=False)
     modal = db.Column(MutableDict.as_mutable(JSON), nullable=False)
     discourse = db.Column(MutableDict.as_mutable(JSON), nullable=False)
+
+class Partialgraph(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    partial_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)

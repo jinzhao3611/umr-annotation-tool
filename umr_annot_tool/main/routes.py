@@ -10,7 +10,7 @@ from datetime import datetime
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm
 from sqlalchemy.orm.attributes import flag_modified
@@ -107,6 +107,8 @@ def new_project():
                           modal={"Non-NeutAff": True, "Non-FullAff": True, "Non-NeutNeg": True, "Non-FullNeg": True, "FullAff": True, "PrtAff": True, "NeutAff": True, "FullNeg": True, "PrtNeg": True, "NeutNeg": True, "Strong-PrtAff": True, "Weak-PrtAff": True, "Strong-NeutAff": True, "Weak-NeutAff": True, "Strong-PrtNeg": True, "Weak-PrtNeg": True, "Strong-NeutNeg": True, "Weak-NeutNeg": True},
                           discourse={"or": True, "and+but": True, "inclusive-disj": True, "exclusive-disj": True, "and+unexpected": True, "and+contrast": True, "but": True, "and": True, "consecutive": True, "additive": True, "unexpected-co-occurrence": True, "contrast-01": True, ":subtraction": True})
         db.session.add(lattice)
+        pg = Partialgraph(project_id=project.id, partial_umr={})
+        db.session.add(pg)
         db.session.commit()
 
         flash(f'{form.projectname.data} has been created.', 'success')
@@ -225,7 +227,7 @@ def sentlevel(doc_sent_id):
         snt_id = int(request.form["sentence_id"])
 
     if request.method == 'POST':
-        # add to db
+        # add umr to db
         logging.info("post request received")
         try:
             amr_html = request.get_json(force=True)["amr"]
@@ -263,6 +265,20 @@ def sentlevel(doc_sent_id):
         except Exception as e:
             print(e)
             print('Failure: Add current annotation and alignments to database failed.')
+        # add partial graph to db
+        try:
+            partial_graphs = request.get_json(force=True)["partial_graphs"]
+            print("partial_graphs: ", partial_graphs)
+            pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+            pg.partial_umr = partial_graphs
+            flag_modified(pg, 'partial_umr')
+            db.session.commit()
+            msg = 'Success: partial graphs are added to database.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+        except Exception as e:
+            print(e)
+            print('Failure: Add partial graphs to database failed.')
 
     try:
         curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
@@ -292,6 +308,10 @@ def sentlevel(doc_sent_id):
     modalSettingsJSON = lattice.modal
     discourseSettingsJSON = lattice.discourse
 
+    pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+    partial_graphs_json = pg.partial_umr
+    print("partial_graphs_json: ", partial_graphs_json)
+
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
@@ -307,7 +327,8 @@ def sentlevel(doc_sent_id):
                            owner=owner,
                            permission=permission,
                            aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
-                           numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON)
+                           numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON,
+                           partial_graphs_json=partial_graphs_json)
 
 @main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevelview(doc_sent_id):

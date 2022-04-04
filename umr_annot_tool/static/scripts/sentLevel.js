@@ -36,13 +36,15 @@ let show_amr_mo_lock = ''; // '' affects coloring
 
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let docAnnot=false;
+let partial_graphs = {};
 
 /**
  *
  * @param frame_json: frame json file from post
  * @param lang: language of this document
+ * @param partial_graphs_json
  */
-function initialize(frame_json, lang) {
+function initialize(frame_json, lang, partial_graphs_json) {
     language = lang; // assign language of the document
     umr['n'] = 0; //clear the current graph
     undo_list.push(cloneCurrentState()); //populate undo_list
@@ -58,6 +60,7 @@ function initialize(frame_json, lang) {
         });
     }
     pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage in order to pass to another page
+    partial_graphs = JSON.parse(partial_graphs_json);
 }
 
 function customizeOptions(settingsJSON, attrId){
@@ -76,7 +79,6 @@ function customizeOptions(settingsJSON, attrId){
     console.log("length of optionList: ", optionList.length);
     for (let i in optionList){
         for(let j=0; j<optionList[i].length; j++){
-            console.log("item: ", optionList[i][j].value);
             if(settings[optionList[i][j].value]===false){
                 console.log("to be removed", optionList[i][j].value);
                 optionList[i][j].disabled = true;
@@ -2504,15 +2506,42 @@ function recordPartialGraph(){
            graphDict[key.substring(k.length-1, key.length)] = umr[key];
         }
     });
+
     console.log("partial_graph: ", graphDict);
-    let partial_graphs = {};
     partial_graphs[graphName] = graphDict;
-    localStorage.setItem('partial_graphs', JSON.stringify(partial_graphs));
+    let doc_id = document.getElementById('doc_id').innerText;
+    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    let owner_id = document.getElementById('user_id').innerText;
+    let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
+
+    fetch(`/sentlevel/${doc_sent_id}`, {
+        method: 'POST',
+        body: JSON.stringify({"partial_graphs": partial_graphs})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        setInnerHTML("error_msg", data['msg']);
+        document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
+        populatePartialGraphOptionList();
+    }).catch(function(error){
+        console.log("Fetch error from recordPartialGraph: "+ error);
+    });
+}
+function populatePartialGraphOptionList(){
+    let partialGraphDropdown = document.getElementById("partial-graph");
+    while (partialGraphDropdown.options.length > 0) {
+        partialGraphDropdown.options[0].remove();
+    }
+    for (let key in partial_graphs) {
+        let option = document.createElement("option");
+        option.value = key;
+        document.getElementById("partial-graph").append(option);
+    }
 }
 
 function addPartialGraph(){
    let graphName= document.getElementById("partial-graphs").value;
-   let graphDict = JSON.parse(localStorage['partial_graphs'])[graphName];
+   let graphDict = partial_graphs[graphName];
    let current_parent_loc = getKeyByValue(umr, current_parent);
    let role;
    if(document.getElementById('roles2')){

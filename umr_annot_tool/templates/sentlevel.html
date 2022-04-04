@@ -50,7 +50,7 @@
     {# display all the sentences #}
     <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 250px;">
         <script type="text/javascript">
-            initialize({{ frame_dict|tojson|safe }}, "{{ lang }}")
+            initialize({{ frame_dict|tojson|safe }}, "{{ lang }}",`{{ partial_graphs_json |tojson|safe}}`)
         </script>
         {% autoescape off %}
         <p>{{ info2display.sents_html }}</p>
@@ -824,7 +824,7 @@
             customizeOptions(`{{ numberSettingsJSON |tojson|safe}}`, "refer-number-attr");
             customizeOptions(`{{ modalSettingsJSON |tojson|safe}}`, "modstr-values");
             customizeOptions(`{{ discourseSettingsJSON |tojson|safe}}`, "default-roles_abstract-concepts");
-
+            populatePartialGraphOptionList();
         </script>
     <div>
 {% endblock content2 %}
