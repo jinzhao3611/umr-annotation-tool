@@ -434,10 +434,12 @@ def discourse(project_id):
             print("discourse_setting: ", discourse_setting)
             flag_modified(lattice_setting, 'discourse')
             db.session.commit()
+            flash('Discourse setting applied successfully', 'success')
         except Exception as e:
             print(e)
             print("get modal setting error")
-    return render_template('discourse.html', project_id=project_id)
+            flash('get modal setting error', 'danger')
+    return render_template('discourse.html', project_id=project_id, current_setting=Lattice.query.filter(Lattice.project_id == project_id).first().discourse)
 
 @users.route('/aspect/<int:project_id>', methods=['GET', 'POST'])
 def aspect(project_id):
@@ -451,10 +453,12 @@ def aspect(project_id):
             print("aspect_setting: ", aspect_setting)
             flag_modified(lattice_setting, 'aspect')
             db.session.commit()
+            flash('Aspect setting applied successfully', 'success')
         except Exception as e:
             print(e)
             print("get aspect setting error")
-    return render_template('aspect.html', project_id=project_id)
+            flash('get aspect setting error', 'danger')
+    return render_template('aspect.html', project_id=project_id, current_setting=Lattice.query.filter(Lattice.project_id == project_id).first().aspect)
 
 @users.route('/person/<int:project_id>', methods=['GET', 'POST'])
 def person(project_id):
@@ -468,10 +472,12 @@ def person(project_id):
             print("person_setting: ", person_setting)
             flag_modified(lattice_setting, 'person')
             db.session.commit()
+            flash('Person setting applied successfully', 'success')
         except Exception as e:
             print(e)
             print("get person setting error")
-    return render_template('person.html', project_id=project_id)
+            flash('get person setting error', 'danger')
+    return render_template('person.html', project_id=project_id, current_setting=Lattice.query.filter(Lattice.project_id == project_id).first().person)
 
 @users.route('/number/<int:project_id>', methods=['GET', 'POST'])
 def number(project_id):
@@ -485,10 +491,12 @@ def number(project_id):
             print("number_setting: ", number_setting)
             flag_modified(lattice_setting, 'number')
             db.session.commit()
+            flash('Number setting applied successfully', 'success')
         except Exception as e:
             print(e)
             print("get number setting error")
-    return render_template('number.html', project_id=project_id)
+            flash('get number setting error', 'danger')
+    return render_template('number.html', project_id=project_id, current_setting=Lattice.query.filter(Lattice.project_id == project_id).first().number)
 
 @users.route('/modal/<int:project_id>', methods=['GET', 'POST'])
 def modal(project_id):
@@ -499,13 +507,16 @@ def modal(project_id):
             modal_setting = request.get_json(force=True)['lattice_setting']
             lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
             lattice_setting.modal = modal_setting
-            print("modal_setting: ", modal_setting)
             flag_modified(lattice_setting, 'modal')
             db.session.commit()
+            print("modal_setting: ", modal_setting)
+            flash('Modal setting applied successfully', 'success')
+            return redirect(url_for('users.modal', project_id=project_id))
         except Exception as e:
             print(e)
             print("get modal setting error")
-    return render_template('modal.html', project_id=project_id)
+            flash("get modal setting error", 'danger')
+    return render_template('modal.html', project_id=project_id, current_setting=Lattice.query.filter(Lattice.project_id == project_id).first().modal)
 
 @users.route('/modification/<int:project_id>', methods=['GET', 'POST'])
 def modification(project_id): #there is no post here like the previous ones, because users are not allowed to toggle off any modification items in the dropdown menu
