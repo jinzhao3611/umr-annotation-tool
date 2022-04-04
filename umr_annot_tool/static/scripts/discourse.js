@@ -52,7 +52,7 @@ renderChart(data)
       n => {
         console.log(n.id); 
         let s = '';
-        if(!['substitute-01', 'discourse relations'].includes(n.id)){
+        if(!['substitute-01', 'discourse relations', ':apprehensive', ':purpose', ':manner', ':cause', ':condition', ':temporal', ':pure-addition', ':concession', ':concessive-condition'].includes(n.id)){
           s += `<foreignObject x="${n.x -12}" y="${n.y - n.height / 2 - 18}" width="20" height="20">
         <xhtml:label class="switch">
           <input id="${n.id}" type="checkbox" checked>

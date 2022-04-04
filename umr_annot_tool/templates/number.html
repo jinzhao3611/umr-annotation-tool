@@ -21,6 +21,10 @@
             fetchLatticeSetting('number', {{ project_id }});
         }//https://stackoverflow.com/questions/14034737/creating-a-button-dynamically-with-arguments-for-onclick
         document.getElementById("lattice").appendChild(btn);
+        const elm = await waitForElm('#lattice > div:nth-child(2) > svg'); //https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
+        waitForElm('#lattice > div:nth-child(2) > svg').then((elm) => {
+            applyCurrentSettings({{ current_setting | safe }});
+        });
     </script>
 {% endblock content %}
 
