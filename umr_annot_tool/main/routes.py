@@ -658,7 +658,7 @@ def lexiconupdate(project_id):
 
     look_up_form = LookUpLexiconItemForm()
     lexicon_item_form = polulate_lexicon_item_form_by_lookup(frames_dict, citation_dict, look_up_inflected, look_up_lemma)
-
+    print("entries: ", getattr(lexicon_item_form, 'inflected_forms').entries)
     if look_up_form.validate_on_submit() and (look_up_form.inflected_form.data or look_up_form.lemma_form.data): # if click on look up button
         look_up_inflected = look_up_form.inflected_form.data
         look_up_lemma = look_up_form.lemma_form.data
@@ -675,6 +675,20 @@ def lexiconupdate(project_id):
 
     if lexicon_item_form.add_sense.data:#clicked on Add New Inflected Form Field button
         getattr(lexicon_item_form, 'senses').append_entry()
+        return render_template('lexicon.html', project_id=project_id, project_name=project_name, lexicon_item_form=lexicon_item_form,
+                               look_up_form=look_up_form,
+                               frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
+                               doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
+
+    if lexicon_item_form.remove_inflected.data: #clicked on Remove Last Inflected Form Field button
+        getattr(lexicon_item_form, 'inflected_forms').pop_entry()
+        return render_template('lexicon.html', project_id=project_id, project_name=project_name, lexicon_item_form=lexicon_item_form,
+                               look_up_form=look_up_form,
+                               frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
+                               doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
+
+    if lexicon_item_form.remove_sense.data:#clicked on Remove Last Inflected Form Field button
+        getattr(lexicon_item_form, 'senses').pop_entry()
         return render_template('lexicon.html', project_id=project_id, project_name=project_name, lexicon_item_form=lexicon_item_form,
                                look_up_form=look_up_form,
                                frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
@@ -705,6 +719,8 @@ def lexiconupdate(project_id):
 
             # update citation_dict as well
             citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in frames_dict[lemma]["inflected_forms"]}
+            print("frames_dict: ", frames_dict)
+            print("citation_dict: ", citation_dict)
 
             #add to database
             existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()

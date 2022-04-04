@@ -67,6 +67,8 @@ class LexiconItemForm(FlaskForm):
                                                      ("delete", "delete current entry"),])
     add_inflected = SubmitField('+ Add New Inflected Form Field')
     add_sense = SubmitField('+ Add New Sense Field')
+    remove_inflected = SubmitField('- Remove last Inflected Form Field')
+    remove_sense = SubmitField('- Remove last Sense Field')
 
     submit = SubmitField('Save')
 
