@@ -4,7 +4,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm, UpdateProjectForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda, Lattice
+from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda, Lattice, Lexicon, Partialgraph
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
@@ -97,12 +97,21 @@ def account():
             to_delete_project_id = int(request.form["delete_project"])
             print("to_delete_project_id: ", to_delete_project_id)
             if to_delete_project_id !=0:
-                Lattice.query.filter_by(project_id=to_delete_project_id).delete()
+                Partialgraph.query.filter(Partialgraph.project_id==to_delete_project_id).delete()
+                print("Partialgraph removed")
+                Lattice.query.filter(Lattice.project_id==to_delete_project_id).delete()
+                print("Lattice removed")
+                Lexicon.query.filter(Lexicon.project_id == to_delete_project_id).delete()
+                print("Lexicon removed")
                 Docda.query.filter(Docda.project_id==to_delete_project_id).delete()
+                print("Docda removed")
                 Docqc.query.filter(Docqc.project_id==to_delete_project_id).delete()
+                print("Docqc removed")
                 qc_id = Project.query.filter(Project.id==to_delete_project_id).first().qc_user_id
                 Projectuser.query.filter(Projectuser.project_id == to_delete_project_id).delete()
+                print("Projectuser removed")
                 Project.query.filter(Project.id==to_delete_project_id).delete()
+                print("Project removed")
                 to_delete_doc_ids = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
                 for to_delete_doc in to_delete_doc_ids:
                     Annotation.query.filter(Annotation.doc_id == to_delete_doc.id).delete()
@@ -111,7 +120,7 @@ def account():
                 User.query.filter(User.id == qc_id).delete()
             db.session.commit()
         except Exception as e:
-            flash("Project name already exist, change to a unique name", 'info')
+            flash("deleting doc from database failed", 'info')
             print(e)
             print("deleting doc from database failed")
         return redirect(url_for('users.account'))
