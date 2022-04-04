@@ -247,6 +247,7 @@ def sentlevel(doc_sent_id):
                 existing.sent_annot = amr_html
                 existing.alignment = align_info
                 existing.sent_umr = umr_dict
+                flag_modified(existing, 'alignment')
                 flag_modified(existing, 'sent_umr')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
@@ -285,10 +286,12 @@ def sentlevel(doc_sent_id):
                                                          Annotation.user_id == owner_user_id).first()
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
+        curr_alignment = curr_annotation.alignment
     except Exception as e:
         print(e)
         curr_annotation_string= ""
         curr_sent_umr = {}
+        curr_alignment = {}
 
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
@@ -315,16 +318,14 @@ def sentlevel(doc_sent_id):
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
-                           curr_sent_umr=curr_sent_umr,
+                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
                            content_string=doc.content.replace('\n', '<br>'),
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
-                           admin=admin,
-                           curr_annotation_string=curr_annotation_string,
-                           owner=owner,
+                           admin=admin, owner=owner,
                            permission=permission,
                            aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
                            numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON,
@@ -376,10 +377,12 @@ def sentlevelview(doc_sent_id):
                                                          Annotation.user_id == owner_user_id).first()
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
+        curr_alignment = curr_annotation.alignment
     except Exception as e:
         print(e)
         curr_annotation_string= ""
         curr_sent_umr = {}
+        curr_alignment = {}
 
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
@@ -396,16 +399,14 @@ def sentlevelview(doc_sent_id):
     return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
-                           curr_sent_umr=curr_sent_umr,
+                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
                            content_string=doc.content.replace('\n', '<br>'),
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
-                           admin=admin,
-                           curr_annotation_string=curr_annotation_string,
-                           owner=owner,
+                           admin=admin, owner=owner,
                            permission=permission)
 
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])

@@ -14,7 +14,7 @@
 #     (the tabulate package is used, the tables in output txt file cannot adjust to the window resize, please open it in full screen when necessary)
 
 import xml.etree.ElementTree as ET
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 import pandas as pd
 from itertools import accumulate
 import operator
@@ -33,7 +33,7 @@ class InfoToDB(NamedTuple):
     has_annot: bool
     sent_annots: Optional[List[str]]
     doc_annots: Optional[List[str]]
-    aligns: Optional[List[str]]
+    aligns: Optional[Dict[str, str]]
 
 class InfoToDisplay(NamedTuple):
     sents: List[List[str]]
@@ -55,7 +55,7 @@ def amr_text2html(plain_text: str) -> str:
     html_string = '<div id="amr">' + html_string + '</div>\n'
     return html_string
 
-def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str]]:
+def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], Dict[str, str]]:
     """
     example file:
     :param content_string:
@@ -63,13 +63,13 @@ def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[Lis
              sents: [['Edmund', 'Pope', 'tasted', 'freedom', 'today', 'for', 'the', 'first', 'time', 'in', 'more', 'than', 'eight', 'months', '.'], ['He', 'denied', 'any', 'wrongdoing', '.']]
              sent_annots: ['<div id="amr">(s1t&nbsp;/&nbsp;taste-01)<br>\n<div>\n', '<div id="amr">(s2d&nbsp;/&nbsp;deny-01)<br>\n<div>\n']
              doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
-             aligns: ['taste-01(s1t): 3-3', 'deny-01(s2d): 2-2']
+             aligns: {'s1t': '3-3', 's2d': '2-2'}
     """
     doc_content_string = ""
     sents = []
     sent_annots = []
     doc_annots = []
-    aligns=[]
+    aligns={}
     root = ET.fromstring(content_string)
     for child in root:
         if child.tag =='sntamr':
@@ -82,12 +82,11 @@ def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[Lis
                     doc_content_string += '\n'+child2.text
                     sents.append(child2.text.split())
                     doc_annots.append("")
-                    aligns.append("")
 
     return doc_content_string.strip(), sents, sent_annots, doc_annots, aligns
 
 
-def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[str]]:
+def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], Dict[str, str]]:
     """
     example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/exported_sample_snts_english.txt
     :param content_string:

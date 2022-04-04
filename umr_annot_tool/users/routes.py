@@ -225,7 +225,7 @@ def project(project_id):
                             print('I am here 36')
                             annotation = Annotation(sent_annot='',
                                                     doc_annot='',
-                                                    alignment='', author=current_user,
+                                                    alignment={}, author=current_user,
                                                     sent_id=i+1, doc_id=annotated_doc_id,
                                                     sent_umr={}, doc_umr={})
                             db.session.add(annotation)

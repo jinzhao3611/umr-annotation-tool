@@ -37,6 +37,7 @@ let show_amr_mo_lock = ''; // '' affects coloring
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let docAnnot=false;
 let partial_graphs = {};
+let alignments={}
 
 /**
  *
@@ -92,7 +93,7 @@ function customizeOptions(settingsJSON, attrId){
  * @param curr_sent_umr
  * @param curr_annotation_string
  */
-function load_history(curr_sent_umr, curr_annotation_string){
+function load_history(curr_sent_umr, curr_annotation_string, curr_alignment){
     if(curr_sent_umr === "{}" && curr_annotation_string){ //if current umr field is empty but the annot_str field is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
     }else{
@@ -103,6 +104,7 @@ function load_history(curr_sent_umr, curr_annotation_string){
     }
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
+    alignments = JSON.parse(curr_alignment);
     showAlign();
     state_has_changed_p = 1;
     if(language === "english" || language === "chinese"){
@@ -912,26 +914,35 @@ function showAnnotatedTokens(){
     });
 
 }
+// function showAlign(){
+//     correctAlignments();
+//     let alignInfo;
+//     if (( alignInfo = document.getElementById('align')) != null){
+//         let alignment_string = '';
+//         Object.keys(umr).forEach(function (key) {
+//             if (/[\\d|\\.]+c/gm.test(key)) {
+//                 if (!(key.replace('c', 'd') in umr)){ // if the node is not deleted already
+//                     if (umr[key.replace('c', 'a')] !== "NaN-NaN" && typeof umr[key.replace('c', 'a')] !== "undefined"){ //NaN appears when the same variable is added in the second time, undefined appears when there no such key
+//                         if(umr[key]){//empty c, has s
+//                         alignment_string += umr[key] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+//                         }else{
+//                             alignment_string += umr[key.replace('c', 's')] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//         alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
+//     }
+// }
 function showAlign(){
-    correctAlignments();
-    let alignInfo;
-    if (( alignInfo = document.getElementById('align')) != null){
-        let alignment_string = '';
-        Object.keys(umr).forEach(function (key) {
-            if (/[\\d|\\.]+c/gm.test(key)) {
-                if (!(key.replace('c', 'd') in umr)){ // if the node is not deleted already
-                    if (umr[key.replace('c', 'a')] !== "NaN-NaN" && typeof umr[key.replace('c', 'a')] !== "undefined"){ //NaN appears when the same variable is added in the second time, undefined appears when there no such key
-                        if(umr[key]){//empty c, has s
-                        alignment_string += umr[key] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
-                        }else{
-                            alignment_string += umr[key.replace('c', 's')] + "(" + umr[key.replace('c', 'v')] + "): " + umr[key.replace('c', 'a')] + htmlSpaceGuard('\n');
-                        }
-                    }
-                }
-            }
-        });
-        alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
+    let align_str = '';
+    for (const key in alignments){
+        if (alignments.hasOwnProperty(key)) {
+            align_str += key + ": " + alignments[key] + htmlSpaceGuard('\n');
+        }
     }
+    setInnerHTML('align', align_str);
 }
 function showHead(){
     let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
@@ -1027,7 +1038,8 @@ function newUMR(concept) {
     umr[n + '.v'] = v;
     umr[n + '.n'] = 0;
     umr[n + '.s'] = '';
-    umr[n + '.a'] = begOffset + "-" + endOffset;
+    let key = umr[n + '.v'] || umr[n + '.c'] || umr[n + '.s'];
+    alignments[key] = begOffset + "-" + endOffset;
     begOffset = -1;
     endOffset = -1;
     recordVariable(v, n);
@@ -1145,7 +1157,8 @@ function addTriple(head, role, arg, arg_type) {
         //     begOffset += 1;
         //     endOffset += 1;
         // }
-        umr[new_loc + '.a'] = begOffset + "-" + endOffset;
+        let key = umr[new_loc + '.v'] || umr[new_loc + '.c'] || umr[new_loc + '.s'];
+        alignments[key] = begOffset + "-" + endOffset;
         begOffset = -1;
         endOffset = -1;
 
@@ -1817,7 +1830,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         return '';
     } else {
         let concept = umr[loc + '.c']; // umr['1.c'] 1.c: "nenhlet"
-        let alignment_index = umr[loc + '.a'] || ''; // umr['1.a'] 1.a: "2-2"
         let string = umr[loc + '.s'] || ''; // umr['1.s'] 1.s: ""
         let quoted_string = string; //umr['1.s'] 1.s: ""
         if (!string.match(/^".*"$/)) { // if there is no quotes around the string
@@ -2355,7 +2367,6 @@ function UMR2db() {
     show_amr('show'); //to prevent delete/replace mode html string got in database
     let amrHtml = document.getElementById('amr').outerHTML; //"<div id="amr">(f&nbsp;/&nbsp;freedom)<br></div>"
     let annot_str = deHTML(amrHtml);
-    let align_info = document.getElementById('align').innerText;
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
@@ -2366,7 +2377,7 @@ function UMR2db() {
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": annot_str, "align": align_info, "snt_id": snt_id, "umr": umr})
+        body: JSON.stringify({"amr": annot_str, "align": alignments, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
