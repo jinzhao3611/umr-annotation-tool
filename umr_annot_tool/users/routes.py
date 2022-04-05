@@ -11,7 +11,6 @@ import logging
 import json
 
 from parse_input_xml import html
-from flask_principal import Permission, RoleNeed, identity_changed, Identity, AnonymousIdentity
 
 from lemminflect import getLemma
 
@@ -60,7 +59,6 @@ def login():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            identity_changed.send(current_app._get_current_object(), identity=Identity(user.id)) #this is where the @identity_loaded.connect_via(app) decorator function got called
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('users.account'))
         else:
@@ -74,8 +72,6 @@ def logout():
     # Remove session keys set by Flask-Principal
     for key in ('identity.name', 'identity.auth_type'):
         session.pop(key, None)
-    # Tell Flask-Principal the user is anonymous
-    identity_changed.send(current_app._get_current_object(), identity=AnonymousIdentity())
 
     return redirect(url_for('main.display_post'))
 
