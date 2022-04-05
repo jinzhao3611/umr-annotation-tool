@@ -28,23 +28,24 @@ def register():
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
 
-        filepath = Path(__file__).parent.parent.joinpath("static/sample_files/news-text-2-lorelei.txt")
-        with open(filepath, 'r', encoding='utf-8') as f:
-            content_string = f.read()
-        filename = 'news-text-2-lorelei.txt'
-        file_format = 'plain_text'
-        lang = 'english'
-        info2display = html(content_string, file_format, lang)
-        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=user.id,
-                  file_format=file_format)
-        db.session.add(doc)
-        db.session.commit()
-        flash('Your doc has been created!', 'success')
-        for sent_of_tokens in info2display.sents:
-            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
-            db.session.add(sent)
-            db.session.commit()
-        flash('Your sents has been created.', 'success')
+
+        # filepath = Path(__file__).parent.parent.joinpath("static/sample_files/news-text-2-lorelei.txt")
+        # with open(filepath, 'r', encoding='utf-8') as f:
+        #     content_string = f.read()
+        # filename = 'news-text-2-lorelei.txt'
+        # file_format = 'plain_text'
+        # lang = 'english'
+        # info2display = html(content_string, file_format, lang)
+        # doc = Doc(lang=lang, filename=filename, content=content_string, user_id=user.id,
+        #           file_format=file_format)
+        # db.session.add(doc)
+        # db.session.commit()
+        # flash('Your doc has been created!', 'success')
+        # for sent_of_tokens in info2display.sents:
+        #     sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
+        #     db.session.add(sent)
+        #     db.session.commit()
+        # flash('Your sents has been created.', 'success')
 
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
@@ -239,6 +240,7 @@ def project(project_id):
             elif add_qc_doc_id !=0: # add to Quality Control
                 qc_id = Project.query.filter(Project.id == project_id).first().qc_user_id
                 qc = User.query.filter(User.id==qc_id).first()
+                print("qc_id:", qc.id)
                 # check existing:
                 if not (Annotation.query.filter(Annotation.doc_id == add_qc_doc_id, Annotation.user_id == qc_id).all()):
                     print("I am here 70")
@@ -293,7 +295,7 @@ def project(project_id):
             db.session.commit()
         except Exception as e:
             print(e)
-            print("permission change failed")
+            print("If you are trying to change permission, permission change failed")
         return redirect(url_for('users.project', project_id=project_id))
     elif request.method == 'GET':
         form.projectname.data = project_name
