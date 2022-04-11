@@ -2,7 +2,7 @@ from flask import url_for, redirect, flash, send_from_directory, make_response, 
 from werkzeug.utils import secure_filename
 from typing import List
 import json
-from parse_input_xml import html, process_exported_file, parse_lexicon_xml, process_exported_file_isi_editor
+from parse_input_xml import html, parse_exported_file, parse_lexicon_xml, process_exported_file_isi_editor
 from flask_login import current_user
 import os
 import logging
@@ -40,11 +40,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id, project_id=current_project_id).first()
     if existing_doc:
         doc_id = existing_doc.id
-        existing_doc.content = content_string
-        existing_doc.file_format = file_format
-        existing_doc.lang = lang
-        db.session.commit()
-        flash('Your doc and sents already created.', 'success')
+        flash('Upload failed: A document with the same name is already in current project.', 'success')
     else:
         doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id,
                   file_format=file_format, project_id=current_project_id)
@@ -58,24 +54,29 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
             db.session.commit()
         flash('Your sents has been created.', 'success')
 
-    if has_annot:
+    print("file_format:", file_format)
+    if file_format == 'isi_editor':
         for i in range(len(sents)):
-            existing = Annotation.query.filter(Annotation.sent_id == i + 1, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == current_user.id).first()
-            if existing:  # update the existing Annotation object
-                existing.sent_annot = sent_annots[i]
-                existing.doc_annot = doc_annots[i]
-                existing.alignment = aligns[i]
-                db.session.commit()
-            else:
-                dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-                annotation = Annotation(sent_annot=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
-                                        user_id=dummy_user_id, #uploaded documents are unassigned document first, the annotation of unassigned documents has user_id of dummy_user, unassigned document has user_id of the uploader/admin
-                                        sent_id=i + 1, #sentence id counts from 1
-                                        doc_id=doc_id,
-                                        sent_umr={}, doc_umr={})
-                db.session.add(annotation)
-                db.session.commit()
+            dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
+            annotation = Annotation(sent_annot=sent_annots[i], doc_annot="", alignment={},
+                                    user_id=dummy_user_id,
+                                    # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
+                                    sent_id=i + 1,  # sentence id counts from 1
+                                    doc_id=doc_id,
+                                    sent_umr={}, doc_umr={})
+            db.session.add(annotation)
+        db.session.commit()
+        flash('Your annotations has been created.', 'success')
+    elif has_annot:
+        for i in range(len(sents)):
+            dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
+            annotation = Annotation(sent_annot=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
+                                    user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
+                                    sent_id=i + 1, #sentence id counts from 1
+                                    doc_id=doc_id,
+                                    sent_umr={}, doc_umr={})
+            db.session.add(annotation)
+        db.session.commit()
         flash('Your annotations has been created.', 'success')
     return doc_id
 
@@ -134,20 +135,17 @@ def upload_document(current_project_id):
                 is_exported = form.if_exported.data
                 if is_exported:  # has annotation
                     if file_format == 'isi_editor':
-                        new_content_string, sents, sent_annots, doc_annots, aligns = process_exported_file_isi_editor(
-                            content_string)
+                        new_content_string, sents, sent_annots = process_exported_file_isi_editor(content_string)
+                        file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
+                                sents=sents, has_annot=True, sent_annots=sent_annots, current_project_id=current_project_id)
                     else:
-                        new_content_string, sents, sent_annots, doc_annots, aligns = process_exported_file(
+                        new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
                             content_string)
-                    print('sents:', sents[0])
-                    print(len(sents))
-                    print('sent_annots:', sent_annots[0])
-                    print(len(sent_annots))
-                    doc_id = file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id)
+                        file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id)
                 else:  # doesn't have annotation
                     info2display = html(content_string, file_format, lang=lang)
-                    doc_id = file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
+                    file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
                             sents=info2display.sents, has_annot=False, current_project_id=current_project_id)
             try:  # when uploaded file already come with annotation, convert strings to umr and save to database
                 dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
@@ -321,7 +319,7 @@ def sentlevel(doc_sent_id):
                            curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
+                           content_string=doc.content,
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
@@ -402,7 +400,7 @@ def sentlevelview(doc_sent_id):
                            curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
+                           content_string=doc.content,
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
@@ -492,7 +490,7 @@ def doclevel(doc_sent_id):
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
+                           content_string=doc.content,
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
@@ -559,7 +557,7 @@ def doclevelview(doc_sent_id):
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\n', '<br>'),
+                           content_string=doc.content,
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,

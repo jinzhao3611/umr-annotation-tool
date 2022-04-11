@@ -24,17 +24,6 @@ import re, regex
 from typing import NamedTuple, Optional, List
 import json
 
-class InfoToDB(NamedTuple):
-    filename: str
-    file_format: str
-    content_string: str
-    lang: str
-    sents: List[List[str]]
-    has_annot: bool
-    sent_annots: Optional[List[str]]
-    doc_annots: Optional[List[str]]
-    aligns: Optional[Dict[str, str]]
-
 class InfoToDisplay(NamedTuple):
     sents: List[List[str]]
     sents_html: str
@@ -55,21 +44,13 @@ def amr_text2html(plain_text: str) -> str:
     html_string = '<div id="amr">' + html_string + '</div>\n'
     return html_string
 
-def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], Dict[str, str]]:
+def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[str]]:
     """
-    example file:
-    :param content_string:
-    :return: doc_content_string: Edmund Pope tasted freedom today for the first time in more than eight months .\nHe denied any wrongdoing .
-             sents: [['Edmund', 'Pope', 'tasted', 'freedom', 'today', 'for', 'the', 'first', 'time', 'in', 'more', 'than', 'eight', 'months', '.'], ['He', 'denied', 'any', 'wrongdoing', '.']]
-             sent_annots: ['<div id="amr">(s1t&nbsp;/&nbsp;taste-01)<br>\n<div>\n', '<div id="amr">(s2d&nbsp;/&nbsp;deny-01)<br>\n<div>\n']
-             doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
-             aligns: {'s1t': '3-3', 's2d': '2-2'}
+    example file: /Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/kristin/events37.xml
     """
     doc_content_string = ""
     sents = []
     sent_annots = []
-    doc_annots = []
-    aligns={}
     root = ET.fromstring(content_string)
     for child in root:
         if child.tag =='sntamr':
@@ -81,29 +62,20 @@ def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[Lis
                 elif child2.tag == 'sentence':
                     doc_content_string += '\n'+child2.text
                     sents.append(child2.text.split())
-                    doc_annots.append("")
 
-    return doc_content_string.strip(), sents, sent_annots, doc_annots, aligns
+    return doc_content_string.strip(), sents, sent_annots
 
-
-def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], Dict[str, str]]:
+def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[Dict[str, str]]]:
     """
-    example file: /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/sample_sentences/exported_sample_snts_english.txt
-    :param content_string:
+    :param content_string: Edmund Pope tasted freedom today for the first time in more than eight months .\nHe denied any wrongdoing .
     :return: doc_content_string: Edmund Pope tasted freedom today for the first time in more than eight months .\nHe denied any wrongdoing .
              sents: [['Edmund', 'Pope', 'tasted', 'freedom', 'today', 'for', 'the', 'first', 'time', 'in', 'more', 'than', 'eight', 'months', '.'], ['He', 'denied', 'any', 'wrongdoing', '.']]
              sent_annots: ['<div id="amr">(s1t&nbsp;/&nbsp;taste-01)<br>\n<div>\n', '<div id="amr">(s2d&nbsp;/&nbsp;deny-01)<br>\n<div>\n']
              doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
-             aligns: ['taste-01(s1t): 3-3', 'deny-01(s2d): 2-2']
+             aligns: ['s1t: '3-3', 's2d': 2-2', 'State': -1--1]
     """
-    items = content_string.split("#")[:-1]
-    doc_content_string = content_string.split("#")[-1].replace(' Source File: \n', '')
-    print('doc_content_string: ', doc_content_string)
-
-    user_id_match = re.match(r"user id: (\d+)", items[0].strip().split('\n')[1])
-    user_id = user_id_match.group(1)
-    lang_match = re.match(r"file language: (.+)", items[0].strip().split('\n')[2])
-    lang = lang_match.group(1)
+    items = content_string.split("#")[:-1] #last item in list is original source file
+    doc_content_string = content_string.split("#")[-1].replace(' Source File: \n', '').strip() #remove first line
 
     sent_indice = list(range(1, len(items), 4))
     sent_annot_indice = list(range(2, len(items), 4))
@@ -113,30 +85,34 @@ def process_exported_file(content_string: str) -> Tuple[str, List[List[str]], Li
     sent_annot_list = [items[i] for i in sent_annot_indice]
     align_list = [items[i] for i in align_indice]
     doc_annot_list = [items[i] for i in doc_annot_indice]
-    # print(sent_indice)
-    # print(sent_annot_indice)
-    # print(align_indice)
-    # print(doc_annot_indice)
-    # print(sent_list)
-    # print(sent_annot_list)
-    # print(align_list)
-    # print(doc_annot_list)
 
     sents = []
     for sent_content in sent_list:
         sent_content = re.sub(' :: snt\d+\tSentence: ', '', sent_content).strip()
         sents.append(sent_content.split())
-    print('sents: ', sents)
 
-    # doc_content_string = "".join([re.sub(' :: snt\d+\tSentence: ', '', sent) for sent in sent_list])
-    aligns = [re.sub('alignment:', '', align).strip() for align in align_list]
-    print('aligns: ', aligns)
+    aligns = []
+    for align_string in align_list:
+        align_dict = {}
+        align_items = re.sub('alignment:', '', align_string).strip().split('\n')
+        for align_item in align_items:
+            if align_item == '':
+                continue
+            key_str, value_str = align_item.split(':')
+            if '(' in key_str:
+                pattern = "^(.*)\((.*)\)"
+                concept_or_string = re.match(pattern, key_str).group(1)
+                variable = re.match(pattern, key_str).group(2)
+                key = variable if variable else concept_or_string
+                align_dict[key] = value_str.strip()
+            else:
+                align_dict[key_str.strip()] = value_str.strip()
+        aligns.append(align_dict)
+
     sent_annots = [amr_text2html(re.sub(' sentence level graph:', '', sent_annot).strip() + '\n') for sent_annot in
                    sent_annot_list]
-    print(sent_annots)
     doc_annots = [re.sub('\n','', amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip()) )for doc_annot in
                   doc_annot_list]
-    print(doc_annots)
     return doc_content_string, sents, sent_annots, doc_annots, aligns
 
 def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
@@ -701,7 +677,6 @@ def parse_sense_content(sense_content: bs4.element.Tag):
     sense = sense_content.find("span", {"class": "sense"})
     gloss_str = sense.find("span", {"class": "definitionorgloss"}).get_text(strip=True)
     args_str = sense.find("span", {"class": "argument-structure"}).get_text(strip=True)
-    # args_dict = {arg.split(": ")[0]: arg.split(": ")[1] for arg in args_str.split("; ")}
 
     frames = sense.find_all("span", "coding-frame")
     frames_str_lst = [frame.get_text(strip=True) for frame in frames]
@@ -711,7 +686,6 @@ def parse_sense_content(sense_content: bs4.element.Tag):
         "args": args_str,
         "coding_frames": "#sep".join(frames_str_lst),
     }
-
 
 def parse_lexicon_xml(xml_str: str):
     frames_dict = {}

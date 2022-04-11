@@ -92,8 +92,9 @@ function customizeOptions(settingsJSON, attrId){
  * load the annotation for current sentence from database
  * @param curr_sent_umr
  * @param curr_annotation_string
+ * @param curr_alignment
  */
-function load_history(curr_sent_umr, curr_annotation_string, curr_alignment){
+function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     if(curr_sent_umr === "{}" && curr_annotation_string){ //if current umr field is empty but the annot_str field is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
     }else{
@@ -2401,7 +2402,6 @@ function deHTML2(s){
 }
 
 function export_annot(exported_items, content_string) {
-    content_string = content_string.replaceAll('<br>', '\n');
     let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {
         e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
@@ -2409,6 +2409,14 @@ function export_annot(exported_items, content_string) {
         e[1] = e[1].replace(/<br>/g, "");
         e[1] = e[1].replace('<div id="amr">', '');
         e[1] = e[1].replace('</div>', '');
+
+        let align_str = '';
+        for (const key in e[2]){
+            if (e[2].hasOwnProperty(key)) {
+                align_str += key + ": " + e[2][key] + "\n";
+            }
+        }
+        e[2] = align_str;
     })
 
 
