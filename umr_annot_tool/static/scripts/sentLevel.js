@@ -965,7 +965,7 @@ function showAlign(){
     let align_str = '';
     for (const key in alignments){
         if (alignments.hasOwnProperty(key)) {
-            align_str += key + ": " + alignments[key] + htmlSpaceGuard('\n');
+            align_str += `${key}: <span contenteditable="true" id="${key}">${alignments[key]}</span><br>`;
         }
     }
     setInnerHTML('align', align_str);
