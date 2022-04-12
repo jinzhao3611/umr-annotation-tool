@@ -781,16 +781,6 @@
                         </div>
                     </td>
                 </tr>
-                <script>
-                       let graphDict = JSON.parse(localStorage['partial_graphs']); // when localStorage['partial_graphs'] is empty, this is causing "VM339:1 Uncaught SyntaxError: Unexpected token u in JSON at position 0", but it doesn't matter for now, potentially going to save this in database
-                       let list = document.getElementById('partial-graph');
-                       Object.keys(graphDict).forEach(function(key) {
-                            let option = document.createElement('option');
-                            option.value = key;
-                            list.appendChild(option);
-                        });
-
-                </script>
 
                 <tr>
                     <td>

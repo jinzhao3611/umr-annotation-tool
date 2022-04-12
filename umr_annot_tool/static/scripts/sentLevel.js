@@ -50,7 +50,11 @@ function initialize(frame_json, lang, partial_graphs_json) {
     umr['n'] = 0; //clear the current graph
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top'; //reset the current mode to add root
-    frame_dict = JSON.parse(frame_json); //potentially have two different formats: one is the frames_english file, one is lexicon file: sample file: Flex lexicon for frame files.xml
+    try{
+        frame_dict = JSON.parse(frame_json); //potentially have two different formats: one is the frames_english file, one is lexicon file: sample file: Flex lexicon for frame files.xml
+    }catch (e){
+        console.log("error in frame_json: ", e);
+    }
     begOffset = -1;
     endOffset = -1;
     if(default_langs.includes(language)){ // if langauge is one of the default languages, populate citation_dict into dictionary: key: inflected_form, value:lemma_form (used in getLemma)
@@ -61,11 +65,20 @@ function initialize(frame_json, lang, partial_graphs_json) {
         });
     }
     pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage in order to pass to another page
-    partial_graphs = JSON.parse(partial_graphs_json);
+    try{
+        partial_graphs = JSON.parse(partial_graphs_json);
+    }catch (e){
+        console.log("error in partial_graphs_json: ", e);
+    }
 }
 
 function customizeOptions(settingsJSON, attrId){
-    let settings = JSON.parse(settingsJSON);
+    let settings;
+    try{
+        settings = JSON.parse(settingsJSON);
+    }catch (e){
+        console.log("error in parsing settingsJSON: ", e);
+    }
     console.log("settings: ", settings);
     console.log("length of settings: ", Object.keys(settings).length);
     console.log("attrId: ", attrId);
@@ -98,14 +111,22 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     if(curr_sent_umr === "{}" && curr_annotation_string){ //if current umr field is empty but the annot_str field is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
     }else{
-        umr = JSON.parse(curr_sent_umr);
+        try{
+            umr = JSON.parse(curr_sent_umr);
+        }catch (e){
+            console.log("error in parsing curr_sent_umr: ", e);
+        }
     }
     if(Object.keys(umr).length === 0){ // if the parsed curr_sent_umr is empty
         umr['n'] = 0; //initialize umr here
     }
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
-    alignments = JSON.parse(curr_alignment);
+    try{
+        alignments = JSON.parse(curr_alignment);
+    }catch (e){
+        console.log("error in parsing curr_alignment: ", e);
+    }
     showAlign();
     state_has_changed_p = 1;
     if(language === "english" || language === "chinese"){
@@ -143,8 +164,14 @@ function conceptDropdown(lang='english') {
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
                  submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
             }else{
-                if (token in JSON.parse(localStorage["citation_dict"])){
-                    let lemma = JSON.parse(localStorage["citation_dict"])[token];
+                let updated_citation_dict;
+                try {
+                    updated_citation_dict = JSON.parse(localStorage["citation_dict"]);
+                } catch (e) {
+                    console.log("error in parsing citation_dict: ", e);
+                }
+                if (token in updated_citation_dict){
+                    let lemma = updated_citation_dict[token];
                     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
                 }else{
                     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
@@ -2494,10 +2521,18 @@ function suggestLemma(project_id, doc_id, snt_id){
 
 
 function initializeLexicon(frames, citations){
-    frame_dict = JSON.parse(deHTML(frames));
-    citation_dict = JSON.parse(deHTML(citations));
-    console.log("frame_dict: ", frame_dict);
-    console.log("citation_dict: ", citation_dict);
+    try{
+        frame_dict = JSON.parse(deHTML(frames));
+    }catch (e){
+        console.log("Error parsing frame_dict: " + e);
+    }
+
+    try{
+        citation_dict = JSON.parse(deHTML(citations));
+    }catch (e){
+        console.log("Error parsing citation_dict: " + e);
+    }
+
 }
 
 
@@ -2578,7 +2613,13 @@ function addPartialGraph(){
 }
 
 function colorAnnotatedSents(annotated_sent_ids){
-    JSON.parse(annotated_sent_ids).forEach(n => {
+    let annotated_sent_ids_arr;
+    try{
+        annotated_sent_ids_arr = JSON.parse(annotated_sent_ids);
+    }catch (e){
+        console.log("Error parsing annotated_sent_ids: " + e);
+    }
+    annotated_sent_ids_arr.forEach(n => {
         document.querySelector(`#all-sentences > table > tbody > tr:nth-child(${n}) > td`).setAttribute("style", "color: green");
     })
 }
