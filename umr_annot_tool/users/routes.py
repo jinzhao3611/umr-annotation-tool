@@ -427,6 +427,26 @@ def search(project_id):
 
     return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results = sent_results)
 
+@users.route('/partialgraph/<int:project_id>', methods=['GET', 'POST'])
+def partialgraph(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    partialGraphs = Partialgraph.query.filter(Partialgraph.project_id == project_id).first().partial_umr
+    print("partialGraphs: ", type(partialGraphs))
+    if request.method == "POST":
+        try:
+            partialGraphKey = request.get_json(force=True)['partialGraphKey']
+            del partialGraphs[partialGraphKey]
+            partial_graph_to_change = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+            partial_graph_to_change.partial_umr = partialGraphs
+            flag_modified(partial_graph_to_change, "partial_umr")
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("delete partial graph error")
+
+    return render_template('partial_graph.html', title='partial graphs', partialGraphs=partialGraphs, project_name=project_name, project_id=project_id)
 
 
 # annotation lattices

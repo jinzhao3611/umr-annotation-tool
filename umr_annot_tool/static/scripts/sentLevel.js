@@ -2547,7 +2547,7 @@ function listDict(id){
 }
 
 function recordPartialGraph(){
-    let graphDict = {};
+    let graphDict = {'n':1};
     let graphName = document.getElementById("save-partial-graph").value.split(" ")[0];
     let graphHead = document.getElementById("save-partial-graph").value.split(" ")[1];
     console.log("selected variable to be partial graph: ", graphHead);
@@ -2557,7 +2557,7 @@ function recordPartialGraph(){
 
     Object.keys(umr).forEach(function(key) {
         if(key.startsWith(k.replace('v', ''))){
-           graphDict[key.substring(k.length-1, key.length)] = umr[key];
+           graphDict['1.' + key.substring(k.length-1, key.length)] = umr[key];
         }
     });
 
@@ -2596,6 +2596,7 @@ function populatePartialGraphOptionList(){
 function addPartialGraph(){
    let graphName= document.getElementById("partial-graphs").value;
    let graphDict = partial_graphs[graphName];
+   let graphDict_mod = {};
    let current_parent_loc = getKeyByValue(umr, current_parent);
    let role;
    if(document.getElementById('roles2')){
@@ -2603,10 +2604,15 @@ function addPartialGraph(){
    }else if(document.getElementById('roles1')){
        role = document.getElementById('roles1').value;
    }
-   graphDict['r'] = role;
-
+   graphDict_mod['r'] = role;
    Object.keys(graphDict).forEach(function(key) {
-       umr[current_parent_loc.substring(0, current_parent_loc.length-1)  + (umr[current_parent_loc.replace('v', 'n')] + 1) + '.'+ key] = graphDict[key];
+       if(key !== 'n'){
+           graphDict_mod[key.substring(2)] = graphDict[key];
+       }
+   });
+
+   Object.keys(graphDict_mod).forEach(function(key) {
+       umr[current_parent_loc.substring(0, current_parent_loc.length-1)  + (umr[current_parent_loc.replace('v', 'n')] + 1) + '.'+ key] = graphDict_mod[key];
    });
    umr[current_parent_loc.replace('v', 'n')] = umr[current_parent_loc.replace('v', 'n')] + 1;
    show_amr('show');

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <script src="../static/scripts/partialGraph.js" type="text/javascript"></script>
+    <script src="../static/scripts/penmanString2umrDict.js" type="text/javascript"></script>
+    <script src="../static/scripts/umrDict2penmanString.js" type="text/javascript"></script>
+    <script src="../static/scripts/sentLevel.js" type="text/javascript"></script>
+    <script src="../static/scripts/utils.js" type="text/javascript"></script>
+{% endblock head %}
+
+{% block content %}
+    <div class="content-section">
+        <legend class="border-bottom mb-4">Saved partial graphs in {{ project_name }}</legend>
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDocumentsInProject" aria-expanded="true" aria-controls="collapseDocumentsInProject">collapse</button>
+        <div class="collapse show" id="collapseDocumentsInProject">
+            <ul class="list-group" id="partialGraphs">
+            </ul>
+        </div>
+    </div>
+
+
+    <div id="error_msg">
+    </div>
+    <script type="text/javascript">
+        populatePartialGraphs('{{ partialGraphs | tojson | safe}}', {{ project_id }});
+    </script>
+
+
+{% endblock content%}
+{% block content2 %}
+    <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}">back to project</a>
+{% endblock content2 %}
+
+
+
