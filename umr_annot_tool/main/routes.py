@@ -23,17 +23,10 @@ FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 
 def lexicon2db(project_id:int, lexicon_dict: dict):
     existing_lexicon = Lexicon.query.filter(Lexicon.project_id==project_id).first()
-    if existing_lexicon:
-        existing_lexicon.lexi = lexicon_dict
-        flag_modified(existing_lexicon, 'lexi')
-        db.session.commit()
-        flash('your lexicon has been saved to db, your old lexicon for the language is overridden', 'success')
-    else:
-        lexicon_row = Lexicon(project_id=project_id, lexi=lexicon_dict)
-        db.session.add(lexicon_row)
-        db.session.commit()
-        flash('your lexicon has been saved to db', 'success')
-
+    existing_lexicon.lexi = lexicon_dict
+    flag_modified(existing_lexicon, 'lexi')
+    db.session.commit()
+    flash('your lexicon has been saved to db', 'success')
 
 def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int,
             sent_annots=None, doc_annots=None, aligns=None) -> int:
@@ -110,6 +103,8 @@ def new_project():
         db.session.add(lattice)
         pg = Partialgraph(project_id=project.id, partial_umr={})
         db.session.add(pg)
+        lexi = Lexicon(project_id=project.id, lexi={})
+        db.session.add(lexi)
         db.session.commit()
 
         flash(f'{form.projectname.data} has been created.', 'success')

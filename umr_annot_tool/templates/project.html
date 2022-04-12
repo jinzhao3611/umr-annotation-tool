@@ -279,6 +279,25 @@
     </div>
     {% endif %}
 
+    {% if permission in ['admin', 'edit', 'annotate'] %}
+        <div class="content-section">
+        <legend class="border-bottom mb-4">Others</legend>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a href="{{ url_for('users.partialgraph', project_id=project_id) }}">
+                    Show all saved partial graphs
+                </a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a href="{{ url_for('users.alllexicon', project_id=project_id) }}">
+                    Show lexicon
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% endif %}
+
+
 {% endblock content%}
 
 {% block content2 %}

@@ -445,9 +445,26 @@ def partialgraph(project_id):
         except Exception as e:
             print(e)
             print("delete partial graph error")
-
     return render_template('partial_graph.html', title='partial graphs', partialGraphs=partialGraphs, project_name=project_name, project_id=project_id)
 
+@users.route('/alllexicon/<int:project_id>', methods=['GET', 'POST'])
+def alllexicon(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    lexi = Lexicon.query.filter(Lexicon.project_id == project_id).first().lexi
+    if request.method == "POST":
+        try:
+            lemmaKey = request.get_json(force=True)['lemmaKey']
+            del lexi[lemmaKey]
+            lexi_to_change = Lexicon.query.filter(Lexicon.project_id == project_id).first()
+            lexi_to_change.lexi = lexi
+            flag_modified(lexi_to_change, "lexi")
+            db.session.commit()
+        except Exception as e:
+            print(e)
+            print("delete lexicon error")
+    return render_template('alllexicon.html', title='all lexicon', lexi=lexi, project_name=project_name, project_id=project_id)
 
 # annotation lattices
 @users.route('/discourse/<int:project_id>', methods=['GET', 'POST'])
