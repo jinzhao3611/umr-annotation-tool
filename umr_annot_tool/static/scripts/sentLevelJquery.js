@@ -18,8 +18,7 @@ $(document).ready(function(){
 
     // https://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
     $('#genericDropdown').on("click", "#sense", function() {
-        $('input[name=roles1]').val('');
-        $('input[name=roles2]').val('');
+        $('input[name=roles]').val('');
         $('input[name=attributes]').val('');
         $('input[name=concept_types]').val('');
         $('input[name=ne_types]').val('');
@@ -31,8 +30,7 @@ $(document).ready(function(){
         $('input[name=attribute_values6]').val('');
     });
     $('#add-abs-concept').click(function() {
-        $('input[name=roles1]').val('');
-        $('input[name=roles2]').val('');
+        $('input[name=roles]').val('');
         $('input[name=attributes]').val('');
         $('input[name=concept_types]').val('');
         $('input[name=ne_types]').val('');
@@ -44,8 +42,7 @@ $(document).ready(function(){
         $('input[name=attribute_values6]').val('');
     });
     $('#add-attr').click(function() {
-        $('input[name=roles1]').val('');
-        $('input[name=roles2]').val('');
+        $('input[name=roles]').val('');
         $('input[name=attributes]').val('');
         $('input[name=concept_types]').val('');
         $('input[name=ne_types]').val('');
@@ -57,11 +54,8 @@ $(document).ready(function(){
         $('input[name=attribute_values6]').val('');
     });
 
-    $('input[name=roles1]').focusin(function() {
-        $('input[name=roles1]').val('');
-    });
-    $('input[name=roles2]').focusin(function() {
-        $('input[name=roles2]').val('');
+    $('input[name=roles]').focusin(function() {
+        $('input[name=roles]').val('');
     });
     $('input[name=attributes]').focusin(function() {
         $('input[name=attributes]').val('');

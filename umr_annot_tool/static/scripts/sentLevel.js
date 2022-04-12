@@ -291,10 +291,8 @@ function submit_query(){
     let r = '';
     if(document.getElementById('simplified_modals').value){
         r = document.getElementById('simplified_modals').value;
-    } else if(document.getElementById('roles1')){
-        r = document.getElementById('roles1').value;
-    }else if(document.getElementById('roles2')){
-        r = document.getElementById('roles2').value;
+    } else if(document.getElementById('roles')){
+        r = document.getElementById('roles').value;
     }
 
     let a = document.getElementById('attributes').value;
@@ -408,7 +406,7 @@ function show_modal_values(){
     } else {
         document.getElementById("modstr-vals").style.display = 'none';
     }
-    document.getElementById('roles2').value = ''; // clear the roles box
+    document.getElementById('roles').value = ''; // clear the roles box
 }
 /** undo *******************************************************/
 /**

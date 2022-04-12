@@ -136,106 +136,9 @@
             <tbody>
                 <tr>
                     <td>
-                        {% if 'English' == lang or 'Chinese' == lang%}
-                            <div class="dropdown">
-                                <label for="roles1">Roles(English)</label>
-                                <input list="english-roles" name="roles1" id="roles1" onfocus="this.value=''" onchange="this.blur();">
-                                <datalist id="english-roles">
-                                    <option value=":other">
-                                    <option value=":ARG0">
-                                    <option value=":ARG1">
-                                    <option value=":ARG2">
-                                    <option value=":ARG3">
-                                    <option value=":ARG4">
-                                    <option value=":ARG5">
-                                    <option value=":ARG6">
-                                    <option value=":calendar">
-                                    <option value=":century">
-                                    <option value=":day">
-                                    <option value=":dayperiod">
-                                    <option value=":decade">
-                                    <option value=":era">
-                                    <option value=":month">
-                                    <option value=":quarter">
-                                    <option value=":season">
-                                    <option value=":timezone">
-                                    <option value=":weekday">
-                                    <option value=":year">
-                                    <option value=":year2">
-                                    <option value=":companion">
-                                    <option value=":age">
-                                    <option value=":affectee">
-                                    <option value=":cause">
-                                    <option value=":concession">
-                                    <option value=":condition">
-                                    <option value=":consist_of">
-                                    <option value=":degree">
-                                    <option value=":destination">
-                                    <option value=":direction">
-                                    <option value=":duration">
-                                    <option value=":frequency">
-                                    <option value=":example">
-                                    <option value=":extent">
-                                    <option value=":instrument">
-                                    <option value=":li">
-                                    <option value=":place">
-                                    <option value=":manner">
-                                    <option value=":medium">
-                                    <option value=":mod">
-                                    <option value=":name">
-                                    <option value=":ord">
-                                    <option value=":part">
-                                    <option value=":path">
-                                    <option value=":polite">
-                                    <option value=":poss">
-                                    <option value=":purpose">
-                                    <option value=":quant">
-                                    <option value=":range">
-                                    <option value=":scale">
-                                    <option value=":source">
-                                    <option value=":subevent">
-                                    <option value=":subset">
-                                    <option value=":time">
-                                    <option value=":topic">
-                                    <option value=":unit">
-                                    <option value=":value">
-                                    <option value=":wiki">
-                                    <option value=":op1">
-                                    <option value=":op2">
-                                    <option value=":op3">
-                                    <option value=":op4">
-                                    <option value=":op5">
-                                    <option value=":op6">
-                                    <option value=":op7">
-                                    <option value=":op8">
-                                    <option value=":op9">
-                                    <option value=":op10">
-
-                                    <option value=":reason">
-                                    <option value=":temporal">
-                                    <option value=":coref">
-
-                                    <option value=":ARG0-of">
-                                    <option value=":ARG1-of">
-                                    <option value=":ARG2-of">
-                                    <option value=":ARG3-of">
-                                    <option value=":ARG4-of">
-                                    <option value=":ARG5-of">
-                                    <option value=":ARG6-of">
-
-                                    <option value=":before">
-                                    <option value=":depends-on">
-                                    <option value=":same-entity">
-
-                                    <option value=":topic">
-                                    <option value=":consist-of">
-
-                                </datalist>
-                            </div>
-                        {% else %}
-                            <div class="dropdown">
-                                <label for="roles2">Roles(Default)</label>
-                                <input list="default-roles" name="roles2" id="roles2" onfocus="this.value=''" onchange="this.blur();">
+                        <div class="dropdown">
+                                <label for="roles">Roles</label>
+                                <input list="default-roles" name="roles" id="roles" onfocus="this.value=''" onchange="this.blur();">
                                 <datalist id="default-roles">
                                     <option value=":actor">
                                     <option value=":undergoer">
@@ -356,8 +259,6 @@
                                     <option value=":consist-of">
                                 </datalist>
                             </div>
-                        {% endif %}
-
                     </td>
                 </tr>
 
