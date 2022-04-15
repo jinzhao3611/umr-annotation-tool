@@ -180,7 +180,7 @@ def upload_lexicon(current_project_id):
         else:
             flash("please upload a lexicon file", "danger")
 
-    return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form)
+    return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form, project_id=current_project_id)
 
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
@@ -652,6 +652,8 @@ def lexiconlookup(project_id):
                            doc_id=doc_id, snt_id=snt_id,
                            autocomplete_lemmas=json.dumps(autocomplete_lemmas), autocomplete_inflected=json.dumps(autocomplete_inflected))
 
+# https://stackoverflow.com/questions/30121763/how-to-use-a-wtforms-fieldlist-of-formfields
+# https://stackoverflow.com/questions/62776469/how-do-i-edit-a-wtforms-fieldlist-to-remove-a-value-in-the-middle-of-the-list
 @main.route("/lexiconresult/<project_id>", methods=['GET'])
 def lexiconresult_get(project_id):
     if not current_user.is_authenticated:

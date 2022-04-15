@@ -26,3 +26,8 @@
         </form>
     </div>
 {% endblock content %}
+{% block content2 %}
+    <div>warning: uploading a new lexicon will overwrite current lexicon, click on "show all lexicon" button to view current lexicon</div>
+    <a class="btn btn-info btn-sm" title="click to show all lexicon" href="{{ url_for('users.alllexicon', project_id=project_id) }}" onclick="UMR2db()">show all lexicon</a>
+
+{% endblock content2 %}
