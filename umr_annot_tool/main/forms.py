@@ -54,11 +54,13 @@ class SenseForm(FlaskForm):
     gloss = TextAreaField("gloss")
     args = TextAreaField("args")
     coding_frames = TextAreaField("coding frames")
+    remove = SubmitField(label='Delete')
 
 class InflectedForm(FlaskForm):
     class Meta:
         csrf = False
     inflected_form = StringField('inflected_form')
+    remove = SubmitField(label='Delete')
 
 class LexiconItemForm(FlaskForm):
     class Meta:
@@ -75,8 +77,6 @@ class LexiconItemForm(FlaskForm):
                                                      ("delete", "delete current entry"),])
     add_inflected = SubmitField('+ Add New Inflected Form Field')
     add_sense = SubmitField('+ Add New Sense Field')
-    remove_inflected = SubmitField('- Remove last Inflected Form Field')
-    remove_sense = SubmitField('- Remove last Sense Field')
 
     submit = SubmitField('Save')
 
