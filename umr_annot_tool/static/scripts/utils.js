@@ -171,6 +171,16 @@ function decodeHtmlUnicode(str) {
     });
 }
 
+function escapeHtml(unsafe)
+{
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+ }
+
 /**
  * So far I think this is just python split()
  * @param s "1.1 1.2.1.1 1.2.2.1 1.2.2.2.1"

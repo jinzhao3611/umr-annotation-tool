@@ -64,7 +64,6 @@ function initialize(frame_json, lang, partial_graphs_json) {
             });
         });
     }
-    pass_citation_dict(JSON.stringify(citation_dict)); //put citation dict in local storage in order to pass to another page
     try{
         partial_graphs = JSON.parse(partial_graphs_json);
     }catch (e){
@@ -164,14 +163,8 @@ function conceptDropdown(lang='english') {
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
                  submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
             }else{
-                let updated_citation_dict;
-                try {
-                    updated_citation_dict = JSON.parse(localStorage["citation_dict"]);
-                } catch (e) {
-                    console.log("error in parsing citation_dict: ", e);
-                }
-                if (token in updated_citation_dict){
-                    let lemma = updated_citation_dict[token];
+                if (token in citation_dict){
+                    let lemma = citation_dict[token];
                     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
                 }else{
                     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
@@ -247,7 +240,7 @@ function getSenses(senses) {
     senses.res.forEach(function (value, index, array) {
         let genLink = document.createElement("a");
         genLink.innerHTML = value.name;
-        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', "${value.name}");`);
+        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', '${value.name}');`);
         genLink.setAttribute("title", value.desc);
         genLink.setAttribute("id", "sense");
         genLink.setAttribute("class", "dropdown-item");
@@ -1945,7 +1938,12 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 tree_span_args = 'id="' + elem_id + '"';
             } else if (!docAnnot){ //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
                 let frames = JSON.stringify(frame_dict[concept]);
-                concept_m = `<span title=${frames}>` + concept_m + '</span>';
+                if (typeof frames !== 'undefined') {
+                    let escaped_frames = escapeHtml(frames);
+                    concept_m = `<span title=${escaped_frames}>` + concept_m + '</span>';
+                }else{
+                    concept_m = `<span title="">` + concept_m + '</span>';
+                }
             }
             s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
 
@@ -2230,9 +2228,6 @@ function get_selected_word(){
     localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
  }
 
-function pass_citation_dict(citation_dict){
-    localStorage.setItem('citation_dict', citation_dict);
-}
 function highlightSelection() {
     console.log("highlightSelection is called.");
 

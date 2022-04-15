@@ -149,7 +149,7 @@
         </div>
     </form>
     <hr>
-    <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ current_user.id) }}" onclick="pass_citation_dict(`{{ citation_dict }}`)">sent-level-annot</a>
+    <a class="btn btn-outline-secondary" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ current_user.id) }}">sent-level-annot</a>
     <script type="text/javascript">autocomplete(document.getElementById("lemma_form"), {{ autocomplete_lemmas|safe }});</script>
 
 {% endblock content2 %}
