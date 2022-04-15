@@ -87,17 +87,19 @@ function exportLexicon(lexi, projectName,){
  * @param project_id - current project id
  */
 function deleteLexicon(project_id){
-   fetch(`/alllexicon/${project_id}`, {
-        method: 'POST',
-        body: JSON.stringify({"changeLemmaKey": "", "entry":"",  "deleteLemmaKey": "", "share2projectName": "", "deleteLexicon": true}),
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        setInnerHTML("error_msg", data["msg"]);
-        document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
-    }).catch(function(error){
-        console.log("Fetch error from deleteLexicon: "+ error);
-    });
+    if(confirm('are you sure you want to delete the whole lexicon of this project? ')){
+       fetch(`/alllexicon/${project_id}`, {
+            method: 'POST',
+            body: JSON.stringify({"changeLemmaKey": "", "entry":"",  "deleteLemmaKey": "", "share2projectName": "", "deleteLexicon": true}),
+        }).then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            setInnerHTML("error_msg", data["msg"]);
+            document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
+        }).catch(function(error){
+            console.log("Fetch error from deleteLexicon: "+ error);
+        });
+    }
 }
 
 /**

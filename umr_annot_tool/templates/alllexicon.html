@@ -21,7 +21,8 @@
         <input style="width:320px" list="all-project" id="all-projects" onfocus="this.value=''" onchange="this.blur();" placeholder="share this lexicon with your other projects">
         <datalist id="all-project"></datalist>
         <button class="btn btn-info btn-sm" onclick="shareWithProject({{ project_id }})">Share</button>
-    </div>
+         <span>warning: sharing lexicon with your other project will overwrite the existing lexicon of the target project</span>
+     </div>
 
 
 
