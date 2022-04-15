@@ -72,7 +72,6 @@ def logout():
     # Remove session keys set by Flask-Principal
     for key in ('identity.name', 'identity.auth_type'):
         session.pop(key, None)
-
     return redirect(url_for('main.display_post'))
 
 
@@ -453,18 +452,63 @@ def alllexicon(project_id):
         return redirect(url_for('users.login'))
     project_name = Project.query.filter(Project.id == project_id).first().project_name
     lexi = Lexicon.query.filter(Lexicon.project_id == project_id).first().lexi
+    lexi = dict(lexi)
     if request.method == "POST":
-        try:
-            lemmaKey = request.get_json(force=True)['lemmaKey']
-            del lexi[lemmaKey]
-            lexi_to_change = Lexicon.query.filter(Lexicon.project_id == project_id).first()
-            lexi_to_change.lexi = lexi
-            flag_modified(lexi_to_change, "lexi")
-            db.session.commit()
-        except Exception as e:
-            print(e)
-            print("delete lexicon error")
-    return render_template('alllexicon.html', title='all lexicon', lexi=lexi, project_name=project_name, project_id=project_id)
+        print("request.get_json(force=True): ", request.get_json(force=True))
+        deleteLemmaKey = request.get_json(force=True)['deleteLemmaKey']
+        changeLemmaKey = request.get_json(force=True)['changeLemmaKey']
+        entry = request.get_json(force=True)['entry']
+        share2projectName = request.get_json(force=True)['share2projectName']
+        deleteLexicon = request.get_json(force=True)['deleteLexicon']
+        if deleteLemmaKey:
+            try:
+                del lexi[deleteLemmaKey]
+                lexi_to_change = Lexicon.query.filter(Lexicon.project_id == project_id).first()
+                lexi_to_change.lexi = lexi
+                flag_modified(lexi_to_change, "lexi")
+                db.session.commit()
+                return make_response(jsonify({"msg": "delete entry: success", "msg_category": "success"}), 200)
+            except Exception as e:
+                print(e)
+                print("delete lexicon error")
+        elif changeLemmaKey:
+            try:
+                lexi_to_change = Lexicon.query.filter(Lexicon.project_id == project_id).first()
+                original_lexi = dict(lexi_to_change.lexi)
+                original_lexi[changeLemmaKey] = json.loads(entry)
+                lexi_to_change.lexi = original_lexi
+                flag_modified(lexi_to_change, "lexi")
+                db.session.commit()
+                return make_response(jsonify({"msg": "change entry: success", "msg_category": "success"}), 200)
+            except Exception as e:
+                print(e)
+                print("edit lexicon error")
+
+        elif share2projectName:
+            try:
+                share2projectId = Projectuser.query.filter(Projectuser.project_name == share2projectName, Projectuser.user_id == current_user.id).first().project_id
+                lexi2change = Lexicon.query.filter(Lexicon.project_id == share2projectId).first()
+                lexi2change.lexi = Lexicon.query.filter(Lexicon.project_id == project_id).first().lexi
+                flag_modified(lexi2change, "lexi")
+                db.session.commit()
+                return make_response(jsonify({"msg": "share lexicon: success", "msg_category": "success"}), 200)
+            except Exception as e:
+                print(e)
+                print("share lexicon with your other project error")
+        elif deleteLexicon:
+            try:
+                lexi_to_change = Lexicon.query.filter(Lexicon.project_id == project_id).first()
+                lexi_to_change.lexi = {}
+                flag_modified(lexi_to_change, "lexi")
+                db.session.commit()
+                return make_response(jsonify({"msg": "delete whole lexicon successfully, refresh to see changes", "msg_category": "success"}), 200) #need refresh to see is because, redirect to current page, under post somehow doesn't work, therefore I will have to ask the user to refresh manually
+            except Exception as e:
+                print(e)
+                print("delete lexicon error")
+
+    all_projects = Projectuser.query.filter(Projectuser.user_id == current_user.id, Projectuser.permission=="admin").all()
+    all_project_names = [p.project_name for p in all_projects]
+    return render_template('alllexicon.html', title='all lexicon', lexi=json.dumps(lexi), project_name=project_name, project_id=project_id, all_projects=json.dumps(all_project_names))
 
 # annotation lattices
 @users.route('/discourse/<int:project_id>', methods=['GET', 'POST'])
