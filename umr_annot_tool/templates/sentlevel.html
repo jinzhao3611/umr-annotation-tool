@@ -704,6 +704,7 @@
             <hr>
             <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
             <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconlookup', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon lookup</a>
+            <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconadd', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">add to Lexicon</a>
             <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" onclick="UMR2db()">search</a>
             <a class="btn btn-info btn-sm" id="pg-button" title="click to show all partial graphs" href="{{ url_for('users.partialgraph', project_id=project_id) }}" onclick="UMR2db()">show partial graphs</a>
             <a class="btn btn-info btn-sm" title="click to show all lexicon" href="{{ url_for('users.alllexicon', project_id=project_id) }}" onclick="UMR2db()">show all lexicon</a>

@@ -70,6 +70,7 @@
         autocomplete(document.getElementById("lemma_form"), {{ autocomplete_lemmas|safe }});
     </script>
 <a class="btn btn-info btn-sm" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ current_user.id) }}">sent-level-annot</a>
+<a class="btn btn-info btn-sm" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconadd', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="get_selected_word()">add to Lexicon</a>
 
 {% endblock content2 %}
 

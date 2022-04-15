@@ -2,7 +2,8 @@ from flask import url_for, redirect, flash, send_from_directory, make_response, 
 from werkzeug.utils import secure_filename
 from typing import List
 import json
-from parse_input_xml import html, parse_exported_file, parse_lexicon_xml, process_exported_file_isi_editor
+from parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor
+from parse_lexicon_file import parse_lexicon_xml, FrameDict, Entry
 from flask_login import current_user
 import os
 import logging
@@ -12,7 +13,7 @@ from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
-    InflectedForm, SenseForm, CreateProjectForm
+    InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from sqlalchemy.orm.attributes import flag_modified
 from suggest_sim_words import generate_candidate_list, find_suggested_words
 
@@ -175,7 +176,8 @@ def upload_lexicon(current_project_id):
         if lexicon_form.file.data:
             content_string = lexicon_form.file.data.read().decode("utf-8")
             frames_dict = parse_lexicon_xml(content_string)
-            lexicon2db(project_id=current_project_id, lexicon_dict=frames_dict)
+            fd = FrameDict.from_dict(frames_dict)
+            lexicon2db(project_id=current_project_id, lexicon_dict=fd.flatten)
             return redirect(url_for('users.project', project_id=current_project_id))
         else:
             flash("please upload a lexicon file", "danger")
@@ -575,19 +577,19 @@ def get_lexicon_dicts(project_id:int):
 
     return frames_dict, citation_dict
 
-def populate_lexicon_item_form_by_lookup(frames_dict, citation_dict, look_up_inflected, look_up_lemma):
+def populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma):
     lexicon_item_form = LexiconItemForm()
     lexicon_item = {} #this is the value of a key(lemma) look up in frame dict
 
     if look_up_inflected:
         if look_up_inflected in citation_dict:
             look_up_lemma = citation_dict[look_up_inflected]
-            lexicon_item = frames_dict[look_up_lemma]
+            lexicon_item = fd.flatten[look_up_lemma]
         else:
             flash(f'inflected form {look_up_inflected} is not in current lexicon', 'danger')
     elif look_up_lemma:
-        if look_up_lemma in frames_dict:
-            lexicon_item = frames_dict[look_up_lemma]
+        if look_up_lemma in fd.flatten.keys():
+            lexicon_item = fd.flatten[look_up_lemma]
         else:
             flash(f'lemma {look_up_lemma} is not in current lexicon', 'danger')
 
@@ -622,7 +624,9 @@ def lexiconlookup(project_id):
     snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
     doc = Doc.query.get_or_404(doc_id)
     frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
-    autocomplete_lemmas = list(frames_dict.keys())
+    fd = FrameDict.from_dict(frames_dict)
+
+    autocomplete_lemmas = list(fd.flatten.keys())
     autocomplete_inflected = list(citation_dict.keys())
 
     # handle the suggested inflected and lemma list
@@ -652,6 +656,73 @@ def lexiconlookup(project_id):
                            doc_id=doc_id, snt_id=snt_id,
                            autocomplete_lemmas=json.dumps(autocomplete_lemmas), autocomplete_inflected=json.dumps(autocomplete_inflected))
 
+@main.route("/lexiconadd/<project_id>", methods=['GET', 'POST'])
+def lexiconadd(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
+    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
+    doc = Doc.query.get_or_404(doc_id)
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    fd = FrameDict.from_dict(frames_dict)
+    lexicon_add_form = LexiconAddForm()
+
+    if request.method == 'POST':
+        # handle the suggested inflected and lemma list
+        try:
+            selected_word = request.get_json(force=True)['selected_word']
+            print("selected_word: ", selected_word)
+            word_candidates = generate_candidate_list(doc.content, doc.file_format)
+            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+            return res
+        except:
+            print("no word selected")
+
+        if lexicon_add_form.add_inflected.data: #clicked on Add New Inflected Form Field button
+            getattr(lexicon_add_form, 'inflected_forms').append_entry()
+
+        if lexicon_add_form.add_sense.data:#clicked on Add New Inflected Form Field button
+            getattr(lexicon_add_form, 'senses').append_entry()
+
+        for ndx, this_entry in enumerate(lexicon_add_form.inflected_forms.entries):
+            if this_entry.data['remove']:  # This was the entry on which the person hit the delete button
+                # TODO: WTForms seems to say you shouldn't do the following, but it seems to work.
+                del lexicon_add_form.inflected_forms.entries[ndx]
+                break
+        for ndx, this_entry in enumerate(lexicon_add_form.senses.entries):
+            if this_entry.data['remove']:  # This was the entry on which the person hit the delete button
+                # TODO: WTForms seems to say you shouldn't do the following, but it seems to work.
+                del lexicon_add_form.senses.entries[ndx]
+                break
+        print("form error", lexicon_add_form.errors)
+        if lexicon_add_form.data['save'] and lexicon_add_form.lemma.data: # if click on Save button
+            new_lexicon_entry = {lexicon_add_form.lemma.data: {"root": lexicon_add_form.root.data,
+                                                                "pos": lexicon_add_form.pos.data,
+                                                                "inflected_forms": [element['inflected_form'] for element in
+                                                                                    lexicon_add_form.inflected_forms.data
+                                                                                    if element['inflected_form'] != ""],
+                                                                "sense": lexicon_add_form.senses.data
+                                                                }
+                                 }
+            look_up_lemma = lexicon_add_form.lemma.data
+            print("new_lexicon_entry: ", new_lexicon_entry)
+
+            fd.add_frame(look_up_lemma, new_lexicon_entry[look_up_lemma]) #deal with homonym case: automatically number those hymonym lemmas
+            # add to database
+            existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+            existing_lexicon.lexi = fd.flatten
+            flag_modified(existing_lexicon, 'lexi')
+            db.session.commit()
+            flash('This entry is added and saved successfully', 'success')
+        print("form error", lexicon_add_form.errors)
+
+    return render_template('lexicon_add.html', project_id=project_id, project_name=project_name,
+                           lexicon_add_form=lexicon_add_form,
+                           frames_dict=json.dumps(fd.flatten), citation_dict=json.dumps(citation_dict),
+                           doc_id=doc_id, snt_id=snt_id)
+
 # https://stackoverflow.com/questions/30121763/how-to-use-a-wtforms-fieldlist-of-formfields
 # https://stackoverflow.com/questions/62776469/how-do-i-edit-a-wtforms-fieldlist-to-remove-a-value-in-the-middle-of-the-list
 @main.route("/lexiconresult/<project_id>", methods=['GET'])
@@ -662,6 +733,7 @@ def lexiconresult_get(project_id):
     doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
     snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
     frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    fd = FrameDict.from_dict(frames_dict)
 
     look_up_inflected = request.args.get('look_up_inflected', None)
     look_up_lemma = request.args.get('look_up_lemma', None)
@@ -670,7 +742,7 @@ def lexiconresult_get(project_id):
     print("frames_dict: ", frames_dict)
     print("citation_dict: ", citation_dict)
 
-    lexicon_item_form, lexicon_item = populate_lexicon_item_form_by_lookup(frames_dict, citation_dict, look_up_inflected, look_up_lemma)
+    lexicon_item_form, lexicon_item = populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma)
 
     return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
                            lexicon_item_form=lexicon_item_form,
@@ -686,7 +758,7 @@ def lexiconresult_post(project_id):
     snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
     doc = Doc.query.get_or_404(doc_id)
     frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
-
+    fd = FrameDict.from_dict(frames_dict)
     # handle the suggested inflected and lemma list
     try:
         selected_word = request.get_json(force=True)['selected_word']
@@ -718,40 +790,46 @@ def lexiconresult_post(project_id):
             break
 
     if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data: # if click on save and lemma in form is not empty
-            # this is entry to be added in frame_dict
-            new_lexicon_entry = {lexicon_item_form.lemma.data: {"root": lexicon_item_form.root.data,
-                                                                "pos": lexicon_item_form.pos.data,
-                                                                "inflected_forms": [element['inflected_form'] for element in lexicon_item_form.inflected_forms.data if element['inflected_form'] != ""],
-                                                                "sense": lexicon_item_form.senses.data
-                                                                }
-                                 }
-            if lexicon_item_form.update_mode.data == 'edit':
-                look_up_lemma = lexicon_item_form.lemma.data
-                try:
-                    print("frames_dict: ", frames_dict)
-                    print("look_up_lemma: ", look_up_lemma)
-                    del frames_dict[look_up_lemma]
-                    frames_dict.update(new_lexicon_entry)
-                    flash('This entry is edited and saved successfully', 'success')
-                except KeyError:
-                    flash('This entry is not in lexicon yet, use "add new entry" mode instead of "edit current entry" mode', 'danger')
-            elif lexicon_item_form.update_mode.data == 'add':
-                frames_dict.update(new_lexicon_entry) # todo deal with homonym case: automatically number those hymonym lemmas
-                flash('This entry is added and saved successfully', 'success')
-            elif lexicon_item_form.update_mode.data == 'delete':
-                del frames_dict[lexicon_item_form.lemma.data]
+        # this is entry to be added in frame_dict
+        new_lexicon_entry = {lexicon_item_form.lemma.data: {"root": lexicon_item_form.root.data,
+                                                            "pos": lexicon_item_form.pos.data,
+                                                            "inflected_forms": [element['inflected_form'] for element in lexicon_item_form.inflected_forms.data if element['inflected_form'] != ""],
+                                                            "sense": lexicon_item_form.senses.data
+                                                            }
+                             }
+        look_up_lemma = lexicon_item_form.lemma.data
+        if lexicon_item_form.update_mode.data == 'edit':
+            try:
+                fd.edit_frame(look_up_lemma, new_lexicon_entry[look_up_lemma])
+                flash('This entry is edited and saved successfully', 'success')
+                # add to database
+                existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+                existing_lexicon.lexi = fd.flatten
+                flag_modified(existing_lexicon, 'lexi')
+                db.session.commit()
+            except KeyError:
+                flash('This entry is not in lexicon yet, use "add new entry" mode instead of "edit current entry" mode', 'danger')
+        elif lexicon_item_form.update_mode.data == 'delete':
+            try:
+                fd.delete_frame(lexicon_item_form.lemma.data)
                 flash('This entry is deleted and saved successfully', 'success')
-
-            # update citation_dict as well
-            citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in frames_dict[lemma]["inflected_forms"]}
-            print("frames_dict: ", frames_dict)
-            print("citation_dict: ", citation_dict)
-
-            #add to database
+            except Exception:
+                flash('This entry is not in lexicon yet, delete failed', 'danger')
+                # update citation_dict as well
+            # add to database
             existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
-            existing_lexicon.lexi = frames_dict
+            existing_lexicon.lexi = fd.flatten
             flag_modified(existing_lexicon, 'lexi')
             db.session.commit()
+            return redirect(
+                url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected='', look_up_lemma='',
+                        doc_id=doc_id, snt_id=snt_id))
+
+
+
+    citation_dict = {inflected_form: lemma for lemma in fd.flatten for inflected_form in
+                             fd.flatten[lemma]["inflected_forms"]}
+    print("citation_dict: ", citation_dict)
 
     return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
                            lexicon_item_form=lexicon_item_form,
