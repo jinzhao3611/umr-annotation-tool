@@ -445,7 +445,7 @@ def doclevel(doc_sent_id):
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
-    if doc.file_format == 'plain_text' or 'isi_editor':
+    if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
     else:
         _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
