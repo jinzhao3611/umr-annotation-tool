@@ -3,7 +3,7 @@
 export default function define(runtime, observer) {
   const main = runtime.module();
   main.variable(observer()).define(["md"], function(md){return(
-md`# Modal Strength`
+md`# Modification`
 )});
   main.variable(observer()).define(["renderChart","data"], function(renderChart,data){return(
 renderChart(data)
