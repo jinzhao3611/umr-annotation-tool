@@ -189,7 +189,7 @@ function string2umr(annotText) {
     annotText = annotText.replace(/ROOT/g, 's10000r');
     annotText = annotText.replace(/past-ref/g, 's10000b');
     annotText = annotText.replace(/future-ref/g, 's10000c');
-    annotText = annotText.replace(/present-ref/g, 's10000d');
+    annotText = annotText.replace(/present-ref/g, 's10000e');
 
     annotText = decodeHtmlUnicode(annotText);// this function is used to convert &#34; to ", or it will cause matching errors
 
@@ -247,7 +247,7 @@ function string2umr(annotText) {
             umr_dict[key] = 'past-ref';
         }else if(value==="s10000c"){
             umr_dict[key] = 'future-ref';
-        }else if(value==="s10000d"){
+        }else if(value==="s10000e"){
             umr_dict[key] = 'present-ref';
         }
     }
