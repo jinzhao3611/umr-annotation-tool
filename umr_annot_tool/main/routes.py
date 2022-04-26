@@ -255,7 +255,7 @@ def sentlevel(doc_sent_id):
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 db.session.add(annotation)
                 logging.info(db.session.commit())
-            msg = 'Success: current annotation and alignments are added to database.'
+            msg = 'Success: current doc-level annotation is added to database.'
             msg_category = 'success'
             return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
@@ -433,8 +433,14 @@ def doclevel(doc_sent_id):
                 flag_modified(existing, 'doc_umr')
                 flag_modified(existing, 'doc_annot')
                 db.session.commit()
+                msg = 'Success: current annotation and alignments are added to database.'
+                msg_category = 'success'
+                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
             else:
                 print("the sent level annotation of the current sent doesn't exist")
+                msg = "the sent level annotation of the current sent doesn't exist."
+                msg_category = 'success'
+                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
             print(e)
             print("add doc level annotation to database failed")
@@ -444,6 +450,8 @@ def doclevel(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
+    print(type(sentAnnotUmrs))
+    print("sentAnnotUmrs: ", sentAnnotUmrs[2])
 
     if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
@@ -481,6 +489,8 @@ def doclevel(doc_sent_id):
         project_name = ""
         admin=current_user
         permission = ""
+
+    print("sent_annot_pairs: ", sent_annot_pairs[0])
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,

@@ -257,10 +257,14 @@
                         </div>
 
                         <div>
+                            <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
                             <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
                             <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
                             <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
                             <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
+                        </div>
+
+                        <div id="error_msg">
                         </div>
 
                         <script type="text/javascript">
@@ -277,7 +281,7 @@
                             <p>current sentence:
                                 <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
                                 <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }} disabled>
-                                <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db({{ owner.id }})" disabled>
+                                <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go" disabled>
                             </p>
                         </form>
                         <div class="btn-group dropright">

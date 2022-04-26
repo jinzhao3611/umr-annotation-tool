@@ -336,20 +336,26 @@ function load_doc_history(curr_doc_umr, curr_sent_id){
 }
 
 function docUMR2db(owner_id) {
-    show_amr('amr'); //to prevent delete/replace mode html string got in database
+    show_amr('show'); //to prevent delete/replace mode html string got in database
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let doc_annot_str = document.getElementById('amr').innerHTML;
 
     //this purpose of these 3 lines is to remove .d items in dictionary before saving
     docAnnot=false;
-    let penmanStr = show_amr('show');
+    let penmanStr = show_amr('show'); //get the umr without .d items
     docAnnot=true;
     umr = string2umr(penmanStr);
+    show_amr('show');//the above line displays penman string, we need to set it to triples string
 
     fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
         method: 'POST',
         body: JSON.stringify({"snt_id": snt_id, "umr_dict": umr, "doc_annot_str": doc_annot_str})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        setInnerHTML("error_msg", data["msg"]);
+        document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(function(error){
         console.log("Fetch error: "+ error);
     });
