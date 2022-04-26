@@ -240,7 +240,7 @@ function getSenses(senses) {
     senses.res.forEach(function (value, index, array) {
         let genLink = document.createElement("a");
         genLink.innerHTML = value.name;
-        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action('${current_mode}', '${value.name}');`);
+        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
         genLink.setAttribute("title", value.desc);
         genLink.setAttribute("id", "sense");
         genLink.setAttribute("class", "dropdown-item");
