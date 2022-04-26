@@ -187,6 +187,10 @@ function string2umr(annotText) {
     annotText = annotText.replace(/DCT/g, 's10000d');
     annotText = annotText.replace(/AUTH/g, 's10000a');
     annotText = annotText.replace(/ROOT/g, 's10000r');
+    annotText = annotText.replace(/past-ref/g, 's10000past');
+    annotText = annotText.replace(/future-ref/g, 's10000future');
+    annotText = annotText.replace(/present-ref/g, 's10000present');
+
     annotText = decodeHtmlUnicode(annotText);// this function is used to convert &#34; to ", or it will cause matching errors
 
     let loc; // current graph location we are dealing with
@@ -239,6 +243,12 @@ function string2umr(annotText) {
             umr_dict[key] = 'AUTH';
         }else if(value==="s10000r"){
             umr_dict[key] = 'ROOT';
+        }else if(value==="s10000past"){
+            umr_dict[key] = 'past-ref';
+        }else if(value==="s10000future"){
+            umr_dict[key] = 'future-ref';
+        }else if(value==="s10000present"){
+            umr_dict[key] = 'present-ref';
         }
     }
     return umr_dict;
