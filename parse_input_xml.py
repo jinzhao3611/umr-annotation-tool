@@ -198,7 +198,10 @@ def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
             r'class="dataframe table table-striped table-sm" dir="rtl" style="text-align:right">',
             sents_html
         )
-    # html string for all sentences
+        # html string for all sentences
+    #manually add id to each sentence td in order to color them
+    sentid_p = re.compile(r"(<th>)(\d+)(<\/th>\s+<td)(>)")
+    sents_html = sentid_p.sub(r'\1\2\3 id="sentid-\2"\4', sents_html)
     return InfoToDisplay(sents, sents_html, sent_htmls, df_htmls, gls, notes)
 
 def parse_xml(xml_string, file_format) -> 'ExtractedXMLInfo':

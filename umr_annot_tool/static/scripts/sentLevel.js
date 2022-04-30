@@ -2536,7 +2536,7 @@ function colorAnnotatedSents(annotated_sent_ids){
         console.log("Error parsing annotated_sent_ids: " + e);
     }
     annotated_sent_ids_arr.forEach(n => {
-        document.querySelector(`#all-sentences > table > tbody > tr:nth-child(${n}) > td`).setAttribute("style", "color: green");
+        document.getElementById(`sentid-${n}`).setAttribute("style", "color: green");
     })
 }
 
