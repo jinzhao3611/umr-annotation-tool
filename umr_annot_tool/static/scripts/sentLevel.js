@@ -2395,10 +2395,18 @@ function UMR2db() {
     if(annot_str!==''){
         umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
     }
+    let alignments2save = {};
+    for (let key in alignments){
+        if(alignments.hasOwnProperty(key)){
+            if(key in variables){
+                alignments2save[key] = alignments[key];
+            }
+        }
+    }
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": annot_str, "align": alignments, "snt_id": snt_id, "umr": umr})
+        body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
