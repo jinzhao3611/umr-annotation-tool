@@ -81,6 +81,8 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                 umr_dict[loc + '.c'] = '';
                 umr_dict[loc + '.v'] = '';
                 umr_dict[loc + '.n'] = 0;
+                setInnerHTML('error_msg', 'one of the character in string ' + annotText + ' is not matched, check for special characters for the specific language. ');
+                document.getElementById("error_msg").className = `alert alert-danger`;
             } else {
                 umr_dict[loc + '.d'] = 1;
             }
@@ -169,6 +171,8 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
         umr_dict[loc + '.s'] = string_arg;
         umr_dict[loc + '.c'] = '';
         umr_dict[loc + '.v'] = variable_arg;
+        setInnerHTML('error_msg', 'one of the character in string ' + annotText + ' is not matched, check for special characters for the specific language. ');
+        document.getElementById("error_msg").className = `alert alert-danger`;
         var head_loc = loc.replace(/\.\d+$/, "");
         let result = string2umr_recursive(annotText, head_loc, 'post-concept', umr_dict);
         annotText = result[0];
