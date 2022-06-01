@@ -22,6 +22,9 @@ FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 
+from farasa.stemmer import FarasaStemmer
+stemmer = FarasaStemmer(interactive=True)
+
 def lexicon2db(project_id:int, lexicon_dict: dict):
     existing_lexicon = Lexicon.query.filter(Lexicon.project_id==project_id).first()
     existing_lexicon.lexi = lexicon_dict
@@ -866,3 +869,16 @@ def download(filename):
     uploads = os.path.join(main.root_path, 'resources')
     # Returning file from appended path
     return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
+
+#farasapy
+@main.route('/getfarasalemma', methods=['GET', 'POST'])
+def getfarasalemma():
+    import time
+    token = request.get_json(force=True)["token"]
+    print("inflected_form: ", token)
+    t0 = time.time()
+    stemmed = stemmer.stem(token)
+    t1 = time.time()
+    print("elapsed time: ", t1-t0)
+    print("lemma_form: ", stemmed)
+    return make_response(jsonify({"text": stemmed}), 200)
