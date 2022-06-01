@@ -174,8 +174,13 @@ function conceptDropdown(lang='english') {
         }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
             let lemma;
             if(lang === 'arabic'){
-                getLemmaFarasa(token).then( function(response) {
-                    lemma = response['result'][0];
+                fetch(`/getfarasalemma`, {
+                    method: 'POST',
+                    body: JSON.stringify({"token": token})
+                }).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    lemma = data['text'];
                     console.log(lemma);
                     let senses = [];
                     Object.keys(frame_dict).forEach(function(key) {
@@ -190,7 +195,9 @@ function conceptDropdown(lang='english') {
                         submenu_items = {"res": senses};
                     }
                     getSenses(submenu_items);
-                })
+                }).catch(function(error){
+                    console.log("get lemma error: "+ error);
+                });
             } else if(lang === 'english'){
                 lemma = getLemma(token);
                 let senses = [];
