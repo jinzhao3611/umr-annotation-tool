@@ -706,6 +706,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
 
         // cc == ["b", ":arg1", "car"]
+        if (cc.length > 3 && cc[1]==':Aspect'){
+            let p = cc[0];
+            let r = cc[1];
+            let c = cc.slice(2,).join("-")
+            cc = [p, r, c]
+        }
         let ne_concept;
         let cc2v;
         if (cc[0] === 'top'){
