@@ -67,7 +67,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
     elif has_annot:
         for i in range(len(sents)):
             dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-            annotation = Annotation(sent_annot=sent_annots[i], doc_annot=doc_annots[i], alignment=aligns[i],
+            annotation = Annotation(sent_annot=sent_annots[i].replace('<br>', ''), doc_annot=doc_annots[i], alignment=aligns[i],
                                     user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
                                     sent_id=i + 1, #sentence id counts from 1
                                     doc_id=doc_id,
