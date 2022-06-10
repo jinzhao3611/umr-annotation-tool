@@ -52,7 +52,7 @@ renderChart(data)
       n => {
         console.log(n.id); 
         let s = '';
-        if(!['substitute-01', 'discourse relations', ':apprehensive', ':purpose', ':manner', ':cause', ':condition', ':temporal', ':pure-addition', ':concession', ':concessive-condition'].includes(n.id)){
+        if(!['discourse relations', ':apprehensive', ':purpose', ':manner', ':cause', ':condition', ':temporal', ':pure-addition', ':concession', ':concessive-condition'].includes(n.id)){
           s += `<foreignObject x="${n.x -12}" y="${n.y - n.height / 2 - 18}" width="20" height="20">
         <xhtml:label class="switch">
           <input id="${n.id}" type="checkbox" checked>
@@ -90,7 +90,7 @@ renderChart(data)
     { id: 'exclusive-disj', parents: ['or'] },
     { id: 'and+unexpected', parents: ['and+but'] },
     { id: 'and+contrast', parents: ['and+but'] },
-    { id: 'but', parents: ['and+but'] },
+    { id: 'but-91', parents: ['and+but'] },
   ],
   [
     { id: 'and', parents: ['and+but', 'and+unexpected', 'and+contrast'] }
@@ -99,8 +99,8 @@ renderChart(data)
     { id: ':apprehensive', parents: ['exclusive-disj'] },
     { id: 'consecutive', parents: ['and'] },
     { id: 'additive', parents: ['and'] },
-    { id: 'unexpected-co-occurrence', parents: ['and+unexpected', 'but'] },
-    { id: 'contrast-01', parents: ['and+contrast', 'but'] },
+    { id: 'unexpected-co-occurrence-91', parents: ['and+unexpected', 'but-91'] },
+    { id: 'contrast-91', parents: ['and+contrast', 'but-91'] },
   ],
   [
     { id: ':purpose', parents: ['consecutive'] },
@@ -109,10 +109,9 @@ renderChart(data)
     { id: ':condition', parents: ['consecutive'] },
     { id: ':temporal', parents: ['consecutive', 'additive'] },
     { id: ':pure-addition', parents: ['additive'] },
-    { id: 'substitute-01', parents: ['additive'] },
-    { id: ':concession', parents: ['unexpected-co-occurrence'] },
-    { id: ':concessive-condition', parents: ['unexpected-co-occurrence'] },
-    { id: ':subtraction', parents: ['contrast-01'] },
+    { id: ':concession', parents: ['unexpected-co-occurrence-91'] },
+    { id: ':concessive-condition', parents: ['unexpected-co-occurrence-91'] },
+    { id: ':subtraction', parents: ['contrast-91'] },
 
   ]
 ]
