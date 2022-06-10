@@ -285,9 +285,10 @@ function submit_concept() {
 }
 
 /**
- * get the info from panel
+ * get the info from menu
  */
 function submit_query(){
+    //get relation
     let r = '';
     if(document.getElementById('simplified_modals').value){
         r = document.getElementById('simplified_modals').value;
@@ -295,6 +296,7 @@ function submit_query(){
         r = document.getElementById('roles').value;
     }
 
+    //get child concept
     let a = document.getElementById('attributes').value;
     let av = '';
     if(document.getElementById('attribute_values1').value){
@@ -338,12 +340,33 @@ function submit_query(){
         submit_template_action(current_mode, current_concept);
     }
 
+    //submit NE shortcut
     let nt = document.getElementById('ne_types').value;
     if(nt){
         current_mode = 'add-ne';
         current_ne_concept = nt;
         console.log("current_mode is: " + current_mode);
     }
+}
+
+function submitNE(){// this is exactly like add abstract concept, not the short cut
+    //get relation
+    let r = '';
+    if(document.getElementById('roles')){
+        r = document.getElementById('roles').value;
+    }
+    if(r){
+        current_relation = r;
+        let nt = document.getElementById('ne_types').value;
+        if(nt){
+            current_mode = 'add';
+            current_ne_concept = nt;
+            submit_template_action(current_mode, current_ne_concept);
+        }
+    }else{
+        console.log("there is no role selected");
+    }
+
 }
 
 /**
