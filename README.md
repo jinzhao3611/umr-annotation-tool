@@ -1,44 +1,12 @@
-environment: 
-conda install -c conda-forge flask-sqlalchemy
-pip install Flask-Bcrypt
-pip install Flask-Login
-pip install Pillow
-pip install Flask-WTF
-pip install email-validator
-pip install flask-mail
-pip install attrs
-pip install tabulate
-pip install pandas
-pip install bs4
+# UMR Writer
 
+### Introduction:
 
+UMR Writer is an extension to AMR Editor that now allows annotators to annotate both sentence level and document level annotation across multiple languages with added features.  
 
-run app.py
-
-so far, the following things works:
-text command input box, following are command examples
-    add head: top want-01
-    add concept: w :arg1 buy-05
-    add named entity: w :arg0 person John Luis
-    delete by variable: delete w :quant b
-    replace by varibale: replace concept at b with run
-    move: move b to w
-     
-undo and redo button
-find lemma used the external lemma library, can also convert number string to number for :quant attribute
-alignment information 
-
-
-dummy_token is the placeholder for abstract concept, for the purpose of alignment. 
-    For example, in the following example, concept person correspond to the dummy_token
-    (k / know-02    
-        :ARG0 (i / i)      
-        :ARG1 (p / person             
-            :ARG1-of (s / see-01                         
-            :ARG0 (y / you)))) 
-    I know who you saw
-    
-    
-    
-    
-the typing part works, the logic behind the clicking parts work, but the interaction is still buggy. 
+```bash
+# install required packages in umr-annotation-tool/requirements.txt
+# create postgres tables based on umr-annotation-tool/umr_annot_tool/models.py
+# run the flask server:
+python run.py
+```
