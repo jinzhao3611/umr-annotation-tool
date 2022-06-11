@@ -9,7 +9,7 @@ from typing import List,Tuple, NamedTuple
 import numpy as np
 # import mlconjug3
 from collections.abc import ValuesView
-from individual_scripts.parse_input_xml import parse_xml
+from one_time_scripts.parse_input_xml import parse_xml
 
 
 class WordCandidates(NamedTuple):
