@@ -1,14 +1,15 @@
-# this file is used to suggest a word list that probably share the same lemma with selected word (in under-resource language that doesn't have frame files)
-import editdistance #https://github.com/roy-ht/editdistance
+# this file containing functions used in lexicon page. It is used to suggest a word list that probably share the same lemma with selected word,
+# for the purpose of reminding the annotator what lemma has been added for a potentially related inflectional form.
+# This is used in some under-resource languages that don't have frame files, and there is a need to build lexicon along the way
+import editdistance # https://github.com/roy-ht/editdistance
 import xml.etree.ElementTree as ET
-import pandas as pd
 from collections import defaultdict
 import itertools
-from typing import List,Tuple, Set, NamedTuple
+from typing import List,Tuple, NamedTuple
 import numpy as np
 # import mlconjug3
 from collections.abc import ValuesView
-from parse_input_xml import parse_xml
+from individual_scripts.parse_input_xml import parse_xml
 
 
 class WordCandidates(NamedTuple):
@@ -209,17 +210,6 @@ def generate_candidate_list(content_string, format):
     words_wz_sim_tok = group_together_tuples(lst=similar_words_edit_distances)
     word_candidates = WordCandidates(words_wz_same_roots, words_wz_same_roots_gloss, words_wz_sim_tok)
     return word_candidates
-
-
-if __name__ == '__main__':
-    # path = '/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/resources/sample_sentences/Sanapana_1.xml'
-    # path = '/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/resources/sample_sentences/arapahoe.xml'
-    path = '/Users/jinzhao/Desktop/The trouble at round rock.xml'
-    with open(path, 'r', encoding='utf-8') as f:
-        content_string = f.read()
-    word_candidates = generate_candidate_list(content_string, 'flex2')
-    # result = find_suggested_words(word='nenhletala', word_candidates=word_candidates)
-
 
 
 

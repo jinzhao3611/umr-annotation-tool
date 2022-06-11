@@ -1,9 +1,8 @@
+# this is used to get the chinese frame json file from 'http://verbs.colorado.edu/chinese/cpb/html_frames/index.html'
+
 from bs4 import BeautifulSoup
 import urllib.request
 import json
-
-# this is used to get the chinese frame files json file from 'http://verbs.colorado.edu/chinese/cpb/html_frames/index.html'
-
 def parse_frame_url(index_page_url):
     """
     generate frames_chinese.json
@@ -58,4 +57,3 @@ def third_index_zero(str):
 
 if __name__ == '__main__':
     parse_frame_url('http://verbs.colorado.edu/chinese/cpb/html_frames/index.html')
-    # parse_predicate_url('走', 'http://verbs.colorado.edu/chinese/cpb/html_frames/4765-zou.html')

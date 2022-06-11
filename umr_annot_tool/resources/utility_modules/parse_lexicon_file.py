@@ -1,3 +1,4 @@
+#This file containing functions used in lexicon page when edit/delete/add lexicon entries.
 from bs4 import BeautifulSoup
 import bs4
 from typing import Any, Dict, List, Set, Tuple
@@ -44,7 +45,11 @@ class FrameDict:
         entry_dict = defaultdict(list)
         for key in frames_dict:
             # TODO: keep original frame number? (e.g. 91)
-            lemma, _ = cls.parse_frame_key(key)
+            try:
+                lemma, _ = cls.parse_frame_key(key)
+            except ValueError:
+                print("lemma contains - itself:", key)
+                lemma = key
             entry_dict[lemma].append(frames_dict[key])
         entries = [Entry(lemma, entry_dict[lemma]) for lemma in entry_dict]
         return cls.from_entries(entries)
@@ -77,14 +82,39 @@ class FrameDict:
         return dict(ChainMap(*(self.entries[k].flatten for k in self.entries)))
 
 
-def parse_lexicon_xml(xml_str: str):
-    frames_dict = {}
-    soup = BeautifulSoup(xml_str, "html.parser")
-    entries = soup.find_all("div", attrs={"class": "entry"})
+def parse_lexicon_xml(lexicon_str: str, file_format: str) -> Dict:
+    loaded_frames_dict = {}
+    if file_format == "flex":
+        soup = BeautifulSoup(lexicon_str, "html.parser")
+        entries = soup.find_all("div", attrs={"class": "entry"})
 
-    for entry in entries:
-        frames_dict.update(parse_entry(entry))
-    return frames_dict
+        for entry in entries:
+            loaded_frames_dict.update(parse_entry(entry))
+    elif file_format == "toolbox":
+        print("I am here to parse toolbox format")
+        toolbox_lexicon = lexicon_str.split("\r\n\r\n")
+        print(toolbox_lexicon)
+        for lx_block in toolbox_lexicon[1:]:
+            lx_word = ""
+            for line in lx_block.strip().split("\r\n"):
+                try:
+                    k, v = line.strip().split(" ", 1)
+                except ValueError:
+                    k = line.strip()
+                    v = ""
+                try:
+                    if k == '\lx':
+                        lx_word = v
+                        loaded_frames_dict[lx_word] = {}
+
+                    else:
+                        loaded_frames_dict[lx_word][k.replace('\\', '')] = v # remove the backslash, bacause python will automatically escape it, and when it is passed to javascript, json cannot parse the double backslash
+
+                except KeyError:
+                    print("KeyError from parsing toolbox lexicon file")
+                    print(lx_block)
+                    print("********")
+    return loaded_frames_dict
 
 
 def parse_entry(entry: bs4.element.Tag):
@@ -116,44 +146,4 @@ def parse_sense_content(sense_content: bs4.element.Tag):
         "args": args_str,
         "coding_frames": "#sep".join(frames_str_lst),
     }
-
-
-if __name__ == '__main__':
-    # fd = FrameDict()
-    # fd.add_frame("a", {"1": "2"})
-    # fd.add_frame("b", {"1": "2"})
-    # fd.add_frame("a", {"1": "2"})
-    # fd.add_frame("a", {"1": "2"})
-    # fd.add_frame("b", {"1": "2"})
-    #
-    #
-    # print(fd.entries)
-    # print(fd.to_dict())
-    lexicon_xml_path = "/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/jens_van_gysel/Flex lexicon.xml"
-    with open(lexicon_xml_path, "r") as f:
-        content_string = f.read()
-    frames_dict = parse_lexicon_xml(content_string)
-    fd = FrameDict.from_dict(frames_dict)
-    print(fd.lemmas)
-    print(fd.flatten.keys())
-    print(fd.flatten)
-
-    fd.add_frame("enyalantema", {1: 2})
-    fd.add_frame("enyalantema", {3: 4})
-    fd.add_frame("enyalantema", {3: 4})
-    fd.add_frame("enyalantema", {3: 4})
-    fd.add_frame("enyalantema", {3: 4})
-
-    fd.edit_frame("enya'hema-00", {1: 2})
-
-    print(fd.flatten.keys())
-    print(fd.flatten)
-
-    fd.delete_frame("enmama-00")
-    fd.delete_frame("enyalantema-01")
-    print("=======")
-
-    print(fd.flatten.keys())
-    print(fd.flatten)
-
 

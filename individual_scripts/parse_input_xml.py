@@ -728,3 +728,11 @@ def parse_toolbox4(xml_string: str) -> 'ExtractedXMLInfo':
         df.index = ['Words'] + rowIDs
         dfs.append(df)
     return ExtractedXMLInfo(sents_of_words, dfs, sents_gls, notes, [])
+
+
+if __name__ == '__main__':
+    input_file = '/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/jens_van_gysel/exported_exported_pear-stories-1-for-umr-tool (1).txt'
+    with open(input_file, 'r') as f:
+        content_string = f.read()
+
+    parse_exported_file(content_string)
