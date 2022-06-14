@@ -10,8 +10,7 @@ from sqlalchemy.orm.attributes import flag_modified
 import logging
 import json
 
-from parse_input_xml import html
-
+from one_time_scripts.parse_input_xml import html
 from lemminflect import getLemma
 
 
