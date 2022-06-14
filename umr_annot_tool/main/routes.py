@@ -319,7 +319,7 @@ def sentlevel(doc_sent_id):
                            curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content,
+                           content_string=doc.content.replace('\\', '\\\\'), #this is for toolbox4 format that has a lot of unescaped backslashes
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
@@ -400,7 +400,7 @@ def sentlevelview(doc_sent_id):
                            curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content,
+                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
                            annotated_sent_ids= annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
@@ -499,7 +499,7 @@ def doclevel(doc_sent_id):
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content,
+                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
@@ -566,7 +566,7 @@ def doclevelview(doc_sent_id):
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content,
+                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
