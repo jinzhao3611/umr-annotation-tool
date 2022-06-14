@@ -2,8 +2,8 @@ from flask import url_for, redirect, flash, send_from_directory, make_response, 
 from werkzeug.utils import secure_filename
 from typing import List
 import json
-from parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor
-from parse_lexicon_file import parse_lexicon_xml, FrameDict, Entry
+from one_time_scripts.parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor
+from umr_annot_tool.resources.utility_modules.parse_lexicon_file import parse_lexicon_xml, FrameDict
 from flask_login import current_user
 import os
 import logging
@@ -15,7 +15,7 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Pr
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from sqlalchemy.orm.attributes import flag_modified
-from suggest_sim_words import generate_candidate_list, find_suggested_words
+from umr_annot_tool.resources.utility_modules.suggest_sim_words import generate_candidate_list, find_suggested_words
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
