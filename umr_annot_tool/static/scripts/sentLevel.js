@@ -107,7 +107,7 @@ function customizeOptions(settingsJSON, attrId){
  * @param curr_alignment
  */
 function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
-    if(curr_sent_umr === "{}" && curr_annotation_string){ //if current umr field is empty but the annot_str field is not, this happens when upload file with existing annotations
+    if(curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))){ //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
     }else{
         try{

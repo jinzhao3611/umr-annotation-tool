@@ -336,6 +336,15 @@ function deHTML(html){
 }
 
 /**
+ * modified from: https://stackoverflow.com/questions/10232366/how-to-check-if-a-variable-is-null-or-empty-string-or-all-whitespace-in-javascri
+ * @param str
+ * @returns {boolean} true if string is null or all white space
+ */
+function isEmptyOrSpaces(str){
+    return str === null || str.match(/^\s*$/) !== null;
+}
+
+/**
  * only called in user_descr2locs
  * @param sloppyString
  * @param referenceString
