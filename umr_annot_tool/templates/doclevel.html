@@ -117,7 +117,9 @@
 
         <main role="main" class="container-fluid no-padding"> {# This is why the role attribute is here: https://stackoverflow.com/questions/10403138/what-is-the-purpose-of-the-role-attribute-in-html #}
             <div class="row align-items-center" style="height: auto; padding-bottom:70px; padding-left:70px; padding-right:70px">
+{#            the left side#}
                 <div id='content' class="col-md-8" style="height: auto;">
+{#                error message section#}
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -127,6 +129,7 @@
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
+{#                 information section#}
                     <div id="info" style="height: auto; overflow-y: scroll; max-height: 250px;">
                         <script type="text/javascript">
                             initializeDoc()
@@ -158,8 +161,8 @@
                         </tr>
                     </table>
                     </div>
-
                     <hr>
+{#                umr annotations#}
                     <div id="umrs">
                         {% for pair in sent_annot_pairs %}
                             <div class="row">
@@ -204,162 +207,163 @@
                         {% endfor %}
                     </div>
                 </div>
+{#            the right side#}
                 {% if permission in ['admin', 'edit'] %}
                     <div id='menu' class="col-md-4" style="height: auto;"  >
-                    <div style="position:fixed; top:200px;">
-                        <form method="post">
-                            <p>current sentence:
-                                <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
-                                <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
-                                <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db({{ owner.id }})">
-                            </p>
-                        </form>
-                        <div class="btn-group dropright">
-                            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relations:</button>
-                            <p class="dropdown-item" id="doc-level-relations"></p>
-                            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item" tabindex="-1" >temporal</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :before')">:before</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :after')">:after</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :depends-on')">:depends-on</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :overlap')">:overlap</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :Contained')">:Contained</a></li>
+                        <div style="position:fixed; top:200px;">
+                            <form method="post">
+                                <p>current sentence:
+                                    <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
+                                    <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
+                                    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db({{ owner.id }})">
+                                </p>
+                            </form>
+                            <div class="btn-group dropright">
+                                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relations:</button>
+                                <p class="dropdown-item" id="doc-level-relations"></p>
+                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" tabindex="-1" >temporal</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :before')">:before</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :after')">:after</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :depends-on')">:depends-on</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :overlap')">:overlap</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :Contained')">:Contained</a></li>
 
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item" tabindex="-1">coref</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-entity')">:same-entity</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-event')">:same-event</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :subset-of')">:subset-of</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" tabindex="-1">coref</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-entity')">:same-entity</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-event')">:same-event</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :subset-of')">:subset-of</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div id="text-command">
+                        {#    child and parent arg are switched because the child and parent concept is different here#}
+                                <table>
+                                    <tr>
+                                        <td>Node Parent:</td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')"></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Node Child:</td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea></td>
+                                    </tr>
+                                </table>
+                                <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));">submit</button>
+
+                            </div>
+
+                            <div>
+                                <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
+                                <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
+                                <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
+                                <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
+                                <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
+                            </div>
+
+                            <div id="error_msg">
+                            </div>
+
+                            <script type="text/javascript">
+                                fillInSentAnnots({{ sentAnnotUmrs | safe }});
+                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                showBlueBox();
+                            </script>
                         </div>
-
-                        <div id="text-command">
-                    {#    child and parent arg are switched because the child and parent concept is different here#}
-                            <table>
-                                <tr>
-                                    <td>Node Parent:</td>
-                                    <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')"></textarea></td>
-                                </tr>
-                                <tr>
-                                    <td>Node Child:</td>
-                                    <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea></td>
-                                </tr>
-                            </table>
-                            <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));">submit</button>
-
-                        </div>
-
-                        <div>
-                            <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
-                            <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
-                            <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
-                            <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
-                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
-                        </div>
-
-                        <div id="error_msg">
-                        </div>
-
-                        <script type="text/javascript">
-                            fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                            load_doc_history('{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
-                            showBlueBox();
-                        </script>
                     </div>
-                </div>
                 {% else %}
                     <div id='menu' class="col-md-4" style="height: auto;"  >
-                    <div style="position:fixed; top:200px;">
-                        <form method="post">
-                            <p>current sentence:
-                                <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
-                                <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }} disabled>
-                                <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go" disabled>
-                            </p>
-                        </form>
-                        <div class="btn-group dropright">
-                            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Relations:</button>
-                            <p class="dropdown-item" id="doc-level-relations"></p>
-                            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item" tabindex="-1" >temporal</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :before')">:before</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :after')">:after</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :depends-on')">:depends-on</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :overlap')">:overlap</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :Contained')">:Contained</a></li>
+                        <div style="position:fixed; top:200px;">
+                            <form method="post">
+                                <p>current sentence:
+                                    <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
+                                    <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }} disabled>
+                                    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go" disabled>
+                                </p>
+                            </form>
+                            <div class="btn-group dropright">
+                                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Relations:</button>
+                                <p class="dropdown-item" id="doc-level-relations"></p>
+                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" tabindex="-1" >temporal</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :before')">:before</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :after')">:after</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :depends-on')">:depends-on</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :overlap')">:overlap</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :Contained')">:Contained</a></li>
 
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item" tabindex="-1" >modal</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item"><a tabindex="-1" >:QUOT</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" >:MOD</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" >:PURP</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" >:COND</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a class="dropdown-item" tabindex="-1" >:MODSTR</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :AFF')">:AFF</a></li>
-                                                <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTAFF')">:NEUTAFF</a></li>
-                                                <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTAFF')">:PARTAFF</a></li>
-                                                <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEG')">:NEG</a></li>
-                                                <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTNEG')">:NEUTNEG</a></li>
-                                                <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTNEG')">:PARTNEG</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item" tabindex="-1">coref</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-entity')">:same-entity</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-event')">:same-event</a></li>
-                                        <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :subset-of')">:subset-of</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" tabindex="-1" >modal</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item"><a tabindex="-1" >:QUOT</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" >:MOD</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" >:PURP</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" >:COND</a></li>
+                                            <li class="dropdown-submenu">
+                                                <a class="dropdown-item" tabindex="-1" >:MODSTR</a>
+                                                <ul class="dropdown-menu">
+                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :AFF')">:AFF</a></li>
+                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTAFF')">:NEUTAFF</a></li>
+                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTAFF')">:PARTAFF</a></li>
+                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEG')">:NEG</a></li>
+                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTNEG')">:NEUTNEG</a></li>
+                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTNEG')">:PARTNEG</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" tabindex="-1">coref</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-entity')">:same-entity</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :same-event')">:same-event</a></li>
+                                            <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':coref :subset-of')">:subset-of</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div id="text-command">
+                        {#    child and parent arg are switched because the child and parent concept is different here#}
+                                <table>
+                                    <tr>
+                                        <td>Node Parent:</td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')" disabled></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Node Child:</td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')" disabled></textarea></td>
+                                    </tr>
+                                </table>
+                                <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));" disabled>submit</button>
+
+                            </div>
+
+                            <div>
+                                <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
+                                <button class="btn btn-outline-secondary" id="reset-box" disabled><a title="reset" href="javascript:reset();">reset</a></button>
+                                <button class="btn btn-outline-secondary" id="delete-box" disabled><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
+                                <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
+                            </div>
+
+                            <script type="text/javascript">
+                                fillInSentAnnots({{ sentAnnotUmrs | safe }});
+                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                showBlueBox();
+                            </script>
                         </div>
-
-                        <div id="text-command">
-                    {#    child and parent arg are switched because the child and parent concept is different here#}
-                            <table>
-                                <tr>
-                                    <td>Node Parent:</td>
-                                    <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')" disabled></textarea></td>
-                                </tr>
-                                <tr>
-                                    <td>Node Child:</td>
-                                    <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')" disabled></textarea></td>
-                                </tr>
-                            </table>
-                            <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));" disabled>submit</button>
-
-                        </div>
-
-                        <div>
-                            <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
-                            <button class="btn btn-outline-secondary" id="reset-box" disabled><a title="reset" href="javascript:reset();">reset</a></button>
-                            <button class="btn btn-outline-secondary" id="delete-box" disabled><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
-                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
-                        </div>
-
-                        <script type="text/javascript">
-                            fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                            load_doc_history('{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
-                            showBlueBox();
-                        </script>
                     </div>
-                </div>
                 {% endif %}
             </div>
 

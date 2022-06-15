@@ -4,10 +4,12 @@ from typing import List
 import json
 from one_time_scripts.parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor
 from umr_annot_tool.resources.utility_modules.parse_lexicon_file import parse_lexicon_xml, FrameDict
+from umr_annot_tool.resources.utility_modules.penmanString2umrDict import string2umr
 from flask_login import current_user
 import os
 import logging
 from datetime import datetime
+from bs4 import BeautifulSoup
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
@@ -67,11 +69,14 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
     elif has_annot:
         for i in range(len(sents)):
             dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-            annotation = Annotation(sent_annot=sent_annots[i].replace('<br>', ''), doc_annot=doc_annots[i], alignment=aligns[i],
+            dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
+            dehtml_doc_annot = BeautifulSoup(doc_annots[i]).get_text()
+            sent_umr = string2umr(dehtml_sent_annot)
+            annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=aligns[i],
                                     user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
                                     sent_id=i + 1, #sentence id counts from 1
                                     doc_id=doc_id,
-                                    sent_umr={}, doc_umr={})
+                                    sent_umr=sent_umr, doc_umr={})
             db.session.add(annotation)
         db.session.commit()
         flash('Your annotations has been created.', 'success')
@@ -491,8 +496,6 @@ def doclevel(doc_sent_id):
         project_name = ""
         admin=current_user
         permission = ""
-
-    print("sent_annot_pairs: ", sent_annot_pairs[0])
 
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,

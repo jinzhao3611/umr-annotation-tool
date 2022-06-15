@@ -110,7 +110,7 @@ def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List
 
     sent_annots = [amr_text2html(re.sub(' sentence level graph:', '', sent_annot).strip() + '\n') for sent_annot in
                    sent_annot_list]
-    doc_annots = [re.sub('\n','', amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip()) )for doc_annot in
+    doc_annots = [amr_text2html(re.sub(' document level annotation:', '', doc_annot).strip() + '\n') for doc_annot in
                   doc_annot_list]
     return doc_content_string, sents, sent_annots, doc_annots, aligns
 

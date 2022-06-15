@@ -284,7 +284,7 @@
 
                         <script type="text/javascript">
                             fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                            load_doc_history('{{ current_sent_pair[1].doc_umr|tojson|safe }}', '{{ current_snt_id }}');
+                            load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
                             showBlueBox();
                         </script>
                     </div>

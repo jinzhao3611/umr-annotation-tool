@@ -129,7 +129,7 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     showAlign();
     state_has_changed_p = 1;
     if(language === "english" || language === "chinese"){
-        showAnnotatedTokens();
+        // showAnnotatedTokens();
     }
 }
 
@@ -1981,7 +1981,12 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                     concept_m = `<span title="">` + concept_m + '</span>';
                 }
             }
-            s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
+
+            if(docAnnot){
+                s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
+            }else{
+                s += '(' + `<span id="variable-${loc}">` + variable_m + '</span>' + ' / ' + concept_m; //'(s1t / taste-01'
+            }
 
             let n = umr[loc + '.n']; //check how many children current loc has
             let index;
@@ -2105,7 +2110,11 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             }
-            s += variable_m;
+            if(docAnnot){
+                s += variable_m;
+            }else{
+                s += `<span id="variable-${loc}">` + variable_m + '</span>';
+            }
         }
         if (tree_span_args) {
             s = '<span ' + tree_span_args + '>' + s + '</span>';
@@ -2170,7 +2179,7 @@ function show_amr(args) {
     if(!docAnnot){
         showAlign();
         if(language === 'chinese' || language === 'english'){
-            showAnnotatedTokens();
+            // showAnnotatedTokens();
         }
         showHead();
     }

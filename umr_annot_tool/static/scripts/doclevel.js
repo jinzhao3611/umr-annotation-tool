@@ -120,31 +120,18 @@ function docUmrTransform(html_umr_s, nested){
 /**
  *
  * @param penman_s: showing_penman_html: '(s1 / sentence<br>&nbsp;&nbsp;:temporal ((s1t :before DCT)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after (s2e :before test)))<br>&nbsp;&nbsp;:modal ((s2d :AFF AUTH)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s2e :NEG AUTH))<br>&nbsp;&nbsp;:coref ((s2e :same-entity s1t)))<br>';
- * @returns db_penman_text: "(s1 / sentence :temporal (s1t / s1t :before (DCT / DCT)) :temporal (s1t / s1t :after (s2e / s2e)) :temporal (s2e / s2e :before (test / test)) :modal (s2d / s2d :AFF (AUTH / AUTH)) :modal (s2e / s2e :NEG (AUTH / AUTH)) :coref (s2e / s2e :same-entity (s1t / s1t))"
+ * @returns inter_penman_text: "(s1 / sentence :temporal (s1t / s1t :before (DCT / DCT)) :temporal (s1t / s1t :after (s2e / s2e)) :temporal (s2e / s2e :before (test / test)) :modal (s2d / s2d :AFF (AUTH / AUTH)) :modal (s2e / s2e :NEG (AUTH / AUTH)) :coref (s2e / s2e :same-entity (s1t / s1t))"
  */
 function inverseUmrTransform(penman_s){
-  // let penman_s = '&lt;div id=&#34;amr&#34;&gt;(s1 / sentence&lt;br&gt;  :temporal ((s1t :before DCT)&lt;br&gt;                    (s1t :after s2d)))&lt;/div&gt;';
+    let lines = penman_s.trim().split('\n');
 
-  penman_s = deHTML3(penman_s);
+  let temporal_rels = [];
+  let modal_rels = [];
+  let coref_rels = [];
 
-  // console.log(penman_s);
-
-  lines = penman_s.split('split_here');
-
-  // lines.forEach(myFunction);
-  // function myFunction(value) {
-  //   console.log('value: ', value);
-  // }
-
-  temporal_rels = [];
-  modal_rels = [];
-  coref_rels = [];
-
-	console.log(lines.length)
   let flag = '';
   for(let i=0; i<lines.length; i++){
   	lines[i] = lines[i].trim();
-  	console.log('here0: ', lines[i]);
     if (lines[i].startsWith(":temporal")){
       flag = ':temporal';
     }else if(lines[i].startsWith(":modal")){
@@ -154,62 +141,53 @@ function inverseUmrTransform(penman_s){
     }
 
     if(flag ===':temporal'){
-      console.log('line from here0: ', lines[i])
-      item = lines[i].replace(':temporal','');
+      let item = lines[i].replace(':temporal','');
       item = item.replaceAll('\(', '');
       item = item.replaceAll('\)', '').trim();
-      console.log('item from here0: ', item.split(' '));
 
       if (item.split(' ').length !== 3){
-        rels = breakNestedRels(item);
-        console.log('rels from here0: ', rels)
+        let rels = breakNestedRels(item);
         temporal_rels.push(...rels);
       }else{
         temporal_rels.push(item);
       }
     }else if(flag ===':modal'){
-    	console.log('line from here1: ', lines[i])
-      item = lines[i].replace(':modal','');
+      let item = lines[i].replace(':modal','');
       item = item.replaceAll('\(', '');
       item = item.replaceAll('\)', '').trim();
-      console.log('item from here1: ', item.split(' '));
       if (item.split(' ').length !== 3){
-        rels = breakNestedRels(item);
-        console.log('rels from here1: ', rels)
+        let rels = breakNestedRels(item);
         modal_rels.push(...rels);
       }else{
         modal_rels.push(item);
       }
     }else if(flag ===':coref'){
-      item = lines[i].replace(':coref','');
+      let item = lines[i].replace(':coref','');
       item = item.replaceAll('\(', '');
       item = item.replaceAll('\)', '').trim();
       if (item.split(' ').length !== 3){
-        rels = breakNestedRels(item);
+        let rels = breakNestedRels(item);
         coref_rels.push(...rels);
       }else{
         coref_rels.push(item);
       }
     }
   }
-  // console.log('temporal rels: ', temporal_rels);
-  // console.log('modal rels: ', modal_rels);
-  // console.log('coref rels: ', coref_rels);
 
-  let db_penman_text = lines[0];
+  let inter_penman_text = lines[0];
 
   temporal_rels.forEach(myFunction2);
   function myFunction2(value) {
   	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":temporal ($1 / $1 $2 ($3 / $3))"); //'s1p :before s2d' -> :temporal (s1p / s1p :before (s2d / s2d))
     console.log(value);
-    db_penman_text += ' ' + value;
+    inter_penman_text += ' ' + value;
   }
 
     modal_rels.forEach(myFunction3);
   function myFunction3(value) {
   	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":modal ($1 / $1 $2 ($3 / $3))");
     console.log(value);
-    db_penman_text += ' ' + value;
+    inter_penman_text += ' ' + value;
 
   }
 
@@ -217,11 +195,10 @@ function inverseUmrTransform(penman_s){
   function myFunction4(value) {
   	value = value.replace(/([a-zA-Z0-9]+) (:[a-zA-Z\-\s]+) ([a-zA-Z0-9]+)/gm, ":coref ($1 / $1 $2 ($3 / $3))");
     console.log(value);
-    db_penman_text += ' ' + value;
+    inter_penman_text += ' ' + value;
 
   }
- 	// console.log('db_penman_text ', db_penman_text);
-  return db_penman_text;
+  return inter_penman_text;
 }
 /**
  // * @param item: s1t :after s2e :before s3e :depends-on s4e
@@ -284,13 +261,30 @@ function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
 /**
  * load the annotation for current sentence from database
  * @param curr_doc_umr: dictionary
+ * @param curr_doc_annot
  * @param curr_sent_id:
  */
-function load_doc_history(curr_doc_umr, curr_sent_id){
-    let modal_triples = generateModalUmr(`amr${curr_sent_id}`); //returns a list of triples, umr is changed to sentLevel umr
-    let modal_triples_strings = modal_triples.map(t => t.join(" "));
+function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
+    let modal_triples = [];
+    let modal_triples_strings = [];
+    try{
+        modal_triples = generateModalUmr(`amr${curr_sent_id}`); //returns a list of triples, umr is changed to sentLevel umr
+        modal_triples_strings = modal_triples.map(t => t.join(" "));
+    }catch(e){
+        setInnerHTML("error_msg", "do the sentence annotation first");
+        document.getElementById("error_msg").className = `alert alert-danger`;
+    }
 
-    umr = JSON.parse(curr_doc_umr);//umr is from database
+    if(curr_doc_umr==='{}'){
+        try{
+            umr = string2umr(inverseUmrTransform(curr_doc_annot))
+        }catch (e){
+            console.log("both doc_umr and doc_annot from database is empty or doesn't not match penman string");
+            umr = JSON.parse(curr_doc_umr); //{"n":0}
+        }
+    }else{
+        umr = JSON.parse(curr_doc_umr);//umr is from database
+    }
     if (Object.keys(umr).length === 0 || Object.keys(umr).length === 1){
         umr['n'] = 1;
         umr['1.v'] = "s"+curr_sent_id+'s0'; // number change with current sentence
