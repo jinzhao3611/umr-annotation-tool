@@ -55,7 +55,7 @@
                         {% endif %}
                     </form>
 
-                    <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
+                    <form action="{{ url_for('users.project', project_id=project_id)}}" method="post" onsubmit="return confirm('Do you really want to delete this document? Once the document is deleted, checked-out copies of this document by other annotators will be deleted as well');">
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
                         <input type="hidden" name="update_doc_id" value={{ projectDoc.id }}>
@@ -128,7 +128,7 @@
                                 <input type="submit" value="add to Double Annotated Files" disabled>
                             {% endif %}
                         </form>
-                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
+                        <form action="{{ url_for('users.project', project_id=project_id)}}" method="post" onsubmit="return confirm('Do you really want to delete this annotation? This action is irreversible');">
                             <input type="hidden" name="remove_member_id" value=0>
                             <input type="hidden" name="new_member_name" value="">
                             <input type="hidden" name="update_doc_id" value=0>

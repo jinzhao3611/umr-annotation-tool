@@ -20,7 +20,7 @@
                           <span class="slider"></span>
                         </label>
                     {% endif %}
-                    <form action="{{ url_for('users.account')}}" method="post">
+                    <form action="{{ url_for('users.account')}}" method="post" onsubmit="return confirm('Do you really want to delete the whole project? this action is irreversible');">
                         <input type="hidden" name="delete_project" value={{ project.project_id }}>
                         {% if project.permission == 'admin' %}
                             <input type="submit" value="x">
