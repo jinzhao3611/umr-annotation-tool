@@ -310,7 +310,23 @@ def sentlevel(doc_sent_id):
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+
+    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
+    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
+    # had no annotations, in which case the annotations for all following lines were moved up one slot.
+    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
+    # in later stages don't need this.
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
+        all_annots_no_skipping[i-1] = sa
+        all_aligns_no_skipping[i-1] = a
+        all_doc_annots_no_skipping[i-1] = da
+
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     lattice = Lattice.query.filter(Lattice.project_id == project_id).first()
     aspectSettingsJSON = lattice.aspect
@@ -401,7 +417,23 @@ def sentlevelview(doc_sent_id):
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+
+    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
+    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
+    # had no annotations, in which case the annotations for all following lines were moved up one slot.
+    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
+    # in later stages don't need this.
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
+        all_annots_no_skipping[i-1] = sa
+        all_aligns_no_skipping[i-1] = a
+        all_doc_annots_no_skipping[i-1] = da
+
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
 
     return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
@@ -484,7 +516,23 @@ def doclevel(doc_sent_id):
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+
+    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
+    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
+    # had no annotations, in which case the annotations for all following lines were moved up one slot.
+    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
+    # in later stages don't need this.
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
+        all_annots_no_skipping[i-1] = sa
+        all_aligns_no_skipping[i-1] = a
+        all_doc_annots_no_skipping[i-1] = da
+
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     #check who is the admin of the project containing this file:
     try:
@@ -551,7 +599,23 @@ def doclevelview(doc_sent_id):
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+
+    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
+    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
+    # had no annotations, in which case the annotations for all following lines were moved up one slot.
+    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
+    # in later stages don't need this.
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
+        all_annots_no_skipping[i-1] = sa
+        all_aligns_no_skipping[i-1] = a
+        all_doc_annots_no_skipping[i-1] = da
+
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     #check who is the admin of the project containing this file:
     try:
