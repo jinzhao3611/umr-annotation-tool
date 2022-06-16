@@ -28,6 +28,10 @@ function initializeDoc() {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after s2d)))<br>
  */
 function docUmrTransform(html_umr_s, nested){
+    //this is a bandit solution, in early stages, the root variable is in the form of s1, now it's s1s0, this is for the purpose of being compatible with the early stage form(export new file with new form)
+    let root_pattern = /(\(s\d+)( \/ sentence)/g
+    html_umr_s = html_umr_s.replace(root_pattern, "$1" + "s0" + "$2")
+
     let regex1 = /([a-zA-Z0-9\-]+) \/ (?=.*?\1)[a-zA-Z0-9\-]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");

@@ -2463,14 +2463,8 @@ function UMR2db() {
 }
 
 function deHTML2(s){
-    s = s.replaceAll('<div id="amr">', '');
-    s = s.replaceAll('\n', "");
-    s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
-    s = s.replaceAll('&nbsp;', ' ');
-    s = s.replaceAll('<i>', '');
-    s = s.replaceAll('</i>', '');
-
+    s = deHTML(s)
     return s;
 }
 
@@ -2500,7 +2494,7 @@ function export_annot(exported_items, content_string) {
         + "\n# alignment:"
         + a[2]
         + "\n# document level annotation:\n"
-        + deHTML2(a[3])
+        + docUmrTransform(deHTML2(a[3]), false).replaceAll('<br>', '\n')
         +"\n").join("\n\n# :: snt");
 
     let filename;
