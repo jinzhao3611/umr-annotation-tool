@@ -88,35 +88,39 @@ def new_project():
         return redirect(url_for('users.login'))
     form = CreateProjectForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
-        qc_user = User(username=f"{form.projectname.data}_qc", email=f'{form.projectname.data}{datetime.now().strftime("%H%M%S")}{datetime.today().strftime("%d%m%Y")}@qc.com',
-                       password=hashed_password) #the reason of using datetime is to make everybody's email different, this will cause an sqlalchemy error even before checking if there is same project name in this user's project
-        db.session.add(qc_user)
-        db.session.commit()
+        try:
+            hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
+            qc_user = User(username=f"{form.projectname.data}_qc", email=f'{form.projectname.data}{datetime.now().strftime("%H%M%S")}{datetime.today().strftime("%d%m%Y")}@qc.com',
+                           password=hashed_password) #the reason of using datetime is to make everybody's email different, this will cause an sqlalchemy error even before checking if there is same project name in this user's project
+            db.session.add(qc_user)
+            db.session.commit()
 
-        project = Project(project_name=form.projectname.data, qc_user_id=qc_user.id)
-        db.session.add(project)
-        db.session.commit()
+            project = Project(project_name=form.projectname.data, qc_user_id=qc_user.id)
+            db.session.add(project)
+            db.session.commit()
 
-        user_project = Projectuser(project_name=form.projectname.data, user_id=current_user.id, permission="admin",
-                                   project_id=project.id)
-        db.session.add(user_project)
-        db.session.commit()
+            user_project = Projectuser(project_name=form.projectname.data, user_id=current_user.id, permission="admin",
+                                       project_id=project.id)
+            db.session.add(user_project)
+            db.session.commit()
 
-        lattice = Lattice(project_id=project.id,
-                          aspect={"Habitual": True, "Imperfective": True, "Process": True, "Atelic Process": True, "Perfective": True, "State": True, "Activity": True, "Endeavor": True, "Performance": True, "Reversible State": True, "Irreversible State": True, "Inherent State": True, "Point State": True, "Undirected Activity": True, "Directed Activity": True, "Semelfactive": True, "Undirected Endeavor": True, "Directed Endeavor": True, "Incremental Accomplishment": True, "Nonincremental Accomplishment": True, "Directed Achievement": True, "Reversible Directed Achievement": True, "Irreversible Directed Achievement": True},
-                          person={"person": True, "non-3rd": True, "non-1st": True, "1st": True, "2nd": True, "3rd": True, "incl.": True, "excl.": True},
-                          number={"Singular": True, "Non-singular": True, "Paucal": True, "Plural": True, "Dual": True, "Non-dual Paucal": True, "Greater Plural": True, "Trial": True, "Non-trial Paucal": True},
-                          modal={"Non-NeutAff": True, "Non-FullAff": True, "Non-NeutNeg": True, "Non-FullNeg": True, "FullAff": True, "PrtAff": True, "NeutAff": True, "FullNeg": True, "PrtNeg": True, "NeutNeg": True, "Strong-PrtAff": True, "Weak-PrtAff": True, "Strong-NeutAff": True, "Weak-NeutAff": True, "Strong-PrtNeg": True, "Weak-PrtNeg": True, "Strong-NeutNeg": True, "Weak-NeutNeg": True},
-                          discourse={"or": True, "and+but": True, "inclusive-disj": True, "exclusive-disj": True, "and+unexpected": True, "and+contrast": True, "but": True, "and": True, "consecutive": True, "additive": True, "unexpected-co-occurrence": True, "contrast-01": True, ":subtraction": True})
-        db.session.add(lattice)
-        pg = Partialgraph(project_id=project.id, partial_umr={})
-        db.session.add(pg)
-        lexi = Lexicon(project_id=project.id, lexi={})
-        db.session.add(lexi)
-        db.session.commit()
+            lattice = Lattice(project_id=project.id,
+                              aspect={"Habitual": True, "Imperfective": True, "Process": True, "Atelic Process": True, "Perfective": True, "State": True, "Activity": True, "Endeavor": True, "Performance": True, "Reversible State": True, "Irreversible State": True, "Inherent State": True, "Point State": True, "Undirected Activity": True, "Directed Activity": True, "Semelfactive": True, "Undirected Endeavor": True, "Directed Endeavor": True, "Incremental Accomplishment": True, "Nonincremental Accomplishment": True, "Directed Achievement": True, "Reversible Directed Achievement": True, "Irreversible Directed Achievement": True},
+                              person={"person": True, "non-3rd": True, "non-1st": True, "1st": True, "2nd": True, "3rd": True, "incl.": True, "excl.": True},
+                              number={"Singular": True, "Non-singular": True, "Paucal": True, "Plural": True, "Dual": True, "Non-dual Paucal": True, "Greater Plural": True, "Trial": True, "Non-trial Paucal": True},
+                              modal={"Non-NeutAff": True, "Non-FullAff": True, "Non-NeutNeg": True, "Non-FullNeg": True, "FullAff": True, "PrtAff": True, "NeutAff": True, "FullNeg": True, "PrtNeg": True, "NeutNeg": True, "Strong-PrtAff": True, "Weak-PrtAff": True, "Strong-NeutAff": True, "Weak-NeutAff": True, "Strong-PrtNeg": True, "Weak-PrtNeg": True, "Strong-NeutNeg": True, "Weak-NeutNeg": True},
+                              discourse={"or": True, "and+but": True, "inclusive-disj": True, "exclusive-disj": True, "and+unexpected": True, "and+contrast": True, "but": True, "and": True, "consecutive": True, "additive": True, "unexpected-co-occurrence": True, "contrast-01": True, ":subtraction": True})
+            db.session.add(lattice)
+            pg = Partialgraph(project_id=project.id, partial_umr={})
+            db.session.add(pg)
+            lexi = Lexicon(project_id=project.id, lexi={})
+            db.session.add(lexi)
+            db.session.commit()
 
-        flash(f'{form.projectname.data} has been created.', 'success')
+            flash(f'{form.projectname.data} has been created.', 'success')
+        except sqlalchemy.exc.IntegrityError:
+            flash(f'Name "{form.projectname.data}" already exists, choose another one')
+            return redirect(url_for('main.new_project'))
 
         return redirect(url_for('users.account'))
     return render_template('new_project.html', form=form, title='create project')
