@@ -88,6 +88,8 @@ def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List
     sents = []
     for sent_content in sent_list:
         sent_content = re.sub(' :: snt\d+\tSentence: ', '', sent_content).strip()
+        sent_content = re.sub(':: snt\d+', '', sent_content).strip()
+        sent_content = re.sub('Sentence:', '', sent_content).strip()
         sents.append(sent_content.split())
 
     aligns = []
