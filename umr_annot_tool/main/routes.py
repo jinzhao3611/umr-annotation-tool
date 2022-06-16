@@ -1,3 +1,4 @@
+import sqlalchemy.exc
 from flask import url_for, redirect, flash, send_from_directory, make_response, jsonify
 from werkzeug.utils import secure_filename
 from typing import List
