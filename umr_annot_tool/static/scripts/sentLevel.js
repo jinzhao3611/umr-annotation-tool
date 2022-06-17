@@ -657,7 +657,7 @@ function color_amr_elem(id, color, event_type) {
 
 
 /** entrance ******************************************************/
-function submit_template_action(id, tokens = "") {
+function submit_template_action(id, tokens = "", parentVarLoc="") {
     if (tokens !== "") { //multiword expression
         if(tokens.indexOf(' ') >= 0 && id==='add'){
             tokens = tokens.replaceAll(" ", "-");
@@ -676,25 +676,11 @@ function submit_template_action(id, tokens = "") {
                 current_parent = umr[new_k];
                 console.log("current_parent is " + current_parent);
             }
-            showHead();
             current_mode = 'add';
         }
     } else if (id === 'set_parent') {
-        let test_str = "";
-        test_str += selection;
-        console.log("selected variable to be set to head: ", test_str);
-
-        test_str = test_str.trim();
-        let k = getKeyByValue(umr, test_str);
-        if (k.includes("v")) {
-            current_parent = test_str;
-            console.log("current_parent is: " + current_parent);
-        } else {
-            let new_k = k.replace('c', 'v');
-            current_parent = umr[new_k];
-            console.log("current_parent is: " + current_parent);
-        }
-        showHead();
+        current_parent = umr[parentVarLoc + '.v'];
+        showHead(parentVarLoc);
     } else if (id === 'add') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
     } else if (id === 'add-constant') {
@@ -999,7 +985,7 @@ function showAlign(){
     }
     setInnerHTML('align', align_str);
 }
-function showHead(){
+function showHead(parentVarLoc){
     let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
     while(existingHead.length){
         var parent = existingHead[0].parentNode;
@@ -1008,7 +994,7 @@ function showHead(){
         }
         parent.removeChild(existingHead[0]);
     }
-    highlight(document.getElementById("amr"), [current_parent + " "]);
+    document.getElementById(`variable-${parentVarLoc}`).setAttribute("class", "text-success")
 }
 
 

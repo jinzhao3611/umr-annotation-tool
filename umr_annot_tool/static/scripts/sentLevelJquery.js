@@ -8,13 +8,11 @@ $(document).ready(function(){
     // double click to set head
     $("#amr").dblclick(function(){ // when double click on element #amr
         selection = document.getSelection(); //get selection of text
-        submit_template_action('set_parent'); //set text to parent
+        let selectedNode = getSelectedNode(); // get the selected node
+        let locationOfVariable = selectedNode.getAttribute("id").replace("variable-", "")
+        console.log("selected variable location: ", locationOfVariable);
+        submit_template_action('set_parent', "", locationOfVariable); //set text to parent
     });
-
-    //click button to set head
-    $("#set-head").click(function(){
-        submit_template_action('set_parent');
-    })
 
     //click corresponding button to submit addTriple and clear the form
     // https://stackoverflow.com/questions/6658752/click-event-doesnt-work-on-dynamically-generated-elements
