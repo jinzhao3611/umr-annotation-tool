@@ -2590,3 +2590,15 @@ function submit_command(){
 function reset(){
     show_amr('show');
 }
+
+// https://stackoverflow.com/questions/1335252/how-can-i-get-the-dom-element-which-contains-the-current-selection
+function getSelectedNode() {
+    if (document.selection)
+        return document.selection.createRange().parentElement();
+    else
+    {
+        var selection = window.getSelection();
+        if (selection.rangeCount > 0)
+            return selection.getRangeAt(0).startContainer.parentNode;
+    }
+}
