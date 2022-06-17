@@ -2167,7 +2167,6 @@ function show_amr(args) {
         if(language === 'chinese' || language === 'english'){
             // showAnnotatedTokens();
         }
-        showHead();
     }
     return deHTML(html_amr_s);
 }
