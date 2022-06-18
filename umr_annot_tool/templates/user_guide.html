@@ -2,110 +2,119 @@
 {% block content %}
     <h2>Guides</h2>
 
-    Below are sample file formats that the tool accepts:
+    <h5>LREC Demo Examples</h5>
     <ul>
-        <li>plain_text example file: <a href="{{ url_for('main.download', filename="sample_sentences/sample_snts_english.txt") }}">sample_snts_english.txt</a></li>
-        <li>flex1 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/Original_Verifiable generic_Paragraphs.xml") }}" >Original_Verifiable generic_Paragraphs.xml</a></li>
-        <li>flex2 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/Original_Verifiable generic.xml") }}" >Original_Verifiable generic.xml</a></li>
-        <li>flex3 example file: <a href="{{ url_for('main.download', filename="jens_van_gysel/Original_XLingPaper, align morphemes.xml") }}" >Original_XLingPaper, align morphemes.xml</a></li>
-        <li>toolbox1 example file: <a href="{{ url_for('main.download', filename="sample_sentences/arapahoe.xml") }}" >arapahoe.xml</a></li>
-        <li>toolbox2 example file: <a href="{{ url_for('main.download', filename="rosa_vallejos/04NOV2006-3.xml") }}" >04NOV2006-3.xml</a></li>
-        <li>toolbox3 example file: <a href="{{ url_for('main.download', filename="rosa_vallejos/04NOV2006-3.txt") }}" >04NOV2006-3.txt</a></li>
-        <li>exported plain_text example file: <a href="{{ url_for('main.download', filename="sample_sentences/exported_sample_snts_english.txt") }}">exported_sample_snts_english.txt</a></li>
-
+        <li>plain_text example file: <a href="{{ url_for('main.download', filename="news-text-2-lorelei.txt") }}">news-text-2-lorelei.txt</a></li>
+        <li>exported plain_text example file: <a href="{{ url_for('main.download', filename="exported_news-text-2-lorelei.txt") }}">exported_news-text-2-lorelei.txt</a></li>
     </ul>
 
+    <h5>Below are sample file formats that the tool accepts:</h5>
+    <ul>
+        <li>plain_text example file: <a href="{{ url_for('main.download', filename="news-text-2-lorelei.txt") }}">news-text-2-lorelei.txt</a></li>
+        <li>exported plain_text example file: <a href="{{ url_for('main.download', filename="exported_news-text-2-lorelei.txt") }}">exported_news-text-2-lorelei.txt</a></li>
+        <li>flex1 example file: <a href="{{ url_for('main.download', filename="Original_Verifiable_generic_Paragraphs.xml") }}" >Original_Verifiable_generic_Paragraphs.xml</a></li>
+        <li>flex2 example file: <a href="{{ url_for('main.download', filename="Original_Verifiable_generic.xml") }}" >Original_Verifiable_generic.xml</a></li>
+        <li>flex3 example file: <a href="{{ url_for('main.download', filename="Original_XLingPaper_align_morphemes.xml") }}" >Original_XLingPaper_align_morphemes.xml</a></li>
+        <li>toolbox1 example file: <a href="{{ url_for('main.download', filename="arapahoe.xml") }}" >arapahoe.xml</a></li>
+        <li>toolbox2 example file: <a href="{{ url_for('main.download', filename="04NOV2006-3.xml") }}" >04NOV2006-3.xml</a></li>
+        <li>toolbox3 example file: <a href="{{ url_for('main.download', filename="04NOV2006-3.txt") }}" >04NOV2006-3.txt</a></li>
+        <li>toolbox4 example file: <a href="{{ url_for('main.download', filename="kuk1999oct01-umr2.txt") }}" >kuk1999oct01-umr2.txt</a></li>
+    </ul>
 
-    <p>Below is an example showing how to annotate an English sentence.</p>
-    <p>First you should register an account, you should always annotate after logging in.</p>
-    <p>On home page, click on login.</p>
-    <img src="../static/guidelines_pics/homepage.png" alt="homepage" width="750" height="450">
-    <p>This is the login page, type in your Email and password. </p>
-    <img src="../static/guidelines_pics/login.png" alt="login" width="750" height="450">
-    <p>After logging in, click annotate on Nav bar:</p>
-    <img src="../static/guidelines_pics/homepage_after_login.png" alt="homepage_after_login" width="750" height="450">
-    <p>Choose a txt file, flex format xml or tool box format xml, choose a language, then click on Annotate button</p>
-    <img src="../static/guidelines_pics/upload.png" alt="upload" width="750" height="450">
+{#    <iframe width="420" height="315"#}
+{#    src="https://www.youtube.com/embed/dMcnbXEOBkc&t=6s">#}
+{#    </iframe>#}
 
-    <p>At the following annotation page, you can select "tasted" in the sentence by double clicking or click and drag.
-        Then there is a button appears after Lexicalized Concept on the right: click the "tasted" button. </p>
-    <img src="../static/guidelines_pics/select.png" alt="select" width="750" height="450">
-
-    <p>In the submenu, hover over find lemma, and click on tasted-01 in the subsubmenu: </p>
-    <img src="../static/guidelines_pics/predicate.png" alt="predicate" width="750" height="450">
-
-    <p>Then the first line of annotation (t / taste-01) appears under UMR Penman Annotation, alignments section is updated, and tasted is colored, s1t is colored because it's current head:</p>
-    <img src="../static/guidelines_pics/annot_1.png" alt="annot_1" width="750" height="450">
-
-    <p> Add attribute: click on Attribute box on the right, choose :Aspect, then an Attribute values box will appear
-        right below the Attribute box, and then choose Performance </p>
-    <img src="../static/guidelines_pics/attribute_1.png" alt="attribute_1" width="750" height="450">
-
-    <p>Click on Add attribute button, UMR Penman Annotation and Alignments on the left will be updated accordingly </p>
-    <img src="../static/guidelines_pics/attribute_2.png" alt="attribute_2" width="750" height="450">
-
-    <p>Add named entity: Choose :ARG0 in Roles(English) box, choose person in Named Entity Types box</p>
-    <img src="../static/guidelines_pics/addNe_1.png" alt="addNe_1" width="750" height="450">
-
-    <p>Select Edmund Pope on the left, click on Edmund Pop in lexicalized Concept on the right: </p>
-    <img src="../static/guidelines_pics/addNe_2.png" alt="addNe_2" width="750" height="450">
-
-    <p>new amr is generated on the left</p>
-    <img src="../static/guidelines_pics/addNe_3.png" alt="addNe_3" width="750" height="450">
-
-    <p>Add a concept, choose :ARG1 on the right</p>
-    <img src="../static/guidelines_pics/addConcept_1.png" alt="addConcept_1" width="750" height="450">
-
-    <p>Choose the correct sense of freedom on the right</p>
-    <img src="../static/guidelines_pics/addConcept_2.png" alt="addConcept_2" width="750" height="450">
-
-    <p>Annotation is generated, but we want sense free-04 instead of freedom, we can change it manually </p>
-    <img src="../static/guidelines_pics/addConcept_3.png" alt="addConcept_3" width="750" height="450">
-
-    <p>Rlick on the replace button on the right. </p>
-    <img src="../static/guidelines_pics/replace_1.png" alt="replace_1" width="750" height="450">
-
-    <p>Replace in place by editing in the blue box. </p>
-    <img src="../static/guidelines_pics/replace_2.png" alt="replace_2" width="750" height="450">
-
-    <p>Concept is replaced </p>
-    <img src="../static/guidelines_pics/replace_3.png" alt="replace_3" width="750" height="450">
-
-    <p>To add a concept that alreay existed in the tree, choose the variable in the tree</p>
-    <img src="../static/guidelines_pics/addCoref_1.png" alt="addCoref_1" width="750" height="450">
-
-    <p>the variable will be added in place. </p>
-    <img src="../static/guidelines_pics/addCoref_2.png" alt="addCoref_2" width="750" height="450">
-
-    <p>Add abstract concept as following </p>
-    <img src="../static/guidelines_pics/addAbstractConcept_1.png" alt="addAbstractConcept_1" width="750" height="450">
-    <img src="../static/guidelines_pics/addAbstractConcept_2.png" alt="addAbstractConcept_1" width="750" height="450">
-
-    <p>Change the head as following:</p>
-    <img src="../static/guidelines_pics/setHead_1.png" alt="setHead_1" width="750" height="450">
-    <img src="../static/guidelines_pics/setHead_2.png" alt="setHead_2" width="750" height="450">
-
-    <p>Add number as following:</p>
-    <img src="../static/guidelines_pics/addNum.png" alt="addNum" width="750" height="450">
-
-    <p>Add multiple words as following</p>
-    <img src="../static/guidelines_pics/addMultiWords_1.png" alt="addMultiWords_1" width="750" height="450">
-    <img src="../static/guidelines_pics/addMultiWords_2.png" alt="addMultiWords_2" width="750" height="450">
-
-    <p>Move to the next sentence by clicking next button, finish the annotation, click on save2db button, then move on to document level annotation by clicking on the doc-level-annot button</p>
-    <img src="../static/guidelines_pics/doc_annot.png" alt="doc_annot" width="750" height="450">
-
-
-    <p>To annotate the first sentence, make sure the current sentence box is showing 1, if not, change it to 1, and click save&go, choose the relation, and type in the arguments in Enter Args box. Click on save2db button after you finish</p>
-    <img src="../static/guidelines_pics/docTemporal.png" alt="docTemporal" width="750" height="450">
-
-    <p>This is another example:</p>
-    <img src="../static/guidelines_pics/docModal.png" alt="docModal" width="750" height="450">
-
-    <p>During or after the process of annotating, you can click on export button to save a txt file on your local computer </p>
-    <img src="../static/guidelines_pics/export.png" alt="export" width="750" height="450">
-    <img src="../static/guidelines_pics/exportedFile.png" alt="exportedFile" width="750" height="450">
-
+{#    <p>Below is an example showing how to annotate an English sentence.</p>#}
+{#    <p>First you should register an account, you should always annotate after logging in.</p>#}
+{#    <p>On home page, click on login.</p>#}
+{#    <img src="../static/guidelines_pics/homepage.png" alt="homepage" width="750" height="450">#}
+{#    <p>This is the login page, type in your Email and password. </p>#}
+{#    <img src="../static/guidelines_pics/login.png" alt="login" width="750" height="450">#}
+{#    <p>After logging in, click annotate on Nav bar:</p>#}
+{#    <img src="../static/guidelines_pics/homepage_after_login.png" alt="homepage_after_login" width="750" height="450">#}
+{#    <p>Choose a txt file, flex format xml or tool box format xml, choose a language, then click on Annotate button</p>#}
+{#    <img src="../static/guidelines_pics/upload.png" alt="upload" width="750" height="450">#}
+{##}
+{#    <p>At the following annotation page, you can select "tasted" in the sentence by double clicking or click and drag.#}
+{#        Then there is a button appears after Lexicalized Concept on the right: click the "tasted" button. </p>#}
+{#    <img src="../static/guidelines_pics/select.png" alt="select" width="750" height="450">#}
+{##}
+{#    <p>In the submenu, hover over find lemma, and click on tasted-01 in the subsubmenu: </p>#}
+{#    <img src="../static/guidelines_pics/predicate.png" alt="predicate" width="750" height="450">#}
+{##}
+{#    <p>Then the first line of annotation (t / taste-01) appears under UMR Penman Annotation, alignments section is updated, and tasted is colored, s1t is colored because it's current head:</p>#}
+{#    <img src="../static/guidelines_pics/annot_1.png" alt="annot_1" width="750" height="450">#}
+{##}
+{#    <p> Add attribute: click on Attribute box on the right, choose :Aspect, then an Attribute values box will appear#}
+{#        right below the Attribute box, and then choose Performance </p>#}
+{#    <img src="../static/guidelines_pics/attribute_1.png" alt="attribute_1" width="750" height="450">#}
+{##}
+{#    <p>Click on Add attribute button, UMR Penman Annotation and Alignments on the left will be updated accordingly </p>#}
+{#    <img src="../static/guidelines_pics/attribute_2.png" alt="attribute_2" width="750" height="450">#}
+{##}
+{#    <p>Add named entity: Choose :ARG0 in Roles(English) box, choose person in Named Entity Types box</p>#}
+{#    <img src="../static/guidelines_pics/addNe_1.png" alt="addNe_1" width="750" height="450">#}
+{##}
+{#    <p>Select Edmund Pope on the left, click on Edmund Pop in lexicalized Concept on the right: </p>#}
+{#    <img src="../static/guidelines_pics/addNe_2.png" alt="addNe_2" width="750" height="450">#}
+{##}
+{#    <p>new amr is generated on the left</p>#}
+{#    <img src="../static/guidelines_pics/addNe_3.png" alt="addNe_3" width="750" height="450">#}
+{##}
+{#    <p>Add a concept, choose :ARG1 on the right</p>#}
+{#    <img src="../static/guidelines_pics/addConcept_1.png" alt="addConcept_1" width="750" height="450">#}
+{##}
+{#    <p>Choose the correct sense of freedom on the right</p>#}
+{#    <img src="../static/guidelines_pics/addConcept_2.png" alt="addConcept_2" width="750" height="450">#}
+{##}
+{#    <p>Annotation is generated, but we want sense free-04 instead of freedom, we can change it manually </p>#}
+{#    <img src="../static/guidelines_pics/addConcept_3.png" alt="addConcept_3" width="750" height="450">#}
+{##}
+{#    <p>Rlick on the replace button on the right. </p>#}
+{#    <img src="../static/guidelines_pics/replace_1.png" alt="replace_1" width="750" height="450">#}
+{##}
+{#    <p>Replace in place by editing in the blue box. </p>#}
+{#    <img src="../static/guidelines_pics/replace_2.png" alt="replace_2" width="750" height="450">#}
+{##}
+{#    <p>Concept is replaced </p>#}
+{#    <img src="../static/guidelines_pics/replace_3.png" alt="replace_3" width="750" height="450">#}
+{##}
+{#    <p>To add a concept that alreay existed in the tree, choose the variable in the tree</p>#}
+{#    <img src="../static/guidelines_pics/addCoref_1.png" alt="addCoref_1" width="750" height="450">#}
+{##}
+{#    <p>the variable will be added in place. </p>#}
+{#    <img src="../static/guidelines_pics/addCoref_2.png" alt="addCoref_2" width="750" height="450">#}
+{##}
+{#    <p>Add abstract concept as following </p>#}
+{#    <img src="../static/guidelines_pics/addAbstractConcept_1.png" alt="addAbstractConcept_1" width="750" height="450">#}
+{#    <img src="../static/guidelines_pics/addAbstractConcept_2.png" alt="addAbstractConcept_1" width="750" height="450">#}
+{##}
+{#    <p>Change the head as following:</p>#}
+{#    <img src="../static/guidelines_pics/setHead_1.png" alt="setHead_1" width="750" height="450">#}
+{#    <img src="../static/guidelines_pics/setHead_2.png" alt="setHead_2" width="750" height="450">#}
+{##}
+{#    <p>Add number as following:</p>#}
+{#    <img src="../static/guidelines_pics/addNum.png" alt="addNum" width="750" height="450">#}
+{##}
+{#    <p>Add multiple words as following</p>#}
+{#    <img src="../static/guidelines_pics/addMultiWords_1.png" alt="addMultiWords_1" width="750" height="450">#}
+{#    <img src="../static/guidelines_pics/addMultiWords_2.png" alt="addMultiWords_2" width="750" height="450">#}
+{##}
+{#    <p>Move to the next sentence by clicking next button, finish the annotation, click on save2db button, then move on to document level annotation by clicking on the doc-level-annot button</p>#}
+{#    <img src="../static/guidelines_pics/doc_annot.png" alt="doc_annot" width="750" height="450">#}
+{##}
+{##}
+{#    <p>To annotate the first sentence, make sure the current sentence box is showing 1, if not, change it to 1, and click save&go, choose the relation, and type in the arguments in Enter Args box. Click on save2db button after you finish</p>#}
+{#    <img src="../static/guidelines_pics/docTemporal.png" alt="docTemporal" width="750" height="450">#}
+{##}
+{#    <p>This is another example:</p>#}
+{#    <img src="../static/guidelines_pics/docModal.png" alt="docModal" width="750" height="450">#}
+{##}
+{#    <p>During or after the process of annotating, you can click on export button to save a txt file on your local computer </p>#}
+{#    <img src="../static/guidelines_pics/export.png" alt="export" width="750" height="450">#}
+{#    <img src="../static/guidelines_pics/exportedFile.png" alt="exportedFile" width="750" height="450">#}
+{##}
 
 
 

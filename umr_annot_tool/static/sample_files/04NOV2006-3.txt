@@ -1,0 +1,1525 @@
+\_sh v3.0  400  econv
+
+\ref 0000.0
+\per VY
+\trs ta    ɨmɨntsarara
+\m ta    ɨmɨntsara -ra
+\ge 1M.SF story       -Vbzr
+\gs 1M.SF cuento      -Vbdr
+\f voy a contar
+
+\ref 0004.157
+\per VY
+\trs tatu      mɨta    aɨmanta ɨmɨna
+\m tatu      mɨta    aɨmanta ɨmɨna
+\ge armadillo         lie      tiger    long.ago
+\gs carachupa engañar otorongo antiguamente
+\f (cómo) antiguamente la carachupa engaña al tigre
+\nt RA: los cocamillas dicen yawara al tigre y aɨmanta al
+otorongo, los cocamas llaman a ambos yawara, o ɨwɨrati
+yawara. Cocamas y cocamillas llaman marakaya al tigrillo.
+El otorongo es mas grande/largo que el tigre.
+
+\ref 0007.984
+\per VY
+\trs ikian aɨmantapura   purara    tatu
+\m ikian aɨmanta -pura purara    tatu
+\ge this  tiger    -FOC  find      ?
+\gs este  otorongo -FOC  encontrar carachupa
+\f el otorongo encuentra a la carachupa
+
+\ref 0012.375
+\per VY
+\trs ikian unikuara     ipira yapchikari
+\m ikian uni   -kuara ipira yapichika -ri
+\ge this  water -INE   fish  catch     -Prog
+\gs este  agua  -INE   pez   agarrar   -Prog
+
+\trs yutin
+\m yuti       -n
+\ge stay       -NZR
+\gs permanecer -NDR
+\f cuando estaba agarrando peces en el agua
+
+\ref 0017.672
+\per VY
+\trs iniakana        uri   yatɨrɨtari
+\m inia      -kana uri   yatɨrɨta   -ri
+\ge sp.fish   -PLM  3M.LF put.together -Prog
+\gs carachama -PLM  3M.FL juntar       -Prog
+
+\trs yutin
+\m yuti       -n
+\ge stay       -REL
+\gs permanecer -REL
+\f que estaba agarrando carachamas
+
+\ref 0021.047
+\per VY
+\trs raepe    ikian aɨmanta uri
+\m raepe    ikian aɨmanta uri
+\ge then     this  tiger    come
+\gs entonces este  otorongo venir
+\f entonces el otorongo viene
+\nt parece que el demostrativo ikian funciona como marcador de
+definido (versus no definido).
+
+\ref 0024.375
+\per VY
+\trs rapurarura              rakumitsa      ratsui
+\m ra-    purara    -ura   ra-    kumitsa ra    -tsui
+\ge 3M.CL- find      -3M.OB 3M.CL- talk    3M.SF -ABL
+\gs 3M.CL- encontrar -3M.OB 3M.CL- hablar  3M.SF -ABL
+\f le encuentra (y) le dice
+
+\ref 0026.462
+\per VY
+\trs mariaritipa           ene, rimariru?
+\m mari  -a  -ri   -tipa ene  rimariru
+\ge thing -EV -Prog -Q    2LF  grandson
+\gs cosa  -VE -Prog -Q    2LF  nieto
+\f qué haces nieto?
+
+\ref 0029.141
+\per VY
+\trs ikiaka    tachasu,     papatu
+\m ikia -ka  ta    -chasu papa   -tu
+\ge this -LOC 1M.SF -AFEC  father -Aum
+\gs este -LOC 1M.SF -AFEC  papá  -Aum
+\f aquí estoy, papa
+
+\ref 0032.453
+\per VY
+\trs iniakana        yapchikari
+\m inia      -kana yapichika -ri
+\ge sp.fish   -PLM  catch     -Prog
+\gs carachama -PLM  agarrar   -Prog
+\f agarrando carachamas
+
+\ref 0034.703
+\per VY
+\trs yatɨrɨtari
+\m yatɨrɨta   -ri
+\ge put.together -Prog
+\gs juntar       -Prog
+\f juntando
+
+\ref 0036.344
+\per VY
+\trs tana,    terutsutsenura              ta
+\m tana     t-     erutsu -tsen  -ura   ta
+\ge 1PL.EX.M 1M.CL- bring  -PUR3  -3M.OB 1Pos
+\gs 1PL.EX.M 1M.CL- llevar -PROP3 -3M.OB 1Pos
+
+\trs taɨrakana   emera
+\m taɨra -kana emera
+\ge m'son  -PLM  for.eating
+\gs hijo.h -PLM  para.comer
+\f para llevarlos para su comida de mis hijos
+
+\ref 0039.719
+\per VY
+\trs ah, marira   ray  tɨma, na  yumiura     tatsui
+\m ah  marira   ray  tɨma  na  yumi -ura   ta    -tsui
+\ge ah  why      PRT  Neg    2SF give -3M.OB 1M.SF -ABL
+\gs ah  para.que pues Neg    2SF dar  -3M.OB 1M.SF -ABL
+\f ah, porqué pues no me das a mi
+
+\nt A V O GL-tsui
+
+\ref 0044.844
+\per VY
+\trs ta    ay,       ay        yamachi
+\m ta    ay        ay        yamachi
+\ge 1M.SF like.this like.this be.hungry
+\gs 1M.SF así      así      estar.hambriento
+\f yo estoy hambriento
+
+\ref 0046.875
+\per VY
+\trs na        aɨmanta kumitsa
+\m na        aɨmanta kumitsa
+\ge like.this tiger    talk
+\gs así      otorongo hablar
+\f así dice el otorongo
+
+\ref 0048.391
+\per VY
+\trs ikia tatutsui
+\m ikia tatu      -tsui
+\ge this ?         -ABL
+\gs este carachupa -ABL
+\f a la carachupa
+
+\ref 0050.11
+\per VY
+\trs tatu      kumitsa ratsui
+\m tatu      kumitsa ra    -tsui
+\ge ?         talk    3M.SF -ABL
+\gs carachupa hablar  3M.SF -ABL
+\f la carachupa le dice
+
+\ref 0052.735
+\per VY
+\trs ta    yumi rutsu       nemera
+\m ta    yumi r-     utsu n-   emera
+\ge 1M.SF give 3M.CL- go   2CL- for.eating
+\gs 1M.SF dar  3M.CL- ir   2CL- para.comer
+\f te voy a dar para que comas
+
+\nt A V O-aux
+
+\ref 0056.922
+\per VY
+\trs ikiaka    ay      awɨrɨnan
+\m ikia -ka  ay      awɨrɨ  -nan
+\ge this -LOC already how.many -only
+\gs este -LOC ya      cuanto   -solamente
+
+\trs tyapchikura
+\m t-     yapichika -ura
+\ge 1M.CL- catch     -3M.OB
+\gs 1M.CL- agarrar   -3M.OB
+\f acá he agarrado unos cuantos nomás
+
+\ref 0059.328
+\per VY
+\trs na        tatu      yumiura
+\m na        tatu      yumi -ura
+\ge like.this ?         give -3M.OB
+\gs así      carachupa dar  -3M.OB
+\f así le da la carachupa
+
+\nt A V=O
+\nt aquí esta yumi sólo con dos argumentos: cual es ura, pescado
+u otorongo!!! RA: dice pescado
+
+\ref 0061.672
+\per VY
+\trs ikian iruaka, iniachasu        rayumi     ikian
+\m ikian iruaka  inia      -chasu ra-   yumi ikian
+\ge this  four    sp.fish   -AFEC  3M.SF give this
+\gs este  cuatro  carachama -AFEC  3M.SF dar  este
+
+\trs aɨmantatsui
+\m aɨmanta -tsui
+\ge tiger    -ABL
+\gs otorongo -ABL
+\f estas cuatro carachamitas, le da al otorongo
+\wo O A V GL-tsui
+
+\nt RA: no queda bien el tiempo en otorongo, solo puede ir
+despues del verbo
+
+\ref 0067.485
+\per VY
+\trs uri   ra    eyu,  ra    watari
+\m uri   ra    eyu   ra    watari
+\ge 3M.LF 3M.SF eat   3M.SF missing
+\gs 3M.FL 3M.SF comer 3M.SF faltar
+\f eso come, (pero) le falta
+
+\ref 0070.61
+\per VY
+\trs tupapenan  ra    piatakatura
+\m tupapenan  ra    piyata    -ka  -ta  -ura
+\ge same.place 3M.SF ask       -REI -CAU -3M.OB
+\gs ahí.mismo 3M.SF preguntar -REI -CAU -3M.OB
+\f otra vez le pide
+
+\ref 0073.047
+\per VY
+\trs rimariru, tɨmataka   na  tseta
+\m rimariru  tɨma -taka na  tseta
+\ge grandson  Neg   -MOD  2SF want
+\gs nieto     Neg   -MOD  2SF querer
+
+\trs yumikatura
+\m yumi -ka  -ta  -ura
+\ge give -REI -CAU -3M.OB
+\gs dar  -REI -CAU -3M.OB
+\f nieto, tal vez no quieres dar eso otra vez
+
+\ref 0077.36
+\per VY
+\trs ayta,           ta    tsetakatura
+\m ay      - ta    ta    tseta  -ka  -ta  -ura
+\ge already - 1M.SF 1M.SF want   -REI -CAU -3M.OB
+\gs ya      - 1M.SF 1M.SF querer -REI -CAU -3M.OB
+
+\trs ay      tyamachika
+\m ay      t-     yamachi          -ka
+\ge already 1M.CL- be.hungry        -REI
+\gs ya      1M.CL- estar.hambriento -REI
+\f ya quiero otra vez, ya estoy hambriento
+
+\ref 0080.828
+\per VY
+\trs ah, tupanan    tyumika          rutsu
+\m ah  tupapenan  t-     yumi -ka  r-     utsu
+\ge ah  same.place 1M.CL- give -REI 3M.CL- go
+\gs ah  ahí.mismo 1M.CL- dar  -REI 3M.CL- ir
+
+\trs mukuikanan         nemera
+\m mukuika -nan       n-   emera
+\ge two     -only      2CL- for.eating
+\gs dos     -solamente 2CL- para.comer
+\f ah, te voy a dar otra vez solamente dos para que comas
+
+\ref 0084.453
+\per VY
+\trs na        ray  aɨmantatsui   ra    yumika
+\m na        ray  aɨmanta -tsui ra    yumi -ka
+\ge like.this PRT  tiger    -ABL  3M.SF give -REI
+\gs así      pues otorongo -ABL  3M.SF dar  -REI
+
+\trs mukuika inia
+\m mukuika inia
+\ge two     sp.fish
+\gs dos     carachama
+\f así pues, al otorongo le da otra vez dos carachamas
+\wo GL-tsui A V O
+
+\ref 0088.484
+\per VY
+\trs raepetsui ay      tupapenan  aɨmanta
+\m raepetsui ay      tupapenan  aɨmanta
+\ge after     already same.place tiger
+\gs después  ya      ahí.mismo otorongo
+
+\trs piyatakatura
+\m piyata    -ka  -ta  -ura
+\ge ask       -REI -CAU -3M.OB
+\gs preguntar -REI -CAU -3M.OB
+\f despues, el tigre vuelve a pedir
+
+\ref 0092.688
+\per VY
+\trs rimariru, yumika    temeran
+\m rimariru  yumi -ka  t-     emera      -n
+\ge grandson  give -REI 1M.CL- for.eating -NZR
+\gs nieto     dar  -REI 1M.CL- para.comer -NDR
+\f nieto, dame de comer
+
+\ref 0096.203
+\per VY
+\trs rikua      ikian tatu      yumɨra
+\m rikua      ikian tatu      yumɨra
+\ge that's.why this  ?         be.angry
+\gs por.eso    este  carachupa estar.molesto
+\f por eso se molesta la carachupa
+
+\ref 0099.36
+\per VY
+\trs ay      senior, ami,       marira   ray  uriaka
+\m ay      senior  ami        marira   ray  uri   -a  -ka
+\ge already lord    granfather why      PRT  come  -EV -REI
+\gs ya      señor  abuelo     para.que pues venir -VE -REI
+
+\trs na  piyata    nemeran
+\m na  piyata    n-   emera      -n
+\ge 2SF ask       2CL- for.eating -NZR
+\gs 2SF preguntar 2CL- para.comer -NDR
+\f ay señor, abuelo, por qué pues vienes otra vez a pedir tu comida
+
+\ref 0105.25
+\per VY
+\trs ay      tɨmapura,        makatsui
+\m ay      tɨma - purara    maka  -tsui
+\ge already Neg   - find      where -ABL
+\gs ya      Neg   - encontrar donde -ABL
+
+\trs tayumitsenura
+\m ta-   yumi -tsen  -ura
+\ge 1M.SF give -PUR3  -3M.OB
+\gs 1M.SF dar  -PROP3 -3M.OB
+\f ya no tengo de donde para darte
+\nt RA dice que tɨmapurá, con acento agudo, significaría
+tɨma-purára, es decir se elide la última sílaba
+
+\ref 0108.723
+\per VY
+\trs ay      tɨmapura         mania ta
+\m ay      tɨma - purara    mania ta
+\ge already Neg   - find      how   1M.SF
+\gs ya      Neg   - encontrar cómo 1M.SF
+
+\trs yapchikura
+\m yapichika -ura
+\ge catch     -3M.OB
+\gs agarrar   -3M.OB
+\f ya no hay manera de que agarre
+\nt pero aquí el sentido 'encontrar' de purara es menos evidente,
+aqui purá parece más focalización de la negación
+
+\ref 0111.469
+\per VY
+\trs tsaniuri ene riay,    unikuara
+\m tsaniuri ene riay     uni   -kuara
+\ge come.in  2LF also     water -INE
+\gs adelante 2LF también agua  -INE
+\f ven tu también al agua
+
+\ref 0113.993
+\per VY
+\trs ikiaka    rapurakana        yatɨrɨnan
+\m ikia -ka  ra    -pura -kana yatɨrɨ     -nan
+\ge this -LOC 3M.SF -FOC  -PLM  be.togheter  -only
+\gs este -LOC 3M.SF -FOC  -PLM  estar.juntos -solamente
+
+\trs ene puatua
+\m ene pua  -tua
+\ge 2LF hand -Aum
+\gs 2LF mano -Aum
+\f aquí estan amontonados, tu manazo..
+
+\ref 0116.611
+\per VY
+\trs raputin          na  yatɨrɨta   ramia
+\m ra    -pu   -tin na  yatɨrɨta   ra    -mia
+\ge 3M.SF -INST -Mod 2SF put.together 3M.SF -MOD
+\gs 3M.SF -INST -si  2SF juntar       3M.SF -MOD
+\f con eso (la mano) sí podrías juntarlo
+
+\ref 0118.612
+\per VY
+\trs na        ikian tatu,     kumitsa ikian aɨmantatsui
+\m na        ikian tatu      kumitsa ikian aɨmanta -tsui
+\ge like.this this  ?         talk    this  tiger    -ABL
+\gs así      este  carachupa hablar  este  otorongo -ABL
+\f así le dice la carachupa al otorongo
+
+\ref 0122.127
+\per VY
+\trs ria       ura?
+\m ria       ura
+\ge like.this 3sgMO
+\gs así      3sgMO
+\f así es?
+\nt (de verdad?)
+
+\ref 0123.325
+\per VY
+\trs ria       ura,  ikian, este
+\m ria       ura   ikian  este
+\ge like.this 3sgMO this   this
+\gs así      3sgMO este   este
+\f así es, este...
+
+\ref 0125.409
+\per VY
+\trs ah, ami
+\m ah  ami
+\ge ah  granfather
+\gs ah  abuelo
+\f abuelo
+
+\ref 0127.315
+\per VY
+\trs aja, aver     tupuriutsu
+\m aja  aver     t-     upuri -utsu
+\ge ah   lets.see 1M.CL- fall  -Fut1
+\gs ajá a.ver    1M.CL- caer  -Fut1
+\f a ver, voy a caer
+\nt voy a tirarme al agua
+
+\ref 0129.268
+\per VY
+\trs na        aɨmanta upuri unikuara     
+\m na        aɨmanta upuri uni   -kuara
+\ge like.this tiger    fall  water -INE
+\gs así      otorongo caer  agua  -INE
+\f así, el tigre se vota al agua
+
+\ref 0131.393
+\per VY
+\trs rupuri       tɨma mania ra    yaparari  
+\m r-     upuri tɨma mania ra    yaparari
+\ge 3M.CL- fall  Neg   how   3M.SF ?
+\gs 3M.CL- caer  Neg   cómo 3M.SF hundirse
+\f se tira al agua pero no hay forma de que se hunda
+
+\ref 0135.096
+\per VY
+\trs putunan           yuti
+\m putu   -nan       yuti
+\ge ?      -only      stay
+\gs flotar -solamente permanecer
+\f solamente esta flotando
+
+\ref 0137.393
+\per VY
+\trs rikua      ikian, ikian tatu      kumitsa ratsui
+\m rikua      ikian  ikian tatu      kumitsa ra    -tsui
+\ge that's.why this   this  ?         talk    3M.SF -ABL
+\gs por.eso    este   este  carachupa hablar  3M.SF -ABL
+\f por eso, la carachupa le dice
+
+\ref 0142.174
+\per VY
+\trs ami,       tɨma mania na, na  yaparari utsu
+\m ami        tɨma mania na  na  yaparari utsu
+\ge granfather Neg   how   2SF 2SF ?        go
+\gs abuelo     Neg   cómo 2SF 2SF hundirse ir
+\f abuelo, no hay forma de que te hundas
+
+\ref 0147.893
+\per VY
+\trs tatɨkɨtatsapa          itaki  natsewekari,       nayapararitsen
+\m ta    tɨkɨta -tsapa    itaki  na-   tseweka -ri  na-  yaparari -tsen
+\ge 1M.SF tie      -still    stone  2Pos- belly   -DIF 2SF- ?        -PUR3
+\gs 1M.SF atar     -todavía piedra 2Pos- barriga -DIF 2SF- hundirse -PROP3
+\f voy a amarrar una piedra a tu barriga para que te hundas
+
+\ref 0152.643
+\per VY
+\trs ya      uri,  rimariru
+\m ya      uri   rimariru
+\ge already 3M.LF grandson
+\gs ya      3M.FL nieto
+\f ya, nieto
+
+\ref 0155.424
+\per VY
+\trs tɨkɨtatinura
+\m tɨkɨta -tin -ura
+\ge tie      -Mod -3M.OB
+\gs atar     -si  -3M.OB
+\f si, amárralo
+
+\ref 0157.018
+\per VY
+\trs ikian tatupura        tɨkɨtura      ikuatseme
+\m ikian tatu      -pura tɨkɨta -ura   ukuatseme
+\ge this  ?         -FOC  tie      -3M.OB too.much
+\gs este  carachupa -FOC  atar     -3M.OB mucho
+\f la carachupa le amarra bien
+
+\ref 0160.565
+\per VY
+\trs tɨma mania uchimatatsenura
+\m tɨma mania uchima -ta  -tsen  -ura
+\ge Neg   how   go.out -CAU -PUR3  -3M.OB
+\gs Neg   cómo salir  -CAU -PROP3 -3M.OB
+\f para que no haya forma de que lo saque
+
+\ref 0164.067
+\per VY
+\trs mania ray  tupuriutsu         unipu
+\m mania ray  t-     upuri -utsu uni   -pu
+\ge how   PRT  1M.CL- fall  -Fut1 water -INST
+\gs cómo pues 1M.CL- caer  -Fut1 agua  -INST
+\f cómo pues voy a caerme a agua
+\nt (pregunta el otorongo)
+
+\ref 0166.549
+\per VY
+\trs ipuchi     rara
+\m ipuchi     ra    -ra
+\ge be.heavy   3M.SF -COND
+\gs ser.pesado 3M.SF -COND
+\f si está pesado
+
+\ref 0167.83
+\per VY
+\trs ikiatsui   titika            nutsu
+\m ikia -tsui t-     itika      n-   utsu
+\ge this -ABL  1M.CL- throw      2CL- go
+\gs este -ABL  1M.CL- votar.algo 2CL- ir
+\f de aquí te voy a votar
+
+\ref 0169.72
+\per VY
+\trs ikia ɨwamatsui
+\m ikia ɨwama   -tsui
+\ge this ?        -ABL
+\gs este barranco -ABL
+\f de este barranco
+
+\ref 0172.064
+\per VY
+\trs na        ipamawa           aɨmanta rana tɨkɨta
+\m na        ipama        -wa  aɨmanta rana tɨkɨta
+\ge like.this stand        -GER tiger    3plM tie
+\gs así      estar.parado -GER otorongo 3plM atar
+
+\trs yutin
+\m yuti       -n
+\ge stay       -REL
+\gs permanecer -REL
+\f así se para el otorongo atado a la piedra
+
+\ref 0175.627
+\per VY
+\trs rana tɨkɨta itakipura    era        ra   tsewekari
+\m rana tɨkɨta itaki  -pura era        ra   tseweka -ri
+\ge 3plM tie      stone  -FOC  be.good    3Pos belly   -DIF
+\gs 3plM atar     piedra -FOC  estar.bien 3Pos barriga -DIF
+\f atan muy bien la piedra a su barriga
+
+\ref 0178.314
+\per VY
+\trs raepetsui ikian
+\m raepetsui ikian
+\ge after     this
+\gs después  este
+\f después
+
+\ref 0180.016
+\per NOBODY
+\trs SɨLENCE
+
+\ref 0182.105
+\per VY
+\trs ria       ikian, tatu
+\m ria       ikian  tatu
+\ge like.this this   ?
+\gs así      este   carachupa
+\f la carachupa
+
+\ref 0185.31
+\per VY
+\trs ay      tɨkɨta ikian itakipura    era
+\m ay      tɨkɨta ikian itaki  -pura era
+\ge already tie      this  stone  -FOC  be.good
+\gs ya      atar     este  piedra -FOC  estar.bien
+\f ya ató bien la piedra
+
+\ref 0189.252
+\per VY
+\trs ikiaka    nipama,           pai
+\m ikia -ka  n-   ipama        pai
+\ge this -LOC 2CL- stand        uncle
+\gs este -LOC 2CL- estar.parado tío
+\f párate acá, tío
+
+\ref 0191.141
+\per VY
+\trs ah, ikian, ah
+\m ah  ikian  ah
+\ge ah  this   ah
+\gs ah  este   ah
+\f este
+
+\ref 0195.252
+\per VY
+\trs papatu,     ikiaka    nipama
+\m papa   -tu  ikia -ka  n-   ipama
+\ge father -Aum this -LOC 2CL- stand
+\gs papá  -Aum este -LOC 2CL- estar.parado
+\f vejez, párate acá
+
+\ref 0198.289
+\per VY
+\trs ikiatsui   tayumunu     nutsu     unikuara
+\m ikia -tsui ta    yumunu n-   utsu uni   -kuara
+\ge this -ABL  1M.SF send   2CL- go   water -INE
+\gs este -ABL  1M.SF enviar 2CL- ir   agua  -INE
+\f de aquí te voy a enviar/empujar al agua
+
+\ref 0200.72
+\per VY
+\trs na        ikian tatu
+\m na        ikian tatu
+\ge like.this this  ?
+\gs así      este  carachupa
+\f así (dice) la carachupa
+
+\ref 0202.658
+\per VY
+\trs ra    ipamatura                uni   tsɨmara
+\m ra    ipama        -t   -ura   uni   tsɨma -ra
+\ge 3M.SF stand        -CAU -3M.OB water shore  -DIF
+\gs 3M.SF estar.parado -CAU -3M.OB agua  orilla -DIF
+\f lo hace pararse a la orilla del agua
+
+\ref 0204.877
+\per VY
+\trs raepetsui ritikura
+\m raepetsui r-     itika      -ura
+\ge after     3M.CL- throw      -3M.OB
+\gs después  3M.CL- votar.algo -3M.OB
+\f de ahí le vota
+
+\ref 0206.418
+\per VY
+\trs chak,         muu,          na        ikian aɨmantapura   utsu
+\m chak          muu           na        ikian aɨmanta -pura utsu
+\ge hitting.sound splash        like.this this  tiger    -FOC  go
+\gs sonido.picar  sonido.caída así      este  otorongo -FOC  ir
+
+\trs unikuara
+\m uni   -kuara
+\ge water -INE
+\gs agua  -INE
+\f así suena, el otorongo  va al agua
+
+\ref 0211.293
+\per VY
+\trs pululilin,      na        rapura      utsu ikian yaparari
+\m pululilin       na        ra    -pura utsu ikian yaparari
+\ge ONO             like.this 3M.SF -FOC  go   this  ?
+\gs sonido.hundirse así      3M.SF -FOC  ir   este  hundirse
+\f así suena (cuando) él se hunde
+
+\ref 0216.137
+\per VY
+\trs ay        ikian uri,  umi ikian aɨmantapura
+\m ay        ikian uri   umi ikian aɨmanta -pura
+\ge like.this this  3M.LF see this  tiger    -FOC
+\gs así      este  3M.FL ver este  otorongo -FOC
+
+\trs yaparari ikua
+\m yaparari ikua
+\ge ?        because.of
+\gs hundirse por
+\f entonces, porque ve que el otorongo se hunde
+
+\ref 0221.088
+\per VY
+\trs ikian tatupura        yapana
+\m ikian tatu      -pura yapana
+\ge this  ?         -FOC  run
+\gs este  carachupa -FOC  correr
+\f la carachupa corre/se escapa
+
+\ref 0222.829
+\per VY
+\trs akɨchan
+\m akɨcha     -n
+\ge be.scared   -NZR
+\gs tener.miedo -NDR
+\f asustada
+
+\ref 0224.361
+\per VY
+\trs ra    eyumakura             ikian
+\m ra    eyu   -maka    -ura   ikian
+\ge 3M.SF eat   -NEG.PUR -3M.OB this
+\gs 3M.SF comer -NEG.PUR -3M.OB este
+
+\trs rumanuta          utsun,
+\m r-     umanu -ta  utsu -n
+\ge 3M.CL- die   -CAU go   -REL
+\gs 3M.CL- morir -CAU ir   -REL
+\f (le amarra) para que no le coma, le va a matar
+
+\ref 0227.644
+\per VY
+\trs ikian, aɨmantapuratu
+\m ikian  aɨmanta -pura -tu
+\ge this   tiger    -FOC  -Aum
+\gs este   otorongo -FOC  -Aum
+\f este otorongo
+
+\ref 0229.986
+\per VY
+\trs raepetsui ikian
+\m raepetsui ikian
+\ge after     this
+\gs después  este
+\f luego
+
+\ref 0231.642
+\per VY
+\trs aɨmanta maniataka,  ra    yapapararika             tupakataka
+\m aɨmanta mania -taka ra    yaparari - yaparari -ka  tupa  -ka  -taka
+\ge tiger    how   -MOD  3M.SF lie      - lie      -REI place -LOC -MOD
+\gs otorongo cómo -MOD  3M.SF echarse  - echarse  -REI lugar -LOC -MOD
+\f donde estaría el otorongo revolcándose
+
+\ref 0235.86
+\per VY
+\trs ay      ikian itaki  uchimatsuriay          ikian
+\m ay      ikian itaki  uchima -tsuri -ay      ikian
+\ge already this  stone  go.out -PAS3  -already this
+\gs ya      este  piedra salir  -PAS3  -ya      este
+
+\trs ra    tsewekatsui
+\m ra    tseweka -tsui
+\ge 3M.SF belly   -ABL
+\gs 3M.SF barriga -ABL
+\f ya salió/se desató la piedra de su barriga
+
+\ref 0238.698
+\per VY
+\trs ay      ruchima
+\m ay      r-     uchima
+\ge already 3M.CL- go.out
+\gs ya      3M.CL- salir
+\f ya sale
+
+\ref 0239.861
+\per VY
+\trs ra,   rachikari       ikian ra   rimarirupura
+\m ra    ra-    chikari  ikian ra   rimariru -pura
+\ge 3M.SF 3M.CL- look.for this  3Pos grandson -FOC
+\gs 3M.SF 3M.CL- buscar   este  3Pos nieto    -FOC
+\f busca a su nieto
+
+\ref 0242.82
+\per VY
+\trs rimariru, makatipene?
+\m rimariru  maka  -tipa - ene
+\ge grandson  where -Q    - 2LF
+\gs nieto     donde -Q    - 2LF
+\f nieto, dónde estas
+
+\ref 0244.662
+\per VY
+\trs rimariru utsu yapanan
+\m rimariru utsu yapana -n
+\ge grandson go   run    -NZR
+\gs nieto    ir   correr -NDR
+\f el nieto se fue corriendo (esta corrido)
+
+\ref 0246.693
+\per VY
+\trs ikian ra    uchima uni   tsɨmara
+\m ikian ra    uchima uni   tsɨma -ra
+\ge this  3M.SF go.out water shore  -DIF
+\gs este  3M.SF salir  agua  orilla -DIF
+\f sale a la orilla del agua
+
+\ref 0250.271
+\per VY
+\trs ipamanan                ra    umi
+\m ipama        -nan       ra    umi
+\ge stand        -only      3M.SF see
+\gs estar.parado -solamente 3M.SF ver
+\f parado el mira
+
+\ref 0251.909
+\per VY
+\trs makataka    ta   rimariru utsuy
+\m maka  -taka ta   rimariru utsu -uy
+\ge where -MOD  1Pos grandson go   -Pas1
+\gs donde -MOD  1Pos nieto    ir   -Pas1
+\f dónde se fue mi nieto
+
+\ref 0253.99
+\per VY
+\trs aja, ikian ta   rimariru tseta  umanuta    ta
+\m aja  ikian ta   rimariru tseta  umanu -ta  ta
+\ge ah   this  1Pos grandson want   die   -CAU 1M.SF
+\gs ajá este  1Pos nieto    querer morir -CAU 1M.SF
+\f ah, mi nieto quiere matarme
+
+\ref 0257.146
+\per VY
+\trs ikun  ta    chikuarata rutsu,      makataka
+\m ikun  ta    chikuarata r-     utsu maka  -taka
+\ge today 1M.SF follow     3M.CL- go   where -MOD
+\gs hoy   1M.SF seguir     3M.CL- ir   donde -MOD
+
+\trs tapuraraura
+\m ta-   purara    -ura
+\ge 1M.SF find      -3M.OB
+\gs 1M.SF encontrar -3M.OB
+\f ahora le voy a seguir, dónde quizas lo encontraré
+
+\ref 0259.943
+\per VY
+\trs raepe teyu         rutsu       na        kumitsa
+\m raepe t-     eyu   r-     utsu na        kumitsa
+\ge there 1M.CL- eat   3M.CL- go   like.this talk
+\gs ahí  1M.CL- comer 3M.CL- ir   así      hablar
+\f ahí le voy a comer, así dice
+
+\ref 0261.99
+\per VY
+\trs ikian aɨmantapura   yapana
+\m ikian aɨmanta -pura yapana
+\ge this  tiger    -FOC  run
+\gs este  otorongo -FOC  correr
+\f el otorongo corre,
+
+\ref 0264.206
+\per VY
+\trs tsetuni makarupe    ikian rimariru utsu tupapurarupe
+\m tsetuni maka  -rupe ikian rimariru utsu tupa  -pura -rupe
+\ge smell   where -Fin  this  grandson go   place -FOC  -Fin
+\gs oler    donde -Fin  este  nieto    ir   lugar -FOC  -Fin
+\f olfatea el lugar por donde se fue el nieto
+
+\ref 0267.928
+\per VY
+\trs ra    yapana
+\m ra    yapana
+\ge 3M.SF run
+\gs 3M.SF correr
+\f corre
+
+\ref 0269.897
+\per VY
+\trs ra    chikari  ikia, ra   rimarirupurutsu
+\m ra    chikari  ikia  ra   rimariru -pura -utsu
+\ge 3M.SF look.for this  3Pos grandson -FOC  -Fut1
+\gs 3M.SF buscar   este  3Pos nieto    -FOC  -Fut1
+\f va a buscar a su nieto
+
+\ref 0272.96
+\per VY
+\trs ay      ra    purara    rimariru, ah
+\m ay      ra    purara    rimariru  ah
+\ge already 3M.SF find      grandson  ah
+\gs ya      3M.SF encontrar nieto     ah
+\f y entonces encuentra al nieto
+
+\ref 0275.897
+\per VY
+\trs ya,     ya      ra    yapchika  rutsu
+\m ya      ya      ra    yapichika r-     utsu
+\ge already already 3M.SF catch     3M.CL- go
+\gs ya      ya      3M.SF agarrar   3M.CL- ir
+\f ya lo va a agarrar
+
+\ref 0279.366
+\per VY
+\trs ra   rimariru ipama
+\m ra   rimariru ipama
+\ge 3Pos grandson stop
+\gs 3Pos nieto    detenerse
+\f su nieto se detiene
+
+\ref 0281.491
+\per VY
+\trs ah, hm
+\m ah  hm
+\ge ah  hm
+\gs ah  hm
+
+
+\ref 0284.835
+\per VY
+\trs rimariru ipama
+\m rimariru ipama
+\ge grandson stop
+\gs nieto    detenerse
+\f su nieto se detiene
+
+\ref 0287.803
+\per VY
+\trs maritipura      ami,       na        rakumitsa
+\m mari  -ti -pura ami        na        ra-    kumitsa
+\ge thing -Q  -FOC  granfather like.this 3M.CL- talk
+\gs cosa  -Q  -FOC  abuelo     así      3M.CL- hablar
+\f qué pasa abuelo, así dice
+
+\ref 0292.803
+\per VY
+\trs maritipura
+\m mari  -ti -pura
+\ge thing -Q  -FOC
+\gs cosa  -Q  -FOC
+\f qué pasa
+
+\ref 0294.522
+\per VY
+\trs ikiaka    tauriuy           nachikaritara
+\m ikia -ka  ta-   uri   -uy   na-  chikari  -tara
+\ge this -LOC 1M.SF come  -Pas1 2SF- look.for -PUR1
+\gs este -LOC 1M.SF venir -Pas1 2SF- buscar   -PROP1
+\f aca vengo a buscarte
+
+\ref 0297.241
+\per VY
+\trs marira   na  mɨta    ta
+\m marira   na  mɨta    ta
+\ge why      2SF lie      1M.SF
+\gs para.que 2SF engañar 1M.SF
+\f porque me engañas
+
+\ref 0298.71
+\per VY
+\trs na  tseta  umanuta    ta    unikuara
+\m na  tseta  umanu -ta  ta    uni   -kuara
+\ge 2SF want   die   -CAU 1M.SF water -INE
+\gs 2SF querer morir -CAU 1M.SF agua  -INE
+\f me quieres matar en el agua
+
+\ref 0300.678
+\per VY
+\trs na        ra    kumitsa
+\m na        ra    kumitsa
+\ge like.this 3M.SF talk
+\gs así      3M.SF hablar
+\f así dice
+
+\ref 0302.71
+\per VY
+\trs tɨma, tɨma riaura           ami
+\m tɨma  tɨma ria       -ura   ami
+\ge Neg    Neg   like.this -3M.OB granfather
+\gs Neg    Neg   así      -3M.OB abuelo
+\f no es así, abuelo
+
+\ref 0305.928
+\per VY
+\trs tsenu ikian
+\m tsenu ikian
+\ge hear  this
+\gs oir   este
+\f escucha
+
+\ref 0307.147
+\per VY
+\trs ikian mikura yumunu ikian
+\m ikian mikura yumunu ikian
+\ge this  ?      send   this
+\gs este  zorro  enviar este
+
+\trs kuatiaramuy
+\m kuatiara -n   -uy
+\ge write    -NZR -Pas1
+\gs escribir -NDR -Pas1
+\f el zorro a enviado una carta
+
+\ref 0310.616
+\per VY
+\trs ikian, ah
+\m ikian  ah
+\ge this   ah
+\gs este   ah
+
+
+\ref 0312.319
+\per VY
+\trs ikian, este, tsanuyamuki
+\m ikian  este  tsanuya -muki
+\ge this   this  mouse   -COM
+\gs este   este  ratón  -COM
+\f con el ratón
+
+\ref 0316.006
+\per VY
+\trs ikiaka    rakumitsa
+\m ikia -ka  ra-    kumitsa
+\ge this -LOC 3M.CL- talk
+\gs este -LOC 3M.CL- hablar
+\f acá dice
+
+\ref 0317.288
+\per VY
+\trs tsenupura,  tsenuka    ikia
+\m tsenu -pura tsenu -ka  ikia
+\ge hear  -FOC  hear  -MOD this
+\gs oir   -FOC  oir   -MOD este
+\f escucha, escucha pues esto
+\nt RA: tsenupura 'has de oir'
+
+\ref 0318.788
+\per VY
+\trs mikura kumitsa
+\m mikura kumitsa
+\ge ?      talk
+\gs zorro  hablar
+\f el zorro dice
+
+\ref 0320.069
+\per VY
+\trs na        ra    kumitsa
+\m na        ra    kumitsa
+\ge like.this 3M.SF talk
+\gs así      3M.SF hablar
+\f así dice
+
+\ref 0321.475
+\per VY
+\trs irua       tatu
+\m irua       tatu
+\ge mate       ?
+\gs compañero carachupa
+\f hermano carachupa
+
+\ref 0323.85
+\per VY
+\trs ta    kumitsa ikiaka    kuatiarankuara
+\m ta    kumitsa ikia -ka  kuatiara -n   -kuara
+\ge 1M.SF talk    this -LOC write    -NZR -INE
+\gs 1M.SF hablar  este -LOC escribir -NDR -INE
+\f hablo acá, a través de esta carta
+
+\ref 0326.413
+\per VY
+\trs na  purara    maniawatsun     aɨmantakanara
+\m na  purara    maniawatsu -n   aɨmanta -kana -ra
+\ge 2SF find      how        -NZR tiger    -PLM  -COND
+\gs 2SF encontrar como       -NDR otorongo -PLM  -COND
+\f si encuentras algún/cualquier clase de tigre
+
+\ref 0329.803
+\per VY
+\trs na, na
+\m na  na
+\ge 2SF 2SF
+\gs 2SF 2SF
+
+
+\ref 0332.647
+\per VY
+\trs nikuata       rana
+\m n-   ikuata   rana
+\ge 2CL- let.know 3plM
+\gs 2CL- avisar   3plM
+\f avísales
+
+\ref 0334.381
+\per VY
+\trs ikumenan rana, rana umanutsu
+\m ikumenan rana  rana umanu -utsu
+\ge soon     3plM  3plM die   -Fut1
+\gs pronto   3plM  3plM morir -Fut1
+\f pronto van a morir
+
+\ref 0337.459
+\per VY
+\trs ikian tata    nuwan,         purara    ranuri
+\m ikian tata    nua       -n   purara    rana uri
+\ge this  fire    bebig     -REL find      3plM come
+\gs este  candela sergrande -REL encontrar 3plM venir
+\f la candela grande les viene a encontrar
+
+\ref 0340.521
+\per VY
+\trs tin rana warika ɨwatin     ɨwɨrari
+\m tin rana warika ɨwa   -tin ɨwɨra -ri
+\ge MOD 3plM go.up  ?      -Mod tree    -DIF
+\gs MOD 3plM subir  tronco -si  árbol  -DIF
+\f entonces que suban al tronco, al palo
+
+\ref 0343.302
+\per VY
+\trs raepe rana utsuepetsen
+\m raepe rana utsuepe -tsen
+\ge there 3plM scape   -PUR3
+\gs ahí  3plM escapar -PROP3
+\f ahí para que se salven/escapen (del fuego)
+
+\ref 0345.24
+\per VY
+\trs na        ikian kumitsa
+\m na        ikian kumitsa
+\ge like.this this  talk
+\gs así      este  hablar
+\f así dice
+
+\ref 0346.958
+\per VY
+\trs ikian kuatiaran     kumitsa, ami
+\m ikian kuatiara -n   kumitsa  ami
+\ge this  write    -NZR talk     granfather
+\gs este  escribir -NDR hablar   abuelo
+\f esta carta dice (así), abuelo
+
+\ref 0350.439
+\per VY
+\trs aja, carajo
+\m aja  carajo
+\ge ah   ***
+\gs ajá carajo
+\f ajá, carajo
+
+\ref 0351.771
+\per VY
+\trs akɨchararawa        ura
+\m akɨchara -ra   -wa  ura
+\ge scare.SO  -PUR  -GER 3sgMO
+\gs asustar   -PROP -GER 3sgMO
+\f eso da miedo
+\nt es dificil el analisis de ra!!!  ɨtsɨkaka
+
+\ref 0353.583
+\per VY
+\trs makatin    ɨwɨraritaka      ta    warikamia
+\m maka  -tin ɨwɨra -ri  -taka ta    warika -mia
+\ge where -Mod tree    -DIF -MOD  1M.SF go.up  -MOD
+\gs donde -si  árbol  -DIF -MOD  1M.SF subir  -MOD
+\f donde pues, en cual palo podría subir
+
+\ref 0356.496
+\per VY
+\trs ikian ɨwɨra ikanamari             na  warika
+\m ikian ɨwɨra ikana   -n   -a  -ri  na  warika
+\ge this  tree    dry     -REL -EV -DIF 2SF go.up
+\gs este  árbol  secarse -REL -VE -DIF 2SF subir
+\f por este árbol que esta seco sube
+
+\ref 0358.864
+\per VY
+\trs ra    warikatura         ɨwɨra
+\m ra    warika -t   -ura   ɨwɨra
+\ge 3M.SF go.up  -CAU -3M.OB tree
+\gs 3M.SF subir  -CAU -3M.OB árbol
+
+\trs ikanamari
+\m ikana   -n   -a  -ri
+\ge dry     -NZR -EV -DIF
+\gs secarse -NDR -VE -DIF
+\f le hace subir por el palo seco
+
+\ref 0361.145
+\per VY
+\trs ɨwati aɨmantapura   yapɨkanan
+\m ɨwati aɨmanta -pura yapɨka -nan
+\ge high   tiger    -FOC  sit     -only
+\gs alto   otorongo -FOC  sentar  -solamente
+\f en lo alto esta sentado el tigre
+
+\ref 0364.708
+\per VY
+\trs ikian tatupura,       ikian
+\m ikian tatu      -pura ikian
+\ge this  ?         -FOC  this
+\gs este  carachupa -FOC  este
+\f la carachupa
+
+\ref 0367.349
+\per VY
+\trs yipiararari
+\m y-     ipia     -ra   -ra   -ri
+\ge 3F.CL- firewood -Vbzr -Vbzr -Prog
+\gs 3F.CL- leña    -Vbdr -Vbdr -Prog
+\f esta leñando
+
+\ref 0368.818
+\per VY
+\trs ikian ɨwɨra tsapɨtari
+\m ikian ɨwɨra tsapɨta -ri
+\ge this  tree    base     -DIF
+\gs este  árbol  base     -DIF
+\f al pie del árbol 
+
+\ref 0372.318
+\per VY
+\trs ikian tatu,     ay      yatɨrɨta   ipiapura
+\m ikian tatu      ay      yatɨrɨta   ipia     -pura
+\ge this  ?         already put.together firewood -FOC
+\gs este  carachupa ya      juntar       leña    -FOC
+\f esta carachupa ya esta juntando la leña
+
+\ref 0377.883
+\per VY
+\trs ikian ɨwɨra ikanan       tsapɨtari
+\m ikian ɨwɨra ikana   -n   tsapɨta -ri
+\ge this  tree    dry     -NZR base     -DIF
+\gs este  árbol  secarse -NDR base     -DIF
+\f al pie del árbol seco
+
+\ref 0380.974
+\per VY
+\trs raepe    ay      ra    kumitsa
+\m raepe    ay      ra    kumitsa
+\ge then     already 3M.SF talk
+\gs entonces ya      3M.SF hablar
+\f entonces dice
+
+\ref 0384.443
+\per VY
+\trs ami,       na        ra    kumitsa ikian
+\m ami        na        ra    kumitsa ikian
+\ge granfather like.this 3M.SF talk    this
+\gs abuelo     así      3M.SF hablar  este
+\f abuelo, así dice
+
+\ref 0388.255
+\per VY
+\trs rami             ɨwatin     ra    tsapuki
+\m r-    ami        ɨwati -n   ra    tsapuki
+\ge 3Pos- granfather high   -REL 3M.SF call
+\gs 3Pos- abuelo     alto   -REL 3M.SF llamar
+\f al abuelo que esta en lo alto le llama
+
+\ref 0391.443
+\per VY
+\trs uuu, na        aɨmanta tsawitiura       ɨwatitsui
+\m *uuu na        aɨmanta tsawiti   -ura   ɨwati -tsui
+\ge ***  like.this tiger    answer    -3M.OB high   -ABL
+\gs ***  así      otorongo responder -3M.OB alto   -ABL
+\f uuu, así le responde el otorongo desde lo alto
+
+\ref 0396.855
+\per VY
+\trs maritipura
+\m mari  -ti -pura
+\ge thing -Q  -FOC
+\gs cosa  -Q  -FOC
+\f que cosa
+
+\ref 0399.227
+\per VY
+\trs ikumenan tata    wararutsu
+\m ikumenan tata    wararu -utsu
+\ge soon     fire    fire?  -Fut1
+\gs pronto   candela arder  -Fut1
+\f pronto va a arder la candela
+
+\ref 0402.571
+\per VY
+\trs erura
+\m era        -ura
+\ge be.good    -3M.OB
+\gs estar.bien -3M.OB
+\f esta bien
+
+\ref 0404.134
+\per VY
+\trs utsutaka   tutsuepe
+\m utsu -taka t-     utsuepe
+\ge go   -MOD  1M.CL- scape
+\gs ir   -MOD  1M.CL- escapar
+\f tal vez me voy a escapar
+
+\ref 0405.946
+\per VY
+\trs utsuepe nutsu
+\m utsuepe n-   utsu
+\ge scape   2CL- go
+\gs escapar 2CL- ir
+\f te vas a escapar
+
+\ref 0407.446
+\per VY
+\trs ɨwati nikua
+\m ɨwati n-   ikua
+\ge high   2CL- because.of
+\gs alto   2CL- por
+\f porque estas arriba
+
+\ref 0408.826
+\per VY
+\trs na        ikian tatu      mɨtaryuti
+\m na        ikian tatu      mɨta    - r-     yuti
+\ge like.this this  ?         lie      - 3M.CL- stay
+\gs así      este  carachupa engañar - 3M.CL- permanecer
+\f así la carachupa le esta engañando 
+
+\ref 0411.036
+\per VY
+\trs raepetsui rana tseneta  ikian tata,   rana
+\m raepetsui rana tseneta  ikian tata    rana
+\ge after     3plM turn.on  this  fire    3plM
+\gs después  3plM encender este  candela 3plM
+\f después encienden la candela 
+
+\ref 0413.663
+\per VY
+\trs rana yatɨrɨtan       ipiapura
+\m rana yatɨrɨta   -n   ipia     -pura
+\ge 3plM put.together -REL firewood -FOC
+\gs 3plM juntar       -REL leña    -FOC
+\f la leña que han juntado
+
+\ref 0416.757
+\per VY
+\trs ɨwɨrapura   ukuatsemenan         wararukapa
+\m ɨwɨra -pura ukuatseme -nan       wararu -ka  -pa
+\ge tree    -FOC  too.much  -only      fire?  -REI -CPL
+\gs árbol  -FOC  mucho     -solamente arder  -REI -CPL
+\f el árbol arde por todos lados
+
+\ref 0421.35
+\per VY
+\trs rapiruarari        ikian ɨwɨra wararu, hasta
+\m ra-   piruara -ri  ikian ɨwɨra wararu  hasta
+\ge 3Pos- skin    -DIF this  tree    fire?   until
+\gs 3Pos- piel    -DIF este  árbol  arder   hasta
+\f (en) su corteza, el árbol arde
+\nt la corteza del árbol arde (poseción externa???)
+
+\ref 0423.922
+\per VY
+\trs ikian aɨmanta yuti       tupapuraka
+\m ikian aɨmanta yuti       tupa  -pura -ka
+\ge this  tiger    stay       place -FOC  -LOC
+\gs este  otorongo permanecer lugar -FOC  -LOC
+\f donde esta el otorongo 
+
+\ref 0426.663
+\per VY
+\trs aɨmanta tɨma mania
+\m aɨmanta tɨma mania
+\ge tiger    Neg   how
+\gs otorongo Neg   cómo
+\f el otorongo, no tiene forma
+
+\ref 0429.099
+\per VY
+\trs maniakaka  ikumenan
+\m maniakaka  ikumenan
+\ge be.worried soon
+\gs afligirse  pronto
+\f pronto se preocupa/se aflige
+
+\ref 0430.654
+\per VY
+\trs ay      tata    uri,  ay      ra    ukita
+\m ay      tata    uri   ay      ra    uki      -ta
+\ge already fire    come  already 3M.SF burn     -CAU
+\gs ya      candela venir ya      3M.SF quemarse -CAU
+
+\trs turi
+\m t-     uri
+\ge 1M.CL- come
+\gs 1M.CL- venir
+\f ya viene la candela, ya viene a quemarme
+
+\ref 0433.621
+\per VY
+\trs na        ikian aɨmantapura   ɨtsɨkaka
+\m na        ikian aɨmanta -pura ɨtsɨ -ka  -ka
+\ge like.this this  tiger    -FOC  fear   -REI -REF
+\gs así      este  otorongo -FOC  susto  -REI -REF
+\f así se asusta el otorongo
+
+\ref 0435.85
+\per VY
+\trs ikia ra    ya,       rimariru
+\m ikia ra    ya        rimariru
+\ge this 3M.SF like.this grandson
+\gs este 3M.SF así      nieto
+\f ya, nieto
+
+\ref 0438.605
+\per VY
+\trs ay      ukiari             tutsu
+\m ay      uki      -a  -ri   t-     utsu
+\ge already burn     -EV -Prog 1M.CL- go
+\gs ya      quemarse -VE -Prog 1M.CL- ir
+\f ya me estoy quemando
+\nt progresivo y futuro??
+
+\ref 0441.105
+\per VY
+\trs ukuki, papa   wiju
+\m ukuki  papa   wiju
+\ge fall   father old
+\gs caer   papá  viejo
+\f caete, papá viejo
+
+\ref 0443.605
+\per VY
+\trs ukuki, na        ikian
+\m ukuki  na        ikian
+\ge fall   like.this this
+\gs caer   así      este
+\f caete, así
+
+\ref 0446.105
+\per VY
+\trs tatu      kumitsa ratsui,     ukuki
+\m tatu      kumitsa ra    -tsui ukuki
+\ge ?         talk    3M.SF -ABL  fall
+\gs carachupa hablar  3M.SF -ABL  caer
+\f la carachupa le dice, cáete
+
+\ref 0448.948
+\per VY
+\trs raepetsui na  ichari
+\m raepetsui na  ichari
+\ge after     2SF leave
+\gs después  2SF dejar
+\f después (dice), deja 
+
+\ref 0451.855
+\per VY
+\trs ikian nyapɨkatupa
+\m ikian n-   yapɨka -tupa
+\ge this  2CL- sit     -REL
+\gs este  2CL- sentar  -REL.donde
+\f tu asiento
+
+\ref 0453.572
+\per VY
+\trs ukuki
+\m ukuki
+\ge fall
+\gs caer
+\f cae
+
+\ref 0454.452
+\per VY
+\trs ikian aɨmanta
+\m ikian aɨmanta
+\ge this  tiger
+\gs este  otorongo
+\f el otorongo
+
+\ref 0455.99
+\per VY
+\trs tsapiarinpura,       ah
+\m tsapiari  -n   -pura ah
+\ge listen.to -NZR -FOC  ah
+\gs obedecer  -NDR -FOC  ah
+\f obediente
+
+\ref 0459.552
+\per VY
+\trs ukuki ɨwatitsui
+\m ukuki ɨwati -tsui
+\ge fall  high   -ABL
+\gs caer  alto   -ABL
+\f cae desde lo alto
+
+\ref 0461.802
+\per VY
+\trs tatakuara      raepe rapura      uki
+\m tata    -kuara raepe ra    -pura uki
+\ge fire    -INE   there 3M.SF -FOC  burn
+\gs candela -INE   ahí  3M.SF -FOC  quemarse
+\f en la candela, ahí se quema 
+
+\ref 0464.052
+\per VY
+\trs raepe aɨmantapura   upa
+\m raepe aɨmanta -pura upa
+\ge there tiger    -FOC  end
+\gs ahí  otorongo -FOC  terminar
+\f ahí el otorongo se termina
+
+\ref 0466.365
+\per VY
+\trs na        ikian tatu
+\m na        ikian tatu
+\ge like.this this  ?
+\gs así      este  carachupa
+\f así la carachupa
+
+\ref 0468.302
+\per VY
+\trs ikian tatu
+\m ikian tatu
+\ge this  ?
+\gs este  carachupa
+\f la carachupa
+
+\ref 0469.958
+\per VY
+\trs mɨtan        aɨmantapura   umanutsuri
+\m mɨta    -n   aɨmanta -pura umanu -tsuri
+\ge lie      -NZR tiger    -FOC  die   -PAS3
+\gs engañar -NDR otorongo -FOC  morir -PAS3
+
+\trs ɨmɨna      tatakuara
+\m ɨmɨna      tata    -kuara
+\ge long.ago     fire    -INE
+\gs antiguamente candela -INE
+\f engañado el otorongo muere en la candela antiguamente
+
+\ref 0474.865
+\per VY
+\trs na        raepenan         ikian, kun, ikian ɨmɨntsara
+\m na        raepe -nan       ikian  kuin ikian ɨmɨntsara
+\ge like.this there -only      this   ese  this  story
+\gs así      ahí  -solamente este   ese  este  cuento
+\f ahí nomás, esta historia. 
+
+\ref 0478.396
+\per VY
+\trs ikian tatu      ɨmɨntsara upa
+\m ikian tatu      ɨmɨntsara upa
+\ge this  ?         story       end
+\gs este  carachupa cuento      terminar
+\f el cuento de la carachupa termina
+
+\ref 0481.381

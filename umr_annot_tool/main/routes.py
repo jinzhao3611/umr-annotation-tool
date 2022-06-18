@@ -1,5 +1,5 @@
 import sqlalchemy.exc
-from flask import url_for, redirect, flash, send_from_directory, make_response, jsonify
+from flask import url_for, redirect, flash, make_response, jsonify, send_file
 from werkzeug.utils import secure_filename
 from typing import List
 import json
@@ -935,12 +935,12 @@ def display_post():
 def guidelines():
     return render_template('user_guide.html')
 
-@main.route('/guide/<path:filename>', methods=['GET', 'POST'])
+@main.route('/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     # Appending app path to upload folder path within app root folder
-    uploads = os.path.join(main.root_path, 'resources')
+    uploads = "static/sample_files/" + filename
     # Returning file from appended path
-    return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
+    return send_file(uploads, as_attachment=True, attachment_filename=filename)
 
 # #farasapy
 # @main.route('/getfarasalemma', methods=['GET', 'POST'])
