@@ -9,13 +9,12 @@
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Upload Lexicon</legend>
                 <div class="input-group mb-3">
-                      <div class="input-group-prepend">
+                    <div class="input-group-prepend">
                         {{ lexicon_form.file }}
-                      </div>
-
+                    </div>
                     <div>
-                        {{ lexicon_form.language_mode.label(class="form-check-label") }}
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ lexicon_form.language_mode(class="form-check-input")}}
+                        {{ lexicon_form.format.label(class="form-check-label") }}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ lexicon_form.format(class="form-check-input") }}
                     </div>
                 </div>
             </fieldset>
@@ -27,7 +26,10 @@
     </div>
 {% endblock content %}
 {% block content2 %}
-    <div>warning: uploading a new lexicon will overwrite current lexicon, click on "show all lexicon" button to view current lexicon</div>
-    <a class="btn btn-info btn-sm" title="click to show all lexicon" href="{{ url_for('users.alllexicon', project_id=project_id) }}" onclick="UMR2db()">show all lexicon</a>
+    <div>warning: uploading a new lexicon will overwrite current lexicon, click on "show all lexicon" button to view
+        current lexicon
+    </div>
+    <a class="btn btn-info btn-sm" title="click to show all lexicon"
+       href="{{ url_for('users.alllexicon', project_id=project_id) }}" onclick="UMR2db()">show all lexicon</a>
 
 {% endblock content2 %}

@@ -32,14 +32,7 @@ class UploadForm(FlaskForm):
 
 class UploadLexiconForm(FlaskForm):
     file = FileField()
-    language_mode = SelectField('Language', choices=[("arapahoe","arapahoe"),
-                                                     ("arabic", "arabic"),
-                                                     ("chinese", "chinese"),
-                                                     ("english", "english"),
-                                                     ("navajo", "navajo"),
-                                                     ("sanapana", "sanapana"),
-                                                     ("secoya", "secoya"),
-                                                     ("kukama", "kukama"),])
+    format = SelectField('Format', choices=[("flex", "flex"), ("toolbox", "toolbox")])
     submit = SubmitField('Upload')
 
 

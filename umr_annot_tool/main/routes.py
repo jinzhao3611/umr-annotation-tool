@@ -188,7 +188,8 @@ def upload_lexicon(current_project_id):
     if lexicon_form.validate_on_submit():
         if lexicon_form.file.data:
             content_string = lexicon_form.file.data.read().decode("utf-8")
-            frames_dict = parse_lexicon_xml(content_string)
+            file_format = lexicon_form.format.data
+            frames_dict = parse_lexicon_xml(content_string, file_format)
             fd = FrameDict.from_dict(frames_dict)
             lexicon2db(project_id=current_project_id, lexicon_dict=fd.flatten)
             return redirect(url_for('users.project', project_id=current_project_id))
