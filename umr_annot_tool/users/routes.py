@@ -9,6 +9,7 @@ from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
 import json
+import datetime
 
 from one_time_scripts.parse_input_xml import html
 from lemminflect import getLemma
@@ -54,12 +55,20 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('users.account'))
     form = LoginForm()
+
     if form.validate_on_submit():
+
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember.data)
+            # auto-login within 7 days
+            duration=datetime.timedelta(days=7)
+            login_user(user, remember=form.remember.data,duration=duration)
+            print(form.remember.data)
+            # if form.remember.data is True:
+            #     print(session['remember'])
+            #     print(session['remember_seconds'])
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('users.account'))
+            return  redirect(next_page) if next_page else redirect(url_for('users.account'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -294,7 +303,8 @@ def project(project_id):
     elif request.method == 'GET':
         form.projectname.data = project_name
 
-
+    print(form.projectname.data)
+    print(session.items())
     project_members = Projectuser.query.filter(Projectuser.project_id == project_id).all()
     members = []
     permissions = []
@@ -342,7 +352,7 @@ def project(project_id):
                             members=members, permissions=permissions, member_ids=member_ids, checked_out_by=list(checked_out_by),
                            projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, qcUploaderIds=qcUploaderIds, annotatedDocs=annotatedDocs,
                            daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission,
-                           form=form, dummy_user_id=dummy_user_id)
+                           form=form,dummy_user_id=dummy_user_id)
 
 @users.route("/user/<string:username>")
 def user_posts(username):

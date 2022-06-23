@@ -657,7 +657,7 @@ function color_amr_elem(id, color, event_type) {
 
 
 /** entrance ******************************************************/
-function submit_template_action(id, tokens = "", parentVarLoc="") {
+function submit_template_action(id, tokens = "") {
     if (tokens !== "") { //multiword expression
         if(tokens.indexOf(' ') >= 0 && id==='add'){
             tokens = tokens.replaceAll(" ", "-");
@@ -676,11 +676,25 @@ function submit_template_action(id, tokens = "", parentVarLoc="") {
                 current_parent = umr[new_k];
                 console.log("current_parent is " + current_parent);
             }
+            showHead();
             current_mode = 'add';
         }
     } else if (id === 'set_parent') {
-        current_parent = umr[parentVarLoc + '.v'];
-        showHead(parentVarLoc);
+        let test_str = "";
+        test_str += selection;
+        console.log("selected variable to be set to head: ", test_str);
+
+        test_str = test_str.trim();
+        let k = getKeyByValue(umr, test_str);
+        if (k.includes("v")) {
+            current_parent = test_str;
+            console.log("current_parent is: " + current_parent);
+        } else {
+            let new_k = k.replace('c', 'v');
+            current_parent = umr[new_k];
+            console.log("current_parent is: " + current_parent);
+        }
+        showHead();
     } else if (id === 'add') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
     } else if (id === 'add-constant') {
@@ -985,7 +999,7 @@ function showAlign(){
     }
     setInnerHTML('align', align_str);
 }
-function showHead(parentVarLoc){
+function showHead(){
     let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
     while(existingHead.length){
         var parent = existingHead[0].parentNode;
@@ -994,7 +1008,7 @@ function showHead(parentVarLoc){
         }
         parent.removeChild(existingHead[0]);
     }
-    document.getElementById(`variable-${parentVarLoc}`).setAttribute("class", "text-success")
+    highlight(document.getElementById("amr"), [current_parent + " "]);
 }
 
 
@@ -2167,6 +2181,7 @@ function show_amr(args) {
         if(language === 'chinese' || language === 'english'){
             // showAnnotatedTokens();
         }
+        showHead();
     }
     return deHTML(html_amr_s);
 }
@@ -2242,6 +2257,13 @@ function indent_for_loc(loc, c, style, n) {
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
+
+        console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
+        if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'){
+            selection=''
+            // selection.removeAllRanges()
+        }
+
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
@@ -2448,8 +2470,14 @@ function UMR2db() {
 }
 
 function deHTML2(s){
+    s = s.replaceAll('<div id="amr">', '');
+    s = s.replaceAll('\n', "");
+    s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
-    s = deHTML(s)
+    s = s.replaceAll('&nbsp;', ' ');
+    s = s.replaceAll('<i>', '');
+    s = s.replaceAll('</i>', '');
+
     return s;
 }
 
@@ -2479,7 +2507,7 @@ function export_annot(exported_items, content_string) {
         + "\n# alignment:"
         + a[2]
         + "\n# document level annotation:\n"
-        + docUmrTransform(deHTML2(a[3]), false).replaceAll('<br>', '\n')
+        + deHTML2(a[3])
         +"\n").join("\n\n# :: snt");
 
     let filename;
@@ -2588,16 +2616,4 @@ function submit_command(){
 
 function reset(){
     show_amr('show');
-}
-
-// https://stackoverflow.com/questions/1335252/how-can-i-get-the-dom-element-which-contains-the-current-selection
-function getSelectedNode() {
-    if (document.selection)
-        return document.selection.createRange().parentElement();
-    else
-    {
-        var selection = window.getSelection();
-        if (selection.rangeCount > 0)
-            return selection.getRangeAt(0).startContainer.parentNode;
-    }
 }

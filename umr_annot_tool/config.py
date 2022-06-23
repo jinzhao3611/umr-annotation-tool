@@ -1,6 +1,8 @@
 import os
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
+    os.environ['DATABASE_URL']='postgresql://postgres:postgres@localhost:5432/postgres'
+    SECRET_KEY = os.urandom(32)
+    # SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
     # this is using my own email as the sender
