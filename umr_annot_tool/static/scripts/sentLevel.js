@@ -2257,6 +2257,13 @@ function indent_for_loc(loc, c, style, n) {
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
+
+        console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
+        if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'){
+            selection=''
+            // selection.removeAllRanges()
+        }
+
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
