@@ -70,7 +70,20 @@ body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > 
 .dropdown-submenu:hover>a:after {
     border-left-color: #fff;
 }
+.main_annotation{
+    display: block;
+    width: 100%;
 
+}
+.main_annotation tbody tr{
+display: inline-block
+
+
+}
+.main_annotation td{
+    white-space: nowrap;
+    display: block;
+}
 .dropdown-submenu.pull-left {
     float: none;
 }
@@ -87,4 +100,5 @@ body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > 
     height:auto;
     overflow-y: scroll;
     max-height: 250px;
+
 }

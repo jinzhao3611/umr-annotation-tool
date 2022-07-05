@@ -1086,6 +1086,7 @@ function newVar(concept) {
  * @returns {string} return a new amr head, "b"
  */
 function newUMR(concept) {
+    console.log(concept, 'i am testing newumr')
     let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
@@ -1101,6 +1102,7 @@ function newUMR(concept) {
     recordConcept(concept, n);
     variable2concept[v] = concept;
     state_has_changed_p = 1;
+
     return v;
 }
 
@@ -1116,6 +1118,7 @@ function addTriple(head, role, arg, arg_type) {
     head = strip(head); // b
     role = strip(role); // :arg1
     arg = strip(arg); //car
+    console.log(head,role,arg, arg_type,'i am testing addtriple')
     let head_var_locs = getLocs(head);
     let arg_var_locs;
     let arg_variable;
@@ -1225,6 +1228,7 @@ function addTriple(head, role, arg, arg_type) {
             
             renorm_ops(head); //in umr, reorder :op5, :op8, :op6 to :op1, :op2, :op3
         }
+        // console.log(arg_variable)
         return arg_variable;
     } else {
         return '';
@@ -1880,6 +1884,7 @@ function role_unquoted_string_arg(role, arg, loc) {
  * @returns {string} returns a html string that represents the penman format
  */
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
+
     loc += '';
     if (umr[loc + '.d']) { //if this node has already been deleted
         return '';
@@ -2119,7 +2124,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         if (tree_span_args) {
             s = '<span ' + tree_span_args + '>' + s + '</span>';
         }
-        // console.log("s: "+ s);
+        console.log("s: "+ s);
         return s;
     }
 }
@@ -2129,6 +2134,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
  * @param args "show" or "show replace" or "show delete", if args is empty string, nothing will be shown
  */
 function show_amr(args) {
+    console.log('I am here to test show_amr')
     let s; //DOM element that contains umr
     let html_amr_s; //html string of the umr penman graph
     n_elems_w_id = 0; //keep counts of element (used in show delete)
@@ -2146,17 +2152,20 @@ function show_amr(args) {
         let n = umr['n']; // how many children currently in the tree
         for (let i = 1; i <= n; i++) { //traverse children
             let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
+            // console.log(show_amr_rec_result)
             if (show_amr_rec_result){
                 amr_s += show_amr_rec_result + '\n';
             }
         }
 
         html_amr_s = amr_s;
+        // console.log(html_amr_s)
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
         // this is the actual output part
         if(docAnnot){
             html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         }
+        console.log(html_amr_s)
         setInnerHTML('amr', html_amr_s);
         show_umr_status = args;
     }
@@ -2258,7 +2267,7 @@ function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
 
-        console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
+        // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
         if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'){
             selection=''
             // selection.removeAllRanges()
@@ -2615,5 +2624,97 @@ function submit_command(){
 }
 
 function reset(){
-    show_amr('show');
+
+    // setInnerHTML('amr',html_amr_s)
+    // var s;
+    // if ((s = document.getElementById(id)) != null) {
+    //     s.innerHTML = value;
+    // }
+// }
+}
+
+
+    window.onload=function(){
+    // let sent=document.getElementsByClassName("table table-striped table-sm")
+
+    let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0]
+    console.log(sent.getElementsByTagName('tr')[0].cells.length)
+     let wordcount=   sent.getElementsByTagName('tr')[0].cells.length
+    // sent.
+    // let sent=document.createElement('div')
+    // sent.innerHTML=sentence
+    // let sent=document.getElementById('sentence');
+    // sent.length
+    // sent=JSON.parse(sentence)
+    let current=sent
+        // console.log(current.childNodes.length);
+    let row=document.createElement('tr')
+     let val1=document.createElement('td')
+    val1.innerHTML=''
+    row.appendChild(val1)
+    // let current=sent[1];
+        // console.log(current.classList)
+for (var i=1;i<wordcount;i++){
+
+        let val=document.createElement('td')
+        val.innerHTML='x'+i
+        row.appendChild(val)
+}
+   current.appendChild(row)
+        //should accept index get from the input from the users and get the corresponding word
+        first_row=current.getElementsByTagName('tr')[0]
+    console.log(first_row.cells[1].textContent.slice(2))
+}
+
+function set_load_visible(){
+    // $("#load-table").display.toggle();
+    let load_widget=document.getElementById('load-table')
+    if (load_widget.style.display === 'none') {
+    load_widget.style.display = 'inline';
+  } else {
+    load_widget.style.display = 'none';
+  }
+
+}
+function load2mar(){
+    let load_amr=document.getElementById('load-plain').value;
+    // html_amr_s='<span id="variable-1">s3x</span> / <span title="">浦城</span>\n' +
+    //      '&nbsp;&nbsp;:ARG0 (<span id="variable-1.1">s3x2</span> / <span title="">宋</span>)'
+    // // console.log(show_amr_rec(0,'show',0,''))
+    // // if (document)
+    // document.getElementById('amr').innerHTML=html_amr_s.replace(/\n/g, "<br>\n")
+    // setInnerHTML('amr',load_amr)
+    let line='';
+   // for (line in load_amr.trim().split('\n')){
+   //     console.log(line)
+   //
+   // }
+    let newhead=load_amr.trim().split('\n')
+    let test=newUMR(newhead[0].split('/')[1])
+    // var head =
+    // (s1x / 8编码)
+    let newchild=/\((.+)\)\)/.exec(newhead[1])[1]
+    addOr(test+' '+':ARG1'+' '+newchild.split('/')[1]  )
+    // console.log(newchild,newhead[1])
+ let amr_s = ''; // html string of the umr penman graph
+        let n = umr['n']; // how many children currently in the tree
+        for (let i = 1; i <= n; i++) { //traverse children
+            let show_amr_rec_result = show_amr_rec(i, 'show', 0, ' '); //returns a html string that represents the penman format of this recursion
+            // console.log(show_amr_rec_result)
+            if (show_amr_rec_result){
+                amr_s += show_amr_rec_result + '\n';
+            }
+        }
+
+        html_amr_s = amr_s;
+        // console.log(html_amr_s)
+        html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
+        // this is the actual output part
+        if(docAnnot){
+            html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
+        }
+
+        setInnerHTML('amr', html_amr_s);
+
+
 }

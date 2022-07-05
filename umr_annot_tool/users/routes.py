@@ -63,10 +63,7 @@ def login():
             # auto-login within 7 days
             duration=datetime.timedelta(days=7)
             login_user(user, remember=form.remember.data,duration=duration)
-            print(form.remember.data)
-            # if form.remember.data is True:
-            #     print(session['remember'])
-            #     print(session['remember_seconds'])
+
             next_page = request.args.get('next')
             return  redirect(next_page) if next_page else redirect(url_for('users.account'))
         else:
@@ -304,7 +301,7 @@ def project(project_id):
         form.projectname.data = project_name
 
     print(form.projectname.data)
-    print(session.items())
+    # print(session.items())
     project_members = Projectuser.query.filter(Projectuser.project_id == project_id).all()
     members = []
     permissions = []
