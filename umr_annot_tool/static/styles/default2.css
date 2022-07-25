@@ -96,9 +96,65 @@ display: inline-block
     border-radius: 6px 0 6px 6px;
 }
 
-#info, #all-sentences, #sentence{
+#all-sentences, #sentence{
     height:auto;
     overflow-y: scroll;
     max-height: 250px;
 
+}
+
+#info{
+        height:auto;
+    overflow-y: scroll;
+    max-height: 250px;
+    display: none;}
+
+
+ul.raw_text,ul.raw_text_index {
+    padding:0 0 0 0 ;
+    width: auto;
+    /*width: max-content;*/
+    white-space: normal;
+    /*word-wrap: break-word;*/
+/*word-break: break-all;*/
+    /*float: left;*/
+    /*overflow: clip;*/
+}
+
+
+ul.raw_text,ul.raw_text_index, ul.raw_text_index li , ul.raw_text li {
+    list-style-type: none;
+
+    /*margin: 0;*/
+    display: block;
+    /*word-wrap: break-word;*/
+    /*float: left;*/
+}
+ul.raw_text li div{
+     list-style-type: none;
+
+
+
+}
+ul.raw_text_index li , ul.raw_text li {
+display: inline-block;
+    margin-right: 20px;
+    /*padding-right: 10px;*/
+
+}
+
+
+ul.raw_text_index li:nth-child(odd){
+
+    color: #005f87;
+
+}
+ul.raw_text,ul.raw_text_index {
+    display: block;
+
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 50px;
 }

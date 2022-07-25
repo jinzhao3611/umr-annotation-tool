@@ -954,3 +954,11 @@ def download(filename):
 #     print("elapsed time: ", t1-t0)
 #     print("lemma_form: ", stemmed)
 #     return make_response(jsonify({"text": stemmed}), 200)
+
+@main.route('/getframe/',methods=['POST'])
+def getframe():
+    if request.method == 'POST':
+        token=request.get_json(force=True)['token']
+        print(token,'this is token')
+        res=make_response(jsonify({"token": token+' get'}), 200)
+        return res

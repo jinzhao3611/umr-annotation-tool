@@ -109,6 +109,7 @@ function customizeOptions(settingsJSON, attrId){
 function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     if(curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))){ //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
+
     }else{
         try{
             umr = JSON.parse(curr_sent_umr);
@@ -729,7 +730,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
 
         // cc == ["b", ":arg1", "car"]
-        if (cc.length > 3 && cc[1]==':Aspect'){
+        if (cc.length > 3 && cc[1]===':Aspect'){
             let p = cc[0];
             let r = cc[1];
             let c = cc.slice(2,).join("-")
@@ -991,13 +992,18 @@ function showAnnotatedTokens(){
 //     }
 // }
 function showAlign(){
+    // let align_str;
     let align_str = '';
     for (const key in alignments){
+    // let key=alignments.slice(-1)
+    // console.log('key:', key)
         if (alignments.hasOwnProperty(key)) {
-            align_str += `${key}: <span contenteditable="true" id="${key}">${alignments[key]}</span><br>`;
+            // align_str += `<!--${key}: <span contenteditable="true" id="${key}">${alignments[key]}</span><br>-->`;
+            // # just show the current alignment info
+           align_str = `${key}: <span contenteditable="true" id="${key}">${alignments[key]}</span><br>`;
         }
-    }
-    setInnerHTML('align', align_str);
+    console.log(align_str)
+    setInnerHTML('align', align_str);}
 }
 function showHead(){
     let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
@@ -2272,7 +2278,8 @@ function selectEvent(){
             selection=''
             // selection.removeAllRanges()
         }
-
+         // getframe( document.getElementById('selected_tokens').innerText)//just for test
+        getframe(document.getElementById('test-fetch').value)
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
@@ -2623,6 +2630,9 @@ function submit_command(){
     exec_command(value, 1);
 }
 
+
+
+
 function reset(){
 
     // setInnerHTML('amr',html_amr_s)
@@ -2633,14 +2643,53 @@ function reset(){
 // }
 }
 
+let status = true;
 
-    window.onload=function(){
+window.onload=function(){
     // let sent=document.getElementsByClassName("table table-striped table-sm")
 
     let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0]
     console.log(sent.getElementsByTagName('tr')[0].cells.length)
      let wordcount=   sent.getElementsByTagName('tr')[0].cells.length
-    // sent.
+     let rawtext=document.createElement('ul')
+        rawtext.setAttribute('class','raw_text')
+        for (let i=0;i<wordcount;i++){
+             let k=document.createElement('div')
+            k.setAttribute('class','showindex')
+            // k.setAttribute('title','x'+i)
+            k.style.cssText="position: absolute; background-color: white; border: 1px solid black;display:none;"
+            let c=document.createElement('li')
+            // console.log(sent.getElementsByTagName('tr')[0].cells[i].innerText)
+            c.setAttribute('class','token')
+            c.setAttribute('title','x'+i)
+            c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText
+            c.appendChild(k)
+            c.onmouseover=overshow();
+            c.onmouseout=overhide();
+            // c.setAttribute('class','token')
+            rawtext.appendChild(c)
+
+
+        }
+
+        // rawtext.onmouseover=overshow
+        // rawtext.onmouseout=overhide
+        let sen_index=document.createElement('ul')
+        sen_index.setAttribute('class','raw_text_index')
+            let index=document.createElement('li')
+            index.innerText="sentence:"
+         // index.setAttribute('class','token_index')
+            sen_index.appendChild(index)
+          for (let i=0;i<wordcount-1;i++){
+
+            let index=document.createElement('li')
+            // console.log(sent.getElementsByTagName('tr')[0].cells[i].innerText)
+            index.innerText='x'+ (i+1)
+            // index.setAttribute('class','token_index')
+            sen_index.appendChild(index)
+
+        }
+        // sent.
     // let sent=document.createElement('div')
     // sent.innerHTML=sentence
     // let sent=document.getElementById('sentence');
@@ -2654,7 +2703,7 @@ function reset(){
     row.appendChild(val1)
     // let current=sent[1];
         // console.log(current.classList)
-for (var i=1;i<wordcount;i++){
+for (let i=1;i<wordcount;i++){
 
         let val=document.createElement('td')
         val.innerHTML='x'+i
@@ -2664,6 +2713,90 @@ for (var i=1;i<wordcount;i++){
         //should accept index get from the input from the users and get the corresponding word
         first_row=current.getElementsByTagName('tr')[0]
     console.log(first_row.cells[1].textContent.slice(2))
+        let sentence_display=document.getElementsByClassName('sentence_display_test')[0]
+        current.appendChild(rawtext)
+        current.appendChild(sen_index)
+ // let rawtext=document.getElementsByClassName('raw_text')[0]
+    let text_index=document.getElementsByClassName('raw_text_index')[0]
+    // console.log(rawtext.getElementsByTagName('li').length)
+      for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
+                    console.log(rawtext.getElementsByTagName('li')[i].innerText.length ,text_index.getElementsByTagName('li')[i].innerText.length)
+
+        let a=rawtext.getElementsByTagName('li')[i].innerText.length
+         let b= text_index.getElementsByTagName('li')[i].innerText.length
+          let max_len= Math.max(a,b)
+          rawtext.getElementsByTagName('li')[i].style.width=((a-1)*7+5+'px').toString()
+          // text_index.getElementsByTagName('li')[i].style.width=(max_len*8+'px').toString()
+            console.log(max_len,  rawtext.getElementsByTagName('li')[i].style.width)
+            sentence_display.appendChild(rawtext)
+            // sentence_display.appendChild(text_index)
+
+
+      }
+//         for (let i=0;i<rawtext.getElementsByTagName('li').length;i++){
+//             console.log(rawtext.getElementsByClassName('li')[i].innerHTML,sen_index.getElementsByClassName('li').item(i))
+//
+//
+
+
+
+}
+document.onkeydown=function(){
+    if(event.keyCode===18 && event.ctrlKey===true){
+        overshow();
+
+    }
+
+}
+
+document.onkeyup=function(){
+    if(event.keyCode===18){
+        overhide()
+    }
+
+}
+function check(){
+
+    if(status===true){
+        overshow();
+        status=false;
+    }else{
+        overhide()
+        status=true;
+    }
+}
+
+function overshow(){
+    let show_indexes=document.getElementsByClassName('showindex')
+    let tokens=document.getElementsByClassName('token')
+    for(let v=0;v<show_indexes.length;v++){
+        let current=show_indexes[v]
+        current.style.left=event.clientX;
+        current.style.top=event.clientY;
+        current.style.display='block'
+        current.innerHTML='x'+v
+        let current_token=tokens[v]
+        current_token.style.marginBottom ='20px';
+
+
+    }
+
+
+
+}
+function overhide(){
+        let show_indexes=document.getElementsByClassName('showindex')
+    let tokens=document.getElementsByClassName('token')
+    for(let v=0;v<show_indexes.length;v++){
+        let current=show_indexes[v]
+        current.style.display='none';
+        current.innerHTML='';
+        let current_token=tokens[v]
+        current_token.style.margin='';
+    }
+
+
+
 }
 
 function set_load_visible(){
@@ -2675,9 +2808,14 @@ function set_load_visible(){
     load_widget.style.display = 'none';
   }
 
+
 }
 function load2mar(){
     let load_amr=document.getElementById('load-plain').value;
+    console.log(string2umr(load_amr))
+    umr=string2umr(load_amr)
+    populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
+    show_amr('show');
     // html_amr_s='<span id="variable-1">s3x</span> / <span title="">浦城</span>\n' +
     //      '&nbsp;&nbsp;:ARG0 (<span id="variable-1.1">s3x2</span> / <span title="">宋</span>)'
     // // console.log(show_amr_rec(0,'show',0,''))
@@ -2718,3 +2856,43 @@ function load2mar(){
 
 
 }
+
+function toggle_info(){
+
+    let info= document.getElementById('info')
+    info.style.display=(info.style.display==='block'?"":'block')
+    let rawtext=document.getElementsByClassName('raw_text')[0]
+    let text_index=document.getElementsByClassName('raw_text_index')[0]
+    // console.log(rawtext.getElementsByTagName('li').length)
+      for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
+                    console.log(rawtext.getElementsByTagName('li')[i].innerText.length ,text_index.getElementsByTagName('li')[i].innerText.length)
+
+        let a=rawtext.getElementsByTagName('li')[i].innerText.length
+         let b= text_index.getElementsByTagName('li')[i].innerText.length
+          let max_len= Math.max(a,b)
+          rawtext.getElementsByTagName('li')[i].style.width=max_len+'px'.toString()
+          text_index.getElementsByTagName('li')[i].clientWidth=max_len
+            console.log(max_len,  text_index.getElementsByTagName('li')[i].clientWidth)
+
+
+      }
+
+}
+
+function getframe(token){
+    console.log(token)
+        fetch(`/getframe/`, {
+        method: 'POST',
+        body: JSON.stringify({"token": token})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        // setInnerHTML("error_msg", data["msg"]);
+        console.log(data)
+        document.getElementById("frame_info").innerHTML=data['token'];
+    }).catch(function(error){
+        console.log("Fetch error from UMR2db: "+ error);
+
+
+})}
+
