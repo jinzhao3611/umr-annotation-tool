@@ -234,6 +234,7 @@ def sentlevel(doc_sent_id):
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
 
+
     if request.method == 'POST':
         # add umr to db
         logging.info("post request received")
@@ -960,5 +961,7 @@ def getframe():
     if request.method == 'POST':
         token=request.get_json(force=True)['token']
         print(token,'this is token')
-        res=make_response(jsonify({"token": token+' get'}), 200)
+        scroll_pos=request.get_json(force=True)['scroll_pos']
+
+        res=make_response(jsonify({"token": token+' get',"scroll_pos":scroll_pos}), 200)
         return res

@@ -15,7 +15,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
         let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
         if (annotText.match(new RegExp(pattern1))) {
             annotText = annotText.replace(/^\(\s*/, ""); //remove left parenthesis
-            let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*` //match something like s1t
+            let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*` //match something like s1t //Sijia todo
             let variableList = annotText.match(new RegExp(pattern2)); //match variable until the variable ends, and put it in variableList
             let pattern3 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*\\s*` //match something like s1t with trailing space
             annotText = annotText.replace(new RegExp(pattern3), ""); //remove variable
@@ -59,7 +59,8 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             } else if (variablesInUse[variable + '.conflict']) {
                 umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
-            } else if (!variable.match(/^s\d*[a-z]\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
+                ///s\d*x\d*[_?x?\d*]*   //Sijia Regex
+            } else if (!variable.match(/^s\d*x\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
                 new_variable = newVar(concept);
                 umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
@@ -183,6 +184,8 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     return [annotText, umr_dict];
 }
 
+
+//sijia to-do
 /**
  * annotText got cut into pieces in this process, part of the annotText got cut off when it's got parsed successfully, and the leftover annotText string is the string to be parsed into umr
  * @param annotText : String (s1t / taste-01)
@@ -205,6 +208,7 @@ function string2umr(annotText) {
     variables = {};
     concepts = {};
     variablesInUse = {};
+    //Sijia Todo
     let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root

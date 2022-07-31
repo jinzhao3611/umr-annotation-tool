@@ -19,10 +19,13 @@
 
 {% block content %}
 <script type="javascript">
-    $(document).ready(
-        function (){
-    let sent=document.getElementsByClassName('dataframe table table-striped table-sm')
-    console.log(sent)})
+
+{##}
+{##}
+{#    $(document).ready(#}
+{#        function (){#}
+{#            location.hash='sentence';})#}
+
     </script>
     <button type="button" onclick=toggle_info()>{{filename}}</button>
     <div id="info">
@@ -78,18 +81,26 @@
 
     <div id="error_msg">
     </div>
+    <script type="javascript">
+        var scroll_=document.getElementById('scroll_pos')
+        console.log(getScrollTop())
+        scroll_.value=getScrollTop()
+
+    </script>
     <div style="display: flex">
          <form method="post">
 
 
          <input type="text" id="sentence_id" name="sentence_id" style="display: none" value="{{ snt_id -(1) if snt_id>1 else 1 }}">
-         <input type="submit" name="set_sentence" id="set_sentence" size=6 value="previous" onclick="UMR2db()"><br>
+         <input   type="text" id="scroll_pos" name="scroll_pos" style="display: none" value="">
+             <input type="submit"  name="set_sentence" id="set_sentence" size=6 value="previous" onclick="UMR2db()"><br>
 
     </form>
      <form method="post">
 
 
          <input type="text" id="sentence_id" name="sentence_id" style="display: none" value="{{ snt_id +(1) if snt_id<info2display.sents|length else (info2display.sents|length) }}">
+          <input   type="text" id="scroll_pos" name="scroll_pos" style="display: none" value="">
          <input type="submit" name="set_sentence" id="set_sentence" size=6 value="next" onclick="UMR2db()"><br>
 
     </form>
@@ -344,6 +355,13 @@
     {{ frame_info }}
     <p id="frame_info"></p>
 </div>
+<script type="javascript">
+
+
+
+
+{#history.scrollRestoration="auto";#}
+</script>
 {#    <hr>#}
 {#    <div id="alignment">#}
 {#        <p> Alignments:</p>#}

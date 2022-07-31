@@ -280,7 +280,7 @@ function listContainsCap(list) {
     }
     return 0;
 }
-
+//sijia todo
 /**
  * return null when input is like "#", or "buy.01", 不能有大写字母，单引号，或者数字（arapahoe里面有）
  * @param concept

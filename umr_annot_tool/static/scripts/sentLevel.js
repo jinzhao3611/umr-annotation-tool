@@ -17,10 +17,12 @@ let selection;
 let begOffset;
 let endOffset;
 
-let umr = {}; //{n: 1, 1.c: "obligate-01", 1.v: "o", 1.s: "", 1.n: 1, …}
+let umr = {}; //{n: 1 # n: number of the child nodes , 1.c: "obligate-01"/ c:concept, 1.v: "o",/variable 1.s: "",//special 1.n: 1, …}
 let variables = {}; //{o: "1", r: "1.1", b: "1.1.1"}
 let concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
 let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
+
+
 
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
@@ -139,7 +141,9 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
  */
 function populateUtilityDicts(){
         Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+        console.log('test144',key)
         if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+            //loc means like 1.1.1
             recordVariable(umr[key], key.replace(/\.v$/, "") + '');
             variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
         }else if(key.match(/\d+.c/)){
@@ -719,7 +723,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         let cc;
         if(value.includes("(")){
             //doc-level
-            let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
+            //sijia to-do: segment     s1 :temporal (s1x2_x4 :before DCT)  or   s1 :temporal (x2_2 :before DCT)
+            let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*x\d*\s:.+\s.+\))$/;
             //example match: s1 :temporal (s1t2 :before DCT)
             //s1 :coref (s1h :same-entity s1p)
             //s1 :modal (s2c4 :NEG AUTH)
@@ -731,8 +736,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
 
         // cc == ["b", ":arg1", "car"]
         if (cc.length > 3 && cc[1]===':Aspect'){
-            let p = cc[0];
-            let r = cc[1];
+            let p = cc[0]; // parent variable
+            let r = cc[1];  // roles
             let c = cc.slice(2,).join("-")
             cc = [p, r, c]
         }
@@ -837,7 +842,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             }
         } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
 
-            if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
+            if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
                 console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
             } else if (cc.length == 2) {
                 console.log('In <i>add</i> command, there must be at least 3 arguments.');
@@ -1050,6 +1055,8 @@ function recordConcept(c, loc) {
     }
 }
 
+//to-do Sijia
+
 /**
  * given concept return variable, with sentence id but without variable counting index
  * @param concept
@@ -1057,10 +1064,15 @@ function recordConcept(c, loc) {
  */
 function newVar(concept) {
     let v;
-    let initial = concept.substring(0, 1).toLowerCase();
-    if (!initial.match(/[a-z]/)) {
-        initial = 'x';
-    }
+    /*using index instead of the first char
+    * */
+    // let initial = concept.substring(0, 1).toLowerCase();
+    // if (!initial.match(/[a-z]/)) {
+    //     initial = 'x';
+    // }
+
+    let initial=concept
+     // let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*x\d*\s:.+\s.+\))$/;
 
     if (!docAnnot){
             // add the sentence number s1 to initial t -> s1t
@@ -1071,24 +1083,81 @@ function newVar(concept) {
             initial = "s"+ (parseInt(sentenceId)+1) + initial;
         }
     }
+    //Sijia to-do for those over the whole length of the sentence and not use
+
 
     // increase index or reserve variable 'i' for concept 'i'
-    if (getLocs(initial) || variablesInUse[initial] || concept.match(/^i./i)) {
-        let index = 2;
-        v = initial + index;
-        while (getLocs(v) || variablesInUse[v]) {
-            index++;
-            v = initial + index;
-        }
-    } else {
-        v = initial;
-    }
+    // if (getLocs(initial) || variablesInUse[initial] || concept.match(/^i./i)) {
+    //     let index = 2;
+    //     v = initial + index;
+    //     while (getLocs(v) || variablesInUse[v]) {
+    //         index++;
+    //         v = initial + index;
+    //     }
+    // } else {
+    v = initial;
+    // }
     return v;
+}
+
+function index2concept(concept){
+
+     let rawtext= document.getElementsByClassName('raw_text')[0]
+    if (concept.split('_').length-1>0){
+        // signal that there is not a word, might be x1_x2
+        let index_list= concept.split('_')
+        let target='';
+        let previous='';
+        // console.log(index_list[-1])
+        for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
+            if(index_list[i].includes('x')){
+                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')].innerText
+                // get the current token
+
+                if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
+                    target+=newconcept
+                }else{
+                    // not a whole token                    x1_2
+                    previous=newconcept
+                }
+
+
+            }else {
+
+
+               target+=previous[index_list[i]-1]
+            }
+
+
+        }
+        if (index_list[index_list.length-1].includes('x')){
+
+            target+=rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')].innerText
+        }else{
+
+            target+=previous[index_list[index_list.length-1]-1]
+        }
+
+            concept=target}
+
+
+        else if(concept.includes(':')){
+            concept;
+    }else{
+            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")].innerText
+
+
+    }
+
+
+
+
+    return concept
 }
 
 /**
  * populate variables, concepts, variable2concept, and umr
- * @param concept "buy"
+ * @param concept "buy"  index//
  * @returns {string} return a new amr head, "b"
  */
 function newUMR(concept) {
@@ -1096,6 +1165,55 @@ function newUMR(concept) {
     let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
+    let rawtext= document.getElementsByClassName('raw_text')[0]
+    if (concept.split('_').length-1>0){
+        // signal that there is not a word, might be x1_x2
+        let index_list= concept.split('_')
+        let target='';
+        let previous='';
+        // console.log(index_list[-1])
+        for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
+            if(index_list[i].includes('x')){
+                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')].innerText
+                // get the current token
+
+                if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
+                    target+=newconcept
+                }else{
+                    // not a whole token                    x1_2
+                    previous=newconcept
+                }
+
+
+            }else {
+
+
+               target+=previous[index_list[i]-1]
+            }
+
+
+        }
+        if (index_list[index_list.length-1].includes('x')){
+
+            target+=rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')].innerText
+        }else{
+
+            target+=previous[index_list[index_list.length-1]-1]
+        }
+
+            concept=target}
+
+
+        else if(concept.includes(':')){
+            concept;
+    }else{
+            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")].innerText
+
+
+    }
+
+    console.log(concept)
+
     umr[n + '.c'] = concept;
     umr[n + '.v'] = v;
     umr[n + '.n'] = 0;
@@ -1123,7 +1241,9 @@ function newUMR(concept) {
 function addTriple(head, role, arg, arg_type) {
     head = strip(head); // b
     role = strip(role); // :arg1
+
     arg = strip(arg); //car
+    arg=index2concept(arg);
     console.log(head,role,arg, arg_type,'i am testing addtriple')
     let head_var_locs = getLocs(head);
     let arg_var_locs;
@@ -1319,6 +1439,7 @@ function addOr(value) {
  */
 function replace_concept(key_at, head_var, key_with, new_concept) {
     console.log('replace_concept ' + key_at + '::' + head_var + '::' + key_with + '::' + new_concept);
+    new_concept=index2concept(new_concept)
     new_concept = new_concept.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
     if (key_at === 'at') {
         let head_var_locs = getLocs(head_var);
@@ -1706,7 +1827,7 @@ function change_var_name(variable, target, top) {
     let loc;
     if (locs) {
         variables[variable] = '';
-        if ((target.match(/^(s\d)*[a-z]\d*$/)) && (!getLocs(target))) {
+        if ((target.match(/^(s\d)*x\d*$/)) && (!getLocs(target))) { //sijia todo
             new_variable = target;
         } else {
             new_variable = newVar(target);
@@ -1801,6 +1922,8 @@ function leafy_or_concept_p(loc) {
         return 0;
     }
 }
+
+
 
 /**
  * decide if this new concept amr should be on the same line with parent and grandparent or not
@@ -2272,9 +2395,10 @@ function indent_for_loc(loc, c, style, n) {
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
-
+            // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent);
         // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
-        if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'){
+        if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'&& selection.anchorNode.parentElement.parentNode.childNodes.item(0).textContent!=='' ) {
+            // in order to test
             selection=''
             // selection.removeAllRanges()
         }
@@ -2292,7 +2416,11 @@ function selectEvent(){
         }
     };
 }
+
+// Sijia to-do
 function get_selected_word(){
+
+    //get the word part from the command, and split it, then find out the corresponding token based on the index
     localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
  }
 
@@ -2397,7 +2525,7 @@ function toggleRow(id) {
 
 function changeButton(id) {
     var elem = document.getElementById(id);
-    if (elem.innerText == "show more info") elem.innerText = "show less info";
+    if (elem.innerText === "show more info") elem.innerText = "show less info";
     else elem.innerText = "show more info";
 }
 
@@ -2472,7 +2600,7 @@ function UMR2db() {
         }
     }
 
-    fetch(`/sentlevel/${doc_sent_id}`, {
+    fetch(`/sentlevel/${doc_sent_id}#senrence`, {
         method: 'POST',
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
@@ -2646,6 +2774,9 @@ function reset(){
 let status = true;
 
 window.onload=function(){
+    // window.scrollTo({top:})
+    location.hash='sentence'
+
     // let sent=document.getElementsByClassName("table table-striped table-sm")
 
     let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0]
@@ -2725,7 +2856,8 @@ for (let i=1;i<wordcount;i++){
         let a=rawtext.getElementsByTagName('li')[i].innerText.length
          let b= text_index.getElementsByTagName('li')[i].innerText.length
           let max_len= Math.max(a,b)
-          rawtext.getElementsByTagName('li')[i].style.width=((a-1)*7+5+'px').toString()
+          // rawtext.getElementsByTagName('li')[i].style.width=((a-1)*7+5+'px').toString()
+          rawtext.getElementsByTagName('li')[i].style.width='fit-content'
           // text_index.getElementsByTagName('li')[i].style.width=(max_len*8+'px').toString()
             console.log(max_len,  rawtext.getElementsByTagName('li')[i].style.width)
             sentence_display.appendChild(rawtext)
@@ -2774,9 +2906,12 @@ function overshow(){
         current.style.left=event.clientX;
         current.style.top=event.clientY;
         current.style.display='block'
+        current.style.background='#000';
+        current.style.color='#FFF'
         current.innerHTML='x'+v
         let current_token=tokens[v]
         current_token.style.marginBottom ='20px';
+        current_token.style.marginRight ='18px';
 
 
     }
@@ -2879,17 +3014,41 @@ function toggle_info(){
 
 }
 
+
+  function getScrollTop(){
+
+var scrollTop=0;
+
+if(document.documentElement&&document.documentElement.scrollTop){
+
+scrollTop=document.documentElement.scrollTop;
+
+}else if(document.body){
+
+scrollTop=document.body.scrollTop;
+
+}
+
+return scrollTop;
+
+}
+
 function getframe(token){
+
+
+    let scroll_pos=getScrollTop()
+
     console.log(token)
         fetch(`/getframe/`, {
         method: 'POST',
-        body: JSON.stringify({"token": token})
+        body: JSON.stringify({"token": token, "scroll_pos":scroll_pos})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         // setInnerHTML("error_msg", data["msg"]);
         console.log(data)
         document.getElementById("frame_info").innerHTML=data['token'];
+        window.scrollTo({top:data['scroll_pos']})
     }).catch(function(error){
         console.log("Fetch error from UMR2db: "+ error);
 
