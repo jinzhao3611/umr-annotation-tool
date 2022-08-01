@@ -11,6 +11,7 @@ import os
 import logging
 from datetime import datetime
 from bs4 import BeautifulSoup
+import jpype
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
@@ -943,18 +944,20 @@ def download(filename):
     # Returning file from appended path
     return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
 
-# #farasapy
-# @main.route('/getfarasalemma', methods=['GET', 'POST'])
-# def getfarasalemma():
-#     import time
-#     token = request.get_json(force=True)["token"]
-#     print("inflected_form: ", token)
-#     t0 = time.time()
-#     stemmed = stemmer.stem(token)
-#     t1 = time.time()
-#     print("elapsed time: ", t1-t0)
-#     print("lemma_form: ", stemmed)
-#     return make_response(jsonify({"text": stemmed}), 200)
+#farasapy
+@main.route('/getfarasalemma', methods=['GET', 'POST'])
+def getfarasalemma():
+    import time
+    token = request.get_json(force=True)["token"]
+    t0 = time.time()
+    jvmpath = jpype.getDefaultJVMPath()
+    jpype.startJVM(jvmpath, '-ea', "-Djava.class.path=%s" % r'D:\FarasaSegmenterJar.jar')
+    jclass = jpype.JClass('com.qcri.farasa.segmenter.Farasa')
+    instance = jclass()
+    stemmed=instance.lemmtizeLine(token)
+    t1 = time.time()
+
+    return make_response(jsonify({"text": stemmed}), 200)
 
 @main.route('/getframe/',methods=['POST'])
 def getframe():
