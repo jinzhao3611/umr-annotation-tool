@@ -11,7 +11,7 @@ let current_attribute;
 let current_ne_concept;
 let frame_dict = {};// key is lemma form, value is the frame (including all the inflected form)
 let citation_dict = {}; //key is inflected form, value is lemma form
-let similar_word_list ={};
+let similar_word_list = {};
 
 let selection;
 let begOffset;
@@ -35,9 +35,9 @@ let show_umr_status = 'show'; //'show'
 let show_amr_mo_lock = ''; // '' affects coloring
 
 let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
-let docAnnot=false;
+let docAnnot = false;
 let partial_graphs = {};
-let alignments={}
+let alignments = {}
 
 /**
  *
@@ -50,49 +50,49 @@ function initialize(frame_json, lang, partial_graphs_json) {
     umr['n'] = 0; //clear the current graph
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top'; //reset the current mode to add root
-    try{
+    try {
         frame_dict = JSON.parse(frame_json); //potentially have two different formats: one is the frames_english file, one is lexicon file: sample file: Flex lexicon for frame files.xml
-    }catch (e){
+    } catch (e) {
         console.log("error in frame_json: ", e);
     }
     begOffset = -1;
     endOffset = -1;
-    if(default_langs.includes(language)){ // if langauge is one of the default languages, populate citation_dict into dictionary: key: inflected_form, value:lemma_form (used in getLemma)
-        Object.keys(frame_dict).forEach(function(key) {
-            frame_dict[key]['inflected_forms'].forEach(function(item){
+    if (default_langs.includes(language)) { // if langauge is one of the default languages, populate citation_dict into dictionary: key: inflected_form, value:lemma_form (used in getLemma)
+        Object.keys(frame_dict).forEach(function (key) {
+            frame_dict[key]['inflected_forms'].forEach(function (item) {
                 citation_dict[item] = key;
             });
         });
     }
-    try{
+    try {
         partial_graphs = JSON.parse(partial_graphs_json);
-    }catch (e){
+    } catch (e) {
         console.log("error in partial_graphs_json: ", e);
     }
 }
 
-function customizeOptions(settingsJSON, attrId){
+function customizeOptions(settingsJSON, attrId) {
     let settings;
-    try{
+    try {
         settings = JSON.parse(settingsJSON);
-    }catch (e){
+    } catch (e) {
         console.log("error in parsing settingsJSON: ", e);
     }
     console.log("settings: ", settings);
     console.log("length of settings: ", Object.keys(settings).length);
     console.log("attrId: ", attrId);
-    let optionList=[];
-    if(attrId==="default-roles_abstract-concepts"){
+    let optionList = [];
+    if (attrId === "default-roles_abstract-concepts") {
         let optionList1 = document.getElementById("default-roles").children;
         let optionList2 = document.getElementById("abstract-concepts").children;
         optionList = [optionList1, optionList2];
-    }else{
+    } else {
         optionList = [document.getElementById(attrId).children];
     }
     console.log("length of optionList: ", optionList.length);
-    for (let i in optionList){
-        for(let j=0; j<optionList[i].length; j++){
-            if(settings[optionList[i][j].value]===false){
+    for (let i in optionList) {
+        for (let j = 0; j < optionList[i].length; j++) {
+            if (settings[optionList[i][j].value] === false) {
                 console.log("to be removed", optionList[i][j].value);
                 optionList[i][j].disabled = true;
             }
@@ -106,29 +106,29 @@ function customizeOptions(settingsJSON, attrId){
  * @param curr_annotation_string
  * @param curr_alignment
  */
-function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
-    if(curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))){ //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
+function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment) {
+    if (curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))) { //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
-    }else{
-        try{
+    } else {
+        try {
             umr = JSON.parse(curr_sent_umr);
-        }catch (e){
+        } catch (e) {
             console.log("error in parsing curr_sent_umr: ", e);
         }
     }
-    if(Object.keys(umr).length === 0){ // if the parsed curr_sent_umr is empty
+    if (Object.keys(umr).length === 0) { // if the parsed curr_sent_umr is empty
         umr['n'] = 0; //initialize umr here
     }
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
-    try{
+    try {
         alignments = JSON.parse(curr_alignment);
-    }catch (e){
+    } catch (e) {
         console.log("error in parsing curr_alignment: ", e);
     }
     showAlign();
     state_has_changed_p = 1;
-    if(language === "english" || language === "chinese"){
+    if (language === "english" || language === "chinese") {
         // showAnnotatedTokens();
     }
 }
@@ -136,12 +136,12 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
 /**
  * based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
  */
-function populateUtilityDicts(){
-        Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+function populateUtilityDicts() {
+    Object.keys(umr).forEach(function (key) { //traverse all the items in umr
+        if (key.match(/\d+.v/)) { //traverse all the .d items in umr that have a value of 1
             recordVariable(umr[key], key.replace(/\.v$/, "") + '');
-            variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
-        }else if(key.match(/\d+.c/)){
+            variable2concept[umr[key]] = umr[key.replace(/\.v$/, ".c") + ''];
+        } else if (key.match(/\d+.c/)) {
             recordConcept(umr[key], key.replace(/\.c$/, "") + '');
         }
     });
@@ -150,7 +150,7 @@ function populateUtilityDicts(){
 /**
  * from currently selected word, get the lemma and generate the senses menu list
  */
-function conceptDropdown(lang='english') {
+function conceptDropdown(lang = 'english') {
     submit_concept(); //record the current concept from the selected tokens
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
@@ -158,12 +158,12 @@ function conceptDropdown(lang='english') {
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         getSenses(number);
     } else { //if concept is not a number
-        if (default_langs.includes(lang)){ // if lang is one of the default languages
+        if (default_langs.includes(lang)) { // if lang is one of the default languages
             let submenu_items;
-            if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
-                 submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
-            }else{
-                if (token in citation_dict){
+            if (lang === "navajo") { //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
+                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+            } else {
+                if (token in citation_dict) {
                     let lemma = citation_dict[token];
                     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
                 }else{
@@ -171,9 +171,9 @@ function conceptDropdown(lang='english') {
                 }
             }
             getSenses(submenu_items);
-        }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
+        } else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
             let lemma;
-            if(lang === 'arabic'){
+            if (lang === 'arabic') {
                 fetch(`/getfarasalemma`, {
                     method: 'POST',
                     body: JSON.stringify({"token": token})
@@ -183,53 +183,53 @@ function conceptDropdown(lang='english') {
                     lemma = data['text'];
                     console.log(lemma);
                     let senses = [];
-                    Object.keys(frame_dict).forEach(function(key) {
-                        if(key.split("-")[0] === lemma){
-                            senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
+                    Object.keys(frame_dict).forEach(function (key) {
+                        if (key.split("-")[0] === lemma) {
+                            senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
                         }
                     });
                     let submenu_items;
                     if (senses.length === 0) {
                         submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                    }else{
+                    } else {
                         submenu_items = {"res": senses};
                     }
                     getSenses(submenu_items);
-                }).catch(function(error){
-                    console.log("get lemma error: "+ error);
+                }).catch(function (error) {
+                    console.log("get lemma error: " + error);
                 });
-            } else if(lang === 'english'){
+            } else if (lang === 'english') {
                 lemma = getLemma(token);
                 let senses = [];
-                Object.keys(frame_dict).forEach(function(key) {
-                    if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
+                Object.keys(frame_dict).forEach(function (key) {
+                    if (key.split("-")[0] === lemma) {
+                        senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
                     }
                 });
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                }else{
+                } else {
                     submenu_items = {"res": senses};
                 }
                 getSenses(submenu_items);
-            }else if (lang === 'chinese') {
+            } else if (lang === 'chinese') {
                 lemma = token;
                 let senses = [];
-                Object.keys(frame_dict).forEach(function(key) {
-                    if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
+                Object.keys(frame_dict).forEach(function (key) {
+                    if (key.split("-")[0] === lemma) {
+                        senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
                     }
                 });
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                }else{
+                } else {
                     submenu_items = {"res": senses};
                 }
                 getSenses(submenu_items);
             }
-        }else {
+        } else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
             getSenses(letter);
         }
@@ -287,41 +287,41 @@ function submit_concept() {
 /**
  * get the info from menu
  */
-function submit_query(){
+function submit_query() {
     //get relation
     let r = '';
-    if(document.getElementById('simplified_modals').value){
+    if (document.getElementById('simplified_modals').value) {
         r = document.getElementById('simplified_modals').value;
-    } else if(document.getElementById('roles')){
+    } else if (document.getElementById('roles')) {
         r = document.getElementById('roles').value;
     }
 
     //get child concept
     let a = document.getElementById('attributes').value;
     let av = '';
-    if(document.getElementById('attribute_values1').value){
+    if (document.getElementById('attribute_values1').value) {
         av = document.getElementById('attribute_values1').value;
-    }else if (document.getElementById('attribute_values2').value){
+    } else if (document.getElementById('attribute_values2').value) {
         av = document.getElementById('attribute_values2').value;
-    }else if (document.getElementById('attribute_values3').value){
+    } else if (document.getElementById('attribute_values3').value) {
         av = document.getElementById('attribute_values3').value;
-    }else if (document.getElementById('attribute_values4').value){
+    } else if (document.getElementById('attribute_values4').value) {
         av = document.getElementById('attribute_values4').value;
-    }else if (document.getElementById('attribute_values5').value){
+    } else if (document.getElementById('attribute_values5').value) {
         av = document.getElementById('attribute_values5').value;
-    }else if (document.getElementById('attribute_values6').value){
+    } else if (document.getElementById('attribute_values6').value) {
         av = document.getElementById('attribute_values6').value;
     }
 
-    if(r){
+    if (r) {
         current_relation = r;
         current_mode = "add";
-        if(r===":MODSTR"){
+        if (r === ":MODSTR") {
             submit_template_action('add-constant', document.getElementById('modstr-values1').value);
             document.getElementById("modstr-vals").style.display = 'none'; //fold the modstr values box
             document.getElementById('simplified_modals').value = ""; //clear the modals box
         }
-    }else if(a){
+    } else if (a) {
         current_relation = a;
         current_attribute = av;
         submit_template_action('add-constant', current_attribute);
@@ -334,7 +334,7 @@ function submit_query(){
     }
 
     let ct = document.getElementById('concept_types').value;
-    if(ct){
+    if (ct) {
         current_concept = ct;
         current_concept = current_concept.replace("'", "\'");
         submit_template_action(current_mode, current_concept);
@@ -342,28 +342,28 @@ function submit_query(){
 
     //submit NE shortcut
     let nt = document.getElementById('ne_types').value;
-    if(nt){
+    if (nt) {
         current_mode = 'add-ne';
         current_ne_concept = nt;
         console.log("current_mode is: " + current_mode);
     }
 }
 
-function submitNE(){// this is exactly like add abstract concept, not the short cut
+function submitNE() {// this is exactly like add abstract concept, not the short cut
     //get relation
     let r = '';
-    if(document.getElementById('roles')){
+    if (document.getElementById('roles')) {
         r = document.getElementById('roles').value;
     }
-    if(r){
+    if (r) {
         current_relation = r;
         let nt = document.getElementById('ne_types').value;
-        if(nt){
+        if (nt) {
             current_mode = 'add';
             current_ne_concept = nt;
             submit_template_action(current_mode, current_ne_concept);
         }
-    }else{
+    } else {
         console.log("there is no role selected");
     }
 
@@ -372,7 +372,7 @@ function submitNE(){// this is exactly like add abstract concept, not the short 
 /**
  * fold unselected attribute value datalist, show the selected attribute datalist
  */
-function show_attribute_values(){
+function show_attribute_values() {
     let option = document.querySelector('#attributes').value;
     if (option === ':Aspect') {
         document.getElementById("polarity-attribute").style.display = 'none';
@@ -388,28 +388,28 @@ function show_attribute_values(){
         document.getElementById("refer-person-attribute").style.display = 'none';
         document.getElementById("refer-number-attribute").style.display = 'none';
         document.getElementById("degree-attribute").style.display = 'none';
-    } else if (option === ':mode'){
+    } else if (option === ':mode') {
         document.getElementById("aspect-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'block';
         document.getElementById("refer-person-attribute").style.display = 'none';
         document.getElementById("refer-number-attribute").style.display = 'none';
         document.getElementById("degree-attribute").style.display = 'none';
-    } else if (option === ':refer-person'){
+    } else if (option === ':refer-person') {
         document.getElementById("aspect-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'none';
         document.getElementById("refer-person-attribute").style.display = 'block';
         document.getElementById("refer-number-attribute").style.display = 'none';
         document.getElementById("degree-attribute").style.display = 'none';
-    } else if (option === ':refer-number'){
+    } else if (option === ':refer-number') {
         document.getElementById("aspect-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'none';
         document.getElementById("refer-person-attribute").style.display = 'none';
         document.getElementById("refer-number-attribute").style.display = 'block';
         document.getElementById("degree-attribute").style.display = 'none';
-    }else if (option === ':degree'){
+    } else if (option === ':degree') {
         document.getElementById("aspect-attribute").style.display = 'none';
         document.getElementById("polarity-attribute").style.display = 'none';
         document.getElementById("mode-attribute").style.display = 'none';
@@ -422,7 +422,7 @@ function show_attribute_values(){
 /**
  * fold unselected modstr value datalist, show the selected attribute datalist
  */
-function show_modal_values(){
+function show_modal_values() {
     let option = document.querySelector('#simplified_modals').value;
     if (option === ':MODSTR') {
         document.getElementById("modstr-vals").style.display = 'block';
@@ -431,6 +431,7 @@ function show_modal_values(){
     }
     document.getElementById('roles').value = ''; // clear the roles box
 }
+
 /** undo *******************************************************/
 /**
  *  copy a plain Object, Array, Date, String, Number, or Boolean
@@ -557,16 +558,16 @@ function undo(n) {
  * this function chooses the correct show mode (show_delete, show_replace and show)
  * @param action
  */
-function changeShowStatus(action){
-    if(show_umr_status.match(/replace/) && action ==='delete'){
+function changeShowStatus(action) {
+    if (show_umr_status.match(/replace/) && action === 'delete') {
         show_amr('show');
         show_amr('show delete');
-    }else if(show_umr_status.match(/delete/) && action === 'replace'){
+    } else if (show_umr_status.match(/delete/) && action === 'replace') {
         show_amr('show replace');
-    }else if(show_umr_status === 'show'){
-        if(action === 'delete'){
+    } else if (show_umr_status === 'show') {
+        if (action === 'delete') {
             show_amr('show delete');
-        }else if(action === 'replace'){
+        } else if (action === 'replace') {
             show_amr('show replace');
         }
     }
@@ -598,9 +599,9 @@ function fillDeleteTemplate(at, mo_lock) {
         show_amr_mo_lock = mo_lock;
         color_all_under_amr_elem(show_amr_mo_lock, '#FF0000', '');
         let at_list = at.split(/\s+/);
-        if (at_list && (at_list.length >= 4) && (! at_list[2].match(/^"/))) {
+        if (at_list && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
             at = at_list[0] + ' ' + at_list[1] + ' "';
-            for (let i=2; i<at_list.length; i++) {
+            for (let i = 2; i < at_list.length; i++) {
                 at += at_list[i] + ' ';
             }
             at = at.replace(/\s*$/, "\"");
@@ -657,9 +658,9 @@ function color_amr_elem(id, color, event_type) {
 
 
 /** entrance ******************************************************/
-function submit_template_action(id, tokens = "", parentVarLoc="") {
+function submit_template_action(id, tokens = "", parentVarLoc = "") {
     if (tokens !== "") { //multiword expression
-        if(tokens.indexOf(' ') >= 0 && id==='add'){
+        if (tokens.indexOf(' ') >= 0 && id === 'add') {
             tokens = tokens.replaceAll(" ", "-");
         }
         current_concept = tokens;
@@ -686,9 +687,9 @@ function submit_template_action(id, tokens = "", parentVarLoc="") {
     } else if (id === 'add-constant') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
     } else if (id === 'add-ne') {
-        if(typeof current_relation === 'undefined'){
-            exec_command('top'  + ' ' + current_ne_concept + ' ' + current_concept, 1);
-        }else{
+        if (typeof current_relation === 'undefined') {
+            exec_command('top' + ' ' + current_ne_concept + ' ' + current_concept, 1);
+        } else {
             exec_command(current_parent + ' ' + current_relation + ' ' + current_ne_concept + ' ' + current_concept, 1);
         }
     }
@@ -702,7 +703,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         value = strip(value);
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
         let cc;
-        if(value.includes("(")){
+        if (value.includes("(")) {
             //doc-level
             let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
             //example match: s1 :temporal (s1t2 :before DCT)
@@ -710,12 +711,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             //s1 :modal (s2c4 :NEG AUTH)
             let match = pattern.exec(value);
             cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
-        }else{
+        } else {
             cc = argSplit(value);
         }
 
         // cc == ["b", ":arg1", "car"]
-        if (cc.length > 3 && cc[1]==':Aspect'){
+        if (cc.length > 3 && cc[1] == ':Aspect') {
             let p = cc[0];
             let r = cc[1];
             let c = cc.slice(2,).join("-")
@@ -723,7 +724,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
         let ne_concept;
         let cc2v;
-        if (cc[0] === 'top'){
+        if (cc[0] === 'top') {
             if ((cc.length >= 3)
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
@@ -748,8 +749,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             && (cc[2].match(/\+$/))
             && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
             && getLocs(cc2v)) {
-                addTriple(cc[0], cc[1], cc2v);
-                show_amr_args = 'show';
+            addTriple(cc[0], cc[1], cc2v);
+            show_amr_args = 'show';
         } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
             // this is the condition we go in 1
             addTriple(cc[0], cc[1], cc[2], '');
@@ -818,7 +819,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 changeShowStatus('delete');
                 show_amr_args = 'show delete';
             } else {
-                add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
+                console.log('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
         } else if (cc[0] === 'move') {
             if (cc.length >= 4) {
@@ -879,71 +880,71 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
 /**
  * find the correct alignment info for abstract concept like name
  */
-function correctAlignments(){
-    Object.keys(umr).forEach(function(key){
-        if(key.match(/\d+.v/)){ // abstract concepts have "-1--1" alignment
-            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
-            || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
+function correctAlignments() {
+    Object.keys(umr).forEach(function (key) {
+        if (key.match(/\d+.v/)) { // abstract concepts have "-1--1" alignment
+            if ((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
+                || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1) { // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
             }
         }
 
-        if(key.match(/\d+.v/) && umr[key] !== "" && getLocs(umr[key]) !== undefined){ // deal with coref
+        if (key.match(/\d+.v/) && umr[key] !== "" && getLocs(umr[key]) !== undefined) { // deal with coref
             let locs_list = getLocs(umr[key]).split(' ');
-            if(locs_list.length > 1){
+            if (locs_list.length > 1) {
                 let shared_align = "";
-                for(let i = 0; i <locs_list.length; i++){
-                    if(umr[locs_list[i] + '.c'] !==""){
+                for (let i = 0; i < locs_list.length; i++) {
+                    if (umr[locs_list[i] + '.c'] !== "") {
                         shared_align = umr[locs_list[i] + '.a'];
                     }
                 }
-                 for(let i = 0; i <locs_list.length; i++){
-                    if(umr[locs_list[i] + '.c'] ===""){
+                for (let i = 0; i < locs_list.length; i++) {
+                    if (umr[locs_list[i] + '.c'] === "") {
                         umr[locs_list[i] + '.a'] = shared_align;
                     }
                 }
             }
-            if((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
-            || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1){ // arg-concept c
+            if ((umr[key] === "" && umr[key.replace('.v', '.s')].match(/^(|1st|2nd|3rd|non-1st|non-3rd|Incl\.|Excl\.|Singular|Dual|Trial|Paucal|Plural|Intensifier|Downtoner|intensifier|downtoner|Habitual|habitual|Activity|activity|Endeavor|endeavor|Performance|performance|State|Imperfective|Perfective|Process|Atelic Process|expressive|interrogative|imperative|-|\+)$/))
+                || abstractConcepts.indexOf(umr[key.replace('.v', '.c')]) > -1) { // arg-concept c
                 umr[key.replace('.v', '.a')] = "-1--1";
             }
         }
 
-        if(umr[key] === "name"){
+        if (umr[key] === "name") {
             // console.log(umr[key]);
             let beg = 10000;
             let end = -1;
-            let locs = key.replace('.c','');
+            let locs = key.replace('.c', '');
             // console.log(locs);
             let pattern = new RegExp(`${locs}.\\d+.a`);
-            for(let i=0; i<Object.keys(umr).length; i++){
-                if(pattern.test(Object.keys(umr)[i])){
+            for (let i = 0; i < Object.keys(umr).length; i++) {
+                if (pattern.test(Object.keys(umr)[i])) {
                     // console.log("match!"+ umr[Object.keys(umr)[i]]);
                     let s = parseInt(umr[Object.keys(umr)[i]].split('-')[0]);
                     let e = parseInt(umr[Object.keys(umr)[i]].split('-')[1]);
                     umr[Object.keys(umr)[i]] = s + '-' + e;
-                    if(s < beg){
+                    if (s < beg) {
                         beg = s;
                     }
-                    if(e > end){
+                    if (e > end) {
                         end = e;
                     }
                 }
             }
-            if(beg !== 10000){
-                umr[key.replace('.c','.a')] = beg + '-' + end;
+            if (beg !== 10000) {
+                umr[key.replace('.c', '.a')] = beg + '-' + end;
             }
         }
     })
 
 }
 
-function showAnnotatedTokens(){
+function showAnnotatedTokens() {
     Object.keys(umr).forEach(function (key) {
         if (/[\\d|\\.]+a/gm.test(key)) {
-            if (!(key.replace('a', 'd') in umr)){
+            if (!(key.replace('a', 'd') in umr)) {
                 let indice = umr[key].split("-");
-                if ((parseInt(indice[0]) > 0) && (parseInt(indice[1]) > 0)){
+                if ((parseInt(indice[0]) > 0) && (parseInt(indice[1]) > 0)) {
                     for (let i = parseInt(indice[0]); i <= parseInt(indice[1]); i++) {
                         let cell2highlight = document.getElementById("sentence").childNodes[2].getElementsByTagName("td")[i];
                         let newNode = document.createElement("span");
@@ -960,7 +961,7 @@ function showAnnotatedTokens(){
                         };
                         let cellText = cell2highlight.innerText;
                         // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
-                        if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !==""){
+                        if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !== "") {
                             // console.log("I am here highlight1");
                             newNode.appendChild(document.createTextNode(cell2highlight.innerText));
                             cell2highlight.replaceChild(newNode, cell2highlight.firstChild)
@@ -973,6 +974,7 @@ function showAnnotatedTokens(){
     });
 
 }
+
 // function showAlign(){
 //     correctAlignments();
 //     let alignInfo;
@@ -994,20 +996,21 @@ function showAnnotatedTokens(){
 //         alignInfo.innerHTML = htmlSpaceGuard('\n') + alignment_string;
 //     }
 // }
-function showAlign(){
+function showAlign() {
     let align_str = '';
-    for (const key in alignments){
+    for (const key in alignments) {
         if (alignments.hasOwnProperty(key)) {
             align_str += `${key}: <span contenteditable="true" id="${key}">${alignments[key]}</span><br>`;
         }
     }
     setInnerHTML('align', align_str);
 }
-function showHead(parentVarLoc){
+
+function showHead(parentVarLoc) {
     let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
-    while(existingHead.length){
+    while (existingHead.length) {
         var parent = existingHead[0].parentNode;
-        while(existingHead[0].firstChild){
+        while (existingHead[0].firstChild) {
             parent.insertBefore(existingHead[0].firstChild, existingHead[0]);
         }
         parent.removeChild(existingHead[0]);
@@ -1060,13 +1063,13 @@ function newVar(concept) {
         initial = 'x';
     }
 
-    if (!docAnnot){
-            // add the sentence number s1 to initial t -> s1t
+    if (!docAnnot) {
+        // add the sentence number s1 to initial t -> s1t
         let sentenceId = document.getElementById('sentence_id').value;
-        if(table_id===1){ // this is deal with the two sentence display in under-resource languages
-            initial = "s"+ sentenceId + initial;
-        }else{
-            initial = "s"+ (parseInt(sentenceId)+1) + initial;
+        if (table_id === 1) { // this is deal with the two sentence display in under-resource languages
+            initial = "s" + sentenceId + initial;
+        } else {
+            initial = "s" + (parseInt(sentenceId) + 1) + initial;
         }
     }
 
@@ -1136,7 +1139,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_variable = arg;
             arg_concept = '';
             arg_string = '';
-        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
+        } else if ((language === 'chinese' || language === 'english' || language === 'arabic')
             && validEntryConcept(arg) //不能有大写字母，单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string') // arg_type is "concept" or empty (is variable)
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1145,7 +1148,7 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
+        } else if ((language === 'chinese' || language === 'english' || language === 'arabic')
             && validEntryConcept(arg.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
@@ -1154,17 +1157,17 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        }else if((default_langs.includes(language) || language === 'chinese'|| language === 'arabic' )//not English
+        } else if ((default_langs.includes(language) || language === 'chinese' || language === 'arabic')//not English
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
-            && (!role.match(/^:?(li|wiki)$/))){
+            && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here40-4");
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
-        }else if (validString(arg) //matches all non-white space character (except ")
+        } else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
-                ||role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree|:MODSTR)$/))){
+                || role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree|:MODSTR)$/))) {
             console.log("I am here40-5");
             arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
@@ -1226,7 +1229,6 @@ function addTriple(head, role, arg, arg_type) {
         variable2concept[arg_variable] = arg_concept; // add to variable2concept dictionary
         state_has_changed_p = 1; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished todo:can be used to tell if command is executed completely
         if (role.match(/^:op(-\d|0|\d+\.\d)/)) {
-            
             renorm_ops(head); //in umr, reorder :op5, :op8, :op6 to :op1, :op2, :op3
         }
         return arg_variable;
@@ -1464,6 +1466,7 @@ function replace_role(key_at, head_var, old_role, arg, key_with, new_role) {
         add_error('Ill-formed replace role command. Second argument should be "at". Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
     }
 }
+
 //not allowed
 function replace_variable(key_at, head_var, role, old_variable, key_with, new_variable) {
     console.log("replace_variable is called");
@@ -1937,14 +1940,14 @@ function role_unquoted_string_arg(role, arg, loc) {
     }
     if (role.match(/^:op/) && (head_role === ':name')) {
         return 0; //should be quoted
-    }  else if(!arg.length){ // if arg is empty string
+    } else if (!arg.length) { // if arg is empty string
         return 1;
-    }  else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
+    } else if (arg.match(/^\d+(?:\.\d+)?$/)     // a whole number or a floating number
         // || arg.match(/^(-|\+)$/)     // polarity
         || (role === ':MODSTR')
         || (role === ':polarity')
         || ((role === ':mode') && arg.match(/^(expressive|interrogative|imperative)$/)) //mode
-        || (role ===':Aspect')
+        || (role === ':Aspect')
         || (role === ':refer-person')
         || (role === ':refer-number')
         || ((role === ':degree') && arg.match(/^(|Intensifier|Downtoner|intensifier|downtoner)$/))) {
@@ -2054,19 +2057,19 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
-            } else if (!docAnnot){ //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
+            } else if (!docAnnot) { //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
                 let frames = JSON.stringify(frame_dict[concept]);
                 if (typeof frames !== 'undefined') {
                     let escaped_frames = escapeHtml(frames);
                     concept_m = `<span title=${escaped_frames}>` + concept_m + '</span>';
-                }else{
+                } else {
                     concept_m = `<span title="">` + concept_m + '</span>';
                 }
             }
 
-            if(docAnnot){
+            if (docAnnot) {
                 s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
-            }else{
+            } else {
                 s += '(' + `<span id="variable-${loc}">` + variable_m + '</span>' + ' / ' + concept_m; //'(s1t / taste-01'
             }
 
@@ -2141,13 +2144,13 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 let sub_loc = loc + '.' + index;
                 let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
                 if (show_amr_rec_result) {
-                    if (docAnnot){
+                    if (docAnnot) {
                         if (show_amr_new_line_doc(sub_loc)) {
                             s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
                         } else {
                             s += ' ' + show_amr_rec_result;
                         }
-                    }else{
+                    } else {
                         if (show_amr_new_line_sent(sub_loc)) {
                             s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
                         } else {
@@ -2192,9 +2195,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             }
-            if(docAnnot){
+            if (docAnnot) {
                 s += variable_m;
-            }else{
+            } else {
                 s += `<span id="variable-${loc}">` + variable_m + '</span>';
             }
         }
@@ -2228,7 +2231,7 @@ function show_amr(args) {
         let n = umr['n']; // how many children currently in the tree
         for (let i = 1; i <= n; i++) { //traverse children
             let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
-            if (show_amr_rec_result){
+            if (show_amr_rec_result) {
                 amr_s += show_amr_rec_result + '\n';
             }
         }
@@ -2236,7 +2239,7 @@ function show_amr(args) {
         html_amr_s = amr_s;
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
         // this is the actual output part
-        if(docAnnot){
+        if (docAnnot) {
             html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         }
         setInnerHTML('amr', html_amr_s);
@@ -2258,21 +2261,21 @@ function show_amr(args) {
             // add_log ('re-scroll ' + origScrollTop + '/' + origScrollHeight + ' ' + s.scrollTop + ' ' + s.scrollTop + ' ' + intScrollTop);
         }
     }
-    if(!docAnnot){
+    if (!docAnnot) {
         showAlign();
-        if(language === 'chinese' || language === 'english'){
+        if (language === 'chinese' || language === 'english') {
             // showAnnotatedTokens();
         }
     }
     return deHTML(html_amr_s);
 }
 
-function showEditHistory(){
+function showEditHistory() {
     let s = "";
-    if(undo_list.length > 1){
-        for(let i=0; i<undo_list.length; i++){
-            Object.keys(undo_list[i]).forEach(function(key) {
-                if(key.match('action')){
+    if (undo_list.length > 1) {
+        for (let i = 0; i < undo_list.length; i++) {
+            Object.keys(undo_list[i]).forEach(function (key) {
+                if (key.match('action')) {
                     s += "show edit history" + i + ": " + undo_list[i]['action'] + " -" + document.getElementById("username").textContent + "<br>";
                 }
             });
@@ -2282,10 +2285,10 @@ function showEditHistory(){
 }
 
 //todo: put this in hyper link later, instead of clicking on button
-function goToEdit(number_string){
-   let n = parseInt(number_string);
-   undo(n - undo_index+1);
-   showEditHistory();
+function goToEdit(number_string) {
+    let n = parseInt(number_string);
+    undo(n - undo_index + 1);
+    showEditHistory();
 }
 
 /**
@@ -2335,24 +2338,25 @@ function indent_for_loc(loc, c, style, n) {
     return indentation;
 }
 
-function selectEvent(){
+function selectEvent() {
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
-        if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id==='table2'){
+        if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id === 'table2') {
             table_id = 2;
         }
-        if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
+        if (selection.anchorNode.parentNode.tagName === "TD") {// in sentence table
             begOffset = selection.anchorNode.parentElement.cellIndex;
             endOffset = selection.focusNode.parentElement.cellIndex;
         }
     };
 }
-function get_selected_word(){
+
+function get_selected_word() {
     localStorage["selected_word"] = document.getElementById('selected_tokens').innerHTML;
- }
+}
 
 function highlightSelection() {
     console.log("highlightSelection is called.");
@@ -2384,7 +2388,7 @@ function highlightSelection() {
         };
         let cellText = tableRow.cells[i].innerText;
         // remove unwanted highlighted Attribute Values span got generated, maybe there is a better way to do this
-        if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !== "Abstract Concept "){
+        if (cellText !== "Attribute Values " && cellText !== "Attributes " && cellText !== "Abstract Concept ") {
             newNode.appendChild(document.createTextNode(tableRow.cells[i].innerText));
             tableRow.cells[i].replaceChild(newNode, tableRow.cells[i].firstChild)
         }
@@ -2392,36 +2396,36 @@ function highlightSelection() {
 }
 
 function highlight(elem, keywords, caseSensitive = true, cls = 'text-success') {
-    if(keywords[0] !== undefined){
+    if (keywords[0] !== undefined) {
         const flags = caseSensitive ? 'gi' : 'g';
-      // Sort longer matches first to avoid
-      // highlighting keywords within keywords.
-      keywords.sort((a, b) => b.length - a.length);
-      Array.from(elem.childNodes).forEach(child => {
-        const keywordRegex = RegExp(keywords.join('|'), flags);
-        // console.log("console list is: ", keywords);
-        // console.log("pattern is: ", keywords.join('|')+ "space?");
-        // console.log("first keyword: ", keywords[0] === undefined );
-        if (child.nodeType !== 3) { // not a text node
-          highlight(child, keywords, caseSensitive, cls);
-        } else if (keywordRegex.test(child.textContent)) {
-          const frag = document.createDocumentFragment();
-          let lastIdx = 0;
-          child.textContent.replace(keywordRegex, (match, idx) => {
-            const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
-            const highlighted = document.createElement('span');
-            console.log("match: ", match);
-            highlighted.textContent = match;
-            highlighted.classList.add(cls);
-            frag.appendChild(part);
-            frag.appendChild(highlighted);
-            lastIdx = idx + match.length;
-          });
-          const end = document.createTextNode(child.textContent.slice(lastIdx));
-          frag.appendChild(end);
-          child.parentNode.replaceChild(frag, child);
-        }
-      });
+        // Sort longer matches first to avoid
+        // highlighting keywords within keywords.
+        keywords.sort((a, b) => b.length - a.length);
+        Array.from(elem.childNodes).forEach(child => {
+            const keywordRegex = RegExp(keywords.join('|'), flags);
+            // console.log("console list is: ", keywords);
+            // console.log("pattern is: ", keywords.join('|')+ "space?");
+            // console.log("first keyword: ", keywords[0] === undefined );
+            if (child.nodeType !== 3) { // not a text node
+                highlight(child, keywords, caseSensitive, cls);
+            } else if (keywordRegex.test(child.textContent)) {
+                const frag = document.createDocumentFragment();
+                let lastIdx = 0;
+                child.textContent.replace(keywordRegex, (match, idx) => {
+                    const part = document.createTextNode(child.textContent.slice(lastIdx, idx));
+                    const highlighted = document.createElement('span');
+                    console.log("match: ", match);
+                    highlighted.textContent = match;
+                    highlighted.classList.add(cls);
+                    frag.appendChild(part);
+                    frag.appendChild(highlighted);
+                    lastIdx = idx + match.length;
+                });
+                const end = document.createTextNode(child.textContent.slice(lastIdx));
+                frag.appendChild(end);
+                child.parentNode.replaceChild(frag, child);
+            }
+        });
     }
 
 }
@@ -2505,7 +2509,6 @@ function loadErrorHandler(evt) {
 }
 
 
-
 /**
  * pass all the information that need to be saved in database back to routes.py
  * @constructor
@@ -2518,13 +2521,13 @@ function UMR2db() {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
-    if(annot_str!==''){
+    if (annot_str !== '') {
         umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
     }
     let alignments2save = {};
-    for (let key in alignments){
-        if(alignments.hasOwnProperty(key)){
-            if(key in variables){
+    for (let key in alignments) {
+        if (alignments.hasOwnProperty(key)) {
+            if (key in variables) {
                 alignments2save[key] = alignments[key];
             }
         }
@@ -2538,12 +2541,12 @@ function UMR2db() {
     }).then(function (data) {
         setInnerHTML("error_msg", data["msg"]);
         document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
-    }).catch(function(error){
-        console.log("Fetch error from UMR2db: "+ error);
+    }).catch(function (error) {
+        console.log("Fetch error from UMR2db: " + error);
     });
 }
 
-function deHTML2(s){
+function deHTML2(s) {
     s = s.replaceAll('<br>', '\n');
     s = deHTML(s)
     return s;
@@ -2559,7 +2562,7 @@ function export_annot(exported_items, content_string) {
         e[1] = e[1].replace('</div>', '');
 
         let align_str = '';
-        for (const key in e[2]){
+        for (const key in e[2]) {
             if (e[2].hasOwnProperty(key)) {
                 align_str += key + ": " + e[2][key] + "\n";
             }
@@ -2576,7 +2579,7 @@ function export_annot(exported_items, content_string) {
         + a[2]
         + "\n# document level annotation:\n"
         + docUmrTransform(deHTML2(a[3]), false).replaceAll('<br>', '\n')
-        +"\n").join("\n\n# :: snt");
+        + "\n").join("\n\n# :: snt");
 
     let filename;
     let text = "user name: " + document.getElementById('username').innerText + '\n';
@@ -2613,7 +2616,7 @@ function get(object, key, default_value) {
     return (typeof result !== "undefined") ? result : default_value;
 }
 
-function suggestLemma(project_id, doc_id, snt_id){
+function suggestLemma(project_id, doc_id, snt_id) {
     fetch(`/lexiconlookup/${project_id}?doc_id=${doc_id}&snt_id=${snt_id}`, {
         method: 'POST',
         body: JSON.stringify({"selected_word": localStorage["selected_word"]})
@@ -2626,41 +2629,41 @@ function suggestLemma(project_id, doc_id, snt_id){
         document.getElementById('simWordList').remove(); //box suggesting similar forms on the right
         // create ul element and set its attributes.
         const ul = document.createElement('ul');
-        ul.setAttribute ('class', 'list-group');
-        ul.setAttribute ('id', 'simWordList');
+        ul.setAttribute('class', 'list-group');
+        ul.setAttribute('id', 'simWordList');
         for (let i = 0; i <= data['similar_word_list'].length - 1; i++) {
             const li = document.createElement('li');	// create li element.
             li.innerHTML = `${data['similar_word_list'][i]} (${get(citation_dict, data['similar_word_list'][i], "no lemma added for this word yet")})`;	                        // assigning text to li using array value.
-            li.setAttribute ('class', 'list-group-item py-0');	// remove the bullets.
+            li.setAttribute('class', 'list-group-item py-0');	// remove the bullets.
             ul.appendChild(li);		// append li to ul.
         }
         cont.appendChild(ul);		// add ul to the container.
-    }).catch(function(error){
-        console.log("Fetch error: "+ error);
+    }).catch(function (error) {
+        console.log("Fetch error: " + error);
     });
 }
 
 
-function initializeLexicon(frames, citations){
-    try{
+function initializeLexicon(frames, citations) {
+    try {
         frame_dict = JSON.parse(deHTML(frames));
-    }catch (e){
+    } catch (e) {
         console.log("Error parsing frame_dict: " + e);
     }
 
-    try{
+    try {
         citation_dict = JSON.parse(deHTML(citations));
-    }catch (e){
+    } catch (e) {
         console.log("Error parsing citation_dict: " + e);
     }
 
 }
 
-function colorAnnotatedSents(annotated_sent_ids){
+function colorAnnotatedSents(annotated_sent_ids) {
     let annotated_sent_ids_arr;
-    try{
+    try {
         annotated_sent_ids_arr = JSON.parse(annotated_sent_ids);
-    }catch (e){
+    } catch (e) {
         console.log("Error parsing annotated_sent_ids: " + e);
     }
     annotated_sent_ids_arr.forEach(n => {
@@ -2668,7 +2671,7 @@ function colorAnnotatedSents(annotated_sent_ids){
     })
 }
 
-function changeSetting(){
+function changeSetting() {
     show_amr_obj['option-1-line-NEs'] = !show_amr_obj['option-1-line-NEs'];
     // show_amr_obj['option-string-args-with-head'] = !show_amr_obj['option-string-args-with-head'];
     show_amr("show");
@@ -2677,12 +2680,12 @@ function changeSetting(){
 /**
  * this is a temporary function, the purpose is to test execute command function
  */
-function submit_command(){
+function submit_command() {
     let value = document.getElementById('command').value;
     exec_command(value, 1);
 }
 
-function reset(){
+function reset() {
     show_amr('show');
 }
 
@@ -2690,8 +2693,7 @@ function reset(){
 function getSelectedNode() {
     if (document.selection)
         return document.selection.createRange().parentElement();
-    else
-    {
+    else {
         var selection = window.getSelection();
         if (selection.rangeCount > 0)
             return selection.getRangeAt(0).startContainer.parentNode;
