@@ -820,6 +820,24 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             } else {
                 add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
+        } else if (cc[0] === 'move') {
+            if (cc.length >= 4) {
+                if (cc[2] === 'to') {
+                    if (cc.length === 4) {
+                        moveVar(cc[1], cc[3], '');
+                        show_amr_args = 'show';
+                    } else if (cc.length === 5) {
+                        moveVar(cc[1], cc[3], cc[4]);
+                        show_amr_args = 'show';
+                    } else {
+                        console.log('Ill-formed move command. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+                    }
+                } else {
+                    console.log("Ill-formed move command. Second argument should be <i>to</i>. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]");
+                }
+            } else {
+                console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+            }
         } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
 
             if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
@@ -1668,6 +1686,84 @@ function deleteAMR() {
     exec_command('record delete amr', 1);
 }
 
+function moveVar(variable, new_head_var, role) {
+    console.log('move ' + variable + ' ' + new_head_var + ' ' + role);
+    let loc, locs, loc_list, head_var_loc, head_var_locs, head_var_loc_list;
+    locs = getLocs(variable);
+    if (locs) {
+        locs += '';
+        if ((head_var_locs = getLocs(new_head_var))
+            || ((new_head_var === 'top') && (head_var_locs = 'top'))) {
+            head_var_locs += '';
+            if ((role === '') || role.match(/^:[a-z]/i)) {
+                if ((loc_list = argSplit(locs))
+                    && (loc_list.length >= 1)
+                    && (loc = loc_list[0])) {
+                    if (role || (new_head_var === 'top') || (role = umr[loc + '.r'])) {
+                        if ((head_var_loc_list = argSplit(head_var_locs))
+                            && (head_var_loc_list.length >= 1)
+                            && (head_var_loc = head_var_loc_list[0])) {
+                            let n_subs, new_loc;
+                            if (head_var_loc === 'top') {
+                                n_subs = umr['n'];
+                                umr['n'] = ++n_subs;
+                                new_loc = n_subs;
+                            } else {
+                                n_subs = umr[head_var_loc + '.n'];
+                                umr[head_var_loc + '.n'] = ++n_subs;
+                                new_loc = head_var_loc + '.' + n_subs;
+                            }
+                            console.log('move core ' + loc + ' ' + head_var_loc + ' ' + new_loc);
+                            for (let key in umr) {
+                                let re1 = '^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$';
+                                let re2 = new_loc + '$1';
+                                let new_key = key.replace(new RegExp('^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$', ""), new_loc + '$1');
+                                console.log('   key: ' + key + ' re1: ' + re1 + ' re2: ' + re2 + ' new_key: ' + new_key);
+                                if (new_key !== key) {
+                                    umr[new_key] = umr[key];
+                                    console.log('move amr update: ' + key + '&rarr; ' + new_key);
+                                }
+                            }
+                            umr[new_loc + '.r'] = role;
+                            umr[loc + '.d'] = 1;
+                            state_has_changed_p = 1;
+                            for (let key in variables) {
+                                let old_value = getLocs(key);
+                                let old_value2 = ' ' + old_value + ' ';
+                                let new_value = strip(old_value2.replace(new RegExp(' ' + regexGuard(loc) + '((\\.\\d+)*)' + ' ', ""), ' ' + new_loc + '$1 '));
+                                if (old_value !== new_value) {
+                                    variables[key] = new_value;
+                                    console.log('move variable update for ' + key + ': ' + old_value + ' &rarr; ' + new_value);
+                                }
+                            }
+                            for (let key in concepts) {
+                                let old_value = concepts[key];
+                                let old_value2 = ' ' + old_value + ' ';
+                                let new_value = strip(old_value2.replace(new RegExp(' ' + regexGuard(loc) + '((\\.\\d+)*)' + ' ', ""), ' ' + new_loc + '$1 '));
+                                if (old_value !== new_value) {
+                                    concepts[key] = new_value;
+                                    console.log('move concept update for ' + key + ': ' + old_value + ' &rarr; ' + new_value);
+                                }
+                            }
+                        } else {
+                            console.log('Could not find AMR with variable ' + new_head_var);
+                        }
+                    } else {
+                        console.log('Ill-formed move command. To move the tree of variable ' + variable + ', a fourth argument is neccessary to provide a proper role, starting with a colon. Usage: move &lt;var&gt; to &lt;new-head-var&gt; &lt;role&gt;');
+                    }
+                } else {
+                    console.log('Could not find AMR with variable ' + variable);
+                }
+            } else {
+                console.log('Ill-formed move command. Fourth argument should be a role starting with a colon. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+            }
+        } else {
+            console.log('Ill-formed move command. Third argument should be a defined variable. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+        }
+    } else {
+        console.log('Ill-formed move command. First argument should be a defined variable. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+    }
+}
 
 /**
  * this is used to directly change the variable to another one
