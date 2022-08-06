@@ -34,7 +34,6 @@ let state_has_changed_p = 0; // related to undo list, it becomes 1 when four cor
 let show_umr_status = 'show'; //'show'
 let show_amr_mo_lock = ''; // '' affects coloring
 
-let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let docAnnot = false;
 let partial_graphs = {};
 let alignments = {}
@@ -716,20 +715,20 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
 
         // cc == ["b", ":arg1", "car"]
-        if (cc.length > 3 && cc[1] == ':Aspect') {
+        if (cc.length > 3 && cc[1] === ':Aspect') { //example: value = 's1t :Aspect Reversible State': Reversible State needs to be hyphenated when added to graph
             let p = cc[0];
             let r = cc[1];
-            let c = cc.slice(2,).join("-")
+            let c = cc.slice(2,).join("-") // Aspect values that are longer than 2 tokens need to be hyphenated
             cc = [p, r, c]
         }
         let ne_concept;
-        if (cc[0] === 'top') { // NE as root
+        if (cc[0] === 'top') {
             if ((cc.length >= 3)
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
-                && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                && (listContainsCap(cc))) { //example: value = "top people Jin", this is used when we need an named entity as root instead of a predicate
                 let ne_var = newUMR(trimConcept(ne_concept));
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
                 for (let i = 2; i < cc.length; i++) {
@@ -737,7 +736,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     addTriple(name_var, sub_role, cc[i], 'string');
                 }
                 show_amr_args = 'show';
-            } else if (cc.length >= 2) {
+            } else if (cc.length >= 2) { // example: value = "top taste"
                 // this is when cc only has two element (the first probably is top)
                 for (let i = 1; i < cc.length; i++) {
                     newUMR(cc[i].toLowerCase());
@@ -747,61 +746,52 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) { //example: value = "s1t :ARG5 freedom"
             addTriple(cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
-        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
+        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) { //example: value = "s1t :ARG0 person Jin Zhao"
             addNE(value);
             show_amr_args = 'show';
-        } else if ((cc.length >= 3) && (cc[1] == ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) {
+        } else if ((cc.length >= 3) && (cc[1] === ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) { //example: value = "s1t :name Jin Zhao", this is required when the named entity is not in the list when shortcut annotation
             addNE(value);
             show_amr_args = 'show';
         } else if (cc[0] === 'replace') {
-
-            if (cc.length == 1) {
-
+            if (cc.length === 1) {
                 console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
-            } else if (cc[1] == 'concept') {
-                if (cc.length == 6) {
-
+            } else if (cc[1] === 'concept') { //example: value = "replace concept at s1n3 with noodles"
+                if (cc.length === 6) {
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
                 } else {
 
                     console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                 }
-            } else if (cc[1] == 'string') {
-
-                if (cc.length == 7) {
-
+            } else if (cc[1] === 'string') { // example: value = "replace string at s1n3 :op1 with Jin"
+                if (cc.length === 7) {
                     replace_string(cc[2], cc[3], cc[4], cc[5], stripQuotes(cc[6]));
                     show_amr_args = 'show';
                 } else {
-
                     console.log('Ill-formed replace string command. Incorrect number of arguments. Usage: replace string at &lt;var&gt; &lt;role&gt; with &lt;new-value&gt;');
                 }
-            } else if (cc[1] == 'role') {
-
-                if (cc.length == 8) {
+            } else if (cc[1] === 'role') { // example: value = "replace role at s1n3 :ARG1 s10 with :ARG2"
+                if (cc.length === 8) {
                     replace_role(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
                     show_amr_args = 'show';
                 } else {
                     console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace role at &lt;var&gt; &lt;old-role&gt; &lt;arg&gt; with &lt;new-role&gt;');
                 }
-            } else if (cc[1] == 'variable') {
-
-                if (cc.length == 8) {
+            } else if (cc[1] === 'variable') { //example: value = "replace variable at s1f :ARG1 s1p with s1p2"
+                if (cc.length === 8) {
                     replace_variable(cc[2], cc[3], cc[4], cc[5], cc[6], cc[7]);
                     show_amr_args = 'show';
                 } else {
-                    console.log('Ill-formed replace role command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
+                    console.log('Ill-formed replace variable command. Incorrect number of arguments. Usage: replace variable at &lt;var&gt; &lt;role&gt; &lt;old-variable&gt; with &lt;new-variable&gt;');
                 }
             } else {
                 console.log('Ill-formed replace command. First argument should be the type of AMR element to be replaced: concept, string or role');
             }
         } else if (cc[0] === 'delete') {
-
-            if (cc.length === 4) {
+            if (cc.length === 4) { //example: value = "delete top level s1t"
                 if ((cc[1] === 'top') && (cc[2] === 'level')) {
                     delete_top_level(cc[3]);
-                } else {
+                } else { //example: value = 'delete s1t :ARG1 s1p'
                     delete_based_on_triple(cc[1], cc[2], cc[3]);
                 }
                 changeShowStatus('delete');
@@ -810,7 +800,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 console.log('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
         } else if (cc[0] === 'move') {
-            if (cc.length >= 4) {
+            if (cc.length >= 4) { //example: value = "move s1t2 to s1p2 :ARG5"
                 if (cc[2] === 'to') {
                     if (cc.length === 4) {
                         moveVar(cc[1], cc[3], '');
@@ -828,8 +818,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
             }
         } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
-
-            if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) {
+            if ((cc[0].match(/^[a-z]\d*$/)) && !getLocs(cc[0])) { //parent variable doesn't exist
                 console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
             } else if (cc.length == 2) {
                 console.log('In <i>add</i> command, there must be at least 3 arguments.');
@@ -837,11 +826,16 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 console.log('Unrecognized <i>add</i> command.');
             }
         } else {
-            console.log('Unrecognized command:' + value);
+            console.log('Unrecognized sentence level command:' + value);
+            //doc level
+            if(docAnnot){
+                setInnerHTML('error_msg', 'no relation is chosen' + value);
+                document.getElementById("error_msg").className = `alert alert-danger`;
+            }
             top = 0;
         }
 
-        if (top) {
+        if (top) { //top is 0 when the last action didn't take effect
             // value: "b :arg1 car"
             show_amr(show_amr_args); // show_amr_args:'show'
             if (state_has_changed_p) {
