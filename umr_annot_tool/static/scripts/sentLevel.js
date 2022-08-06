@@ -723,8 +723,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             cc = [p, r, c]
         }
         let ne_concept;
-        let cc2v;
-        if (cc[0] === 'top') {
+        if (cc[0] === 'top') { // NE as root
             if ((cc.length >= 3)
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
@@ -745,14 +744,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 }
                 show_amr_args = 'show';
             }
-        } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
-            && (cc[2].match(/\+$/))
-            && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
-            && getLocs(cc2v)) {
-            addTriple(cc[0], cc[1], cc2v);
-            show_amr_args = 'show';
-        } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
-            // this is the condition we go in 1
+        } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) { //example: value = "s1t :ARG5 freedom"
             addTriple(cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
         } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
