@@ -1781,11 +1781,7 @@ function change_var_name(variable, target, top) {
     let loc;
     if (locs) {
         variables[variable] = '';
-        if ((target.match(/^(s\d)*[a-z]\d*$/)) && (!getLocs(target))) {
-            new_variable = target;
-        } else {
-            new_variable = newVar(target);
-        }
+        new_variable = newVar(target);
         let loc_list = argSplit(locs);
         for (let i = 0; i < loc_list.length; i++) {
             loc = loc_list[i];
