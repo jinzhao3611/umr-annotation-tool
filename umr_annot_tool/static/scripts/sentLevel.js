@@ -755,10 +755,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             // this is the condition we go in 1
             addTriple(cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
-        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
-
-            addOr(value);
-            show_amr_args = 'show';
         } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) {
             addNE(value);
             show_amr_args = 'show';
@@ -1266,42 +1262,6 @@ function addNE(value) {
         for (let i = name_start; i < cc.length; i++) {
             let sub_role = ':op' + (i - name_start + 1);
             addTriple(name_var, sub_role, cc[i], 'string');
-        }
-    }
-}
-
-/**
- * check if value is valid, add triple, if not, add error, :op appears here
- * @param value "b :mod pretty very much so"
- */
-function addOr(value) {
-    let cc = argSplit(value);
-    let head_var = cc[0];
-    let role = cc[1];
-    let key_or = cc[2];
-    let name_var = '';
-    let ill_formed_concepts = [];
-    let or_var;
-    for (let i = 3; i < cc.length; i++) {
-        if (!validEntryConcept(cc[i])) {
-            ill_formed_concepts.push(cc[i]);
-        }
-    }
-    if (ill_formed_concepts.length >= 2) {
-        console.log('Ill-formed concepts following *OR*: ' + ill_formed_concepts.join(", "));
-    } else if (ill_formed_concepts.length === 1) {
-        console.log('Ill-formed concept following *OR*: ' + ill_formed_concepts[0]);
-    } else {
-        if (head_var === 'top') {
-            or_var = newUMR(key_or);
-        } else {
-            or_var = addTriple(head_var, role, key_or, 'concept');
-        }
-        if (or_var) { // when cc is longer than 3, the rest elements are ops
-            for (let i = 3; i < cc.length; i++) {
-                let sub_role = ':op' + (i - 2);
-                addTriple(or_var, sub_role, cc[i], 'concept');
-            }
         }
     }
 }
