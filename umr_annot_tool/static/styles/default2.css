@@ -96,13 +96,28 @@ display: inline-block
     border-radius: 6px 0 6px 6px;
 }
 
-#all-sentences, #sentence{
-    height:auto;
-    overflow-y: scroll;
-    max-height: 250px;
+
+#penman{
+    font-style: italic;
+    font-family: "Times New Roman", serif;
+
 
 }
 
+#all-sentences, #sentence{
+    height:auto;
+    overflow-y: scroll;
+    max-height: 30px;
+
+}
+#sentence{
+
+    display: none;
+}
+#all-sentences{
+    height: 6em;
+
+}
 #info{
         height:auto;
     overflow-y: scroll;
@@ -159,3 +174,44 @@ ul.raw_text,ul.raw_text_index {
     margin-inline-end: 0px;
     padding-inline-start: 50px;
 }
+.command{
+    width: 100%;
+    display: flex;
+    font-size: 20px;
+height: 70%}
+
+.command::-webkit-input-placeholder{
+        color: #aab2bd;
+        font-size: 10px;
+    }
+
+.btn-sm{
+    background-color: #10a778;
+
+
+}
+hr {
+  /*border: 0;*/
+  clear:both;
+  /*display:block;*/
+  /*width: 96%;*/
+  /*background-color:grey;*/
+  /*height: 1px;*/
+}
+body.wrapper{
+
+    /*display: grid;*/
+    /*grid: auto auto/ max-content auto;*/
+}.annotation-display{
+    width: 85%;float: left;
+ }.frame_display_info{
+    width: 50%;float: right; margin-top: 20px;
+   }
+
+
+#frame_display{width: fit-content }
+    .string { color: green; }
+    .number { color: darkorange; }
+    .boolean { color: blue; }
+    .null { color: magenta; }
+    .key { color: red; }

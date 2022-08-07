@@ -15,7 +15,8 @@ import jpype
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, \
+    Partialgraph
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from sqlalchemy.orm.attributes import flag_modified
@@ -26,19 +27,27 @@ FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 
-# from farasa.stemmer import FarasaStemmer
-# stemmer = FarasaStemmer(interactive=True)
+from farasa.stemmer import FarasaStemmer
 
-def lexicon2db(project_id:int, lexicon_dict: dict):
-    existing_lexicon = Lexicon.query.filter(Lexicon.project_id==project_id).first()
+stemmer = FarasaStemmer(interactive=True)
+
+
+
+# instance1=jclass().lemmatizeLine('ﺍﻷﻤﻴﺭ')
+# print(instance1)
+def lexicon2db(project_id: int, lexicon_dict: dict):
+    existing_lexicon = Lexicon.query.filter(Lexicon.project_id == project_id).first()
     existing_lexicon.lexi = lexicon_dict
     flag_modified(existing_lexicon, 'lexi')
     db.session.commit()
     flash('your lexicon has been saved to db', 'success')
 
-def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int,
+
+def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool,
+            current_project_id: int,
             sent_annots=None, doc_annots=None, aligns=None) -> int:
-    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id, project_id=current_project_id).first()
+    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id,
+                                       project_id=current_project_id).first()
     if existing_doc:
         doc_id = existing_doc.id
         flash('Upload failed: A document with the same name is already in current project.', 'success')
@@ -70,19 +79,21 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         flash('Your annotations has been created.', 'success')
     elif has_annot:
         for i in range(len(sents)):
-            dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
+            dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
             dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
             dehtml_doc_annot = BeautifulSoup(doc_annots[i]).get_text()
             sent_umr = string2umr(dehtml_sent_annot)
             annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=aligns[i],
-                                    user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
-                                    sent_id=i + 1, #sentence id counts from 1
+                                    user_id=dummy_user_id,
+                                    # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
+                                    sent_id=i + 1,  # sentence id counts from 1
                                     doc_id=doc_id,
                                     sent_umr=sent_umr, doc_umr={})
             db.session.add(annotation)
         db.session.commit()
         flash('Your annotations has been created.', 'success')
     return doc_id
+
 
 @main.route("/new_project", methods=['GET', 'POST'])
 def new_project():
@@ -92,8 +103,9 @@ def new_project():
     if form.validate_on_submit():
         try:
             hashed_password = bcrypt.generate_password_hash('qcisauser').decode('utf-8')
-            qc_user = User(username=f"{form.projectname.data}_qc", email=f'{form.projectname.data}{datetime.now().strftime("%H%M%S")}{datetime.today().strftime("%d%m%Y")}@qc.com',
-                           password=hashed_password) #the reason of using datetime is to make everybody's email different, this will cause an sqlalchemy error even before checking if there is same project name in this user's project
+            qc_user = User(username=f"{form.projectname.data}_qc",
+                           email=f'{form.projectname.data}{datetime.now().strftime("%H%M%S")}{datetime.today().strftime("%d%m%Y")}@qc.com',
+                           password=hashed_password)  # the reason of using datetime is to make everybody's email different, this will cause an sqlalchemy error even before checking if there is same project name in this user's project
             db.session.add(qc_user)
             db.session.commit()
 
@@ -107,11 +119,29 @@ def new_project():
             db.session.commit()
 
             lattice = Lattice(project_id=project.id,
-                              aspect={"Habitual": True, "Imperfective": True, "Process": True, "Atelic Process": True, "Perfective": True, "State": True, "Activity": True, "Endeavor": True, "Performance": True, "Reversible State": True, "Irreversible State": True, "Inherent State": True, "Point State": True, "Undirected Activity": True, "Directed Activity": True, "Semelfactive": True, "Undirected Endeavor": True, "Directed Endeavor": True, "Incremental Accomplishment": True, "Nonincremental Accomplishment": True, "Directed Achievement": True, "Reversible Directed Achievement": True, "Irreversible Directed Achievement": True},
-                              person={"person": True, "non-3rd": True, "non-1st": True, "1st": True, "2nd": True, "3rd": True, "incl.": True, "excl.": True},
-                              number={"Singular": True, "Non-singular": True, "Paucal": True, "Plural": True, "Dual": True, "Non-dual Paucal": True, "Greater Plural": True, "Trial": True, "Non-trial Paucal": True},
-                              modal={"Non-NeutAff": True, "Non-FullAff": True, "Non-NeutNeg": True, "Non-FullNeg": True, "FullAff": True, "PrtAff": True, "NeutAff": True, "FullNeg": True, "PrtNeg": True, "NeutNeg": True, "Strong-PrtAff": True, "Weak-PrtAff": True, "Strong-NeutAff": True, "Weak-NeutAff": True, "Strong-PrtNeg": True, "Weak-PrtNeg": True, "Strong-NeutNeg": True, "Weak-NeutNeg": True},
-                              discourse={"or": True, "and+but": True, "inclusive-disj": True, "exclusive-disj": True, "and+unexpected": True, "and+contrast": True, "but": True, "and": True, "consecutive": True, "additive": True, "unexpected-co-occurrence": True, "contrast-01": True, ":subtraction": True})
+                              aspect={"Habitual": True, "Imperfective": True, "Process": True, "Atelic Process": True,
+                                      "Perfective": True, "State": True, "Activity": True, "Endeavor": True,
+                                      "Performance": True, "Reversible State": True, "Irreversible State": True,
+                                      "Inherent State": True, "Point State": True, "Undirected Activity": True,
+                                      "Directed Activity": True, "Semelfactive": True, "Undirected Endeavor": True,
+                                      "Directed Endeavor": True, "Incremental Accomplishment": True,
+                                      "Nonincremental Accomplishment": True, "Directed Achievement": True,
+                                      "Reversible Directed Achievement": True,
+                                      "Irreversible Directed Achievement": True},
+                              person={"person": True, "non-3rd": True, "non-1st": True, "1st": True, "2nd": True,
+                                      "3rd": True, "incl.": True, "excl.": True},
+                              number={"Singular": True, "Non-singular": True, "Paucal": True, "Plural": True,
+                                      "Dual": True, "Non-dual Paucal": True, "Greater Plural": True, "Trial": True,
+                                      "Non-trial Paucal": True},
+                              modal={"Non-NeutAff": True, "Non-FullAff": True, "Non-NeutNeg": True, "Non-FullNeg": True,
+                                     "FullAff": True, "PrtAff": True, "NeutAff": True, "FullNeg": True, "PrtNeg": True,
+                                     "NeutNeg": True, "Strong-PrtAff": True, "Weak-PrtAff": True,
+                                     "Strong-NeutAff": True, "Weak-NeutAff": True, "Strong-PrtNeg": True,
+                                     "Weak-PrtNeg": True, "Strong-NeutNeg": True, "Weak-NeutNeg": True},
+                              discourse={"or": True, "and+but": True, "inclusive-disj": True, "exclusive-disj": True,
+                                         "and+unexpected": True, "and+contrast": True, "but": True, "and": True,
+                                         "consecutive": True, "additive": True, "unexpected-co-occurrence": True,
+                                         "contrast-01": True, ":subtraction": True})
             db.session.add(lattice)
             pg = Partialgraph(project_id=project.id, partial_umr={})
             db.session.add(pg)
@@ -126,6 +156,7 @@ def new_project():
 
         return redirect(url_for('users.account'))
     return render_template('new_project.html', form=form, title='create project')
+
 
 @main.route("/upload_document/<int:current_project_id>", methods=['GET', 'POST'])
 def upload_document(current_project_id):
@@ -146,13 +177,17 @@ def upload_document(current_project_id):
                 if is_exported:  # has annotation
                     if file_format == 'isi_editor':
                         new_content_string, sents, sent_annots = process_exported_file_isi_editor(content_string)
-                        file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, current_project_id=current_project_id)
+                        file2db(filename=filename, file_format=file_format, content_string=new_content_string,
+                                lang=lang,
+                                sents=sents, has_annot=True, sent_annots=sent_annots,
+                                current_project_id=current_project_id)
                     else:
                         new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
                             content_string)
-                        file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id)
+                        file2db(filename=filename, file_format=file_format, content_string=new_content_string,
+                                lang=lang,
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots,
+                                aligns=aligns, current_project_id=current_project_id)
                 else:  # doesn't have annotation
                     info2display = html(content_string, file_format, lang=lang)
                     file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
@@ -179,7 +214,9 @@ def upload_document(current_project_id):
         else:
             flash('Please upload a file.', 'danger')
 
-    return render_template('upload_document.html', title='upload', form=form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
+    return render_template('upload_document.html', title='upload', form=form, sent_annots=json.dumps(sent_annots),
+                           doc_annots=json.dumps(doc_annots), doc_id=doc_id)
+
 
 @main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
 def upload_lexicon(current_project_id):
@@ -196,7 +233,8 @@ def upload_lexicon(current_project_id):
         else:
             flash("please upload a lexicon file", "danger")
 
-    return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form, project_id=current_project_id)
+    return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form,
+                           project_id=current_project_id)
 
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
@@ -206,15 +244,18 @@ def sentlevel(doc_sent_id):
 
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2]) == 0 else int(
+        doc_sent_id.split("_")[2])  # html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
-    #check who is the admin of the project containing this file:
+    # check who is the admin of the project containing this file:
     project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                        Projectuser.permission == "admin").first().user_id
     admin = User.query.filter(User.id == admin_id).first()
-    permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+    permission = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                          Projectuser.user_id == current_user.id).first().permission
 
     doc = Doc.query.get_or_404(doc_id)
     info2display = html(doc.content, doc.file_format, lang=doc.lang)
@@ -226,15 +267,14 @@ def sentlevel(doc_sent_id):
     elif doc.lang == "arabic":
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
-        try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
+        try:  # this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
             frame_dict = Lexicon.query.filter_by(project_id=project_id).first().lexi
-        except AttributeError: #there is no frame_dict for this language at all
+        except AttributeError:  # there is no frame_dict for this language at all
             frame_dict = {}
 
     snt_id = int(request.args.get('snt_id', default_sent_id))
     if "set_sentence" in request.form:
         snt_id = int(request.form["sentence_id"])
-
 
     if request.method == 'POST':
         # add umr to db
@@ -293,13 +333,13 @@ def sentlevel(doc_sent_id):
 
     try:
         curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
-                                                         Annotation.user_id == owner_user_id).first()
+                                                  Annotation.user_id == owner_user_id).first()
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
         curr_alignment = curr_annotation.alignment
     except Exception as e:
         print(e)
-        curr_annotation_string= ""
+        curr_annotation_string = ""
         curr_sent_umr = {}
         curr_alignment = {}
 
@@ -307,13 +347,14 @@ def sentlevel(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
-    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
+    annotated_sent_ids = [annot.sent_id for annot in annotations if
+                          (annot.sent_umr != {} or annot.sent_annot)]  # this is used to color annotated sentences
     all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
 
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
     # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
     # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
     # had no annotations, in which case the annotations for all following lines were moved up one slot.
@@ -324,11 +365,13 @@ def sentlevel(doc_sent_id):
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
     for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+        print('bug finding',i)
+        all_annots_no_skipping[i - 1] = sa
+        all_aligns_no_skipping[i - 1] = a
+        all_doc_annots_no_skipping[i - 1] = da
 
-    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+    exported_items = [list(p) for p in
+                      zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     lattice = Lattice.query.filter(Lattice.project_id == project_id).first()
     aspectSettingsJSON = lattice.aspect
@@ -344,18 +387,22 @@ def sentlevel(doc_sent_id):
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
-                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
+                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string,
+                           curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\\', '\\\\'), #this is for toolbox4 format that has a lot of unescaped backslashes
-                           annotated_sent_ids= annotated_sent_ids,
+                           content_string=doc.content.replace('\\', '\\\\'),
+                           # this is for toolbox4 format that has a lot of unescaped backslashes
+                           annotated_sent_ids=annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
                            admin=admin, owner=owner,
                            permission=permission,
                            aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
-                           numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON,
+                           numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON,
+                           discourseSettingsJSON=discourseSettingsJSON,
                            partial_graphs_json=partial_graphs_json)
+
 
 @main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevelview(doc_sent_id):
@@ -363,7 +410,8 @@ def sentlevelview(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2]) == 0 else int(
+        doc_sent_id.split("_")[2])  # html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
     # check who is the admin of the project containing this file:
@@ -389,9 +437,9 @@ def sentlevelview(doc_sent_id):
     elif doc.lang == "arabic":
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
-        try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
+        try:  # this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
             frame_dict = Lexicon.query.filter_by(project_id=project_id).first().lexi
-        except AttributeError: #there is no frame_dict for this language at all
+        except AttributeError:  # there is no frame_dict for this language at all
             frame_dict = {}
 
     snt_id = int(request.args.get('snt_id', default_sent_id))
@@ -400,13 +448,13 @@ def sentlevelview(doc_sent_id):
 
     try:
         curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
-                                                         Annotation.user_id == owner_user_id).first()
+                                                  Annotation.user_id == owner_user_id).first()
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
         curr_alignment = curr_annotation.alignment
     except Exception as e:
         print(e)
-        curr_annotation_string= ""
+        curr_annotation_string = ""
         curr_sent_umr = {}
         curr_alignment = {}
 
@@ -414,13 +462,14 @@ def sentlevelview(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
     filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
-    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
+    annotated_sent_ids = [annot.sent_id for annot in annotations if
+                          (annot.sent_umr != {} or annot.sent_annot)]  # this is used to color annotated sentences
     all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in filtered_sentences]
 
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
     # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
     # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
     # had no annotations, in which case the annotations for all following lines were moved up one slot.
@@ -431,25 +480,28 @@ def sentlevelview(doc_sent_id):
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
     for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+        all_annots_no_skipping[i - 1] = sa
+        all_aligns_no_skipping[i - 1] = a
+        all_doc_annots_no_skipping[i - 1] = da
 
-    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
-
+    exported_items = [list(p) for p in
+                      zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     return render_template('sentlevelview.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
                            frame_dict=json.dumps(frame_dict),
-                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
+                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string,
+                           curr_alignment=curr_alignment,
                            exported_items=exported_items,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
-                           annotated_sent_ids= annotated_sent_ids,
+                           content_string=doc.content.replace('\\', '\\\\'),
+                           # this is for toolbox4 format that has a lot of unescaped backslashes
+                           annotated_sent_ids=annotated_sent_ids,
                            project_name=project_name,
                            project_id=project_id,
                            admin=admin, owner=owner,
                            permission=permission)
+
 
 @main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevel(doc_sent_id):
@@ -457,7 +509,8 @@ def doclevel(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2]) == 0 else int(
+        doc_sent_id.split("_")[2])  # html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
     current_snt_id = default_sent_id
@@ -505,12 +558,12 @@ def doclevel(doc_sent_id):
         _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
         sent_annot_pairs = list(zip(df_html, annotations))
 
-
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
+        return redirect(
+            url_for('main.sentlevel', doc_sent_id=str(doc_id) + '_' + str(current_snt_id) + '_' + str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.sent_annot for annot in annotations]
@@ -519,7 +572,7 @@ def doclevel(doc_sent_id):
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
 
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
     # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
     # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
     # had no annotations, in which case the annotations for all following lines were moved up one slot.
@@ -530,39 +583,45 @@ def doclevel(doc_sent_id):
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
     for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+        all_annots_no_skipping[i - 1] = sa
+        all_aligns_no_skipping[i - 1] = a
+        all_doc_annots_no_skipping[i - 1] = da
 
-    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+    exported_items = [list(p) for p in
+                      zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
-    #check who is the admin of the project containing this file:
+    # check who is the admin of the project containing this file:
     try:
         project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                                Projectuser.permission == "admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
         if owner.id == current_user.id:
-            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+            permission = 'edit'  # this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
         else:
-            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+            permission = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                                  Projectuser.user_id == current_user.id).first().permission
     except AttributeError:
         project_name = ""
-        admin=current_user
+        admin = current_user
         permission = ""
 
-    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
+    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs,
+                           sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
+                           content_string=doc.content.replace('\\', '\\\\'),
+                           # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
                            owner=owner,
                            permission=permission)
+
 
 @main.route("/doclevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevelview(doc_sent_id):
@@ -570,7 +629,8 @@ def doclevelview(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2]) == 0 else int(
+        doc_sent_id.split("_")[2])  # html post 0 here, it means it's my own annotation
     owner = User.query.get_or_404(owner_user_id)
 
     current_snt_id = default_sent_id
@@ -593,7 +653,8 @@ def doclevelview(doc_sent_id):
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
     except IndexError:
         flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
+        return redirect(
+            url_for('main.sentlevelview', doc_sent_id=str(doc_id) + '_' + str(current_snt_id) + '_' + str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.sent_annot for annot in annotations]
@@ -602,7 +663,7 @@ def doclevelview(doc_sent_id):
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
 
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
     # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
     # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
     # had no annotations, in which case the annotations for all following lines were moved up one slot.
@@ -613,47 +674,54 @@ def doclevelview(doc_sent_id):
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
     for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+        all_annots_no_skipping[i - 1] = sa
+        all_aligns_no_skipping[i - 1] = a
+        all_doc_annots_no_skipping[i - 1] = da
 
-    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+    exported_items = [list(p) for p in
+                      zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
-    #check who is the admin of the project containing this file:
+    # check who is the admin of the project containing this file:
     try:
         project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().project_name
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                                Projectuser.permission == "admin").first().project_name
         admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
         if owner.id == current_user.id:
-            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+            permission = 'edit'  # this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
         else:
-            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+            permission = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                                  Projectuser.user_id == current_user.id).first().permission
     except AttributeError:
         project_name = ""
-        admin=current_user
+        admin = current_user
         permission = ""
 
-    return render_template('doclevelview.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
+    return render_template('doclevelview.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs,
+                           sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
+                           content_string=doc.content.replace('\\', '\\\\'),
+                           # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
                            owner=owner,
                            permission=permission)
 
+
 @main.route("/about")
 def about():
     return render_template('about.html', title='About')
 
-def get_lexicon_dicts(project_id:int):
+
+def get_lexicon_dicts(project_id: int):
     try:
-        frames_dict = Lexicon.query.filter(Lexicon.project_id==project_id).first().lexi
+        frames_dict = Lexicon.query.filter(Lexicon.project_id == project_id).first().lexi
     except AttributeError:
         frames_dict = {}
         flash(f'there is no existing lexicon for current project, you can start to add now', 'success')
@@ -663,9 +731,10 @@ def get_lexicon_dicts(project_id:int):
 
     return frames_dict, citation_dict
 
+
 def populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma):
     lexicon_item_form = LexiconItemForm()
-    lexicon_item = {} #this is the value of a key(lemma) look up in frame dict
+    lexicon_item = {}  # this is the value of a key(lemma) look up in frame dict
 
     if look_up_inflected:
         if look_up_inflected in citation_dict:
@@ -682,7 +751,7 @@ def populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, l
     print("lexicon_item: ", lexicon_item)
 
     # following is to populate lexicon_item_form by lookup inflected_form or lemma
-    lexicon_item_form.lemma.data = look_up_lemma #assigned ehl to ehl-00 here
+    lexicon_item_form.lemma.data = look_up_lemma  # assigned ehl to ehl-00 here
     lexicon_item_form.root.data = lexicon_item.get('root', "")
     lexicon_item_form.pos.data = lexicon_item.get('pos', "")
     for surface_form in lexicon_item.get('inflected_forms', []):
@@ -699,17 +768,19 @@ def populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, l
         lexicon_item_form.senses.append_entry(entry)
     return lexicon_item_form, lexicon_item
 
+
 # see https://stackoverflow.com/questions/49066046/append-entry-to-fieldlist-with-flask-wtforms-using-ajax
 # and https://stackoverflow.com/questions/51817148/dynamically-add-new-wtforms-fieldlist-entries-from-user-interface
 @main.route("/lexiconlookup/<project_id>", methods=['GET', 'POST'])
 def lexiconlookup(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))  # used to suggest words with similar lemma
+    snt_id = int(request.args.get('snt_id',
+                                  1))  # used to go back to the original sentence number when click on sent-level-annot button
     doc = Doc.query.get_or_404(doc_id)
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)  # this is lexi from database
     fd = FrameDict.from_dict(frames_dict)
 
     autocomplete_lemmas = list(fd.flatten.keys())
@@ -729,28 +800,33 @@ def lexiconlookup(project_id):
 
     look_up_form = LookUpLexiconItemForm()
 
-    if look_up_form.validate_on_submit() and (look_up_form.inflected_form.data or look_up_form.lemma_form.data): # if click on look up button
+    if look_up_form.validate_on_submit() and (
+            look_up_form.inflected_form.data or look_up_form.lemma_form.data):  # if click on look up button
         look_up_inflected = look_up_form.inflected_form.data
         look_up_lemma = look_up_form.lemma_form.data
         return redirect(
-            url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma,
+            url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected=look_up_inflected,
+                    look_up_lemma=look_up_lemma,
                     doc_id=doc_id, snt_id=snt_id))
 
     return render_template('lexicon_lookup.html', project_id=project_id, project_name=project_name,
                            look_up_form=look_up_form,
                            frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
                            doc_id=doc_id, snt_id=snt_id,
-                           autocomplete_lemmas=json.dumps(autocomplete_lemmas), autocomplete_inflected=json.dumps(autocomplete_inflected))
+                           autocomplete_lemmas=json.dumps(autocomplete_lemmas),
+                           autocomplete_inflected=json.dumps(autocomplete_inflected))
+
 
 @main.route("/lexiconadd/<project_id>", methods=['GET', 'POST'])
 def lexiconadd(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))  # used to suggest words with similar lemma
+    snt_id = int(request.args.get('snt_id',
+                                  1))  # used to go back to the original sentence number when click on sent-level-annot button
     doc = Doc.query.get_or_404(doc_id)
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)  # this is lexi from database
     fd = FrameDict.from_dict(frames_dict)
     lexicon_add_form = LexiconAddForm()
 
@@ -766,10 +842,10 @@ def lexiconadd(project_id):
         except:
             print("no word selected")
 
-        if lexicon_add_form.add_inflected.data: #clicked on Add New Inflected Form Field button
+        if lexicon_add_form.add_inflected.data:  # clicked on Add New Inflected Form Field button
             getattr(lexicon_add_form, 'inflected_forms').append_entry()
 
-        if lexicon_add_form.add_sense.data:#clicked on Add New Inflected Form Field button
+        if lexicon_add_form.add_sense.data:  # clicked on Add New Inflected Form Field button
             getattr(lexicon_add_form, 'senses').append_entry()
 
         for ndx, this_entry in enumerate(lexicon_add_form.inflected_forms.entries):
@@ -783,19 +859,21 @@ def lexiconadd(project_id):
                 del lexicon_add_form.senses.entries[ndx]
                 break
         print("form error", lexicon_add_form.errors)
-        if lexicon_add_form.data['save'] and lexicon_add_form.lemma.data: # if click on Save button
+        if lexicon_add_form.data['save'] and lexicon_add_form.lemma.data:  # if click on Save button
             new_lexicon_entry = {lexicon_add_form.lemma.data: {"root": lexicon_add_form.root.data,
-                                                                "pos": lexicon_add_form.pos.data,
-                                                                "inflected_forms": [element['inflected_form'] for element in
-                                                                                    lexicon_add_form.inflected_forms.data
-                                                                                    if element['inflected_form'] != ""],
-                                                                "sense": lexicon_add_form.senses.data
-                                                                }
+                                                               "pos": lexicon_add_form.pos.data,
+                                                               "inflected_forms": [element['inflected_form'] for element
+                                                                                   in
+                                                                                   lexicon_add_form.inflected_forms.data
+                                                                                   if element['inflected_form'] != ""],
+                                                               "sense": lexicon_add_form.senses.data
+                                                               }
                                  }
             look_up_lemma = lexicon_add_form.lemma.data
             print("new_lexicon_entry: ", new_lexicon_entry)
 
-            fd.add_frame(look_up_lemma, new_lexicon_entry[look_up_lemma]) #deal with homonym case: automatically number those hymonym lemmas
+            fd.add_frame(look_up_lemma, new_lexicon_entry[
+                look_up_lemma])  # deal with homonym case: automatically number those hymonym lemmas
             # add to database
             existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
             existing_lexicon.lexi = fd.flatten
@@ -809,16 +887,18 @@ def lexiconadd(project_id):
                            frames_dict=json.dumps(fd.flatten), citation_dict=json.dumps(citation_dict),
                            doc_id=doc_id, snt_id=snt_id)
 
+
 # https://stackoverflow.com/questions/30121763/how-to-use-a-wtforms-fieldlist-of-formfields
 # https://stackoverflow.com/questions/62776469/how-do-i-edit-a-wtforms-fieldlist-to-remove-a-value-in-the-middle-of-the-list
 @main.route("/lexiconresult/<project_id>", methods=['GET'])
 def lexiconresult_get(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))  # used to suggest words with similar lemma
+    snt_id = int(request.args.get('snt_id',
+                                  1))  # used to go back to the original sentence number when click on sent-level-annot button
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)  # this is lexi from database
     fd = FrameDict.from_dict(frames_dict)
 
     look_up_inflected = request.args.get('look_up_inflected', None)
@@ -828,22 +908,25 @@ def lexiconresult_get(project_id):
     print("frames_dict: ", frames_dict)
     print("citation_dict: ", citation_dict)
 
-    lexicon_item_form, lexicon_item = populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma)
+    lexicon_item_form, lexicon_item = populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected,
+                                                                           look_up_lemma)
 
     return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
                            lexicon_item_form=lexicon_item_form,
                            frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
                            doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
 
+
 @main.route("/lexiconresult/<project_id>", methods=['POST'])
 def lexiconresult_post(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))  # used to suggest words with similar lemma
+    snt_id = int(request.args.get('snt_id',
+                                  1))  # used to go back to the original sentence number when click on sent-level-annot button
     doc = Doc.query.get_or_404(doc_id)
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)  # this is lexi from database
     fd = FrameDict.from_dict(frames_dict)
     # handle the suggested inflected and lemma list
     try:
@@ -858,10 +941,10 @@ def lexiconresult_post(project_id):
 
     lexicon_item_form = LexiconItemForm()
 
-    if lexicon_item_form.add_inflected.data: #clicked on Add New Inflected Form Field button
+    if lexicon_item_form.add_inflected.data:  # clicked on Add New Inflected Form Field button
         getattr(lexicon_item_form, 'inflected_forms').append_entry()
 
-    if lexicon_item_form.add_sense.data:#clicked on Add New Inflected Form Field button
+    if lexicon_item_form.add_sense.data:  # clicked on Add New Inflected Form Field button
         getattr(lexicon_item_form, 'senses').append_entry()
 
     for ndx, this_entry in enumerate(lexicon_item_form.inflected_forms.entries):
@@ -875,11 +958,13 @@ def lexiconresult_post(project_id):
             del lexicon_item_form.senses.entries[ndx]
             break
 
-    if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data: # if click on save and lemma in form is not empty
+    if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data:  # if click on save and lemma in form is not empty
         # this is entry to be added in frame_dict
         new_lexicon_entry = {lexicon_item_form.lemma.data: {"root": lexicon_item_form.root.data,
                                                             "pos": lexicon_item_form.pos.data,
-                                                            "inflected_forms": [element['inflected_form'] for element in lexicon_item_form.inflected_forms.data if element['inflected_form'] != ""],
+                                                            "inflected_forms": [element['inflected_form'] for element in
+                                                                                lexicon_item_form.inflected_forms.data
+                                                                                if element['inflected_form'] != ""],
                                                             "sense": lexicon_item_form.senses.data
                                                             }
                              }
@@ -894,7 +979,8 @@ def lexiconresult_post(project_id):
                 flag_modified(existing_lexicon, 'lexi')
                 db.session.commit()
             except KeyError:
-                flash('This entry is not in lexicon yet, use "add new entry" mode instead of "edit current entry" mode', 'danger')
+                flash('This entry is not in lexicon yet, use "add new entry" mode instead of "edit current entry" mode',
+                      'danger')
         elif lexicon_item_form.update_mode.data == 'delete':
             try:
                 fd.delete_frame(lexicon_item_form.lemma.data)
@@ -911,16 +997,15 @@ def lexiconresult_post(project_id):
                 url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected='', look_up_lemma='',
                         doc_id=doc_id, snt_id=snt_id))
 
-
-
     citation_dict = {inflected_form: lemma for lemma in fd.flatten for inflected_form in
-                             fd.flatten[lemma]["inflected_forms"]}
+                     fd.flatten[lemma]["inflected_forms"]}
     print("citation_dict: ", citation_dict)
 
     return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
                            lexicon_item_form=lexicon_item_form,
                            frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
                            doc_id=doc_id, snt_id=snt_id)
+
 
 @main.route("/")
 @main.route("/display_post")
@@ -937,6 +1022,7 @@ def display_post():
 def guidelines():
     return render_template('user_guide.html')
 
+
 @main.route('/guide/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     # Appending app path to upload folder path within app root folder
@@ -944,27 +1030,55 @@ def download(filename):
     # Returning file from appended path
     return send_from_directory(directory=uploads, filename=filename, as_attachment=True)
 
-#farasapy
+
+# farasapy
 @main.route('/getfarasalemma', methods=['GET', 'POST'])
 def getfarasalemma():
     import time
     token = request.get_json(force=True)["token"]
     t0 = time.time()
-    jvmpath = jpype.getDefaultJVMPath()
-    jpype.startJVM(jvmpath, '-ea', "-Djava.class.path=%s" % r'D:\FarasaSegmenterJar.jar')
-    jclass = jpype.JClass('com.qcri.farasa.segmenter.Farasa')
-    instance = jclass()
-    stemmed=instance.lemmtizeLine(token)
+    # instance = jclass()
+    # print(token)
+    stemmed = stemmer.stem(token)
+    # stemmed = instance.lemmtizeLine(token)
+    # print(stemmed)
     t1 = time.time()
 
     return make_response(jsonify({"text": stemmed}), 200)
+# @main.route('/getfarasalemma', methods=['GET', 'POST'])
+# def getfarasalemma():
+#     import time
+#     token = request.get_json(force=True)["token"]
+#     print("inflected_form: ", token)
+#     t0 = time.time()
+#     jvmpath = jpype.getDefaultJVMPath()
+#     print(jvmpath)
+#     jpype.startJVM(jvmpath, '-ea', "-Djava.class.path=%s" % (r'.\umr_annot_tool\main\FarasaSegmenterJar.jar'))
+#     print(jpype.isJVMStarted())
+#     jclass = jpype.JClass('com.qcri.farasa.segmenter.Farasa')
+#     print(jclass)
+#     if not jpype.attachThreadToJVM():
+#         jpype.attachThreadToJVM()
+#     stemmed = jclass().lemmtizeLine(token)
+#     # stemmed = stemmer.stem(token)
+#
+#     # stemmed = instance.lemmtizeLine(token)
+#
+#     t1 = time.time()
+#     print("elapsed time: ", t1 - t0)
+#     print("lemma_form: ", stemmed)
+#     jpype.shutdownJVM()
+#     return make_response(jsonify({"text": stemmed}), 200)
 
-@main.route('/getframe/',methods=['POST'])
+
+@main.route('/getframe/', methods=['POST'])
 def getframe():
     if request.method == 'POST':
-        token=request.get_json(force=True)['token']
-        print(token,'this is token')
-        scroll_pos=request.get_json(force=True)['scroll_pos']
+        token = request.get_json(force=True)['token']
+        print(token, 'this is token')
+        scroll_pos = request.get_json(force=True)['scroll_pos']
 
-        res=make_response(jsonify({"token": token+' get',"scroll_pos":scroll_pos}), 200)
+        res = make_response(jsonify({"token": token + ' get', "scroll_pos": scroll_pos}), 200)
         return res
+
+# jpype.shutdownJVM()

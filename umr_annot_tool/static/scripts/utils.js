@@ -93,7 +93,18 @@ function text2num(s){
  * @returns {*} for example, the root variable returns 1, first child of root returns 1.1
  */
 function getLocs(variable) { // b
+    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    // var pattern="/x\d+/"
+
+    if (variable.startsWith('x') | variable.startsWith('ac')){
+        variable='s'+snt_id.trim()+'.'+variable
+    }
+    if (variable.match(/.*?(-\d+)/)){
+        variable=variable.replace(variable.match(/.*?(-\d+)/)[1],'')
+    }
+    console.log('test100', variable)
     let value = variables[variable];
+    console.log('103 ',value)
     if (value === undefined) {
         return undefined;
     } else if (typeof value == 'string') {
@@ -417,3 +428,4 @@ function action_on_enter(field, e, s_id) {
 String.prototype.repeat = function(length) {
  return Array(length + 1).join(this);
 };
+

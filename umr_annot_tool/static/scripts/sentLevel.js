@@ -40,7 +40,7 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let docAnnot=false;
 let partial_graphs = {};
 let alignments={}
-
+let acindex=0;//the index for abstract concept
 /**
  *
  * @param frame_json: frame json file from post
@@ -155,28 +155,34 @@ function populateUtilityDicts(){
 /**
  * from currently selected word, get the lemma and generate the senses menu list
  */
-function conceptDropdown(lang='english') {
-    submit_concept(); //record the current concept from the selected tokens
+function conceptDropdown(concept,lang='english') {
+    let  frame_info=''
+    // submit_concept(); //record the current concept from the selected tokens
+    current_concept=concept.toLowerCase()
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
     if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
-        getSenses(number);
+        console.log('test 165',number['res'][0]['name'])
+        frame_info=getSenses(number);
     } else { //if concept is not a number
-        if (default_langs.includes(lang)){ // if lang is one of the default languages
+        if (default_langs.includes(lang)){ // if lang is one of the default languages  sijia todo: what's this, why English
             let submenu_items;
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
                  submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
             }else{
                 if (token in citation_dict){
                     let lemma = citation_dict[token];
+                    // console.log('test-174',lemma)
                     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
+                    console.log('test177', submenu_items['res'][1]['name'])
                 }else{
                     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
                 }
             }
-            getSenses(submenu_items);
+            frame_info=getSenses(submenu_items);
         }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
+            console.log(token)
             let lemma;
             if(lang === 'arabic'){
                 fetch(`/getfarasalemma`, {
@@ -190,7 +196,7 @@ function conceptDropdown(lang='english') {
                     let senses = [];
                     Object.keys(frame_dict).forEach(function(key) {
                         if(key.split("-")[0] === lemma){
-                            senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
+                            senses.push({"name": key, "desc":frame_dict[key]})
                         }
                     });
                     let submenu_items;
@@ -199,31 +205,35 @@ function conceptDropdown(lang='english') {
                     }else{
                         submenu_items = {"res": senses};
                     }
-                    getSenses(submenu_items);
+                    frame_info=getSenses(submenu_items);
                 }).catch(function(error){
                     console.log("get lemma error: "+ error);
                 });
+
             } else if(lang === 'english'){
                 lemma = getLemma(token);
+                console.log('test213', lemma)
                 let senses = [];
                 Object.keys(frame_dict).forEach(function(key) {
                     if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
+                        senses.push({"name": key, "desc":frame_dict[key]})
                     }
                 });
+                console.log('test220',senses)
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+
                 }else{
                     submenu_items = {"res": senses};
                 }
-                getSenses(submenu_items);
+                frame_info=getSenses(submenu_items);
             }else if (lang === 'chinese') {
                 lemma = token;
                 let senses = [];
                 Object.keys(frame_dict).forEach(function(key) {
                     if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":JSON.stringify(frame_dict[key])})
+                        senses.push({"name": key, "desc":frame_dict[key]})
                     }
                 });
                 let submenu_items;
@@ -232,13 +242,15 @@ function conceptDropdown(lang='english') {
                 }else{
                     submenu_items = {"res": senses};
                 }
-                getSenses(submenu_items);
+                frame_info=getSenses(submenu_items);
             }
         }else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
-            getSenses(letter);
+            frame_info=getSenses(letter);
         }
     }
+
+    return frame_info
 }
 
 /**
@@ -246,20 +258,22 @@ function conceptDropdown(lang='english') {
  * @param senses a dictionary looks like {"res": [{"name": lemma, "desc": different senses}]}
  */
 function getSenses(senses) {
-    submit_query(); // update the current mode if named Entity box has something filled in
-    let genDrop = document.getElementById('genericDropdown');
-    genDrop.innerHTML = "";
+    // submit_query(); // update the current mode if named Entity box has something filled in
+    // let genDrop = document.getElementById('genericDropdown');
+    // genDrop.innerHTML = "";
+    console.log('test260',senses)
     senses.res.forEach(function (value, index, array) {
-        let genLink = document.createElement("a");
-        genLink.innerHTML = value.name;
-        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
-        genLink.setAttribute("title", value.desc);
-        genLink.setAttribute("id", "sense");
-        genLink.setAttribute("class", "dropdown-item");
-        let genLi = document.createElement("li");
-        genLi.appendChild(genLink);
-        genDrop.appendChild(genLi);
+        // let genLink = document.createElement("a");
+        // genLink.innerHTML = value.name;
+        // genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
+        // genLink.setAttribute("title", value.desc);
+        // genLink.setAttribute("id", "sense");
+        // genLink.setAttribute("class", "dropdown-item");
+        // let genLi = document.createElement("li");
+        // genLi.appendChild(genLink);
+        // genDrop.appendChild(genLi);
     });
+    return senses
 }
 
 
@@ -723,15 +737,25 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         let cc;
         if(value.includes("(")){
             //doc-level
-            //sijia to-do: segment     s1 :temporal (s1x2_x4 :before DCT)  or   s1 :temporal (x2_2 :before DCT)
+            //sijia todo: segment     s1 :temporal (s1x2_x4 :before DCT)  or   s1 :temporal (x2_2 :before DCT)
             let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*x\d*\s:.+\s.+\))$/;
             //example match: s1 :temporal (s1t2 :before DCT)
             //s1 :coref (s1h :same-entity s1p)
             //s1 :modal (s2c4 :NEG AUTH)
             let match = pattern.exec(value);
             cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
+            console.log('testcc734',cc)
         }else{
             cc = argSplit(value);
+            let _concept=cc.slice(-1)[0]// get the last token from the command
+            // if(_concept.match(/x\d+/)){
+            //     // let frame_token=index2concept(_concept)
+            //     let frame_token='taste'
+            //     let frame_button=document.getElementById('frame_button')
+            //     frame_button.onclick=window.open("http://ska.tjemye.rs/propbank/development-frames/"+frame_token+".html","newwindow","height=700,width=500,top=300,left=300,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no")
+            //
+            // }
+            console.log('test 737',cc)
         }
 
         // cc == ["b", ":arg1", "car"]
@@ -744,13 +768,15 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         let ne_concept;
         let cc2v;
         if (cc[0] === 'top'){
-            if ((cc.length >= 3)
+            if ((cc.length >= 3) //sijia todo what's the meaning
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
                 && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
                 let ne_var = newUMR(trimConcept(ne_concept));
+
+                console.log('test757',ne_var)
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
                 for (let i = 2; i < cc.length; i++) {
                     let sub_role = ':op' + (i - 1);
@@ -760,21 +786,27 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             } else if (cc.length >= 2) {
                 // this is when cc only has two element (the first probably is top)
                 for (let i = 1; i < cc.length; i++) {
-                    newUMR(cc[i].toLowerCase());
+                    var top_var=newUMR(cc[i].toLowerCase());
                 }
+                console.log('test 770', top_var)
+                var pattern= /s\d+/
+
+
                 show_amr_args = 'show';
             }
         } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])
             && (cc[2].match(/\+$/))
             && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
             && getLocs(cc2v)) {
+            console.log('780',cc2v)
                 addTriple(cc[0], cc[1], cc2v);
                 show_amr_args = 'show';
-        } else if ((cc.length == 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
+        } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
             // this is the condition we go in 1
+            console.log('test785')
             addTriple(cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
-        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] == '*OR*') && validEntryConcept(cc[3])) {
+        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] === '*OR*') && validEntryConcept(cc[3])) {// sijia todo
 
             addOr(value);
             show_amr_args = 'show';
@@ -840,9 +872,29 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             } else {
                 add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
-        } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
 
+             } else if (cc[0] === 'move') {
+            if (cc.length >= 4) {
+                if (cc[2] === 'to') {
+                    if (cc.length === 4) {
+                        moveVar(cc[1], cc[3], '');
+                        show_amr_args = 'show';
+                    } else if (cc.length === 5) {
+                        moveVar(cc[1], cc[3], cc[4]);
+                        show_amr_args = 'show';
+                    } else {
+                        console.log('Ill-formed move command. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+                    }
+                } else {
+                    console.log("Ill-formed move command. Second argument should be <i>to</i>. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]");
+                }
+            } else {
+                console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+            }
+        } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
+            console.log(variables)
             if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
+                // console.log('874'+snt_id+cc[0])
                 console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
             } else if (cc.length == 2) {
                 console.log('In <i>add</i> command, there must be at least 3 arguments.');
@@ -850,6 +902,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 console.log('Unrecognized <i>add</i> command.');
             }
         } else {
+            //Sijia  todo
             console.log('Unrecognized command:' + value);
             top = 0;
         }
@@ -1070,19 +1123,39 @@ function newVar(concept) {
     // if (!initial.match(/[a-z]/)) {
     //     initial = 'x';
     // }
-
+    let sense='';
+    if (concept.match(/.*?(-\d+)/)){
+        sense=concept.match(/.*?(-\d+)/)[1]
+    }
+    concept=concept.replace(sense,'')
     let initial=concept
      // let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*x\d*\s:.+\s.+\))$/;
-
+    console.log('test1133',concept)
     if (!docAnnot){
             // add the sentence number s1 to initial t -> s1t
         let sentenceId = document.getElementById('sentence_id').value;
+
+        if (!concept.startsWith('x') ){
+
         if(table_id===1){ // this is deal with the two sentence display in under-resource languages
-            initial = "s"+ sentenceId + initial;
+            initial = "s"+ sentenceId +'.'+ 'ac'+acindex;
+            acindex+=1
         }else{
-            initial = "s"+ (parseInt(sentenceId)+1) + initial;
+            initial = "s"+ (parseInt(sentenceId)+1)   +'.'+ 'ac'+acindex;
+            acindex+=1
         }
-    }
+
+
+        }else{
+
+
+
+        if(table_id===1){ // this is deal with the two sentence display in under-resource languages
+            initial = "s"+ sentenceId +'.'+ initial;
+        }else{
+            initial = "s"+ (parseInt(sentenceId)+1) +'.'+ initial;
+        }
+    }}
     //Sijia to-do for those over the whole length of the sentence and not use
 
 
@@ -1103,6 +1176,11 @@ function newVar(concept) {
 function index2concept(concept){
 
      let rawtext= document.getElementsByClassName('raw_text')[0]
+    let sense=''
+    if (concept.match(/.*?(-\d+)/)){
+        sense=concept.match(/.*?(-\d+)/)[1]
+    }
+    concept=concept.replace(sense,'')
     if (concept.split('_').length-1>0){
         // signal that there is not a word, might be x1_x2
         let index_list= concept.split('_')
@@ -1111,7 +1189,7 @@ function index2concept(concept){
         // console.log(index_list[-1])
         for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
             if(index_list[i].includes('x')){
-                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')].innerText
+                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText
                 // get the current token
 
                 if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
@@ -1132,7 +1210,7 @@ function index2concept(concept){
         }
         if (index_list[index_list.length-1].includes('x')){
 
-            target+=rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')].innerText
+            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText
         }else{
 
             target+=previous[index_list[index_list.length-1]-1]
@@ -1144,7 +1222,7 @@ function index2concept(concept){
         else if(concept.includes(':')){
             concept;
     }else{
-            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")].innerText
+            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText
 
 
     }
@@ -1152,7 +1230,7 @@ function index2concept(concept){
 
 
 
-    return concept
+    return concept+sense
 }
 
 /**
@@ -1165,53 +1243,7 @@ function newUMR(concept) {
     let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
-    let rawtext= document.getElementsByClassName('raw_text')[0]
-    if (concept.split('_').length-1>0){
-        // signal that there is not a word, might be x1_x2
-        let index_list= concept.split('_')
-        let target='';
-        let previous='';
-        // console.log(index_list[-1])
-        for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
-            if(index_list[i].includes('x')){
-                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')].innerText
-                // get the current token
-
-                if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
-                    target+=newconcept
-                }else{
-                    // not a whole token                    x1_2
-                    previous=newconcept
-                }
-
-
-            }else {
-
-
-               target+=previous[index_list[i]-1]
-            }
-
-
-        }
-        if (index_list[index_list.length-1].includes('x')){
-
-            target+=rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')].innerText
-        }else{
-
-            target+=previous[index_list[index_list.length-1]-1]
-        }
-
-            concept=target}
-
-
-        else if(concept.includes(':')){
-            concept;
-    }else{
-            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")].innerText
-
-
-    }
-
+    concept=index2concept(concept)
     console.log(concept)
 
     umr[n + '.c'] = concept;
@@ -1243,7 +1275,7 @@ function addTriple(head, role, arg, arg_type) {
     role = strip(role); // :arg1
 
     arg = strip(arg); //car
-    arg=index2concept(arg);
+    // arg=index2concept(arg);
     console.log(head,role,arg, arg_type,'i am testing addtriple')
     let head_var_locs = getLocs(head);
     let arg_var_locs;
@@ -1252,7 +1284,10 @@ function addTriple(head, role, arg, arg_type) {
     let arg_string;
     if (head && role && (arg !== undefined) && (arg !== '')  //all three parameters exist
         && head_var_locs) { //head already existed in variables dictionary
+        console.log('test1286', arg)
         arg_var_locs = getLocs(arg);
+        arg_concept=index2concept(arg)
+        // console.log('test 1290',validEntryConcept(arg.toLowerCase()))
         if (arg_var_locs //argument already exist in variables dictionary
             && (arg_type !== 'concept')
             && (arg_type !== 'string') // arg_type is '' (is variable)
@@ -1271,21 +1306,28 @@ function addTriple(head, role, arg, arg_type) {
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
         } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
-            && validEntryConcept(arg.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
+            && validEntryConcept(arg_concept.toLowerCase()) //可以有大写字母，不能有单引号(以及其他符号)，或者数字（arapahoe里面有）
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki|name)$/))) {
-            console.log("I am here40-3");
+            console.log("I am here40-3",arg,arg_concept);
+
+            arg_variable = newVar(arg); // truffle -> s1t
+             if (arg.startsWith('x')){
+            arg=index2concept(arg);}
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
-            arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
         }else if((default_langs.includes(language) || language === 'chinese'|| language === 'arabic' )//not English
             && (arg_type !== 'string')
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))){
             console.log("I am here40-4");
+            arg_variable = newVar(arg); // truffle -> s1t
+            console.log('test1336',arg_variable,arg)
+            if (arg.startsWith('x')){
+            arg=index2concept(arg);}
             arg_concept = trimConcept(arg.toLowerCase()); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
-            arg_variable = newVar(arg_concept); // truffle -> s1t
+
             arg_string = '';
         }else if (validString(arg) //matches all non-white space character (except ")
             && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
@@ -1379,6 +1421,7 @@ function addNE(value) {
             name_start = 2;
         }
     } else {
+        console.log('test 1415', head_var,role,ne_type)
         let ne_arg_var = addTriple(head_var, role, ne_type, 'concept');
         if (ne_arg_var) {
             name_var = addTriple(ne_arg_var, ':name', 'name', 'concept');
@@ -1389,7 +1432,8 @@ function addNE(value) {
     if (name_var) {
         for (let i = name_start; i < cc.length; i++) {
             let sub_role = ':op' + (i - name_start + 1);
-            addTriple(name_var, sub_role, cc[i], 'string');
+            let entity_name=index2concept(cc[i])
+            addTriple(name_var, sub_role, entity_name, 'string');
         }
     }
 }
@@ -1439,19 +1483,26 @@ function addOr(value) {
  */
 function replace_concept(key_at, head_var, key_with, new_concept) {
     console.log('replace_concept ' + key_at + '::' + head_var + '::' + key_with + '::' + new_concept);
-    new_concept=index2concept(new_concept)
-    new_concept = new_concept.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
+    let new_concept_=index2concept(new_concept) // new_concept:x3, new_concept_: Eat
+    // here just to differentiate the index and the concept corresponding to the concept//
+    new_concept_ = new_concept_.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
+    console.log('1489',new_concept_)
     if (key_at === 'at') {
         let head_var_locs = getLocs(head_var);
         if (head_var_locs) {
             if (key_with === 'with') {
                 // if (validEntryConcept(new_concept) || language === "default") {
-                if (new_concept) {
+                if (new_concept_) {
                     head_var_locs += '';
                     let loc_list = argSplit(head_var_locs);
                     let loc = loc_list[0];
                     let old_concept = umr[loc + '.c'];
-                    umr[loc + '.c'] = trimConcept(new_concept);
+                    umr[loc + '.c'] = trimConcept(new_concept_);
+
+                    if (new_concept.match('/.*?(-\d+)/')){
+                        new_concept=new_concept.replace(new_concept.match('/.*?(-\d+)/')[1],'')
+                    }
+                    console.log('1500', head_var,new_concept)
                     change_var_name(head_var, new_concept, 0);
                     state_has_changed_p = 1;
                 } else {
@@ -1738,22 +1789,29 @@ function delete_rec(loc) {
 function delete_based_on_triple(head_var, role, arg) {
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
+        console.log('test 1797', role.match(/^:[a-z]/i))
         if (role.match(/^:[a-z]/i)) {
-            if (getLocs(arg) || validEntryConcept(arg) || validString(stripQuotes(arg))) {
+            let concept=index2concept(arg)
+            if (getLocs(arg) || validEntryConcept(concept) || validString(stripQuotes(arg))) {
                 // add_log('delete_based_on_triple: ' + head_var + ' ' + role + ' ' + arg);
                 head_var_locs += '';
                 let head_var_loc_list = argSplit(head_var_locs);
                 let head_var_loc = head_var_loc_list[0];
                 let n_subs = umr[head_var_loc + '.n'];
                 let loc = '';
-                let arg2 = stripQuotes(arg);
-                let arg3 = trimConcept(arg);
+                let arg2 = stripQuotes(concept);
+                let arg3 = trimConcept(concept);
                 for (let i = 1; i <= n_subs; i++) {
                     if (loc === '') {
                         var sub_loc = head_var_loc + '.' + i;
                         var sub_role = umr[sub_loc + '.r'];
                         if ((!umr[sub_loc + '.d'])
                             && (sub_role === role)) {
+                             let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+                            // var pattern="/x\d+/"
+                            if (arg.startsWith('x') | arg.startsWith('ac')){
+                                arg='s'+snt_id.trim()+'.'+arg
+                            }
                             let arg_variable = umr[sub_loc + '.v'];
                             let arg_concept = umr[sub_loc + '.c'];
                             let arg_string = umr[sub_loc + '.s'];
@@ -1814,6 +1872,91 @@ function deleteAMR() {
 }
 
 
+function moveVar(variable, new_head_var, role) {
+    console.log('move ' + variable + ' ' + new_head_var + ' ' + role);
+    let loc, locs, loc_list, head_var_loc, head_var_locs, head_var_loc_list;
+    locs = getLocs(variable);
+    if (locs) {
+        locs += '';
+        if ((head_var_locs = getLocs(new_head_var))
+            || ((new_head_var === 'top') && (head_var_locs = 'top'))) {
+            head_var_locs += '';
+            if ((role === '') || role.match(/^:[a-z]/i)) {
+                if ((loc_list = argSplit(locs))
+                    && (loc_list.length >= 1)
+                    && (loc = loc_list[0])) {
+                    if (role || (new_head_var === 'top') || (role = umr[loc + '.r'])) {
+                        if ((head_var_loc_list = argSplit(head_var_locs))
+                            && (head_var_loc_list.length >= 1)
+                            && (head_var_loc = head_var_loc_list[0])) {
+                            let n_subs, new_loc;
+                            if (head_var_loc === 'top') {
+                                n_subs = umr['n'];
+                                umr['n'] = ++n_subs;
+                                new_loc = n_subs;
+                            } else {
+                                n_subs = umr[head_var_loc + '.n'];
+                                umr[head_var_loc + '.n'] = ++n_subs;
+                                new_loc = head_var_loc + '.' + n_subs;
+                            }
+                            console.log('move core ' + loc + ' ' + head_var_loc + ' ' + new_loc);
+                            for (let key in umr) {
+                                let re1 = '^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$';
+                                let re2 = new_loc + '$1';
+                                let new_key = key.replace(new RegExp('^' + regexGuard(loc) + '(\\.(\\d+\\.)*[a-z]+)$', ""), new_loc + '$1');
+                                console.log('   key: ' + key + ' re1: ' + re1 + ' re2: ' + re2 + ' new_key: ' + new_key);
+                                if (new_key !== key) {
+                                    umr[new_key] = umr[key];
+                                    console.log('move amr update: ' + key + '&rarr; ' + new_key);
+                                }
+                            }
+                            umr[new_loc + '.r'] = role;
+                            umr[loc + '.d'] = 1;
+                            state_has_changed_p = 1;
+                            for (let key in variables) {
+                                let old_value = getLocs(key);
+                                let old_value2 = ' ' + old_value + ' ';
+                                let new_value = strip(old_value2.replace(new RegExp(' ' + regexGuard(loc) + '((\\.\\d+)*)' + ' ', ""), ' ' + new_loc + '$1 '));
+                                if (old_value !== new_value) {
+                                    variables[key] = new_value;
+                                    console.log('move variable update for ' + key + ': ' + old_value + ' &rarr; ' + new_value);
+                                }
+                            }
+                            for (let key in concepts) {
+                                let old_value = concepts[key];
+                                let old_value2 = ' ' + old_value + ' ';
+                                let new_value = strip(old_value2.replace(new RegExp(' ' + regexGuard(loc) + '((\\.\\d+)*)' + ' ', ""), ' ' + new_loc + '$1 '));
+                                if (old_value !== new_value) {
+                                    concepts[key] = new_value;
+                                    console.log('move concept update for ' + key + ': ' + old_value + ' &rarr; ' + new_value);
+                                }
+                            }
+                        } else {
+                            console.log('Could not find AMR with variable ' + new_head_var);
+                        }
+                    } else {
+                        console.log('Ill-formed move command. To move the tree of variable ' + variable + ', a fourth argument is neccessary to provide a proper role, starting with a colon. Usage: move &lt;var&gt; to &lt;new-head-var&gt; &lt;role&gt;');
+                    }
+                } else {
+                    console.log('Could not find AMR with variable ' + variable);
+                }
+            } else {
+                console.log('Ill-formed move command. Fourth argument should be a role starting with a colon. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+            }
+        } else {
+            console.log(head_var_locs,new_head_var)
+            console.log('Ill-formed move command. Third argument should be a defined variable. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+        }
+    } else {
+        console.log('Ill-formed move command. First argument should be a defined variable. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
+    }
+}
+
+
+
+
+
+
 /**
  * this is used to directly change the variable to another one
  * in dictionary variables, the original key will be assigned empty value, the new key will be assigned original value
@@ -1826,9 +1969,18 @@ function change_var_name(variable, target, top) {
     let new_variable;
     let loc;
     if (locs) {
+         let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    // var pattern="/x\d+/"
+        if (variable.startsWith('x') | variable.startsWith('ac')){
+        variable='s'+snt_id.trim()+'.'+variable
+    }
+        console.log('test1974',variable,variables)
         variables[variable] = '';
-        if ((target.match(/^(s\d)*x\d*$/)) && (!getLocs(target))) { //sijia todo
-            new_variable = target;
+        console.log('test1976', target,target.match(/^x\d+|ac\d+$/))
+        if ((target.match(/^x\d+|ac\d+$/)) && (!getLocs(target))) { //sijia todo
+            new_variable = 's'+snt_id.trim()+'.'+target;
+            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")
+            console.log('test1977',new_variable)
         } else {
             new_variable = newVar(target);
         }
@@ -1840,6 +1992,7 @@ function change_var_name(variable, target, top) {
         }
         // add_log('  variable changed to ' + new_variable);
         state_has_changed_p = 1;
+        target=index2concept(target)
         exec_command('record change variable ' + variable + ' ' + target, top);
         return new_variable;
     }
@@ -2403,7 +2556,7 @@ function selectEvent(){
             // selection.removeAllRanges()
         }
          // getframe( document.getElementById('selected_tokens').innerText)//just for test
-        getframe(document.getElementById('test-fetch').value)
+        // getframe(document.getElementById('test-fetch').value)
         document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
         document.getElementById('selected_tokens').innerHTML += selection;
 
@@ -2753,127 +2906,102 @@ function changeSetting(){
 /**
  * this is a temporary function, the purpose is to test execute command function
  */
-function submit_command(){
-    let value = document.getElementById('command').value;
-    exec_command(value, 1);
-}
+function submit_command(e){
+    let value = document.getElementById(e).value
+    exec_command(value,1)
 
+    // let command_lists= document.getElementsByClassName('command')
+    // for(let v in command_lists){
+    //     let current_id=command_lists[v].id
+    //     // console.log(current.id, current)
+    //     // console.log(typeof current, current)
+    //    let current=document.getElementById(current_id)
+    //    // let style=getComputedStyle(document.getElementById(current_id),null).getPropertyValue('display')
+    //       console.log('test2924', current.style.display==='block')
+        // if ((v.style.display.)(v.value!='')).
 
-
-
-function reset(){
-
-    // setInnerHTML('amr',html_amr_s)
-    // var s;
-    // if ((s = document.getElementById(id)) != null) {
-    //     s.innerHTML = value;
-    // }
+    }
+    // let value = document.getElementById('command').value;
+    // exec_command(value, 1);
 // }
-}
+
+
 
 let status = true;
 
 window.onload=function(){
+    check_command();
+    // submit_command();
     // window.scrollTo({top:})
-    location.hash='sentence'
+    location.hash="locate_page" // when redirecting to the new page, fxied the scroll bar to the center of the page.
+    // the annotator doesn't need to scroll up or down to find the annotation area
+
+
+                // let frame_token=index2concept(_concept)
+                // let frame_token='taste'
+
+    let frame_button=document.getElementById('frame_button')
+     frame_button.addEventListener("click", function () {  // get the token that user is inputing,
+
+         window.open("http://ska.tjemye.rs/propbank/development-frames/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
+
+ });
 
     // let sent=document.getElementsByClassName("table table-striped table-sm")
 
-    let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0]
-    console.log(sent.getElementsByTagName('tr')[0].cells.length)
-     let wordcount=   sent.getElementsByTagName('tr')[0].cells.length
-     let rawtext=document.createElement('ul')
-        rawtext.setAttribute('class','raw_text')
-        for (let i=0;i<wordcount;i++){
-             let k=document.createElement('div')
+    let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0] // get the current sentence
+     let wordcount=  sent.getElementsByTagName('tr')[0].cells.length // the length of the current sentence
+     let rawtext=document.createElement('ul') //
+    /*
+    // the raw text    ul；raw_text
+                            - li： token  // each word of the raw text
+                                - div:showindex // each index for the word
+
+
+     */
+     rawtext.setAttribute('class','raw_text')
+        for (let i=1;i<wordcount;i++){
+            let k=document.createElement('div')// add the index to visualize
             k.setAttribute('class','showindex')
-            // k.setAttribute('title','x'+i)
             k.style.cssText="position: absolute; background-color: white; border: 1px solid black;display:none;"
-            let c=document.createElement('li')
-            // console.log(sent.getElementsByTagName('tr')[0].cells[i].innerText)
+            let c=document.createElement('li') // using the unordered list to show the text
             c.setAttribute('class','token')
-            c.setAttribute('title','x'+i)
+            c.setAttribute('title','x'+i) // using the hover to show the index
             c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText
             c.appendChild(k)
-            c.onmouseover=overshow();
-            c.onmouseout=overhide();
-            // c.setAttribute('class','token')
+
             rawtext.appendChild(c)
 
 
         }
 
-        // rawtext.onmouseover=overshow
-        // rawtext.onmouseout=overhide
+
         let sen_index=document.createElement('ul')
         sen_index.setAttribute('class','raw_text_index')
-            let index=document.createElement('li')
-            index.innerText="sentence:"
-         // index.setAttribute('class','token_index')
-            sen_index.appendChild(index)
-          for (let i=0;i<wordcount-1;i++){
 
-            let index=document.createElement('li')
-            // console.log(sent.getElementsByTagName('tr')[0].cells[i].innerText)
-            index.innerText='x'+ (i+1)
-            // index.setAttribute('class','token_index')
-            sen_index.appendChild(index)
+        let sentence_display=document.getElementsByClassName('sentence_display_test')[0] // the display area for the sentence
 
-        }
-        // sent.
-    // let sent=document.createElement('div')
-    // sent.innerHTML=sentence
-    // let sent=document.getElementById('sentence');
-    // sent.length
-    // sent=JSON.parse(sentence)
-    let current=sent
-        // console.log(current.childNodes.length);
-    let row=document.createElement('tr')
-     let val1=document.createElement('td')
-    val1.innerHTML=''
-    row.appendChild(val1)
-    // let current=sent[1];
-        // console.log(current.classList)
-for (let i=1;i<wordcount;i++){
 
-        let val=document.createElement('td')
-        val.innerHTML='x'+i
-        row.appendChild(val)
-}
-   current.appendChild(row)
-        //should accept index get from the input from the users and get the corresponding word
-        first_row=current.getElementsByTagName('tr')[0]
-    console.log(first_row.cells[1].textContent.slice(2))
-        let sentence_display=document.getElementsByClassName('sentence_display_test')[0]
-        current.appendChild(rawtext)
-        current.appendChild(sen_index)
- // let rawtext=document.getElementsByClassName('raw_text')[0]
-    let text_index=document.getElementsByClassName('raw_text_index')[0]
-    // console.log(rawtext.getElementsByTagName('li').length)
+
       for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
-                    console.log(rawtext.getElementsByTagName('li')[i].innerText.length ,text_index.getElementsByTagName('li')[i].innerText.length)
+          // below three lines to set the interval between tokens as a fix value,
+          let a=rawtext.getElementsByTagName('li')[i].innerText.length
+         // let b= text_index.getElementsByTagName('li')[i].innerText.length
+         //  let max_len= Math.max(a,b) //avoid the index length is longer than the token, so pick up the longer one
+          // token: a  index: x135
+          rawtext.getElementsByTagName('li')[i].style.width='fit-content'  // adjust the word spacing between each other
 
-        let a=rawtext.getElementsByTagName('li')[i].innerText.length
-         let b= text_index.getElementsByTagName('li')[i].innerText.length
-          let max_len= Math.max(a,b)
-          // rawtext.getElementsByTagName('li')[i].style.width=((a-1)*7+5+'px').toString()
-          rawtext.getElementsByTagName('li')[i].style.width='fit-content'
-          // text_index.getElementsByTagName('li')[i].style.width=(max_len*8+'px').toString()
-            console.log(max_len,  rawtext.getElementsByTagName('li')[i].style.width)
-            sentence_display.appendChild(rawtext)
-            // sentence_display.appendChild(text_index)
+          sentence_display.appendChild(rawtext)
+
 
 
       }
-//         for (let i=0;i<rawtext.getElementsByTagName('li').length;i++){
-//             console.log(rawtext.getElementsByClassName('li')[i].innerHTML,sen_index.getElementsByClassName('li').item(i))
-//
-//
+
 
 
 
 }
-document.onkeydown=function(){
+document.onkeydown=function(){ // show the index with the hot key
     if(event.keyCode===18 && event.ctrlKey===true){
         overshow();
 
@@ -2881,24 +3009,15 @@ document.onkeydown=function(){
 
 }
 
-document.onkeyup=function(){
+document.onkeyup=function(){ // the hot key for hide the index
     if(event.keyCode===18){
         overhide()
     }
 
 }
-function check(){
 
-    if(status===true){
-        overshow();
-        status=false;
-    }else{
-        overhide()
-        status=true;
-    }
-}
 
-function overshow(){
+function overshow(){ // show the index, change the display of the index here
     let show_indexes=document.getElementsByClassName('showindex')
     let tokens=document.getElementsByClassName('token')
     for(let v=0;v<show_indexes.length;v++){
@@ -2907,9 +3026,12 @@ function overshow(){
         current.style.top=event.clientY;
         current.style.display='block'
         current.style.background='#000';
-        current.style.color='#FFF'
-        current.innerHTML='x'+v
+        current.style.color='#FFF';
+        // let marker=tokens[v].textContent.slice(0,1).toLowerCase()
+        // console.log(marker.toLowerCase())
+        current.innerHTML='x'+(v+1)
         let current_token=tokens[v]
+
         current_token.style.marginBottom ='20px';
         current_token.style.marginRight ='18px';
 
@@ -2919,8 +3041,8 @@ function overshow(){
 
 
 }
-function overhide(){
-        let show_indexes=document.getElementsByClassName('showindex')
+function overhide(){  // hide the index
+    let show_indexes=document.getElementsByClassName('showindex')
     let tokens=document.getElementsByClassName('token')
     for(let v=0;v<show_indexes.length;v++){
         let current=show_indexes[v]
@@ -2934,9 +3056,9 @@ function overhide(){
 
 }
 
-function set_load_visible(){
+function set_load_visible(command_id){  // show the load text field, user can copy and paste penman tree.
     // $("#load-table").display.toggle();
-    let load_widget=document.getElementById('load-table')
+    let load_widget=document.getElementById(command_id)
     if (load_widget.style.display === 'none') {
     load_widget.style.display = 'inline';
   } else {
@@ -2945,23 +3067,15 @@ function set_load_visible(){
 
 
 }
-function load2mar(){
+function load2mar(){  // get the paste penman tree and show the tree
     let load_amr=document.getElementById('load-plain').value;
     console.log(string2umr(load_amr))
     umr=string2umr(load_amr)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
-    // html_amr_s='<span id="variable-1">s3x</span> / <span title="">浦城</span>\n' +
-    //      '&nbsp;&nbsp;:ARG0 (<span id="variable-1.1">s3x2</span> / <span title="">宋</span>)'
-    // // console.log(show_amr_rec(0,'show',0,''))
-    // // if (document)
-    // document.getElementById('amr').innerHTML=html_amr_s.replace(/\n/g, "<br>\n")
-    // setInnerHTML('amr',load_amr)
+
     let line='';
-   // for (line in load_amr.trim().split('\n')){
-   //     console.log(line)
-   //
-   // }
+
     let newhead=load_amr.trim().split('\n')
     let test=newUMR(newhead[0].split('/')[1])
     // var head =
@@ -2992,66 +3106,149 @@ function load2mar(){
 
 }
 
-function toggle_info(){
+function toggle_info(){ // expand or collapse the annotation info, like filename. username. etc
 
     let info= document.getElementById('info')
     info.style.display=(info.style.display==='block'?"":'block')
-    let rawtext=document.getElementsByClassName('raw_text')[0]
-    let text_index=document.getElementsByClassName('raw_text_index')[0]
-    // console.log(rawtext.getElementsByTagName('li').length)
-      for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
-                    console.log(rawtext.getElementsByTagName('li')[i].innerText.length ,text_index.getElementsByTagName('li')[i].innerText.length)
+    // let rawtext=document.getElementsByClassName('raw_text')[0]
+    // let text_index=document.getElementsByClassName('raw_text_index')[0]
+    // // console.log(rawtext.getElementsByTagName('li').length)
+    //   for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
+    //                 console.log(rawtext.getElementsByTagName('li')[i].innerText.length ,text_index.getElementsByTagName('li')[i].innerText.length)
+    //
+    //     let a=rawtext.getElementsByTagName('li')[i].innerText.length
+    //      let b= text_index.getElementsByTagName('li')[i].innerText.length
+    //       let max_len= Math.max(a,b)
+    //       rawtext.getElementsByTagName('li')[i].style.width=max_len+'px'.toString()
+    //       text_index.getElementsByTagName('li')[i].clientWidth=max_len
+    //         console.log(max_len,  text_index.getElementsByTagName('li')[i].clientWidth)
 
-        let a=rawtext.getElementsByTagName('li')[i].innerText.length
-         let b= text_index.getElementsByTagName('li')[i].innerText.length
-          let max_len= Math.max(a,b)
-          rawtext.getElementsByTagName('li')[i].style.width=max_len+'px'.toString()
-          text_index.getElementsByTagName('li')[i].clientWidth=max_len
-            console.log(max_len,  text_index.getElementsByTagName('li')[i].clientWidth)
 
 
-      }
 
 }
 
 
-  function getScrollTop(){
-
-var scrollTop=0;
-
-if(document.documentElement&&document.documentElement.scrollTop){
-
-scrollTop=document.documentElement.scrollTop;
-
-}else if(document.body){
-
-scrollTop=document.body.scrollTop;
-
-}
-
-return scrollTop;
-
-}
-
-function getframe(token){
+//   function getScrollTop(){  deprecated for fixed the postion of the scrollbar, but might be useful later, so I preserve.
+//
+// var scrollTop=0;
+//
+// if(document.documentElement&&document.documentElement.scrollTop){
+//
+// scrollTop=document.documentElement.scrollTop;
+//
+// }else if(document.body){
+//
+// scrollTop=document.body.scrollTop;
+//
+// }
+//
+// return scrollTop;
+//
+// }
 
 
-    let scroll_pos=getScrollTop()
+function getframe(token){  // get the frame info and show on the right dynamically.
+
+
+    // let scroll_pos=getScrollTop()
 
     console.log(token)
         fetch(`/getframe/`, {
         method: 'POST',
-        body: JSON.stringify({"token": token, "scroll_pos":scroll_pos})
+        body: JSON.stringify({"token": token})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         // setInnerHTML("error_msg", data["msg"]);
         console.log(data)
         document.getElementById("frame_info").innerHTML=data['token'];
-        window.scrollTo({top:data['scroll_pos']})
     }).catch(function(error){
         console.log("Fetch error from UMR2db: "+ error);
 
 
 })}
+
+
+
+function check_command(){
+    // let current_command=''
+    let command_list=document.getElementsByClassName('command')
+    for(let i=0;i<command_list.length;i++){
+        let current= command_list[i]
+        // if((current.style.display!='none')&(current.value!=''))
+
+        console.log(current.id,current.style.display,current.value==='')
+        current.onkeydown=function(e){
+                 var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            // 13 代表 回车键
+            if (code === 13) {
+                // if (current.style.display==='block'){
+
+                    submit_command(current.id)
+
+                    current.value=''
+                // }
+            }
+
+
+        }
+        // current.bind('keydown')
+    }
+
+
+
+}
+function onInputHandler(event) {
+    let command_value= event.target.value
+
+    let senses='';
+    if (command_value) {
+        let value = strip(command_value);
+        value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
+        let cc;
+
+        cc=argSplit(command_value)
+        let concept_token=cc.slice(-1)[0]
+        let  concept=index2concept(concept_token)
+        if (concept_token.match(/x\d+/)){
+            senses=conceptDropdown(concept)
+
+    }   else{
+            senses=conceptDropdown(concept_token)
+        }
+    }
+    // console.log('test 3246', senses)
+    // console.log(JSON.parse(senses))
+    $('#frame_display').html(syntaxHighlight(senses))
+}
+// Internet Explorer
+function onPropertyChangeHandler(event) {
+    if (event.propertyName.toLowerCase () === "value") {
+        console.log(event.srcElement.value);
+    }
+}
+
+function syntaxHighlight(json) {
+    if (typeof json != 'string') {
+        json = JSON.stringify(json['res'], undefined, 2);
+    }
+    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+        var cls = 'number';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'key';
+            } else {
+                cls = 'string';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'boolean';
+        } else if (/null/.test(match)) {
+            cls = 'null';
+        }
+        return '<span class="' + cls + '">' + match + '</span>';
+    });
+}
 

@@ -182,6 +182,7 @@ def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
 
     sent_htmls = []  # a list of single sentence htmls
     sents.append('Sentence There have been hundreds of earthquakes in Indonesia since a 9.1 temblor in 2004 caused a tsunami that swept across the Indian Ocean , devastating coastal communities and leaving more than 220,000 people dead in Indonesia , Sri Lanka , India , Thailand and other countries .'.split())
+
     for sent in sents:
         print(sent)
         target_sent_html = pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
