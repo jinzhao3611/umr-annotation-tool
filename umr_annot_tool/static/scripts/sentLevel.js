@@ -707,7 +707,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
             //example match: s1 :temporal (s1t2 :before DCT)
             //s1 :coref (s1h :same-entity s1p)
-            //s1 :modal (s2c4 :NEG AUTH)
+            //s1 :modal (s2c4 :FullNeg AUTH)
             let match = pattern.exec(value);
             cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
         } else {
