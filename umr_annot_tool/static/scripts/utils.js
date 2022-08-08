@@ -284,11 +284,13 @@ function setInnerHTML(id, value) {
  */
 function listContainsCap(list) {
     var len = list.length;
+
     for (var i = 1; i < len; i++) {
-        console.log('288',list[i].match(/[A-Z]/))
-        if (list[i].match(/[A-Z]/)) {
+        // console.log('288',list[i].match(/[A-Z]/))
+        if(list[i].match(/x\d+/)){
+        if (index2concept(list[i]).match(/[A-Z]/)) {
             return 1;
-        }
+        }}
     }
     return 0;
 }
