@@ -32,7 +32,7 @@ function convert_with_mod(umr){
 
             let mod_parent2 = umr[loc + ".v"] || check_reentrance(umr, loc);
             let mod_child2 = umr[find_parent_loc(key) + ".v"];
-            output.push([mod_parent2, ":UNSP", mod_child2]);
+            output.push([mod_parent2, ":Unsp", mod_child2]);
         }
     });
     return output
@@ -118,10 +118,10 @@ function mod_over_quot(umr){
             let k2 = getKeyByValue(umr, ':actor')
             let conceiver2 = umr[find_loc(k2) + '.v'];
             output.push([conceiver1, ":FullAff", modal_event]);
-            output.push([modal_event, ":UNSP", conceiver2]);
+            output.push([modal_event, ":Unsp", conceiver2]);
 
             let mod_child2 = umr[find_parent_loc(key) + ".v"];
-            output.push([modal_event, ":UNSP", mod_child2]);
+            output.push([modal_event, ":Unsp", mod_child2]);
         }
         if(umr[key] === ":MODSTR" && checkIfSibling(quot_loc, find_loc(key))) {
             let loc = find_loc(key);
@@ -154,7 +154,7 @@ function mod_over_purp(umr){
             let modal_event = umr[loc + ".v"] || check_reentrance(umr, loc); //re-entrance
             output.push([conceiver1, ":FullAff", modal_event]);
             let mod_child2 = umr[find_parent_loc(key) + ".v"];
-            output.push([modal_event, ":UNSP", mod_child2]);
+            output.push([modal_event, ":Unsp", mod_child2]);
         }
         if(umr[key] === ":MODSTR" && checkIfChild(purp_loc, find_loc(key))) {
             let loc = find_loc(key);
@@ -190,7 +190,7 @@ function mod_over_cond(umr){
             let cond_event = umr[find_parent_loc(key) + '.v'];
             let event = umr[find_parent_loc(cond_loc+"**") + '.v'];
             output.push(["HAVECONDITION", edge_value, cond_event]);
-            output.push(["HAVECONDITION", ":UNSP", event]);
+            output.push(["HAVECONDITION", ":Unsp", event]);
         }
         if(umr[key] === ":MODSTR" && !checkIfChild(cond_loc, find_loc(key))) {
             let loc = find_loc(key);
@@ -200,7 +200,7 @@ function mod_over_cond(umr){
             output.push(["AUTH", edge_value, experiencer]);
             let modal_event = umr[mod_loc + '.v'];
             output.push([experiencer, ":FullAff", modal_event]);
-            output.push([modal_event, ":UNSP", "HAVECONDITION"])
+            output.push([modal_event, ":Unsp", "HAVECONDITION"])
         }
     });
     return output;
@@ -230,7 +230,7 @@ function quot_over_mod(umr){
             let experiencer = umr[find_loc(k2) + '.v'];
             output.push([actor, edge_value, experiencer]);
             output.push([experiencer, ":FullAff", event]);
-            output.push([event, ":UNSP", umr[find_parent_loc(mod_loc+"**") + '.v']]); //find_parent_loc takes in key
+            output.push([event, ":Unsp", umr[find_parent_loc(mod_loc+"**") + '.v']]); //find_parent_loc takes in key
         }
     });
     return output;
