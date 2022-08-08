@@ -23,10 +23,10 @@ function convert_with_mod(umr){
             let modstr_child = umr[find_loc(k) + '.v']; //get child node of :ARGO and turn it into modstr_child
             output.push(["AUTH", modstr_edge_value, modstr_child]);
         }
-        if(umr[key] === ":MOD") { // if :MOD appears
-            let loc = key.substring(0, key.length - 2); //get the location of :MOD
+        if(umr[key] === ":MODPRED") { // if :MODPRED appears
+            let loc = key.substring(0, key.length - 2); //get the location of :MODPRED
             let k = getKeyByValue(umr, ':experiencer') || getKeyByValue(umr, ':ARG0')
-            let mod_parent = umr[find_loc(k) + '.v']; // get the child node of :MOD and turn it into mod_parent
+            let mod_parent = umr[find_loc(k) + '.v']; // get the child node of :MODPRED and turn it into mod_parent
             let mod_child = umr[loc + ".v"] || check_reentrance(umr, loc); //re-entrance
             output.push([mod_parent, ":FullAff", mod_child]);
 
@@ -110,10 +110,10 @@ function mod_over_quot(umr){
     let quot_loc = find_loc(getKeyByValue(umr,':QUOT'));
 
     Object.keys(umr).forEach(function(key){
-        if(umr[key] === ":MOD") { // if :MOD appears
-            let loc = key.substring(0, key.length - 2); //get the location of :MOD
+        if(umr[key] === ":MODPRED") { // if :MODPRED appears
+            let loc = key.substring(0, key.length - 2); //get the location of :MODPRED
             let k = getKeyByValue(umr, ':experiencer') || getKeyByValue(umr, ':ARG0')
-            let conceiver1 = umr[find_loc(k) + '.v']; // get the child node of :MOD and turn it into mod_parent
+            let conceiver1 = umr[find_loc(k) + '.v']; // get the child node of :MODPRED and turn it into mod_parent
             let modal_event = umr[loc + ".v"] || check_reentrance(umr, loc); //re-entrance
             let k2 = getKeyByValue(umr, ':actor')
             let conceiver2 = umr[find_loc(k2) + '.v'];
@@ -147,10 +147,10 @@ function mod_over_purp(umr){
     let purp_loc = find_loc(getKeyByValue(umr,':PURP'));
 
     Object.keys(umr).forEach(function(key){
-        if(umr[key] === ":MOD") { // if :MOD appears
-            let loc = key.substring(0, key.length - 2); //get the location of :MOD
+        if(umr[key] === ":MODPRED") { // if :MODPRED appears
+            let loc = key.substring(0, key.length - 2); //get the location of :MODPRED
             let k = getKeyByValue(umr, ':experiencer') || getKeyByValue(umr, ':ARG0')
-            let conceiver1 = umr[find_loc(k) + '.v']; // get the child node of :MOD and turn it into mod_parent
+            let conceiver1 = umr[find_loc(k) + '.v']; // get the child node of :MODPRED and turn it into mod_parent
             let modal_event = umr[loc + ".v"] || check_reentrance(umr, loc); //re-entrance
             output.push([conceiver1, ":FullAff", modal_event]);
             let mod_child2 = umr[find_parent_loc(key) + ".v"];
@@ -181,7 +181,7 @@ function mod_over_purp(umr){
 function mod_over_cond(umr){
     let output = [["ROOT", ":MODAL", "AUTH"]];
     let cond_loc = find_loc(getKeyByValue(umr,':COND'));
-    let mod_loc = find_loc(getKeyByValue(umr, ':MOD'));
+    let mod_loc = find_loc(getKeyByValue(umr, ':MODPRED'));
 
     Object.keys(umr).forEach(function(key){
         if(umr[key] === ":MODSTR" && checkIfChild(cond_loc, find_loc(key))) {
@@ -209,7 +209,7 @@ function mod_over_cond(umr){
 function quot_over_mod(umr){
     let output = [["ROOT", ":MODAL", "AUTH"]];
     let quot_loc = find_loc(getKeyByValue(umr,':QUOT'));
-    let mod_loc = find_loc(getKeyByValue(umr, ':MOD'));
+    let mod_loc = find_loc(getKeyByValue(umr, ':MODPRED'));
     Object.keys(umr).forEach(function(key){
         if(umr[key] === ":MODSTR" && !checkIfSibling(quot_loc, find_loc(key))) {
             let loc = find_loc(key);
@@ -364,7 +364,7 @@ function generateModalUmr(id){
         }
     });
 
-    if (Object.values(umr).indexOf(':MOD') >-1){
+    if (Object.values(umr).indexOf(':MODPRED') >-1){
         if (Object.values(umr).indexOf(':QUOT')>-1){
             triples = mod_over_quot(umr);
         }else if(Object.values(umr).indexOf(':PURP')>-1){
