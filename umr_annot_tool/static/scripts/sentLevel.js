@@ -768,12 +768,13 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         let ne_concept;
         let cc2v;
         if (cc[0] === 'top'){
+            console.log('test771',is_standard_named_entity[(cc[1])],listContainsCap(cc),cc,cc[0],validEntryConcept(cc[1]),!getLocs(cc[1]))
             if ((cc.length >= 3) //sijia todo what's the meaning
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
-                && (is_standard_named_entity[ne_concept] || listContainsCap(cc))) {
+                && (listContainsCap(cc)||is_standard_named_entity[ne_concept] )) {
                 let ne_var = newUMR(trimConcept(ne_concept));
 
                 console.log('test757',ne_var)

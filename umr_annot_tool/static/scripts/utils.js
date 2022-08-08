@@ -285,6 +285,7 @@ function setInnerHTML(id, value) {
 function listContainsCap(list) {
     var len = list.length;
     for (var i = 1; i < len; i++) {
+        console.log('288',list[i].match(/[A-Z]/))
         if (list[i].match(/[A-Z]/)) {
             return 1;
         }
