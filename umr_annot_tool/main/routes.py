@@ -11,7 +11,7 @@ import os
 import logging
 from datetime import datetime
 from bs4 import BeautifulSoup
-import jpype
+# import jpype
 
 from flask import render_template, request, Blueprint
 from umr_annot_tool import db, bcrypt
