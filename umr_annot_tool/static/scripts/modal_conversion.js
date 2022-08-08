@@ -68,7 +68,7 @@ function convert_with_purp(umr){
     let purp_loc = find_loc(getKeyByValue(umr,':PURP'));
     let arg0k = getKeyByValue(umr, ':experiencer') || getKeyByValue(umr, ':ARG0')
     let prtParent = umr[find_loc(arg0k) + '.v']
-    output.push([prtParent, ":PRT", "PURPOSE"]);
+    output.push([prtParent, ":PrtAff", "PURPOSE"]);
 
     Object.keys(umr).forEach(function(key){
         if(umr[key] === ":MODSTR" &&  checkIfSibling(purp_loc, find_loc(key))) {
@@ -163,7 +163,7 @@ function mod_over_purp(umr){
             let conceiver2 = umr[find_loc(k2) + '.v'];
             let child = umr[find_parent_loc(key) + '.v'];
             output.push(["AUTH", edge_value, conceiver2]);
-            output.push([conceiver2, ":PRT", "PURPOSE"]);
+            output.push([conceiver2, ":PrtAff", "PURPOSE"]);
             output.push(["PURPOSE", ":FullAff", umr[purp_loc + '.v']]);
         }
         if(umr[key] === ":MODSTR" && !checkIfChild(purp_loc, find_loc(key))) {
