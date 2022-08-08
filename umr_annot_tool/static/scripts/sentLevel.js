@@ -1177,6 +1177,7 @@ function index2concept(concept){
 
      let rawtext= document.getElementsByClassName('raw_text')[0]
     let sense=''
+
     if (concept.match(/.*?(-\d+)/)){
         sense=concept.match(/.*?(-\d+)/)[1]
     }
@@ -1243,7 +1244,11 @@ function newUMR(concept) {
     let v = newVar(concept); // string initial
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
-    concept=index2concept(concept)
+    if (concept.match(/x\d+/)){
+
+        concept=index2concept(concept)
+    }
+
     console.log(concept)
 
     umr[n + '.c'] = concept;
@@ -1286,7 +1291,11 @@ function addTriple(head, role, arg, arg_type) {
         && head_var_locs) { //head already existed in variables dictionary
         console.log('test1286', arg)
         arg_var_locs = getLocs(arg);
-        arg_concept=index2concept(arg)
+        if (arg.match(/x\d+/)){
+            arg_concept=index2concept(arg)}
+        else{
+            arg_concept=arg
+        }
         // console.log('test 1290',validEntryConcept(arg.toLowerCase()))
         if (arg_var_locs //argument already exist in variables dictionary
             && (arg_type !== 'concept')
@@ -2950,6 +2959,7 @@ window.onload=function(){
     // let sent=document.getElementsByClassName("table table-striped table-sm")
 
     let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0] // get the current sentence
+    console.log('test2953',sent)
      let wordcount=  sent.getElementsByTagName('tr')[0].cells.length // the length of the current sentence
      let rawtext=document.createElement('ul') //
     /*
