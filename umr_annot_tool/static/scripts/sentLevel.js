@@ -1191,7 +1191,7 @@ function index2concept(concept){
         // console.log(index_list[-1])
         for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
             if(index_list[i].includes('x')){
-                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText
+                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.length-1)
                 // get the current token
 
                 if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
@@ -1212,7 +1212,7 @@ function index2concept(concept){
         }
         if (index_list[index_list.length-1].includes('x')){
 
-            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText
+            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.length-1)
         }else{
 
             target+=previous[index_list[index_list.length-1]-1]
@@ -1224,7 +1224,7 @@ function index2concept(concept){
         else if(concept.includes(':')){
             concept;
     }else{
-            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText
+            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText.substring(0,rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText.length-1)
 
 
     }
@@ -2960,6 +2960,7 @@ window.onload=function(){
     // let sent=document.getElementsByClassName("table table-striped table-sm")
 
     let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0] // get the current sentence
+    // sent.setAttribute('dir','rtl')
     console.log('test2953',sent)
      let wordcount=  sent.getElementsByTagName('tr')[0].cells.length // the length of the current sentence
      let rawtext=document.createElement('ul') //
@@ -2978,9 +2979,19 @@ window.onload=function(){
             let c=document.createElement('li') // using the unordered list to show the text
             c.setAttribute('class','token')
             c.setAttribute('title','x'+i) // using the hover to show the index
-            c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText
-            c.appendChild(k)
+            let temporary_index=i.toString();
+            if (sent.getAttribute('dir')==='rtl'){
 
+                c.innerText=sent.getElementsByTagName('tr')[0].cells[wordcount-i].innerText
+                c.innerHTML+=temporary_index.sup()
+
+            }else{
+
+            c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText;
+            c.innerHTML+=temporary_index.sup()
+            }
+
+            c.appendChild(k)
             rawtext.appendChild(c)
 
 
