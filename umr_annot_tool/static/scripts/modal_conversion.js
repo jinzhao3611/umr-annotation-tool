@@ -92,7 +92,7 @@ function convert_with_purp(umr){
 
 function convert_with_cond(umr){
     let output = [["ROOT", ":MODAL", "AUTH"]];
-    output.push(["AUTH", ":NEUT", "HAVECONDITION"]);
+    output.push(["AUTH", ":NeutAff", "HAVECONDITION"]);
 
     Object.keys(umr).forEach(function(key){
         if(umr[key] === ":MODSTR") {
