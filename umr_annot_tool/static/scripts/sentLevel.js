@@ -785,7 +785,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
                 && (listContainsCap(cc)||is_standard_named_entity[ne_concept] )) {
-                let ne_var = newUMR(trimConcept(ne_concept));
+                let ne_var = newUMR(trimConcept(ne_concept),cc.slice(2,cc.length));
 
                 console.log('test757',ne_var)
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
@@ -1253,9 +1253,17 @@ function index2concept(concept){
  * @param concept "buy"  index//
  * @returns {string} return a new amr head, "b"
  */
-function newUMR(concept) {
+function newUMR(concept,index='') {
     console.log(concept, 'i am testing newumr')
-    let v = newVar(concept); // string initial
+    let v = newVar(concept); // string initial  //change ac to index
+    if(index!=''){ //if  ac, use index instead
+        let sen_index = document.getElementById('curr_shown_sent_id').innerText;
+        v='s'+sen_index.trim()+'.ac'
+        for (let i=0;i<index.length;i++){
+            v+=  '_'+index[i]
+
+        }
+    }
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
     if (concept.match(/x\d+/)){
@@ -1287,9 +1295,10 @@ function newUMR(concept) {
  * @param role :arg1
  * @param arg car
  * @param arg_type concept, string, '' (potentially there are other types)
+ * @param index   just for ac ne
  * @returns {*} arg_variable
  */
-function addTriple(head, role, arg, arg_type) {
+function addTriple(head, role, arg, arg_type, index='') {
     head = strip(head); // b
     role = strip(role); // :arg1
 
@@ -1326,6 +1335,7 @@ function addTriple(head, role, arg, arg_type) {
             && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here40-2");
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            console.log('1329',arg_concept)
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
         } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
@@ -1394,6 +1404,14 @@ function addTriple(head, role, arg, arg_type) {
         // console.log('subs ' + head_var_loc + '.n: ' + n_subs);
         let new_loc = head_var_loc + '.' + n_subs;
         // console.log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
+        if(index!==''){ //if  ac, use index instead
+        let sen_index = document.getElementById('curr_shown_sent_id').innerText;
+        arg_variable='s'+sen_index.trim()+'.ac'
+        for (let i=0;i<index.length;i++){
+            arg_variable+=  '_'+index[i]
+
+        }
+    }
         umr[new_loc + '.v'] = arg_variable;
         umr[new_loc + '.r'] = role;
         umr[new_loc + '.n'] = 0;
@@ -1445,7 +1463,7 @@ function addNE(value) {
         }
     } else {
         console.log('test 1415', head_var,role,ne_type)
-        let ne_arg_var = addTriple(head_var, role, ne_type, 'concept');
+        let ne_arg_var = addTriple(head_var, role, ne_type, 'concept',cc.slice(3,cc.length));
         if (ne_arg_var) {
             name_var = addTriple(ne_arg_var, ':name', 'name', 'concept');
         } else {
