@@ -2996,19 +2996,22 @@ window.onload=function(){
             // c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText;
             // c.innerHTML+=temporary_index.sup()
             //change
-            if (sent.getAttribute('dir')==='rtl'){
-
-                c.innerText=sent.getElementsByTagName('tr')[0].cells[wordcount-i].innerText
-                c.innerHTML=c.innerHTML+temporary_index.sup()
-
-            }else{
-
-            c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText;
+            // if (sent.getAttribute('dir')==='rtl'){
+            //
+            //     c.innerText=sent.getElementsByTagName('tr')[0].cells[wordcount-i].innerText
+            //     c.innerHTML=c.innerHTML+temporary_index.sup()
+            //
+            // }else{
+            console.log('3005', sent.getElementsByTagName('tr')[0].cells[i].innerHTML)
+            c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerHTML;
             c.innerHTML+=temporary_index.sup()
-            }
+            // }
 
             c.appendChild(k)
             rawtext.appendChild(c)
+            if (sent.getAttribute('dir')==='rtl'){
+            rawtext.dir='rtl'
+            rawtext.style.textAlign='right'}
         //   if (sent.getAttribute('dir')==='rtl'){
         //     var list= rawtext.getElementsByTagName('li')
         //     var fragment=document.createDocumentFragment();
