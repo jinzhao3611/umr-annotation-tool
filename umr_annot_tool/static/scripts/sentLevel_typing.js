@@ -208,7 +208,9 @@ function conceptDropdown(concept,lang='english') {
                         submenu_items = {"res": senses};
                     }
 
-                    $('#frame_display').html(syntaxHighlight(submenu_items))
+                    // $('#frame_display').html(syntaxHighlight(submenu_items))
+                    document.getElementById('frame_display').innerText = JSON.stringify(submenu_items['res'], undefined, 2);
+
                 console.log('211',frame_info)
                 }
 
@@ -3270,7 +3272,8 @@ function onInputHandler(event,lang) {
     }
     console.log('test 3246', senses)
     // console.log(JSON.parse(senses))
-    $('#frame_display').html(syntaxHighlight(senses))
+    // $('#frame_display').html(syntaxHighlight(senses))
+    document.getElementById('frame_display').innerText = JSON.stringify(senses['res'], undefined, 2);
 }
 
 
@@ -3282,25 +3285,25 @@ function onInputHandler(event,lang) {
 //     }
 // }
 
-function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json['res'], undefined, 2);
-    }
-    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-        var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-                cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
-        }
-        return '<span class="' + cls + '">' + match + '</span>';
-    });
-}
+// function syntaxHighlight(json) {
+//     if (typeof json != 'string') {
+//         json = JSON.stringify(json['res'], undefined, 2);
+//     }
+//     json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+//     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+//         var cls = 'number';
+//         if (/^"/.test(match)) {
+//             if (/:$/.test(match)) {
+//                 cls = 'key';
+//             } else {
+//                 cls = 'string';
+//             }
+//         } else if (/true|false/.test(match)) {
+//             cls = 'boolean';
+//         } else if (/null/.test(match)) {
+//             cls = 'null';
+//         }
+//         return '<span class="' + cls + '">' + match + '</span><br>';
+//     });
+// }
 
