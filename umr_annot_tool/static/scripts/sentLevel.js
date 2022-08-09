@@ -779,7 +779,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         let cc2v;
         if (cc[0] === 'top'){
             console.log('test771',is_standard_named_entity[(cc[1])],listContainsCap(cc),cc,cc[0],validEntryConcept(cc[1]),!getLocs(cc[1]))
-            if ((cc.length >= 3) //sijia todo what's the meaning
+            if ((cc.length >= 3) //
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
                 && validEntryConcept(ne_concept)
@@ -791,7 +791,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
                 for (let i = 2; i < cc.length; i++) {
                     let sub_role = ':op' + (i - 1);
-                    addTriple(name_var, sub_role, cc[i], 'string');
+                    console.log('test794',name_var,sub_role,cc[i])
+                    addTriple(name_var, sub_role, index2concept(cc[i]), 'string');
                 }
                 show_amr_args = 'show';
             } else if (cc.length >= 2) {
