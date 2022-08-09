@@ -166,7 +166,7 @@ function conceptDropdown(concept,lang='english') {
         console.log('test 165',number['res'][0]['name'])
         frame_info=getSenses(number);
     } else { //if concept is not a number
-        if (default_langs.includes(lang)){ // if lang is one of the default languages  sijia todo: what's this, why English
+        if (default_langs.includes(lang)){ // if lang is one of the default languages
             let submenu_items;
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
                  submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
@@ -748,7 +748,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         if(value.includes("(")){
             //doc-level
             //sijia todo: segment     s1 :temporal (s1x2_x4 :before DCT)  or   s1 :temporal (x2_2 :before DCT)
-            let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*x\d*\s:.+\s.+\))$/;
+            let pattern = /^(s\d+)\s(:temporal|:modal|:coref)\s(\(s\d+[.a-z]+\d*\s:.+\s.+\))$/;
             //example match: s1 :temporal (s1t2 :before DCT)
             //s1 :coref (s1h :same-entity s1p)
             //s1 :modal (s2c4 :NEG AUTH)
@@ -818,7 +818,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             console.log('test785')
             addTriple(cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
-        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] === '*OR*') && validEntryConcept(cc[3])) {// sijia todo
+        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] === '*OR*') && validEntryConcept(cc[3])) {
 
             addOr(value);
             show_amr_args = 'show';
@@ -914,7 +914,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 console.log('Unrecognized <i>add</i> command.');
             }
         } else {
-            //Sijia  todo
+
             console.log('Unrecognized command:' + value);
             top = 0;
         }
@@ -1120,7 +1120,7 @@ function recordConcept(c, loc) {
     }
 }
 
-//to-do Sijia
+
 
 /**
  * given concept return variable, with sentence id but without variable counting index
@@ -1168,7 +1168,7 @@ function newVar(concept) {
             initial = "s"+ (parseInt(sentenceId)+1) +'.'+ initial;
         }
     }}
-    //Sijia to-do for those over the whole length of the sentence and not use
+
 
 
     // increase index or reserve variable 'i' for concept 'i'
@@ -2000,7 +2000,7 @@ function change_var_name(variable, target, top) {
         console.log('test1974',variable,variables)
         variables[variable] = '';
         console.log('test1976', target,target.match(/^x\d+|ac\d+$/))
-        if ((target.match(/^x\d+|ac\d+$/)) && (!getLocs(target))) { //sijia todo
+        if ((target.match(/^x\d+|ac\d+$/)) && (!getLocs(target))) {
             new_variable = 's'+snt_id.trim()+'.'+target;
             new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")
             console.log('test1977',new_variable)
@@ -2593,7 +2593,7 @@ function selectEvent(){
     };
 }
 
-// Sijia to-do
+
 function get_selected_word(){
 
     //get the word part from the command, and split it, then find out the corresponding token based on the index
