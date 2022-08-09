@@ -1032,43 +1032,35 @@ def download(filename):
 
 
 # farasapy
-@main.route('/getfarasalemma', methods=['GET', 'POST'])
-def getfarasalemma():
-    import time
-    token = request.get_json(force=True)["token"]
-    t0 = time.time()
-    # instance = jclass()
-    # print(token)
-    stemmed = stemmer.stem(token)
-    # stemmed = instance.lemmtizeLine(token)
-    # print(stemmed)
-    t1 = time.time()
-
-    return make_response(jsonify({"text": stemmed}), 200)
 # @main.route('/getfarasalemma', methods=['GET', 'POST'])
 # def getfarasalemma():
 #     import time
 #     token = request.get_json(force=True)["token"]
-#     print("inflected_form: ", token)
+#     print('test 1039token')
 #     t0 = time.time()
-#     jvmpath = jpype.getDefaultJVMPath()
-#     print(jvmpath)
-#     jpype.startJVM(jvmpath, '-ea', "-Djava.class.path=%s" % (r'.\umr_annot_tool\main\FarasaSegmenterJar.jar'))
-#     print(jpype.isJVMStarted())
-#     jclass = jpype.JClass('com.qcri.farasa.segmenter.Farasa')
-#     print(jclass)
-#     if not jpype.attachThreadToJVM():
-#         jpype.attachThreadToJVM()
-#     stemmed = jclass().lemmtizeLine(token)
-#     # stemmed = stemmer.stem(token)
-#
+#     # instance = jclass()
+#     # print(token)
+#     stemmed = stemmer.stem(token)
 #     # stemmed = instance.lemmtizeLine(token)
-#
+#     # print(stemmed)
 #     t1 = time.time()
-#     print("elapsed time: ", t1 - t0)
-#     print("lemma_form: ", stemmed)
-#     jpype.shutdownJVM()
+#
 #     return make_response(jsonify({"text": stemmed}), 200)
+@main.route('/getfarasalemma', methods=['GET', 'POST'])
+def getfarasalemma():
+    import time
+    token = request.get_json(force=True)["token"]
+    print("inflected_form: ", token)
+    t0 = time.time()
+    stemmed = stemmer.stem(token)
+
+    # stemmed = instance.lemmtizeLine(token)
+
+    t1 = time.time()
+    print("elapsed time: ", t1 - t0)
+    print("lemma_form: ", stemmed)
+    # jpype.shutdownJVM()
+    return make_response(jsonify({"text": stemmed}), 200)
 
 
 @main.route('/getframe/', methods=['POST'])

@@ -182,34 +182,44 @@ function conceptDropdown(concept,lang='english') {
             }
             frame_info=getSenses(submenu_items);
         }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
-            console.log(token)
+            console.log('test185',token)
             let lemma;
             if(lang === 'arabic'){
+                let submenu_items;
                 fetch(`/getfarasalemma`, {
                     method: 'POST',
                     body: JSON.stringify({"token": token})
                 }).then(function (response) {
+                    console.log('test 192')
                     return response.json();
                 }).then(function (data) {
                     lemma = data['text'];
-                    console.log(lemma);
+                    console.log('195',lemma);
                     let senses = [];
                     Object.keys(frame_dict).forEach(function(key) {
                         if(key.split("-")[0] === lemma){
                             senses.push({"name": key, "desc":frame_dict[key]})
                         }
                     });
-                    let submenu_items;
+
                     if (senses.length === 0) {
                         submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
                     }else{
                         submenu_items = {"res": senses};
                     }
-                    frame_info=getSenses(submenu_items);
-                }).catch(function(error){
-                    console.log("get lemma error: "+ error);
-                });
 
+                    $('#frame_display').html(syntaxHighlight(submenu_items))
+                console.log('211',frame_info)
+                }
+
+                ).catch(function(error){
+                    console.log("get lemma error: "+ error);
+                }
+
+
+                );
+                frame_info=getSenses(submenu_items);
+                  // frame_info=getSenses(submenu_items);
             } else if(lang === 'english'){
                 lemma = getLemma(token);
                 console.log('test213', lemma)
@@ -249,7 +259,7 @@ function conceptDropdown(concept,lang='english') {
             frame_info=getSenses(letter);
         }
     }
-
+    console.log('test283',frame_info)
     return frame_info
 }
 
@@ -1224,7 +1234,9 @@ function index2concept(concept){
         else if(concept.includes(':')){
             concept;
     }else{
-            concept=rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText.substring(0,rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText.length-1)
+            console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
+
+        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - 1)
 
 
     }
@@ -2980,10 +2992,13 @@ window.onload=function(){
             c.setAttribute('class','token')
             c.setAttribute('title','x'+i) // using the hover to show the index
             let temporary_index=i.toString();
+            // c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText;
+            // c.innerHTML+=temporary_index.sup()
+            //change
             if (sent.getAttribute('dir')==='rtl'){
 
                 c.innerText=sent.getElementsByTagName('tr')[0].cells[wordcount-i].innerText
-                c.innerHTML+=temporary_index.sup()
+                c.innerHTML=c.innerHTML+temporary_index.sup()
 
             }else{
 
@@ -2993,9 +3008,12 @@ window.onload=function(){
 
             c.appendChild(k)
             rawtext.appendChild(c)
-
-
-        }
+        //   if (sent.getAttribute('dir')==='rtl'){
+        //     var list= rawtext.getElementsByTagName('li')
+        //     var fragment=document.createDocumentFragment();
+        //     for (var t=list.length-1;t>=0;t--){
+        //         fragment.append(list[t]);
+        // }rawtext.appendChild(fragment);}
 
 
         let sen_index=document.createElement('ul')
@@ -3036,7 +3054,7 @@ document.onkeyup=function(){ // the hot key for hide the index
         overhide()
     }
 
-}
+}}
 
 
 function overshow(){ // show the index, change the display of the index here
@@ -3222,7 +3240,10 @@ function check_command(){
 
 
 }
-function onInputHandler(event) {
+
+//
+
+function onInputHandler(event,lang) {
     let command_value= event.target.value
 
     let senses='';
@@ -3235,22 +3256,27 @@ function onInputHandler(event) {
         let concept_token=cc.slice(-1)[0]
         let  concept=index2concept(concept_token)
         if (concept_token.match(/x\d+/)){
-            senses=conceptDropdown(concept)
+            senses=conceptDropdown(concept,lang)
+            console.log('3254',senses)
 
     }   else{
-            senses=conceptDropdown(concept_token)
+            senses=conceptDropdown(concept_token,lang)
+            console.log('3258',senses)
         }
     }
-    // console.log('test 3246', senses)
+    console.log('test 3246', senses)
     // console.log(JSON.parse(senses))
     $('#frame_display').html(syntaxHighlight(senses))
 }
+
+
+
 // Internet Explorer
-function onPropertyChangeHandler(event) {
-    if (event.propertyName.toLowerCase () === "value") {
-        console.log(event.srcElement.value);
-    }
-}
+// function onPropertyChangeHandler(event) {
+//     if (event.propertyName.toLowerCase () === "value") {
+//         console.log(event.srcElement.value);
+//     }
+// }
 
 function syntaxHighlight(json) {
     if (typeof json != 'string') {

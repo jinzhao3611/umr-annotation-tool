@@ -147,8 +147,12 @@
                 </div>
             </div>
 <hr>
+    <script>
 
-    <input class='command' id='main-command' oninput="onInputHandler(event)" placeholder="e.g: 'top x5' or 'x5 :ARG1 x2'">
+
+{##}
+    </script>
+    <input class='command' id='main-command' oninput="onInputHandler(event,'{{ lang }}')" placeholder="e.g: 'top x5' or 'x5 :ARG1 x2'">
 
     <button  id="frame_button" >English frame</button>
     <div style="display: inline-flex; float: right" >
@@ -362,7 +366,7 @@
 {#</div>#}
 {#<div>#}
         <input style="display: none"  placeholder="move + branch head node + to + new head + role, e.g: move x2 to x3 :ARG5"  class="command" id="move_box" >
-        <input style="display: none"  oninput="onInputHandler(event)" class="command" id="replace_box"  placeholder="replace + concept + at + variable with new variable, e.g:replace concept at x1 with x2">
+        <input style="display: none"  oninput="onInputHandler(event,'{{ lang }}')" class="command" id="replace_box"  placeholder="replace + concept + at + variable with new variable, e.g:replace concept at x1 with x2">
         <input style="display: none" class="command" id ="delete_box"  placeholder=" delete+ head+roles+variable, e.g:delete x2 :ARG1 x3">
     frame info:
     {{ frame_info }}
