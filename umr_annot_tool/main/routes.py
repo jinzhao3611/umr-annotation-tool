@@ -200,6 +200,162 @@ def upload_lexicon(current_project_id):
 
     return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form, project_id=current_project_id)
 
+@main.route("/sentlevel_typing/<string:doc_sent_id>", methods=['GET', 'POST'])
+def sentlevel_typing(doc_sent_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+
+    doc_id = int(doc_sent_id.split("_")[0])
+    default_sent_id = int(doc_sent_id.split("_")[1])
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner = User.query.get_or_404(owner_user_id)
+
+    #check who is the admin of the project containing this file:
+    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
+    admin = User.query.filter(User.id == admin_id).first()
+    permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
+
+    doc = Doc.query.get_or_404(doc_id)
+    info2display = html(doc.content, doc.file_format, lang=doc.lang)
+    # find the correct frame_dict for current annotation
+    if doc.lang == "chinese":
+        frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
+    elif doc.lang == "english":
+        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+    elif doc.lang == "arabic":
+        frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
+    else:
+        try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
+            frame_dict = Lexicon.query.filter_by(project_id=project_id).first().lexi
+        except AttributeError: #there is no frame_dict for this language at all
+            frame_dict = {}
+
+    snt_id = int(request.args.get('snt_id', default_sent_id))
+    if "set_sentence" in request.form:
+        snt_id = int(request.form["sentence_id"])
+
+    if request.method == 'POST':
+        # add umr to db
+        logging.info("post request received")
+        try:
+            amr_html = request.get_json(force=True)["amr"]
+            amr_html = amr_html.replace('<span class="text-success">', '')  # get rid of the head highlight tag
+            amr_html = amr_html.replace('</span>', '')
+            print("amr_html: ", amr_html)
+            align_info = request.get_json(force=True)["align"]
+            print("align_info: ", align_info)
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            print("snt_id_info: ", snt_id_info)
+            umr_dict = request.get_json(force=True)["umr"]
+            print("umr_dict: ", umr_dict)
+
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == owner.id).first()
+            if existing:  # update the existing Annotation object
+                existing.sent_annot = amr_html
+                existing.alignment = align_info
+                existing.sent_umr = umr_dict
+                flag_modified(existing, 'alignment')
+                flag_modified(existing, 'sent_umr')
+                logging.info(f"User {owner.id} committed: {amr_html}")
+                logging.info(db.session.commit())
+            else:
+                annotation = Annotation(sent_annot=amr_html, doc_annot='', alignment=align_info, author=owner,
+                                        sent_id=snt_id_info,
+                                        doc_id=doc_id,
+                                        sent_umr=umr_dict, doc_umr={})
+                flag_modified(annotation, 'umr')
+                logging.info(f"User {owner.id} committed: {amr_html}")
+                db.session.add(annotation)
+                logging.info(db.session.commit())
+            msg = 'Success: current doc-level annotation is added to database.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+        except Exception as e:
+            print(e)
+            print('Failure: Add current annotation and alignments to database failed.')
+        # add partial graph to db
+        try:
+            partial_graphs = request.get_json(force=True)["partial_graphs"]
+            print("partial_graphs: ", partial_graphs)
+            pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+            pg.partial_umr = partial_graphs
+            flag_modified(pg, 'partial_umr')
+            db.session.commit()
+            msg = 'Success: partial graphs are added to database.'
+            msg_category = 'success'
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+        except Exception as e:
+            print(e)
+            print('Failure: Add partial graphs to database failed.')
+
+    try:
+        curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
+                                                         Annotation.user_id == owner_user_id).first()
+        curr_annotation_string = curr_annotation.sent_annot.strip()
+        curr_sent_umr = curr_annotation.sent_umr
+        curr_alignment = curr_annotation.alignment
+    except Exception as e:
+        print(e)
+        curr_annotation_string= ""
+        curr_sent_umr = {}
+        curr_alignment = {}
+
+    # load all annotations for current document used for export_annot()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
+        Annotation.sent_id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
+    annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
+    all_annots = [annot.sent_annot for annot in annotations]
+    all_aligns = [annot.alignment for annot in annotations]
+    all_doc_annots = [annot.doc_annot for annot in annotations]
+    all_sents = [sent2.content for sent2 in filtered_sentences]
+
+    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
+    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
+    # had no annotations, in which case the annotations for all following lines were moved up one slot.
+    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
+    # in later stages don't need this.
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
+        all_annots_no_skipping[i-1] = sa
+        all_aligns_no_skipping[i-1] = a
+        all_doc_annots_no_skipping[i-1] = da
+
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+
+    lattice = Lattice.query.filter(Lattice.project_id == project_id).first()
+    aspectSettingsJSON = lattice.aspect
+    personSettingsJSON = lattice.person
+    numberSettingsJSON = lattice.number
+    modalSettingsJSON = lattice.modal
+    discourseSettingsJSON = lattice.discourse
+
+    pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+    partial_graphs_json = pg.partial_umr
+    print("partial_graphs_json: ", partial_graphs_json)
+
+    return render_template('sentlevel_typing.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
+                           info2display=info2display,
+                           frame_dict=json.dumps(frame_dict),
+                           curr_sent_umr=curr_sent_umr, curr_annotation_string=curr_annotation_string, curr_alignment=curr_alignment,
+                           exported_items=exported_items,
+                           file_format=doc.file_format,
+                           content_string=doc.content.replace('\\', '\\\\'), #this is for toolbox4 format that has a lot of unescaped backslashes
+                           annotated_sent_ids= annotated_sent_ids,
+                           project_name=project_name,
+                           project_id=project_id,
+                           admin=admin, owner=owner,
+                           permission=permission,
+                           aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
+                           numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON,
+                           partial_graphs_json=partial_graphs_json)
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevel(doc_sent_id):

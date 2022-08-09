@@ -90,6 +90,12 @@
     {# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
                             {{annotatedDoc.filename}}
                         </a>
+
+                        <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel_typing', doc_sent_id=annotatedDoc.id ~ '_1_0')}}">
+    {# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
+                            {{annotatedDoc.filename}}_typing
+                        </a>
+
                         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                             <input type="hidden" name="remove_member_id" value=0>
                             <input type="hidden" name="new_member_name" value="">
