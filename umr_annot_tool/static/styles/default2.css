@@ -228,6 +228,7 @@ body.wrapper{
 #error_prompt{
     background-color: #a9b0bc;
     color: #e7040f;
-    display: inline-block;
+    display: block;
     font-weight: bold;
+    width: fit-content;
 }
