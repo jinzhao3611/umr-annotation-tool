@@ -155,6 +155,7 @@
     <input class='command' id='main-command' oninput="onInputHandler(event,'{{ lang }}')" placeholder="e.g: 'top x5' or 'x5 :ARG1 x2'">
 
     <button  id="frame_button" >English frame</button>
+    <span id ='logger'></span>
     <div style="display: inline-flex; float: right" >
          <form method="post">
 
@@ -173,7 +174,12 @@
 
     </form>
     <button class="btn btn-info btn" id="umr2db" onclick="UMR2db()">save</button>
+
     </div>
+    <div id="error_prompt">
+        <span id="error_logger"></span>
+    </div>
+
 
 {#      <table style="height: 10%; width:80%" class="main_annotation">#}
 {#            <tbody>#}

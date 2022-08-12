@@ -215,3 +215,19 @@ body.wrapper{
     .boolean { color: blue; }
     .null { color: magenta; }
     .key { color: red; }
+
+#logger{
+    width: max-content;
+    color: #838383;
+    text-align: center;
+
+
+
+
+}
+#error_prompt{
+    background-color: #a9b0bc;
+    color: #e7040f;
+    display: inline-block;
+    font-weight: bold;
+}

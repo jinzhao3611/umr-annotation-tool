@@ -41,6 +41,7 @@ let docAnnot=false;
 let partial_graphs = {};
 let alignments={}
 let acindex=0;//the index for abstract concept
+
 /**
  *
  * @param frame_json: frame json file from post
@@ -740,7 +741,8 @@ function submit_template_action(id, tokens = "") {
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     let show_amr_args = '';
-
+    let err_logger=document.getElementById('error_logger')
+    err_logger.innerHTML=''
     if (value) {
         value = strip(value);
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
@@ -831,7 +833,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         } else if (cc[0] === 'replace') {
 
             if (cc.length == 1) {
-
+                err_logger.innerHTML="<span>Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role+</span>"
                 console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
             } else if (cc[1] == 'concept') {
                 if (cc.length == 6) {
@@ -839,7 +841,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
                 } else {
-
+                    err_logger.innerHTML="<span>'Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;'</span>"
                     console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                 }
             } else if (cc[1] == 'string') {
@@ -907,6 +909,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             console.log(variables)
             if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
                 // console.log('874'+snt_id+cc[0])
+                console.log(err_logger)
+                err_logger.innerHTML="<span>"+'In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.'+"</span>"
                 console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
             } else if (cc.length == 2) {
                 console.log('In <i>add</i> command, there must be at least 3 arguments.');
@@ -1194,6 +1198,7 @@ function index2concept(concept){
         sense=concept.match(/.*?(-\d+)/)[1]
     }
     concept=concept.replace(sense,'')
+    console.log('tets1197',concept)
     if (concept.split('_').length-1>0){
         // signal that there is not a word, might be x1_x2
         let index_list= concept.split('_')
@@ -1202,7 +1207,8 @@ function index2concept(concept){
         // console.log(index_list[-1])
         for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
             if(index_list[i].includes('x')){
-                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.length-1)
+                let index_len= index_list[i].match(/x(\d+)/)[1].length
+                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.length-index_len)
                 // get the current token
 
                 if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
@@ -1222,8 +1228,8 @@ function index2concept(concept){
 
         }
         if (index_list[index_list.length-1].includes('x')){
-
-            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.length-1)
+            let index_len= index_list[index_list.length-1].match(/x(\d+)/)[1].length
+            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.length-index_len)
         }else{
 
             target+=previous[index_list[index_list.length-1]-1]
@@ -1236,15 +1242,16 @@ function index2concept(concept){
             concept;
     }else{
             console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
-
-        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - 1)
+         let index_len= concept.match(/x(\d+)/)[1].length
+        console.log('test1242',index_len)
+        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - index_len)
 
 
     }
 
 
-
-
+    concept=text2num(concept)// if it's a number ?  Sijia to-do
+    console.log('test1250', concept)
     return concept+sense
 }
 
@@ -1310,14 +1317,27 @@ function addTriple(head, role, arg, arg_type, index='') {
     let arg_variable;
     let arg_concept;
     let arg_string;
+
     if (head && role && (arg !== undefined) && (arg !== '')  //all three parameters exist
         && head_var_locs) { //head already existed in variables dictionary
         console.log('test1286', arg)
+
         arg_var_locs = getLocs(arg);
         if (arg.match(/x\d+/)){
             arg_concept=index2concept(arg)}
         else{
             arg_concept=arg
+        }
+        // console.log('1326',umr[getKeyByValue(umr, head)])
+        let sent_fix=''
+        if (!head.match(/^s\d+/)){
+             let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    // var pattern="/x\d+/"
+
+            if (head.startsWith('x') | head.startsWith('ac')){
+                    sent_fix= 's'+snt_id.trim()+'.'
+    }
+
         }
         // console.log('test 1290',validEntryConcept(arg.toLowerCase()))
         if (arg_var_locs //argument already exist in variables dictionary
@@ -1325,7 +1345,17 @@ function addTriple(head, role, arg, arg_type, index='') {
             && (arg_type !== 'string') // arg_type is '' (is variable)
             && (!role.match(/^:?(li|wiki)$/))
             && (!docAnnot)) {
+            let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    // var pattern="/x\d+/"
+
+        if (arg.startsWith('x') | arg.startsWith('ac')){  // x26 → s1.x26
+            arg='s'+snt_id.trim()+'.'+arg
+        }
+    if (arg.match(/.*?(-\d+)/)){ //x26-01  → x26
+        arg=arg.replace(arg.match(/.*?(-\d+)/)[1],'')
+    }
             arg_variable = arg;
+
             arg_concept = '';
             arg_string = '';
         } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
@@ -1363,9 +1393,10 @@ function addTriple(head, role, arg, arg_type, index='') {
 
             arg_string = '';
         }else if (validString(arg) //matches all non-white space character (except ")
-            && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
+            && (umr[getKeyByValue(umr, sent_fix+head).replace('v', 'c')] === 'name' //head concept is 'name'
                 ||role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree|:MODSTR)$/))){
             console.log("I am here40-5");
+            console.log('test1385',head)
             arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
             arg_variable = '';
@@ -1383,8 +1414,8 @@ function addTriple(head, role, arg, arg_type, index='') {
             arg_concept = arg;
             arg_variable = arg;
         } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
-            console.log("I am here40-6");
-            arg_string = stripQuotes(arg);
+            console.log("I am here40-6",arg);
+            arg_string = stripQuotes(arg_concept);
             arg_concept = '';
             arg_variable = '';
         } else {
@@ -1467,6 +1498,8 @@ function addNE(value) {
         if (ne_arg_var) {
             name_var = addTriple(ne_arg_var, ':name', 'name', 'concept');
         } else {
+
+            err_logger.innerHTML="<span>'Ill-formed add-ne command. Possibly a problem with argument ' + ne_type</span>"
             console.log('Ill-formed add-ne command. Possibly a problem with argument ' + ne_type);
         }
     }
@@ -2950,6 +2983,8 @@ function changeSetting(){
 function submit_command(e){
     let value = document.getElementById(e).value
     exec_command(value,1)
+    let logger= document.getElementById('logger')
+    logger.innerHTML='last command: '+ value
 
     // let command_lists= document.getElementsByClassName('command')
     // for(let v in command_lists){
