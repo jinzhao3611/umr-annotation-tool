@@ -2065,7 +2065,9 @@ function change_var_name(variable, target, top) {
         console.log('test1976', target,target.match(/^x\d+|ac\d+$/))
         if ((target.match(/^x\d+|ac\d+$/)) && (!getLocs(target))) {
             new_variable = 's'+snt_id.trim()+'.'+target;
-            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")
+            console.log('test2068', new_variable)
+            if (new_variable.match(/.*?(-\d+)/)){
+            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")}
             console.log('test1977',new_variable)
         } else {
             new_variable = newVar(target);
