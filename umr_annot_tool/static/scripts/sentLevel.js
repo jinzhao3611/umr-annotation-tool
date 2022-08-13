@@ -3344,7 +3344,9 @@ function onInputHandler(event,lang) {
     }
     console.log('test 3246', senses)
     // console.log(JSON.parse(senses))
-    $('#frame_display').html(syntaxHighlight(senses))
+    document.getElementById('frame_display').innerHTML=syntaxHighlight(senses['res'],undefined,4)
+    console.log(syntaxHighlight(senses['res']))
+    // $('#frame_display').html(syntaxHighlight(senses['res']))
 }
 
 
@@ -3357,24 +3359,34 @@ function onInputHandler(event,lang) {
 // }
 
 function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json['res'], undefined, 2);
-    }
-    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+    // if (typeof json != 'string') {
+    //     json = JSON.stringify(json['res'], undefined, 2);
+    // }
+    console.log('3364',json)
+    json = JSON.stringify(json,undefined,2).replace(/[\[\]]/g, '').replace(/{/g, '').replace(/}/g, '');
+    return json.replace(/"name"|"desc"|"ARG\d+"/g, function(match) {
         var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
+        if (/name/.test(match)) {
+    //         if (/:$/.test(match)) {
                 cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
+                match='sense'
+    //         } else {
+    //             cls = 'string';
+    //         }
+
+        } else if (/(ARG\d+)/.test(match['desc'])) {
+                cls='string'
+        }else{
+              if (/(ARG\d+)/.test(match)) {
+            cls = 'boolean';}
+            // match = match.match(/(ARG\d+)/)[1]}
+            else {
+                cls='null'
+                  match = ''
+              }
         }
-        return '<span class="' + cls + '">' + match + '</span>';
+        return '<span class="' + cls + ' "  >' + match + '</span>';
     });
+
 }
 
