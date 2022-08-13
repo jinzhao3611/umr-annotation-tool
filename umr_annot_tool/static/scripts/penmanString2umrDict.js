@@ -12,12 +12,12 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     annotText = strip2(annotText);
     if (state === 'pre-open-parenthesis') {
         annotText = annotText.replace(/^[^(]*/, ""); // remove everything at the start point until the open parenthesis
-        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
+        let pattern1 = `^\\(\\s*s[\\.-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
         if (annotText.match(new RegExp(pattern1))) {
             annotText = annotText.replace(/^\(\s*/, ""); //remove left parenthesis
-            let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*` //match something like s1t //Sijia todo
+            let pattern2 = `^[${allLanguageChars}0-9][\\.-_${allLanguageChars}0-9']*` //match something like s1t //Sijia todo
             let variableList = annotText.match(new RegExp(pattern2)); //match variable until the variable ends, and put it in variableList
-            let pattern3 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*\\s*` //match something like s1t with trailing space
+            let pattern3 = `^[${allLanguageChars}0-9][\\.-_${allLanguageChars}0-9']*\\s*` //match something like s1t with trailing space
             annotText = annotText.replace(new RegExp(pattern3), ""); //remove variable
             if (annotText.match(/^\//)) { // if annotText start with a forward slash /
                 annotText = annotText.replace(/^\/\s*/, ""); //remove / and trailing space of /
@@ -60,11 +60,12 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                 umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
                 ///s\d*x\d*[_?x?\d*]*   //Sijia Regex
-            } else if (!variable.match(/^s\d*x\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
-                new_variable = newVar(concept);
-                umr_dict[loc + '.v'] = new_variable;
-                recordVariable(new_variable, loc);
-            } else { //this is the most common case
+            // } else if (!variable.match(/^s\d*x\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
+            //     new_variable = newVar(concept);
+            //     umr_dict[loc + '.v'] = new_variable;
+            //     recordVariable(new_variable, loc);
+            }
+            else { //this is the most common case
                 umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
             }
@@ -209,7 +210,8 @@ function string2umr(annotText) {
     concepts = {};
     variablesInUse = {};
     //Sijia Todo
-    let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
+    let uncleanedRootVariables = annotText.match(/\(\s*s\d*.[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
+    console.log('test213--', uncleanedRootVariables)
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "

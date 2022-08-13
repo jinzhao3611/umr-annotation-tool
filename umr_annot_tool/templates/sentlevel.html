@@ -374,8 +374,8 @@
         <input style="display: none"  placeholder="move + branch head node + to + new head + role, e.g: move x2 to x3 :ARG5"  class="command" id="move_box" >
         <input style="display: none"  oninput="onInputHandler(event,'{{ lang }}')" class="command" id="replace_box"  placeholder="replace + concept + at + variable with new variable, e.g:replace concept at x1 with x2">
         <input style="display: none" class="command" id ="delete_box"  placeholder=" delete+ head+roles+variable, e.g:delete x2 :ARG1 x3">
-    frame info:
-    {{ frame_info }}
+{#    frame info:#}
+{#    {{ frame_info }}#}
     <p id="frame_info"></p>
 {#</div>#}
 {#        <div style="height: 10%; width:80%">#}
@@ -443,7 +443,7 @@
 	      </tr>
 	      <tr>
 		<td>
-		  <table width="40" border="1" cellpadding="1" cellspacing="0"><tbody><tr style="background-color:#BBCCFF;"><td align="center"><nobr>&nbsp;<a style="text-decoration:none" title="click to load amr from text area" onclick="load2mar();" ><font color="black">load direct AMR</font></a>&nbsp;</nobr></td></tr></tbody></table>
+		  <table width="40" border="1" cellpadding="1" cellspacing="0"><tbody><tr style="background-color:#BBCCFF;"><td align="center"><nobr>&nbsp;<a style="text-decoration:none" title="click to load amr from text area" onclick="load2amr();" ><font color="black">load direct AMR</font></a>&nbsp;</nobr></td></tr></tbody></table>
 		</td>
 	      </tr>
 	    </tbody></table>
