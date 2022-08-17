@@ -213,7 +213,11 @@ body.wrapper{
 
     .string { color: green;  }
     .number { color: darkorange; display: inline }
-    .boolean { color: blue;  display: inline-block}
+    .boolean::before{
+        content: '\A';
+        white-space: pre;
+    }
+    .boolean { color: blue;  display: -moz-inline-block}
     .null { color: magenta; display: block}
     .key::before{
         content: '\A\A';
