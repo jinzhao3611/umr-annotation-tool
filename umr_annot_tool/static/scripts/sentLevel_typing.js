@@ -110,12 +110,15 @@ function customizeOptions(settingsJSON, attrId){
  * @param curr_alignment
  */
 function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
+    console.log('test113',curr_sent_umr,curr_annotation_string,curr_annotation_string)
     if(curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))){ //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
 
     }else{
         try{
+            console.log('test118')
             umr = JSON.parse(curr_sent_umr);
+            console.log('test120',umr)
         }catch (e){
             console.log("error in parsing curr_sent_umr: ", e);
         }
@@ -125,6 +128,7 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     }
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
+    console.log('test129')
     try{
         alignments = JSON.parse(curr_alignment);
     }catch (e){
@@ -1465,7 +1469,7 @@ function addTriple(head, role, arg, arg_type, index='') {
         variable2concept[arg_variable] = arg_concept; // add to variable2concept dictionary
         state_has_changed_p = 1; //it turns to 1 when a triple is added, it is set to 0 after execute commanded is finished todo:can be used to tell if command is executed completely
         if (role.match(/^:op(-\d|0|\d+\.\d)/)) {
-            
+
             renorm_ops(head); //in umr, reorder :op5, :op8, :op6 to :op1, :op2, :op3
         }
         // console.log(arg_variable)
@@ -1861,6 +1865,7 @@ function delete_rec(loc) {
  * @param arg freedom
  */
 function delete_based_on_triple(head_var, role, arg) {
+    // console.log('1868',umr)
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
         console.log('test 1797', role.match(/^:[a-z]/i))
@@ -1869,18 +1874,24 @@ function delete_based_on_triple(head_var, role, arg) {
             if (getLocs(arg) || validEntryConcept(concept) || validString(stripQuotes(arg))) {
                 // add_log('delete_based_on_triple: ' + head_var + ' ' + role + ' ' + arg);
                 head_var_locs += '';
+
                 let head_var_loc_list = argSplit(head_var_locs);
+
                 let head_var_loc = head_var_loc_list[0];
                 let n_subs = umr[head_var_loc + '.n'];
+
                 let loc = '';
                 let arg2 = stripQuotes(concept);
                 let arg3 = trimConcept(concept);
                 for (let i = 1; i <= n_subs; i++) {
                     if (loc === '') {
                         var sub_loc = head_var_loc + '.' + i;
+
                         var sub_role = umr[sub_loc + '.r'];
+
                         if ((!umr[sub_loc + '.d'])
                             && (sub_role === role)) {
+
                              let snt_id = document.getElementById('curr_shown_sent_id').innerText;
                             // var pattern="/x\d+/"
                             if (arg.startsWith('x') | arg.startsWith('ac')){
@@ -1889,6 +1900,7 @@ function delete_based_on_triple(head_var, role, arg) {
                             let arg_variable = umr[sub_loc + '.v'];
                             let arg_concept = umr[sub_loc + '.c'];
                             let arg_string = umr[sub_loc + '.s'];
+
                             if ((arg_variable && (arg === arg_variable))
                                 || (arg_concept && (arg === arg_concept))
                                 || (arg_concept && (arg3 === arg_concept))
@@ -2053,7 +2065,9 @@ function change_var_name(variable, target, top) {
         console.log('test1976', target,target.match(/^x\d+|ac\d+$/))
         if ((target.match(/^x\d+|ac\d+$/)) && (!getLocs(target))) {
             new_variable = 's'+snt_id.trim()+'.'+target;
-            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")
+            console.log('test2068', new_variable)
+            if (new_variable.match(/.*?(-\d+)/)){
+            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")}
             console.log('test1977',new_variable)
         } else {
             new_variable = newVar(target);
@@ -2419,6 +2433,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 let index = ordered_indexes[i];
                 let sub_loc = loc + '.' + index;
                 let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
+                console.log('test2426', show_amr_rec_result)
                 if (show_amr_rec_result) {
                     if (docAnnot){
                         if (show_amr_new_line_doc(sub_loc)) {
@@ -2506,11 +2521,13 @@ function show_amr(args) {
     if (args) { //args can be "show", "replace", "delete" or "check"
         let amr_s = ''; // html string of the umr penman graph
         let n = umr['n']; // how many children currently in the tree
+        console.log('test2514',n)
         for (let i = 1; i <= n; i++) { //traverse children
             let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
             // console.log(show_amr_rec_result)
             if (show_amr_rec_result){
                 amr_s += show_amr_rec_result + '\n';
+                console.log('test2518',amr_s)
             }
         }
 
@@ -2815,9 +2832,11 @@ function UMR2db() {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
+    console.log('test2821',annot_str)
     if(annot_str!==''){
         umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
     }
+    console.log('test2824',umr)
     let alignments2save = {};
     for (let key in alignments){
         if(alignments.hasOwnProperty(key)){
@@ -2827,12 +2846,13 @@ function UMR2db() {
         }
     }
 
-    fetch(`/sentlevel/${doc_sent_id}#senrence`, {
+    fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
+        console.log('2840',data['msg'])
         setInnerHTML("error_msg", data["msg"]);
         document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(function(error){
@@ -3164,21 +3184,22 @@ function set_load_visible(command_id){  // show the load text field, user can co
 
 
 }
-function load2mar(){  // get the paste penman tree and show the tree
+function load2amr(){  // get the paste penman tree and show the tree
     let load_amr=document.getElementById('load-plain').value;
-    console.log(string2umr(load_amr))
+    // console.log(string2umr(load_amr))
     umr=string2umr(load_amr)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
 
     let line='';
 
-    let newhead=load_amr.trim().split('\n')
-    let test=newUMR(newhead[0].split('/')[1])
+    // let newhead=load_amr.trim().split('\n')
+    // console.log(newhead)
+    // let test=newUMR(newhead[0].split('/')[1])
     // var head =
     // (s1x / 8编码)
-    let newchild=/\((.+)\)\)/.exec(newhead[1])[1]
-    addOr(test+' '+':ARG1'+' '+newchild.split('/')[1]  )
+    // let newchild=/\((.+)\)\)/.exec(newhead[1])[1]
+    // addOr(test+' '+':ARG1'+' '+newchild.split('/')[1]  )
     // console.log(newchild,newhead[1])
  let amr_s = ''; // html string of the umr penman graph
         let n = umr['n']; // how many children currently in the tree
@@ -3197,7 +3218,7 @@ function load2mar(){  // get the paste penman tree and show the tree
         if(docAnnot){
             html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         }
-
+        console.log(umr)
         setInnerHTML('amr', html_amr_s);
 
 
@@ -3323,7 +3344,9 @@ function onInputHandler(event,lang) {
     }
     console.log('test 3246', senses)
     // console.log(JSON.parse(senses))
-    $('#frame_display').html(syntaxHighlight(senses))
+    document.getElementById('frame_display').innerHTML=syntaxHighlight(senses['res'],undefined,4)
+    console.log(syntaxHighlight(senses['res']))
+    // $('#frame_display').html(syntaxHighlight(senses['res']))
 }
 
 
@@ -3336,24 +3359,34 @@ function onInputHandler(event,lang) {
 // }
 
 function syntaxHighlight(json) {
-    if (typeof json != 'string') {
-        json = JSON.stringify(json['res'], undefined, 2);
-    }
-    json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
+    // if (typeof json != 'string') {
+    //     json = JSON.stringify(json['res'], undefined, 2);
+    // }
+    console.log('3364',json)
+    json = JSON.stringify(json,undefined,2).replace(/[\[\]]/g, '').replace(/{/g, '').replace(/}/g, '');
+    return json.replace(/"name"|"desc"|"ARG\d+"/g, function(match) {
         var cls = 'number';
-        if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
+        if (/name/.test(match)) {
+    //         if (/:$/.test(match)) {
                 cls = 'key';
-            } else {
-                cls = 'string';
-            }
-        } else if (/true|false/.test(match)) {
-            cls = 'boolean';
-        } else if (/null/.test(match)) {
-            cls = 'null';
+                match='sense'
+    //         } else {
+    //             cls = 'string';
+    //         }
+
+        } else if (/(ARG\d+)/.test(match['desc'])) {
+                cls='string'
+        }else{
+              if (/(ARG\d+)/.test(match)) {
+            cls = 'boolean';}
+            // match = match.match(/(ARG\d+)/)[1]}
+            else {
+                cls='null'
+                  match = ''
+              }
         }
-        return '<span class="' + cls + '">' + match + '</span>';
+        return '<span class="' + cls + ' "  >' + match + '</span>';
     });
+
 }
 
