@@ -146,15 +146,15 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
  */
 function populateUtilityDicts(){
         Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        console.log('test144',key)
-        if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
-            //loc means like 1.1.1
-            recordVariable(umr[key], key.replace(/\.v$/, "") + '');
-            variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
-        }else if(key.match(/\d+.c/)){
-            recordConcept(umr[key], key.replace(/\.c$/, "") + '');
-        }
-    });
+            console.log('test144',key)
+            if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+                //loc means like 1.1.1
+                recordVariable(umr[key], key.replace(/\.v$/, "") + '');
+                variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
+            }else if(key.match(/\d+.c/)){
+                recordConcept(umr[key], key.replace(/\.c$/, "") + '');
+            }
+        });
 }
 
 /**
@@ -1245,14 +1245,15 @@ function index2concept(concept){
         else if(concept.includes(':')){
             concept;
     }else{
-            console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
-         let index_len= concept.match(/x(\d+)/)[1].length
-        console.log('test1242',index_len)
-        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - index_len)
-
+        Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+            if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+                if (umr[key] === concept){
+                    concept = umr[key.replace(".v", ".c")]
+                }
+            }
+        });
 
     }
-
 
     concept=text2num(concept)// if it's a number ?  Sijia to-do
     console.log('test1250', concept)
