@@ -1245,11 +1245,17 @@ function index2concept(concept){
         else if(concept.includes(':')){
             concept;
     }else{
-            console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
-         let index_len= concept.match(/x(\d+)/)[1].length
-        console.log('test1242',index_len)
-        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - index_len)
-
+        //     console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
+        //  let index_len= concept.match(/x(\d+)/)[1].length
+        // console.log('test1242',index_len)
+        // concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - index_len)
+        Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+            if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+                if (umr[key] === concept){
+                    concept = umr[key.replace(".v", ".c")]
+                }
+            }
+        });
 
     }
 
