@@ -1561,7 +1561,15 @@ function addOr(value) {
  */
 function replace_concept(key_at, head_var, key_with, new_concept) {
     console.log('replace_concept ' + key_at + '::' + head_var + '::' + key_with + '::' + new_concept);
-    let new_concept_=index2concept(new_concept) // new_concept:x3, new_concept_: Eat
+      let new_concept_;
+    if (/x\d+/.test(new_concept)||/ac\d+/.test(new_concept)){
+        new_concept_=index2concept(new_concept)}
+        // new_concept:x3, new_concept_: Eat
+    else{
+        new_concept_=new_concept
+    }
+
+     // new_concept:x3, new_concept_: Eat
     // here just to differentiate the index and the concept corresponding to the concept//
     new_concept_ = new_concept_.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
     console.log('1489',new_concept_)
@@ -2080,7 +2088,8 @@ function change_var_name(variable, target, top) {
         }
         // add_log('  variable changed to ' + new_variable);
         state_has_changed_p = 1;
-        target=index2concept(target)
+        if (/x\d+/.test(target)||/ac\d+/.test(target)){
+        target=index2concept(target)}
         exec_command('record change variable ' + variable + ' ' + target, top);
         return new_variable;
     }

@@ -622,6 +622,127 @@ def doclevel(doc_sent_id):
                            owner=owner,
                            permission=permission)
 
+@main.route("/doclevel_thyme/<string:doc_sent_id>", methods=['GET', 'POST'])
+def doclevel_thyme(doc_sent_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    doc_id = int(doc_sent_id.split("_")[0])
+    default_sent_id = int(doc_sent_id.split("_")[1])
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2]) == 0 else int(
+        doc_sent_id.split("_")[2])  # html post 0 here, it means it's my own annotation
+    owner = User.query.get_or_404(owner_user_id)
+
+    current_snt_id = default_sent_id
+    if "set_sentence" in request.form:
+        current_snt_id = int(request.form["sentence_id"])
+
+    # add to db
+    if request.method == 'POST':
+        try:
+            snt_id_info = request.get_json(force=True)["snt_id"]
+            umr_dict = request.get_json(force=True)["umr_dict"]
+            print("umr_dict: ", umr_dict)
+            doc_annot_str = request.get_json(force=True)["doc_annot_str"]
+            print("doc_annot_str: ", doc_annot_str)
+            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
+                                               Annotation.user_id == owner_user_id).first()
+            if existing:  # update the existing Annotation object
+                existing.doc_umr = umr_dict
+                existing.doc_annot = doc_annot_str
+                flag_modified(existing, 'doc_umr')
+                flag_modified(existing, 'doc_annot')
+                db.session.commit()
+                msg = 'Success: current annotation and alignments are added to database.'
+                msg_category = 'success'
+                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+            else:
+                print("the sent level annotation of the current sent doesn't exist")
+                msg = "the sent level annotation of the current sent doesn't exist."
+                msg_category = 'success'
+                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+        except Exception as e:
+            print(e)
+            print("add doc level annotation to database failed")
+
+    doc = Doc.query.get_or_404(doc_id)
+    sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
+        Annotation.sent_id).all()
+    sentAnnotUmrs = [annot.sent_umr for annot in annotations]
+    print(type(sentAnnotUmrs))
+
+    if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
+        sent_annot_pairs = list(zip(sents, annotations))
+    else:
+        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
+        sent_annot_pairs = list(zip(df_html, annotations))
+
+    try:
+        current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+    except IndexError:
+        flash('You have not created sentence level annotation yet', 'danger')
+        return redirect(
+            url_for('main.sentlevel', doc_sent_id=str(doc_id) + '_' + str(current_snt_id) + '_' + str(owner.id)))
+
+    # load all annotations for current document used for export_annot()
+    all_annots = [annot.sent_annot for annot in annotations]
+    all_aligns = [annot.alignment for annot in annotations]
+    all_doc_annots = [annot.doc_annot for annot in annotations]
+    all_sents = [sent2.content for sent2 in sents]
+    all_sent_umrs = [annot.sent_umr for annot in annotations]
+
+    # this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
+    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
+    # had no annotations, in which case the annotations for all following lines were moved up one slot.
+    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
+    # in later stages don't need this.
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
+        all_annots_no_skipping[i - 1] = sa
+        all_aligns_no_skipping[i - 1] = a
+        all_doc_annots_no_skipping[i - 1] = da
+
+    exported_items = [list(p) for p in
+                      zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+
+    # check who is the admin of the project containing this file:
+    try:
+        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+        project_name = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                                Projectuser.permission == "admin").first().project_name
+        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                            Projectuser.permission == "admin").first().user_id
+        admin = User.query.filter(User.id == admin_id).first()
+        if owner.id == current_user.id:
+            permission = 'edit'  # this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+        else:
+            permission = Projectuser.query.filter(Projectuser.project_id == project_id,
+                                                  Projectuser.user_id == current_user.id).first().permission
+    except AttributeError:
+        project_name = ""
+        admin = current_user
+        permission = ""
+
+    return render_template('doclevel_thyme.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs,
+                           sentAnnotUmrs=json.dumps(sentAnnotUmrs),
+                           filename=doc.filename,
+                           title='Doc Level Annotation', current_snt_id=current_snt_id,
+                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
+                           file_format=doc.file_format,
+                           content_string=doc.content.replace('\\', '\\\\'),
+                           # this is for toolbox4 format that has a lot of unescaped backslashes
+                           all_sent_umrs=all_sent_umrs,
+                           project_name=project_name,
+                           admin=admin,
+                           owner=owner,
+                           permission=permission)
+
+
+
 
 @main.route("/doclevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 def doclevelview(doc_sent_id):
