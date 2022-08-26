@@ -40,7 +40,8 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let docAnnot=false;
 let partial_graphs = {};
 let alignments={}
-let acindex=0;//the index for abstract concept
+// let acindex=0;//the index for abstract concept
+
 /**
  *
  * @param frame_json: frame json file from post
@@ -109,12 +110,15 @@ function customizeOptions(settingsJSON, attrId){
  * @param curr_alignment
  */
 function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
+    console.log('test113',curr_sent_umr,curr_annotation_string,curr_annotation_string)
     if(curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))){ //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
 
     }else{
         try{
+            console.log('test118')
             umr = JSON.parse(curr_sent_umr);
+            console.log('test120',umr)
         }catch (e){
             console.log("error in parsing curr_sent_umr: ", e);
         }
@@ -124,6 +128,7 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     }
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
+    console.log('test129')
     try{
         alignments = JSON.parse(curr_alignment);
     }catch (e){
@@ -141,15 +146,15 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
  */
 function populateUtilityDicts(){
         Object.keys(umr).forEach(function(key) { //traverse all the items in umr
-        console.log('test144',key)
-        if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
-            //loc means like 1.1.1
-            recordVariable(umr[key], key.replace(/\.v$/, "") + '');
-            variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
-        }else if(key.match(/\d+.c/)){
-            recordConcept(umr[key], key.replace(/\.c$/, "") + '');
-        }
-    });
+            console.log('test144',key)
+            if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+                //loc means like 1.1.1
+                recordVariable(umr[key], key.replace(/\.v$/, "") + '');
+                variable2concept[umr[key]]= umr[key.replace(/\.v$/, ".c") + ''];
+            }else if(key.match(/\d+.c/)){
+                recordConcept(umr[key], key.replace(/\.c$/, "") + '');
+            }
+        });
 }
 
 /**
@@ -208,9 +213,7 @@ function conceptDropdown(concept,lang='english') {
                         submenu_items = {"res": senses};
                     }
 
-                    // $('#frame_display').html(syntaxHighlight(submenu_items))
-                    document.getElementById('frame_display').innerText = JSON.stringify(submenu_items['res'], undefined, 2);
-
+                    $('#frame_display').html(syntaxHighlight(submenu_items))
                 console.log('211',frame_info)
                 }
 
@@ -589,6 +592,7 @@ function undo(n) {
  * @param action
  */
 function changeShowStatus(action){
+    console.log('test595',show_umr_status)
     if(show_umr_status.match(/replace/) && action ==='delete'){
         show_amr('show');
         show_amr('show delete');
@@ -742,7 +746,8 @@ function submit_template_action(id, tokens = "") {
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     let show_amr_args = '';
-
+    let err_logger=document.getElementById('error_logger')
+    err_logger.innerHTML=''
     if (value) {
         value = strip(value);
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
@@ -787,7 +792,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
                 && (listContainsCap(cc)||is_standard_named_entity[ne_concept] )) {
-                let ne_var = newUMR(trimConcept(ne_concept));
+                let ne_var = newUMR(trimConcept(ne_concept),cc.slice(2,cc.length));
 
                 console.log('test757',ne_var)
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
@@ -833,7 +838,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         } else if (cc[0] === 'replace') {
 
             if (cc.length == 1) {
-
+                err_logger.innerHTML="<span>Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role+</span>"
                 console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
             } else if (cc[1] == 'concept') {
                 if (cc.length == 6) {
@@ -841,7 +846,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
                 } else {
-
+                    err_logger.innerHTML="<span>'Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;'</span>"
                     console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                 }
             } else if (cc[1] == 'string') {
@@ -909,6 +914,8 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             console.log(variables)
             if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
                 // console.log('874'+snt_id+cc[0])
+                console.log(err_logger)
+                err_logger.innerHTML="<span>"+'In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.'+"</span>"
                 console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
             } else if (cc.length == 2) {
                 console.log('In <i>add</i> command, there must be at least 3 arguments.');
@@ -1138,20 +1145,32 @@ function newVar(concept) {
     //     initial = 'x';
     // }
     let sense='';
-    if (concept.match(/.*?(-\d+)/)){
+    if (concept.match(/.*?(-\d+)/)){  // get the sense number  like 'eat-01', sense='-01'
         sense=concept.match(/.*?(-\d+)/)[1]
     }
-    concept=concept.replace(sense,'')
+    concept=concept.replace(sense,'')  //eat
     let initial=concept
      // let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*x\d*\s:.+\s.+\))$/;
     console.log('test1133',concept)
     if (!docAnnot){
             // add the sentence number s1 to initial t -> s1t
-        let sentenceId = document.getElementById('sentence_id').value;
+        let sentenceId = document.getElementById('sentence_id').value;  //sentence_id  : s13
 
         if (!concept.startsWith('x') ){
+            let acindex=0
+            Object.keys(umr).forEach(function(key) { //traverse all the items in umr
+            if(key.match(/\d+.v/) ) { //traverse all the .d items in umr that have a value of 1
+                if (/ac\d+/.test(umr[key])){
+                    acindex= Math.max(umr[key].match(/ac(\d+)/)[1],acindex)
+                }
+            }
+        });
 
+
+
+        acindex+=1;
         if(table_id===1){ // this is deal with the two sentence display in under-resource languages
+
             initial = "s"+ sentenceId +'.'+ 'ac'+acindex;
             acindex+=1
         }else{
@@ -1182,6 +1201,7 @@ function newVar(concept) {
     //         v = initial + index;
     //     }
     // } else {
+    console.log('test1191',initial)
     v = initial;
     // }
     return v;
@@ -1196,6 +1216,7 @@ function index2concept(concept){
         sense=concept.match(/.*?(-\d+)/)[1]
     }
     concept=concept.replace(sense,'')
+    console.log('tets1197',concept)
     if (concept.split('_').length-1>0){
         // signal that there is not a word, might be x1_x2
         let index_list= concept.split('_')
@@ -1204,7 +1225,8 @@ function index2concept(concept){
         // console.log(index_list[-1])
         for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
             if(index_list[i].includes('x')){
-                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.length-1)
+                let index_len= index_list[i].match(/x(\d+)/)[1].length
+                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.length-index_len)
                 // get the current token
 
                 if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
@@ -1224,8 +1246,8 @@ function index2concept(concept){
 
         }
         if (index_list[index_list.length-1].includes('x')){
-
-            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.length-1)
+            let index_len= index_list[index_list.length-1].match(/x(\d+)/)[1].length
+            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.length-index_len)
         }else{
 
             target+=previous[index_list[index_list.length-1]-1]
@@ -1237,16 +1259,15 @@ function index2concept(concept){
         else if(concept.includes(':')){
             concept;
     }else{
-            console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
-
-        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - 1)
-
+         console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
+         let index_len= concept.match(/x(\d+)/)[1].length
+        console.log('test1242',index_len)
+        concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - index_len)
 
     }
 
-
-
-
+    concept=text2num(concept)// if it's a number ?  Sijia to-do
+    console.log('test1250', concept)
     return concept+sense
 }
 
@@ -1255,9 +1276,17 @@ function index2concept(concept){
  * @param concept "buy"  index//
  * @returns {string} return a new amr head, "b"
  */
-function newUMR(concept) {
+function newUMR(concept,index='') {
     console.log(concept, 'i am testing newumr')
-    let v = newVar(concept); // string initial
+    let v = newVar(concept); // string initial  //change ac to index
+    if(index!=''){ //if  ac, use index instead
+        let sen_index = document.getElementById('curr_shown_sent_id').innerText;
+        v='s'+sen_index.trim()+'.ac'
+        for (let i=0;i<index.length;i++){
+            v+=  '_'+index[i]
+
+        }
+    }
     let n = umr['n']; // n is how many amr trees currently in amr
     umr['n'] = ++n;
     if (concept.match(/x\d+/)){
@@ -1289,9 +1318,10 @@ function newUMR(concept) {
  * @param role :arg1
  * @param arg car
  * @param arg_type concept, string, '' (potentially there are other types)
+ * @param index   just for ac ne
  * @returns {*} arg_variable
  */
-function addTriple(head, role, arg, arg_type) {
+function addTriple(head, role, arg, arg_type, index='') {
     head = strip(head); // b
     role = strip(role); // :arg1
 
@@ -1303,14 +1333,27 @@ function addTriple(head, role, arg, arg_type) {
     let arg_variable;
     let arg_concept;
     let arg_string;
+
     if (head && role && (arg !== undefined) && (arg !== '')  //all three parameters exist
         && head_var_locs) { //head already existed in variables dictionary
         console.log('test1286', arg)
+
         arg_var_locs = getLocs(arg);
         if (arg.match(/x\d+/)){
             arg_concept=index2concept(arg)}
         else{
             arg_concept=arg
+        }
+        // console.log('1326',umr[getKeyByValue(umr, head)])
+        let sent_fix=''
+        if (!head.match(/^s\d+/)){
+             let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    // var pattern="/x\d+/"
+
+            if (head.startsWith('x') | head.startsWith('ac')){
+                    sent_fix= 's'+snt_id.trim()+'.'
+    }
+
         }
         // console.log('test 1290',validEntryConcept(arg.toLowerCase()))
         if (arg_var_locs //argument already exist in variables dictionary
@@ -1318,7 +1361,17 @@ function addTriple(head, role, arg, arg_type) {
             && (arg_type !== 'string') // arg_type is '' (is variable)
             && (!role.match(/^:?(li|wiki)$/))
             && (!docAnnot)) {
+            let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    // var pattern="/x\d+/"
+
+        if (arg.startsWith('x') | arg.startsWith('ac')){  // x26 → s1.x26
+            arg='s'+snt_id.trim()+'.'+arg
+        }
+    if (arg.match(/.*?(-\d+)/)){ //x26-01  → x26
+        arg=arg.replace(arg.match(/.*?(-\d+)/)[1],'')
+    }
             arg_variable = arg;
+
             arg_concept = '';
             arg_string = '';
         } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
@@ -1328,6 +1381,7 @@ function addTriple(head, role, arg, arg_type) {
             && (!role.match(/^:?(li|wiki)$/))) {
             console.log("I am here40-2");
             arg_concept = trimConcept(arg); //"concept.truffle" -> "truffle", or "!truffle" -> "truffle"
+            console.log('1329',arg_concept)
             arg_variable = newVar(arg_concept); // truffle -> s1t
             arg_string = '';
         } else if ((language === 'chinese' || language === 'english' || language === 'arabic' )
@@ -1355,9 +1409,10 @@ function addTriple(head, role, arg, arg_type) {
 
             arg_string = '';
         }else if (validString(arg) //matches all non-white space character (except ")
-            && (umr[getKeyByValue(umr, head).replace('v', 'c')] === 'name' //head concept is 'name'
+            && (umr[getKeyByValue(umr, sent_fix+head).replace('v', 'c')] === 'name' //head concept is 'name'
                 ||role.match(/^(:Aspect|:mode|:polarity|:refer-number|:refer-person|:degree|:MODSTR)$/))){
             console.log("I am here40-5");
+            console.log('test1385',head)
             arg_string = arg; // "Edmund", "Performance", "imperative", "-"
             arg_concept = '';
             arg_variable = '';
@@ -1375,8 +1430,8 @@ function addTriple(head, role, arg, arg_type) {
             arg_concept = arg;
             arg_variable = arg;
         } else if (validString(stripQuotes(arg))) { //matches all non-white space character (except ")
-            console.log("I am here40-6");
-            arg_string = stripQuotes(arg);
+            console.log("I am here40-6",arg);
+            arg_string = stripQuotes(arg_concept);
             arg_concept = '';
             arg_variable = '';
         } else {
@@ -1396,6 +1451,15 @@ function addTriple(head, role, arg, arg_type) {
         // console.log('subs ' + head_var_loc + '.n: ' + n_subs);
         let new_loc = head_var_loc + '.' + n_subs;
         // console.log('adding ' + head + ' ' + role + ' ' + arg + ' ' + new_loc);
+        if(index!==''){ //if  ac, use index instead; update 08/24/2022,  change a little bit, see what happens
+        // let sen_index = document.getElementById('curr_shown_sent_id').innerText;
+        // console.log('test1443',arg_variable)
+        // arg_variable='s'+sen_index.trim()+'.ac'
+        for (let i=0;i<index.length;i++){
+            arg_variable+=  '_'+index[i]
+
+        }
+    }
         umr[new_loc + '.v'] = arg_variable;
         umr[new_loc + '.r'] = role;
         umr[new_loc + '.n'] = 0;
@@ -1447,10 +1511,13 @@ function addNE(value) {
         }
     } else {
         console.log('test 1415', head_var,role,ne_type)
-        let ne_arg_var = addTriple(head_var, role, ne_type, 'concept');
+        let ne_arg_var = addTriple(head_var, role, ne_type, 'concept',cc.slice(3,cc.length));
         if (ne_arg_var) {
+            console.log('test1515', ne_arg_var)
             name_var = addTriple(ne_arg_var, ':name', 'name', 'concept');
         } else {
+
+            err_logger.innerHTML="<span>'Ill-formed add-ne command. Possibly a problem with argument ' + ne_type</span>"
             console.log('Ill-formed add-ne command. Possibly a problem with argument ' + ne_type);
         }
     }
@@ -1505,10 +1572,19 @@ function addOr(value) {
  * @param head_var head variable s1t
  * @param key_with 'with'
  * @param new_concept 'noodle'
+ * @param arg_type  '1 or 2, represent the command comes from the edit or replace input command'
  */
-function replace_concept(key_at, head_var, key_with, new_concept) {
+function replace_concept(key_at, head_var, key_with, new_concept,arg_type=1) {
     console.log('replace_concept ' + key_at + '::' + head_var + '::' + key_with + '::' + new_concept);
-    let new_concept_=index2concept(new_concept) // new_concept:x3, new_concept_: Eat
+      let new_concept_;
+    if (/x\d+/.test(new_concept)||/ac\d+/.test(new_concept)){
+        new_concept_=index2concept(new_concept)}
+        // new_concept:x3, new_concept_: Eat
+    else{
+        new_concept_=new_concept
+    }
+
+     // new_concept:x3, new_concept_: Eat
     // here just to differentiate the index and the concept corresponding to the concept//
     new_concept_ = new_concept_.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
     console.log('1489',new_concept_)
@@ -1528,7 +1604,7 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
                         new_concept=new_concept.replace(new_concept.match('/.*?(-\d+)/')[1],'')
                     }
                     console.log('1500', head_var,new_concept)
-                    change_var_name(head_var, new_concept, 0);
+                    change_var_name(head_var, new_concept, 0,arg_type);
                     state_has_changed_p = 1;
                 } else {
                     console.log('Ill-formed replace concept command. Last argument should be a valid concept. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
@@ -1812,26 +1888,56 @@ function delete_rec(loc) {
  * @param arg freedom
  */
 function delete_based_on_triple(head_var, role, arg) {
+    // console.log('1868',umr)
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
-        console.log('test 1797', role.match(/^:[a-z]/i))
+        console.log('test 1797', role.match(/^:[a-z]/i),head_var,arg)
         if (role.match(/^:[a-z]/i)) {
-            let concept=index2concept(arg)
+            let concept;
+            if (/ac\d+/.test(arg)){  //justify whether it's an ac
+                 if (/^ac\d+/.test(arg)){  // judge whether this variable without the sentence id(so that it cannot query by the value)
+                     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+                       arg='s'+snt_id.trim()+'.'+arg.trim()
+                        // add the sentence id to the variable
+
+                 }
+                    console.log(arg)
+                    concept =umr[(getKeyByValue(umr,arg)).replace('v','c')]
+                    // query the concept by the variable in the umr
+             }else{ // not an ac
+
+
+
+            if (/^s\d+\./.test(arg)){
+                arg=arg.replace(/^s\d+\./,'')
+                //remove the sentence id and convert this to a token
+            }
+
+
+
+
+             concept=index2concept(arg)}
             if (getLocs(arg) || validEntryConcept(concept) || validString(stripQuotes(arg))) {
                 // add_log('delete_based_on_triple: ' + head_var + ' ' + role + ' ' + arg);
                 head_var_locs += '';
+
                 let head_var_loc_list = argSplit(head_var_locs);
+
                 let head_var_loc = head_var_loc_list[0];
                 let n_subs = umr[head_var_loc + '.n'];
+
                 let loc = '';
                 let arg2 = stripQuotes(concept);
                 let arg3 = trimConcept(concept);
                 for (let i = 1; i <= n_subs; i++) {
                     if (loc === '') {
                         var sub_loc = head_var_loc + '.' + i;
+
                         var sub_role = umr[sub_loc + '.r'];
+
                         if ((!umr[sub_loc + '.d'])
                             && (sub_role === role)) {
+
                              let snt_id = document.getElementById('curr_shown_sent_id').innerText;
                             // var pattern="/x\d+/"
                             if (arg.startsWith('x') | arg.startsWith('ac')){
@@ -1840,6 +1946,7 @@ function delete_based_on_triple(head_var, role, arg) {
                             let arg_variable = umr[sub_loc + '.v'];
                             let arg_concept = umr[sub_loc + '.c'];
                             let arg_string = umr[sub_loc + '.s'];
+
                             if ((arg_variable && (arg === arg_variable))
                                 || (arg_concept && (arg === arg_concept))
                                 || (arg_concept && (arg3 === arg_concept))
@@ -1987,7 +2094,7 @@ function moveVar(variable, new_head_var, role) {
  * in dictionary variables, the original key will be assigned empty value, the new key will be assigned original value
  {o: "1", r: "1.1", b: "1.1.1", c: "1.1.1.2"} -> {o: "1", r: "", b: "1.1.1", c: "1.1.1.2", r1: "1.1"}
  */
-function change_var_name(variable, target, top) {
+function change_var_name(variable, target, top,arg_type=1) {
     console.log('change_var_name is called, variable: ' + variable + ', target: ' + target + ', top: ' + top);
     // For whole set. Target can be var or concept.
     let locs = getLocs(variable);
@@ -2004,9 +2111,15 @@ function change_var_name(variable, target, top) {
         console.log('test1976', target,target.match(/^x\d+|ac\d+$/))
         if ((target.match(/^x\d+|ac\d+$/)) && (!getLocs(target))) {
             new_variable = 's'+snt_id.trim()+'.'+target;
-            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")
+            console.log('test2068', new_variable)
+            if (new_variable.match(/.*?(-\d+)/)){
+            new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")}
             console.log('test1977',new_variable)
-        } else {
+        }else if(arg_type===2){
+
+            new_variable=variable
+        }
+        else {
             new_variable = newVar(target);
         }
         let loc_list = argSplit(locs);
@@ -2017,7 +2130,8 @@ function change_var_name(variable, target, top) {
         }
         // add_log('  variable changed to ' + new_variable);
         state_has_changed_p = 1;
-        target=index2concept(target)
+        if (/x\d+/.test(target)||/ac\d+/.test(target)){
+        target=index2concept(target)}
         exec_command('record change variable ' + variable + ' ' + target, top);
         return new_variable;
     }
@@ -2370,6 +2484,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 let index = ordered_indexes[i];
                 let sub_loc = loc + '.' + index;
                 let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
+                console.log('test2426', show_amr_rec_result)
                 if (show_amr_rec_result) {
                     if (docAnnot){
                         if (show_amr_new_line_doc(sub_loc)) {
@@ -2457,11 +2572,13 @@ function show_amr(args) {
     if (args) { //args can be "show", "replace", "delete" or "check"
         let amr_s = ''; // html string of the umr penman graph
         let n = umr['n']; // how many children currently in the tree
+        console.log('test2514',n)
         for (let i = 1; i <= n; i++) { //traverse children
             let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
             // console.log(show_amr_rec_result)
             if (show_amr_rec_result){
                 amr_s += show_amr_rec_result + '\n';
+                console.log('test2518',amr_s)
             }
         }
 
@@ -2766,9 +2883,11 @@ function UMR2db() {
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
+    console.log('test2821',annot_str)
     if(annot_str!==''){
         umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
     }
+    console.log('test2824',umr)
     let alignments2save = {};
     for (let key in alignments){
         if(alignments.hasOwnProperty(key)){
@@ -2778,12 +2897,13 @@ function UMR2db() {
         }
     }
 
-    fetch(`/sentlevel/${doc_sent_id}#senrence`, {
+    fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
+        console.log('2840',data['msg'])
         setInnerHTML("error_msg", data["msg"]);
         document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
     }).catch(function(error){
@@ -2934,6 +3054,8 @@ function changeSetting(){
 function submit_command(e){
     let value = document.getElementById(e).value
     exec_command(value,1)
+    let logger= document.getElementById('logger')
+    logger.innerHTML='last command: '+ value
 
     // let command_lists= document.getElementsByClassName('command')
     // for(let v in command_lists){
@@ -3113,21 +3235,22 @@ function set_load_visible(command_id){  // show the load text field, user can co
 
 
 }
-function load2mar(){  // get the paste penman tree and show the tree
+function load2amr(){  // get the paste penman tree and show the tree
     let load_amr=document.getElementById('load-plain').value;
-    console.log(string2umr(load_amr))
+    // console.log(string2umr(load_amr))
     umr=string2umr(load_amr)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
 
     let line='';
 
-    let newhead=load_amr.trim().split('\n')
-    let test=newUMR(newhead[0].split('/')[1])
+    // let newhead=load_amr.trim().split('\n')
+    // console.log(newhead)
+    // let test=newUMR(newhead[0].split('/')[1])
     // var head =
     // (s1x / 8编码)
-    let newchild=/\((.+)\)\)/.exec(newhead[1])[1]
-    addOr(test+' '+':ARG1'+' '+newchild.split('/')[1]  )
+    // let newchild=/\((.+)\)\)/.exec(newhead[1])[1]
+    // addOr(test+' '+':ARG1'+' '+newchild.split('/')[1]  )
     // console.log(newchild,newhead[1])
  let amr_s = ''; // html string of the umr penman graph
         let n = umr['n']; // how many children currently in the tree
@@ -3146,7 +3269,7 @@ function load2mar(){  // get the paste penman tree and show the tree
         if(docAnnot){
             html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         }
-
+        console.log(umr)
         setInnerHTML('amr', html_amr_s);
 
 
@@ -3272,8 +3395,9 @@ function onInputHandler(event,lang) {
     }
     console.log('test 3246', senses)
     // console.log(JSON.parse(senses))
-    // $('#frame_display').html(syntaxHighlight(senses))
-    document.getElementById('frame_display').innerText = JSON.stringify(senses['res'], undefined, 2);
+    document.getElementById('frame_display').innerHTML=syntaxHighlight(senses['res'],undefined,4)
+    console.log(syntaxHighlight(senses['res']))
+    // $('#frame_display').html(syntaxHighlight(senses['res']))
 }
 
 
@@ -3285,25 +3409,35 @@ function onInputHandler(event,lang) {
 //     }
 // }
 
-// function syntaxHighlight(json) {
-//     if (typeof json != 'string') {
-//         json = JSON.stringify(json['res'], undefined, 2);
-//     }
-//     json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
-//     return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function(match) {
-//         var cls = 'number';
-//         if (/^"/.test(match)) {
-//             if (/:$/.test(match)) {
-//                 cls = 'key';
-//             } else {
-//                 cls = 'string';
-//             }
-//         } else if (/true|false/.test(match)) {
-//             cls = 'boolean';
-//         } else if (/null/.test(match)) {
-//             cls = 'null';
-//         }
-//         return '<span class="' + cls + '">' + match + '</span><br>';
-//     });
-// }
+function syntaxHighlight(json) {
+    // if (typeof json != 'string') {
+    //     json = JSON.stringify(json['res'], undefined, 2);
+    // }
+    console.log('3364',json)
+    json = JSON.stringify(json,undefined,2).replace(/[\[\]]/g, '').replace(/{/g, '').replace(/}/g, '');
+    return json.replace(/"name"|"desc"|"ARG\d+"/g, function(match) {
+        var cls = 'number';
+        if (/name/.test(match)) {
+    //         if (/:$/.test(match)) {
+                cls = 'key';
+                match='sense'
+    //         } else {
+    //             cls = 'string';
+    //         }
+
+        } else if (/(ARG\d+)/.test(match['desc'])) {
+                cls='string'
+        }else{
+              if (/(ARG\d+)/.test(match)) {
+            cls = 'boolean';}
+            // match = match.match(/(ARG\d+)/)[1]}
+            else {
+                cls='null'
+                  match = ''
+              }
+        }
+        return '<span class="' + cls + ' "  >' + match + '</span>';
+    });
+
+}
 
