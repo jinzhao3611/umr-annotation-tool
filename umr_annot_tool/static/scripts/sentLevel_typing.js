@@ -592,6 +592,7 @@ function undo(n) {
  * @param action
  */
 function changeShowStatus(action){
+    console.log('test595',show_umr_status)
     if(show_umr_status.match(/replace/) && action ==='delete'){
         show_amr('show');
         show_amr('show delete');
@@ -1571,8 +1572,9 @@ function addOr(value) {
  * @param head_var head variable s1t
  * @param key_with 'with'
  * @param new_concept 'noodle'
+ * @param arg_type  '1 or 2, represent the command comes from the edit or replace input command'
  */
-function replace_concept(key_at, head_var, key_with, new_concept) {
+function replace_concept(key_at, head_var, key_with, new_concept,arg_type=1) {
     console.log('replace_concept ' + key_at + '::' + head_var + '::' + key_with + '::' + new_concept);
       let new_concept_;
     if (/x\d+/.test(new_concept)||/ac\d+/.test(new_concept)){
@@ -1602,7 +1604,7 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
                         new_concept=new_concept.replace(new_concept.match('/.*?(-\d+)/')[1],'')
                     }
                     console.log('1500', head_var,new_concept)
-                    change_var_name(head_var, new_concept, 0);
+                    change_var_name(head_var, new_concept, 0,arg_type);
                     state_has_changed_p = 1;
                 } else {
                     console.log('Ill-formed replace concept command. Last argument should be a valid concept. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
@@ -2092,7 +2094,7 @@ function moveVar(variable, new_head_var, role) {
  * in dictionary variables, the original key will be assigned empty value, the new key will be assigned original value
  {o: "1", r: "1.1", b: "1.1.1", c: "1.1.1.2"} -> {o: "1", r: "", b: "1.1.1", c: "1.1.1.2", r1: "1.1"}
  */
-function change_var_name(variable, target, top) {
+function change_var_name(variable, target, top,arg_type=1) {
     console.log('change_var_name is called, variable: ' + variable + ', target: ' + target + ', top: ' + top);
     // For whole set. Target can be var or concept.
     let locs = getLocs(variable);
@@ -2113,7 +2115,11 @@ function change_var_name(variable, target, top) {
             if (new_variable.match(/.*?(-\d+)/)){
             new_variable=new_variable.replace(new_variable.match(/.*?(-\d+)/)[1],"")}
             console.log('test1977',new_variable)
-        } else {
+        }else if(arg_type===2){
+
+            new_variable=variable
+        }
+        else {
             new_variable = newVar(target);
         }
         let loc_list = argSplit(locs);

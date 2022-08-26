@@ -99,9 +99,12 @@ $(document).ready(function(){
             let inplaceBox = document.getElementById(e.target.id).innerHTML;
             inplaceBox = inplaceBox.replaceAll(/'/g, "\\'");
             let new_value = inplaceBox; // example: freedom-01
+            console.log('test102',new_value)
             // this way of dynamically changing onclick function seems ugly to me, maybe there is a better way (didn't actually use the fillReplaceTemplate function here)
             let clickfunc = e.target.getAttribute("onclick"); //example: clickfunc="fillReplaceTemplate('concept','s1f','freedom','amr_elem_3')"
+            console.log('105 ',clickfunc)
             let funname = clickfunc.substring(0, clickfunc.indexOf(",", clickfunc.indexOf(",") + 1)); // example: clickfunc="fillReplaceTemplate('concept','s1f'"
+            console.log(107, funname,new_value,e.target.id)
             document.getElementById(e.target.id).setAttribute("onclick",funname+",'"+ new_value + "','" + e.target.id + "')"); //clickfunc="fillReplaceTemplate('concept','s1f','freedom-01','amr_elem_3')"
         }
     })
@@ -126,7 +129,13 @@ $(document).ready(function(){
             if ((type === 'string') && new_value.match(/ /)) {
                 new_value = '"' + new_value + '"';
             }
-            exec_command('replace ' + type + ' at ' + at + ' with ' + new_value, 1);
+            if(type.trim()==='concept'){
+                console.log('test133','at', at, 'with', new_value.trim().replace(/<.*?><.*?>/,''))
+                replace_concept('at', at, 'with', new_value.trim().replace(/<.*?><.*?>/,''),2);
+
+
+            }else{ exec_command('replace ' + type + ' at ' + at + ' with ' + new_value, 1);}
+
         }
     })
 
