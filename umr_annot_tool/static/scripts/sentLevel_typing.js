@@ -911,7 +911,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
             }
         } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
-            console.log(variables)
+            console.log('test914',variables)
             if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
                 // console.log('874'+snt_id+cc[0])
                 console.log(err_logger)
