@@ -3414,8 +3414,8 @@ function syntaxHighlight(json) {
     //     json = JSON.stringify(json['res'], undefined, 2);
     // }
     console.log('3364',json)
-    json = JSON.stringify(json,undefined,2).replace(/[\[\]]/g, '').replace(/{/g, '').replace(/}/g, '');
-    return json.replace(/"name"|"desc"|"ARG\d+"/g, function(match) {
+    json = JSON.stringify(json,undefined,2).replace(/"/g,'').replace(/[\[\]]/g, '').replace(/{/g, '').replace(/}/g, '');
+    return json.replace(/name|desc|ARG\d+/g, function(match) {
         var cls = 'number';
         if (/name/.test(match)) {
     //         if (/:$/.test(match)) {
