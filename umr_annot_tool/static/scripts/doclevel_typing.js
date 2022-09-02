@@ -33,8 +33,8 @@ function docUmrTransform(html_umr_s, nested){
 
     html_umr_s = html_umr_s.replace(root_pattern, "$1" + "s0" + "$2")
     console.log('test35',html_umr_s)
-    let regex1 = /([a-zA-Z0-9\-]+) \/ (?=.*?\1)[a-zA-Z0-9\-]+ /g //match s1t / s1t (space at the end)
-    let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
+    let regex1 = /([a-zA-Z0-9._\-]+) \/ (?=.*?\1)[a-zA-Z0-9._\-]+ /g //match s1t / s1t (space at the end)
+    let regex2 = /\(([a-zA-Z0-9._]+) \/ (?=.*?\1)[a-zA-Z0-9._]+\)/g //match (AUTH / AUTH)
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
     console.log('39',html_umr_s1)
     html_umr_s1 = html_umr_s1.replace(regex2, "$1");
