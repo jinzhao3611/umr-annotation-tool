@@ -885,7 +885,7 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
                 if ((cc[1] === 'top') && (cc[2] === 'level')) {
                     delete_top_level(cc[3]);
                 } else {
-                    delete_based_on_triple(cc[1], cc[2], cc[3]);
+                    delete_based_on_triple(cc[1], cc[2], cc[3],is_doc);
                 }
                 changeShowStatus('delete');
                 show_amr_args = 'show delete';
@@ -1943,7 +1943,7 @@ function delete_rec(loc) {
  * @param role :arg1
  * @param arg freedom
  */
-function delete_based_on_triple(head_var, role, arg) {
+function delete_based_on_triple(head_var, role, arg,doc=0) {
     // console.log('1868',umr)
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
@@ -1971,8 +1971,8 @@ function delete_based_on_triple(head_var, role, arg) {
 
 
 
-
-             concept=index2concept(arg)}
+            if (doc===0){
+             concept=index2concept(arg)}}
             if (getLocs(arg) || validEntryConcept(concept) || validString(stripQuotes(arg))) {
                 // add_log('delete_based_on_triple: ' + head_var + ' ' + role + ' ' + arg);
                 head_var_locs += '';

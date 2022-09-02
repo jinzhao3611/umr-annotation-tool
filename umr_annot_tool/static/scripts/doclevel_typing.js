@@ -347,10 +347,11 @@ function docUMR2db(owner_id) {
     docAnnot=true;
     umr = string2umr(penmanStr);
     show_amr('show');//the above line displays penman string, we need to set it to triples string
-
+    console.log('test350',umr)
     fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
         method: 'POST',
         body: JSON.stringify({"snt_id": snt_id, "umr_dict": umr, "doc_annot_str": doc_annot_str})
+
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
