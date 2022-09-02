@@ -2182,6 +2182,10 @@ function show_amr(args) {
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
         // this is the actual output part
         if (docAnnot) {
+            // html_amr_s =
+            //(s2s0 / sentence
+            // :temporal (s1t / s1t
+            //     :before (s2i3 / s2i3)))
             html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         }
         setInnerHTML('amr', html_amr_s);

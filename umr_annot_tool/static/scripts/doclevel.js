@@ -263,7 +263,7 @@ function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
 }
 
 /**
- * load the annotation for current sentence from database
+ * load the annotation for current sentence from database, the doc_level_annotation is already loaded once in jinja, here it's loading the modal annotation from sentence-level
  * @param curr_doc_umr: dictionary
  * @param curr_doc_annot
  * @param curr_sent_id:
@@ -390,15 +390,15 @@ function deHTML3(s) {
 
 
 function initialCommand(current_snt_id){
-        let parentArg = document.getElementById('parentArg').value;
-        let childArg = document.getElementById('childArg').value;
-        let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0];
-        let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1];
+        let parentArg = document.getElementById('parentArg').value; //s2i2
+        let childArg = document.getElementById('childArg').value; //s1d
+        let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
+        let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
 
-        let command1 = 's'+ current_snt_id +'s0' + ' ' + role_outter + ' ' + parentArg;
+        let command1 = 's'+ current_snt_id +'s0' + ' ' + role_outter + ' ' + parentArg; //s1s0 :coref s2i2
         exec_command(command1, '1');
 
-        let command2 = parentArg + ' ' + role_inner + ' ' + childArg;
+        let command2 = parentArg + ' ' + role_inner + ' ' + childArg; //s2i2 :same-entity s1d
         exec_command(command2, '1');
 
 }
