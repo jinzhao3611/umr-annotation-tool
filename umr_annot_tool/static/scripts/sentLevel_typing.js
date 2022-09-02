@@ -178,7 +178,7 @@ function conceptDropdown(concept,lang='english') {
             }else{
                 if (token in citation_dict){
                     let lemma = citation_dict[token];
-                    // console.log('test-174',lemma)
+                    console.log('test-174',lemma)
                     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
                     console.log('test177', submenu_items['res'][1]['name'])
                 }else{
@@ -744,15 +744,16 @@ function submit_template_action(id, tokens = "") {
 
 }
 
-function exec_command(value, top) { // value: "b :arg1 car" , top: 1
+function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
     let show_amr_args = '';
     let err_logger=document.getElementById('error_logger')
     err_logger.innerHTML=''
+    let doc;
     if (value) {
         value = strip(value);
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
         let cc;
-        if(value.includes("(")){
+        if (value.includes("(")) {
             //doc-level
             //sijia todo: segment     s1 :temporal (s1x2_x4 :before DCT)  or   s1 :temporal (x2_2 :before DCT)
             let pattern = /^(s\d+)\s(:temporal|:modal|:coref)\s(\(s\d+[.a-z]+\d*\s:.+\s.+\))$/;
@@ -761,10 +762,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             //s1 :modal (s2c4 :NEG AUTH)
             let match = pattern.exec(value);
             cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
-            console.log('testcc734',cc)
-        }else{
+            console.log('testcc734', cc)
+        } else {
             cc = argSplit(value);
-            let _concept=cc.slice(-1)[0]// get the last token from the command
+            let _concept = cc.slice(-1)[0]// get the last token from the command
             // if(_concept.match(/x\d+/)){
             //     // let frame_token=index2concept(_concept)
             //     let frame_token='taste'
@@ -772,11 +773,11 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             //     frame_button.onclick=window.open("http://ska.tjemye.rs/propbank/development-frames/"+frame_token+".html","newwindow","height=700,width=500,top=300,left=300,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no")
             //
             // }
-            console.log('test 737',cc)
+            console.log('test 737', cc)
         }
 
         // cc == ["b", ":arg1", "car"]
-        if (cc.length > 3 && cc[1]===':Aspect'){
+        if (cc.length > 3 && cc[1] === ':Aspect') {
             let p = cc[0]; // parent variable
             let r = cc[1];  // roles
             let c = cc.slice(2,).join("-")
@@ -784,31 +785,31 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
         let ne_concept;
         let cc2v;
-        if (cc[0] === 'top'){
-            console.log('test771',is_standard_named_entity[(cc[1])],listContainsCap(cc),cc,cc[0],validEntryConcept(cc[1]),!getLocs(cc[1]))
+        if (cc[0] === 'top') {
+            console.log('test771', is_standard_named_entity[(cc[1])], listContainsCap(cc), cc, cc[0], validEntryConcept(cc[1]), !getLocs(cc[1]))
             if ((cc.length >= 3) //
                 && (cc[0] === 'top')
                 && (ne_concept = cc[1])
                 && validEntryConcept(ne_concept)
                 && (!getLocs(ne_concept))
-                && (listContainsCap(cc)||is_standard_named_entity[ne_concept] )) {
-                let ne_var = newUMR(trimConcept(ne_concept),cc.slice(2,cc.length));
+                && (listContainsCap(cc) || is_standard_named_entity[ne_concept])) {
+                let ne_var = newUMR(trimConcept(ne_concept), cc.slice(2, cc.length));
 
-                console.log('test757',ne_var)
+                console.log('test757', ne_var)
                 let name_var = addTriple(ne_var, ':name', 'name', 'concept');
                 for (let i = 2; i < cc.length; i++) {
                     let sub_role = ':op' + (i - 1);
-                    console.log('test794',name_var,sub_role,cc[i])
+                    console.log('test794', name_var, sub_role, cc[i])
                     addTriple(name_var, sub_role, index2concept(cc[i]), 'string');
                 }
                 show_amr_args = 'show';
             } else if (cc.length >= 2) {
                 // this is when cc only has two element (the first probably is top)
                 for (let i = 1; i < cc.length; i++) {
-                    var top_var=newUMR(cc[i].toLowerCase());
+                    var top_var = newUMR(cc[i].toLowerCase());
                 }
                 console.log('test 770', top_var)
-                var pattern= /s\d+/
+                var pattern = /s\d+/
 
 
                 show_amr_args = 'show';
@@ -817,13 +818,13 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             && (cc[2].match(/\+$/))
             && (cc2v = cc[2].replace(/^(.*)\+$/, "$1"))
             && getLocs(cc2v)) {
-            console.log('780',cc2v)
-                addTriple(cc[0], cc[1], cc2v);
-                show_amr_args = 'show';
+            console.log('780', cc2v)
+            addTriple(cc[0], cc[1], cc2v);
+            show_amr_args = 'show';
         } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) {
             // this is the condition we go in 1
             console.log('test785')
-            addTriple(cc[0], cc[1], cc[2], '');
+            addTriple(cc[0], cc[1], cc[2], '', doc = is_doc);
             show_amr_args = 'show';
         } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && (cc[2] === '*OR*') && validEntryConcept(cc[3])) {
 
@@ -838,7 +839,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         } else if (cc[0] === 'replace') {
 
             if (cc.length == 1) {
-                err_logger.innerHTML="<span>Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role+</span>"
+                err_logger.innerHTML = "<span>Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role+</span>"
                 console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
             } else if (cc[1] == 'concept') {
                 if (cc.length == 6) {
@@ -846,7 +847,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
                 } else {
-                    err_logger.innerHTML="<span>'Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;'</span>"
+                    err_logger.innerHTML = "<span>'Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;'</span>"
                     console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
                 }
             } else if (cc[1] == 'string') {
@@ -892,7 +893,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
 
-             } else if (cc[0] === 'move') {
+        } else if (cc[0] === 'move') {
             if (cc.length >= 4) {
                 if (cc[2] === 'to') {
                     if (cc.length === 4) {
@@ -915,7 +916,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
                 // console.log('874'+snt_id+cc[0])
                 console.log(err_logger)
-                err_logger.innerHTML="<span>"+'In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.'+"</span>"
+                err_logger.innerHTML = "<span>" + 'In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.' + "</span>"
                 console.log('In <i>add</i> command, ' + cc[0] + ' is not last_command defined variable.');
             } else if (cc.length == 2) {
                 console.log('In <i>add</i> command, there must be at least 3 arguments.');
@@ -1106,6 +1107,7 @@ function showHead(){
 function recordVariable(v, loc) {
     if ((v !== undefined) && (v !== '')) {
         let old_value = getLocs(v);
+        console.log('test1109',v,loc,old_value)
         if (old_value) {
             variables[v] = old_value + ' ' + loc;
         } else {
@@ -1267,21 +1269,35 @@ function index2concept(concept){
     }
 
     concept=text2num(concept)// if it's a number ?  Sijia to-do
+    if(sense!==''){  // convert the token into the lemmatized result rather than the token in the raw context
+        let sense_regex=/^[0]+/
+        let sense_no=sense.replace('-','').replace(sense_regex,'')
+        let lang=language
+        let senses=conceptDropdown(concept,lang)
+        concept=senses['res'][parseInt(sense_no)-1]['name']
+
+
+    }
+
+
     console.log('test1250', concept)
-    return concept+sense
+    return concept
 }
 
 /**
  * populate variables, concepts, variable2concept, and umr
  * @param concept "buy"  index//
+ * @param index
+ * @param lang
  * @returns {string} return a new amr head, "b"
  */
-function newUMR(concept,index='') {
+function newUMR(concept,index='',lang='english') {
     console.log(concept, 'i am testing newumr')
     let v = newVar(concept); // string initial  //change ac to index
     if(index!=''){ //if  ac, use index instead
         let sen_index = document.getElementById('curr_shown_sent_id').innerText;
-        v='s'+sen_index.trim()+'.ac'
+        // if ac works as top. then 'ac1_x2_x3'
+        console.log('test1298',v)
         for (let i=0;i<index.length;i++){
             v+=  '_'+index[i]
 
@@ -1293,9 +1309,30 @@ function newUMR(concept,index='') {
 
         concept=index2concept(concept)
     }
+    //         if (concept.match(/.*?(-\d+)/)){
+    //         console.log('1473')
+    //     let sense=concept.match(/.*?(-\d+)/)[1]
+    //         concept=concept.replace(sense,'')
+    //         let sense_regex=/^[0]+/
+    //     let sense_no=sense.replace('-','').replace(sense_regex,'')
+    //         console.log('1479',sense_no)
+    //     let senses=conceptDropdown(concept,lang)
+    //         // console.log('1480',senses['res'][0]['name'],parseInt(sense_no))
+    //     concept=senses['res'][parseInt(sense_no)-1]['name']
+    //
+    // }
+    //display the ac varable inlcudes index
+    // but store withoutindex
+    console.log('1321',concept,v)
+    let v1;
+    if (/ac\d+/.test(v)){
 
-    console.log(concept)
+        v1=v.match(/s\d+.ac\d+/)[0]
+    }else{
+        v1=v
 
+    }
+    console.log('1331',v1)
     umr[n + '.c'] = concept;
     umr[n + '.v'] = v;
     umr[n + '.n'] = 0;
@@ -1304,12 +1341,12 @@ function newUMR(concept,index='') {
     alignments[key] = begOffset + "-" + endOffset;
     begOffset = -1;
     endOffset = -1;
-    recordVariable(v, n);
+    recordVariable(v1, n);
     recordConcept(concept, n);
     variable2concept[v] = concept;
     state_has_changed_p = 1;
 
-    return v;
+    return v1;
 }
 
 /**
@@ -1319,9 +1356,11 @@ function newUMR(concept,index='') {
  * @param arg car
  * @param arg_type concept, string, '' (potentially there are other types)
  * @param index   just for ac ne
+ * @param doc   whether come from doc annotation
+
  * @returns {*} arg_variable
  */
-function addTriple(head, role, arg, arg_type, index='') {
+function addTriple(head, role, arg, arg_type, index='',doc=0) {
     head = strip(head); // b
     role = strip(role); // :arg1
 
@@ -1339,7 +1378,7 @@ function addTriple(head, role, arg, arg_type, index='') {
         console.log('test1286', arg)
 
         arg_var_locs = getLocs(arg);
-        if (arg.match(/x\d+/)){
+        if (arg.match(/x\d+/)&&(doc===1)){
             arg_concept=index2concept(arg)}
         else{
             arg_concept=arg
@@ -1460,6 +1499,20 @@ function addTriple(head, role, arg, arg_type, index='') {
 
         }
     }
+        console.log('1472',arg_concept,arg_variable)
+    //     if (arg_concept.match(/.*?(-\d+)/)){
+    //         console.log('1473')
+    //     let sense=arg_concept.match(/.*?(-\d+)/)[1]
+    //         arg_concept=arg_concept.replace(sense,'')
+    //         let sense_regex=/^[0]+/
+    //     let sense_no=sense.replace('-','').replace(sense_regex,'')
+    //         console.log('1479',sense_no)
+    //     let senses=conceptDropdown(arg_concept,lang)
+    //         console.log('1480',senses['res'][0]['name'],parseInt(sense_no))
+    //     arg_concept=senses['res'][parseInt(sense_no)-1]['name']
+    //
+    // }
+
         umr[new_loc + '.v'] = arg_variable;
         umr[new_loc + '.r'] = role;
         umr[new_loc + '.n'] = 0;
@@ -1476,7 +1529,10 @@ function addTriple(head, role, arg, arg_type, index='') {
         alignments[key] = begOffset + "-" + endOffset;
         begOffset = -1;
         endOffset = -1;
+        if (/ac\d+/.test(arg_variable)){ // abstract concept, the variable display include the index but the variable store in the dic is just ac\d
 
+        arg_variable=arg_variable.match(/s\d+.ac\d+/)[0]
+    }
         recordVariable(arg_variable, new_loc); // add to variables dictionary
         recordConcept(arg_concept, new_loc); // add to concepts dictionary
         variable2concept[arg_variable] = arg_concept; // add to variable2concept dictionary
@@ -1496,7 +1552,7 @@ function addTriple(head, role, arg, arg_type, index='') {
  * populate amr, update variables and concepts
  * @param value add person Edmond Pope
  */
-function addNE(value) {
+function addNE(value,lang) {
     console.log('add_ne: ' + value);
     let cc = argSplit(value);
     let head_var = cc[0];
@@ -3441,3 +3497,8 @@ function syntaxHighlight(json) {
 
 }
 
+
+// function getlang(){
+//     let lang=language
+//
+// }
