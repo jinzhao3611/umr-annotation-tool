@@ -163,6 +163,7 @@ function populateUtilityDicts(){
 function conceptDropdown(concept,lang='english') {
     let  frame_info=''
     // submit_concept(); //record the current concept from the selected tokens
+    console.log('test166',concept)
     current_concept=concept.toLowerCase()
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
@@ -1274,14 +1275,29 @@ function index2concept(concept){
         let sense_no=sense.replace('-','').replace(sense_regex,'')
         let lang=language
         let senses=conceptDropdown(concept,lang)
-        concept=senses['res'][parseInt(sense_no)-1]['name']
+        for(let i=0;i<senses['res'].length;i++){
+            // for (let key in senses['res'][i]){
+            //
+                if (senses['res'][i]['name'].includes(sense)){
+
+                    concept=senses['res'][i]['name']
+                    console.log('test1283',concept)
+                     break;
+                }
+
+            }
+
+            // console.log('1288',senses['res'][i])
+
+        // }
+        // concept=senses['res'][parseInt(sense_no)-1]['name']
 
 
     }
 
 
     console.log('test1250', concept)
-    return concept
+    return concept+''
 }
 
 /**
@@ -1378,7 +1394,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
         console.log('test1286', arg)
 
         arg_var_locs = getLocs(arg);
-        if (arg.match(/x\d+/)&&(doc===1)){
+        if (arg.match(/x\d+/)&&(doc===0)){
             arg_concept=index2concept(arg)}
         else{
             arg_concept=arg
