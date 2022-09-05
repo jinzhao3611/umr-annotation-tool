@@ -1260,7 +1260,6 @@ function addNE(value) {
  * @param new_concept 'noodle'
  */
 function replace_concept(key_at, head_var, key_with, new_concept) {
-    console.log('replace_concept ' + key_at + '::' + head_var + '::' + key_with + '::' + new_concept);
     new_concept = new_concept.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
     if (key_at === 'at') {
         let head_var_locs = getLocs(head_var);
@@ -1273,7 +1272,11 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
                     let loc = loc_list[0];
                     let old_concept = umr[loc + '.c'];
                     umr[loc + '.c'] = trimConcept(new_concept);
-                    change_var_name(head_var, new_concept, 0);
+                    if(docAnnot){
+                        umr[loc + '.v'] = trimConcept(new_concept); //concept and variable are the same in doclevel annot
+                    }else{
+                        change_var_name(head_var, new_concept, 0);
+                    }
                     state_has_changed_p = 1;
                 } else {
                     console.log('Ill-formed replace concept command. Last argument should be a valid concept. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
@@ -1947,11 +1950,11 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             role = umr[loc + '.r']; //umr['1.v']
             role_m = role;
             if (show_replace) {
-                var type = 'role';
+                let type = 'role';
                 head_loc = loc.replace(/\.\d+$/, "");
                 head_variable = umr[head_loc + '.v'];
-                var at = head_variable + ' ' + role + ' ' + arg;
-                var old_value = role;
+                let at = head_variable + ' ' + role + ' ' + arg;
+                let old_value = role;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
                 onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
                 onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
@@ -1987,13 +1990,13 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         }
         if (concept) {
             if (show_replace) {
-                var type = 'concept';
-                var at = variable;
-                var old_value = concept;
+                let type = 'concept';
+                let at = variable;
+                let old_value = concept;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
-                var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
-                var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
-                var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 concept_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept + '</span>';
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
@@ -2013,7 +2016,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 if(role === ''){ //when variable match the root of doclevel annotation, something like s1s0
                    s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
                 }else{
-                    s +='(' + variable_m;
+                    s +='(' + concept_m; //in doc_annot, concept and the variable are the same
                 }
             } else {
                 s += '(' + `<span id="variable-${loc}">` + variable_m + '</span>' + ' / ' + concept_m; //'(s1t / taste-01'
@@ -2108,16 +2111,16 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             s += ')';
         } else if (string) {
             if (show_replace) {
-                var type = 'string';
-                var head_loc = loc.replace(/\.\d+$/, "");
-                var head_variable = umr[head_loc + '.v'];
-                var role = umr[loc + '.r'];
-                var at = head_variable + ' ' + role;
-                var old_value = string;
+                let type = 'string';
+                let head_loc = loc.replace(/\.\d+$/, "");
+                let head_variable = umr[head_loc + '.v'];
+                let role = umr[loc + '.r'];
+                let at = head_variable + ' ' + role;
+                let old_value = string;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
-                var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
-                var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
-                var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 string_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
             } else if (show_delete) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
@@ -2126,16 +2129,16 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             s += string_m;
         } else { // variable is not empty
             if (show_replace) {  // without concept, i.e. secondary variable
-                var type = 'variable';
-                var head_loc = loc.replace(/\.\d+$/, "");
-                var head_variable = umr[head_loc + '.v'];
-                var role = umr[loc + '.r'];
-                var at = head_variable + ' ' + role + ' ' + variable;
-                var old_value = variable;
+                let type = 'variable';
+                let head_loc = loc.replace(/\.\d+$/, "");
+                let head_variable = umr[head_loc + '.v'];
+                let role = umr[loc + '.r'];
+                let at = head_variable + ' ' + role + ' ' + variable;
+                let old_value = variable;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
-                var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
-                var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
-                var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 variable_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
