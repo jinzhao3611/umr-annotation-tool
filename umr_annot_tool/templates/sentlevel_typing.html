@@ -62,7 +62,7 @@
     <hr>
 
     {# display all the sentences #}
-    <div id="all-sentences" style="height: auto; overflow-y: scroll; max-height: 100px;">
+    <div id="all-sentences" style="height: 150px; overflow-y: scroll;resize: vertical">
         <script type="text/javascript">
             initialize({{ frame_dict|tojson|safe }}, "{{ lang }}",`{{ partial_graphs_json |tojson|safe}}`)
         </script>

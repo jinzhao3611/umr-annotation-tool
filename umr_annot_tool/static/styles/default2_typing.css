@@ -105,19 +105,19 @@ display: inline-block
 }
 
 #all-sentences, #sentence{
-    height:auto;
+    /*height:auto;*/
     overflow-y: scroll;
-    max-height: 30px;
+    /*max-height: 30px;*/
 
 }
 #sentence{
 
     display: none;
 }
-#all-sentences{
-    height: 6em;
+/*#all-sentences{*/
+/*    height: 6em;*/
 
-}
+/*}*/
 #info{
         height:auto;
     overflow-y: scroll;
