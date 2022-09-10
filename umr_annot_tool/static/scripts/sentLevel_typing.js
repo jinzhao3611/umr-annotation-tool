@@ -1681,7 +1681,12 @@ function replace_concept(key_at, head_var, key_with, new_concept,arg_type=1) {
                         new_concept=new_concept.replace(new_concept.match('/.*?(-\d+)/')[1],'')
                     }
                     console.log('1500', head_var,new_concept)
+                if(docAnnot){
+                    umr[loc+'.v']=trimConcept(new_concept)
+                } else{
                     change_var_name(head_var, new_concept, 0,arg_type);
+                }
+
                     state_has_changed_p = 1;
                 } else {
                     console.log('Ill-formed replace concept command. Last argument should be a valid concept. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
@@ -2419,20 +2424,20 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         let tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
         let role_m = ''; // role string surrounded by html string
         let elem_id = '';
-        var onmouseover_fc = '';
-        var onmouseout_fc = '';
-        var onclick_fc = '';
-        var head_loc, head_concept, head_variable, core_concept, var_locs;
+        let onmouseover_fc = '';
+        let onmouseout_fc = '';
+        let onclick_fc = '';
+        let head_loc, head_concept, head_variable, core_concept, var_locs;
 
         if (rec) { // if not graph root
             role = umr[loc + '.r']; //umr['1.v']
             role_m = role;
             if (show_replace) {
-                var type = 'role';
+                let type = 'role';
                 head_loc = loc.replace(/\.\d+$/, "");
                 head_variable = umr[head_loc + '.v'];
-                var at = head_variable + ' ' + role + ' ' + arg;
-                var old_value = role;
+                let at = head_variable + ' ' + role + ' ' + arg;
+                let old_value = role;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
                 onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
                 onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
@@ -2452,9 +2457,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 onclick_fc = 'fillDeleteTemplate(\'top level ' + variable + '\',\'' + elem_id + '\')';
             }
             show_amr_obj['elem-' + elem_id] = elem_id;
-            var list = ancestor_elem_id_list.split(" ");
-            for (var i = 0; i < list.length; i++) {
-                var ancestor_elem_id = list[i];
+            let list = ancestor_elem_id_list.split(" ");
+            for (let i = 0; i < list.length; i++) {
+                let ancestor_elem_id = list[i];
                 if (ancestor_elem_id.match(/\S/)) {
                     show_amr_obj['elem-' + ancestor_elem_id] += ' ' + elem_id;
                 }
@@ -2468,13 +2473,13 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         }
         if (concept) {
             if (show_replace) {
-                var type = 'concept';
-                var at = variable;
-                var old_value = concept;
+                let type = 'concept';
+                let at = variable;
+                let old_value = concept;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
-                var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
-                var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
-                var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 concept_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept + '</span>';
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
@@ -2491,24 +2496,30 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             }
 
             if(docAnnot){
-                s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
+                if(role===''){
+
+                    s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
+                }else{
+                    s+='('+concept_m;
+                }
+
             }else{
                 s += '(' + `<span id="variable-${loc}">` + variable_m + '</span>' + ' / ' + concept_m; //'(s1t / taste-01'
             }
 
             let n = umr[loc + '.n']; //check how many children current loc has
             let index;
-            var opx_all_simple_p = 1;
-            var argx_all_simple_p = 1;
+            let opx_all_simple_p = 1;
+            let argx_all_simple_p = 1;
             let opx_order = [];
             let argx_order = [];
             let opx_indexes = [];
             let argx_indexes = []; //argx_indexes is the same with argx_order, except argx_order could have undefined element, but argx_indexes don't
-            var name_indexes = [];
-            var other_indexes = [];
-            var other_string_indexes = [];
-            var other_non_string_indexes = [];
-            var ordered_indexes = [];
+            let name_indexes = [];
+            let other_indexes = [];
+            let other_string_indexes = [];
+            let other_non_string_indexes = [];
+            let  ordered_indexes = [];
             for (let i = 1; i <= n; i++) {//traverse children of current loc
                 let sub_loc = loc + '.' + i;
                 let sub_string = umr[sub_loc + '.s'];
@@ -2586,16 +2597,16 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             s += ')';
         } else if (string) {
             if (show_replace) {
-                var type = 'string';
-                var head_loc = loc.replace(/\.\d+$/, "");
-                var head_variable = umr[head_loc + '.v'];
-                var role = umr[loc + '.r'];
-                var at = head_variable + ' ' + role;
-                var old_value = string;
+                let type = 'string';
+                let head_loc = loc.replace(/\.\d+$/, "");
+                let head_variable = umr[head_loc + '.v'];
+                let role = umr[loc + '.r'];
+                let at = head_variable + ' ' + role;
+                let old_value = string;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
-                var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
-                var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
-                var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 string_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
             } else if (show_delete) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
@@ -2604,16 +2615,16 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             s += string_m;
         } else { // variable is not empty
             if (show_replace) {  // without concept, i.e. secondary variable
-                var type = 'variable';
-                var head_loc = loc.replace(/\.\d+$/, "");
-                var head_variable = umr[head_loc + '.v'];
-                var role = umr[loc + '.r'];
-                var at = head_variable + ' ' + role + ' ' + variable;
-                var old_value = variable;
+                let type = 'variable';
+                let head_loc = loc.replace(/\.\d+$/, "");
+                let head_variable = umr[head_loc + '.v'];
+                let role = umr[loc + '.r'];
+                let at = head_variable + ' ' + role + ' ' + variable;
+                let old_value = variable;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
-                var onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
-                var onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
-                var onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 variable_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
@@ -2668,7 +2679,12 @@ function show_amr(args) {
         // console.log(html_amr_s)
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
         // this is the actual output part
-        if(docAnnot){
+        if(docAnnot && args==='show'){
+            //
+            // html_amr_s='// html_amr_s =\n' +
+            //     '            //(s2s0 / sentence\n' +
+            //     '            // :temporal (s1t / s1t\n' +
+            //     '            //     :before (s2i3 / s2i3)))'
             html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
         }
         console.log(html_amr_s)
