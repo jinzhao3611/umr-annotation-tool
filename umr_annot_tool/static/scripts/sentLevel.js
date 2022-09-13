@@ -149,111 +149,138 @@ function populateUtilityDicts() {
 /**
  * from currently selected word, get the lemma and generate the senses menu list
  */
-function conceptDropdown(lang = 'english') {
-    submit_concept(); //record the current concept from the selected tokens
+
+function conceptDropdown(concept,lang='english') {
+    let  frame_info=''
+    // submit_concept(); //record the current concept from the selected tokens
+    console.log('test166',concept)
+    current_concept=concept.toLowerCase()
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
     if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
-        getSenses(number);
+        console.log('test 165',number['res'][0]['name'])
+        frame_info=getSenses(number);
     } else { //if concept is not a number
-        if (default_langs.includes(lang)) { // if lang is one of the default languages
+        if (default_langs.includes(lang)){ // if lang is one of the default languages
             let submenu_items;
-            if (lang === "navajo") { //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
-                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
-            } else {
-                if (token in citation_dict) {
+            if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
+                 submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+            }else{
+                if (token in citation_dict){
                     let lemma = citation_dict[token];
+                    console.log('test-174',lemma)
                     submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
+                    console.log('test177', submenu_items['res'][1]['name'])
                 }else{
                     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
                 }
             }
-            getSenses(submenu_items);
-        } else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
+            frame_info=getSenses(submenu_items);
+        }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
+            console.log('test185',token)
             let lemma;
-            if (lang === 'arabic') {
+            if(lang === 'arabic'){
+                let submenu_items;
                 fetch(`/getfarasalemma`, {
                     method: 'POST',
                     body: JSON.stringify({"token": token})
                 }).then(function (response) {
+                    console.log('test 192')
                     return response.json();
                 }).then(function (data) {
                     lemma = data['text'];
-                    console.log(lemma);
+                    console.log('195',lemma);
                     let senses = [];
-                    Object.keys(frame_dict).forEach(function (key) {
-                        if (key.split("-")[0] === lemma) {
-                            senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
+                    Object.keys(frame_dict).forEach(function(key) {
+                        if(key.split("-")[0] === lemma){
+                            senses.push({"name": key, "desc":frame_dict[key]})
                         }
                     });
-                    let submenu_items;
+
                     if (senses.length === 0) {
                         submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                    } else {
+                    }else{
                         submenu_items = {"res": senses};
                     }
-                    getSenses(submenu_items);
-                }).catch(function (error) {
-                    console.log("get lemma error: " + error);
-                });
-            } else if (lang === 'english') {
+
+                    $('#frame_display').html(syntaxHighlight(submenu_items))
+                console.log('211',frame_info)
+                }
+
+                ).catch(function(error){
+                    console.log("get lemma error: "+ error);
+                }
+
+
+                );
+                frame_info=getSenses(submenu_items);
+                  // frame_info=getSenses(submenu_items);
+            } else if(lang === 'english'){
                 lemma = getLemma(token);
+                console.log('test213', lemma)
                 let senses = [];
-                Object.keys(frame_dict).forEach(function (key) {
-                    if (key.split("-")[0] === lemma) {
-                        senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
+                Object.keys(frame_dict).forEach(function(key) {
+                    if(key.split("-")[0] === lemma){
+                        senses.push({"name": key, "desc":frame_dict[key]})
                     }
                 });
+                console.log('test220',senses)
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                } else {
+
+                }else{
                     submenu_items = {"res": senses};
                 }
-                getSenses(submenu_items);
-            } else if (lang === 'chinese') {
+                frame_info=getSenses(submenu_items);
+            }else if (lang === 'chinese') {
                 lemma = token;
                 let senses = [];
-                Object.keys(frame_dict).forEach(function (key) {
-                    if (key.split("-")[0] === lemma) {
-                        senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
+                Object.keys(frame_dict).forEach(function(key) {
+                    if(key.split("-")[0] === lemma){
+                        senses.push({"name": key, "desc":frame_dict[key]})
                     }
                 });
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                } else {
+                }else{
                     submenu_items = {"res": senses};
                 }
-                getSenses(submenu_items);
+                frame_info=getSenses(submenu_items);
             }
-        } else {
+        }else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
-            getSenses(letter);
+            frame_info=getSenses(letter);
         }
     }
+    console.log('test283',frame_info)
+    return frame_info
 }
+
 
 /**
  * takes in different senses of a lemma and generate the secondary menu of find lemma
  * @param senses a dictionary looks like {"res": [{"name": lemma, "desc": different senses}]}
  */
 function getSenses(senses) {
-    submit_query(); // update the current mode if named Entity box has something filled in
-    let genDrop = document.getElementById('genericDropdown');
-    genDrop.innerHTML = "";
+    // submit_query(); // update the current mode if named Entity box has something filled in
+    // let genDrop = document.getElementById('genericDropdown');
+    // genDrop.innerHTML = "";
+    console.log('test260',senses)
     senses.res.forEach(function (value, index, array) {
-        let genLink = document.createElement("a");
-        genLink.innerHTML = value.name;
-        genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
-        genLink.setAttribute("title", value.desc);
-        genLink.setAttribute("id", "sense");
-        genLink.setAttribute("class", "dropdown-item");
-        let genLi = document.createElement("li");
-        genLi.appendChild(genLink);
-        genDrop.appendChild(genLi);
+        // let genLink = document.createElement("a");
+        // genLink.innerHTML = value.name;
+        // genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
+        // genLink.setAttribute("title", value.desc);
+        // genLink.setAttribute("id", "sense");
+        // genLink.setAttribute("class", "dropdown-item");
+        // let genLi = document.createElement("li");
+        // genLi.appendChild(genLink);
+        // genDrop.appendChild(genLi);
     });
+    return senses
 }
 
 
@@ -2633,10 +2660,11 @@ function changeSetting() {
 /**
  * this is a temporary function, the purpose is to test execute command function
  */
-function submit_command() {
-    let value = document.getElementById('command').value;
-    exec_command(value, 1);
-}
+function submit_command(e){
+    let value = document.getElementById(e).value
+    exec_command(value,1)
+    let logger= document.getElementById('logger')
+    logger.innerHTML='last command: '+ value}
 
 function reset() {
     show_amr('show');
@@ -2651,4 +2679,369 @@ function getSelectedNode() {
         if (selection.rangeCount > 0)
             return selection.getRangeAt(0).startContainer.parentNode;
     }
+}
+
+window.onload=function(){
+    check_command();
+    // submit_command();
+    // window.scrollTo({top:})
+    location.hash="locate_page" // when redirecting to the new page, fxied the scroll bar to the center of the page.
+    // the annotator doesn't need to scroll up or down to find the annotation area
+
+
+                // let frame_token=index2concept(_concept)
+                // let frame_token='taste'
+
+    let frame_button=document.getElementById('frame_button')
+     frame_button.addEventListener("click", function () {  // get the token that user is inputing,
+
+         window.open("http://ska.tjemye.rs/propbank/development-frames/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
+
+ });
+
+    // let sent=document.getElementsByClassName("table table-striped table-sm")
+
+    let sent=document.getElementById("sentence").getElementsByClassName("table table-striped table-sm")[0] // get the current sentence
+    // sent.setAttribute('dir','rtl')
+    console.log('test2953',sent)
+     let wordcount=  sent.getElementsByTagName('tr')[0].cells.length // the length of the current sentence
+     let rawtext=document.createElement('ul') //
+    /*
+    // the raw text    ul；raw_text
+                            - li： token  // each word of the raw text
+                                - div:showindex // each index for the word
+
+
+     */
+     rawtext.setAttribute('class','raw_text')
+        for (let i=1;i<wordcount;i++){
+            let k=document.createElement('div')// add the index to visualize
+            k.setAttribute('class','showindex')
+            k.style.cssText="position: absolute; background-color: white; border: 1px solid black;display:none;"
+            let c=document.createElement('li') // using the unordered list to show the text
+            c.setAttribute('class','token')
+            c.setAttribute('title','x') // using the hover to show the index
+            let temporary_index=i.toString();
+            // c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerText;
+            // c.innerHTML+=temporary_index.sup()
+            //change
+            // if (sent.getAttribute('dir')==='rtl'){
+            //
+            //     c.innerText=sent.getElementsByTagName('tr')[0].cells[wordcount-i].innerText
+            //     c.innerHTML=c.innerHTML+temporary_index.sup()
+            //
+            // }else{
+            console.log('3005', sent.getElementsByTagName('tr')[0].cells[i].innerHTML)
+            c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerHTML;
+            // c.innerHTML+=temporary_index.sup()
+            // }
+
+            c.appendChild(k)
+            rawtext.appendChild(c)
+            if (sent.getAttribute('dir')==='rtl'){
+            rawtext.dir='rtl'
+            rawtext.style.textAlign='right'}
+        //   if (sent.getAttribute('dir')==='rtl'){
+        //     var list= rawtext.getElementsByTagName('li')
+        //     var fragment=document.createDocumentFragment();
+        //     for (var t=list.length-1;t>=0;t--){
+        //         fragment.append(list[t]);
+        // }rawtext.appendChild(fragment);}
+
+
+        let sen_index=document.createElement('ul')
+        sen_index.setAttribute('class','raw_text_index')
+
+        let sentence_display=document.getElementsByClassName('sentence_display_test')[0] // the display area for the sentence
+
+
+
+      for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
+          // below three lines to set the interval between tokens as a fix value,
+          let a=rawtext.getElementsByTagName('li')[i].innerText.length
+         // let b= text_index.getElementsByTagName('li')[i].innerText.length
+         //  let max_len= Math.max(a,b) //avoid the index length is longer than the token, so pick up the longer one
+          // token: a  index: x135
+          rawtext.getElementsByTagName('li')[i].style.width='fit-content'  // adjust the word spacing between each other
+
+          sentence_display.appendChild(rawtext)
+
+
+
+      }
+
+
+
+
+}
+document.onkeydown=function(){ // show the index with the hot key
+    if(event.keyCode===18 && event.ctrlKey===true){
+        overshow();
+
+    }
+
+}
+
+document.onkeyup=function(){ // the hot key for hide the index
+    if(event.keyCode===18){
+        overhide()
+    }
+
+}}
+
+
+function overshow(){ // show the index, change the display of the index here
+    let show_indexes=document.getElementsByClassName('showindex')
+    let tokens=document.getElementsByClassName('token')
+    for(let v=0;v<show_indexes.length;v++){
+        let current=show_indexes[v]
+        current.style.left=event.clientX;
+        current.style.top=event.clientY;
+        current.style.display='block'
+        current.style.background='#000';
+        current.style.color='#FFF';
+        // let marker=tokens[v].textContent.slice(0,1).toLowerCase()
+        // console.log(marker.toLowerCase())
+        current.innerHTML='x'+(v+1)
+        let current_token=tokens[v]
+
+        current_token.style.marginBottom ='20px';
+        current_token.style.marginRight ='18px';
+
+
+    }
+
+
+
+}
+function overhide(){  // hide the index
+    let show_indexes=document.getElementsByClassName('showindex')
+    let tokens=document.getElementsByClassName('token')
+    for(let v=0;v<show_indexes.length;v++){
+        let current=show_indexes[v]
+        current.style.display='none';
+        current.innerHTML='';
+        let current_token=tokens[v]
+        current_token.style.margin='';
+    }
+
+
+
+}
+
+function set_load_visible(command_id){  // show the load text field, user can copy and paste penman tree.
+    // $("#load-table").display.toggle();
+    let load_widget=document.getElementById(command_id)
+    if (load_widget.style.display === 'none') {
+    load_widget.style.display = 'inline';
+  } else {
+    load_widget.style.display = 'none';
+  }
+
+
+}
+function load2amr(){  // get the paste penman tree and show the tree
+    let load_amr=document.getElementById('load-plain').value;
+    // console.log(string2umr(load_amr))
+    umr=string2umr(load_amr)
+    populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
+    show_amr('show');
+
+    let line='';
+
+    // let newhead=load_amr.trim().split('\n')
+    // console.log(newhead)
+    // let test=newUMR(newhead[0].split('/')[1])
+    // var head =
+    // (s1x / 8编码)
+    // let newchild=/\((.+)\)\)/.exec(newhead[1])[1]
+    // addOr(test+' '+':ARG1'+' '+newchild.split('/')[1]  )
+    // console.log(newchild,newhead[1])
+ let amr_s = ''; // html string of the umr penman graph
+        let n = umr['n']; // how many children currently in the tree
+        for (let i = 1; i <= n; i++) { //traverse children
+            let show_amr_rec_result = show_amr_rec(i, 'show', 0, ' '); //returns a html string that represents the penman format of this recursion
+            // console.log(show_amr_rec_result)
+            if (show_amr_rec_result){
+                amr_s += show_amr_rec_result + '\n';
+            }
+        }
+
+        html_amr_s = amr_s;
+        // console.log(html_amr_s)
+        html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
+        // this is the actual output part
+        if(docAnnot){
+            html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
+        }
+        console.log(umr)
+        setInnerHTML('amr', html_amr_s);
+
+
+}
+
+function toggle_info(){ // expand or collapse the annotation info, like filename. username. etc
+
+    let info= document.getElementById('info')
+    info.style.display=(info.style.display==='block'?"":'block')
+    // let rawtext=document.getElementsByClassName('raw_text')[0]
+    // let text_index=document.getElementsByClassName('raw_text_index')[0]
+    // // console.log(rawtext.getElementsByTagName('li').length)
+    //   for (let i = 1;i<rawtext.getElementsByTagName('li').length; i++) { //traverse children
+    //                 console.log(rawtext.getElementsByTagName('li')[i].innerText.length ,text_index.getElementsByTagName('li')[i].innerText.length)
+    //
+    //     let a=rawtext.getElementsByTagName('li')[i].innerText.length
+    //      let b= text_index.getElementsByTagName('li')[i].innerText.length
+    //       let max_len= Math.max(a,b)
+    //       rawtext.getElementsByTagName('li')[i].style.width=max_len+'px'.toString()
+    //       text_index.getElementsByTagName('li')[i].clientWidth=max_len
+    //         console.log(max_len,  text_index.getElementsByTagName('li')[i].clientWidth)
+
+
+
+
+}
+
+
+//   function getScrollTop(){  deprecated for fixed the postion of the scrollbar, but might be useful later, so I preserve.
+//
+// var scrollTop=0;
+//
+// if(document.documentElement&&document.documentElement.scrollTop){
+//
+// scrollTop=document.documentElement.scrollTop;
+//
+// }else if(document.body){
+//
+// scrollTop=document.body.scrollTop;
+//
+// }
+//
+// return scrollTop;
+//
+// }
+
+
+function getframe(token){  // get the frame info and show on the right dynamically.
+
+
+    // let scroll_pos=getScrollTop()
+
+    console.log(token)
+        fetch(`/getframe/`, {
+        method: 'POST',
+        body: JSON.stringify({"token": token})
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        // setInnerHTML("error_msg", data["msg"]);
+        console.log(data)
+        document.getElementById("frame_info").innerHTML=data['token'];
+    }).catch(function(error){
+        console.log("Fetch error from UMR2db: "+ error);
+
+
+})}
+
+
+
+function check_command(){
+    // let current_command=''
+    let command_list=document.getElementsByClassName('command')
+    for(let i=0;i<command_list.length;i++){
+        let current= command_list[i]
+        // if((current.style.display!='none')&(current.value!=''))
+
+        console.log(current.id,current.style.display,current.value==='')
+        current.onkeydown=function(e){
+                 var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            // 13 代表 回车键
+            if (code === 13) {
+                // if (current.style.display==='block'){
+
+                    submit_command(current.id)
+
+                    current.value=''
+                // }
+            }
+
+
+        }
+        // current.bind('keydown')
+    }
+
+
+
+}
+
+//
+
+function onInputHandler(event,lang) {
+    let command_value= event.target.value
+
+    let senses='';
+    if (command_value) {
+        let value = strip(command_value);
+        value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
+        let cc;
+
+        cc=argSplit(command_value)
+        let concept_token=cc.slice(-1)[0]
+        // let  concept=index2concept(concept_token)
+    //     if (concept_token.match(/[a-z]\d*/)){
+    //         senses=conceptDropdown(concept,lang)
+    //         console.log('3254',senses)
+    //
+    // }   else{
+            senses=conceptDropdown(concept_token,lang)
+            console.log('3258',senses)
+        // }
+    }
+    console.log('test 3246', senses)
+    // console.log(JSON.parse(senses))
+    document.getElementById('frame_display').innerHTML=syntaxHighlight(senses['res'],undefined,4)
+    console.log(syntaxHighlight(senses['res']))
+    // $('#frame_display').html(syntaxHighlight(senses['res']))
+}
+
+
+
+// Internet Explorer
+// function onPropertyChangeHandler(event) {
+//     if (event.propertyName.toLowerCase () === "value") {
+//         console.log(event.srcElement.value);
+//     }
+// }
+
+function syntaxHighlight(json) {
+    // if (typeof json != 'string') {
+    //     json = JSON.stringify(json['res'], undefined, 2);
+    // }
+    console.log('3364',json)
+    json = JSON.stringify(json,undefined,2).replace(/"/g,'').replace(/[\[\]]/g, '').replace(/{/g, '').replace(/}/g, '');
+    return json.replace(/name|desc|ARG\d+/g, function(match) {
+        var cls = 'number';
+        if (/name/.test(match)) {
+    //         if (/:$/.test(match)) {
+                cls = 'key';
+                match='sense'
+    //         } else {
+    //             cls = 'string';
+    //         }
+
+        } else if (/(ARG\d+)/.test(match['desc'])) {
+                cls='string'
+        }else{
+              if (/(ARG\d+)/.test(match)) {
+            cls = 'boolean';}
+            // match = match.match(/(ARG\d+)/)[1]}
+            else {
+                cls='null'
+                  match = ''
+              }
+        }
+        return '<span class="' + cls + ' "  >' + match + '</span>';
+    });
+
 }
