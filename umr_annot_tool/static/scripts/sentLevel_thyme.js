@@ -2688,7 +2688,7 @@ window.onload=function(){
     let frame_button=document.getElementById('frame_button')
      frame_button.addEventListener("click", function () {  // get the token that user is inputing,
 
-         window.open("http://ska.tjemye.rs/propbank/development-frames/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
+         window.open("https://verbs.colorado.edu/propbank-development/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
 
  });
 
