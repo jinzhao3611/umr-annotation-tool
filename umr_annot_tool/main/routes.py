@@ -57,25 +57,25 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
         flash('Your sents has been created.', 'success')
 
     print("file_format:", file_format)
-    if file_format == 'isi_editor':
-        for i in range(len(sents)):
-            dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
-            annotation = Annotation(sent_annot=sent_annots[i], doc_annot="", alignment={},
-                                    user_id=dummy_user_id,
-                                    # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
-                                    sent_id=i + 1,  # sentence id counts from 1
-                                    doc_id=doc_id,
-                                    sent_umr={}, doc_umr={})
-            db.session.add(annotation)
-        db.session.commit()
-        flash('Your annotations has been created.', 'success')
-    elif has_annot:
+    if file_format == 'isi_editor' or has_annot:
         for i in range(len(sents)):
             dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-            dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
-            dehtml_doc_annot = BeautifulSoup(doc_annots[i]).get_text()
+            # dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
+            # dehtml_doc_annot = BeautifulSoup(doc_annots[i]).get_text()
+            if sent_annots:
+                dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
+            else:
+                dehtml_sent_annot = ""
+            if doc_annots:
+                dehtml_doc_annot = BeautifulSoup(sent_annots[i]).get_text()
+            else:
+                dehtml_doc_annot = ""
+            if aligns:
+                pass_aligns = aligns[i]
+            else:
+                pass_aligns = {}
             sent_umr = string2umr(dehtml_sent_annot)
-            annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=aligns[i],
+            annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=pass_aligns,
                                     user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
                                     sent_id=i + 1, #sentence id counts from 1
                                     doc_id=doc_id,
