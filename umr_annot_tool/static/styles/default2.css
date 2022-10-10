@@ -38,7 +38,11 @@ body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > 
 .dropdown-submenu {
     position: relative;
 }
+.col-md-3{
 
+    height: 100%;
+
+}
 .dropdown-submenu>.dropdown-menu {
     top: 0;
     left: 100%;
