@@ -113,7 +113,7 @@ $(document).ready(function(){
 
             let type = clickfunc.replace(/fillReplaceTemplate\('(.*)','(.*)','(.*)','(.*)'\)/i, "$1");
             let at = clickfunc.replace(/fillReplaceTemplate\('(.*)','(.*)','(.*)','(.*)'\)/i, "$2");
-            let new_value = clickfunc.replace(/fillReplaceTemplate\('(.*)','(.*)','(.*)','(.*)'\)/i, "$3").replaceAll(`\\'`,`'`);
+            let new_value = clickfunc.replace(/fillReplaceTemplate\('(.*)','(.*)','(.*)','(.*)'\)/i, "$3").replaceAll(`\\'`, `'`);
 
             let at_list = at.split(/\s+/);
             if ((type === 'role') && (at_list) && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
