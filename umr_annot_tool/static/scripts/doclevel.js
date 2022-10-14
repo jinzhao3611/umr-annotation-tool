@@ -31,11 +31,11 @@ function initializeDoc(sent_annot_umrs) {
  */
 function docUmrTransform(html_umr_s, nested){
     //this is a bandit solution, in early stages, the root variable is in the form of s1, now it's s1s0, this is for the purpose of being compatible with the early stage form(export new file with new form)
-    let root_pattern = /(\(s\d+)( \/ sentence)/g
-    html_umr_s = html_umr_s.replace(root_pattern, "$1" + "s0" + "$2")
+    let root_pattern = /(\(s\d+)( \/ sentence)/g //match s1 / sentence
+    html_umr_s = html_umr_s.replace(root_pattern, "$1" + "s0" + "$2") //change it to s1s0 / sentence
 
-    let regex1 = /([a-zA-Z0-9\-]+) \/ (?=.*?\1)[a-zA-Z0-9\-]+ /g //match s1t / s1t (space at the end)
-    let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
+    let regex1 = /([a-zA-Z0-9\-]+) \/ (?=.*?\1)[a-zA-Z0-9\-]+ /g //match s1t / s1t (space at the end): match variable
+    let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH) : match constant
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
     html_umr_s1 = html_umr_s1.replace(regex2, "$1");
 
@@ -46,7 +46,7 @@ function docUmrTransform(html_umr_s, nested){
         console.log("after html_fy: ", html_umr_s1);
     }
 
-    let regexp = /&nbsp;&nbsp;:(temporal|modal|coref)\s(\(.+?\))/g;
+    let regexp = /&nbsp;&nbsp;:(temporal|modal|coref)\s(\(.+?\))/g; //match &nbsp;&nbsp;:temporal (s2d :after (s1t)
     let array = [...html_umr_s1.matchAll(regexp)];
 
     let temporals = [];
@@ -397,6 +397,7 @@ function initialCommand(current_snt_id){
         let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
         let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
 
+        //child arg should always be variable in current sentence
         let command1 = 's'+ current_snt_id +'s0' + ' ' + role_outter + ' ' + parentArg; //s1s0 :coref s2i2
         exec_command(command1, '1');
 
