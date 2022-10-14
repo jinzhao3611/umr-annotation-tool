@@ -632,7 +632,7 @@ def statistics(project_id):
             uploaded_token_count += len(sent.content.split())
         annotations_of_doc = Annotation.query.filter(Annotation.doc_id==doc.id).all()
         for annot in annotations_of_doc:
-            if len(annot.sent_annot) > len('<div id="amr"><i>empty umr</i></div>'):
+            if len(annot.sent_annot) > len('<div id="amr"></div>'):
                 total_annotated_sentence_count += 1
                 total_annotated_docs.add(doc.id)
                 umr = annot.sent_umr
@@ -662,7 +662,7 @@ def statistics(project_id):
                 if annot:
                     checked_out_documents_this_annotator.add(annot.doc_id)
                     checked_out_sentence_count_this_annotator += 1
-                    if len(annot.sent_annot) > len('<div id="amr"><i>empty umr</i></div>'):
+                    if len(annot.sent_annot) > len('<div id="amr"></div>'):
                         annotated_sentence_count_this_annotator += 1
                         annotated_documents_this_annotator.add(annot.doc_id)
                         umr = annot.sent_umr
