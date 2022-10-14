@@ -1,6 +1,7 @@
 let childArg = '';
 let parentArg = '';
 let selectedText;
+let sentAnnotUmrs = {}
 
 /**
  * fill in all the sentence annotation penman strings using a list of umr dictionaries of all the sentence annotations
@@ -13,11 +14,12 @@ function fillInSentAnnots(sentAnnotUmrs){
     }
 }
 
-function initializeDoc() {
+function initializeDoc(sent_annot_umrs) {
     docAnnot=true;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top';
+    sentAnnotUmrs = sent_annot_umrs;
 }
 
 /**
