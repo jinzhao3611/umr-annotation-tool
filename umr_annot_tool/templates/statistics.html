@@ -48,8 +48,8 @@
     {% for annotator_name in annotator_names %}
         <div class="content-section">
         <legend class="border-bottom mb-4">Annotator: {{ annotator_name }} / {{ annotator_ids[loop.index0] }}</legend>
-        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseMyAnnotations" aria-expanded="true" aria-controls="collapseMyAnnotations">collapse</button>
-        <div class="collapse show" id="collapseMyAnnotations">
+        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseAnnotator{{loop.index0}}" aria-expanded="true" aria-controls="collapseAnnotator{{loop.index0}}">collapse</button>
+        <div class="collapse show" id="collapseAnnotator{{loop.index0}}">
             <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span class="badge">
