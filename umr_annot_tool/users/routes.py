@@ -614,3 +614,80 @@ def modification(project_id): #there is no post here like the previous ones, bec
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     return render_template('modification.html', project_id=project_id)
+
+@users.route('/statistics/<int:project_id>', methods=['GET', 'POST'])
+def statistics(project_id):
+    project_name = Project.query.filter(Project.id == project_id).first().project_name
+    docs = Doc.query.filter(Doc.project_id==project_id).all()
+    uploaded_document_count = len(docs)
+    uploaded_sentence_count = 0
+    uploaded_token_count = 0
+    total_annotated_docs = set()
+    total_annotated_sentence_count = 0
+    total_annotated_concept_count = 0
+    for doc in docs:
+        sents_of_doc = Sent.query.filter(Sent.doc_id==doc.id).all()
+        uploaded_sentence_count += len(sents_of_doc)
+        for sent in sents_of_doc:
+            uploaded_token_count += len(sent.content.split())
+        annotations_of_doc = Annotation.query.filter(Annotation.doc_id==doc.id).all()
+        for annot in annotations_of_doc:
+            if len(annot.sent_annot) > len('<div id="amr"><i>empty umr</i></div>'):
+                total_annotated_sentence_count += 1
+                total_annotated_docs.add(doc.id)
+                umr = annot.sent_umr
+                for k in umr:
+                    if k.endswith(".c"):
+                        total_annotated_concept_count +=1
+    total_annotated_document_count = len(total_annotated_docs)
+    project_users = Projectuser.query.filter(Projectuser.project_id==project_id).all()
+    annotator_ids = [project_user.user_id for project_user in project_users]
+    annotator_names = [User.query.filter(User.id==annotator_id).first().username for annotator_id in annotator_ids]
+    checked_out_document_counts = []
+    checked_out_sentence_counts = []
+    annotated_document_counts = []
+    annotated_sentence_counts = []
+    annotated_concept_counts = []
+    for annotator_id in annotator_ids:
+        checked_out_documents_this_annotator = set()
+        checked_out_sentence_count_this_annotator = 0
+        annotated_documents_this_annotator = set()
+        annotated_sentence_count_this_annotator = 0
+        annotated_concept_count_this_annotator = 0
+        for doc in docs:
+            print("annotator_id: ", annotator_id)
+            print("doc_id: ", doc.id)
+            annots = Annotation.query.filter(Annotation.user_id==annotator_id, Annotation.doc_id==doc.id).all()
+            for annot in annots:
+                if annot:
+                    checked_out_documents_this_annotator.add(annot.doc_id)
+                    checked_out_sentence_count_this_annotator += 1
+                    if len(annot.sent_annot) > len('<div id="amr"><i>empty umr</i></div>'):
+                        annotated_sentence_count_this_annotator += 1
+                        annotated_documents_this_annotator.add(annot.doc_id)
+                        umr = annot.sent_umr
+                        for k in umr:
+                            if k.endswith(".c"):
+                                annotated_concept_count_this_annotator += 1
+        checked_out_document_counts.append(len(checked_out_documents_this_annotator))
+        checked_out_sentence_counts.append(checked_out_sentence_count_this_annotator)
+        annotated_document_counts.append(len(annotated_documents_this_annotator))
+        annotated_sentence_counts.append(annotated_sentence_count_this_annotator)
+        annotated_concept_counts.append(annotated_concept_count_this_annotator)
+
+
+    return render_template('statistics.html', project_id=project_id, project_name=project_name,
+                           uploaded_document_count=uploaded_document_count,
+                           uploaded_sentence_count=uploaded_sentence_count,
+                           uploaded_token_count=uploaded_token_count,
+                           total_annotated_document_count=total_annotated_document_count,
+                           total_annotated_sentence_count=total_annotated_sentence_count,
+                           total_annotated_concept_count=total_annotated_concept_count,
+                           annotator_ids=annotator_ids,
+                           annotator_names=annotator_names,
+                           checked_out_document_counts=checked_out_document_counts,
+                           checked_out_sentence_counts=checked_out_sentence_counts,
+                           annotated_document_counts=annotated_document_counts,
+                           annotated_sentence_counts=annotated_sentence_counts,
+                           annotated_concept_counts=annotated_concept_counts,
+                           )
