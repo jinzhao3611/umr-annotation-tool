@@ -2513,7 +2513,7 @@ function UMR2db() {
         }
     }
 
-    fetch(`/sentlevel/${doc_sent_id}`, {
+    fetch(`/UMRWriter/sentlevel/${doc_sent_id}`, {
         method: 'POST',
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
@@ -2695,7 +2695,7 @@ window.onload=function(){
     let frame_button=document.getElementById('frame_button')
      frame_button.addEventListener("click", function () {  // get the token that user is inputing,
 
-         window.open("http://ska.tjemye.rs/propbank/development-frames/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
+         window.open("http://verbs.colorado.edu/propbank-development/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
 
  });
 
@@ -2843,6 +2843,7 @@ function set_load_visible(command_id){  // show the load text field, user can co
 function load2amr(){  // get the paste penman tree and show the tree
     let load_amr=document.getElementById('load-plain').value;
     // console.log(string2umr(load_amr))
+    load_amr=load_amr_replace_sentid(load_amr)
     umr=string2umr(load_amr)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
@@ -3043,5 +3044,28 @@ function syntaxHighlight(json) {
         }
         return '<span class="' + cls + ' "  >' + match + '</span>';
     });
+
+}
+
+function load_amr_replace_sentid(amr){
+    let s=''
+    let pattern_=/\(s(\d+)[a-z]\d*/  //test whether this is a variable
+
+    amr.trim().split('\n').forEach(function(v,i){
+        if(pattern_.test(v)){
+            let snt_id = document.getElementById('curr_shown_sent_id').innerText; //get the current sentenceid
+            s+=v.replace(/\(s(\d+)([a-z]\d*)/,'(s'+snt_id.trim()+'$2') // replace that.
+
+        }else{
+            s+=v;
+
+        }
+
+
+
+    })
+
+// console.log(s)
+return s
 
 }

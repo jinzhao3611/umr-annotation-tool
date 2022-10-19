@@ -181,13 +181,19 @@
                                     {% endautoescape %}
                                 </div>
 
+
+
                                 <div class="col-sm-4" style="overflow-x: scroll">
                                     <h5>Doc-Level Annotation:</h5>
+
                                     {% if pair[1].doc_annot | length %}
                     {#            if current sentence doc_annotation is not empty in database, load from database#}
                                         {% if loop.index == current_snt_id %}
+{#                                            <div id="locate_page"></div>#}
                                             {% autoescape false %}
+                                        <div id="locate_page"></div>
                                                 <div id="amr">{{ pair[1].doc_annot }}<br></div>
+
                                             {% endautoescape %}
                                         {% else %}
                                             {% autoescape false %}
@@ -199,7 +205,10 @@
                                     {% else %}
                     {#          if current sentence doc_annotation is empty in database, create a sentence top #}
                                         {% if loop.index == current_snt_id %}
+{#                                            <div id="locate_page"></div>#}
+
                                             <div id="amr">(s{{ loop.index }}s0 / sentence)<br></div>
+{#                                            <div id="locate_page"></div>#}
                                         {% else %}
                                             <div id="amr_doc{{ loop.index }}">(s{{ loop.index }}s0 / sentence)<br></div>
                                         {% endif %}
@@ -217,10 +226,21 @@
                                 <p>current sentence:
                                     <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
                                     <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
-                                    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="save&go" onclick="docUMR2db({{ owner.id }})">
-                                </p>
+                                    <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go" onclick="docUMR2db({{ owner.id }})">
+                                    <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
+                             </p>
                             </form>
-                            <div class="btn-group dropright">
+
+
+
+                            <div id="text-command">
+                        {#    child and parent arg are switched because the child and parent concept is different here#}
+                                <table>
+                                    <tr>
+                                        <td>Node Parent:</td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')"></textarea></td>
+                                    </tr></table>
+                                                               <tr><td> <div class="btn-group dropright">
                                 <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relations:</button>
                                 <p class="dropdown-item" id="doc-level-relations"></p>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -253,16 +273,8 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </div>
-
-                            <div id="text-command">
-                        {#    child and parent arg are switched because the child and parent concept is different here#}
-                                <table>
-                                    <tr>
-                                        <td>Node Parent:</td>
-                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')"></textarea></td>
-                                    </tr>
-                                    <tr>
+                                                               </div></td></tr>
+                            <table><tr>
                                         <td>Node Child:</td>
                                         <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea></td>
                                     </tr>
@@ -272,7 +284,7 @@
                             </div>
 
                             <div>
-                                <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
+
                                 <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
                                 <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
                                 <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
@@ -298,12 +310,24 @@
                         <div style="position:fixed; top:200px;">
                             <form method="post">
                                 <p>current sentence:
+
                                     <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
                                     <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }} disabled>
                                     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go" disabled>
                                 </p>
                             </form>
-                            <div class="btn-group dropright">
+
+
+                            <div id="text-command">
+                        {#    child and parent arg are switched because the child and parent concept is different here#}
+                                <table>
+                                    <tr>
+                                        <td>Node Parent:</td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')" disabled></textarea></td>
+                                    </tr></table>
+
+                                    <p>
+                                     <div class="btn-group dropright">
                                 <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>Relations:</button>
                                 <p class="dropdown-item" id="doc-level-relations"></p>
                                 <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
@@ -355,16 +379,10 @@
                                         </ul>
                                     </li>
                                 </ul>
-                            </div>
+                                    </div></p>
 
-                            <div id="text-command">
-                        {#    child and parent arg are switched because the child and parent concept is different here#}
-                                <table>
-                                    <tr>
-                                        <td>Node Parent:</td>
-                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')" disabled></textarea></td>
-                                    </tr>
-                                    <tr>
+
+                                <table><tr>
                                         <td>Node Child:</td>
                                         <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')" disabled></textarea></td>
                                     </tr>
