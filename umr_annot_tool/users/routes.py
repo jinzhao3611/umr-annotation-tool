@@ -691,3 +691,46 @@ def statistics(project_id):
                            annotated_sentence_counts=annotated_sentence_counts,
                            annotated_concept_counts=annotated_concept_counts,
                            )
+
+@users.route('/statistics_all', methods=['GET', 'POST'])
+def statistics_all():
+    stats_all = []
+    for lang in ["arapahoe","arabic","chinese","english","navajo","sanapana","secoya","kukama","default"]:
+    # for lang in ["arapahoe", "sanapana"]:
+        docs = Doc.query.filter(Doc.lang==lang).all()
+        uploaded_document_count = len(docs)
+        uploaded_sentence_count = 0
+        uploaded_token_count = 0
+        total_annotated_docs = set()
+        total_annotated_sentence_count = 0
+        total_annotated_concept_count = 0
+        for doc in docs:
+            sents_of_doc = Sent.query.filter(Sent.doc_id==doc.id).all()
+            uploaded_sentence_count += len(sents_of_doc)
+            for sent in sents_of_doc:
+                uploaded_token_count += len(sent.content.split())
+            annotations_of_doc = Annotation.query.filter(Annotation.doc_id==doc.id).all()
+            for annot in annotations_of_doc:
+                if len(annot.sent_annot) > len('<div id="amr"></div>'):
+                    total_annotated_sentence_count += 1
+                    total_annotated_docs.add(doc.id)
+                    umr = annot.sent_umr
+                    for k in umr:
+                        if k.endswith(".c"):
+                            total_annotated_concept_count +=1
+        total_annotated_document_count = len(total_annotated_docs)
+        curr_lang_stat= [uploaded_document_count, uploaded_sentence_count, uploaded_token_count, total_annotated_document_count, total_annotated_sentence_count, total_annotated_concept_count]
+        stats_all.append(curr_lang_stat)
+
+
+    return render_template('statistics_all.html',
+                           arapahoe_stats=stats_all[0],
+                           arabic_stats=stats_all[1],
+                           chinese_stats=stats_all[2],
+                           english_stats=stats_all[3],
+                           navajo_stats=stats_all[4],
+                           sanapana_stats=stats_all[5],
+                           secoya_stats=stats_all[6],
+                           kukama_stats=stats_all[7],
+                           default_stats=stats_all[8]
+                           )
