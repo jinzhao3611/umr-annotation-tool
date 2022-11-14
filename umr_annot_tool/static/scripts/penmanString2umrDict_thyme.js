@@ -12,20 +12,18 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     annotText = strip2(annotText);
     if (state === 'pre-open-parenthesis') {
         annotText = annotText.replace(/^[^(]*/, ""); // remove everything at the start point until the open parenthesis
-        console.log('test15',annotText)
-        let pattern1 = `^\\(\\s*s[\\.-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[.-_${allLanguageChars}0-9][.-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
-        console.log('test17',annotText.match(new RegExp((pattern1))))
+        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
         if (annotText.match(new RegExp(pattern1))) {
             annotText = annotText.replace(/^\(\s*/, ""); //remove left parenthesis
-            let pattern2 = `^[.-_${allLanguageChars}0-9][\\${allLanguageChars}0-9']*` //match something like s1t //Sijia todo
+            let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*` //match something like s1t
             let variableList = annotText.match(new RegExp(pattern2)); //match variable until the variable ends, and put it in variableList
-            let pattern3 = `^[.-_${allLanguageChars}0-9][\\${allLanguageChars}0-9']*\\s*` //match something like s1t with trailing space
+            let pattern3 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*\\s*` //match something like s1t with trailing space
             annotText = annotText.replace(new RegExp(pattern3), ""); //remove variable
             if (annotText.match(/^\//)) { // if annotText start with a forward slash /
                 annotText = annotText.replace(/^\/\s*/, ""); //remove / and trailing space of /
             }
             let conceptList;
-            let pattern4 = `^[:*]?[.-_${allLanguageChars}0-9][${allLanguageChars}0-9']*[*]?` // match something like taste-01
+            let pattern4 = `^[:*]?[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[*]?` // match something like taste-01
             conceptList = annotText.match(new RegExp(pattern4)); //match the concept until the first concept ends, and put it in conceptList
             annotText = annotText.replace(new RegExp(pattern4), ""); //remove the concept until the first concept ends
 
@@ -34,13 +32,12 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             let new_variable;
             let new_concept;
             // THIS BLOCK ADD 1.c and RECORD CONCEPT
-            let pattern5 = `^[.-_${allLanguageChars}0-9][-_${allLanguageChars}0-9']*(?:-\\d+)?$` //match something like quick-01
+            let pattern5 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*(?:-\\d+)?$` //match something like quick-01
             if (concept.match(new RegExp(pattern5))) { //match something like quick-01, or quick
                 umr_dict[loc + '.c'] = concept;
                 recordConcept(concept, loc);
                 variable2concept[variable] = concept;
             } else { //todo: how to envoke this
-                console.log('call 34')
                 new_concept = concept.toLowerCase();
                 new_concept = new_concept.replace(/_/g, "-");
                 new_concept = new_concept.replace(/-+/g, "-");
@@ -62,13 +59,11 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             } else if (variablesInUse[variable + '.conflict']) {
                 umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
-                ///s\d*x\d*[_?x?\d*]*   //Sijia Regex
-            // } else if (!variable.match(/^s\d*x\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
-            //     new_variable = newVar(concept);
-            //     umr_dict[loc + '.v'] = new_variable;
-            //     recordVariable(new_variable, loc);
-            }
-            else { //this is the most common case
+            } else if (!variable.match(/^s\d*[a-z]\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
+                new_variable = newVar(concept);
+                umr_dict[loc + '.v'] = new_variable;
+                recordVariable(new_variable, loc);
+            } else { //this is the most common case
                 umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
             }
@@ -81,7 +76,6 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             annotText = annotText.replace(/^\)/, ""); // remove ) at the start position
         } else {
             if (umr_dict[loc + '.r']) {
-                console.log('test81')
                 var string_arg = 'MISSING-VALUE';
                 umr_dict[loc + '.s'] = string_arg;
                 umr_dict[loc + '.c'] = '';
@@ -189,8 +183,6 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     return [annotText, umr_dict];
 }
 
-
-//sijia to-do
 /**
  * annotText got cut into pieces in this process, part of the annotText got cut off when it's got parsed successfully, and the leftover annotText string is the string to be parsed into umr
  * @param annotText : String (s1t / taste-01)
@@ -213,9 +205,7 @@ function string2umr(annotText) {
     variables = {};
     concepts = {};
     variablesInUse = {};
-    //Sijia Todo
-    let uncleanedRootVariables = annotText.match(/\(\s*s\d*.[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
-    console.log('test213--', uncleanedRootVariables)
+    let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
