@@ -213,6 +213,11 @@ body.wrapper{
 #frame_display{width: fit-content }
 
     .string { color: green;  }
+    .number::before{
+        content:'\A';
+        white-space:pre;
+
+    }
     .number { color: darkorange; display: inline }
     .boolean::before{
         content: '\A';

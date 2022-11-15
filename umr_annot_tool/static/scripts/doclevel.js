@@ -436,9 +436,9 @@ function show_amr_new_line_doc(loc) {
         return 0;
     }
 }
-window.onload=function(){
-
-    location.hash="locate_page";
-
-
-}
+// window.onload=function(){
+//
+//     location.hash="locate_page";
+//
+//
+// }

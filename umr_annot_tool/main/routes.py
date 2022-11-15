@@ -19,12 +19,12 @@ from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItem
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from sqlalchemy.orm.attributes import flag_modified
 from umr_annot_tool.resources.utility_modules.suggest_sim_words import generate_candidate_list, find_suggested_words
-
+basedir_ = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 main = Blueprint('main', __name__)
-FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
-FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
-FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
-LEMMA_DICT_ARABIC = 'umr_annot_tool/resources/arabic_lemma_dict.json'
+FRAME_FILE_ENGLISH = basedir_+r"/resources/frames_english.json"
+FRAME_FILE_CHINESE = basedir_+r'/resources/frames_chinese.json'
+FRAME_FILE_ARABIC = basedir_+r'/resources/frames_arabic.json'
+LEMMA_DICT_ARABIC = basedir_+r'/resources/arabic_lemma_dict.json'
 lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 
 # from farasa.stemmer import FarasaStemmer
@@ -58,6 +58,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
 
     print("file_format:", file_format)
     if file_format == 'isi_editor' or has_annot:
+        print('test79', sents)
         for i in range(len(sents)):
             dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
             # dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
@@ -74,7 +75,10 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
                 pass_aligns = aligns[i]
             else:
                 pass_aligns = {}
+
             sent_umr = string2umr(dehtml_sent_annot)
+
+            # dehtml_doc_annot=doc_annots[i]
             annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=pass_aligns,
                                     user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
                                     sent_id=i + 1, #sentence id counts from 1
@@ -146,9 +150,10 @@ def upload_document(current_project_id):
                 is_exported = form.if_exported.data
                 if is_exported:  # has annotation
                     if file_format == 'isi_editor':
-                        new_content_string, sents, sent_annots = process_exported_file_isi_editor(content_string)
+                        new_content_string, sents, sent_annots,doc_annots = process_exported_file_isi_editor(content_string)
+                        print('test150',doc_annots)
                         file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, current_project_id=current_project_id)
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots,current_project_id=current_project_id)
                     else:
                         new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
                             content_string)
@@ -380,7 +385,7 @@ def sentlevel(doc_sent_id):
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":
-        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r",encoding='utf-8'))
     elif doc.lang == "arabic":
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
@@ -542,7 +547,7 @@ def sentlevelview(doc_sent_id):
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":
-        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r",encoding='utf-8'))
     elif doc.lang == "arabic":
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
