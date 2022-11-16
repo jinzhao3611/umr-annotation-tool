@@ -68,7 +68,8 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
             else:
                 dehtml_sent_annot = ""
             if doc_annots:
-                dehtml_doc_annot = BeautifulSoup(sent_annots[i]).get_text()
+                # dehtml_doc_annot = BeautifulSoup(sent_annots[i]).get_text()
+                dehtml_doc_annot = doc_annots[i]
             else:
                 dehtml_doc_annot = ""
             if aligns:

@@ -14,7 +14,7 @@
 #     (the tabulate package is used, the tables in output txt file cannot adjust to the window resize, please open it in full screen when necessary)
 
 import xml.etree.ElementTree as ET
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Any
 import pandas as pd
 from itertools import accumulate
 import operator
@@ -43,13 +43,14 @@ def amr_text2html(plain_text: str) -> str:
     html_string = '<div id="amr">' + html_string + '</div>\n'
     return html_string
 
-def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[str]]:
+def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[List[str]], List[Any], List[str]]:
     """
     example file: /Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/kristin/events37.xml
     """
     doc_content_string = ""
     sents = []
     sent_annots = []
+    doc_annots=[]
     root = ET.fromstring(content_string)
     for child in root:
         if child.tag =='sntamr':
@@ -57,12 +58,16 @@ def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[Lis
                 if child2.tag == 'amr':
                     amr = regex.sub(r'(\()([a-z][0-9]? /)', rf'\1s{str(len(sent_annots)+1)}\2', child2.text)
                     sent_annots.append(amr)
-
+                elif child2.tag == 'doc-amr':
+                    if child2.text:
+                        doc_annots.append(child2.text)  # assuming the input file looks like events37.xml sent by Sijia
+                    else:
+                        doc_annots.append("")  # otherwise NoneType object will be added in
                 elif child2.tag == 'sentence':
                     doc_content_string += '\n'+child2.text
                     sents.append(child2.text.split())
 
-    return doc_content_string.strip(), sents, sent_annots
+    return doc_content_string.strip(), sents, sent_annots,doc_annots
 
 def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List[str], List[str], List[Dict[str, str]]]:
     """
