@@ -2668,7 +2668,7 @@ function show_amr(args) {
         console.log('test2514',n)
         for (let i = 1; i <= n; i++) { //traverse children
             let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
-            // console.log(show_amr_rec_result)
+            console.log('2671',show_amr_rec_result)
             if (show_amr_rec_result){
                 amr_s += show_amr_rec_result + '\n';
                 console.log('test2518',amr_s)
@@ -3336,6 +3336,8 @@ function set_load_visible(command_id){  // show the load text field, user can co
 function load2amr(){  // get the paste penman tree and show the tree
     let load_amr=document.getElementById('load-plain').value;
     // console.log(string2umr(load_amr))
+    load_amr=load_amr_replace_sentid(load_amr)
+    console.log('test3340',load_amr)
     umr=string2umr(load_amr)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
@@ -3544,3 +3546,25 @@ function syntaxHighlight(json) {
 //     let lang=language
 //
 // }
+function load_amr_replace_sentid(amr){
+    let s=''
+    let pattern_=/\(s(\d+?)\.(x|ac)\d+/  //test whether this is a variable
+
+    amr.trim().split('\n').forEach(function(v,i){
+        if(pattern_.test(v)){
+            let snt_id = document.getElementById('curr_shown_sent_id').innerText; //get the current sentenceid
+            s+=v.replace(/\(s(\d+?)(?=\.(x|ac))/,'(s'+snt_id.trim()) // replace that.
+
+        }else{
+            s+=v;
+
+        }
+
+
+
+    })
+
+// console.log(s)
+return s
+
+}
