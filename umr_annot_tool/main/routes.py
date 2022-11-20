@@ -65,7 +65,8 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
             else:
                 dehtml_sent_annot = ""
             if doc_annots:
-                dehtml_doc_annot = BeautifulSoup(sent_annots[i]).get_text()
+                dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
+                print("every doc_annot in file: ", doc_annots[i])
             else:
                 dehtml_doc_annot = ""
             if aligns:
@@ -144,9 +145,9 @@ def upload_document(current_project_id):
                 is_exported = form.if_exported.data
                 if is_exported:  # has annotation
                     if file_format == 'isi_editor':
-                        new_content_string, sents, sent_annots = process_exported_file_isi_editor(content_string)
+                        new_content_string, sents, sent_annots, doc_annots = process_exported_file_isi_editor(content_string)
                         file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, current_project_id=current_project_id)
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id)
                     else:
                         new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
                             content_string)
