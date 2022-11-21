@@ -6,7 +6,7 @@
     <script src="../static/scripts/sentLevel_typing.js" type="text/javascript"></script>
     <script src="../static/scripts/doclevel.js" type="text/javascript"></script>
     <script src="../static/scripts/utils_typing.js" type="text/javascript"></script>
-    <script src="../static/scripts/penmanString2umrDict_thyme.js" type="text/javascript"></script>
+    <script src="../static/scripts/penmanString2umrDict_typing.js" type="text/javascript"></script>
     <script src="../static/scripts/umrDict2penmanString.js" type="text/javascript"></script>
     <script src="../static/scripts/BlobBuilder.js"></script>
     <script src="../static/scripts/FileSaver.js"></script>
@@ -155,6 +155,9 @@
     <input class='command' id='main-command' oninput="onInputHandler(event,'{{ lang }}')" placeholder="e.g: 'top x5' or 'x5 :ARG1 x2'">
 
     <button  id="frame_button" >English frame</button>
+     <button  id ="segmentations" onclick="set_load_visible('segmentation_result');">Mannual Segmentation</button>
+
+
     <span id ='logger'></span>
     <div style="display: inline-flex; float: right" >
          <form method="post">
@@ -179,7 +182,9 @@
     <div id="error_prompt">
         <span id="error_logger"></span>
     </div>
-
+  <p>
+    <input style="display: none;width: 100%"   id ="segmentation_result" >
+    </p>
 
 {#      <table style="height: 10%; width:80%" class="main_annotation">#}
 {#            <tbody>#}
@@ -365,6 +370,7 @@
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('move_box');">move</button>
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('replace_box');">replace</button>
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('delete_box');">tdelete</button>
+            <button class="btn btn-info btn" id ="load" onclick="set_load_visible('query_frame');">query_frame</button>
 
 
 
@@ -374,6 +380,7 @@
         <input style="display: none"  placeholder="move + branch head node + to + new head + role, e.g: move x2 to x3 :ARG5"  class="command" id="move_box" >
         <input style="display: none"  oninput="onInputHandler(event,'{{ lang }}')" class="command" id="replace_box"  placeholder="replace + concept + at + variable with new variable, e.g:replace concept at x1 with x2">
         <input style="display: none" class="command" id ="delete_box"  placeholder=" delete+ head+roles+variable, e.g:delete x2 :ARG1 x3">
+        <input style="display: none" oninput="frame_onInputHandler(event,'{{ lang }}')" class="command" id ="query_frame"  placeholder=" please input the word you want to query">
 {#    frame info:#}
 {#    {{ frame_info }}#}
     <p id="frame_info"></p>

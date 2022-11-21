@@ -164,6 +164,7 @@ function populateUtilityDicts(){
  */
 function conceptDropdown(concept,lang='english') {
     let  frame_info=''
+
     // submit_concept(); //record the current concept from the selected tokens
     console.log('test166',concept)
     current_concept=concept.toLowerCase()
@@ -267,9 +268,14 @@ function conceptDropdown(concept,lang='english') {
             frame_info=getSenses(letter);
         }
     }
-    console.log('test283',frame_info)
+    console.log('test283',frame_info);
+    console.log('test272',);
     return frame_info
 }
+
+
+
+
 
 /**
  * takes in different senses of a lemma and generate the secondary menu of find lemma
@@ -770,6 +776,7 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
         } else {
             cc = argSplit(value);
             let _concept = cc.slice(-1)[0]// get the last token from the command
+
             // if(_concept.match(/x\d+/)){
             //     // let frame_token=index2concept(_concept)
             //     let frame_token='taste'
@@ -807,11 +814,13 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
                     addTriple(name_var, sub_role, index2concept(cc[i]), 'string');
                 }
                 show_amr_args = 'show';
+                change_color(cc[2])
             } else if (cc.length >= 2) {
                 // this is when cc only has two element (the first probably is top)
                 for (let i = 1; i < cc.length; i++) {
                     var top_var = newUMR(cc[i].toLowerCase());
                 }
+                change_color(cc[1])
                 console.log('test 770', top_var)
                 var pattern = /s\d+/
 
@@ -851,6 +860,9 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
 
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
+
+                    change_color(cc[5],1)
+                    change_color(cc[3],0)
                 } else {
                     err_logger.innerHTML = "<span>'Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;'</span>"
                     console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
@@ -894,6 +906,9 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
                 }
                 changeShowStatus('delete');
                 show_amr_args = 'show delete';
+
+                change_color(cc[3],0)
+
             } else {
                 add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
@@ -1273,7 +1288,12 @@ function index2concept(concept){
 
     }
 
+    concept=query_lemma(concept,language)
     concept=text2num(concept)// if it's a number ?  Sijia to-do
+
+
+    console.log('1278',concept)
+    // concept=conceptDropdown(concept,language)
     if(sense!==''){  // convert the token into the lemmatized result rather than the token in the raw context
         let sense_regex=/^[0]+/
         let sense_no=sense.replace('-','').replace(sense_regex,'')
@@ -1303,6 +1323,9 @@ function index2concept(concept){
     console.log('test1250', concept)
     return concept+''
 }
+
+
+
 
 /**
  * populate variables, concepts, variable2concept, and umr
@@ -1387,6 +1410,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
     arg = strip(arg); //car
     // arg=index2concept(arg);
     console.log(head,role,arg, arg_type,'i am testing addtriple')
+
     let head_var_locs = getLocs(head);
     let arg_var_locs;
     let arg_variable;
@@ -1450,7 +1474,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki|name)$/))) {
             console.log("I am here40-3",arg,arg_concept);
-
+            change_color(arg,1)
             arg_variable = newVar(arg); // truffle -> s1t
              if (arg.startsWith('x')){
             arg=index2concept(arg);}
@@ -3176,6 +3200,7 @@ let status = true;
 
 window.onload=function(){
     check_command();
+
     // submit_command();
     // window.scrollTo({top:})
     location.hash="locate_page" // when redirecting to the new page, fxied the scroll bar to the center of the page.
@@ -3206,6 +3231,7 @@ window.onload=function(){
 
 
      */
+    let segment=''
      rawtext.setAttribute('class','raw_text')
         for (let i=1;i<wordcount;i++){
             let k=document.createElement('div')// add the index to visualize
@@ -3224,6 +3250,7 @@ window.onload=function(){
             //     c.innerHTML=c.innerHTML+temporary_index.sup()
             //
             // }else{
+            segment=segment+' '+sent.getElementsByTagName('tr')[0].cells[i].innerHTML
             console.log('3005', sent.getElementsByTagName('tr')[0].cells[i].innerHTML)
             c.innerText=sent.getElementsByTagName('tr')[0].cells[i].innerHTML;
             c.innerHTML+=temporary_index.sup()
@@ -3267,6 +3294,11 @@ window.onload=function(){
 
 
 }
+
+        console.log('3296 segment',segment)
+    $('#segmentation_result').val(segment)
+
+    get_segmentation_result();
 document.onkeydown=function(){ // show the index with the hot key
     if(event.keyCode===18 && event.ctrlKey===true){
         overshow();
@@ -3329,6 +3361,8 @@ function set_load_visible(command_id){  // show the load text field, user can co
     load_widget.style.display = 'inline';
   } else {
     load_widget.style.display = 'none';
+    load_widget.value='';
+
   }
 
 
@@ -3470,6 +3504,37 @@ function check_command(){
 
 }
 
+function get_segmentation_result(){
+
+    let segmentation=document.getElementById('segmentation_result')
+
+
+
+        segmentation.onkeydown=function(e){
+                 var theEvent = e || window.event;
+            var code = theEvent.keyCode || theEvent.which || theEvent.charCode;
+            // 13 代表 回车键
+            if (code === 13) {
+                // if (current.style.display==='block'){
+
+                    console.log('3516',segmentation.value.split(' '))
+
+                    // current.value=''
+                // }
+            }
+
+
+        }
+        // current.bind('keydown')
+    }
+
+
+
+
+
+
+
+
 //
 
 function onInputHandler(event,lang) {
@@ -3483,8 +3548,12 @@ function onInputHandler(event,lang) {
 
         cc=argSplit(command_value)
         let concept_token=cc.slice(-1)[0]
+
         let  concept=index2concept(concept_token)
         if (concept_token.match(/x\d+/)){
+            let rawtext= document.getElementsByClassName('raw_text')[0]
+            let concept_index=concept_token.replace('x','')
+            // rawtext.getElementsByTagName('li')[concept_index-1].style.color='#f00'
             senses=conceptDropdown(concept,lang)
             console.log('3254',senses)
 
@@ -3501,7 +3570,26 @@ function onInputHandler(event,lang) {
 }
 
 
+function frame_onInputHandler(event,lang) {
 
+    // if (event.style.display==='inline'){
+    let command_value= event.target.value
+
+    let senses='';
+    if (command_value) {
+        let value = strip(command_value);
+
+
+        senses=conceptDropdown(command_value,lang)
+        console.log('3541',senses)
+
+    }
+    console.log('test 3544', senses)
+    // console.log(JSON.parse(senses))
+    document.getElementById('frame_display').innerHTML=syntaxHighlight(senses['res'],undefined,4)
+    console.log(syntaxHighlight(senses['res']))
+    // $('#frame_display').html(syntaxHighlight(senses['res']))
+}
 // Internet Explorer
 // function onPropertyChangeHandler(event) {
 //     if (event.propertyName.toLowerCase () === "value") {
@@ -3566,5 +3654,49 @@ function load_amr_replace_sentid(amr){
 
 // console.log(s)
 return s
+
+}
+function  query_lemma(concept,language){
+
+if(language === 'arabic'){
+
+    fetch(`/getfarasalemma`, {
+        method: 'POST',
+        body: JSON.stringify({"token": concept})
+    }).then(function (response) {
+        console.log('test 192')
+        return response.json();
+    }).then(function (data) {
+        concept = data['text'];}).
+
+    catch(function(error){
+        console.log("get lemma error: "+ error);
+    })}else if(language==='english'){ concept=getLemma(concept)}
+
+
+    return concept
+
+}
+
+function change_color(arg,status=1){
+
+    console.log('3621',arg)
+
+    if (arg.match(/x\d+/)){
+        if (/x\d+(-\d+)/.test(arg)){
+
+        let sense= arg.match(/x\d+(-\d+)/)
+            console.log(sense,'3627')
+        arg=arg.replace(sense[1],'')}
+
+            console.log('test3626',arg)
+            let rawtext= document.getElementsByClassName('raw_text')[0]
+            let concept_index=arg.replace('x','')
+            if(status===1){
+            rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
+                  rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
+                }
+
+
 
 }
