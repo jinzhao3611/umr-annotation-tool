@@ -734,3 +734,7 @@ def statistics_all():
                            kukama_stats=stats_all[7],
                            default_stats=stats_all[8]
                            )
+
+@users.route('/settings', methods=['GET', 'POST'])
+def settings():
+    return render_template('settings.html')

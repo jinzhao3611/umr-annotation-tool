@@ -808,7 +808,6 @@
             <button class="btn btn-info btn-sm" id="undo-button" title="currently nothing to undo" onclick="undo(-1);">undo</button>
             <button class="btn btn-info btn-sm" id="redo-button" title="currently nothing to undo" onclick="undo(1);">redo</button>
             <button class="btn btn-info btn-sm" id="reset-box" onclick="reset();">reset</button>
-            <button class="btn btn-info btn-sm" id="one-line-ne" onclick="changeSetting();">one-line NE</button>
             <hr>
             <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
             <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconlookup', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon lookup</a>
