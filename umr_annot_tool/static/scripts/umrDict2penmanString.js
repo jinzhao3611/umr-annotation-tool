@@ -58,14 +58,14 @@ function umrDict2penmanString_rec(loc, rec, umr_dict) {
                     && (index = sub_role.replace(/^:op([1-9]\d*)$/i, "$1")) //get "1" of :op1
                     && (!opx_order[index])) {
                     opx_order[index] = i;
-                    if (show_amr_new_line_sent(sub_loc)) {
+                    if (show_amr_new_line_sent(sub_loc, umr_dict)) {
                         opx_all_simple_p = 0;
                     }
                 } else if ((sub_role.match(/^:arg(\d+)$/i))
                     && (index = sub_role.replace(/^:arg(\d+)$/i, "$1"))
                     && (!argx_order[index])) {
                     argx_order[index] = i; //argindex is the ith children (arg0 is 2nd children)
-                    if (show_amr_new_line_sent(sub_loc)) {
+                    if (show_amr_new_line_sent(sub_loc, umr_dict)) {
                         argx_all_simple_p = 0;
                     }
                 } else if (sub_role === ':name') {
@@ -98,7 +98,7 @@ function umrDict2penmanString_rec(loc, rec, umr_dict) {
                 let sub_loc = loc + '.' + index;
                 let umrDict2penmanString_rec_result = umrDict2penmanString_rec(sub_loc, 1, umr_dict); // this stores one amr line
                 if (umrDict2penmanString_rec_result) {
-                    if (show_amr_new_line_sent(sub_loc)) {
+                    if (show_amr_new_line_sent(sub_loc, umr_dict)) {
                         s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + umrDict2penmanString_rec_result;
                     } else {
                         s += ' ' + umrDict2penmanString_rec_result;

@@ -1825,13 +1825,14 @@ function leafy_or_concept_p(loc) {
 /**
  * decide if this new concept amr should be on the same line with parent and grandparent or not
  * @param loc: 1.1
+ * @param umr_dict: when umr_dict is not passed in(sentence level annotation render in sentence level page) use current umr, otherwise(sentence level annotation render in doc level page) use passed in umr_dict
  * @returns {number}
  */
-function show_amr_new_line_sent(loc) {
-    let variable = umr[loc + '.v'];
-    let concept = umr[loc + '.c'];
-    let string = umr[loc + '.s'];
-    let role = umr[loc + '.r'] || '';
+function show_amr_new_line_sent(loc, umr_dict=umr) {
+    let variable = umr_dict[loc + '.v'];
+    let concept = umr_dict[loc + '.c'];
+    let string = umr_dict[loc + '.s'];
+    let role = umr_dict[loc + '.r'] || '';
     let head_loc = '';
     let head_concept = '';
     let head_role = '';
@@ -1840,12 +1841,12 @@ function show_amr_new_line_sent(loc) {
     let grand_head_concept = '';
     if (loc.match(/\.\d+$/)) {
         head_loc = loc.replace(/\.\d+$/, "");
-        head_concept = umr[head_loc + '.c'] || '';
-        head_role = umr[head_loc + '.r'] || '';
-        n = umr[head_loc + '.n'];
+        head_concept = umr_dict[head_loc + '.c'] || '';
+        head_role = umr_dict[head_loc + '.r'] || '';
+        n = umr_dict[head_loc + '.n'];
         if (head_loc.match(/\.\d+$/)) {
             grand_head_loc = head_loc.replace(/\.\d+$/, "");
-            grand_head_concept = umr[grand_head_loc + '.c'] || '';
+            grand_head_concept = umr_dict[grand_head_loc + '.c'] || '';
         }
     }
     if (role.match(/^:ARG\d+$/)) {
