@@ -45,7 +45,7 @@ let alignments = {}
  * @param partial_graphs_json
  */
 function initialize(frame_json, lang, partial_graphs_json) {
-    show_amr_obj["option-1-line-NEs"] = localStorage["one-line-NE"];
+    show_amr_obj["option-1-line-NEs"] = (localStorage["one-line-NE"] === 'true');
     language = lang; // assign language of the document
     umr['n'] = 0; //clear the current graph
     undo_list.push(cloneCurrentState()); //populate undo_list

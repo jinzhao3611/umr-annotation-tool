@@ -15,6 +15,7 @@ function fillInSentAnnots(sentAnnotUmrs){
 }
 
 function initializeDoc(sent_annot_umrs) {
+    show_amr_obj["option-1-line-NEs"] = (localStorage["one-line-NE"] === 'true');
     docAnnot=true;
     umr['n'] = 0;
     undo_list.push(cloneCurrentState()); //populate undo_list

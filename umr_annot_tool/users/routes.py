@@ -735,6 +735,6 @@ def statistics_all():
                            default_stats=stats_all[8]
                            )
 
-@users.route('/settings', methods=['GET', 'POST'])
-def settings():
-    return render_template('settings.html')
+@users.route('/settings/<int:project_id>', methods=['GET', 'POST'])
+def settings(project_id):
+    return render_template('settings.html', project_id=project_id)

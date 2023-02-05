@@ -13,14 +13,16 @@
       <span class="slider"></span>
     </label>
     <script type="text/javascript">
+        localStorage.setItem("one-line-NE", document.getElementById("one-line-NE").checked)
         let checkbox = document.querySelector("input[id=one-line-NE]");
         checkbox.addEventListener('change', function() {
-              localStorage["one-line-NE"] = document.getElementById("one-line-NE").checked;
+              localStorage.setItem("one-line-NE", document.getElementById("one-line-NE").checked);
         });
     </script>
 {% endblock content%}
 
 {% block content2 %}
+    <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">back to project</a>
 
 {% endblock content2 %}
 
