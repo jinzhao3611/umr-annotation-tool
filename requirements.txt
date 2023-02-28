@@ -24,8 +24,8 @@ Jinja2==2.11.2
 lemminflect==0.2.2
 lxml==4.5.2
 MarkupSafe==1.1.1
-numpy==1.19.2
-pandas==1.1.2
+numpy==1.24.2
+pandas==1.5.3
 penman==1.2.1
 Pillow==7.2.0
 psycopg2==2.8.6
