@@ -9,8 +9,7 @@ $(document).ready(function(){
     $("#amr").dblclick(function(){ // when double click on element #amr
         selection = document.getSelection(); //get selection of text
         let selectedNode = getSelectedNode(); // get the selected node
-        let locationOfVariable = selectedNode.getAttribute("id").replace("variable-", "")
-        console.log("selected variable location: ", locationOfVariable);
+        let locationOfVariable = selectedNode.getAttribute("id").replace("variable-", "");
         submit_template_action('set_parent', "", locationOfVariable); //set text to parent
     });
 
@@ -18,8 +17,7 @@ $(document).ready(function(){
     $("#set-head").click(function(){
         selection = document.getSelection(); //get selection of text
         let selectedNode = getSelectedNode(); // get the selected node
-        let locationOfVariable = selectedNode.getAttribute("id").replace("variable-", "")
-        console.log("selected variable location: ", locationOfVariable);
+        let locationOfVariable = selectedNode.getAttribute("id").replace("variable-", "");
         submit_template_action('set_parent', "", locationOfVariable); //set text to parent
     })
 

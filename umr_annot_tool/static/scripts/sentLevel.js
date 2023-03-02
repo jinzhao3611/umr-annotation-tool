@@ -992,14 +992,10 @@ function showAlign() {
 
 function showHead(parentVarLoc) {
     let existingHead = document.getElementById("amr").getElementsByClassName("text-success");
-    while (existingHead.length) {
-        var parent = existingHead[0].parentNode;
-        while (existingHead[0].firstChild) {
-            parent.insertBefore(existingHead[0].firstChild, existingHead[0]);
-        }
-        parent.removeChild(existingHead[0]);
+    for(let i=0; i<existingHead.length; i++){
+        existingHead[0].removeAttribute("class");
     }
-    document.getElementById(`variable-${parentVarLoc}`).setAttribute("class", "text-success")
+    document.getElementById(`variable-${parentVarLoc}`).setAttribute("class", "text-success");
 }
 
 
