@@ -671,16 +671,17 @@ function submit_template_action(id, tokens = "", parentVarLoc = "") {
             let k = getKeyByValue(umr, current_concept.toLowerCase());
             if (k.includes("v")) { // 1.1.v, if current_concept is variable
                 current_parent = current_concept;
-                console.log("current_parent is " + current_parent);
+                document.getElementById("current_parent").innerHTML = current_parent;
             } else { //1.1.c, if current_concept is concept
                 let new_k = k.replace('c', 'v');
                 current_parent = umr[new_k];
-                console.log("current_parent is " + current_parent);
+                document.getElementById("current_parent").innerHTML = current_parent;
             }
             current_mode = 'add';
         }
     } else if (id === 'set_parent') {
         current_parent = umr[parentVarLoc + '.v'];
+        document.getElementById("current_parent").innerHTML = current_parent;
         showHead(parentVarLoc);
     } else if (id === 'add') {
         exec_command(current_parent + ' ' + current_relation + ' ' + current_concept, 1);
