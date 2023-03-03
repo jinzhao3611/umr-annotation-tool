@@ -555,20 +555,24 @@ function undo(n) {
 }
 
 /**
- * this function chooses the correct show mode (show_delete, show_replace and show)
+ * this function chooses the correct show mode (show_delete, show_move, show_replace and show)
  * @param action
  */
 function changeShowStatus(action) {
-    if (show_umr_status.match(/replace/) && action === 'delete') {
+    if ((show_umr_status.match(/replace/)||show_umr_status.match(/move/)) && action === 'delete') {
         show_amr('show');
         show_amr('show delete');
-    } else if (show_umr_status.match(/delete/) && action === 'replace') {
+    } else if ((show_umr_status.match(/delete/)||show_umr_status.match(/move/)) && action === 'replace') {
         show_amr('show replace');
-    } else if (show_umr_status === 'show') {
+    } else if ((show_umr_status.match(/delete/)||show_umr_status.match(/replace/)) && action === 'move') {
+        show_amr('show move');
+    }else if (show_umr_status === 'show') {
         if (action === 'delete') {
             show_amr('show delete');
         } else if (action === 'replace') {
             show_amr('show replace');
+        } else if (action === 'move'){
+            show_amr('show move');
         }
     }
 }
@@ -607,6 +611,79 @@ function fillDeleteTemplate(at, mo_lock) {
             at = at.replace(/\s*$/, "\"");
         }
         exec_command('delete ' + at, 1);
+    }
+}
+
+/**
+ *
+ * @param at "s1t :actor s1f"
+ * @param mo_lock "amr_elem_6", this is also element id
+ */
+function fillMoveTemplate(at, mo_lock) {
+
+    let same_mo_lock_p = (show_amr_mo_lock == mo_lock);
+    if (show_amr_mo_lock) {
+        color_all_under_amr_elem(show_amr_mo_lock, '#000000', '');
+        show_amr_mo_lock = '';
+    }
+    if (!same_mo_lock_p) {
+        show_amr_mo_lock = mo_lock;
+        color_all_under_amr_elem(show_amr_mo_lock, '#FC33FF', '');
+        let at_list = at.split(/\s+/);
+        if (at_list && (at_list.length >= 4) && (!at_list[2].match(/^"/))) {
+            at = at_list[0] + ' ' + at_list[1] + ' "';
+            for (let i = 2; i < at_list.length; i++) {
+                at += at_list[i] + ' ';
+            }
+            at = at.replace(/\s*$/, "\"");
+        }
+
+        let moveGraphHead = at.split(' ')[2];
+        let role = at.split(' ')[1];
+        let moveGraph = {'n': 1 };
+        let k = getKeyByValue(umr, moveGraphHead);
+        console.log("key: ", k);
+
+        Object.keys(umr).forEach(function(key) {
+            if(key.startsWith(k.replace('v', '')) || key.startsWith(k.replace('s', ''))){
+               moveGraph['1.' + key.substring(k.length-1, key.length)] = umr[key];
+               console.log("key: ", key);
+            }
+        });
+
+        delete moveGraph['1.r'];
+        console.log("partial_graph2: ", moveGraph);
+        exec_command('delete ' + at, 1);
+        let sorted_keys = Object.keys(moveGraph).sort().reverse();
+        for(let i = 0; i < sorted_keys.length; i++){
+           let key = sorted_keys[i];
+           if(key.length <=3){//['n', '1.v', '1.s', '1.n', '1.c'] root of partial graph
+               if(key.endsWith('.c')){
+                   let headVar;
+                   if(moveGraph[key] !== ""){
+                       headVar = addTriple(current_parent, role, moveGraph[key], 'concept');
+                   }else{
+                       let stringField = moveGraph[key.replace('.c', '.s')];
+                       headVar = addTriple(current_parent, role, stringField, 'string');
+                   }
+                   moveGraph[key.replace('.c', '.v')] = headVar;
+               }
+           }else{ //branches of partial graph
+               if(key.endsWith('.c')){
+                   let headVar;
+                   let parentVar = moveGraph[key.slice(0, key.length-4) + '.v'];
+                   let roleField = moveGraph[key.replace('.c', '.r')];
+                   if(moveGraph[key] !== ""){
+                       headVar = addTriple(parentVar, roleField, moveGraph[key], 'concept');
+                   }else{
+                       let stringField = moveGraph[key.replace('.c', '.s')];
+                       headVar = addTriple(parentVar, roleField, stringField, 'string');
+                   }
+                   moveGraph[key.replace('.c', '.v')] = headVar;
+               }
+           }
+       }
+        show_amr('show');
     }
 }
 
@@ -1905,7 +1982,7 @@ function role_unquoted_string_arg(role, arg, loc) {
  * @param loc nth children in amr, most of the time only have 1 tree
  * @param args "show"
  * @param rec 0 or 1 , if rec, meaning there are ancestors, current is not top, if rec is false, current is top
- * @param ancestor_elem_id_list this is only used when at show_delete, something like "amr_elem_1 amr_elem_2", it will be used to populate show_amr_obj[ele-amr_elem_1], which is used to generate html strings
+ * @param ancestor_elem_id_list this is only used when at show_delete, and show_move, something like "amr_elem_1 amr_elem_2", it will be used to populate show_amr_obj[ele-amr_elem_1], which is used to generate html strings
  * @returns {string} returns a html string that represents the penman format
  */
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
@@ -1935,6 +2012,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         let s = '';
         let show_replace = args.match(/replace/);
         let show_delete = args.match(/delete/);
+        let show_move = args.match(/move/);
         let concept_m = concept; //concept string surrounded by html string
         let variable_m = variable; // variable string surrounded by html string
         let tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
@@ -1984,6 +2062,30 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
             }
         }
+        if (show_move) {
+            elem_id = 'amr_elem_' + ++n_elems_w_id;
+            onmouseover_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#FC33FF\',\'mo\')';
+            onmouseout_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+            if (rec) {
+                head_loc = loc.replace(/\.\d+$/, "");
+                head_variable = umr[head_loc + '.v'];
+                onclick_fc = 'fillMoveTemplate(\'' + head_variable + ' ' + role + ' ' + arg + '\',\'' + elem_id + '\')';
+            } else {
+                onclick_fc = 'fillMoveTemplate(\'top level ' + variable + '\',\'' + elem_id + '\')';
+            }
+            show_amr_obj['elem-' + elem_id] = elem_id;
+            let list = ancestor_elem_id_list.split(" ");
+            for (let i = 0; i < list.length; i++) {
+                let ancestor_elem_id = list[i];
+                if (ancestor_elem_id.match(/\S/)) {
+                    show_amr_obj['elem-' + ancestor_elem_id] += ' ' + elem_id;
+                }
+            }
+            if (role_m) {
+                role_m = '<span title="click to move" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
+            }
+        }
+
         if (rec) {
             s += role_m + ' ';
         }
@@ -2000,6 +2102,10 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
+                tree_span_args = 'id="' + elem_id + '"';
+            } else if (show_move) {
+                variable_m = '<span title="click to move" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
+                concept_m = '<span title="click to move" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             } else if (!docAnnot) { //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
                 let frames = JSON.stringify(frame_dict[concept]);
@@ -2124,6 +2230,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             } else if (show_delete) {
                 string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
+            } else if (show_move) {
+                string_m = '<span title="click to move" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
+                tree_span_args = 'id="' + elem_id + '"';
             }
             s += string_m;
         } else { // variable is not empty
@@ -2141,6 +2250,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
             } else if (show_delete) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
+                tree_span_args = 'id="' + elem_id + '"';
+            } else if (show_move) {
+                variable_m = '<span title="click to move" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
             }
             if (docAnnot) {
