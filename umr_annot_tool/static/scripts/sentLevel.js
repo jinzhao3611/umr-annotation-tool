@@ -677,7 +677,12 @@ function fillMoveTemplate(at, mo_lock) {
                        headVar = addTriple(parentVar, roleField, moveGraph[key], 'concept');
                    }else{
                        let stringField = moveGraph[key.replace('.c', '.s')];
-                       headVar = addTriple(parentVar, roleField, stringField, 'string');
+                       if(stringField !== ""){
+                          headVar = addTriple(parentVar, roleField, stringField, 'string');
+                       }else{
+                           let reentrancyVariable = moveGraph[key.replace('.c', '.v')];
+                           headVar = addTriple(parentVar, roleField, reentrancyVariable, '');
+                       }
                    }
                    moveGraph[key.replace('.c', '.v')] = headVar;
                }
