@@ -78,7 +78,7 @@ def file2db(filename: str, file_format: str, content_string: str, lang: str, sen
                                     user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
                                     sent_id=i + 1, #sentence id counts from 1
                                     doc_id=doc_id,
-                                    sent_umr=sent_umr, doc_umr={})
+                                    sent_umr=sent_umr, doc_umr={}, actions=[])
             db.session.add(annotation)
         db.session.commit()
         flash('Your annotations has been created.', 'success')
@@ -264,7 +264,7 @@ def sentlevel_typing(doc_sent_id):
                 annotation = Annotation(sent_annot=amr_html, doc_annot='', alignment=align_info, author=owner,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
-                                        sent_umr=umr_dict, doc_umr={})
+                                        sent_umr=umr_dict, doc_umr={}, actions=[])
                 flag_modified(annotation, 'umr')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 db.session.add(annotation)
@@ -406,6 +406,8 @@ def sentlevel(doc_sent_id):
             print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
             print("umr_dict: ", umr_dict)
+            actions = request.get_json(force=True)["actions"]
+            print("actions: ", actions)
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner.id).first()
@@ -413,15 +415,17 @@ def sentlevel(doc_sent_id):
                 existing.sent_annot = amr_html
                 existing.alignment = align_info
                 existing.sent_umr = umr_dict
+                existing.actions = actions
                 flag_modified(existing, 'alignment')
                 flag_modified(existing, 'sent_umr')
+                flag_modified(existing, 'actions')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
             else:
                 annotation = Annotation(sent_annot=amr_html, doc_annot='', alignment=align_info, author=owner,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
-                                        sent_umr=umr_dict, doc_umr={})
+                                        sent_umr=umr_dict, doc_umr={}, actions=[])
                 flag_modified(annotation, 'umr')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 db.session.add(annotation)

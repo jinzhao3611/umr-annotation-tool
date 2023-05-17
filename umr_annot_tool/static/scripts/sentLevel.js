@@ -21,6 +21,7 @@ let umr = {}; //{n: 1, 1.c: "obligate-01", 1.v: "o", 1.s: "", 1.n: 1, …}
 let variables = {}; //{o: "1", r: "1.1", b: "1.1.1"}
 let concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
 let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
+let actions = [];
 
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
@@ -546,10 +547,13 @@ function undo(n) {
         if (op_name === 'undo') {
             let undone_action = old_state['action'];
             console.log('Undid ' + undone_action + '. Active undo list decreases to ' + undo_list_size + ' elements (incl. empty state). Redo list size: ' + redo_list_size);
+            actions.push('undo ' + undone_action);
+
         } else {
             prev_state = undo_list[undo_index - 1];
             let redone_action = prev_state['action'];
             console.log('Redid ' + redone_action + '. Active undo list increases to ' + undo_list_size + ' elements (incl. empty state). Redo list size: ' + redo_list_size);
+            actions.push('redo ' + redone_action);
         }
     }
 }
@@ -780,6 +784,7 @@ function submit_template_action(id, tokens = "", parentVarLoc = "") {
 }
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
+    actions.push(value);
     let show_amr_args = '';
 
     if (value) {
@@ -1304,7 +1309,6 @@ function addTriple(head, role, arg, arg_type) {
  * @param value add person Edmond Pope
  */
 function addNE(value) {
-    console.log('add_ne: ' + value);
     let cc = argSplit(value);
     let head_var = cc[0];
     let role = cc[1];
@@ -2604,7 +2608,7 @@ function UMR2db() {
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
+        body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr, "actions": actions})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
