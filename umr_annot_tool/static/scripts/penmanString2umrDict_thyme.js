@@ -12,7 +12,8 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     annotText = strip2(annotText);
     if (state === 'pre-open-parenthesis') {
         annotText = annotText.replace(/^[^(]*/, ""); // remove everything at the start point until the open parenthesis
-        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
+        // ^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]
+        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*\\.(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
         if (annotText.match(new RegExp(pattern1))) {
             annotText = annotText.replace(/^\(\s*/, ""); //remove left parenthesis
             let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*` //match something like s1t
@@ -205,7 +206,7 @@ function string2umr(annotText) {
     variables = {};
     concepts = {};
     variablesInUse = {};
-    let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
+    let uncleanedRootVariables = annotText.match(/\(\s*s\d.*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "

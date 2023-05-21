@@ -13,19 +13,21 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     if (state === 'pre-open-parenthesis') {
         annotText = annotText.replace(/^[^(]*/, ""); // remove everything at the start point until the open parenthesis
         console.log('test15',annotText)
-        let pattern1 = `^\\(\\s*s[\\.-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[.-_${allLanguageChars}0-9][.-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
+        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9'.]*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
         console.log('test17',annotText.match(new RegExp((pattern1))))
         if (annotText.match(new RegExp(pattern1))) {
             annotText = annotText.replace(/^\(\s*/, ""); //remove left parenthesis
-            let pattern2 = `^[.-_${allLanguageChars}0-9][\\${allLanguageChars}0-9']*` //match something like s1t //Sijia todo
+            let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9'.]*` //match something like s1t //Sijia todo
             let variableList = annotText.match(new RegExp(pattern2)); //match variable until the variable ends, and put it in variableList
-            let pattern3 = `^[.-_${allLanguageChars}0-9][\\${allLanguageChars}0-9']*\\s*` //match something like s1t with trailing space
+            let pattern3 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9'.]*\\s*` //match something like s1t with trailing space
             annotText = annotText.replace(new RegExp(pattern3), ""); //remove variable
+            console.log(annotText)
             if (annotText.match(/^\//)) { // if annotText start with a forward slash /
                 annotText = annotText.replace(/^\/\s*/, ""); //remove / and trailing space of /
             }
+            console.log(annotText)
             let conceptList;
-            let pattern4 = `^[:*]?[.-_${allLanguageChars}0-9][${allLanguageChars}0-9']*[*]?` // match something like taste-01
+            let pattern4 = `^[:*]?[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[*]?`  // match something like taste-01
             conceptList = annotText.match(new RegExp(pattern4)); //match the concept until the first concept ends, and put it in conceptList
             annotText = annotText.replace(new RegExp(pattern4), ""); //remove the concept until the first concept ends
 
@@ -34,7 +36,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             let new_variable;
             let new_concept;
             // THIS BLOCK ADD 1.c and RECORD CONCEPT
-            let pattern5 = `^[.-_${allLanguageChars}0-9][-_${allLanguageChars}0-9']*(?:-\\d+)?$` //match something like quick-01
+            let pattern5 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*(?:-\\d+)?$` //match something like quick-01
             if (concept.match(new RegExp(pattern5))) { //match something like quick-01, or quick
                 umr_dict[loc + '.c'] = concept;
                 recordConcept(concept, loc);
@@ -214,7 +216,8 @@ function string2umr(annotText) {
     concepts = {};
     variablesInUse = {};
     //Sijia Todo
-    let uncleanedRootVariables = annotText.match(/\(\s*s\d*.[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
+    console.log(annotText)
+    let uncleanedRootVariables = annotText.match(/\(s\d+?.[a-z]\d*[ \/]/g) // match each root vars (uncleaned): ["(s1t "]
     console.log('test213--', uncleanedRootVariables)
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
@@ -233,6 +236,7 @@ function string2umr(annotText) {
         loc = root_index + '';
         umr_dict['n'] = 1;
         let result = string2umr_recursive(annotText + ' ', loc, 'pre-open-parenthesis', umr_dict);
+        console.log(result,'226');
         annotText = result[0];
         umr_dict = result[1];
         while (annotText.match(/^\s*[()]/) && (annotText.length < prev_s_length)) { // match ( ) regardless of space, and the annotText gets shorter

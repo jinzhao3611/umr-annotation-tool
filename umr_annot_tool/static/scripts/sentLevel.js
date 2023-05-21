@@ -594,6 +594,7 @@ function fillReplaceTemplate(type, at, new_value, mo_lock) {
  * @param mo_lock "amr_elem_6", this is also element id
  */
 function fillDeleteTemplate(at, mo_lock) {
+
     let same_mo_lock_p = (show_amr_mo_lock == mo_lock);
     if (show_amr_mo_lock) {
         color_all_under_amr_elem(show_amr_mo_lock, '#000000', '');
@@ -780,6 +781,7 @@ function submit_template_action(id, tokens = "", parentVarLoc = "") {
 }
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
+
     let show_amr_args = '';
 
     if (value) {
@@ -876,6 +878,7 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 if ((cc[1] === 'top') && (cc[2] === 'level')) {
                     delete_top_level(cc[3]);
                 } else { //example: value = 'delete s1t :ARG1 s1p'
+                    console.log(cc)
                     delete_based_on_triple(cc[1], cc[2], cc[3]);
                 }
                 changeShowStatus('delete');
@@ -1641,6 +1644,14 @@ function delete_rec(loc) {
  * @param arg freedom
  */
 function delete_based_on_triple(head_var, role, arg) {
+    let bol=!docAnnot
+    /*mark whether the deletion can work, if sent Annot, docAnnot =False, so always true,
+     below judge no effect; otherwise, doc annotation is true, so bol is false, have to judge the bol is correct or not,
+
+     then can delete.
+
+    */
+
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
         if (role.match(/^:[a-z]/i)) {
@@ -1650,27 +1661,57 @@ function delete_based_on_triple(head_var, role, arg) {
                 let head_var_loc_list = argSplit(head_var_locs);
                 let head_var_loc = head_var_loc_list[0];
                 let n_subs = umr[head_var_loc + '.n'];
+
+
+
+
+
                 let loc = '';
                 let arg2 = stripQuotes(arg);
                 let arg3 = trimConcept(arg);
+                let count= 1
                 for (let i = 1; i <= n_subs; i++) {
                     if (loc === '') {
                         var sub_loc = head_var_loc + '.' + i;
                         var sub_role = umr[sub_loc + '.r'];
+
+                         /**
+                          * below are justification about whether can delete
+                          *
+                          * **/
+                           let n_sub_subs = umr[sub_loc + '.n']
+                            count+=1  //actually count the elem_id
+                          if (count===parseInt(show_amr_mo_lock.split('_')[show_amr_mo_lock.split('_').length-1])){ // if the elem_id matches the user click
+                                bol=true // enable to delete; so deletion can only use with click the whole line.
+                            }
+                            for (let j= 1; j <= n_sub_subs; j++) {  // elem_id including all the nodes, including the child nodes
+                                count+=1
+                            }
+
                         if ((!umr[sub_loc + '.d'])
                             && (sub_role === role)) {
                             let arg_variable = umr[sub_loc + '.v'];
                             let arg_concept = umr[sub_loc + '.c'];
                             let arg_string = umr[sub_loc + '.s'];
-                            if ((arg_variable && (arg === arg_variable))
+
+
+                            //     if (count===show_amr_mo_lock.split('_')[show_amr_mo_lock.split('_').length[-1]]){
+                            //       bol= true
+                            //
+                            //     }}
+
+
+                            if (  bol&&((arg_variable && (arg === arg_variable))
                                 || (arg_concept && (arg === arg_concept))
                                 || (arg_concept && (arg3 === arg_concept))
-                                || ((arg_string !== undefined) && (arg2 === arg_string))) {
+                                || ((arg_string !== undefined) && (arg2 === arg_string)))) { // add one condition, the bol has to be true. deletion can work
+
                                 loc = sub_loc;
                             }
                         }
                     }
                 }
+
                 delete_rec(loc);
             } else {
                 console.log('Ill-formed delete command. Last argument should be an arg (variable, concept, string, or number). Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
@@ -2046,16 +2087,19 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         }
         if (show_delete) {
             elem_id = 'amr_elem_' + ++n_elems_w_id;
+
             onmouseover_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#FF0000\',\'mo\')';
             onmouseout_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
             if (rec) {
                 head_loc = loc.replace(/\.\d+$/, "");
                 head_variable = umr[head_loc + '.v'];
                 onclick_fc = 'fillDeleteTemplate(\'' + head_variable + ' ' + role + ' ' + arg + '\',\'' + elem_id + '\')';
+                console.log('test delete', head_variable,role,arg,elem_id,role_m)
             } else {
                 onclick_fc = 'fillDeleteTemplate(\'top level ' + variable + '\',\'' + elem_id + '\')';
             }
             show_amr_obj['elem-' + elem_id] = elem_id;
+            console.log('elemid',elem_id)
             let list = ancestor_elem_id_list.split(" ");
             for (let i = 0; i < list.length; i++) {
                 let ancestor_elem_id = list[i];
@@ -2064,6 +2108,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 }
             }
             if (role_m) {
+                console.log('2074',onmouseover_fc,onmouseout_fc,onclick_fc,role_m)
                 role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
             }
         }

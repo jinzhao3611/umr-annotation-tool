@@ -96,7 +96,7 @@ function getLocs(variable) { // b
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     // var pattern="/x\d+/"
 
-    if (variable.startsWith('x') | variable.startsWith('ac')){
+    if (variable.startsWith('x') || variable.startsWith('ac')){
         variable='s'+snt_id.trim()+'.'+variable
     }
     if (variable.match(/.*?(-\d+)/)){

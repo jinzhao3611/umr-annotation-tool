@@ -162,114 +162,158 @@ function populateUtilityDicts(){
 /**
  * from currently selected word, get the lemma and generate the senses menu list
  */
-function conceptDropdown(concept,lang='english') {
-    let  frame_info=''
+
+
+async function conceptDropdown(concept, lang = 'english') {
+    let frame_info = '';
     // submit_concept(); //record the current concept from the selected tokens
-    console.log('test166',concept)
-    current_concept=concept.toLowerCase()
+    console.log('test166', concept)
+    current_concept = concept.toLowerCase()
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
     if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
-        console.log('test 165',number['res'][0]['name'])
-        frame_info=getSenses(number);
+        console.log('test 165', number['res'][0]['name'])
+        frame_info = getSenses(number);
+
     } else { //if concept is not a number
-        if (default_langs.includes(lang)){ // if lang is one of the default languages
+        if (default_langs.includes(lang)) { // if lang is one of the default languages
             let submenu_items;
-            if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
-                 submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
-            }else{
-                if (token in citation_dict){
+            if (lang === "navajo") { //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
+                submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
+            } else {
+                if (token in citation_dict) {
                     let lemma = citation_dict[token];
-                    console.log('test-174',lemma)
-                    submenu_items = {"res": [{"name": token, "desc": "not in frame files"},  {"name": lemma, "desc": "look up in lexicon"}]}
+                    console.log('test-174', lemma)
+                    submenu_items = {
+                        "res": [{"name": token, "desc": "not in frame files"}, {
+                            "name": lemma,
+                            "desc": "look up in lexicon"
+                        }]
+                    }
                     console.log('test177', submenu_items['res'][1]['name'])
-                }else{
+                } else {
                     submenu_items = {"res": [{"name": token, "desc": "not in citation dict"}]};
                 }
             }
-            frame_info=getSenses(submenu_items);
-        }else if(typeof getLemma(token) !== 'undefined' || lang === 'chinese'){
-            console.log('test185',token)
+            frame_info = getSenses(submenu_items);
+
+        } else if (typeof getLemma(token) !== 'undefined' || lang === 'chinese') {
+            console.log('test185', token)
+
             let lemma;
-            if(lang === 'arabic'){
-                let submenu_items;
+            if (lang === 'arabic') {
+                // let submenu_items = await arabic_lemma(token)
+                // console.log(submenu_items)
+                // $('#frame_display').html(syntaxHighlight(getSenses(submenu_items['res'])))
+                // window.frame_info = getSenses(submenu_items);
+                //
                 fetch(`/getfarasalemma`, {
                     method: 'POST',
                     body: JSON.stringify({"token": token})
                 }).then(function (response) {
-                    console.log('test 192')
                     return response.json();
                 }).then(function (data) {
                     lemma = data['text'];
-                    console.log('195',lemma);
+                    console.log(lemma);
                     let senses = [];
-                    Object.keys(frame_dict).forEach(function(key) {
-                        if(key.split("-")[0] === lemma){
-                            senses.push({"name": key, "desc":frame_dict[key]})
+                    Object.keys(frame_dict).forEach(function (key) {
+                        if (key.split("-")[0] === lemma) {
+                            senses.push({"name": key, "desc": frame_dict[key]})
+                            console.log(frame_dict[key])
                         }
                     });
-
+                    let submenu_items;
                     if (senses.length === 0) {
                         submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                    }else{
+                    } else {
                         submenu_items = {"res": senses};
                     }
-
-                    $('#frame_display').html(syntaxHighlight(submenu_items))
-                console.log('211',frame_info)
-                }
-
-                ).catch(function(error){
-                    console.log("get lemma error: "+ error);
-                }
+                    console.log(submenu_items)
+                     $('#frame_display').html(syntaxHighlight(getSenses(submenu_items['res'])))
+                    window.frame_info = getSenses(submenu_items);
+                }).catch(function (error) {
+                    console.log("get lemma error: " + error);
+                });
 
 
-                );
-                frame_info=getSenses(submenu_items);
-                  // frame_info=getSenses(submenu_items);
-            } else if(lang === 'english'){
+            } else if (lang === 'english') {
                 lemma = getLemma(token);
                 console.log('test213', lemma)
                 let senses = [];
-                Object.keys(frame_dict).forEach(function(key) {
-                    if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":frame_dict[key]})
+                Object.keys(frame_dict).forEach(function (key) {
+                    if (key.split("-")[0] === lemma) {
+                        senses.push({"name": key, "desc": frame_dict[key]})
                     }
                 });
-                console.log('test220',senses)
+                console.log('test220', senses)
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
 
-                }else{
+                } else {
                     submenu_items = {"res": senses};
                 }
-                frame_info=getSenses(submenu_items);
-            }else if (lang === 'chinese') {
+                frame_info = getSenses(submenu_items);
+                return frame_info
+            } else if (lang === 'chinese') {
                 lemma = token;
                 let senses = [];
-                Object.keys(frame_dict).forEach(function(key) {
-                    if(key.split("-")[0] === lemma){
-                        senses.push({"name": key, "desc":frame_dict[key]})
+                Object.keys(frame_dict).forEach(function (key) {
+                    if (key.split("-")[0] === lemma) {
+                        senses.push({"name": key, "desc": frame_dict[key]})
                     }
                 });
                 let submenu_items;
                 if (senses.length === 0) {
                     submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-                }else{
+                } else {
                     submenu_items = {"res": senses};
                 }
-                frame_info=getSenses(submenu_items);
+
+                frame_info = getSenses(submenu_items);
+
+            } else {
+                let letter = {"res": [{"desc": "token is a letter", "name": token}]};
+                frame_info = getSenses(letter);
+
             }
-        }else {
+        } else {
             let letter = {"res": [{"desc": "token is a letter", "name": token}]};
-            frame_info=getSenses(letter);
+            frame_info = getSenses(letter);
+
         }
+
+
     }
-    console.log('test283',frame_info)
-    return frame_info
+    console.log('test283', frame_info)
+    return window.frame_info
 }
+
+async function arabic_lemma(token){
+    // const lemma
+
+    let data=await arabic_query(token)
+    const lemma= data['text']
+    console.log(lemma)
+  let senses = [];
+
+    Object.keys(frame_dict).forEach(function (key) {
+        console.log()
+        if (key.split("-")[0] === lemma) {
+            senses.push({"name": key, "desc": frame_dict[key]})
+            console.log(frame_dict[key])
+        }})
+        console.log(senses)
+          let submenu_items;
+                      if (senses.length === 0) {
+                submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+            } else {
+                submenu_items = {"res": senses};
+            }
+    return submenu_items;
+}
+
 
 /**
  * takes in different senses of a lemma and generate the secondary menu of find lemma
@@ -280,17 +324,17 @@ function getSenses(senses) {
     // let genDrop = document.getElementById('genericDropdown');
     // genDrop.innerHTML = "";
     console.log('test260',senses)
-    senses.res.forEach(function (value, index, array) {
-        // let genLink = document.createElement("a");
-        // genLink.innerHTML = value.name;
-        // genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
-        // genLink.setAttribute("title", value.desc);
-        // genLink.setAttribute("id", "sense");
-        // genLink.setAttribute("class", "dropdown-item");
-        // let genLi = document.createElement("li");
-        // genLi.appendChild(genLink);
-        // genDrop.appendChild(genLi);
-    });
+    // senses.res.forEach(function (value, index, array) {
+    //     // let genLink = document.createElement("a");
+    //     // genLink.innerHTML = value.name;
+    //     // genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
+    //     // genLink.setAttribute("title", value.desc);
+    //     // genLink.setAttribute("id", "sense");
+    //     // genLink.setAttribute("class", "dropdown-item");
+    //     // let genLi = document.createElement("li");
+    //     // genLi.appendChild(genLink);
+    //     // genDrop.appendChild(genLi);
+    // });
     return senses
 }
 
@@ -748,6 +792,50 @@ function submit_template_action(id, tokens = "") {
 
 }
 
+async function arabic_query(token) {
+    let data;
+    const res=await fetch(`/getfarasalemma`, {
+        method: 'POST',
+        body: JSON.stringify({"token": token})
+    })
+    data= await res.json();
+    console.log(data)
+    return data
+
+
+    // })
+    //     .then(async  function (data) {
+    //         lemma = data['text'];
+    //         console.log('195', lemma);
+    //         let senses = [];
+    //         Object.keys(frame_dict).forEach(function (key) {
+    //             if (key.split("-")[0] === lemma) {
+    //                 senses.push({"name": key, "desc": frame_dict[key]})
+    //             }
+    //         });
+    //         console.log('212', senses)
+    //
+    //         if (senses.length === 0) {
+    //             submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
+    //         } else {
+    //             submenu_items = {"res": senses};
+    //         }
+    //         return submenu_items
+    //         // getSenses(submenu_items);
+    //         //  let frame_info=getSenses(submenu_items);
+    //
+    //         // return frame_info
+    //
+    //     }
+    // )
+    //     .catch(function (error) {
+    //     console.log("get lemma error: " + error);
+    //     console.log('here is error')
+    //     return submenu_items
+    // })
+
+
+}
 function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
     let show_amr_args = '';
     let err_logger=document.getElementById('error_logger')
@@ -1110,6 +1198,7 @@ function showHead(){
  * @param loc "1.1.3"
  */
 function recordVariable(v, loc) {
+    console.log(1124,loc,v)
     if ((v !== undefined) && (v !== '')) {
         let old_value = getLocs(v);
         console.log('test1109',v,loc,old_value)
@@ -1214,84 +1303,91 @@ function newVar(concept) {
     return v;
 }
 
-function index2concept(concept){
+ function index2concept(concept) {
 
-     let rawtext= document.getElementsByClassName('raw_text')[0]
-    let sense=''
+    let rawtext = document.getElementsByClassName('raw_text')[0]
+    let sense = ''
 
-    if (concept.match(/.*?(-\d+)/)){
-        sense=concept.match(/.*?(-\d+)/)[1]
+    if (concept.match(/.*?(-\d+)/)) {
+        sense = concept.match(/.*?(-\d+)/)[1]
     }
-    concept=concept.replace(sense,'')
-    console.log('tets1197',concept)
-    if (concept.split('_').length-1>0){
+    concept = concept.replace(sense, '')
+    console.log('tets1197', concept, sense)
+    if (concept.split('_').length - 1 > 0) {
         // signal that there is not a word, might be x1_x2
-        let index_list= concept.split('_')
-        let target='';
-        let previous='';
+        let index_list = concept.split('_')
+        let target = '';
+        let previous = '';
         // console.log(index_list[-1])
-        for(let i =0;i<index_list.length-1;i++){ //normal one, like x2 in x1_x2
-            if(index_list[i].includes('x')){
-                let index_len= index_list[i].match(/x(\d+)/)[1].length
-                let newconcept=rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list[i].replace('x','')-1].innerText.length-index_len)
+        for (let i = 0; i < index_list.length - 1; i++) { //normal one, like x2 in x1_x2
+            if (index_list[i].includes('x')) {
+                let index_len = index_list[i].match(/x(\d+)/)[1].length
+                let newconcept = rawtext.getElementsByTagName('li')[index_list[i].replace('x', '') - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[index_list[i].replace('x', '') - 1].innerText.length - index_len)
                 // get the current token
 
-                if ((index_list[i+1]).includes('x')){  // the whole token  x1_x2
-                    target+=newconcept
-                }else{
+                if ((index_list[i + 1]).includes('x')) {  // the whole token  x1_x2
+                    target += newconcept
+                } else {
                     // not a whole token                    x1_2
-                    previous=newconcept
+                    previous = newconcept
                 }
 
 
-            }else {
+            } else {
 
 
-               target+=previous[index_list[i]-1]
+                target += previous[index_list[i] - 1]
             }
 
 
         }
-        if (index_list[index_list.length-1].includes('x')){
-            let index_len= index_list[index_list.length-1].match(/x(\d+)/)[1].length
-            target=target+'-'+rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.substring(0,rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x','')-1].innerText.length-index_len)
-        }else{
+        if (index_list[index_list.length - 1].includes('x')) {
+            let index_len = index_list[index_list.length - 1].match(/x(\d+)/)[1].length
+            console.log(rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x', '') - 1], '1257')
+            target = target + '-' + rawtext.getElementsByTagName('li')[parseInt(index_list.slice(-1)[0].replace('x', '')) - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[index_list.slice(-1)[0].replace('x', '') - 1].innerText.length - index_len)
+        } else {
 
-            target+=previous[index_list[index_list.length-1]-1]
+            target += previous[index_list[index_list.length - 1] - 1]
         }
 
-            concept=target}
-
-
-        else if(concept.includes(':')){
-            concept;
-    }else{
-         console.log('test1228', rawtext.getElementsByTagName('li')[concept.replace('x',"")-1].innerText)
-         let index_len= concept.match(/x(\d+)/)[1].length
-        console.log('test1242',index_len)
+        concept = target
+    } else if (concept.includes(':')) {
+        concept;
+    } else {
+        console.log('test1228', parseInt(concept.replace('x', "")) - 1, rawtext.getElementsByTagName('li'))
+        let index_len = concept.match(/x(\d+)/)[1].length
+        console.log('test1242', index_len)
         concept = rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.substring(0, rawtext.getElementsByTagName('li')[concept.replace('x', "") - 1].innerText.length - index_len)
-
+        console.log(concept)
     }
 
-    concept=text2num(concept)// if it's a number ?  Sijia to-do
-    if(sense!==''){  // convert the token into the lemmatized result rather than the token in the raw context
-        let sense_regex=/^[0]+/
-        let sense_no=sense.replace('-','').replace(sense_regex,'')
-        let lang=language
-        let senses=conceptDropdown(concept,lang)
-        for(let i=0;i<senses['res'].length;i++){
+    concept = text2num(concept)// if it's a number ?  Sijia to-do
+    if (sense !== '') {  // convert the token into the lemmatized result rather than the token in the raw context
+        let sense_regex = /^[0]+/
+        let sense_no = sense.replace('-', '').replace(sense_regex, '')
+        console.log(sense_no)
+        let lang = language
+        let senses = conceptDropdown(concept, lang);
+
+
+
+        // console.log('211',submenu_items, frame_info)
+
+
+        console.log('1285', senses)
+        for (let i = 0; i < senses['res'].length; i++) {
             // for (let key in senses['res'][i]){
             //
-                if (senses['res'][i]['name'].includes(sense)){
+            if (senses['res'][i]['name'].includes(sense)) {
 
-                    concept=senses['res'][i]['name']
-                    console.log('test1283',concept)
-                     break;
-                }
-
+                concept = senses['res'][i]['name']
+                console.log('test1283', concept)
+                break;
             }
 
-            // console.log('1288',senses['res'][i])
+        }
+
+        // console.log('1288',senses['res'][i])
 
         // }
         // concept=senses['res'][parseInt(sense_no)-1]['name']
@@ -1301,7 +1397,7 @@ function index2concept(concept){
 
 
     console.log('test1250', concept)
-    return concept+''
+    return concept + ''
 }
 
 /**
@@ -1314,7 +1410,7 @@ function index2concept(concept){
 function newUMR(concept,index='',lang='english') {
     console.log(concept, 'i am testing newumr')
     let v = newVar(concept); // string initial  //change ac to index
-    if(index!=''){ //if  ac, use index instead
+    if(index!==''){ //if  ac, use index instead
         let sen_index = document.getElementById('curr_shown_sent_id').innerText;
         // if ac works as top. then 'ac1_x2_x3'
         console.log('test1298',v)
@@ -1324,6 +1420,8 @@ function newUMR(concept,index='',lang='english') {
         }
     }
     let n = umr['n']; // n is how many amr trees currently in amr
+    let n_1=umr['n'];
+    console.log(1341,n)
     umr['n'] = ++n;
     if (concept.match(/x\d+/)){
 
@@ -1343,7 +1441,7 @@ function newUMR(concept,index='',lang='english') {
     // }
     //display the ac varable inlcudes index
     // but store withoutindex
-    console.log('1321',concept,v)
+    console.log('1321',concept,v,n,n_1)
     let v1;
     if (/ac\d+/.test(v)){
 
@@ -1352,11 +1450,12 @@ function newUMR(concept,index='',lang='english') {
         v1=v
 
     }
-    console.log('1331',v1)
+    console.log('1331',v1,n)
     umr[n + '.c'] = concept;
-    umr[n + '.v'] = v;
+    umr[n+ '.v'] = v;
     umr[n + '.n'] = 0;
     umr[n + '.s'] = '';
+    console.log(umr)
     let key = umr[n + '.v'] || umr[n + '.c'] || umr[n + '.s'];
     alignments[key] = begOffset + "-" + endOffset;
     begOffset = -1;
@@ -1398,7 +1497,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
         console.log('test1286', arg)
 
         arg_var_locs = getLocs(arg);
-        console.log('test1398',doc)
+        console.log('test1398',doc,arg_var_locs)
         if (arg.match(/x\d+/)&&(doc===0)){
             arg_concept=index2concept(arg)}
         else{
@@ -1971,7 +2070,7 @@ function delete_rec(loc) {
  * @param doc
  */
 function delete_based_on_triple(head_var, role, arg,doc=0) {
-    // console.log('1868',umr)
+    console.log('1868',head_var,role,arg,doc)
     let head_var_locs = getLocs(head_var);
     if (head_var_locs) {
         console.log('test 1797', role.match(/^:[a-z]/i),head_var,arg)
@@ -2392,7 +2491,7 @@ function role_unquoted_string_arg(role, arg, loc) {
  * @returns {string} returns a html string that represents the penman format
  */
 function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
-
+    console.log(args)
     loc += '';
     if (umr[loc + '.d']) { //if this node has already been deleted
         return '';
@@ -3010,13 +3109,8 @@ function UMR2db() {
 }
 
 function deHTML2(s){
-    s = s.replaceAll('<div id="amr">', '');
-    s = s.replaceAll('\n', "");
-    s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
-    s = s.replaceAll('&nbsp;', ' ');
-    s = s.replaceAll('<i>', '');
-    s = s.replaceAll('</i>', '');
+    s = deHTML(s)
 
     return s;
 }
