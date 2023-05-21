@@ -5,6 +5,7 @@ from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer # email and password reset
 from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy import Column, Integer, JSON
+from sqlalchemy.dialects.postgresql import ARRAY
 
 
 
@@ -91,9 +92,10 @@ class Annotation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sent_annot = db.Column(db.Text, nullable=False)
     doc_annot = db.Column(db.Text, nullable=False)
-    sent_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
-    doc_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
-    alignment = db.Column(MutableDict.as_mutable(JSON), nullable=False)
+    sent_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    doc_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    actions = db.Column(ARRAY(db.Text), nullable=False, server_default='{}')
+    alignment = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
     sent_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)

@@ -21,6 +21,7 @@ let umr = {}; //{n: 1, 1.c: "obligate-01", 1.v: "o", 1.s: "", 1.n: 1, …}
 let variables = {}; //{o: "1", r: "1.1", b: "1.1.1"}
 let concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
 let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
+let actions = [];
 
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
@@ -105,8 +106,12 @@ function customizeOptions(settingsJSON, attrId) {
  * @param curr_sent_umr
  * @param curr_annotation_string
  * @param curr_alignment
+ * @param actions_list_json
  */
-function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment) {
+function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment, actions_list_json) {
+    if(actions_list_json !== '"[]"'){
+        actions = Object.values(JSON.parse(actions_list_json));
+    }
     if (curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))) { //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
     } else {
@@ -546,10 +551,13 @@ function undo(n) {
         if (op_name === 'undo') {
             let undone_action = old_state['action'];
             console.log('Undid ' + undone_action + '. Active undo list decreases to ' + undo_list_size + ' elements (incl. empty state). Redo list size: ' + redo_list_size);
+            actions.push('undo ' + undone_action);
+
         } else {
             prev_state = undo_list[undo_index - 1];
             let redone_action = prev_state['action'];
             console.log('Redid ' + redone_action + '. Active undo list increases to ' + undo_list_size + ' elements (incl. empty state). Redo list size: ' + redo_list_size);
+            actions.push('redo ' + redone_action);
         }
     }
 }
@@ -594,7 +602,6 @@ function fillReplaceTemplate(type, at, new_value, mo_lock) {
  * @param mo_lock "amr_elem_6", this is also element id
  */
 function fillDeleteTemplate(at, mo_lock) {
-
     let same_mo_lock_p = (show_amr_mo_lock == mo_lock);
     if (show_amr_mo_lock) {
         color_all_under_amr_elem(show_amr_mo_lock, '#000000', '');
@@ -781,6 +788,7 @@ function submit_template_action(id, tokens = "", parentVarLoc = "") {
 }
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
+    actions.push(value);
 
     let show_amr_args = '';
 
@@ -878,7 +886,6 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 if ((cc[1] === 'top') && (cc[2] === 'level')) {
                     delete_top_level(cc[3]);
                 } else { //example: value = 'delete s1t :ARG1 s1p'
-                    console.log(cc)
                     delete_based_on_triple(cc[1], cc[2], cc[3]);
                 }
                 changeShowStatus('delete');
@@ -1661,11 +1668,6 @@ function delete_based_on_triple(head_var, role, arg) {
                 let head_var_loc_list = argSplit(head_var_locs);
                 let head_var_loc = head_var_loc_list[0];
                 let n_subs = umr[head_var_loc + '.n'];
-
-
-
-
-
                 let loc = '';
                 let arg2 = stripQuotes(arg);
                 let arg3 = trimConcept(arg);
@@ -1711,7 +1713,6 @@ function delete_based_on_triple(head_var, role, arg) {
                         }
                     }
                 }
-
                 delete_rec(loc);
             } else {
                 console.log('Ill-formed delete command. Last argument should be an arg (variable, concept, string, or number). Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
@@ -2094,12 +2095,10 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 head_loc = loc.replace(/\.\d+$/, "");
                 head_variable = umr[head_loc + '.v'];
                 onclick_fc = 'fillDeleteTemplate(\'' + head_variable + ' ' + role + ' ' + arg + '\',\'' + elem_id + '\')';
-                console.log('test delete', head_variable,role,arg,elem_id,role_m)
             } else {
                 onclick_fc = 'fillDeleteTemplate(\'top level ' + variable + '\',\'' + elem_id + '\')';
             }
             show_amr_obj['elem-' + elem_id] = elem_id;
-            console.log('elemid',elem_id)
             let list = ancestor_elem_id_list.split(" ");
             for (let i = 0; i < list.length; i++) {
                 let ancestor_elem_id = list[i];
@@ -2108,7 +2107,6 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 }
             }
             if (role_m) {
-                console.log('2074',onmouseover_fc,onmouseout_fc,onclick_fc,role_m)
                 role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
             }
         }
@@ -2649,7 +2647,7 @@ function UMR2db() {
 
     fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
-        body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
+        body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr, "actions": actions})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -2665,7 +2663,31 @@ function deHTML2(s) {
     s = deHTML(s)
     return s;
 }
+function export_actions() {
+    let doc_name = "actions_" + document.getElementById('filename').innerText ;
+    let output_str = actions.join('\n');
 
+    let filename;
+    let text = "user name: " + document.getElementById('username').innerText + '\n';
+    text += "user id: " + document.getElementById('user_id').innerText + '\n';
+    text += "file language: " + document.getElementById('lang').innerText + '\n';
+    text += "file format: " + document.getElementById('file_format').innerText + '\n';
+    text += "Doc ID in database: " + document.getElementById('doc_id').innerText + '\n';
+
+    let curr_time = new Date();
+    text += "export time: " + curr_time.toLocaleString() + '\n\n';
+    text += '# :: snt' + document.getElementById('sentence_id').value + '\n';
+    if (window.BlobBuilder && window.saveAs) {
+        filename = 'exported_' + doc_name;
+        text += output_str;
+        console.log('Saving actions file ' + filename + ' on your computer, typically in default download directory');
+        var bb = new BlobBuilder();
+        bb.append(text);
+        saveAs(bb.getBlob(), filename);
+    } else {
+        console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
+    }
+}
 function export_annot(exported_items, content_string) {
     let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {

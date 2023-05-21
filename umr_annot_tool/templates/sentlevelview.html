@@ -305,7 +305,7 @@
         </div>
         <script type="text/javascript">
             colorAnnotatedSents('{{ annotated_sent_ids }}');
-            loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`);
+            loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`, `[]`);
         </script>
     <div>
 {% endblock content2 %}
