@@ -895,11 +895,13 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
                     addTriple(name_var, sub_role, index2concept(cc[i]), 'string');
                 }
                 show_amr_args = 'show';
+                change_color(cc[2])
             } else if (cc.length >= 2) {
                 // this is when cc only has two element (the first probably is top)
                 for (let i = 1; i < cc.length; i++) {
                     var top_var = newUMR(cc[i].toLowerCase());
                 }
+                change_color(cc[1])
                 console.log('test 770', top_var)
                 var pattern = /s\d+/
 
@@ -939,6 +941,8 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
 
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
+                    change_color(cc[5],1)
+                    change_color(cc[3],0)
                 } else {
                     err_logger.innerHTML = "<span>'Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;'</span>"
                     console.log('Ill-formed replace concept command. Incorrect number of arguments. Usage: replace concept at &lt;var&gt; with &lt;new-value&gt;');
@@ -982,6 +986,7 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
                 }
                 changeShowStatus('delete');
                 show_amr_args = 'show delete';
+                 change_color(cc[3],0)
             } else {
                 add_error('Ill-formed delete command. Usage: delete &lt;head-var&gt; &lt;role&gt; &lt;arg&gt; &nbsp; <i>or</i> &nbsp; top level &lt;var&gt;');
             }
@@ -1549,7 +1554,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki|name)$/))) {
             console.log("I am here40-3",arg,arg_concept);
-
+            change_color(arg,1)
             arg_variable = newVar(arg); // truffle -> s1t
              if (arg.startsWith('x')){
             arg=index2concept(arg);}
@@ -3430,6 +3435,7 @@ function set_load_visible(command_id){  // show the load text field, user can co
 function load2amr(){  // get the paste penman tree and show the tree
     let load_amr=document.getElementById('load-plain').value;
     // console.log(string2umr(load_amr))
+    load_amr=load_amr_replace_sentid(load_amr)
     umr=string2umr(load_amr)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
@@ -3638,3 +3644,48 @@ function syntaxHighlight(json) {
 //     let lang=language
 //
 // }
+function load_amr_replace_sentid(amr){
+    let s=''
+    let pattern_=/\(s(\d+?)\.(x|ac)\d+/  //test whether this is a variable
+
+    amr.trim().split('\n').forEach(function(v,i){
+        if(pattern_.test(v)){
+            let snt_id = document.getElementById('curr_shown_sent_id').innerText; //get the current sentenceid
+            s+=v.replace(/\(s(\d+?)(?=\.(x|ac))/,'(s'+snt_id.trim()) // replace that.
+
+        }else{
+            s+=v;
+
+        }
+
+
+
+    })
+
+// console.log(s)
+return s
+
+}
+
+function change_color(arg,status=1){
+
+    console.log('3621',arg)
+
+    if (arg.match(/x\d+/)){
+        if (/x\d+(-\d+)/.test(arg)){
+
+        let sense= arg.match(/x\d+(-\d+)/)
+            console.log(sense,'3627')
+        arg=arg.replace(sense[1],'')}
+
+            console.log('test3626',arg)
+            let rawtext= document.getElementsByClassName('raw_text')[0]
+            let concept_index=arg.replace('x','')
+            if(status===1){
+            rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
+                  rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
+                }
+
+
+
+}
