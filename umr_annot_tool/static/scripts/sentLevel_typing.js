@@ -164,7 +164,7 @@ function populateUtilityDicts(){
  */
 
 
-async function conceptDropdown(concept, lang = 'english') {
+function conceptDropdown(concept, lang = 'english') {
     let frame_info = '';
     // submit_concept(); //record the current concept from the selected tokens
     console.log('test166', concept)
@@ -290,29 +290,7 @@ async function conceptDropdown(concept, lang = 'english') {
     return window.frame_info
 }
 
-async function arabic_lemma(token){
-    // const lemma
 
-    let data=await arabic_query(token)
-    const lemma= data['text']
-    console.log(lemma)
-  let senses = [];
-
-    Object.keys(frame_dict).forEach(function (key) {
-        console.log()
-        if (key.split("-")[0] === lemma) {
-            senses.push({"name": key, "desc": frame_dict[key]})
-            console.log(frame_dict[key])
-        }})
-        console.log(senses)
-          let submenu_items;
-                      if (senses.length === 0) {
-                submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
-            } else {
-                submenu_items = {"res": senses};
-            }
-    return submenu_items;
-}
 
 
 /**
@@ -790,17 +768,8 @@ function submit_template_action(id, tokens = "") {
         }
     }
 
-}
 
-async function arabic_query(token) {
-    let data;
-    const res=await fetch(`/getfarasalemma`, {
-        method: 'POST',
-        body: JSON.stringify({"token": token})
-    })
-    data= await res.json();
-    console.log(data)
-    return data
+
 
 
     // })
@@ -3099,7 +3068,7 @@ function UMR2db() {
         }
     }
 
-    fetch(`/sentlevel/${doc_sent_id}`, {
+    fetch(`/sentlevel_typing/${doc_sent_id}`, {
         method: 'POST',
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
@@ -3286,9 +3255,12 @@ window.onload=function(){
 
     let frame_button=document.getElementById('frame_button')
      frame_button.addEventListener("click", function () {  // get the token that user is inputing,
+        if (language ==='english') {
+            window.open("https://verbs.colorado.edu/propbank-development/", "newwindow", "height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
+        }else{
+            window.open("https://verbs.colorado.edu/propbank/framesets-arabic/", "newwindow", "height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
 
-         window.open("https://verbs.colorado.edu/propbank-development/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
-
+        }
  });
 
     // let sent=document.getElementsByClassName("table table-striped table-sm")
