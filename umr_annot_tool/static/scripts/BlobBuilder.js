@@ -40,8 +40,8 @@ var
 	).split(" ")
 	, file_ex_code = file_ex_codes.length
 	, realURL = view.URL || view.webkitURL || view
-	, real_create_object_URL = realURL.createObjectURL
-	, real_revoke_object_URL = realURL.revokeObjectURL
+	, real_create_object_url = realURL.createObjectURL
+	, real_revoke_object_url = realURL.revokeObjectURL
 	, URL = realURL
 	, btoa = view.btoa
 	, atob = view.atob
