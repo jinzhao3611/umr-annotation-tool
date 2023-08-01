@@ -1,0 +1,49 @@
+html {
+    font-size: 48px;
+    background-color: #FFFFEE;
+}
+
+body table tr td {
+    font-size: 48px;
+}
+
+b, strong {
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 60px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 54px;
+    font-weight: bold;
+    margin-bottom: 0.4em;
+}
+
+font.large2 {
+    font-size: 66px;
+}
+
+font.large1 {
+    font-size: 60px;
+}
+
+font.small1 {
+    font-size: 20px;
+}
+
+body form input {
+    font-size: 1.2em;
+}
+
+ul {
+    margin-top: 0.3em;
+    margin-bottom: 0.4em;
+}
+
+#amr{
+    border: 100px solid rgb(0, 0, 0);
+    color:red;
+}

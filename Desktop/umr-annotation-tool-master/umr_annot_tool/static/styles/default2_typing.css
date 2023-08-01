@@ -1,0 +1,249 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+input{
+    width: 100px;
+}
+body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > tr > td, body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > tr {
+    font-size: 12px;
+    width: 50px;
+}
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+.main_annotation{
+    display: block;
+    width: 100%;
+
+}
+.main_annotation tbody tr{
+display: inline-block
+
+
+}
+.main_annotation td{
+    white-space: nowrap;
+    display: block;
+}
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+
+#penman{
+    font-style: italic;
+    font-family: "Times New Roman", serif;
+
+
+}
+
+#all-sentences, #sentence{
+    /*height:auto;*/
+    overflow-y: scroll;
+    /*max-height: 30px;*/
+
+}
+#sentence{
+
+    display: none;
+}
+/*#all-sentences{*/
+/*    height: 6em;*/
+
+/*}*/
+#info{
+        height:auto;
+    overflow-y: scroll;
+    max-height: 250px;
+    display: none;}
+
+
+ul.raw_text,ul.raw_text_index {
+    padding:0 0 0 0 ;
+    width: 100%;
+    /*width: max-content;*/
+    /*white-space: normal;*/
+    /*word-wrap: break-word;*/
+/*word-break: break-all;*/
+    /*float: left;*/
+    /*overflow: clip;*/
+}
+
+
+ul.raw_text {
+    list-style-type: none;
+    /*align-content: space-evenly;*/
+    display: flex;
+    justify-content: space-evenly;
+
+    /*word-wrap: break-word;*/
+    float: left;
+}
+ul.raw_text li div{
+     list-style-type: none;
+
+
+
+}
+ul.raw_text_index li , ul.raw_text li {
+display: inline-block;
+    margin-right: 5px;
+    /*padding-right: 10px;*/
+
+}
+
+
+ul.raw_text_index li:nth-child(odd){
+
+    color: #005f87;
+
+}
+ul.raw_text,ul.raw_text_index {
+    display: block;
+
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 50px;
+}
+.command{
+    width: 100%;
+    display: flex;
+    font-size: 20px;
+height: 70%}
+
+.command::-webkit-input-placeholder{
+        color: #aab2bd;
+        font-size: 10px;
+    }
+
+.btn-sm{
+    background-color: #10a778;
+    display: inline;
+
+
+}
+hr {
+  /*border: 0;*/
+  clear:both;
+  /*display:block;*/
+  /*width: 96%;*/
+  /*background-color:grey;*/
+  /*height: 1px;*/
+}
+body.wrapper{
+
+    /*display: grid;*/
+    /*grid: auto auto/ max-content auto;*/
+}.annotation-display{
+    width:100%;float: left;
+ }.frame_display_info{
+    width: 50%;float: right; margin-top: 20px;
+   }
+
+
+#frame_display{width: fit-content }
+
+    .string { color: green;  }
+    .number { color: darkorange; display: inline }
+    .boolean::before{
+        content: '\A';
+        white-space: pre;
+    }
+    .boolean { color: blue;  display: -moz-inline-block}
+    .null { color: magenta; display: block}
+    .key::before{
+        content: '\A\A';
+        white-space: pre;
+    }
+    .key{ color: red;  display: inline}
+
+
+/*#frame_display  span{*/
+/*    display: inline-block;*/
+/*}*/
+
+#logger{
+    width: max-content;
+    color: #838383;
+    text-align: center;
+
+
+
+
+}
+#error_prompt{
+    background-color: #a9b0bc;
+    color: #e7040f;
+    display: block;
+    font-weight: bold;
+    width: fit-content;
+}
