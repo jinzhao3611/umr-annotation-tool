@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
-
 {% block head %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/default2.css') }}">
+    <script src="../static/scripts/sentLevel.js" type="text/javascript"></script>
+     <script src="../static/scripts/utils.js" type="text/javascript"></script>
+    <script src="../static/scripts/penmanString2umrDict.js" type="text/javascript"></script>
+    <script src="../static/scripts/umrDict2penmanString.js" type="text/javascript"></script>
 {% endblock head %}
 
 {% block content %}
@@ -20,10 +23,21 @@
                 <div>
                   {{ search_umr_form.triple.label }}{{ search_umr_form.triple(class="form-control form-control-sm")}}<br/>
                 </div>
+{#                   <div>#}
+{#                  {{ search_umr_form.project_name.label }}{{ search_umr_form.project_name(class="form-control form-control-sm")}}<br/>#}
+{#                </div>#}
+                       <div>
+                  {{ search_umr_form.user_name.label }}{{ search_umr_form.user_name(class="form-control form-control-sm")}}<br/>
+                </div>
+                      <div>
+                  {{ search_umr_form.project_name.label}}{{ search_umr_form.project_name(class="form-control form-control-sm")}}<br/>
+                </div>
+
+
         </fieldset>
 
         <div class="input-group-append">
-            {{ search_umr_form.submit(class="btn btn-outline-info", id="btnSubmit") }}
+            {{ search_umr_form.submit(class="btn btn-outline-info", member_id="btnSubmit") }}
         </div>
     </form>
 
@@ -31,8 +45,74 @@
         <legend class="border-bottom mb-4">Results</legend>
         <ul class="list-group" id="otherDocs">
             {% for umr_result in umr_results %}
+                <li class="list-group-item d-flex justify-content-between align-items-center"  >
+                <p>
+                <style>
+	.search_results{
+	    padding: 3px 5px 3px 18px;
+	    margin: 3px 0 3px 5px;
+	    {#position: relative;#}
+		line-height:24px;
+	    color: #333;
+	    cursor: default;
+	    border: 1px solid #aaaaaa;
+	    border-radius: 3px;
+	    -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+	    box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+	    background-clip: padding-box;
+	    -webkit-touch-callout: none;
+	    -webkit-user-select: none;
+	    -moz-user-select: none;
+	    -ms-user-select: none;
+	    user-select: none;
+	    background-color: #e4e4e4;
+	    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0);
+	    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eee));
+	    background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+	    background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+	    background-image: linear-gradient(to bottom, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+	     font-size:12px;
+ display: flex;
+        flex-wrap: wrap;
+ {# flex: 1;#}
+	}
+hr {
+  flex: 0 0 100%;
+    /* or this */
+}
+</style>
+                    <style>
+table, th, td {
+  border:1px solid black;
+    text-align: center;
+}
+</style>
+{#                <div class="search_results" style="display:flex;" > {{ sent_results }}</div>#}
+{#                    <hr>#}
+                <div class="search_results" style="display:flex;">
+                    <table style="width: 100%">
+                        <tr>
+                            <td>{{ umr_result[2]|safe }}</td>
+                            <td>{{umr_result[3]}}</td>
+                            <td>{{umr_result[4]|safe}}</td>
+                        </tr>
+                    </table>
+                    <hr style="flex-grow: 1">
+                    {{umr_result[0]|safe }} <hr style="flex-grow: 1">
+                    {{umr_result[1]|safe }}  </div>
+
+
+
+
+
+            {% endfor %}
+            {% for sent_result in sents_results %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" >
-                    <p>{{ umr_result|safe }}</p>
+                <p>
+
+                   {{sent_results}}
+                    {#<p>deHTML({{ sent_result|safe }})</p>#}
+                </p>
                 </li>
             {% endfor %}
         </ul>
@@ -42,6 +122,9 @@
         document.getElementById("concept").value = "";
         document.getElementById("word").value = "";
         document.getElementById("triple").value = ""
+        document.getElementById("user_name").value=""
+        document.getElementById("project_name").value=""
+
     </script>
 
 {% endblock content %}

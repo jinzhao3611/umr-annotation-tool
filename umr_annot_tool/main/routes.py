@@ -151,10 +151,9 @@ def upload_document(current_project_id):
                 is_exported = form.if_exported.data
                 if is_exported:  # has annotation
                     if file_format == 'isi_editor':
-                        new_content_string, sents, sent_annots,doc_annots = process_exported_file_isi_editor(content_string)
-                        print('test150',doc_annots)
+                        new_content_string, sents, sent_annots, doc_annots = process_exported_file_isi_editor(content_string)
                         file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots,current_project_id=current_project_id)
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id)
                     else:
                         new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
                             content_string)
@@ -187,6 +186,7 @@ def upload_document(current_project_id):
             flash('Please upload a file.', 'danger')
 
     return render_template('upload_document.html', title='upload', form=form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
+
 
 @main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
 def upload_lexicon(current_project_id):
@@ -229,7 +229,7 @@ def sentlevel_typing(doc_sent_id):
     if doc.lang == "chinese":
         frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
     elif doc.lang == "english":
-        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
+        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r",encoding='utf-8'))
     elif doc.lang == "arabic":
         frame_dict = json.load(open(FRAME_FILE_ARABIC, "r"))
     else:
