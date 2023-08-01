@@ -45,6 +45,7 @@ let alignments = {}
  * @param partial_graphs_json
  */
 function initialize(frame_json, lang, partial_graphs_json) {
+    show_amr_obj['option-1-line-NEs'] = localStorage['one-line-NE']
     language = lang; // assign language of the document
     umr['n'] = 0; //clear the current graph
     undo_list.push(cloneCurrentState()); //populate undo_list
@@ -729,7 +730,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         value = strip(value);
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
         let cc;
+
         if (value.includes("(")) {
+
             //doc-level
             let pattern = /^(s\d*)\s(:temporal|:modal|:coref)\s(\(s\d*[a-z]\d*\s:.+\s.+\))$/;
             //example match: s1 :temporal (s1t2 :before DCT)
@@ -738,9 +741,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             let match = pattern.exec(value);
             cc = [match[1], match[2], match[3]]; //["s1", ":temporal", "(s1t2 :before DCT)"]
         } else {
+
             cc = argSplit(value);
         }
-
+        // console.log(getLocs(cc[0]),'test746',variables)
         // cc == ["b", ":arg1", "car"]
         if (cc.length > 3 && cc[1] === ':Aspect') { //example: value = 's1t :Aspect Reversible State': Reversible State needs to be hyphenated when added to graph
             let p = cc[0];
@@ -783,7 +787,12 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             if (cc.length === 1) {
                 console.log('Ill-formed replace command. Arguments missing. First argument should be the type of AMR element to be replaced: concept, string or role');
             } else if (cc[1] === 'concept') { //example: value = "replace concept at s1n3 with noodles"
-                if (cc.length === 6) {
+                if (docAnnot && cc.length===7){
+                     replace_concept(cc[2], cc[3], cc[4], cc[5]+' '+cc[6]);
+                    show_amr_args = 'show';
+
+                }
+                else if (cc.length === 6) {
                     replace_concept(cc[2], cc[3], cc[4], cc[5]);
                     show_amr_args = 'show';
                 } else {
@@ -1286,10 +1295,19 @@ function addNE(value) {
  * @param key_with 'with'
  * @param new_concept 'noodle'
  */
+//To-Do  multiple modification does not work
 function replace_concept(key_at, head_var, key_with, new_concept) {
+    console.log(key_at,head_var,key_with, new_concept)
+    let elem_id=''
+    if (docAnnot){
+        let elem_id_string = new_concept.split(' ')[1];
+        elem_id=elem_id_string.split('_')[elem_id_string.split('_').length-1];
+        new_concept=new_concept.split(' ')[0]
+        }
     new_concept = new_concept.replace(/\.(\d+)$/, "-$1");  // build.01 -> build-01
     if (key_at === 'at') {
         let head_var_locs = getLocs(head_var);
+        // console.log(head_var_locs,variables)
         if (head_var_locs) {
             if (key_with === 'with') {
                 // if (validEntryConcept(new_concept) || language === "default") {
@@ -1297,11 +1315,35 @@ function replace_concept(key_at, head_var, key_with, new_concept) {
                     head_var_locs += '';
                     let loc_list = argSplit(head_var_locs);
                     let loc = loc_list[0];
+
                     let old_concept = umr[loc + '.c'];
-                    umr[loc + '.c'] = trimConcept(new_concept);
+                    // umr[loc + '.c'] = trimConcept(new_concept);
                     if(docAnnot){
+                        console.log(elem_id)
+                        let concept_index=(parseInt(elem_id)+1)/4
+                        if (concept_index%1!==0){
+
+                            concept_index=(parseInt(elem_id)-1)/4
+                        }
+                        console.log(concept_index)
+                        let key = '1.'+concept_index.toString()+'.v'
+
+                        console.log('key',key)
+                        if (concept_index%1===0 &&umr[key]===head_var){
+
+                                loc = key.replace('.v','')
+                            console.log('loc',loc)
+                            }
+
+
+                         // to-do talk to Jin about here, not to add the new variable to the variables, and find the variable is not the first one.
+                        umr[loc + '.c'] = trimConcept(new_concept);
                         umr[loc + '.v'] = trimConcept(new_concept); //concept and variable are the same in doclevel annot
+                        // change_var_name(head_var,new_concept,0)
+                        variables[new_concept]=variables[head_var]
+                        // variables[head_var]=''
                     }else{
+                          umr[loc + '.c'] = trimConcept(new_concept);
                         change_var_name(head_var, new_concept, 0);
                     }
                     state_has_changed_p = 1;
@@ -1852,29 +1894,35 @@ function leafy_or_concept_p(loc) {
 /**
  * decide if this new concept amr should be on the same line with parent and grandparent or not
  * @param loc: 1.1
+ * @param umr_dict
  * @returns {number}
  */
-function show_amr_new_line_sent(loc) {
-    let variable = umr[loc + '.v'];
-    let concept = umr[loc + '.c'];
-    let string = umr[loc + '.s'];
-    let role = umr[loc + '.r'] || '';
+function show_amr_new_line_sent(loc,umr_dict=umr) {
+     populateUtilityDicts();
+    let variable = umr_dict[loc + '.v'];
+    let concept = umr_dict[loc + '.c'];
+    let string = umr_dict[loc + '.s'];
+    let role = umr_dict[loc + '.r'] || '';
     let head_loc = '';
     let head_concept = '';
     let head_role = '';
     let n = '';
     let grand_head_loc = '';
     let grand_head_concept = '';
+    console.log(umr,'1872')
     if (loc.match(/\.\d+$/)) {
         head_loc = loc.replace(/\.\d+$/, "");
-        head_concept = umr[head_loc + '.c'] || '';
-        head_role = umr[head_loc + '.r'] || '';
-        n = umr[head_loc + '.n'];
+        console.log(head_loc,'1873')
+        head_concept = umr_dict[head_loc + '.c'] || '';
+        head_role = umr_dict[head_loc + '.r'] || '';
+        console.log('1876',head_concept,head_role,umr)
+        n = umr_dict[head_loc + '.n'];
         if (head_loc.match(/\.\d+$/)) {
             grand_head_loc = head_loc.replace(/\.\d+$/, "");
-            grand_head_concept = umr[grand_head_loc + '.c'] || '';
+            grand_head_concept = umr_dict[grand_head_loc + '.c'] || '';
         }
     }
+    console.log('1881',head_concept,role,grand_head_concept,head_role)
     if (role.match(/^:ARG\d+$/)) {
         return 1;
     } else if (show_amr_obj['option-string-args-with-head'] && (string !== '') && (variable === '')) {
@@ -1965,6 +2013,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         let show_delete = args.match(/delete/);
         let concept_m = concept; //concept string surrounded by html string
         let variable_m = variable; // variable string surrounded by html string
+        console.log('1968',concept,variable,loc)
         let tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
         let role_m = ''; // role string surrounded by html string
         let elem_id = '';
@@ -2022,6 +2071,12 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 let old_value = concept;
                 elem_id = 'amr_elem_' + ++n_elems_w_id;
                 let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+
+                if (docAnnot){
+                    onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+
+                }
+                console.log(onclick_fc,'test_replace_',loc)
                 let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
                 let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
                 concept_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept + '</span>';
@@ -2029,7 +2084,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
                 variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
                 concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
                 tree_span_args = 'id="' + elem_id + '"';
-            } else if (!docAnnot) { //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
+            } else if (!docAnnot) { //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict should be empty, then won't go in this
                 let frames = JSON.stringify(frame_dict[concept]);
                 if (typeof frames !== 'undefined') {
                     let escaped_frames = escapeHtml(frames);
@@ -2040,7 +2095,9 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
             }
 
             if (docAnnot) {
+                console.log('2044',variable_m,concept_m)
                 if(role === ''){ //when variable match the root of doclevel annotation, something like s1s0
+
                    s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
                 }else{
                     s +='(' + concept_m; //in doc_annot, concept and the variable are the same
@@ -2180,7 +2237,7 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
         if (tree_span_args) {
             s = '<span ' + tree_span_args + '>' + s + '</span>';
         }
-        // console.log("s: "+ s);
+        console.log("s2183: "+ s);
         return s;
     }
 }
@@ -2214,6 +2271,7 @@ function show_amr(args) {
 
         html_amr_s = amr_s;
         html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
+        console.log('2217',html_amr_s)
         // this is the actual output part
         if (docAnnot && args==="show") {
             // html_amr_s =
@@ -2512,8 +2570,8 @@ function UMR2db() {
             }
         }
     }
-
-    fetch(`/UMRWriter/sentlevel/${doc_sent_id}`, {
+    console.log('test2522',annot_str,umr)
+    fetch(`/sentlevel/${doc_sent_id}#locate_page`, {
         method: 'POST',
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
     }).then(function (response) {
@@ -2533,6 +2591,7 @@ function deHTML2(s) {
 }
 
 function export_annot(exported_items, content_string) {
+    content_string=String(content_string.replace('`',''))
     let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {
         e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
@@ -2574,7 +2633,7 @@ function export_annot(exported_items, content_string) {
     if (window.BlobBuilder && window.saveAs) {
         filename = 'exported_' + doc_name;
         text += output_str;
-        text += '\n\n' + '# Source File: \n' + content_string;
+        text += '\n\n' + '$$ Source File: \n' + content_string;
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
         bb.append(text);
@@ -2651,11 +2710,11 @@ function colorAnnotatedSents(annotated_sent_ids) {
     })
 }
 
-function changeSetting() {
-    show_amr_obj['option-1-line-NEs'] = !show_amr_obj['option-1-line-NEs'];
-    // show_amr_obj['option-string-args-with-head'] = !show_amr_obj['option-string-args-with-head'];
-    show_amr("show");
-}
+// function changeSetting() {
+//     show_amr_obj['option-1-line-NEs'] = !show_amr_obj['option-1-line-NEs'];
+//     // show_amr_obj['option-string-args-with-head'] = !show_amr_obj['option-string-args-with-head'];
+//     show_amr("show");
+// }
 
 /**
  * this is a temporary function, the purpose is to test execute command function
@@ -2685,7 +2744,8 @@ window.onload=function(){
     check_command();
     // submit_command();
     // window.scrollTo({top:})
-    location.hash="locate_page" // when redirecting to the new page, fxied the scroll bar to the center of the page.
+    if (!docAnnot){
+    location.hash="locate_page"} // when redirecting to the new page, fxied the scroll bar to the center of the page.
     // the annotator doesn't need to scroll up or down to find the annotation area
 
 
