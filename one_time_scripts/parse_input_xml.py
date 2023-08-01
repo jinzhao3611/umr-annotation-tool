@@ -51,6 +51,7 @@ def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[Lis
     sents = []
     sent_annots = []
     doc_annots=[]
+    print(content_string)
     root = ET.fromstring(content_string)
     for child in root:
         if child.tag =='sntamr':
@@ -78,9 +79,16 @@ def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List
              doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
              aligns: ['s1t: '3-3', 's2d': 2-2', 'State': -1--1]
     """
-    items = content_string.split("#")[:-1] #last item in list is original source file
-    doc_content_string = content_string.split("#")[-1].replace(' Source File: \n', '').strip() #remove first line
-
+    print('test81')
+    new_text = content_string.split("$$")[0] #last item in list is original source file
+    doc_content_string = content_string.split("$$")[-1].replace(' Source File: \n', '').strip() #remove first line
+    # print('83',items,doc_content_string)
+#     # if '#' in doc_content_string:
+    items = re.split(r'^#', new_text, flags=re.M)  # last item in list is original source file
+# # print(items1)
+    print(items,'87tesr')
+    # doc_content_string = re.split(r"$$",content_string,flags=re.M)[-1].replace(' Source File: \n', '').strip()  # remove first line
+    print('test85',len(items),doc_content_string)
     sent_indice = list(range(1, len(items), 4))
     sent_annot_indice = list(range(2, len(items), 4))
     align_indice = list(range(3, len(items), 4))
@@ -96,15 +104,19 @@ def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List
         sent_content = re.sub(':: snt\d+', '', sent_content).strip()
         sent_content = re.sub('Sentence:', '', sent_content).strip()
         sents.append(sent_content.split())
-
+    print('sents',sents,sent_annot_list)
     aligns = []
     for align_string in align_list:
         align_dict = {}
+        if 'alignment:' not in align_string:
+            continue
         align_items = re.sub('alignment:', '', align_string).strip().split('\n')
         for align_item in align_items:
-            if align_item == '':
+            if align_item.strip() == '':
                 continue
+            print('111',align_items)
             key_str, value_str = align_item.split(':')
+            print('test110',key_str,value_str)
             if '(' in key_str:
                 pattern = "^(.*)\((.*)\)"
                 concept_or_string = re.match(pattern, key_str).group(1)
@@ -738,7 +750,7 @@ def parse_toolbox4(xml_string: str) -> 'ExtractedXMLInfo':
 
 
 if __name__ == '__main__':
-    input_file = '/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/jens_van_gysel/exported_exported_pear-stories-1-for-umr-tool (1).txt'
+    input_file = r'D:\print files\return labels\exported_ID051-clinic-148.xml'
     with open(input_file, 'r') as f:
         content_string = f.read()
 
