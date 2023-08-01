@@ -27,6 +27,7 @@
         <script src="../static/scripts/modal_conversion.js" type="text/javascript"></script>
         <script src="../static/scripts/BlobBuilder.js"></script>
         <script src="../static/scripts/FileSaver.js"></script>
+{#        <script>loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`);</script>#}
 
 
         <style type="text/css">
@@ -118,9 +119,9 @@
         </header>
 
         <main role="main" class="container-fluid no-padding"> {# This is why the role attribute is here: https://stackoverflow.com/questions/10403138/what-is-the-purpose-of-the-role-attribute-in-html #}
-            <div class="row align-items-center" style="height: auto; padding-bottom:70px; padding-left:70px; padding-right:70px">
+            <div class="row align-items-center" style="height: auto; padding-bottom:70px; padding-left:50px; padding-right: 3px;">
 {#            the left side#}
-                <div id='content' class="col-md-8" style="height: auto;">
+                <div id='content' class="col-md-8" style="height: auto;width: auto">
 {#                error message section#}
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
@@ -171,12 +172,12 @@
 
 
 
-                        <div id="umrs"  >
+                        <div id="umrs" >
 
                         {% for pair in sent_annot_pairs %}
 
                             <div class="row" >
-                                <div id="sent_annot{{ loop.index }}" class="col-sm" style="overflow-x: scroll">
+                                <div id="sent_annot{{ loop.index }}" class="col-sm" style="border-bottom-style: solid;float:left;overflow-x: scroll;">
                                     {% autoescape off %}
                                     {% if file_format == 'plain_text' or file_format =='isi_editor' %}
                                         <p>{{ loop.index }}. {{ pair[0].content }}</p>
@@ -190,8 +191,8 @@
                                 </div>
 
 
-
-                                <div class="col-sm-4" style="overflow-x: scroll">
+{#                                <div line style="position: relative;float: left;width: 4px;height: auto;left: 0;top: 0;cursor: w-resize;border: 1px solid red;box-sizing: border-box">#}
+                                <div class="col-sm-5" style=" border-bottom-style: solid;border-bottom-color:#999999;float: left;overflow-x: scroll;">
                                     <h5>Doc-Level Annotation:</h5>
 
                                     {% if pair[1].doc_annot | length %}
@@ -199,8 +200,8 @@
                                         {% if loop.index == current_snt_id %}
 {#                                            <div id="locate_page"></div>#}
                                             {% autoescape false %}
-                                        <div id="locate_page"></div>
-                                                <div id="amr">{{ pair[1].doc_annot }}<br></div>
+{#                                        <div id="locate_page"></div>#}
+                                                <div id="amr" >{{ pair[1].doc_annot }}<br></div>
 
                                             {% endautoescape %}
                                         {% else %}
@@ -215,10 +216,10 @@
                                         {% if loop.index == current_snt_id %}
 {#                                            <div id="locate_page"></div>#}
 
-                                            <div id="amr">(s{{ loop.index }}s0 / sentence)<br></div>
+                                            <div id="amr"  >(s{{ loop.index }}s0 / sentence)<br></div>
 {#                                            <div id="locate_page"></div>#}
                                         {% else %}
-                                            <div id="amr_doc{{ loop.index }}">(s{{ loop.index }}s0 / sentence)<br></div>
+                                            <div id="amr_doc{{ loop.index }}"  >(s{{ loop.index }}s0 / sentence)<br></div>
                                         {% endif %}
                                     {% endif %}
 
@@ -233,14 +234,14 @@
 
 {#            the right side#}
                 {% if permission in ['admin', 'edit'] %}
-                    <div id='menu' class="col-md-4" style="height: auto;"  >
-                        <div style="position:fixed; top:200px;">
+                    <div id='menu' class="col-md-2 " style="height: auto;" >
+                        <div style="position:fixed;right: 0; top:200px;" >
                             <form method="post">
                                 <p>current sentence:
                                     <span id="curr_shown_sent_id" style="display: none"> {{ current_snt_id }}</span>
                                     <input type="number" name="sentence_id" id="curr_sent_id" size=8 min=1 max={{ sent_annot_pairs|length }} value={{ current_snt_id }}>
                                     <input type="submit" name="set_sentence" id="set_sentence" size=6 value="go" onclick="docUMR2db({{ owner.id }})">
-                                    <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
+
                              </p>
                             </form>
 
@@ -251,13 +252,13 @@
                                 <table>
                                     <tr>
                                         <td>Node Parent:</td>
-                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')"></textarea></td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onmouseout="myFunction()"  onfocus="fillInArgs('parentArg')" ></textarea></td>
                                     </tr></table>
                                                                <tr><td> <div class="btn-group dropright">
-                                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relations:</button>
+                                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right:0;">Relations:</button>
                                 <p class="dropdown-item" id="doc-level-relations"></p>
-                                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-                                    <li class="dropdown-submenu">
+                                <ul class="dropdown-menu multi-level "  role="menu" aria-labelledby="dropdownMenu">
+                                    <li class="dropdown-submenu pull-left">
                                         <a class="dropdown-item" tabindex="-1" >temporal</a>
                                         <ul class="dropdown-menu">
                                             <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':temporal :before')">:before</a></li>
@@ -287,7 +288,7 @@
                                     </li>
                                 </ul>
                                                                </div></td></tr>
-                            <table><tr>
+                            <table ><tr>
                                         <td>Node Child:</td>
                                         <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea></td>
                                     </tr>
@@ -296,19 +297,25 @@
 
                             </div>
 
-                            <div>
-
-                                <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
+                            <div >
+                                <button class="btn btn-outline-secondary" onclick="docUMR2db({{ owner.id }})">save</button>
+                                <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, String(`{{content_string|string}}`))">export</button>
                                 <button class="btn btn-outline-secondary" id="reset-box"><a title="reset" href="javascript:reset();">reset</a></button>
+
+                            </div>
+                            <hr>
+                            <div>
                                 <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
                                 <button class="btn btn-outline-secondary" id="edit-box"><a title="edit" href="javascript:changeShowStatus('replace');">edit</a></button>
-
+                                 <button class="btn btn-outline-secondary" id="edit-box"><a title="edit" onclick="open_sent();">open</a></button>
+{#                                  <button class="btn btn-outline-secondary" id="one-line-ne" onclick="changeSetting();">one-line NE</button>#}
                                 <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
+
                             </div>
-                            <div id="error_prompt">
-                                    <span id="error_logger"></span>
+                            <div id="error_prompt" style="word-break: normal">
+                                    <span id="error_logger" style="word-break: break-word"></span>
                             </div>
-                            <div id="error_msg">
+                            <div id="error_msg" style="word-wrap:break-word;word-break:break-all;max-width: 300px">
                             </div>
 
                             <script type="text/javascript">
@@ -331,12 +338,12 @@
                             </form>
 
 
-                            <div id="text-command">
+                            <div id="text-command" style="right: 0">
                         {#    child and parent arg are switched because the child and parent concept is different here#}
                                 <table>
                                     <tr>
                                         <td>Node Parent:</td>
-                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')" disabled></textarea></td>
+                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false"  style="resize:none;font-size:1.2em; max-width: 100px"  onmouseout="myFunction()"   onfocus="fillInArgs('parentArg')"    disabled></textarea></td>
                                     </tr></table>
 
                                     <p>
@@ -467,5 +474,25 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
                 integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                 crossorigin="anonymous"></script>
+
+        <script>
+
+function myFunction(){
+    let parent_value = document.getElementById('parentArg').value
+
+    if (parent_value.trim()!==''){
+                if (/s\d+/.test(parent_value.trim())){
+                    let match_sent_id=parent_value.match(/s(\d+)/)
+                    let current_id=document.getElementById("curr_shown_sent_id")
+                    console.log(current_id.innerText)
+                    if(match_sent_id[1].trim()!== current_id.innerText.trim()){
+                        console.log('I am here for you')
+                        $("#childArg").attr("disabled","disabled");
+                    }
+
+                    console.log(match_sent_id[1],'484')
+                }
+}}
+        </script>
     </body>
 </html>
