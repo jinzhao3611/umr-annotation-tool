@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block head %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/account.css') }}">
+    <script src="../static/scripts/jszip.js" type="text/javascript"></script>
+    <script src="../static/scripts/project.js" type="text/javascript"></script>
+    <script src="../static/scripts/sentLevel_typing.js" type="text/javascript"></script>
+    <script src="../static/scripts/doclevel.js" type="text/javascript"></script>
+    <script src="../static/scripts/utils_typing.js" type="text/javascript"></script>
+    <script src="../static/scripts/penmanString2umrDict_thyme.js" type="text/javascript"></script>
+    <script src="../static/scripts/umrDict2penmanString.js" type="text/javascript"></script>
+    <script src="../static/scripts/BlobBuilder.js"></script>
+    <script src="../static/scripts/FileSaver.js"></script>
+    <script src="../static/scripts/partialGraph.js" type="text/javascript"></script>
+
+    <script src="../static/scripts/javascript-lemmatizer/bower_components/underscore/underscore.js"></script>
+    <script src="../static/scripts/javascript-lemmatizer/js/lemmatizer.js"></script>
+{% endblock head %}
+
+{% block content %}
+<div>
+
+<span id="hidden-text" hidden="hidden" class="{{ project_name }}"></span>
+{% for index in range(exported_items_dict|length) %}
+
+    <button class="btn btn-info btn" id="export-all-box" onclick="export_annot1({{ exported_items_dict[index]}}, `{{content_string_dict[index] }}`,`{{ doc_name_dict[index] }}`,{{meta_data[index]}})" hidden="hidden">export all files</button>
+
+{% endfor %}
+    <button class="btn ensure" id="export-all" >export all files</button>
+
+<script>
+
+    let final_button= document.getElementById("export-all").onclick=export_all;
+function  export_all(){
+    let data=[]
+
+          let doc_name_dict= document.getElementsByClassName("btn btn-info btn");
+    for(let i=0;i<doc_name_dict.length;i++){
+        doc_name_dict[i].click()
+        let hidden_span= document.getElementById("hidden-text")
+        let hidden_text=hidden_span.value
+        let filename=hidden_span.title
+
+        let data1={text:hidden_text,filename:filename}
+        data.push(data1)
+    }
+    let hidden_span= document.getElementById("hidden-text")
+    let project_name=hidden_span.className
+    zip_file(data,project_name)
+}
+
+</script>
+</div>
+
+
+{%   endblock content %}
