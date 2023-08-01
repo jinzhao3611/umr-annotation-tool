@@ -1,6 +1,10 @@
 let childArg = '';
 let parentArg = '';
 let selectedText;
+// console.log('4',umr)
+// let umr={}
+// show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": true, "option-1-line-ORs": false, "option-role-auto-case":false,
+//     "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
 
 /**
  * fill in all the sentence annotation penman strings using a list of umr dictionaries of all the sentence annotations
@@ -28,13 +32,15 @@ function initializeDoc() {
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(s1t :after s2d)))<br>
  */
 function docUmrTransform(html_umr_s, nested){
-    //this is a bandit solution, in early stages, the root variable is in the form of s1, now it's s1s0, this is for the purpose of being compatible with the early stage form(export new file with new form)
+  //this is a bandit solution, in early stages, the root variable is in the form of s1, now it's s1s0, this is for the purpose of being compatible with the early stage form(export new file with new form)
+
     let root_pattern = /(\(s\d+)( \/ sentence)/g
     html_umr_s = html_umr_s.replace(root_pattern, "$1" + "s0" + "$2")
 
     let regex1 = /([a-zA-Z0-9\-]+) \/ (?=.*?\1)[a-zA-Z0-9\-]+ /g //match s1t / s1t (space at the end)
     let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH)
     let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
+
     html_umr_s1 = html_umr_s1.replace(regex2, "$1");
 
     if (!html_umr_s1.includes('&nbsp;')){
@@ -177,7 +183,7 @@ function inverseUmrTransform(penman_s){
       }
     }
   }
-
+    console.log('182',temporal_rels)
   let inter_penman_text = lines[0];
 
   temporal_rels.forEach(myFunction2);
@@ -202,6 +208,7 @@ function inverseUmrTransform(penman_s){
     inter_penman_text += ' ' + value;
 
   }
+  console.log('207',inter_penman_text)
   return inter_penman_text;
 }
 /**
@@ -269,6 +276,8 @@ function chainUp(array){ //array = ["(s1t :before s2d)", "(s2d :before DCT)"]
  * @param curr_sent_id:
  */
 function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
+    console.log('275',curr_doc_umr)
+
     let modal_triples = [];
     let modal_triples_strings = [];
     try{
@@ -281,13 +290,15 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
 
     if(curr_doc_umr==='{}'){
         try{
-            umr = string2umr(inverseUmrTransform(curr_doc_annot))
+            console.log('286',curr_doc_annot)
+            umr = Object.assign(umr, string2umr(inverseUmrTransform(curr_doc_annot)))
+            console.log('287',umr)
         }catch (e){
             console.log("both doc_umr and doc_annot from database is empty or doesn't not match penman string");
             umr = JSON.parse(curr_doc_umr); //{"n":0}
         }
     }else{
-        umr = JSON.parse(curr_doc_umr);//umr is from database
+        umr = Object.assign(umr,JSON.parse(curr_doc_umr));//umr is from database
     }
     if (Object.keys(umr).length === 0 || Object.keys(umr).length === 1){
         umr['n'] = 1;
@@ -387,18 +398,338 @@ function deHTML3(s) {
     s = s.replace(/<br>/g, "split_here");
     return s;
 }
+function changeSetting() {
+    show_amr_obj['option-1-line-NEs'] = !show_amr_obj['option-1-line-NEs'];
+    // show_amr_obj['option-string-args-with-head'] = !show_amr_obj['option-string-args-with-head'];
+    show_amr("show");
+}
+function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
+    loc += '';
+    if (umr[loc + '.d']) { //if this node has already been deleted
+        return '';
+    } else {
+        let concept = umr[loc + '.c']; // umr['1.c'] 1.c: "nenhlet"
+        let string = umr[loc + '.s'] || ''; // umr['1.s'] 1.s: ""
+        let quoted_string = string; //umr['1.s'] 1.s: ""
+        if (!string.match(/^".*"$/)) { // if there is no quotes around the string
+            quoted_string = '"' + string + '"'; // quote the string
+        }
+        let protected_string = string; //unquoted string
+        if (string.match(/ /)) { //match a space
+            protected_string = quoted_string;
+        }
+        let protected_string2 = slashProtectQuote(protected_string); //"Edmund" -> \\\"Edmund\\\"
+        var role = umr[loc + '.r'] || ''; //umr['1.r']
+        let string_m = string;
+        let string_is_number = string.match(/^\d+(?:\.\d+)?$/);
+        if (!role_unquoted_string_arg(role, string, loc)) { //should quote
+            string_m = quoted_string;
+        }
+        let variable = umr[loc + '.v']; //umr['1.v'] 1.v: "s1n"
+        let arg = variable || concept || string;
+        let s = '';
+        let show_replace = args.match(/replace/);
+        let show_delete = args.match(/delete/);
+        let concept_m = concept; //concept string surrounded by html string
+        let variable_m = variable; // variable string surrounded by html string
+        console.log('1968',concept,variable)
+        let tree_span_args = ''; //something like 'id="amr_elem_1"' to be put in the html string on show delete mode
+        let role_m = ''; // role string surrounded by html string
+        let elem_id = '';
+        var onmouseover_fc = '';
+        var onmouseout_fc = '';
+        var onclick_fc = '';
+        var head_loc, head_concept, head_variable, core_concept, var_locs;
 
+        if (rec) { // if not graph root
+            role = umr[loc + '.r']; //umr['1.v']
+            role_m = role;
+            if (show_replace) {
+                let type = 'role';
+                head_loc = loc.replace(/\.\d+$/, "");
+                head_variable = umr[head_loc + '.v'];
+                let at = head_variable + ' ' + role + ' ' + arg;
+                let old_value = role;
+                elem_id = 'amr_elem_' + ++n_elems_w_id;
+                onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                role_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role + '</span>';
+            }
+        }
+        if (show_delete) {
+            elem_id = 'amr_elem_' + ++n_elems_w_id;
+            onmouseover_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#FF0000\',\'mo\')';
+            onmouseout_fc = 'color_all_under_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+            if (rec) {
+                head_loc = loc.replace(/\.\d+$/, "");
+                head_variable = umr[head_loc + '.v'];
+                onclick_fc = 'fillDeleteTemplate(\'' + head_variable + ' ' + role + ' ' + arg + '\',\'' + elem_id + '\')';
+            } else {
+                onclick_fc = 'fillDeleteTemplate(\'top level ' + variable + '\',\'' + elem_id + '\')';
+            }
+            show_amr_obj['elem-' + elem_id] = elem_id;
+            let list = ancestor_elem_id_list.split(" ");
+            for (let i = 0; i < list.length; i++) {
+                let ancestor_elem_id = list[i];
+                if (ancestor_elem_id.match(/\S/)) {
+                    show_amr_obj['elem-' + ancestor_elem_id] += ' ' + elem_id;
+                }
+            }
+            if (role_m) {
+                role_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + role_m + '</span>';
+            }
+        }
+        if (rec) {
+            s += role_m + ' ';
+        }
+        if (concept) {
+            if (show_replace) {
+                let type = 'concept';
+                let at = variable;
+                let old_value = concept;
+                elem_id = 'amr_elem_' + ++n_elems_w_id;
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                concept_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept + '</span>';
+            } else if (show_delete) {
+                variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable + '</span>';
+                concept_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + concept_m + '</span>';
+                tree_span_args = 'id="' + elem_id + '"';
+            } else if (!docAnnot) { //this is used to show the frame file in penman graph, only needed in sentlevel annotation, in doclevel annotation, frame_dict shoule be empty, then won't go in this
+                let frames = JSON.stringify(frame_dict[concept]);
+                if (typeof frames !== 'undefined') {
+                    let escaped_frames = escapeHtml(frames);
+                    concept_m = `<span title=${escaped_frames}>` + concept_m + '</span>';
+                } else {
+                    concept_m = `<span title="">` + concept_m + '</span>';
+                }
+            }
+
+            if (docAnnot) {
+                console.log('2044',variable_m,concept_m)
+                if(role === ''){ //when variable match the root of doclevel annotation, something like s1s0
+
+                   s += '(' + variable_m + ' / ' + concept_m; //'(s1t / taste-01'
+                }else{
+                    s +='(' + concept_m; //in doc_annot, concept and the variable are the same
+                }
+            } else {
+                s += '(' + `<span id="variable-${loc}">` + variable_m + '</span>' + ' / ' + concept_m; //'(s1t / taste-01'
+            }
+
+            let n = umr[loc + '.n']; //check how many children current loc has
+            let index;
+            let opx_all_simple_p = 1;
+            let argx_all_simple_p = 1;
+            let opx_order = [];
+            let argx_order = [];
+            let opx_indexes = [];
+            let argx_indexes = []; //argx_indexes is the same with argx_order, except argx_order could have undefined element, but argx_indexes don't
+            let name_indexes = [];
+            let other_indexes = [];
+            let other_string_indexes = [];
+            let other_non_string_indexes = [];
+            let ordered_indexes = [];
+            for (let i = 1; i <= n; i++) {//traverse children of current loc
+                let sub_loc = loc + '.' + i;
+                let sub_string = umr[sub_loc + '.s'];
+                let sub_role = umr[sub_loc + '.r'];
+                if (umr[sub_loc + '.d']) {
+                    // skip deleted elem
+                } else if ((sub_role.match(/^:op([1-9]\d*)$/i))
+                    && (index = sub_role.replace(/^:op([1-9]\d*)$/i, "$1")) //get "1" of :op1
+                    && (!opx_order[index])) {
+                    opx_order[index] = i;
+                    if (show_amr_new_line_sent(sub_loc)) {
+                        opx_all_simple_p = 0;
+                    }
+                } else if ((sub_role.match(/^:arg(\d+)$/i))
+                    && (index = sub_role.replace(/^:arg(\d+)$/i, "$1"))
+                    && (!argx_order[index])) {
+                    argx_order[index] = i; //argindex is the ith children (arg0 is 2nd children)
+                    if (show_amr_new_line_sent(sub_loc)) {
+                        argx_all_simple_p = 0;
+                    }
+                } else if (sub_role === ':name') {
+                    name_indexes.push(i);
+                } else if (sub_string !== '') {
+                    other_string_indexes.push(i);
+                    other_indexes.push(i);
+                } else {
+                    other_non_string_indexes.push(i);
+                    other_indexes.push(i);
+                }
+            }
+            for (let i = 0; i < opx_order.length; i++) {
+                if ((index = opx_order[i]) !== undefined) {
+                    opx_indexes.push(index);
+                }
+            }
+            for (let i = 0; i < argx_order.length; i++) {
+                if ((index = argx_order[i]) !== undefined) {
+                    argx_indexes.push(index);
+                }
+            }
+            if (show_amr_obj['option-string-args-with-head']) { //keep string arguments on same line as head
+                if (opx_all_simple_p) {
+                    ordered_indexes
+                        = ordered_indexes.concat(opx_indexes, other_string_indexes, name_indexes, argx_indexes, other_non_string_indexes);
+                } else {
+                    ordered_indexes
+                        = ordered_indexes.concat(other_string_indexes, name_indexes, opx_indexes, argx_indexes, other_non_string_indexes);
+                }
+            } else {
+                ordered_indexes
+                    = ordered_indexes.concat(name_indexes, opx_indexes, argx_indexes, other_indexes);
+            }
+
+            for (let i = 0; i < ordered_indexes.length; i++) {
+                let index = ordered_indexes[i];
+                let sub_loc = loc + '.' + index;
+                let show_amr_rec_result = show_amr_rec(sub_loc, args, 1, ancestor_elem_id_list + elem_id + ' '); // this stores one amr line
+                if (show_amr_rec_result) {
+                    if (docAnnot) {
+                        if (show_amr_new_line_doc(sub_loc)) {
+                            s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
+                        } else {
+                            s += ' ' + show_amr_rec_result;
+                        }
+                    } else {
+                        if (show_amr_new_line_sent(sub_loc)) {
+                            s += '\n' + indent_for_loc(sub_loc, '&nbsp;') + show_amr_rec_result;
+                        } else {
+                            s += ' ' + show_amr_rec_result;
+                        }
+                    }
+                }
+            }
+            s += ')';
+        } else if (string) {
+            if (show_replace) {
+                let type = 'string';
+                let head_loc = loc.replace(/\.\d+$/, "");
+                let head_variable = umr[head_loc + '.v'];
+                let role = umr[loc + '.r'];
+                let at = head_variable + ' ' + role;
+                let old_value = string;
+                elem_id = 'amr_elem_' + ++n_elems_w_id;
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                string_m = '<span contenteditable="true" id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
+            } else if (show_delete) {
+                string_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + string_m + '</span>';
+                tree_span_args = 'id="' + elem_id + '"';
+            }
+            s += string_m;
+        } else { // variable is not empty
+            if (show_replace) {  // without concept, i.e. secondary variable
+                let type = 'variable';
+                let head_loc = loc.replace(/\.\d+$/, "");
+                let head_variable = umr[head_loc + '.v'];
+                let role = umr[loc + '.r'];
+                let at = head_variable + ' ' + role + ' ' + variable;
+                let old_value = variable;
+                elem_id = 'amr_elem_' + ++n_elems_w_id;
+                let onclick_fc = 'fillReplaceTemplate(\'' + type + '\',\'' + at + '\',\'' + old_value + '\',\'' + elem_id + '\')';
+                let onmouseover_fc = 'color_amr_elem(\'' + elem_id + '\',\'#0000FF\',\'mo\')';
+                let onmouseout_fc = 'color_amr_elem(\'' + elem_id + '\',\'#000000\',\'mo\')';
+                variable_m = '<span id="' + elem_id + '" title="click to change me" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
+            } else if (show_delete) {
+                variable_m = '<span title="click to delete" onclick="' + onclick_fc + '" onmouseover="' + onmouseover_fc + '" onmouseout="' + onmouseout_fc + '">' + variable_m + '</span>';
+                tree_span_args = 'id="' + elem_id + '"';
+            }
+            if (docAnnot) {
+                s += variable_m;
+            } else {
+                s += `<span id="variable-${loc}">` + variable_m + '</span>';
+            }
+        }
+        if (tree_span_args) {
+            s = '<span ' + tree_span_args + '>' + s + '</span>';
+        }
+        console.log("s2183: "+ s);
+        return s;
+    }
+}
+function show_amr(args) {
+    let s; //DOM element that contains umr
+    let html_amr_s; //html string of the umr penman graph
+    n_elems_w_id = 0; //keep counts of element (used in show delete)
+    show_amr_mo_lock = ''; //relate to coloring, it's ele_id
+    let origScrollHeight = '';
+    let origScrollTop = '';
+    if ((s = document.getElementById('amr')) != null) { // the div that contains the umr penman graph
+        origScrollHeight = s.scrollHeight;
+        origScrollTop = s.scrollTop;
+    }
+
+    //generate the pennman string
+    if (args) { //args can be "show", "replace", "delete" or "check"
+        let amr_s = ''; // html string of the umr penman graph
+        let n = umr['n']; // how many children currently in the tree
+        for (let i = 1; i <= n; i++) { //traverse children
+            let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
+            if (show_amr_rec_result) {
+                amr_s += show_amr_rec_result + '\n';
+            }
+        }
+
+        html_amr_s = amr_s;
+        html_amr_s = html_amr_s.replace(/\n/g, "<br>\n");
+        console.log('2217',html_amr_s)
+        // this is the actual output part
+        if (docAnnot && args==="show") {
+            // html_amr_s =
+            //(s2s0 / sentence
+            // :temporal (s1t / s1t
+            //     :before (s2i3 / s2i3)))
+            html_amr_s = docUmrTransform(html_amr_s, false); //this is the function turns triples into nested form
+        }
+        setInnerHTML('amr', html_amr_s);
+        show_umr_status = args;
+    }
+    if ((s = document.getElementById('amr')) != null) {
+        var height = s.style.height;
+        var newScrollTop = 0;
+        if ((height != undefined) && height.match(/^\d+/)) {
+            if (origScrollTop != 0) {
+                newScrollTop = origScrollTop + s.scrollHeight - origScrollHeight;
+                if (newScrollTop < 0) {
+                    newScrollTop = 0;
+                } else if (newScrollTop > s.scrollHeight) {
+                    newScrollTop = s.scrollHeight;
+                }
+                s.scrollTop = newScrollTop;
+            }
+            // add_log ('re-scroll ' + origScrollTop + '/' + origScrollHeight + ' ' + s.scrollTop + ' ' + s.scrollTop + ' ' + intScrollTop);
+        }
+    }
+    if (!docAnnot) {
+        showAlign();
+        if (language === 'chinese' || language === 'english') {
+            // showAnnotatedTokens();
+        }
+    }
+    return deHTML(html_amr_s);
+}
 
 function initialCommand(current_snt_id){
+        console.log('718',variables)
+        // populateUtilityDicts();
         let parentArg = document.getElementById('parentArg').value; //s2i2
         let childArg = document.getElementById('childArg').value; //s1d
         let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
         let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
 
         let command1 = 's'+ current_snt_id +'s0' + ' ' + role_outter + ' ' + parentArg; //s1s0 :coref s2i2
+    console.log('test724',command1)
         exec_command(command1, '1');
 
         let command2 = parentArg + ' ' + role_inner + ' ' + childArg; //s2i2 :same-entity s1d
+    console.log('test728',command2)
         exec_command(command2, '1');
 
 }
@@ -436,9 +767,18 @@ function show_amr_new_line_doc(loc) {
         return 0;
     }
 }
-// window.onload=function(){
-//
-//     location.hash="locate_page";
-//
-//
-// }
+
+function open_sent(){
+    window.open('display_sentence_annot.html','_blank')
+}
+function  test_focus(){
+    console.log('i AM HERE 775'
+    )}
+            //     let parent_value = $('#parentArg').val()
+            //     console.log('lost focus')
+            //     if (parent_value.trim()!==''){
+            //     if (/s\d+/.test(parent_value.trim())){
+            //         let match_sent_id=parent_value.match(/s(\d+)/)
+            //         console.log(match_sent_id,'484')
+            //
+            // }}}

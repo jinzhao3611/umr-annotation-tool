@@ -1,4 +1,5 @@
-let show_amr_obj = {"option-string-args-with-head": false, "option-1-line-NEs": false, "option-1-line-ORs": false, "option-role-auto-case":false,
+
+let show_amr_obj = {"option-string-args-with-head": true, "option-1-line-NEs": false, "option-1-line-ORs": true, "option-role-auto-case":false,
     "option-check-chinese":true, "option-resize-command":true, 'option-indentation-style': 'variable', 'option-auto-reification': true};
 let abstractConcepts = ['ordinal-entity', 'temporal-quantity', 'amr-unknown', 'amr-choice', 'truth-value', 'name', 'accompany-01', 'age-01', 'benefit-01', 'have-concession-91', 'have-condition-91', 'have-degree-92', 'be-destined-for-91', 'last-01', 'exemplify-01', 'have-extent-91', 'have-frequency-91', 'have-instrument-91', 'have-li-91', 'be-located-at-91', 'have-manner-91', 'have-mod-91', 'have-name-91', 'have-ord-91', 'have-part-91', 'have-polarity-91', 'own-01', 'have-03', 'have-purpose-91', 'have-quant-91', 'be-from-91', 'have-subevent-91', 'be-temporally-at-91', 'concern-02', 'have-value-91', 'person']
 let table_id = 1;
@@ -40,6 +41,7 @@ let is_standard_named_entity = {}; //"": 1; aircraft: 1; aircraft-type: 1
 let docAnnot=false;
 let partial_graphs = {};
 let alignments={}
+
 // let acindex=0;//the index for abstract concept
 function reset() {
     show_amr('show');
@@ -1682,8 +1684,24 @@ function replace_concept(key_at, head_var, key_with, new_concept,arg_type=1) {
                     }
                     console.log('1500', head_var,new_concept)
                 if(docAnnot){
-                    umr[loc+'.v']=trimConcept(new_concept)
+                      for(let key in umr){
+
+                            if (/.v/.test(key)&&umr[key]===head_var){
+
+                                loc = key.replace('.v','')
+                                break;
+                            }
+
+                            }
+                         // to-do talk to Jin about here, not to add the new variable to the variables, and find the variable is not the first one.
+                         umr[loc + '.c'] = trimConcept(new_concept);
+                        umr[loc + '.v'] = trimConcept(new_concept); //concept and variable are the same in doclevel annot
+                        // change_var_name(head_var,new_concept,0)
+                        variables[new_concept]=variables[head_var]
+                        variables[head_var]=''
+
                 } else{
+                    umr[loc+'.v']=trimConcept(new_concept)
                     change_var_name(head_var, new_concept, 0,arg_type);
                 }
 
@@ -3010,18 +3028,14 @@ function UMR2db() {
 }
 
 function deHTML2(s){
-    s = s.replaceAll('<div id="amr">', '');
-    s = s.replaceAll('\n', "");
-    s = s.replaceAll('</div>', "");
     s = s.replaceAll('<br>', '\n');
-    s = s.replaceAll('&nbsp;', ' ');
-    s = s.replaceAll('<i>', '');
-    s = s.replaceAll('</i>', '');
-
+    s = deHTML(s)
     return s;
 }
 
 function export_annot(exported_items, content_string) {
+    console.log(exported_items,content_string)
+    content_string=String(content_string.replace('`',''))
     let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {
         e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
@@ -3031,7 +3045,7 @@ function export_annot(exported_items, content_string) {
         e[1] = e[1].replace('</div>', '');
 
         let align_str = '';
-        for (const key in e[2]){
+        for (const key in e[2]) {
             if (e[2].hasOwnProperty(key)) {
                 align_str += key + ": " + e[2][key] + "\n";
             }
@@ -3047,8 +3061,8 @@ function export_annot(exported_items, content_string) {
         + "\n# alignment:"
         + a[2]
         + "\n# document level annotation:\n"
-        + deHTML2(a[3])
-        +"\n").join("\n\n# :: snt");
+        + docUmrTransform(deHTML2(a[3]), false).replaceAll('<br>', '\n')
+        + "\n").join("\n\n# :: snt");
 
     let filename;
     let text = "user name: " + document.getElementById('username').innerText + '\n';
@@ -3063,7 +3077,7 @@ function export_annot(exported_items, content_string) {
     if (window.BlobBuilder && window.saveAs) {
         filename = 'exported_' + doc_name;
         text += output_str;
-        text += '\n\n' + '# Source File: \n' + content_string;
+        text += '\n\n' + '$$ Source File: \n' + content_string;
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
         bb.append(text);
@@ -3072,6 +3086,8 @@ function export_annot(exported_items, content_string) {
         console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
     }
 }
+
+
 
 /**
  * Javascript equivalent of Python's get method for dictionaries: https://stackoverflow.com/questions/44184794/what-is-the-javascript-equivalent-of-pythons-get-method-for-dictionaries
@@ -3540,7 +3556,106 @@ function syntaxHighlight(json) {
 }
 
 
-// function getlang(){
-//     let lang=language
+function export_annot1(exported_items, content_string,doc_name,meta_data) {
+    // let data={}
+    // console.log(exported_items,content_string)
+    content_string=String(content_string.replace('`',''))
+    let user_name, user_id,language,file_format,doc_id;
+    [user_name,user_id,language,file_format,doc_id]=meta_data;
+    // let doc_name = document.getElementById('filename').innerText;
+    exported_items.forEach(e => {
+        e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
+        e[1] = e[1].replace(/&nbsp;/g, " ");
+        e[1] = e[1].replace(/<br>/g, "");
+        e[1] = e[1].replace('<div id="amr">', '');
+        e[1] = e[1].replace('</div>', '');
+
+        let align_str = '';
+        for (const key in e[2]) {
+            if (e[2].hasOwnProperty(key)) {
+                align_str += key + ": " + e[2][key] + "\n";
+            }
+        }
+        e[2] = align_str;
+    })
+
+
+    let output_str = exported_items.map((a, index) =>
+        index + 1 + '\t' + a[0]
+        + "\n# sentence level graph:\n"
+        + a[1]
+        + "\n# alignment:"
+        + a[2]
+        + "\n# document level annotation:\n"
+        + docUmrTransform(deHTML2(a[3]), false).replaceAll('<br>', '\n')
+        + "\n").join("\n\n# :: snt");
+
+    let filename;
+    let text = "user name: " + user_name + '\n';
+    text+= "user id: " + user_id + '\n';
+    text += "file language: " +language + '\n';
+    text += "file format: " + file_format + '\n';
+    text += "Doc ID in database: " + doc_id+ '\n';
+
+    let curr_time = new Date();
+    // let text=''
+    text += "export time: " + curr_time.toLocaleString() + '\n\n';
+    text += '# :: snt';
+    // if (window.BlobBuilder && window.saveAs)
+    //     let doc_name_no_extension=doc_name.split('.').pop()
+    //     filename = 'exported_' + doc_name.replace('.'+doc_name_no_extension,'');
+        filename = 'exported_'+doc_name
+        text += output_str;
+        text += '\n\n' + '$$ Source File: \n' + content_string;
+        console.log(text)
+        console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
+        let hidden_text=document.getElementById("hidden-text")
+        hidden_text.title=filename
+        hidden_text.value=text
+}
+
+
+
+function zip_file(data,project_name) {
+    let myDate = new Date();
 //
-// }
+
+    let zip = new JSZip();
+
+          // let metadata = zip.folder("metadata");
+          //   const obj = {name: "Simple name", age: "Simple age"};
+          //   metadata.file(`1.json`, JSON.stringify(obj, null, 4));
+    data.forEach(function (object){
+        // console.log(object.text, object.filename)
+        zip.file(object.filename,object.text)
+        });
+ zip.generateAsync(
+  {type:"blob"}
+).then(function(content) {
+    // console.log(content)
+    //  var bb = new BlobBuilder();
+    //  bb.append(content)
+   // saveAs(content, "example.zip");
+
+// })
+//     var xmlcontent = "<?xml version='1.0' encoding='UTF-8'?><Body>";
+//     // xmlcontent += json2xml(data);
+//     xmlcontent += "</Body>";
+//
+//     var zip = new JSZip();
+//     zip.file("test1.xml", xmlcontent);
+//     let content = await zip.generateAsync({type: 'blob', compression: 'DEFLATE'})
+//     // bb= new BlobBuilder()
+//     // bb.append(content)
+//     // saveAs(content,'example.js')
+//
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            var url = URL.createObjectURL(content);
+            a.href = url;
+            a.download = project_name+".zip";
+            a.click();
+            window.URL.revokeObjectURL(url);
+
+})}
