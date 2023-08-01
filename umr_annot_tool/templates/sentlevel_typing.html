@@ -374,6 +374,7 @@
         <input style="display: none"  placeholder="move + branch head node + to + new head + role, e.g: move x2 to x3 :ARG5"  class="command" id="move_box" >
         <input style="display: none"  oninput="onInputHandler(event,'{{ lang }}')" class="command" id="replace_box"  placeholder="replace + concept + at + variable with new variable, e.g:replace concept at x1 with x2">
         <input style="display: none" class="command" id ="delete_box"  placeholder=" delete+ head+roles+variable, e.g:delete x2 :ARG1 x3">
+
 {#    frame info:#}
 {#    {{ frame_info }}#}
     <p id="frame_info"></p>
@@ -393,7 +394,7 @@
          <a class="btn btn-info btn-sm" id="annot-button-THYME" title="click to do doc-level annotation(THYME)" href="{{ url_for('main.doclevel_thyme', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot_thyme</a>
         <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconlookup', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon lookup</a>
             <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconadd', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">add to Lexicon</a>
-            <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" onclick="UMR2db()">search</a>
+            <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" target="_blank" onclick="UMR2db()">search</a>
             <a class="btn btn-info btn-sm" id="pg-button" title="click to show all partial graphs" href="{{ url_for('users.partialgraph', project_id=project_id) }}" onclick="UMR2db()">show partial graphs</a>
             <a class="btn btn-info btn-sm" title="click to show all lexicon" href="{{ url_for('users.alllexicon', project_id=project_id) }}" onclick="UMR2db()">show all lexicon</a>
             <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">back to project</a>
