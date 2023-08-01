@@ -12,7 +12,8 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
     annotText = strip2(annotText);
     if (state === 'pre-open-parenthesis') {
         annotText = annotText.replace(/^[^(]*/, ""); // remove everything at the start point until the open parenthesis
-        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
+        let pattern1 = `^\\(\\s*s[-_${allLanguageChars}0-9']*(\\s*\\/?\\s*|\\s+)[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*[\\s)]` // match something like (s1s / shadahast) or (s1s / shadahast with a newline at the end
+        console.log('test16', annotText,annotText.match(new RegExp((pattern1))))
         if (annotText.match(new RegExp(pattern1))) {
             annotText = annotText.replace(/^\(\s*/, ""); //remove left parenthesis
             let pattern2 = `^[${allLanguageChars}0-9][-_${allLanguageChars}0-9']*` //match something like s1t
@@ -76,11 +77,12 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             annotText = annotText.replace(/^\)/, ""); // remove ) at the start position
         } else {
             if (umr_dict[loc + '.r']) {
-                var string_arg = 'MISSING-VALUE';
+                let  string_arg = 'MISSING-VALUE';
                 umr_dict[loc + '.s'] = string_arg;
                 umr_dict[loc + '.c'] = '';
                 umr_dict[loc + '.v'] = '';
                 umr_dict[loc + '.n'] = 0;
+
                 setInnerHTML('error_msg', 'one of the character in string ' + annotText + ' is not matched, check for special characters for the specific language. ');
                 document.getElementById("error_msg").className = `alert alert-danger`;
             } else {
@@ -157,6 +159,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
 
         } else if (s_comp = annotText.match(/^:/)) {
             string_arg = 'MISSING-VALUE';
+
             setInnerHTML('error_msg', 'one of the character in string ' + annotText + ' is not matched, check for special characters for the specific language. ');
             document.getElementById("error_msg").className = `alert alert-danger`;
         } else if (s_comp = annotText.match(/^[^ ()]+/)) {
@@ -169,6 +172,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             }
         } else {
             string_arg = 'MISSING-VALUE';
+
             setInnerHTML('error_msg', 'one of the character in string ' + annotText + ' is not matched, check for special characters for the specific language. ');
             document.getElementById("error_msg").className = `alert alert-danger`;
         }
@@ -198,7 +202,7 @@ function string2umr(annotText) {
     annotText = annotText.replace(/present-ref/g, 's10000e');
 
     annotText = decodeHtmlUnicode(annotText);// this function is used to convert &#34; to ", or it will cause matching errors
-
+    console.log('201',annotText)
     let loc; // current graph location we are dealing with
     let umr_dict = {};
     umr_dict['n'] = 0;
@@ -207,6 +211,7 @@ function string2umr(annotText) {
     variablesInUse = {};
     let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
     //populate variablesInUse
+    console.log('210',uncleanedRootVariables)
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
         variable = variable.replace(/[ \/]$/, ""); // get rid of the trailing space or /: "s1t"
@@ -222,7 +227,9 @@ function string2umr(annotText) {
         let root_index = 1; // keep track of how many roots (how many graphs)
         loc = root_index + '';
         umr_dict['n'] = 1;
+        console.log(annotText,'226')
         let result = string2umr_recursive(annotText + ' ', loc, 'pre-open-parenthesis', umr_dict);
+        console.log('227',result)
         annotText = result[0];
         umr_dict = result[1];
         while (annotText.match(/^\s*[()]/) && (annotText.length < prev_s_length)) { // match ( ) regardless of space, and the annotText gets shorter
@@ -257,6 +264,7 @@ function string2umr(annotText) {
             umr_dict[key] = 'present-ref';
         }
     }
+    console.log('261',umr_dict)
     return umr_dict;
 }
 
