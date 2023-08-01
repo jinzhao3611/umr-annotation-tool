@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    {% if permission in ['admin'] %}
+    {% if permission in ['admin','edit'] %}
         <div class="row">
             <div class="col-sm-12 text-center">
                 <button class="btn btn-default" type="button"><a href="{{ url_for('main.upload_document', current_project_id=project_id) }}">Upload a Document</a></button>
@@ -67,7 +67,7 @@
                         <input type="hidden" name="add_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_doc_id" value=0>
                         <input type="hidden" name="rm_da_user_id" value=0>
-                        {% if permission == 'admin' %}
+                        {% if permission == 'admin' or permission == 'edit' %}
                             <input type="submit" value="delete">
                         {% else %}
                             <input type="submit" value="delete" disabled>
@@ -87,7 +87,7 @@
                 {% for annotatedDoc in annotatedDocs %}
                     <li class="list-group-item d-flex justify-content-between align-items-center" id="annotatedDoc-{{ annotatedDoc.id }}">
                         <a title="{{ annotatedDoc.content }}" href="{{ url_for('main.sentlevel', doc_sent_id=annotatedDoc.id ~ '_1_0')}}">
-    {# when I am opening the first sentence of my own annotation, I concatenate _1_0                   #}
+{#     when I am opening the first sentence of my own annotation, I concatenate _1_0#}
                             {{annotatedDoc.filename}}
                         </a>
 
@@ -297,6 +297,15 @@
             <li class="list-group-item d-flex justify-content-between align-items-center" >
                 <a href="{{ url_for('users.alllexicon', project_id=project_id) }}">
                     Show lexicon
+                </a>
+            </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a href="{{ url_for('users.settings') }}">
+                    settings
+                </a></li>
+            <li class="list-group-item d-flex justify-content-between align-items-center" >
+                <a href="{{ url_for('users.exported_all_files',project_id=project_id) }} " target="_blank">
+                    Export All Files
                 </a>
             </li>
         </ul>
