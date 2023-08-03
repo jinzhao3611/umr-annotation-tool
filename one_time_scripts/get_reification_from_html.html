@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$.fn.getColumn = function(column) {
+    return this.find('tr').map(function() {
+        return $(this).find('td').eq(column).text();
+    }).get();
+};
+
+$(document).ready(function(){
+  $("button").click(function(){
+    $('p').text($('table').getColumn(1));
+  });
+});
+
+
+
+</script>
+</head>
+
+<body>
+<button>click</button>
+
+<p>lala</p>
+
+<table>
+<thead>
+<tr>
+<th>Relation</th>
+<th>Reification</th>
+<th>Domain</th>
+<th>Range</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:accompanier</code></td>
+<td><code>accompany-01</code></td>
+<td><code>:ARG0</code></td>
+<td><code>:ARG1</code></td>
+<td>“she's with him”</td>
+</tr>
+<tr>
+<td><code>:age</code></td>
+<td><code>age-01</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“she's 41 years old”</td>
+</tr>
+<tr>
+<td><code>:beneficiary</code></td>
+<td><code>benefit-01</code></td>
+<td><code>:ARG0</code></td>
+<td><code>:ARG1</code></td>
+<td>“the 5k run is for kids”</td>
+</tr>
+<tr>
+<td><code>:concession</code></td>
+<td><code>have-concession-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“he came despite of her”</td>
+</tr>
+<tr>
+<td><code>:condition</code></td>
+<td><code>have-condition-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“he comes if she comes”</td>
+</tr>
+<tr>
+<td><code>:degree</code></td>
+<td><code>have-degree-92</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“very tall” (intensifier or downtoner)</td>
+</tr>
+<tr>
+<td><code>:destination</code></td>
+<td><code>be-destined-for-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“i'm off to Atlanta”</td>
+</tr>
+<tr>
+<td><code>:duration</code></td>
+<td><code>last-01</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“it's 15 minutes long”</td>
+</tr>
+<tr>
+<td><code>:example</code></td>
+<td><code>exemplify-01</code></td>
+<td><code>:ARG0</code></td>
+<td><code>:ARG1</code></td>
+<td>“cities such as Atlanta”</td>
+</tr>
+<tr>
+<td><code>:extent</code></td>
+<td><code>have-extent-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“trip was 2500 miles”</td>
+</tr>
+<tr>
+<td><code>:frequency</code></td>
+<td><code>have-frequency-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“he came three times”</td>
+</tr>
+<tr>
+<td><code>:instrument</code></td>
+<td><code>have-instrument-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“forks are for eating”</td>
+</tr>
+<tr>
+<td><code>:li</code></td>
+<td><code>have-li-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“(B)”</td>
+</tr>
+<tr>
+<td><code>:location</code></td>
+<td><code>be-located-at-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“she's not here”</td>
+</tr>
+<tr>
+<td><code>:manner</code></td>
+<td><code>have-manner-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“it was done quickly”</td>
+</tr>
+<tr>
+<td><code>:mod</code></td>
+<td><code>have-mod-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“he is half Chinese"</td>
+</tr>
+<tr>
+<td><code>:name</code></td>
+<td><code>have-name-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“the city formerly named Constantinople”</td>
+</tr>
+<tr>
+<td><code>:ord</code></td>
+<td><code>have-ord-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“I don't know whether it was his first loss.”</td>
+</tr>
+<tr>
+<td><code>:part</code></td>
+<td><code>have-part-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“the roof of the house”</td>
+</tr>
+<tr>
+<td><code>:polarity</code></td>
+<td><code>have-polarity-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“I don't know.”</td>
+</tr>
+<tr>
+<td><code>:poss</code></td>
+<td><code>own-01</code>, <code>have-03</code></td>
+<td><code>:ARG0</code></td>
+<td><code>:ARG1</code></td>
+<td>“that dog's not mine”</td>
+</tr>
+<tr>
+<td><code>:purpose</code></td>
+<td><code>have-purpose-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“it's to eliminate bugs”</td>
+</tr>
+<tr>
+<td><code>:quant</code></td>
+<td><code>have-quant-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“there are 4 rabbits”</td>
+</tr>
+<tr>
+<td><code>:source</code></td>
+<td><code>be-from-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“she's from Ipanema”</td>
+</tr>
+<tr>
+<td><code>:subevent</code></td>
+<td><code>have-subevent-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“presentation at a conference”</td>
+</tr>
+<tr>
+<td><code>:time</code></td>
+<td><code>be-temporally-at-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“the party is on friday”</td>
+</tr>
+<tr>
+<td><code>:topic</code></td>
+<td><code>concern-02</code></td>
+<td><code>:ARG0</code></td>
+<td><code>:ARG1</code></td>
+<td>“the show's about me”</td>
+</tr>
+<tr>
+<td><code>:value</code></td>
+<td><code>have-value-91</code></td>
+<td><code>:ARG1</code></td>
+<td><code>:ARG2</code></td>
+<td>“The phone number is 1-800-555-1223.”</td>
+</tr>
+</tbody>
+</table>
+
+</body>
+</html>
