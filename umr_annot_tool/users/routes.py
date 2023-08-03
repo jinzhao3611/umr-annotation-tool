@@ -124,7 +124,11 @@ def account():
         form.email.data = current_user.email
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
+    # projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
+    # Also pass the visibility of corresponding project object in Projectuser table to frontend by join Project table
+    # and Projectuser table:
+    projects = db.session.query(Projectuser, Project.visibility).join(Project, Projectuser.project_id ==
+                                                                      Project.id).filter(Projectuser.user_id == current_user.id).all()
     historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
     belongToProject=[]
     for hds in historyDocs:
@@ -133,6 +137,24 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs,
                            projects=projects, belongToProject=belongToProject)
+
+# new route to process the ajax request
+@users.route('/update_slide_bar', methods=['POST'])
+def update_slide_bar():
+    # Get the updated value from the slide bar
+    updated_value = request.form.get('slide_bar_value')
+    project_id = request.form.get('project_id')
+    print(updated_value, type(updated_value))
+    print(project_id)
+    if updated_value == "true":
+        p = Project.query.filter(Project.id == project_id).first()
+        p.visibility = True
+    else:
+        p = Project.query.filter(Project.id == project_id).first()
+        p.visibility = False
+    db.session.commit()
+
+    return jsonify({"status": "success"})
 
 @login_required
 @users.route("/project/<int:project_id>", methods=['GET', 'POST'])
@@ -243,8 +265,14 @@ def project(project_id):
                         qc_annotation = Annotation(sent_annot=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment, author=qc,
                                                    sent_id=a.sent_id, doc_id=a.doc_id, sent_umr=a.sent_umr, doc_umr=a.doc_umr)
                         db.session.add(qc_annotation)
-                    docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
-                    db.session.add(docqc)
+                        # my code
+                        docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, upload_member=current_user,
+                                      sent_annot=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment, qc_user=qc,
+                                      sent_id=a.sent_id, sent_umr=a.sent_umr, doc_umr=a.doc_umr)
+                        db.session.add(docqc)
+                        # end
+                    # docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
+                    # db.session.add(docqc)
                     logging.info(db.session.commit())
                 else:
                     flash('this file already exist in Quality Control, add to double annotated files instead', 'info')
@@ -257,15 +285,34 @@ def project(project_id):
             elif add_da_doc_id !=0:
                 #check existing:
                 if not Docda.query.filter(Docda.project_id==project_id, Docda.user_id==current_user.id, Docda.doc_id==add_da_doc_id).all():
-                    docda = Docda(project_id=project_id, user_id=current_user.id, doc_id=add_da_doc_id)
-                    db.session.add(docda)
+                    # my code
+                    da_member_annotations = Annotation.query.filter(Annotation.doc_id == add_da_doc_id,
+                                                                    Annotation.user_id == current_user.id).all()
+                    for a in da_member_annotations:
+                        docda = Docda(project_id=project_id, user_id=current_user.id, doc_id=add_da_doc_id,
+                                      sent_annot=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment,
+                                      sent_id=a.sent_id, sent_umr=a.sent_umr, doc_umr=a.doc_umr,
+                                      actions=a.actions)
+                        db.session.add(docda)
+                    # end
                     docqc = Docqc.query.filter(Docqc.project_id==project_id, Docqc.doc_id==add_da_doc_id, Docqc.upload_member_id!=current_user.id).first()
                     print("docqc: ", docqc)
                     if docqc: #if there is a qc version of this doc already
                         if not Docda.query.filter(Docda.project_id == project_id, Docda.user_id == docqc.upload_member_id,
                                                   Docda.doc_id == add_da_doc_id).all(): #if this qc version not already in docda already
-                            docda_qc = Docda(project_id=project_id, user_id=docqc.upload_member_id, doc_id=add_da_doc_id)
-                            db.session.add(docda_qc)
+                            # docda_qc = Docda(project_id=project_id, user_id=docqc.upload_member_id, doc_id=add_da_doc_id)
+                            # db.session.add(docda_qc)
+
+                            # deep copy
+                            qc_annotations = Docqc.query.filter(Docqc.doc_id == add_da_doc_id).all()
+
+                            for a in qc_annotations:
+                                docda_qc = Docda(project_id=project_id, user_id=docqc.upload_member_id,
+                                                 doc_id=add_da_doc_id, sent_annot=a.sent_annot,
+                                                 doc_annot=a.doc_annot, alignment=a.alignment, sent_id=a.sent_id,
+                                                 sent_umr=a.sent_umr, doc_umr=a.doc_umr)
+                                db.session.add(docda_qc)
+                            # end
                     logging.info(db.session.commit())
             elif rm_da_doc_id != 0 and rm_da_user_id != 0:
                 print("I am here 66")
@@ -306,7 +353,8 @@ def project(project_id):
 
     current_permission = Projectuser.query.filter(Projectuser.user_id == current_user.id,
                                                   Projectuser.project_id == project_id).first().permission
-    daDocs = Docda.query.filter(Docda.project_id == project_id).all()
+    daDocs = Docda.query.filter(Docda.project_id == project_id, Docda.sent_id == 1).all() #sent_id = 1, so each file
+    # only appear once
     daUploaders = []
     daFilenames = []
     for daDoc in daDocs:
@@ -388,7 +436,7 @@ def reset_token(token):
 def search(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
-    member_id = request.args.get('member_id', 0)
+    # member_id = request.args.get('member_id', 0)
     search_umr_form = SearchUmrForm()
     umr_results = []
     sent_results = []
@@ -397,31 +445,63 @@ def search(project_id):
         concept = search_umr_form.concept.data
         word = search_umr_form.word.data
         triple = search_umr_form.triple.data
+        user_name = search_umr_form.user_name.data #new feature
 
         h, r, c = "", "", ""
 
         if triple:
             h, r, c = triple.split()
 
-        docs = Doc.query.filter(Doc.project_id == project_id, Doc.user_id == member_id).all()
+        # docs = Doc.query.filter(Doc.project_id == project_id, Doc.user_id == member_id).all()
+        docs = Doc.query.all()
         doc_ids = [doc.id for doc in docs]
+
+        target_user = User.query.filter_by(username=user_name).first()
+
         for doc_id in doc_ids:
-            annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()
-            for annot in annots:
-                umr_dict = dict(annot.sent_umr)
-                for value in umr_dict.values():
-                    if (concept and concept in str(value)) or (word and getLemma(word, upos="VERB")[0] in str(value)):
-                        # todo: bug: sent didn't got returned
-                        sent = Sent.query.filter(Sent.id == annot.sent_id).first()
-                        umr_results.append(annot.sent_annot)
-                        sent_results.append(sent)
-                    elif triple:
-                        if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
-                            k = list(umr_dict.keys())[list(umr_dict.values()).index(value)]
-                            if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
-                                sent = Sent.query.filter(Sent.id == annot.sent_id).first()
-                                umr_results.append(annot.sent_annot)
-                                sent_results.append(sent)
+            project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
+            project = Project.query.filter(Project.id == project_id).first()
+            visibility = project.visibility
+            # check visibility
+            if visibility:
+                if target_user:
+                    annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == target_user.id).all()
+                else:
+                    annots = Annotation.query.filter(Annotation.doc_id == doc_id).all()
+                # annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()
+
+                sents = Sent.query.filter(Sent.doc_id == doc_id).all()  # all corresponding raw sentences
+                sents.sort(key=lambda x: x.id)
+
+                for annot in annots:
+                    umr_dict = dict(annot.sent_umr)
+                    for value in umr_dict.values():
+                        if (concept and concept in str(value)) or (word and getLemma(word, upos="VERB")[0] in str(value)):
+                            try:
+                                sent = sents[annot.sent_id - 1]
+                                sent_text = sent.content
+                            except Exception as e:
+                                print(e)
+                                sent_text = ""
+
+                            user = User.query.filter(User.id == annot.user_id).first()
+                            umr_results.append(
+                                sent_text + '<br>' +
+                                annot.sent_annot.replace(' ', '&nbsp;').replace('\n', '<br>') + '<hr>' + '<hr>' +
+                                "Annotator: " +
+                                user.username + '<hr/>' + '<hr>')
+
+                            # sent = Sent.query.filter(Sent.id == annot.sent_id).first()
+                            # umr_results.append(annot.sent_annot)
+                            # sent_results.append(sent)
+                        elif triple:
+                            # todo: bug: sent didn't got returned
+                            if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
+                                k = list(umr_dict.keys())[list(umr_dict.values()).index(value)]
+                                if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
+                                    sent = Sent.query.filter(Sent.id == annot.sent_id).first()
+                                    umr_results.append(annot.sent_annot)
+                                    sent_results.append(sent)
 
     return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results = sent_results)
 
