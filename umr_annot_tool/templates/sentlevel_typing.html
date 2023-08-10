@@ -121,9 +121,10 @@
     {% else %}
         <div id="sentence">
             {% autoescape off %}
-{#            <script type="text/javascript">#}
-{#            gettable({{ info2display.sent_htmls[snt_id-1]|tojson}})#}
-{#        </script>#}
+<!--         <script type="text/javascript">-->
+<!--             document.getElementById("word_segmentation").value={{ info2display.sent_htmls[snt_id-1] }}-->
+<!--&lt;!&ndash;{#            gettable({{ info2display.sent_htmls[snt_id-1]|tojson}})#}&ndash;&gt;-->
+<!--        </script>-->
             <p>{{ info2display.sent_htmls[snt_id-1] }}</p>
 
             {% endautoescape %}
@@ -181,156 +182,156 @@
     </div>
 
 
-{#      <table style="height: 10%; width:80%" class="main_annotation">#}
-{#            <tbody>#}
-{#                <tr>#}
-{#                    <td>#}
-{#                        <div class="dropdown">#}
-{#                                <label for="roles">Roles</label>#}
-{#                                <input list="default-roles" name="roles" id="roles" onfocus="this.value=''" onchange="this.blur();">#}
-{#                                <datalist id="default-roles">#}
-{#                                    <option value=":actor">#}
-{#                                    <option value=":undergoer">#}
-{#                                    <option value=":theme">#}
-{#                                    <option value=":recipient">#}
-{#                                    <option value=":force">#}
-{#                                    <option value=":causer">#}
-{#                                    <option value=":experiencer">#}
-{#                                    <option value=":stimulus">#}
-{#                                    <option value=":companion">#}
-{#                                    <option value=":material">#}
-{#                                    <option value=":place">#}
-{#                                    <option value=":start">#}
-{#                                    <option value=":goal">#}
-{#                                    <option value=":affectee">#}
-{#                                    <option value=":other-role">#}
-{#                                    <option value=":instrument">#}
-{#                                    <option value=":source">#}
-{#                                    <option value=":manner">#}
-{#                                    <option value=":reason">#}
-{#                                    <option value=":apprehensive">#}
-{#                                    <option value=":purpose">#}
-{#                                    <option value=":temporal">#}
-{#                                    <option value=":extent">#}
-{#                                    <option value=":direction">#}
-{#                                    <option value=":path">#}
-{#                                    <option value=":ARG0">#}
-{#                                    <option value=":ARG1">#}
-{#                                    <option value=":ARG2">#}
-{#                                    <option value=":ARG3">#}
-{#                                    <option value=":ARG4">#}
-{#                                    <option value=":ARG5">#}
-{#                                    <option value=":ARG6">#}
-{#                                    <option value=":calendar">#}
-{#                                    <option value=":century">#}
-{#                                    <option value=":day">#}
-{#                                    <option value=":dayperiod">#}
-{#                                    <option value=":decade">#}
-{#                                    <option value=":era">#}
-{#                                    <option value=":month">#}
-{#                                    <option value=":quarter">#}
-{#                                    <option value=":season">#}
-{#                                    <option value=":timezone">#}
-{#                                    <option value=":weekday">#}
-{#                                    <option value=":year">#}
-{#                                    <option value=":year2">#}
-{#                                    <option value=":time">#}
-{#                                    <option value=":duration">#}
-{#                                    <option value=":frequency">#}
-{#                                    <option value=":age">#}
-{#                                    <option value=":medium">#}
-{#                                    <option value=":mod">#}
-{#                                    <option value=":name">#}
-{#                                    <option value=":ord">#}
-{#                                    <option value=":part">#}
-{#                                    <option value=":poss">#}
-{#                                    <option value=":quant">#}
-{#                                    <option value=":range">#}
-{#                                    <option value=":scale">#}
-{#                                    <option value=":unit">#}
-{#                                    <option value=":value">#}
-{#                                    <option value=":wiki">#}
-{#                                    <option value=":op1">#}
-{#                                    <option value=":op2">#}
-{#                                    <option value=":op3">#}
-{#                                    <option value=":op4">#}
-{#                                    <option value=":op5">#}
-{#                                    <option value=":op6">#}
-{#                                    <option value=":op7">#}
-{#                                    <option value=":op8">#}
-{#                                    <option value=":op9">#}
-{#                                    <option value=":op10">#}
-{#                                    <option value=":cause">#}
-{#                                    <option value=":pure-addition">#}
-{#                                    <option value=":concession">#}
-{#                                    <option value=":concessive-condition">#}
-{#                                    <option value=":condition">#}
-{#                                    <option value=":example">#}
-{#                                    <option value=":li">#}
-{#                                    <option value=":polite">#}
-{#                                    <option value=":topic">#}
-{#                                    <option value=":group">#}
-{#                                    <option value=":subtraction">#}
-{#                                    <option value=":substitute">#}
-{#                                    <option value=":Actor-of">#}
-{#                                    <option value=":Undergoer-of">#}
-{#                                    <option value=":Theme-of">#}
-{#                                    <option value=":Recipient-of">#}
-{#                                    <option value=":Force-of">#}
-{#                                    <option value=":Causer-of">#}
-{#                                    <option value=":Stimulus-of">#}
-{#                                    <option value=":Experiencer-of">#}
-{#                                    <option value=":Companion-of">#}
-{#                                    <option value=":Material-of">#}
-{#                                    <option value=":Place-of">#}
-{#                                    <option value=":Start-of">#}
-{#                                    <option value=":Goal-of">#}
-{#                                    <option value=":Affectee-of">#}
-{#                                    <option value=":Instrument-of">#}
-{#                                    <option value=":Source-of">#}
-{#                                    <option value=":Cause-of">#}
-{#                                    <option value=":Manner-of">#}
-{#                                    <option value=":Reason-of">#}
-{#                                    <option value=":Purpose-of">#}
-{#                                    <option value=":Temporal-of">#}
-{#                                    <option value=":Extent-of">#}
-{#                                    <option value=":Direction-of">#}
-{#                                    <option value=":Path-of">#}
-{#                                    <option value=":ARG0-of">#}
-{#                                    <option value=":ARG1-of">#}
-{#                                    <option value=":ARG2-of">#}
-{#                                    <option value=":ARG3-of">#}
-{#                                    <option value=":ARG4-of">#}
-{#                                    <option value=":ARG5-of">#}
-{#                                    <option value=":ARG6-of">#}
-{#                                    <option value=":Group-of">#}
-{#                                    <option value=":Other-role-of">#}
-{#                                    <option value=":Mod-of">#}
-{#                                    <option value=":Topic-of">#}
-{#                                    <option value=":Medium-of">#}
-{#                                    <option value=":Duration-of">#}
-{#                                    <option value=":Frequency-of">#}
-{#                                    <option value=":Age-of">#}
-{#                                    <option value=":Range-of">#}
-{#                                    <option value=":Poss-of">#}
-{#                                    <option value=":Quant-of">#}
-{#                                    <option value=":Value-of">#}
-{#                                    <option value=":Degree-of">#}
-{#                                    <option value=":Example-of">#}
-{#                                    <option value=":Polarity-of">#}
-{#                                    <option value=":Part-of">#}
-{#                                    <option value=":Condition-of">#}
-{#                                    <option value=":Concession-of">#}
-{#                                    <option value=":Concessive-condition-of">#}
-{#                                    <option value=":Pure-addition-of">#}
-{#                                    <option value=":Substitute-of">#}
-{#                                    <option value=":Subtraction-of">#}
-{#                                </datalist>#}
-{#                            </div>#}
-{#                    </td>#}
-{#                </tr>#}
-{##}
-{##}
+<!--{#      <table style="height: 10%; width:80%" class="main_annotation">#}-->
+<!--{#            <tbody>#}-->
+<!--{#                <tr>#}-->
+<!--{#                    <td>#}-->
+<!--{#                        <div class="dropdown">#}-->
+<!--{#                                <label for="roles">Roles</label>#}-->
+<!--{#                                <input list="default-roles" name="roles" id="roles" onfocus="this.value=''" onchange="this.blur();">#}-->
+<!--{#                                <datalist id="default-roles">#}-->
+<!--{#                                    <option value=":actor">#}-->
+<!--{#                                    <option value=":undergoer">#}-->
+<!--{#                                    <option value=":theme">#}-->
+<!--{#                                    <option value=":recipient">#}-->
+<!--{#                                    <option value=":force">#}-->
+<!--{#                                    <option value=":causer">#}-->
+<!--{#                                    <option value=":experiencer">#}-->
+<!--{#                                    <option value=":stimulus">#}-->
+<!--{#                                    <option value=":companion">#}-->
+<!--{#                                    <option value=":material">#}-->
+<!--{#                                    <option value=":place">#}-->
+<!--{#                                    <option value=":start">#}-->
+<!--{#                                    <option value=":goal">#}-->
+<!--{#                                    <option value=":affectee">#}-->
+<!--{#                                    <option value=":other-role">#}-->
+<!--{#                                    <option value=":instrument">#}-->
+<!--{#                                    <option value=":source">#}-->
+<!--{#                                    <option value=":manner">#}-->
+<!--{#                                    <option value=":reason">#}-->
+<!--{#                                    <option value=":apprehensive">#}-->
+<!--{#                                    <option value=":purpose">#}-->
+<!--{#                                    <option value=":temporal">#}-->
+<!--{#                                    <option value=":extent">#}-->
+<!--{#                                    <option value=":direction">#}-->
+<!--{#                                    <option value=":path">#}-->
+<!--{#                                    <option value=":ARG0">#}-->
+<!--{#                                    <option value=":ARG1">#}-->
+<!--{#                                    <option value=":ARG2">#}-->
+<!--{#                                    <option value=":ARG3">#}-->
+<!--{#                                    <option value=":ARG4">#}-->
+<!--{#                                    <option value=":ARG5">#}-->
+<!--{#                                    <option value=":ARG6">#}-->
+<!--{#                                    <option value=":calendar">#}-->
+<!--{#                                    <option value=":century">#}-->
+<!--{#                                    <option value=":day">#}-->
+<!--{#                                    <option value=":dayperiod">#}-->
+<!--{#                                    <option value=":decade">#}-->
+<!--{#                                    <option value=":era">#}-->
+<!--{#                                    <option value=":month">#}-->
+<!--{#                                    <option value=":quarter">#}-->
+<!--{#                                    <option value=":season">#}-->
+<!--{#                                    <option value=":timezone">#}-->
+<!--{#                                    <option value=":weekday">#}-->
+<!--{#                                    <option value=":year">#}-->
+<!--{#                                    <option value=":year2">#}-->
+<!--{#                                    <option value=":time">#}-->
+<!--{#                                    <option value=":duration">#}-->
+<!--{#                                    <option value=":frequency">#}-->
+<!--{#                                    <option value=":age">#}-->
+<!--{#                                    <option value=":medium">#}-->
+<!--{#                                    <option value=":mod">#}-->
+<!--{#                                    <option value=":name">#}-->
+<!--{#                                    <option value=":ord">#}-->
+<!--{#                                    <option value=":part">#}-->
+<!--{#                                    <option value=":poss">#}-->
+<!--{#                                    <option value=":quant">#}-->
+<!--{#                                    <option value=":range">#}-->
+<!--{#                                    <option value=":scale">#}-->
+<!--{#                                    <option value=":unit">#}-->
+<!--{#                                    <option value=":value">#}-->
+<!--{#                                    <option value=":wiki">#}-->
+<!--{#                                    <option value=":op1">#}-->
+<!--{#                                    <option value=":op2">#}-->
+<!--{#                                    <option value=":op3">#}-->
+<!--{#                                    <option value=":op4">#}-->
+<!--{#                                    <option value=":op5">#}-->
+<!--{#                                    <option value=":op6">#}-->
+<!--{#                                    <option value=":op7">#}-->
+<!--{#                                    <option value=":op8">#}-->
+<!--{#                                    <option value=":op9">#}-->
+<!--{#                                    <option value=":op10">#}-->
+<!--{#                                    <option value=":cause">#}-->
+<!--{#                                    <option value=":pure-addition">#}-->
+<!--{#                                    <option value=":concession">#}-->
+<!--{#                                    <option value=":concessive-condition">#}-->
+<!--{#                                    <option value=":condition">#}-->
+<!--{#                                    <option value=":example">#}-->
+<!--{#                                    <option value=":li">#}-->
+<!--{#                                    <option value=":polite">#}-->
+<!--{#                                    <option value=":topic">#}-->
+<!--{#                                    <option value=":group">#}-->
+<!--{#                                    <option value=":subtraction">#}-->
+<!--{#                                    <option value=":substitute">#}-->
+<!--{#                                    <option value=":Actor-of">#}-->
+<!--{#                                    <option value=":Undergoer-of">#}-->
+<!--{#                                    <option value=":Theme-of">#}-->
+<!--{#                                    <option value=":Recipient-of">#}-->
+<!--{#                                    <option value=":Force-of">#}-->
+<!--{#                                    <option value=":Causer-of">#}-->
+<!--{#                                    <option value=":Stimulus-of">#}-->
+<!--{#                                    <option value=":Experiencer-of">#}-->
+<!--{#                                    <option value=":Companion-of">#}-->
+<!--{#                                    <option value=":Material-of">#}-->
+<!--{#                                    <option value=":Place-of">#}-->
+<!--{#                                    <option value=":Start-of">#}-->
+<!--{#                                    <option value=":Goal-of">#}-->
+<!--{#                                    <option value=":Affectee-of">#}-->
+<!--{#                                    <option value=":Instrument-of">#}-->
+<!--{#                                    <option value=":Source-of">#}-->
+<!--{#                                    <option value=":Cause-of">#}-->
+<!--{#                                    <option value=":Manner-of">#}-->
+<!--{#                                    <option value=":Reason-of">#}-->
+<!--{#                                    <option value=":Purpose-of">#}-->
+<!--{#                                    <option value=":Temporal-of">#}-->
+<!--{#                                    <option value=":Extent-of">#}-->
+<!--{#                                    <option value=":Direction-of">#}-->
+<!--{#                                    <option value=":Path-of">#}-->
+<!--{#                                    <option value=":ARG0-of">#}-->
+<!--{#                                    <option value=":ARG1-of">#}-->
+<!--{#                                    <option value=":ARG2-of">#}-->
+<!--{#                                    <option value=":ARG3-of">#}-->
+<!--{#                                    <option value=":ARG4-of">#}-->
+<!--{#                                    <option value=":ARG5-of">#}-->
+<!--{#                                    <option value=":ARG6-of">#}-->
+<!--{#                                    <option value=":Group-of">#}-->
+<!--{#                                    <option value=":Other-role-of">#}-->
+<!--{#                                    <option value=":Mod-of">#}-->
+<!--{#                                    <option value=":Topic-of">#}-->
+<!--{#                                    <option value=":Medium-of">#}-->
+<!--{#                                    <option value=":Duration-of">#}-->
+<!--{#                                    <option value=":Frequency-of">#}-->
+<!--{#                                    <option value=":Age-of">#}-->
+<!--{#                                    <option value=":Range-of">#}-->
+<!--{#                                    <option value=":Poss-of">#}-->
+<!--{#                                    <option value=":Quant-of">#}-->
+<!--{#                                    <option value=":Value-of">#}-->
+<!--{#                                    <option value=":Degree-of">#}-->
+<!--{#                                    <option value=":Example-of">#}-->
+<!--{#                                    <option value=":Polarity-of">#}-->
+<!--{#                                    <option value=":Part-of">#}-->
+<!--{#                                    <option value=":Condition-of">#}-->
+<!--{#                                    <option value=":Concession-of">#}-->
+<!--{#                                    <option value=":Concessive-condition-of">#}-->
+<!--{#                                    <option value=":Pure-addition-of">#}-->
+<!--{#                                    <option value=":Substitute-of">#}-->
+<!--{#                                    <option value=":Subtraction-of">#}-->
+<!--{#                                </datalist>#}-->
+<!--{#                            </div>#}-->
+<!--{#                    </td>#}-->
+<!--{#                </tr>#}-->
+<!--{##}-->
+<!--{##}-->
 {#    <input type="text" id="test-fetch" name="test-fetch">#}
 {##}
 {##}
@@ -365,6 +366,9 @@
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('move_box');">move</button>
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('replace_box');">replace</button>
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('delete_box');">tdelete</button>
+        <button class="btn btn-info btn" id ="manual_lematizer" onclick="set_load_visible('manual_lemmatize');">lemmatization</button>
+        <button class="btn btn-info btn" id ="segmentation" onclick="set_load_visible('manual_segmentation');">segmentation</button>
+
 
 
 
@@ -452,6 +456,40 @@
         </div>
 
 </div>
+<!--front end box for manual segmentation and lemmatization -->
+<div  id="manual_lemmatize" style="display: none">
+    <label>
+        <input type="text"  id="token"  name ='token'  readonly="readonly" disabled="disabled">
+        <input type="text" id="lemma" oninput="onlemmaHandler(event)"  name ='lemma' >
+        <button type="button" id="lemmatizer" onclick="RecordLemmazation()" name="confirm">confirm</button>
+    </label>
+
+
+</div>
+
+<div id="manual_segmentation" style="display: none">
+    <form class="form" action="/update_segmentation" method="post">
+    <span id='hidden_sent' style="display: none">{{info2display.sents[snt_id-1][1:]|join(' ')}}</span>
+    <input type="text" id="word_segmentation" name='segmentation_result' style="direction: rtl" > </input>
+         <input type="hidden" id="docid" name='doc_id' value="{{doc_id}}" > </input>
+        <input type="hidden" id="snt_id" name='snt_id' value="{{snt_id}}" > </input>
+        <input type="hidden" id="owner_id" name='_id' value="{{snt_id}}" > </input>
+        <button type="submit" id="submit_segmentation" onmouseover="JudgeSegmentation()">submit</button>
+</form>
+</div>
+    <script>
+        // function Concat(){
+
+        let sent_array=document.getElementById('word_segmentation')
+
+            let hidden_sent=document.getElementById('hidden_sent')
+        console.log(document.getElementById('hidden_sent').innerText)
+         sent_array.value=hidden_sent.innerText
+        sent_array.style.width=hidden_sent.innerText.length*8+'px'
+        // console.log(document.getElementById('hidden_sent').innerHTML.slice(1,))
+        // }
+
+    </script>
 {% endblock content %}
 
 {% block content2 %}
@@ -1125,6 +1163,7 @@
 {#        </div>#}
 
         <script type="text/javascript">
+
             colorAnnotatedSents('{{ annotated_sent_ids }}');
             loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`);
             selectEvent();
@@ -1135,6 +1174,7 @@
             customizeOptions(`{{ discourseSettingsJSON |tojson|safe}}`, "default-roles_abstract-concepts");
             populatePartialGraphOptionList();
             getframe(document.getElementById('query_token').value)
+
         </script>
     </div>
     </div>

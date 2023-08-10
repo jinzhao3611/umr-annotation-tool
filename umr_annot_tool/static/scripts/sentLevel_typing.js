@@ -13,7 +13,7 @@ let current_ne_concept;
 let frame_dict = {};// key is lemma form, value is the frame (including all the inflected form)
 let citation_dict = {}; //key is inflected form, value is lemma form
 let similar_word_list ={};
-
+let manual_lemmatization={};
 let selection;
 let begOffset;
 let endOffset;
@@ -167,15 +167,18 @@ function populateUtilityDicts(){
 function conceptDropdown(concept,lang='english') {
     let  frame_info=''
     // submit_concept(); //record the current concept from the selected tokens
-    console.log('test166',concept)
+    console.log('test166',concept)  // this is the tokens in the raw text
     current_concept=concept.toLowerCase()
     let token = current_concept;
+
     let numfied_token = text2num(token); //return the token itself if it's not a number
+    document.getElementsByName('token')[0].value=numfied_token // set the token for the manual lemmatization
     if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         console.log('test 165',number['res'][0]['name'])
         frame_info=getSenses(number);
     } else { //if concept is not a number
+
         if (default_langs.includes(lang)){ // if lang is one of the default languages
             let submenu_items;
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
@@ -195,7 +198,7 @@ function conceptDropdown(concept,lang='english') {
             console.log('test185',token)
             let lemma;
             if(lang === 'arabic'){
-                let submenu_items;
+
                 fetch(`/getfarasalemma`, {
                     method: 'POST',
                     body: JSON.stringify({"token": token})
@@ -203,15 +206,22 @@ function conceptDropdown(concept,lang='english') {
                     console.log('test 192')
                     return response.json();
                 }).then(function (data) {
-                    lemma = data['text'];
+
+                    lemma = data['text']; // this is lemma
                     console.log('195',lemma);
+
+                    if(manual_lemmatization.hasOwnProperty(token)){
+
+                        lemma=manual_lemmatization[token]
+                    }
+                    document.getElementById('lemma').value=lemma;
                     let senses = [];
                     Object.keys(frame_dict).forEach(function(key) {
-                        if(key.split("-")[0] === lemma){
+                        if(key.split("-")[0].trim() === lemma.trim()){
                             senses.push({"name": key, "desc":frame_dict[key]})
                         }
                     });
-
+                    let submenu_items;
                     if (senses.length === 0) {
                         submenu_items = {"res": [{"name": lemma, "desc": "not in frame files"}]};
                     }else{
@@ -220,6 +230,9 @@ function conceptDropdown(concept,lang='english') {
 
                     $('#frame_display').html(syntaxHighlight(submenu_items))
                 console.log('211',frame_info)
+                         console.log(submenu_items,'232')
+                frame_info=getSenses(submenu_items);
+                    window.frame_info=getSenses(submenu_items);
                 }
 
                 ).catch(function(error){
@@ -228,7 +241,7 @@ function conceptDropdown(concept,lang='english') {
 
 
                 );
-                frame_info=getSenses(submenu_items);
+
                   // frame_info=getSenses(submenu_items);
             } else if(lang === 'english'){
                 lemma = getLemma(token);
@@ -270,7 +283,7 @@ function conceptDropdown(concept,lang='english') {
         }
     }
     console.log('test283',frame_info)
-    return frame_info
+    return window.frame_info
 }
 
 /**
@@ -282,17 +295,17 @@ function getSenses(senses) {
     // let genDrop = document.getElementById('genericDropdown');
     // genDrop.innerHTML = "";
     console.log('test260',senses)
-    senses.res.forEach(function (value, index, array) {
-        // let genLink = document.createElement("a");
-        // genLink.innerHTML = value.name;
-        // genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
-        // genLink.setAttribute("title", value.desc);
-        // genLink.setAttribute("id", "sense");
-        // genLink.setAttribute("class", "dropdown-item");
-        // let genLi = document.createElement("li");
-        // genLi.appendChild(genLink);
-        // genDrop.appendChild(genLi);
-    });
+    // senses.res.forEach(function (value, index, array) {
+    //     // let genLink = document.createElement("a");
+    //     // genLink.innerHTML = value.name;
+    //     // genLink.setAttribute("href", `javascript:submit_query(); submit_template_action("${current_mode}", "${value.name}");`);
+    //     // genLink.setAttribute("title", value.desc);
+    //     // genLink.setAttribute("id", "sense");
+    //     // genLink.setAttribute("class", "dropdown-item");
+    //     // let genLi = document.createElement("li");
+    //     // genLi.appendChild(genLink);
+    //     // genDrop.appendChild(genLi);
+    // });
     return senses
 }
 
@@ -2806,25 +2819,26 @@ function indent_for_loc(loc, c, style, n) {
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
+        let rawTexNode=document.getElementById('sentence_display')
+        if (selection.anchorNode.parentNode.parentNode.parentNode == rawTexNode){
             // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent);
-        // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
-        if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'&& selection.anchorNode.parentElement.parentNode.childNodes.item(0).textContent!=='' ) {
-            // in order to test
-            selection=''
-            // selection.removeAllRanges()
-        }
+
          // getframe( document.getElementById('selected_tokens').innerText)//just for test
         // getframe(document.getElementById('test-fetch').value)
-        document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
-        document.getElementById('selected_tokens').innerHTML += selection;
+        var reg2 = /(?<=(<sup[^>]*?>)).*(?=(<\/sup>))/g;
+        let start=selection.anchorOffset
+        let end= selection.focusOffset
+        let token_index=selection.anchorNode.parentNode.innerHTML.match(reg2)[0]
+        let sub_index=''
+        for (let range =start+1; range<=end;range++){
 
-        if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id==='table2'){
-            table_id = 2;
+            sub_index+='_'+range
+
         }
-        if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
-            begOffset = selection.anchorNode.parentElement.cellIndex;
-            endOffset = selection.focusNode.parentElement.cellIndex;
-        }
+        let index_variable='x'+token_index+sub_index
+         console.log(index_variable)
+         document.getElementById('main-command').value=index_variable}
+     // console.log(selection.toString(),selection.anchorNode.parentNode.innerHTML.match(reg2)[0],'2828')
     };
 }
 
@@ -2926,7 +2940,7 @@ function toggleRow(id) {
     var rows = document.getElementsByClassName(id)
     // var row = document.getElementById(id);
     for (var i = 0; i < rows.length; i++) {
-        if (rows[i].style.display == '') {
+        if (rows[i].style.display === '') {
             rows[i].style.display = 'none';
         } else {
             rows[i].style.display = '';
@@ -3205,7 +3219,7 @@ window.onload=function(){
      frame_button.addEventListener("click", function () {  // get the token that user is inputing,
 
          window.open("https://verbs.colorado.edu/propbank-development/","newwindow","height=700,width=500,top=300,left=300,toolbar=yes,menubar=yes,scrollbars=no,resizable=1,location=no,status=no")
-
+             // JudgeSegmentation()
  });
 
     // let sent=document.getElementsByClassName("table table-striped table-sm")
@@ -3514,6 +3528,57 @@ function onInputHandler(event,lang) {
     // $('#frame_display').html(syntaxHighlight(senses['res']))
 }
 
+function onlemmaHandler(event) {
+    let lemma_value= event.target.value
+    let submenu_items
+    let senses=[]
+    console.log(lemma_value)
+    Object.keys(frame_dict).forEach(function(key) {
+                        console.log(key.split('-')[0].trim())
+        console.log(frame_dict[key])
+                        if(key.split("-")[0].trim() === lemma_value.trim()){
+                            senses.push({"name": key, "desc":frame_dict[key]})
+                        }
+                    });
+
+                    if (senses.length === 0) {
+                        submenu_items = {"res": [{"name": lemma_value, "desc": "not in frame files"}]};
+                    }else{
+                        submenu_items = {"res": senses};
+                    }
+
+                    $('#frame_display').html(syntaxHighlight(submenu_items))
+
+
+
+
+
+
+    //
+    // let senses='';
+    // if (command_value) {
+    //     let value = strip(command_value);
+    //     value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
+    //     let cc;
+    //
+    //     cc=argSplit(command_value)
+    //     let concept_token=cc.slice(-1)[0]
+    //     let  concept=index2concept(concept_token)
+    //     if (concept_token.match(/x\d+/)){
+    //         senses=conceptDropdown(concept,lang)
+    //         console.log('3254',senses)
+    //
+    // }   else{
+    //         senses=conceptDropdown(concept_token,lang)
+    //         console.log('3258',senses)
+    //     }
+    // }
+    // console.log('test 3246', senses)
+    // // console.log(JSON.parse(senses))
+    // document.getElementById('frame_display').innerHTML=syntaxHighlight(senses['res'],undefined,4)
+    // console.log(syntaxHighlight(senses['res']))
+    // $('#frame_display').html(syntaxHighlight(senses['res']))
+}
 
 
 // Internet Explorer
@@ -3659,3 +3724,18 @@ function zip_file(data,project_name) {
             window.URL.revokeObjectURL(url);
 
 })}
+
+function RecordLemmazation(){
+    let concept=document.getElementById('token').value;
+    manual_lemmatization[concept]=document.getElementById('lemma').value;
+}
+
+function JudgeSegmentation(){
+    // if the current graph is not empty, the annotator cannot change the segmentation, because it will impact the annotation
+    let penmangraph=document.getElementById('amr').innerHTML
+    console.log(penmangraph.trim(),'3736')
+    if (penmangraph.trim()!==''){
+        document.getElementById('submit_segmentation').disabled=true
+    }
+
+}

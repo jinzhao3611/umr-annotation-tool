@@ -307,8 +307,8 @@
                             <div>
                                 <button class="btn btn-outline-secondary" id="delete-box"><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
                                 <button class="btn btn-outline-secondary" id="edit-box"><a title="edit" href="javascript:changeShowStatus('replace');">edit</a></button>
-                                 <button class="btn btn-outline-secondary" id="edit-box"><a title="edit" onclick="open_sent();">open</a></button>
-{#                                  <button class="btn btn-outline-secondary" id="one-line-ne" onclick="changeSetting();">one-line NE</button>#}
+{#                                 <button class="btn btn-outline-secondary" id="edit-box"><a title="edit" onclick="open_sent();">open</a></button>#}
+                               <a class="btn btn-outline-secondary" id="annot-button" title="click to view sent-level annotation" href="{{ url_for('main.doclevel_thyme_sent', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}" target="_blank:">doc-sent-level-annot</a>
                                 <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
 
                             </div>
@@ -415,7 +415,9 @@
                                 <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
                                 <button class="btn btn-outline-secondary" id="reset-box" disabled><a title="reset" href="javascript:reset();">reset</a></button>
                                 <button class="btn btn-outline-secondary" id="delete-box" disabled><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
-                                <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
+                                <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel_typing', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}" target="_blank" >sent-level-annot</a>
+<!--                                display the sentence levekl un a separate new tab -->
+                                <a class="btn btn-outline-secondary" id="annot-button" title="click to view sent-level annotation" href="{{ url_for('main.doclevel_thyme_sent', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }} ">doc-sent-level-annot</a>
                             </div>
 
                             <script type="text/javascript">
@@ -479,7 +481,7 @@
 
 function myFunction(){
     let parent_value = document.getElementById('parentArg').value
-
+    // if current sent has to be the child, change 'parentArg'  to 'childArg'
     if (parent_value.trim()!==''){
                 if (/s\d+/.test(parent_value.trim())){
                     let match_sent_id=parent_value.match(/s(\d+)/)
@@ -487,6 +489,7 @@ function myFunction(){
                     console.log(current_id.innerText)
                     if(match_sent_id[1].trim()!== current_id.innerText.trim()){
                         console.log('I am here for you')
+                        // here change to the submit button disabled
                         $("#childArg").attr("disabled","disabled");
                     }
 

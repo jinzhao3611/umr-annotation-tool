@@ -48,6 +48,7 @@ function initialize(frame_json, lang, partial_graphs_json) {
     show_amr_obj['option-1-line-NEs'] = localStorage['one-line-NE']
     language = lang; // assign language of the document
     umr['n'] = 0; //clear the current graph
+
     undo_list.push(cloneCurrentState()); //populate undo_list
     current_mode = 'top'; //reset the current mode to add root
     try {
@@ -131,6 +132,9 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment) {
     if (language === "english" || language === "chinese") {
         // showAnnotatedTokens();
     }
+    // fix the issue of undo will remove the whole graphs
+    undo_list.push(cloneCurrentState());
+    undo_index++;
 }
 
 /**
@@ -163,6 +167,7 @@ function conceptDropdown(concept,lang='english') {
         console.log('test 165',number['res'][0]['name'])
         frame_info=getSenses(number);
     } else { //if concept is not a number
+        console.log('169')
         if (default_langs.includes(lang)){ // if lang is one of the default languages
             let submenu_items;
             if (lang === "navajo"){ //Lukas is having placeholder bug, therefore disable lexicon feature for navajo for now
@@ -206,7 +211,7 @@ function conceptDropdown(concept,lang='english') {
                     }
 
                     $('#frame_display').html(syntaxHighlight(submenu_items))
-                console.log('211',frame_info)
+
                 }
 
                 ).catch(function(error){
@@ -511,6 +516,7 @@ function cloneCurrentState() {
     current_state['concepts'] = clone(concepts);
     last_state_id++; //global variable keep count of state id
     current_state['id'] = last_state_id;
+    console.log('test514',current_state['umr'])
     return current_state;
 }
 
@@ -2905,6 +2911,10 @@ function load2amr(){  // get the paste penman tree and show the tree
     // console.log(string2umr(load_amr))
     load_amr=load_amr_replace_sentid(load_amr)
     umr=string2umr(load_amr)
+    // console.log(undo_list,undo_index)
+    // undo_list.push(cloneCurrentState());
+    // undo_index++;
+    // console.log(undo_list,undo_index)
     populateUtilityDicts(); // based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
     show_amr('show');
 

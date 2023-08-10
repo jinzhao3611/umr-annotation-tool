@@ -205,7 +205,7 @@ function string2umr(annotText) {
     variables = {};
     concepts = {};
     variablesInUse = {};
-    let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
+    let uncleanedRootVariables = annotText.match(/\(s\d+?.[a-z]\d*[ \/]/g)  // match each root vars (uncleaned): ["(s1t "]
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
