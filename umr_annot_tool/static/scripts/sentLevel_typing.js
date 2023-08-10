@@ -23,7 +23,7 @@ let concepts = {}; //{obligate-01: "1", resist-01: "1.1", boy: "1.1.1"}
 let variable2concept = {}; // {o: "obligate-01", r: "resist-01", b: "boy", "": "", c: "car"}
 
 
-
+let manual_lemmatization={}; // record the manual lemmatization pair
 let undo_list = []; // [{action:..., amr: ..., concept:..., variables:..., id: 1}, {...}, ...]
 let undo_index = 0; //2
 
@@ -171,6 +171,7 @@ function conceptDropdown(concept, lang = 'english') {
     current_concept = concept.toLowerCase()
     let token = current_concept;
     let numfied_token = text2num(token); //return the token itself if it's not a number
+    document.getElementsByName('token')[0].value=numfied_token // set the token for the manual lemmatization
     if (!isNaN(numfied_token)) {// if numfied_token is a number, this is to cover :quant
         let number = {"res": [{"desc": "token is a number", "name": numfied_token}]};
         console.log('test 165', number['res'][0]['name'])
@@ -216,9 +217,14 @@ function conceptDropdown(concept, lang = 'english') {
                 }).then(function (data) {
                     lemma = data['text'];
                     console.log(lemma);
+                          if(manual_lemmatization.hasOwnProperty(token)){
+
+                        lemma=manual_lemmatization[token]
+                    }
+                    document.getElementById('lemma').value=lemma;
                     let senses = [];
                     Object.keys(frame_dict).forEach(function (key) {
-                        if (key.split("-")[0] === lemma) {
+                        if (key.split("-")[0].trim() === lemma.trim()) {
                             senses.push({"name": key, "desc": frame_dict[key]})
                             console.log(frame_dict[key])
                         }
@@ -806,6 +812,7 @@ function submit_template_action(id, tokens = "") {
 
 }
 function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
+    console.log(value)
     let show_amr_args = '';
     let err_logger=document.getElementById('error_logger')
     err_logger.innerHTML=''
@@ -979,7 +986,7 @@ function exec_command(value, top,is_doc=0) { // value: "b :arg1 car" , top: 1
                 console.log('Ill-formed move command. Not enough arguments. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
             }
         } else if ((cc.length >= 2) && cc[1].match(/^:/)) {
-            console.log(variables)
+            console.log(variables,cc)
             if ((cc[0].match(/^x\d*$/)) && !getLocs(cc[0])) {
                 // console.log('874'+snt_id+cc[0])
                 console.log(err_logger)
@@ -2861,25 +2868,25 @@ function indent_for_loc(loc, c, style, n) {
 function selectEvent(){
     document.onselectionchange = function selectSpan() {
         selection = document.getSelection();
+        let rawTexNode=document.getElementById('sentence_display')
+        if (selection.anchorNode.parentNode.parentNode.parentNode === rawTexNode){
             // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent);
-        // console.log(selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent)
-        if (selection.anchorNode.parentElement.parentNode.childNodes.item(1).textContent!=='Sentence:'&& selection.anchorNode.parentElement.parentNode.childNodes.item(0).textContent!=='' ) {
-            // in order to test
-            selection=''
-            // selection.removeAllRanges()
-        }
+
          // getframe( document.getElementById('selected_tokens').innerText)//just for test
         // getframe(document.getElementById('test-fetch').value)
-        document.getElementById('selected_tokens').innerHTML = ""; //lexicalized concept button
-        document.getElementById('selected_tokens').innerHTML += selection;
+        var reg2 = /(?<=(<sup[^>]*?>)).*(?=(<\/sup>))/g;
+        let start=selection.anchorOffset
+        let end= selection.focusOffset
+        let token_index=selection.anchorNode.parentNode.innerHTML.match(reg2)[0]
+        let sub_index=''
+        for (let range =start+1; range<=end;range++){
 
-        if (selection.anchorNode.parentNode.parentNode.parentNode.parentNode.parentNode.id==='table2'){
-            table_id = 2;
+            sub_index+='_'+range
+
         }
-        if(selection.anchorNode.parentNode.tagName === "TD"){// in sentence table
-            begOffset = selection.anchorNode.parentElement.cellIndex;
-            endOffset = selection.focusNode.parentElement.cellIndex;
-        }
+        let index_variable='x'+token_index+sub_index
+         console.log(index_variable)
+         document.getElementById('main-command').value=index_variable}
     };
 }
 
@@ -3551,6 +3558,7 @@ function onInputHandler(event,lang) {
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
         let cc;
 
+        
         cc=argSplit(command_value)
         let concept_token=cc.slice(-1)[0]
         let  concept=index2concept(concept_token)
@@ -3659,5 +3667,43 @@ function change_color(arg,status=1){
                 }
 
 
+
+}
+
+
+
+function onlemmaHandler(event) {  // Listen the manual lemmatization result
+    let lemma_value= event.target.value
+    let submenu_items
+    let senses=[]
+    console.log(lemma_value)
+    Object.keys(frame_dict).forEach(function(key) {
+                        console.log(key.split('-')[0].trim())
+        console.log(frame_dict[key])
+                        if(key.split("-")[0].trim() === lemma_value.trim()){
+                            senses.push({"name": key, "desc":frame_dict[key]})
+                        }
+                    });
+
+                    if (senses.length === 0) {
+                        submenu_items = {"res": [{"name": lemma_value, "desc": "not in frame files"}]};
+                    }else{
+                        submenu_items = {"res": senses};
+                    }
+
+                    $('#frame_display').html(syntaxHighlight(submenu_items))}
+
+function RecordLemmazation(){
+    let concept=document.getElementById('token').value;
+    manual_lemmatization[concept]=document.getElementById('lemma').value;
+}
+
+function JudgeSegmentation(){
+    // if the current graph is not empty, the annotator cannot change the segmentation, because it will impact the annotation
+    let penmangraph=document.getElementById('amr').innerHTML
+    console.log(penmangraph.trim(),'3736')
+    if (penmangraph.trim()!==''){
+        document.getElementById('submit_segmentation').disabled=true
+    }
 
 }

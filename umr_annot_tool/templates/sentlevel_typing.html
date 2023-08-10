@@ -65,6 +65,7 @@
     <div id="all-sentences" style="height: 150px; overflow-y: scroll;resize: vertical">
         <script type="text/javascript">
            initialize({{ frame_dict|tojson|safe }}, "{{ lang }}",`{{ partial_graphs_json |tojson|safe}}`)
+
         </script>
 {#        file name: <b>{{ filename }}</b>#}
         {% autoescape off %}
@@ -365,6 +366,8 @@
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('move_box');">move</button>
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('replace_box');">replace</button>
             <button class="btn btn-info btn" id ="load" onclick="set_load_visible('delete_box');">tdelete</button>
+         <button class="btn btn-info btn" id ="manual_lematizer" onclick="set_load_visible('manual_lemmatize');">lemmatization</button>
+        <button class="btn btn-info btn" id ="segmentation" onclick="set_load_visible('manual_segmentation');">segmentation</button>
 
 
 
@@ -451,6 +454,40 @@
         </div>
 
 </div>
+<!-- front end box for manual segmentation and lemmatization -->
+<div  id="manual_lemmatize" style="display: none">
+    <label>
+        <input type="text"  id="token"  name ='token'  readonly="readonly" disabled="disabled">
+        <input type="text" id="lemma" oninput="onlemmaHandler(event)"  name ='lemma' >
+        <button type="button" id="lemmatizer" onclick="RecordLemmazation()" name="confirm">confirm</button>
+    </label>
+
+
+</div>
+
+<div id="manual_segmentation" style="display: none">
+    <form class="form" action="/update_segmentation" method="post">
+    <span id='hidden_sent' style="display: none">{{info2display.sents[snt_id-1][1:]|join(' ')}}</span>
+    <input type="text" id="word_segmentation" name='segmentation_result' style="direction: rtl" > </input>
+         <input type="hidden" id="docid" name='doc_id' value="{{doc_id}}" > </input>
+        <input type="hidden" id="snt_id" name='snt_id' value="{{snt_id}}" > </input>
+        <input type="hidden" id="owner_id" name='_id' value="{{snt_id}}" > </input>
+        <button type="submit" id="submit_segmentation" onmouseover="JudgeSegmentation()">submit</button>
+</form>
+</div>
+    <script>
+        // function Concat(){
+
+        let sent_array=document.getElementById('word_segmentation')
+
+            let hidden_sent=document.getElementById('hidden_sent')
+        console.log(document.getElementById('hidden_sent').innerText)
+         sent_array.value=hidden_sent.innerText
+        sent_array.style.width=hidden_sent.innerText.length*8+'px'
+        // console.log(document.getElementById('hidden_sent').innerHTML.slice(1,))
+        // }
+
+    </script>
 {% endblock content %}
 
 {% block content2 %}
@@ -1134,6 +1171,7 @@
             customizeOptions(`{{ discourseSettingsJSON |tojson|safe}}`, "default-roles_abstract-concepts");
             populatePartialGraphOptionList();
             getframe(document.getElementById('query_token').value)
+
         </script>
     </div>
     </div>
