@@ -336,6 +336,27 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
     show_amr('show');
 }
 
+// function fillInDocAnnots(all_doc_annots, all_doc_umrs, doc_id, owner_id){
+//     for (let i=0; i<all_doc_annots.length; i++){
+//         let snt_id = (i+1).toString();
+//         if (JSON.stringify(all_doc_umrs[i]) === "{}" && JSON.stringify(all_doc_annots[i]) !== ""){
+//             let current_umr = string2umr(JSON.stringify(all_doc_annots[i]));
+//             let doc_annot_str = show_amr('show', current_umr);
+//             fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
+//                 method: 'POST',
+//                 body: JSON.stringify({"snt_id": snt_id, "umr_dict": current_umr, "doc_annot_str": doc_annot_str})
+//             }).then(function (response) {
+//                 return response.json();
+//             }).then(function (data) {
+//                 setInnerHTML("error_msg", data["msg"]);
+//                 document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
+//             }).catch(function(error){
+//                 console.log("Fetch error: "+ error);
+//             });
+//         }
+//     }
+// }
+
 function docUMR2db(owner_id) {
     show_amr('show'); //to prevent delete/replace mode html string got in database
     let doc_id = document.getElementById('doc_id').innerText;

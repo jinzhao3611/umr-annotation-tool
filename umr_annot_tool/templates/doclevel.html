@@ -301,6 +301,7 @@
 
                             <script type="text/javascript">
                                 fillInSentAnnots({{ sentAnnotUmrs | safe }});
+                                {#fillInDocAnnots({{ all_doc_annots|safe }}, {{ all_doc_umrs|safe }}, {{ doc_id }}, {{ owner.id }});#}
                                 load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
                                 showBlueBox();
                             </script>
@@ -390,6 +391,7 @@
 
                             <script type="text/javascript">
                                 fillInSentAnnots({{ sentAnnotUmrs | safe }});
+                                {#fillInDocAnnots({{ all_doc_annots|safe }}, {{ all_doc_umrs|safe }}, {{ doc_id }}, {{ owner.id }});#}
                                 load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
                                 showBlueBox();
                             </script>
