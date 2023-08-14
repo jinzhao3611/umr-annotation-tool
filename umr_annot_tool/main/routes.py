@@ -338,7 +338,7 @@ def sentlevel_typing(doc_sent_id):
 
     pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
     partial_graphs_json = pg.partial_umr
-    print("partial_graphs_json: ", partial_graphs_json)
+    print("partial_graphs_json:", partial_graphs_json)
 
     return render_template('sentlevel_typing.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
@@ -1251,3 +1251,21 @@ def doclevel_thyme(doc_sent_id):
                            admin=admin,
                            owner=owner,
                            permission=permission)
+
+# manual_segmentation
+@main.route('/update_segmentation', methods=['POST'])
+def update_segmentation():
+    doc_id = request.form.get('doc_id')
+    sent_id = int(request.form.get('snt_id'))
+    segment_result = request.form.get('segmentation_result')
+
+    doc = Doc.query.get_or_404(doc_id)
+    content = doc.content.strip().split('\n')
+    if len(Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.sent_id == sent_id).all()) == 1:
+        # if other annotators has  annotated this sentence, cannot segment
+        content[sent_id - 1] = segment_result
+        doc.content = '\n'.join(content)
+        db.session.commit()
+
+    # print(doc_id,'1375,test')
+    return redirect(url_for('main.sentlevel_typing', doc_sent_id=str(doc_id) + '_' + str(sent_id) + '_' + str(0)))

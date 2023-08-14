@@ -217,7 +217,9 @@ function string2umr(annotText) {
     variablesInUse = {};
     //Sijia Todo
     console.log(annotText)
+    // for new data variables format just comment right now
     let uncleanedRootVariables = annotText.match(/\(s\d+?.[a-z]\d*[ \/]/g) // match each root vars (uncleaned): ["(s1t "]
+    // let uncleanedRootVariables = annotText.match(/\(s\d+?[a-z]\d*[ \/]/g) // match each root vars (uncleaned): ["(s1t "]
     console.log('test213--', uncleanedRootVariables)
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root

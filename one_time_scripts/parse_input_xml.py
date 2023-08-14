@@ -23,6 +23,7 @@ import re, regex
 from typing import NamedTuple, Optional, List
 import json
 
+
 class InfoToDisplay(NamedTuple):
     sents: List[List[str]]
     sents_html: str
@@ -52,6 +53,9 @@ def process_exported_file_isi_editor(content_string: str) -> Tuple[str, List[Lis
     sents = []
     sent_annots = []
     doc_annots = []
+    print(content_string,'parsed_text')
+    # parser = ET.XMLParser(encoding="utf-8")
+
     root = ET.fromstring(content_string)
     for child in root:
         if child.tag =='sntamr':

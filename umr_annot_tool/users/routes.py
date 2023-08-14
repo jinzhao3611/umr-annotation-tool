@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
@@ -129,7 +128,7 @@ def account():
     belongToProject=[]
     for hds in historyDocs:
         belongToProject.append(Project.query.get_or_404(hds.project_id).project_name)
-    print("belongToProject: ", belongToProject)
+    # print("belongToProject: ", belongToProject)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form, historyDocs=historyDocs,
                            projects=projects, belongToProject=belongToProject)
