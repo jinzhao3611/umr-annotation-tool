@@ -250,6 +250,8 @@ def sentlevel_typing(doc_sent_id):
             print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
             print("umr_dict: ", umr_dict)
+            actions = request.get_json(force=True)["actions"]
+            print("actions: ", actions)
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner.id).first()
@@ -257,8 +259,10 @@ def sentlevel_typing(doc_sent_id):
                 existing.sent_annot = amr_html
                 existing.alignment = align_info
                 existing.sent_umr = umr_dict
+                existing.actions = actions
                 flag_modified(existing, 'alignment')
                 flag_modified(existing, 'sent_umr')
+                flag_modified(existing, 'actions')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
             else:
