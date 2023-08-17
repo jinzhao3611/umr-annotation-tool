@@ -355,6 +355,7 @@
     <div style="height: 10%; width:90%; margin-top: 40px">
             <button class="btn btn-info btn" id="umr2db" onclick="UMR2db()">save</button>
             <button class="btn btn-info btn" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
+            <button class="btn btn-info btn" id="export-box" onclick="export_actions()">actions</button>
             <button class="btn btn-info btn" id="replace-box" onclick="changeShowStatus('replace');">edit</button>
             <button class="btn btn-info btn" id="delete-box" onclick="changeShowStatus('delete');">mdelete</button>
             <button class="btn btn-info btn" id="undo-button" title="currently nothing to undo" onclick="undo(-1);">undo</button>
@@ -1125,7 +1126,7 @@
 
         <script type="text/javascript">
             colorAnnotatedSents('{{ annotated_sent_ids }}');
-            loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`);
+            loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`, `{{ actions_list|tojson|safe}}`);
             selectEvent();
             customizeOptions(`{{ aspectSettingsJSON |tojson|safe}}`, "aspect-attr");
             customizeOptions(`{{ personSettingsJSON |tojson|safe}}`, "refer-person-attr");

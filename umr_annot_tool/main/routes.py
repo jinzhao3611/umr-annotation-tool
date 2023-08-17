@@ -333,6 +333,8 @@ def sentlevel_typing(doc_sent_id):
         all_doc_annots_no_skipping[i-1] = da
 
     exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+    actions_list = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
+                                          Annotation.user_id == owner_user_id).first().actions
 
     lattice = Lattice.query.filter(Lattice.project_id == project_id).first()
     aspectSettingsJSON = lattice.aspect
@@ -359,7 +361,7 @@ def sentlevel_typing(doc_sent_id):
                            permission=permission,
                            aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
                            numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON,
-                           partial_graphs_json=partial_graphs_json)
+                           partial_graphs_json=partial_graphs_json, action_list=actions_list)
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevel(doc_sent_id):

@@ -110,9 +110,13 @@ function customizeOptions(settingsJSON, attrId){
  * @param curr_sent_umr
  * @param curr_annotation_string
  * @param curr_alignment
+ * @param action_list_json
  */
-function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
+function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment, action_list_json){
     console.log('test113',curr_sent_umr,curr_annotation_string,curr_annotation_string)
+    if (action_list_json !== '"[]"'){
+        actions = Object.values(JSON.parse(action_list_json));
+    }
     if(curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))){ //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
 
@@ -3090,6 +3094,32 @@ function deHTML2(s){
     s = deHTML(s)
 
     return s;
+}
+
+function export_actions() {
+    let doc_name = "actions_" + document.getElementById('filename').innerText ;
+    let output_str = actions.join('\n');
+
+    let filename;
+    let text = "user name: " + document.getElementById('username').innerText + '\n';
+    text += "user id: " + document.getElementById('user_id').innerText + '\n';
+    text += "file language: " + document.getElementById('lang').innerText + '\n';
+    text += "file format: " + document.getElementById('file_format').innerText + '\n';
+    text += "Doc ID in database: " + document.getElementById('doc_id').innerText + '\n';
+
+    let curr_time = new Date();
+    text += "export time: " + curr_time.toLocaleString() + '\n\n';
+    text += '# :: snt' + document.getElementById('sentence_id').value + '\n';
+    if (window.BlobBuilder && window.saveAs) {
+        filename = 'exported_' + doc_name;
+        text += output_str;
+        console.log('Saving actions file ' + filename + ' on your computer, typically in default download directory');
+        var bb = new BlobBuilder();
+        bb.append(text);
+        saveAs(bb.getBlob(), filename);
+    } else {
+        console.log('This browser does not support the BlobBuilder and saveAs. Unable to save file with this method.');
+    }
 }
 
 function export_annot(exported_items, content_string) {
