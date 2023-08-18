@@ -361,7 +361,7 @@ def sentlevel_typing(doc_sent_id):
                            permission=permission,
                            aspectSettingsJSON=aspectSettingsJSON, personSettingsJSON=personSettingsJSON,
                            numberSettingsJSON=numberSettingsJSON, modalSettingsJSON=modalSettingsJSON, discourseSettingsJSON=discourseSettingsJSON,
-                           partial_graphs_json=partial_graphs_json, action_list=actions_list)
+                           partial_graphs_json=partial_graphs_json, actions_list=actions_list)
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevel(doc_sent_id):

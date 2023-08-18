@@ -1126,7 +1126,7 @@
 
         <script type="text/javascript">
             colorAnnotatedSents('{{ annotated_sent_ids }}');
-            loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`, `{{ actions_list|tojson|safe}}`);
+            loadHistory('{{ curr_sent_umr|tojson|safe }}', `{{ curr_annotation_string }}`, `{{ curr_alignment |tojson|safe}}`,`{{ actions_list|tojson|safe}}`);
             selectEvent();
             customizeOptions(`{{ aspectSettingsJSON |tojson|safe}}`, "aspect-attr");
             customizeOptions(`{{ personSettingsJSON |tojson|safe}}`, "refer-person-attr");
