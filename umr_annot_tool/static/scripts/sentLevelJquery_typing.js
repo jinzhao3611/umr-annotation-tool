@@ -1,5 +1,24 @@
 $(document).ready(function(){
+                console.log('158 I am here')
+            let avaliableTags=[
+                ":ARG1",
+                ":ARG2",
+                ":Aspect"
 
+
+            ]
+            if ($("#main-command").bind('input propertychange',function(event){
+                 console.log('159',$("#main-command").val())
+                if ($("#main-command").val().indexOf(':')>=0){
+                    $("#main-command").unbind('input propertychange')
+                    console.log('I am here 14')
+                let newTags=avaliableTags.map(function(tags){return $('#main-command').val().split(" :")[0]+' '+tags})
+                console.log(newTags,'159')
+
+                $("#main-command").autocomplete(newTags)
+            }
+
+            }))
     //click anywhere to make the db feedback message go away
     $('body').click(function(){
         $("#error_msg").removeClass("alert alert-success alert alert-danger").empty();

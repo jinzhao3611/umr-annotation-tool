@@ -222,6 +222,7 @@ function conceptDropdown(concept, lang = 'english') {
                         lemma=manual_lemmatization[token]
                     }
                     document.getElementById('lemma').value=lemma;
+                          console.log('225',lemma)
                     let senses = [];
                     Object.keys(frame_dict).forEach(function (key) {
                         if (key.split("-")[0].trim() === lemma.trim()) {
@@ -3650,8 +3651,24 @@ return s
 function change_color(arg,status=1){
 
     console.log('3621',arg)
+    let rawtext,concept_index
+    if (arg.match(/s\d+\.x\d+/)){
+         if (/s\d\.x\d+(-\d+)/.test(arg)){
 
-    if (arg.match(/x\d+/)){
+        let sense= arg.match(/s\d+\.x\d+(-\d+)/)
+            console.log(sense,'3627')
+        arg=arg.replace(sense[1],'')}
+          rawtext= document.getElementsByClassName('raw_text')[0]
+            concept_index=arg.replace(/s\d+\.x/,'')
+
+
+
+    }
+
+
+
+
+   else if  (arg.match(/x\d+/)){
         if (/x\d+(-\d+)/.test(arg)){
 
         let sense= arg.match(/x\d+(-\d+)/)
@@ -3659,13 +3676,14 @@ function change_color(arg,status=1){
         arg=arg.replace(sense[1],'')}
 
             console.log('test3626',arg)
-            let rawtext= document.getElementsByClassName('raw_text')[0]
-            let concept_index=arg.replace('x','')
-            if(status===1){
-            rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
-                  rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
-                }
+            rawtext= document.getElementsByClassName('raw_text')[0]
+            concept_index=arg.replace('x','')
 
+                }
+             if(status===1){
+            rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
+                console.log( rawtext.getElementsByTagName('li'),'test3667',concept_index)
+                  rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
 
 
 }
