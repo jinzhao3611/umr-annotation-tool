@@ -1124,7 +1124,10 @@ def download(filename):
 def getfarasalemma():
     token = request.get_json(force=True)["token"]
     print("inflected_form: ", token)
-    lemma = lemma_dict[token]
+    if token in lemma_dict:
+        lemma = lemma_dict[token]
+    else:
+        lemma = token
     print("lemma_form from local dictionary: ", lemma)
     return make_response(jsonify({"text": lemma}), 200)
 

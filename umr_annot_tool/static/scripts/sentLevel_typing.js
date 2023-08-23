@@ -204,6 +204,7 @@ function conceptDropdown(concept, lang = 'english') {
 
             let lemma;
             if (lang === 'arabic') {
+                console.log(token )
                 // let submenu_items = await arabic_lemma(token)
                 // console.log(submenu_items)
                 // $('#frame_display').html(syntaxHighlight(getSenses(submenu_items['res'])))
@@ -214,6 +215,7 @@ function conceptDropdown(concept, lang = 'english') {
                     body: JSON.stringify({"token": token})
                 }).then(function (response) {
                     return response.json();
+                    // console.log(response.json())
                 }).then(function (data) {
                     lemma = data['text'];
                     console.log(lemma);
@@ -2887,7 +2889,7 @@ function selectEvent(){
         }
         let index_variable='x'+token_index+sub_index
          console.log(index_variable)
-         document.getElementById('main-command').value=index_variable}
+       document.getElementById('main-command').value=document.getElementById('main-command').value.split(' ').slice(0,-1).join(' ')+' '+index_variable}
     };
 }
 
