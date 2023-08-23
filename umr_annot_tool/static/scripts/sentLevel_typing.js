@@ -295,7 +295,7 @@ function conceptDropdown(concept, lang = 'english') {
 
 
     }
-    console.log('test283', frame_info)
+    console.log('test283', window.frame_info)
     return window.frame_info
 }
 

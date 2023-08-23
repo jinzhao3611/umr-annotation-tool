@@ -7,15 +7,25 @@ $(document).ready(function(){
 
 
             ]
+
+
             if ($("#main-command").bind('input propertychange',function(event){
-                 console.log('159',$("#main-command").val())
+
+                 // console.log('159',$("#main-command").val())
                 if ($("#main-command").val().indexOf(':')>=0){
-                    $("#main-command").unbind('input propertychange')
+
+
+
+                    $("#main-command").unbind('input')
+                    $("#main-command").attr("autocomplete", "off");
                     console.log('I am here 14')
                 let newTags=avaliableTags.map(function(tags){return $('#main-command').val().split(" :")[0]+' '+tags})
                 console.log(newTags,'159')
 
-                $("#main-command").autocomplete(newTags)
+                $("#main-command").autocomplete({source:newTags})
+                        $("#main-command").unbind('input propertychange');
+                    // $("#main-command").attr("autocomplete", "off");
+                    //  $("#main-command").autocomplete('disable');
             }
 
             }))
