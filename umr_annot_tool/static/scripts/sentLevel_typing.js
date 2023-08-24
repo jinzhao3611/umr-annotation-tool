@@ -1378,6 +1378,9 @@ function newVar(concept) {
 
 
     }
+    if(manual_lemmatization.hasOwnProperty(concept)){
+        concept=manual_lemmatization[concept]
+    }
 
 
     console.log('test1250', concept)
@@ -1493,7 +1496,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
              let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     // var pattern="/x\d+/"
 
-            if (head.startsWith('x') | head.startsWith('ac')){
+            if (head.startsWith('x') || head.startsWith('ac')){
                     sent_fix= 's'+snt_id.trim()+'.'
     }
 
@@ -1507,7 +1510,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
             let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     // var pattern="/x\d+/"
 
-        if (arg.startsWith('x') | arg.startsWith('ac')){  // x26 → s1.x26
+        if (arg.startsWith('x') || arg.startsWith('ac')){  // x26 → s1.x26
             arg='s'+snt_id.trim()+'.'+arg
         }
     if (arg.match(/.*?(-\d+)/)){ //x26-01  → x26
@@ -1544,6 +1547,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))){
             console.log("I am here40-4");
+            change_color(arg,1)
             arg_variable = newVar(arg); // truffle -> s1t
             console.log('test1336',arg_variable,arg)
             if (arg.startsWith('x')){
