@@ -141,7 +141,6 @@ def account():
                            image_file=image_file, form=form, historyDocs=historyDocs,
                            projects=projects, belongToProject=belongToProject)
 
-
 # new route to process the ajax request
 @users.route('/update_slide_bar', methods=['POST'])
 def update_slide_bar():
@@ -276,6 +275,7 @@ def project(project_id):
                         docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, upload_member=current_user,
                                       sent_annot=a.sent_annot, doc_annot=a.doc_annot, alignment=a.alignment, qc_user=qc,
                                                    sent_id=a.sent_id, sent_umr=a.sent_umr, doc_umr=a.doc_umr)
+
                         db.session.add(docqc)
                         # end
                     # docqc = Docqc(doc_id=add_qc_doc_id, project_id=project_id, author=current_user) #document which member uploaded the qc doc of this project
@@ -455,10 +455,11 @@ def search(project_id):
         concept = search_umr_form.concept.data
         word = search_umr_form.word.data
         triple = search_umr_form.triple.data
-        user_name = search_umr_form.user_name.data
+
         print(word)
         print(getLemma(word, upos="VERB")[0])
         print(triple)
+        user_name = search_umr_form.user_name.data #new feature
 
         h, r, c = "", "", ""
 
@@ -475,12 +476,13 @@ def search(project_id):
             project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
             project = Project.query.filter(Project.id == project_id).first()
             visibility = project.visibility
+            # check visibility
             if visibility:
                 if target_user:
                     annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == target_user.id).all()
                 else:
                     annots = Annotation.query.filter(Annotation.doc_id == doc_id).all()
-                # annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()
+                # annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()4
                 sents = Sent.query.filter(Sent.doc_id == doc_id).all()  # all corresponding raw sentences
                 sents.sort(key=lambda x: x.id)
 
@@ -505,6 +507,7 @@ def search(project_id):
                             # sent = Sent.query.filter(Sent.id == annot.sent_id).first()
                             # umr_results.append(annot.sent_annot)
                             # sent_results.append(sents[annot.sent_id - 1].content)
+                            # sent_results.append(sent)
                         elif triple:
                             # todo: bug: sent didn't got returned
                             if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
@@ -526,6 +529,12 @@ def search(project_id):
                                         '<br>') + '<hr>' + '<hr>' + "Annotator: " + user.username + '<hr/>' + '<hr>')
 
     return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results=sent_results)
+                                # if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
+                                #     sent = Sent.query.filter(Sent.id == annot.sent_id).first()
+                                #     umr_results.append(annot.sent_annot)
+                                #     sent_results.append(sent)
+
+    # return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results = sent_results)
 
 @users.route('/partialgraph/<int:project_id>', methods=['GET', 'POST'])
 def partialgraph(project_id):

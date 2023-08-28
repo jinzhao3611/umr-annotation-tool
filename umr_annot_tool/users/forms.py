@@ -85,5 +85,6 @@ class SearchUmrForm(FlaskForm):
     concept = StringField('Type in concept (can be full or partial string): ')
     word = StringField('Type in word (can be full or partial string): ')
     triple = StringField('Type in logical triple (in the form of * :ARG1 eat-01 or * :ARG1 ate):')
-    user_name = StringField('Type in the username you want to search for (optional):')
+    user_name = StringField('Type in the username you want to search for (optional):') # can search annotation of
+    # certain user
     submit = SubmitField('Search')

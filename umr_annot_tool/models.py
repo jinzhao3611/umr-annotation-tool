@@ -2,7 +2,6 @@ from datetime import datetime
 
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import expression
-
 from umr_annot_tool import db, login_manager
 from flask import current_app
 from flask_login import UserMixin
@@ -20,7 +19,7 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(200), unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
@@ -138,7 +137,6 @@ class Project(db.Model): #this table keeps track of the Project and the qc user 
     #new column
     visibility = db.Column(db.Boolean, server_default=expression.false(), nullable=False)
 
-
 class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder, because once the file is uploaded, the file will be duplicated and put under project qc user
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
@@ -157,7 +155,6 @@ class Docqc(db.Model): # this table is used to document which member in the proj
     upload_member = relationship('User', foreign_keys=[upload_member_id])
     qc_user = relationship('User', foreign_keys=[qc_user_id])
 
-
 class Docda(db.Model):
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
@@ -171,7 +168,6 @@ class Docda(db.Model):
     actions = db.Column(ARRAY(db.Text), nullable=False, server_default='{}')
     alignment = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
     sent_id = db.Column(db.Integer, nullable=False)
-
 
 class Lattice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -187,6 +183,3 @@ class Partialgraph(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     partial_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
 
-class Test(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    test_id = db.Column(db.Integer, nullable=False)

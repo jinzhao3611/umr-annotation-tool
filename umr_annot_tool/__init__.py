@@ -5,7 +5,10 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from umr_annot_tool.config import Config
 import logging
+<<<<<<< HEAD
 from flask_migrate import Migrate
+=======
+>>>>>>> 91425cdfa1d1cb8cd21b45292a9837308df7ab44
 
 # extensions
 db = SQLAlchemy()
@@ -29,6 +32,8 @@ def create_app(config_class=Config):
 
     migrate = Migrate(app, db)
 
+    with app.app_context():
+        db.create_all()
 
     from umr_annot_tool.users.routes import users  # this is a Blueprint instance we are importing here
     from umr_annot_tool.posts.routes import posts

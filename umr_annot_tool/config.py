@@ -1,10 +1,10 @@
 import os
 class Config:
-    # SECRET_KEY = os.environ.get('SECRET_KEY')
-    # SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
-    os.environ['DATABASE_URL'] = 'postgresql://postgres:postgresql@localhost:5432/umr'
-    SECRET_KEY = os.urandom(32)
-    # SECRET_KEY = os.environ.get('SECRET_KEY')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    # os.environ['DATABASE_URL'] = 'postgresql://postgres:postgresql@localhost:5432/umr'
+    # SECRET_KEY = os.urandom(32)
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
     # this is using my own email as the sender
@@ -21,5 +21,4 @@ class Config:
     MAIL_USERNAME = 'apikey'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
-
 

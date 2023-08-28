@@ -3077,7 +3077,11 @@ function UMR2db() {
 
     fetch(`/sentlevel_typing/${doc_sent_id}`, {
         method: 'POST',
+<<<<<<< HEAD
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr, "actions": actions})
+=======
+        body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr})
+>>>>>>> 91425cdfa1d1cb8cd21b45292a9837308df7ab44
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -3096,6 +3100,7 @@ function deHTML2(s){
     return s;
 }
 
+<<<<<<< HEAD
 function export_actions() {
     let doc_name = "actions_" + document.getElementById('filename').innerText ;
     let output_str = actions.join('\n');
@@ -3122,6 +3127,8 @@ function export_actions() {
     }
 }
 
+=======
+>>>>>>> 91425cdfa1d1cb8cd21b45292a9837308df7ab44
 function export_annot(exported_items, content_string) {
     let doc_name = document.getElementById('filename').innerText;
     exported_items.forEach(e => {
