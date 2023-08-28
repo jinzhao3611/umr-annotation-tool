@@ -1,4 +1,6 @@
 from datetime import datetime
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import expression
 from umr_annot_tool import db, login_manager
 from flask import current_app
 from flask_login import UserMixin
@@ -28,7 +30,7 @@ class User(db.Model, UserMixin):
     docs = db.relationship('Doc', backref='author', lazy=True)
     projectusers = db.relationship('Projectuser', backref='author', lazy=True)
     projects = db.relationship('Project', backref='author', lazy=True)
-    docqcs = db.relationship('Docqc', backref='author', lazy=True)
+    # docqcs = db.relationship('Docqc', backref='author', lazy=True)
     docdas = db.relationship('Docda', backref='author', lazy=True)
 
 
@@ -131,19 +133,40 @@ class Project(db.Model): #this table keeps track of the Project and the qc user 
     lattices = db.relationship('Lattice', backref='project', lazy=True)
     partialgraphs = db.relationship('Partialgraph', backref='project', lazy=True)
 
+    # new column
+    visibility = db.Column(db.Boolean, server_default=expression.false(), nullable=False)
 
 class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder, because once the file is uploaded, the file will be duplicated and put under project qc user
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     upload_member_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
+    # new columns
+    qc_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    sent_annot = db.Column(db.Text, nullable=False)
+    doc_annot = db.Column(db.Text, nullable=False)
+    sent_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    doc_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    actions = db.Column(ARRAY(db.Text), nullable=False, server_default='{}')
+    alignment = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    sent_id = db.Column(db.Integer, nullable=False)
+    # related to User
+    upload_member = relationship('User', foreign_keys=[upload_member_id])
+    qc_user = relationship('User', foreign_keys=[qc_user_id])
 
 class Docda(db.Model):
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
+    # new columns
+    sent_annot = db.Column(db.Text, nullable=False)
+    doc_annot = db.Column(db.Text, nullable=False)
+    sent_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    doc_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    actions = db.Column(ARRAY(db.Text), nullable=False, server_default='{}')
+    alignment = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
+    sent_id = db.Column(db.Integer, nullable=False)
 
 class Lattice(db.Model):
     id = db.Column(db.Integer, primary_key=True)

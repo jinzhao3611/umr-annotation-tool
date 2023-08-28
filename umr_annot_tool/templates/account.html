@@ -6,17 +6,20 @@
 {% endblock head %}
 
 {% block content %}
+<!--    to show info message about the visibility of the owner's project-->
+    <div id="flash-messages"></div>
+
      <div class="content-section">
         <legend class="border-bottom mb-4">Projects</legend>
         <ul class="list-group" id="adminDocs">
-            {% for project in projects %}
+            {% for project, visibility in projects %}
                 <li class="list-group-item d-flex justify-content-between align-items-center" id="project-{{ project.project_id }}">
                     <a href="{{ url_for('users.project', project_id=project.project_id)}}">
                         {{project.project_name}} ({{ project.permission }})
                     </a>
                     {% if project.permission == 'admin' %}
-                        <label class="switch" title="public viewable: if this button is switched on, not only members of this project, any registered users from other projects can see your annotation through search">
-                          <input type="checkbox">
+                        <label class="switch" data-proj-id="{{ project.project_id }}" title="public viewable: if this button is switched on, not only members of this project, any registered users from other projects can see your annotation through search">
+                          <input type="checkbox" id="slide-bar" class="slide-bar-checkbox" {% if visibility %}checked{% endif %}>
                           <span class="slider"></span>
                         </label>
                     {% endif %}
@@ -102,4 +105,38 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.getElementById('slide-bar').addEventListener('change', function() {
+
+            var slideBarValue = this.checked;
+            var projectId = document.getElementById('slide-bar').parentElement.getAttribute('data-proj-id');
+            console.log(slideBarValue);
+
+            // Send an AJAX request to the backend route
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/update_slide_bar', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('slide_bar_value=' + slideBarValue + '&project_id=' + projectId);
+
+            xhr.onload = function() {
+                console.log(xhr.responseText);
+                if (xhr.status === 200 && xhr.responseText) {
+                    // Update the flash message container in the template
+                    var response = JSON.parse(xhr.responseText);
+                    var flashContainer = document.getElementById('flash-messages');
+                    if (response.status === 'success'){
+                        if (slideBarValue) {
+                            flashContainer.innerHTML = '<div class="alert alert-info">Your project can be searched!</div>';
+                        } else {
+                            flashContainer.innerHTML = '<div class="alert alert-info">Your project is hidden.</div>';
+                        }
+                    }
+                } else {
+                    console.error('Failed to update slide bar.');
+                }
+            };
+
+        });
+    </script>
 {% endblock content2 %}
