@@ -480,22 +480,26 @@
         <script>
 
 function myFunction(){
-    let parent_value = document.getElementById('parentArg').value
+    // let parent_value = document.getElementById('parentArg').value
     // if current sent has to be the child, change 'parentArg'  to 'childArg'
+    $('#parentArg').bind('input propertychange',function(){
+        let parent_value=$('#parentArg').val();
     if (parent_value.trim()!==''){
                 if (/s\d+/.test(parent_value.trim())){
                     let match_sent_id=parent_value.match(/s(\d+)/)
                     let current_id=document.getElementById("curr_shown_sent_id")
                     console.log(current_id.innerText)
                     if(match_sent_id[1].trim()!== current_id.innerText.trim()){
-                        console.log('I am here for you')
-                        // here change to the submit button disabled
+                    // here change to the submit button disabled
                         $("#childArg").attr("disabled","disabled");
+                    }
+                    if(match_sent_id[1].trim()=== current_id.innerText.trim()){
+                         $("#childArg").attr("disabled",false);
                     }
 
                     console.log(match_sent_id[1],'484')
                 }
-}}
+}})}
         </script>
     </body>
 </html>
