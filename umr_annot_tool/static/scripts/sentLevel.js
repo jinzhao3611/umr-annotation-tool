@@ -731,7 +731,8 @@ function submit_template_action(id, tokens = "", parentVarLoc = "") {
 
 function exec_command(value, top) { // value: "b :arg1 car" , top: 1
     let show_amr_args = '';
-
+    let snt_id = document.getElementById('curr_shown_sent_id').innerText;
+    snt_id="s"+snt_id.trim();
     if (value) {
         value = strip(value);
         value = value.replace(/^([a-z]\d*)\s+;([a-zA-Z].*)/, "$1 :$2"); // b ;arg0 boy ->  b :arg0 boy
@@ -752,8 +753,9 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
         }
         // console.log(getLocs(cc[0]),'test746',variables)
         // cc == ["b", ":arg1", "car"]
+
         if (cc.length > 3 && cc[1] === ':Aspect') { //example: value = 's1t :Aspect Reversible State': Reversible State needs to be hyphenated when added to graph
-            let p = cc[0];
+            let p = snt_id+cc[0];
             let r = cc[1];
             let c = cc.slice(2,).join("-") // Aspect values that are longer than 2 tokens need to be hyphenated
             cc = [p, r, c]
@@ -780,14 +782,15 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
                 }
                 show_amr_args = 'show';
             }
-        } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0])) { //example: value = "s1t :ARG5 freedom"
-            addTriple(cc[0], cc[1], cc[2], '');
+        } else if ((cc.length === 3) && cc[1].match(/^:[a-z]/i) && getLocs(snt_id+cc[0])) { //example: value = "s1t :ARG5 freedom"
+            console.log('I am here test786')
+            addTriple(snt_id+cc[0], cc[1], cc[2], '');
             show_amr_args = 'show';
-        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) { //example: value = "s1t :ARG0 person Jin Zhao"
-            addNE(value);
+        } else if ((cc.length >= 4) && cc[1].match(/^:[a-z]/i) && getLocs(snt_id+cc[0]) && validEntryConcept(cc[2]) && (!getLocs(cc[2]))) { //example: value = "s1t :ARG0 person Jin Zhao"
+            addNE(snt_id+value);
             show_amr_args = 'show';
-        } else if ((cc.length >= 3) && (cc[1] === ':name') && getLocs(cc[0]) && (!getLocs(cc[2]))) { //example: value = "s1t :name Jin Zhao", this is required when the named entity is not in the list when shortcut annotation
-            addNE(value);
+        } else if ((cc.length >= 3) && (cc[1] === ':name') && getLocs(snt_id+cc[0]) && (!getLocs(cc[2]))) { //example: value = "s1t :name Jin Zhao", this is required when the named entity is not in the list when shortcut annotation
+            addNE(snt_id+value);
             show_amr_args = 'show';
         } else if (cc[0] === 'replace') {
             if (cc.length === 1) {
@@ -845,10 +848,10 @@ function exec_command(value, top) { // value: "b :arg1 car" , top: 1
             if (cc.length >= 4) { //example: value = "move s1t2 to s1p2 :ARG5"
                 if (cc[2] === 'to') {
                     if (cc.length === 4) {
-                        moveVar(cc[1], cc[3], '');
+                        moveVar(snt_id+cc[1], snt_id+cc[3], '');
                         show_amr_args = 'show';
                     } else if (cc.length === 5) {
-                        moveVar(cc[1], cc[3], cc[4]);
+                        moveVar(snt_id+cc[1], snt_id+cc[3], cc[4]);
                         show_amr_args = 'show';
                     } else {
                         console.log('Ill-formed move command. Usage: move &lt;var&gt; to &lt;new-head-var&gt; [&lt;role&gt;]');
