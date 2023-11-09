@@ -204,6 +204,7 @@ function conceptDropdown(concept, lang = 'english') {
 
             let lemma;
             if (lang === 'arabic') {
+                console.log(token )
                 // let submenu_items = await arabic_lemma(token)
                 // console.log(submenu_items)
                 // $('#frame_display').html(syntaxHighlight(getSenses(submenu_items['res'])))
@@ -214,6 +215,7 @@ function conceptDropdown(concept, lang = 'english') {
                     body: JSON.stringify({"token": token})
                 }).then(function (response) {
                     return response.json();
+                    // console.log(response.json())
                 }).then(function (data) {
                     lemma = data['text'];
                     console.log(lemma);
@@ -222,6 +224,7 @@ function conceptDropdown(concept, lang = 'english') {
                         lemma=manual_lemmatization[token]
                     }
                     document.getElementById('lemma').value=lemma;
+                          console.log('225',lemma)
                     let senses = [];
                     Object.keys(frame_dict).forEach(function (key) {
                         if (key.split("-")[0].trim() === lemma.trim()) {
@@ -292,7 +295,7 @@ function conceptDropdown(concept, lang = 'english') {
 
 
     }
-    console.log('test283', frame_info)
+    console.log('test283', window.frame_info)
     return window.frame_info
 }
 
@@ -1375,6 +1378,9 @@ function newVar(concept) {
 
 
     }
+    if(manual_lemmatization.hasOwnProperty(concept)){
+        concept=manual_lemmatization[concept]
+    }
 
 
     console.log('test1250', concept)
@@ -1490,7 +1496,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
              let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     // var pattern="/x\d+/"
 
-            if (head.startsWith('x') | head.startsWith('ac')){
+            if (head.startsWith('x') || head.startsWith('ac')){
                     sent_fix= 's'+snt_id.trim()+'.'
     }
 
@@ -1504,7 +1510,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
             let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     // var pattern="/x\d+/"
 
-        if (arg.startsWith('x') | arg.startsWith('ac')){  // x26 → s1.x26
+        if (arg.startsWith('x') || arg.startsWith('ac')){  // x26 → s1.x26
             arg='s'+snt_id.trim()+'.'+arg
         }
     if (arg.match(/.*?(-\d+)/)){ //x26-01  → x26
@@ -1541,6 +1547,7 @@ function addTriple(head, role, arg, arg_type, index='',doc=0) {
             && (!role_unquoted_string_arg(role, arg, '')) //should be quoted (not a number, polarity, mode or aspect)
             && (!role.match(/^:?(li|wiki)$/))){
             console.log("I am here40-4");
+            change_color(arg,1)
             arg_variable = newVar(arg); // truffle -> s1t
             console.log('test1336',arg_variable,arg)
             if (arg.startsWith('x')){
@@ -2886,7 +2893,7 @@ function selectEvent(){
         }
         let index_variable='x'+token_index+sub_index
          console.log(index_variable)
-         document.getElementById('main-command').value=index_variable}
+       document.getElementById('main-command').value=document.getElementById('main-command').value.split(' ').slice(0,-1).join(' ')+' '+index_variable}
     };
 }
 
@@ -3650,8 +3657,24 @@ return s
 function change_color(arg,status=1){
 
     console.log('3621',arg)
+    let rawtext,concept_index
+    if (arg.match(/s\d+\.x\d+/)){
+         if (/s\d\.x\d+(-\d+)/.test(arg)){
 
-    if (arg.match(/x\d+/)){
+        let sense= arg.match(/s\d+\.x\d+(-\d+)/)
+            console.log(sense,'3627')
+        arg=arg.replace(sense[1],'')}
+          rawtext= document.getElementsByClassName('raw_text')[0]
+            concept_index=arg.replace(/s\d+\.x/,'')
+
+
+
+    }
+
+
+
+
+   else if  (arg.match(/x\d+/)){
         if (/x\d+(-\d+)/.test(arg)){
 
         let sense= arg.match(/x\d+(-\d+)/)
@@ -3659,13 +3682,14 @@ function change_color(arg,status=1){
         arg=arg.replace(sense[1],'')}
 
             console.log('test3626',arg)
-            let rawtext= document.getElementsByClassName('raw_text')[0]
-            let concept_index=arg.replace('x','')
-            if(status===1){
-            rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
-                  rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
-                }
+            rawtext= document.getElementsByClassName('raw_text')[0]
+            concept_index=arg.replace('x','')
 
+                }
+             if(status===1){
+            rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
+                console.log( rawtext.getElementsByTagName('li'),'test3667',concept_index)
+                  rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
 
 
 }
