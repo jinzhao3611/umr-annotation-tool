@@ -141,7 +141,11 @@ function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment){
     if(language === "english" || language === "chinese"){
         // showAnnotatedTokens();
     }
+    console.log('144',umr)
+
 }
+
+
 
 /**
  * based on current umr dict, populate 3 dicts: variables, concepts, and variable2concept
@@ -227,7 +231,9 @@ function conceptDropdown(concept, lang = 'english') {
                           console.log('225',lemma)
                     let senses = [];
                     Object.keys(frame_dict).forEach(function (key) {
+                        // console.log('230',key.split("-")[0].trim(),lemma.trim(),key.split("-"))
                         if (key.split("-")[0].trim() === lemma.trim()) {
+                            console.log('bingo,232')
                             senses.push({"name": key, "desc": frame_dict[key]})
                             console.log(frame_dict[key])
                         }
@@ -3145,7 +3151,7 @@ function export_annot(exported_items, content_string) {
     if (window.BlobBuilder && window.saveAs) {
         filename = 'exported_' + doc_name;
         text += output_str;
-        text += '\n\n' + '# Source File: \n' + content_string;
+        text += '\n\n' + '$$ Source File: \n' + content_string;
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
         bb.append(text);
@@ -3232,6 +3238,7 @@ function changeSetting(){
  * this is a temporary function, the purpose is to test execute command function
  */
 function submit_command(e){
+    // change_all_color();
     let value = document.getElementById(e).value
     exec_command(value,1)
     let logger= document.getElementById('logger')
@@ -3257,6 +3264,7 @@ function submit_command(e){
 let status = true;
 
 window.onload=function(){
+
     check_command();
     // submit_command();
     // window.scrollTo({top:})
@@ -3352,6 +3360,7 @@ window.onload=function(){
 
 
 }
+        change_all_color();
 document.onkeydown=function(){ // show the index with the hot key
     if(event.keyCode===18 && event.ctrlKey===true){
         overshow();
@@ -3653,9 +3662,26 @@ function load_amr_replace_sentid(amr){
 return s
 
 }
+function change_all_color(){
+    console.log('test 3663',umr)
+        Object.keys(umr).forEach(function (key, value) {
+        if(key.match(/.v/)){
+            let cur_snt_id=document.getElementById('curr_shown_sent_id').innerText.trim();
+
+            console.log('test147', 's'+cur_snt_id+'.',umr[key].replace('s'+cur_snt_id+'.',''))
+            let change_index= umr[key].replace('s'+cur_snt_id+'.','')
+            change_color(change_index)
+        }
+    })
+
+
+}
+
 
 function change_color(arg,status=1){
 
+
+    let missing=false;
     console.log('3621',arg)
     let rawtext,concept_index
     if (arg.match(/s\d+\.x\d+/)){
@@ -3684,15 +3710,24 @@ function change_color(arg,status=1){
             console.log('test3626',arg)
             rawtext= document.getElementsByClassName('raw_text')[0]
             concept_index=arg.replace('x','')
+            concept_index=parseInt(concept_index);
+                }else{
 
-                }
+        rawtext= document.getElementsByClassName('raw_text')[0]
+        missing=true;
+    }
+    if (missing===false){
              if(status===1){
+                 console.log(rawtext,concept_index)
             rawtext.getElementsByTagName('li')[concept_index-1].style.color='#0000ff'}  else{
+
+
                 console.log( rawtext.getElementsByTagName('li'),'test3667',concept_index)
+
                   rawtext.getElementsByTagName('li')[concept_index-1].style.color=''}
 
 
-}
+}}
 
 
 
