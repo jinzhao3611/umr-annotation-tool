@@ -82,8 +82,8 @@ def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List
              doc_annots: ['<div id="amr">(s1&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:modal&nbsp;((s1t&nbsp;:AFF&nbsp;s2d)))<br>\n<div>\n', '<div id="amr">(s2&nbsp;/&nbsp;sentence<br>\n&nbsp;&nbsp;:temporal&nbsp;((s2t&nbsp;:after&nbsp;s2d)))<br>\n<div>\n']
              aligns: ['s1t: '3-3', 's2d': 2-2', 'State': -1--1]
     """
-    items = content_string.split("#")[:-1] #last item in list is original source file
-    doc_content_string = content_string.split("#")[-1].replace(' Source File: \n', '').strip() #remove first line
+    items = content_string.split("$$")[0] #last item in list is original source file
+    doc_content_string = content_string.split("$$")[-1].replace(' Source File: \n', '').strip() #remove first line
 
     sent_indice = list(range(1, len(items), 4))
     sent_annot_indice = list(range(2, len(items), 4))

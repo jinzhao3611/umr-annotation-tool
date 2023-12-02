@@ -109,9 +109,9 @@ function customizeOptions(settingsJSON, attrId) {
  * @param actions_list_json
  */
 function loadHistory(curr_sent_umr, curr_annotation_string, curr_alignment, actions_list_json) {
-    if(actions_list_json !== '"[]"'){
-        actions = Object.values(JSON.parse(actions_list_json));
-    }
+    // if(actions_list_json !== '"[]"'){
+    //     actions = Object.values(JSON.parse(actions_list_json));
+    // }
     if (curr_sent_umr === "{}" && !isEmptyOrSpaces(deHTML(curr_annotation_string))) { //if current umr field is empty but the annot_str field (there could be cases: '<div id="amr">\n</div>\n') is not, this happens when upload file with existing annotations
         umr = string2umr(curr_annotation_string);
     } else {
