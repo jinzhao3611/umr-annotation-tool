@@ -2320,9 +2320,10 @@ function show_amr_rec(loc, args, rec, ancestor_elem_id_list) {
 /**
  * this is the function populate the show_amr_obj with the options table content, and print out the penman format output to webpage
  * @param args "show" or "show replace" or "show delete", if args is empty string, nothing will be shown
+ * @param umr_dict
  */
-function show_amr(args) {
-    let s; //DOM element that contains umr
+function show_amr(args, umr_dict=umr) {
+    let s; //DOM element that contains
     let html_amr_s; //html string of the umr penman graph
     n_elems_w_id = 0; //keep counts of element (used in show delete)
     show_amr_mo_lock = ''; //relate to coloring, it's ele_id
@@ -2336,7 +2337,7 @@ function show_amr(args) {
     //generate the pennman string
     if (args) { //args can be "show", "replace", "delete" or "check"
         let amr_s = ''; // html string of the umr penman graph
-        let n = umr['n']; // how many children currently in the tree
+        let n = umr_dict['n']; // how many children currently in the tree
         for (let i = 1; i <= n; i++) { //traverse children
             let show_amr_rec_result = show_amr_rec(i, args, 0, ' '); //returns a html string that represents the penman format of this recursion
             if (show_amr_rec_result) {

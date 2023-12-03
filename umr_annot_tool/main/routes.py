@@ -660,7 +660,6 @@ def doclevel(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
-    print(type(sentAnnotUmrs))
 
     if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
@@ -681,6 +680,7 @@ def doclevel(doc_sent_id):
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
+    # all_doc_umrs = [annot.doc_umr for annot in annotations]
 
     #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
     # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
@@ -715,6 +715,8 @@ def doclevel(doc_sent_id):
         admin=current_user
         permission = ""
 
+    # print("Sent annot pairs1: ", repr(sent_annot_pairs[0][1].doc_annot))
+    # print("Sent annot pairs4: ", repr(sent_annot_pairs[3][1].doc_annot))
     return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
@@ -722,6 +724,8 @@ def doclevel(doc_sent_id):
                            file_format=doc.file_format,
                            content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
+                           # all_doc_annots=all_doc_annots,
+                           # all_doc_umrs=all_doc_umrs,
                            project_name=project_name,
                            admin=admin,
                            owner=owner,

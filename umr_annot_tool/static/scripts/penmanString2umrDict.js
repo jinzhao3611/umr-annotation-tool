@@ -198,6 +198,7 @@ function string2umr(annotText) {
     annotText = annotText.replace(/present-ref/g, 's10000e');
 
     annotText = decodeHtmlUnicode(annotText);// this function is used to convert &#34; to ", or it will cause matching errors
+    annotText = deHTML(annotText) //this is to be compatible with earlier annotations that saved html tags in annotation string in database
 
     let loc; // current graph location we are dealing with
     let umr_dict = {};

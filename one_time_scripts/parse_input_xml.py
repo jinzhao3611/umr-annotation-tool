@@ -235,7 +235,16 @@ def parse_flex12(content_string: str, file_format: str) -> 'ExtractedXMLInfo':
                 flex2:  /Users/jinzhao/schoolwork/lab-work/umr-annotation-tool/umr_annot_tool/resources/jens_van_gysel/Original_Verifiable generic.xml
     :param file_format: what exactly does the xml file look like
     :param content_string: input content string
-    :return:
+    :return: txt: [["ahltama seyana'", "avanhe'", 'sanga'], ...]
+            dfs : [ Dataframe(Words                             ahltama seyana'  avanhe'   sanga
+                                Morphemes                         ahltama seyana'  avanhe'   sanga
+                                Morpheme Gloss(en)
+                                Morpheme Gloss(es)  anciano lugar de los sanapaná   grande  laguna
+                                Morpheme Cat                                  sus      adj     sus
+                                Word Gloss          anciano lugar de los sanapaná   grande  laguna), ...]
+            sent_gls:  [['', "En ahltama seyana' había una laguna grande"],...] # first element of inner list is engish translation, second element is spanish translation
+            conversation_turns:  ['', '', '', 'EG', '', '', '', 'EG', '', '', '', 'EG ', ...] # this is relevant to notes
+            paragraph_groups:  []
     """
     try:
         root = ET.fromstring(content_string)
