@@ -23,8 +23,8 @@ from umr_annot_tool.resources.utility_modules.suggest_sim_words import generate_
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
-FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
-# FRAME_FILE_ARABIC = 'umr_annot_tool/resources/arabic_propbank.json'
+# FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
+FRAME_FILE_ARABIC = 'umr_annot_tool/resources/arabic_propbank.json'
 LEMMA_DICT_ARABIC = 'umr_annot_tool/resources/arabic_lemma_dict.json'
 lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 

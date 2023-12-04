@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from umr_annot_tool.config import Config
+from umr_annot_tool.config1 import Config
 import logging
 
 # extensions

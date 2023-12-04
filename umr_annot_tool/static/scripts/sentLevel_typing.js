@@ -1352,6 +1352,14 @@ function newVar(concept) {
     }
 
     concept = text2num(concept)// if it's a number ?  Sijia to-do
+     if ((concept.indexOf('.')===concept.trim().length-1)||concept.indexOf(':')!=-1){ // if the concept including a period
+         concept=concept.replace('.','')
+         concept=concept.replace(':','')
+     }
+     // if (concept){
+     //
+     //        concept=concept.replace('.','')
+     // }
     if (sense !== '') {  // convert the token into the lemmatized result rather than the token in the raw context
         let sense_regex = /^[0]+/
         let sense_no = sense.replace('-', '').replace(sense_regex, '')
