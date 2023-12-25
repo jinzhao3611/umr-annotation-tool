@@ -232,7 +232,7 @@ function conceptDropdown(concept, lang = 'english') {
                     let senses = [];
                     Object.keys(frame_dict).forEach(function (key) {
                         // console.log('230',key.split("-")[0].trim(),lemma.trim(),key.split("-"))
-                        if (key.split("-")[0].trim() === lemma.trim()) {
+                        if (key.split("-")[0].trim() === lemma.trim() || key.split("-")[0].trim()=== lemma.trim().replace(/[ ُ َ ِ ْ ّ]ّ/g, "")) {
                             console.log('bingo,232')
                             senses.push({"name": key, "desc": frame_dict[key]})
                             console.log(frame_dict[key])
