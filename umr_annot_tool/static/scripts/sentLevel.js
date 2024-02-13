@@ -221,6 +221,7 @@ function conceptDropdown(lang = 'english') {
             } else if (lang === 'chinese') {
                 lemma = token;
                 let senses = [];
+                senses = [{"name": lemma, "desc": ""}];
                 Object.keys(frame_dict).forEach(function (key) {
                     if (key.split("-")[0] === lemma) {
                         senses.push({"name": key, "desc": JSON.stringify(frame_dict[key])})
