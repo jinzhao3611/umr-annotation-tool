@@ -52,7 +52,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                 variable2concept[variable] = new_concept;
             }
             // THIS BLOCK ADD 1.v AND RECORD VARIABLE
-            if (getLocs(variable) && !docAnnot) { // if variable already exists
+            if (getLocs(variable) && !docAnnot && umr_dict[getLocs(variable) + '.c']) { // if variable already exists, and this is not doc level annotation, and if the existing variable have a corresponding concept (this is to deal with the situation when reentrancy variable appears before the antecedent:this current variable is the antecedent variable)
                 new_variable = newVar(concept);
                 umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
@@ -99,7 +99,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                 }
             }
         }
-    } else if (state === 'post-concept') {
+    } else if (state === 'post-concept') { // annotText start with role, match something like ":op1 s1p))\n  :condition (s1w / work-01\n               :ARG0 (s1p / person)))\n "
         annotText = annotText.replace(/^[^:()]*/, ""); //remove anything that is not : or ( or ) until : ( ) appears
         let role_follows_p = annotText.match(/^:[a-z]/i); //match something like :a
         let open_para_follows_p = annotText.match(/^\(/); // match ( in the beginning
@@ -159,10 +159,10 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             string_arg = 'MISSING-VALUE';
             setInnerHTML('error_msg', 'one of the character in string ' + annotText + ' is not matched, check for special characters for the specific language. ');
             document.getElementById("error_msg").className = `alert alert-danger`;
-        } else if (s_comp = annotText.match(/^[^ ()]+/)) {
+        } else if (s_comp = annotText.match(/^[^ ()]+/)) { //reentrancy variables will go in here
             string_arg = s_comp[0].replace(/\s*$/, "");
             annotText = annotText.replace(/^[^ ()]+/, "");
-            if (getLocs(string_arg)) {
+            if (string_arg.match(/^s\d+\w\d*/)) {
                 variable_arg = string_arg;
                 recordVariable(variable_arg, loc);
                 string_arg = '';
