@@ -53,7 +53,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                 variable2concept[variable] = new_concept;
             }
             // THIS BLOCK ADD 1.v AND RECORD VARIABLE
-            if (getLocs(variable) && !docAnnot) { // if variable already exists
+            if (getLocs(variable) && !docAnnot && umr_dict[getLocs(variable) + '.c']) { // if variable already exists
                 new_variable = newVar(concept);
                 umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
@@ -165,7 +165,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
         } else if (s_comp = annotText.match(/^[^ ()]+/)) {
             string_arg = s_comp[0].replace(/\s*$/, "");
             annotText = annotText.replace(/^[^ ()]+/, "");
-            if (getLocs(string_arg)) {
+            if (string_arg.match(/^s\d+\w\d*/)) {
                 variable_arg = string_arg;
                 recordVariable(variable_arg, loc);
                 string_arg = '';
