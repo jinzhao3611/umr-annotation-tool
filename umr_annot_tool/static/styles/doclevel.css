@@ -104,3 +104,7 @@ body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > 
     border: 1px solid #ddd; /* Optional: Add border for clarity */
     padding: 10px;          /* Optional: Add padding */
 }
+
+.highlight {
+    background-color: yellowgreen; /* Change color as needed */
+}

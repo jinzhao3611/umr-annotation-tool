@@ -121,9 +121,18 @@
                                 <div id="sent_annot{{ loop.index }}" style="overflow-x: scroll;">
                                     {% autoescape off %}
                                     {% if file_format == 'plain_text' or file_format =='isi_editor' %}
-                                        <p>{{ loop.index }}. {{ pair[0].content }}</p>
+                                        <p>{{ loop.index }}.
+                                            {% for word in pair[0].content.split() %}
+                                                <!-- Example: Wrap the word you want to highlight in a span -->
+                                                <span class="highlightable" data-key="{{ word }}">{{ word }}</span>
+                                            {% endfor %}
+                                        </p>
                                     {% else %}
-                                        <p>{{ loop.index }}. {{ pair[0] }}</p>
+                                        <p>{{ loop.index }}.
+                                            {% for word in pair[0].split() %}
+                                                <span class="highlightable" data-key="{{ word }}">{{ word }}</span>
+                                            {% endfor %}
+                                        </p>
                                     {% endif %}
                                     <div id="amr{{ loop.index }}">
                                         {# sentence level umrs are loaded here #}
@@ -389,6 +398,7 @@
         {#    reference https://bootsnipp.com/snippets/bxDBA#}
         </main>
 
+        <script src="../static/scripts/highlight.js"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

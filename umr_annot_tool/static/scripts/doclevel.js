@@ -7,10 +7,24 @@ let sentAnnotUmrs = {}
  * fill in all the sentence annotation penman strings using a list of umr dictionaries of all the sentence annotations
  * @param sentAnnotUmrs: a list of umr dictionaries of all the sentence annotations
  */
-function fillInSentAnnots(sentAnnotUmrs){
-    for(let i=0; i<sentAnnotUmrs.length; i++){
+function fillInSentAnnots(sentAnnotUmrs) {
+    for(let i = 0; i < sentAnnotUmrs.length; i++) {
         let amr_s = umrDict2penmanString(sentAnnotUmrs[i]);
-        document.getElementById('amr'+ (i+1)).innerHTML= amr_s.replace(/\n/g, "<br>\n");
+
+        // Modify the text to include span elements
+        let modifiedAmr = amr_s.replace(/(s\d+[a-z]\d*)/g, function(match) {
+            // The match is the string like (s1a), (s1x), etc.
+            // Remove parentheses and spaces for data-key attribute
+            let key = match.replace(/[()]/g, '').trim();
+            return `<span class="highlightable" data-key="${key}">${match}</span>`;
+        });
+
+        // Insert the modified string with highlighted spans into the HTML
+        document.getElementById('amr' + (i + 1)).innerHTML = modifiedAmr.replace(/\n/g, "<br>\n");
+
+        // Log to console for verification
+        console.log('Element ID: amr' + (i + 1));
+        console.log('Modified InnerHTML:', document.getElementById('amr' + (i + 1)).innerHTML);
     }
 }
 
