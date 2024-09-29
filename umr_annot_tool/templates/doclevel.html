@@ -234,19 +234,45 @@
                             </div>
 
                             <div id="text-command">
-                        {#    child and parent arg are switched because the child and parent concept is different here#}
                                 <table>
                                     <tr>
                                         <td>Reference:</td>
-                                        <td><textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 100px" onfocus="fillInArgs('parentArg')"></textarea></td>
+                                        <td>
+                                            <!-- Dropdown for predefined options -->
+                                            <select id="parentArgOptions" onchange="setParentArgValue()">
+                                                <option value="">meta nodes</option>
+                                                <option value="DCT">DCT</option>
+                                                <option value="PAST_REF">PAST_REF</option>
+                                                <option value="PRESENT_REF">PRESENT_REF</option>
+                                                <option value="FUTURE_REF">FUTURE_REF</option>
+                                                <option value="ROOT">ROOT</option>
+                                                <option value="AUTH">AUTH</option>
+                                            </select>
+                                            <br>
+                                            <!-- Textarea for typing freely or editing selected option -->
+                                            <textarea class="form-control" rows="1" cols="50" id="parentArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 300px" onfocus="fillInArgs('parentArg')"></textarea>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Current:</td>
-                                        <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea></td>
+                                        <td>
+                                            <!-- Dropdown for predefined options -->
+                                            <select id="childArgOptions" onchange="setChildArgValue()">
+                                                <option value="">meta nodes</option>
+                                                <option value="DCT">DCT</option>
+                                                <option value="PAST_REF">PAST_REF</option>
+                                                <option value="PRESENT_REF">PRESENT_REF</option>
+                                                <option value="FUTURE_REF">FUTURE_REF</option>
+                                                <option value="ROOT">ROOT</option>
+                                                <option value="AUTH">AUTH</option>
+                                            </select>
+                                            <br>
+                                            <!-- Textarea for typing freely or editing selected option -->
+                                            <textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em; max-width: 300px; overflow:hidden;" onfocus="fillInArgs('childArg')"></textarea>
+                                        </td>
                                     </tr>
                                 </table>
-                                <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));">submit</button>
-
+                                <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));">Submit</button>
                             </div>
 
                             <div>
@@ -399,6 +425,7 @@
         </main>
 
         <script src="../static/scripts/highlight.js"></script>
+        <script src="../static/scripts/textarea.js"></script>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
                 integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
