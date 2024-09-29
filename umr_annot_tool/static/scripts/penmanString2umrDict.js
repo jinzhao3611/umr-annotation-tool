@@ -193,9 +193,9 @@ function string2umr(annotText) {
     annotText = annotText.replace(/DCT/g, 's10000d');
     annotText = annotText.replace(/AUTH/g, 's10000a');
     annotText = annotText.replace(/ROOT/g, 's10000r');
-    annotText = annotText.replace(/past-ref/g, 's10000b');
-    annotText = annotText.replace(/future-ref/g, 's10000c');
-    annotText = annotText.replace(/present-ref/g, 's10000e');
+    annotText = annotText.replace(/PAST_REF/g, 's10000b');
+    annotText = annotText.replace(/FUTURE_REF/g, 's10000c');
+    annotText = annotText.replace(/PRESENT_REF/g, 's10000e');
 
     annotText = decodeHtmlUnicode(annotText);// this function is used to convert &#34; to ", or it will cause matching errors
     annotText = deHTML(annotText) //this is to be compatible with earlier annotations that saved html tags in annotation string in database
@@ -251,11 +251,11 @@ function string2umr(annotText) {
         }else if(value==="s10000r"){
             umr_dict[key] = 'ROOT';
         }else if(value==="s10000b"){
-            umr_dict[key] = 'past-ref';
+            umr_dict[key] = 'PAST_REF';
         }else if(value==="s10000c"){
-            umr_dict[key] = 'future-ref';
+            umr_dict[key] = 'FUTURE_REF';
         }else if(value==="s10000e"){
-            umr_dict[key] = 'present-ref';
+            umr_dict[key] = 'PRESENT_REF';
         }
     }
     return umr_dict;
