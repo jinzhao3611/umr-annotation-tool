@@ -28,6 +28,7 @@
         <script src="../static/scripts/modal_conversion.js" type="text/javascript"></script>
         <script src="../static/scripts/BlobBuilder.js"></script>
         <script src="../static/scripts/FileSaver.js"></script>
+        <script src="../static/scripts/docLevelParse.js"></script>
 
         {% if title %}
             <title>UMR Annotation Tool - {{ title }}</title>
@@ -272,7 +273,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));">Submit</button>
+                                <button id='submit-doc-rel' onclick="initialCommand();">Submit</button>
                             </div>
 
                             <div>
@@ -366,7 +367,7 @@
                                         <td><textarea class="form-control" rows="1" cols="50" id="childArg" autocapitalize="off" spellcheck="false" style="resize:none;font-size:1.2em;max-width: 100px; overflow:hidden;" onfocus="fillInArgs('childArg')" disabled></textarea></td>
                                     </tr>
                                 </table>
-                                <button id='submit-doc-rel' onclick="initialCommand({{ current_snt_id }}); void($('#content').unhighlight({element: 'span', className:'text-danger'})); void($('#content').unhighlight({element: 'span', className:'text-primary'}));" disabled>submit</button>
+                                <button id='submit-doc-rel' onclick="initialCommand();" disabled>submit</button>
 
                             </div>
 

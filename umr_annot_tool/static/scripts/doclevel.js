@@ -298,7 +298,7 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
 
     if(curr_doc_umr==='{}'){
         try{
-            umr = string2umr(inverseUmrTransform(curr_doc_annot))
+            umr = tripleDisplay2docUmr(curr_doc_umr);
         }catch (e){
             console.log("both doc_umr and doc_annot from database is empty or doesn't not match penman string");
             umr = JSON.parse(curr_doc_umr); //{"n":0}
@@ -345,44 +345,26 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
     for (let i = 0; i < modal_triples.length; i++) {
         exec_command(`s${curr_sent_id}s0 :modal ${modal_triples[i][0]}`, '1');
         exec_command(`${modal_triples[i][0]} ${modal_triples[i][1]} ${modal_triples[i][2]}`, '1');
-        show_amr('show');
     }
-    show_amr('show');
+    let html_amr_s = docUmr2TripleDisplay(umr);
+    setDocGraphInnerHTML('amr', html_amr_s);
 }
 
-// function fillInDocAnnots(all_doc_annots, all_doc_umrs, doc_id, owner_id){
-//     for (let i=0; i<all_doc_annots.length; i++){
-//         let snt_id = (i+1).toString();
-//         if (JSON.stringify(all_doc_umrs[i]) === "{}" && JSON.stringify(all_doc_annots[i]) !== ""){
-//             let current_umr = string2umr(JSON.stringify(all_doc_annots[i]));
-//             let doc_annot_str = show_amr('show', current_umr);
-//             fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
-//                 method: 'POST',
-//                 body: JSON.stringify({"snt_id": snt_id, "umr_dict": current_umr, "doc_annot_str": doc_annot_str})
-//             }).then(function (response) {
-//                 return response.json();
-//             }).then(function (data) {
-//                 setInnerHTML("error_msg", data["msg"]);
-//                 document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
-//             }).catch(function(error){
-//                 console.log("Fetch error: "+ error);
-//             });
-//         }
-//     }
-// }
-
 function docUMR2db(owner_id) {
-    show_amr('show'); //to prevent delete/replace mode html string got in database
+    //remove all .d entries in umr
+    for (let key in umr) {
+        if (umr.hasOwnProperty(key)) {
+            // console.log(`Key: ${key}, Value: ${umr[key]}`);
+            if(key.includes('.d')){
+                delete umr[key]
+            }
+        }
+    }
+
     let doc_id = document.getElementById('doc_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let doc_annot_str = document.getElementById('amr').innerHTML;
-
-    //this purpose of these 3 lines is to remove .d items in dictionary before saving
-    docAnnot=false;
-    let penmanStr = show_amr('show'); //get the umr without .d items
-    docAnnot=true;
-    umr = string2umr(penmanStr);
-    show_amr('show');//the above line displays penman string, we need to set it to triples string
+    umr = tripleDisplay2docUmr(doc_annot_str);
 
     fetch(`/doclevel/${doc_id}_${snt_id}_${owner_id}#amr`, {
         method: 'POST',
@@ -411,35 +393,48 @@ function clearInput(){
     document.getElementById('attribute_values1').value = '';
 }
 
-function deHTML3(s) {
 
-    s = s.replace(/&amp;/g, '&');
-    s = s.replace(/&nbsp;/g, " ");
-    s = s.replace(/&#39;/g, '"');
-    s = s.replace(/&#34;/g, '"');
+function initialCommand(){
+    let parentArg = document.getElementById('parentArg').value; //s2i2
+    let childArg = document.getElementById('childArg').value; //s1d
+    let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
+    let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
 
-    s = s.replace(/&lt;/g, '<');
-    s = s.replace(/&gt;/g, '>');
+    let parentLocs = new Set()
+    for (let key in umr) {
+        if (umr.hasOwnProperty(key)) {
+            // console.log(`Key: ${key}, Value: ${umr[key]}`);
+            let loc = key.slice(0, -2);
+            if(loc.length === 3){ // 1.1
+                parentLocs.add(loc);
+            }
+        }
+    }
+    umr["1.n"] = parentLocs.size
+    let parentLocsList = Array.from(parentLocs);
+    // Sort the array based on the number after '1.'
+    parentLocsList.sort((a, b) => parseFloat(a.split('.')[1]) - parseFloat(b.split('.')[1]));
+    // Get the largest number
+    let largest = parentLocsList[parentLocsList.length - 1];
+    let largestNumber = parseFloat(largest.split('.')[1]);
 
-    s = s.replace(/<\/?(a|span|div)\b[^<>]*>/g, "");
-    s = s.replace(/<br>/g, "split_here");
-    return s;
-}
+    let newParentLoc = `1.${largestNumber + 1}`;
+    let newChildLoc = `1.${largestNumber + 1}.1`;
 
+    umr[`${newChildLoc}.c`] = childArg;
+    umr[`${newChildLoc}.n`] = 0;
+    umr[`${newChildLoc}.r`] = role_inner;
+    umr[`${newChildLoc}.s`] = "";
+    umr[`${newChildLoc}.v`] = childArg;
 
-function initialCommand(current_snt_id){
-        let parentArg = document.getElementById('parentArg').value; //s2i2
-        let childArg = document.getElementById('childArg').value; //s1d
-        let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
-        let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
+    umr[`${newParentLoc}.c`] = parentArg;
+    umr[`${newParentLoc}.n`] = 1;
+    umr[`${newParentLoc}.r`] = role_outter;
+    umr[`${newParentLoc}.s`] = "";
+    umr[`${newParentLoc}.v`] = parentArg;
 
-        //child arg should always be variable in current sentence
-        let command1 = 's'+ current_snt_id +'s0' + ' ' + role_outter + ' ' + parentArg; //s1s0 :coref s2i2
-        exec_command(command1, '1');
-
-        let command2 = parentArg + ' ' + role_inner + ' ' + childArg; //s2i2 :same-entity s1d
-        exec_command(command2, '1');
-
+    let newDocUmrGraph = docUmr2TripleDisplay(umr);
+    setDocGraphInnerHTML('amr', newDocUmrGraph);
 }
 
 function showBlueBox(){

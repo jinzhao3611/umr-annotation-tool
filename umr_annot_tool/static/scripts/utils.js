@@ -266,6 +266,17 @@ function setInnerHTML(id, value) {
     }
 }
 
+function setDocGraphInnerHTML(elementId, text) {
+    // Replace newlines with <br> and preserve indentation with &nbsp;
+    const formattedText = text
+        .replace(/\n/g, '<br>')  // Replace newlines with <br>
+        .replace(/ {2}:/g, '&nbsp;&nbsp;:')
+        .replace(/ {2}\(/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;('); // Replace two spaces with &nbsp;&nbsp;
+
+    // Set the formatted text as innerHTML
+    document.getElementById(elementId).innerHTML = formattedText;
+}
+
 /**
  * return true if any element in list contain capital letter
  * @param list
