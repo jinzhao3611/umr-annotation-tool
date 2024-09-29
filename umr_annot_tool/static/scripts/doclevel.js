@@ -298,7 +298,7 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
 
     if(curr_doc_umr==='{}'){
         try{
-            umr = tripleDisplay2docUmr(curr_doc_umr);
+            umr = tripleDisplay2docUmr(curr_doc_annot);
         }catch (e){
             console.log("both doc_umr and doc_annot from database is empty or doesn't not match penman string");
             umr = JSON.parse(curr_doc_umr); //{"n":0}
@@ -312,26 +312,6 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
         umr['1.s'] = "";
         umr['1.n'] = 0;
         umr['1.c'] = "sentence";
-        // sentence level data is still in the following three dicts
-        variable2concept = {};
-        variables = {};
-        concepts = {};
-        // populate with (s1 / sentence)
-        recordVariable(`s${curr_sent_id}s0`, "1");
-        recordConcept('sentence', "1");
-        variable2concept[`s${curr_sent_id}s0`] = 'sentence';
-        state_has_changed_p = 1;
-    }else{
-        variables = {};
-        concepts = {};
-        variable2concept = {};
-        for (const[key, value] of Object.entries(umr)){
-            if(key.endsWith('v') && value.startsWith('s')){
-                variables[value] = key.replace(".v", '');
-                variable2concept[value] = umr[key.replace(".v", ".c")];
-                concepts[umr[key.replace(".v", ".c")]] = key.replace(".v", '');
-            }
-        }
     }
 
     let current_triples = getTriplesFromUmr(umr);
@@ -343,8 +323,11 @@ function load_doc_history(curr_doc_umr, curr_doc_annot, curr_sent_id){
     modal_triples = modal_triples_strings.map(s => s.split(" "));
 
     for (let i = 0; i < modal_triples.length; i++) {
-        exec_command(`s${curr_sent_id}s0 :modal ${modal_triples[i][0]}`, '1');
-        exec_command(`${modal_triples[i][0]} ${modal_triples[i][1]} ${modal_triples[i][2]}`, '1');
+        let parentArg =  modal_triples[i][0];
+        let childArg = modal_triples[i][2];
+        let role_outter = "modal"; //:coref
+        let role_inner = modal_triples[i][1]; //:same-entity
+        execDocCommand(parentArg, childArg, role_outter, role_inner);
     }
     let html_amr_s = docUmr2TripleDisplay(umr);
     setDocGraphInnerHTML('amr', html_amr_s);
@@ -393,13 +376,7 @@ function clearInput(){
     document.getElementById('attribute_values1').value = '';
 }
 
-
-function initialCommand(){
-    let parentArg = document.getElementById('parentArg').value; //s2i2
-    let childArg = document.getElementById('childArg').value; //s1d
-    let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
-    let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
-
+function execDocCommand(parentArg, childArg, role_outter, role_inner){
     let parentLocs = new Set()
     for (let key in umr) {
         if (umr.hasOwnProperty(key)) {
@@ -412,11 +389,14 @@ function initialCommand(){
     }
     umr["1.n"] = parentLocs.size
     let parentLocsList = Array.from(parentLocs);
-    // Sort the array based on the number after '1.'
-    parentLocsList.sort((a, b) => parseFloat(a.split('.')[1]) - parseFloat(b.split('.')[1]));
-    // Get the largest number
-    let largest = parentLocsList[parentLocsList.length - 1];
-    let largestNumber = parseFloat(largest.split('.')[1]);
+    let largestNumber = 0;
+    if (parentLocsList.length !== 0){
+        // Sort the array based on the number after '1.'
+        parentLocsList.sort((a, b) => parseFloat(a.split('.')[1]) - parseFloat(b.split('.')[1]));
+        // Get the largest number
+        let largest = parentLocsList[parentLocsList.length - 1];
+        largestNumber = parseFloat(largest.split('.')[1]);
+    }
 
     let newParentLoc = `1.${largestNumber + 1}`;
     let newChildLoc = `1.${largestNumber + 1}.1`;
@@ -435,6 +415,15 @@ function initialCommand(){
 
     let newDocUmrGraph = docUmr2TripleDisplay(umr);
     setDocGraphInnerHTML('amr', newDocUmrGraph);
+}
+
+function initialCommand(){
+    let parentArg = document.getElementById('parentArg').value; //s2i2
+    let childArg = document.getElementById('childArg').value; //s1d
+    let role_outter = document.getElementById('doc-level-relations').innerText.split(' ')[0]; //:coref
+    let role_inner = document.getElementById('doc-level-relations').innerText.split(' ')[1]; //:same-entity
+
+    execDocCommand(parentArg, childArg, role_outter, role_inner);
 }
 
 function showBlueBox(){
@@ -469,4 +458,9 @@ function show_amr_new_line_doc(loc) {
     }else{
         return 0;
     }
+}
+
+function changeDocShowStatus(newStatus){
+    let updatedDocUmrGraph = docUmr2TripleDisplay(umr, newStatus);
+    setDocGraphInnerHTML('amr', updatedDocUmrGraph);
 }

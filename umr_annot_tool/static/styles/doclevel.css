@@ -108,3 +108,15 @@ body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > 
 .highlight {
     background-color: yellowgreen; /* Change color as needed */
 }
+
+.deletable {
+  display: block;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.deletable:hover {
+  background-color: red;
+  color: white;
+}

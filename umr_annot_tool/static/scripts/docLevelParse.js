@@ -1,4 +1,4 @@
-function docUmr2TripleDisplay(docUmr){
+function docUmr2TripleDisplay(docUmr, showDocUmrStatus="show"){
     let temporalGroup = new Set();
     let modalGroup = new Set();
     let corefGroup = new Set()
@@ -42,8 +42,16 @@ function docUmr2TripleDisplay(docUmr){
     }
     triples += ")";
 
-    return triples
+    if(showDocUmrStatus === "show delete"){
+        let pattern = /\([a-zA-Z0-9]+ :[a-zA-Z\-]+ [a-zA-Z0-9]+\)/g;
 
+        // Use replace() to wrap the matched pattern with <span class="deletable">
+        return triples.replace(pattern, function (match) {
+            return `<span class="deletable">${match}</span>`;
+        })
+    }else{
+        return triples
+    }
 }
 
 function tripleDisplay2docUmr(tripleDisplay) {
@@ -52,17 +60,13 @@ function tripleDisplay2docUmr(tripleDisplay) {
 
     // Initialize doc_umr
     let doc_umr = {};
-    let root = tripleDisplay.match(/^\(([^ ]+) \/ ([^\)]+)\s/);
 
-    if (root) {
-        doc_umr['n'] = 1;
-        doc_umr['1.v'] = root[1]; // "s1s0"
-        doc_umr['1.c'] = "sentence"
-        doc_umr['1.s'] = "";
-    }
+    doc_umr['n'] = 1;
+    doc_umr['1.v'] = tripleDisplay.match(/s\d+s0/g)[0] // "s1s0"
+    doc_umr['1.c'] = "sentence"
+    doc_umr['1.s'] = "";
 
     // Track index positions for nested structures
-    let index = 1;
     let tripleIndex = 1;
 
     // Function to parse a nested block
