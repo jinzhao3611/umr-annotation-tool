@@ -1,0 +1,106 @@
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: #ddd;
+}
+
+.show {
+    display: block;
+}
+
+input{
+    width: 100px;
+}
+body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > tr > td, body > main > div.row.align-items-center > div.col-md-5 > div > table > tbody > tr {
+    font-size: 12px;
+    width: 50px;
+}
+.dropdown-submenu {
+    position: relative;
+}
+.col-md-3{
+
+    height: 100%;
+
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+
+#sentence-level-container {
+    max-height: calc(100vh - 140px); /* 100vh minus the height of header and footer */
+    overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+#doc-level-container {
+    max-height: calc(100vh - 140px); /* 100vh minus the height of header and footer */
+    overflow-y: auto;  /* Enable vertical scrolling */
+}
+
+/* Optional: Adjust column widths or other styling */
+#sentence-level-container, #doc-level-container {
+    border: 1px solid #ddd; /* Optional: Add border for clarity */
+    padding: 10px;          /* Optional: Add padding */
+}
