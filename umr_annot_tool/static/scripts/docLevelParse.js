@@ -1,4 +1,6 @@
 function docUmr2TripleDisplay(docUmr, showDocUmrStatus="show"){
+    checkIllegalVariable();
+
     let temporalGroup = new Set();
     let modalGroup = new Set();
     let corefGroup = new Set()
@@ -122,7 +124,24 @@ function tripleDisplay2docUmr(tripleDisplay) {
             parseTriple(triple, '1.' + tripleIndex);
         });
     }
+    checkIllegalVariable();
     return doc_umr;
+}
+
+function checkIllegalVariable(){
+    for (let key in umr) {
+        if (umr.hasOwnProperty(key)) {
+            if(key.includes('.v') && key.length > 3){
+                if (!(umr[key] in variable2concept) && /s\d+\w\d*/.test(umr[key])){
+                    delete umr[key];
+                    delete umr[key.replace('.v', '.c')];
+                    delete umr[key.replace('.v', '.n')];
+                    delete umr[key.replace('.v', '.r')];
+                    delete umr[key.replace('.v', '.s')];
+                }
+            }
+        }
+    }
 }
 
 // // Input
