@@ -25,7 +25,7 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Lexicon
 from sqlalchemy.orm.attributes import flag_modified
 from umr_annot_tool import db
 from flask import flash
-from umr_annot_tool.resources.utility_modules.penmanString2umrDict import string2umr
+from umr_annot_tool.resources.utility_modules.penmanString2umrDict import string2umr, triple_display_to_doc_umr
 
 
 class InfoToDisplay(NamedTuple):
@@ -815,7 +815,7 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
             else:
                 dehtml_sent_annot = ""
             if doc_annots:
-                dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
+                dehtml_doc_annot = BeautifulSoup(doc_annots[i]).get_text()
             else:
                 dehtml_doc_annot = ""
             if aligns:
@@ -823,6 +823,7 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
             else:
                 pass_aligns = {}
             sent_umr = string2umr(dehtml_sent_annot)
+            doc_umr = triple_display_to_doc_umr(dehtml_doc_annot)
             annotation = Annotation.query.filter_by(doc_id=doc_id, sent_id=i + 1, user_id=current_user_id).first()
 
             if annotation:
@@ -830,7 +831,7 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
                 annotation.doc_annot = dehtml_doc_annot
                 annotation.alignment = pass_aligns
                 annotation.sent_umr = sent_umr
-                annotation.doc_umr = {}
+                annotation.doc_umr = doc_umr
                 annotation.actions = []
                 db.session.commit()
                 flash('Your annotations has been overriden.', 'success')
