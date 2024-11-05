@@ -45,7 +45,7 @@ function docUmr2TripleDisplay(docUmr, showDocUmrStatus="show"){
     triples += ")";
 
     if(showDocUmrStatus === "show delete"){
-        let pattern = /\([a-zA-Z0-9]+ :[a-zA-Z\-]+ [a-zA-Z0-9]+\)/g;
+        let pattern = /\([a-zA-Z0-9]+ (?::[a-zA-Z\-]+|undefined) (?:[a-zA-Z0-9]+|undefined)\)/g;
 
         // Use replace() to wrap the matched pattern with <span class="deletable">
         return triples.replace(pattern, function (match) {
