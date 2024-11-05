@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block head %}
+    <script src="../static/scripts/upload.js" type="text/javascript"></script>
+{% endblock head %}
+{% block content %}
+    <div class="content-section">
+        <!-- Warning message about file name requirement -->
+        <div class="alert alert-warning" role="alert">
+            <strong>Warning:</strong> The file you upload to override the current file must have the same name as your current file.
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Upload to Override File</legend>
+                <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        {{ form.files }}
+                      </div>
+                </div>
+            </fieldset>
+
+            <div class="input-group-append">
+                {{ form.submit(class="btn btn-outline-info", id="btnSubmit") }}
+            </div>
+        </form>
+        <script type="text/javascript">
+            parseUmrDicts({{ sent_annots | safe }}, {{ doc_annots | safe }}, {{ doc_id }})
+        </script>
+    </div>
+{% endblock content %}
