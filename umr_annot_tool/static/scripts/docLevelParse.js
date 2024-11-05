@@ -132,7 +132,7 @@ function checkIllegalVariable(){
     for (let key in umr) {
         if (umr.hasOwnProperty(key)) {
             if(key.includes('.v') && key.length > 3){
-                if (!(umr[key] in variable2concept) && /s\d+\w\d*/.test(umr[key])){
+                if (!(umr[key] in variable2conceptDictDoc) && /s\d+\w\d*/.test(umr[key])){
                     delete umr[key];
                     delete umr[key.replace('.v', '.c')];
                     delete umr[key.replace('.v', '.n')];
@@ -142,6 +142,21 @@ function checkIllegalVariable(){
             }
         }
     }
+}
+
+function umrDict2variableConceptDict(umr_dict) {
+    const varible2conceptDict = {};
+    for (const key in umr_dict) {
+        if (key.endsWith(".v")) {
+            const valueKey = umr_dict[key];  // The value of the `.v` key
+            const contentKey = key.replace(".v", ".c");  // Corresponding `.c` key
+            // Add the entry to v2c if the valueKey exists and umr_dict has the corresponding `.c` key
+            if (valueKey && umr_dict.hasOwnProperty(contentKey)) {
+                varible2conceptDict[valueKey] = umr_dict[contentKey];
+            }
+        }
+    }
+    return varible2conceptDict;
 }
 
 // // Input

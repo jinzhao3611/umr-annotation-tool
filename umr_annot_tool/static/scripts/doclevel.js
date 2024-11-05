@@ -1,7 +1,8 @@
 let childArg = '';
 let parentArg = '';
 let selectedText;
-let sentAnnotUmrs = {}
+let sentAnnotUmrs = {};
+let variable2conceptDictDoc = {};
 
 /**
  * fill in all the sentence annotation penman strings using a list of umr dictionaries of all the sentence annotations
@@ -10,7 +11,8 @@ let sentAnnotUmrs = {}
 function fillInSentAnnots(sentAnnotUmrs) {
     for(let i = 0; i < sentAnnotUmrs.length; i++) {
         let amr_s = umrDict2penmanString(sentAnnotUmrs[i]);
-
+        let variable2conceptDict = umrDict2variableConceptDict(sentAnnotUmrs[i]);
+        variable2conceptDictDoc = { ...variable2conceptDictDoc, ...variable2conceptDict};
         // Modify the text to include span elements
         let modifiedAmr = amr_s.replace(/(s\d+[a-z]\d*)/g, function(match) {
             // The match is the string like (s1a), (s1x), etc.
