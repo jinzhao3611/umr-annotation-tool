@@ -823,7 +823,7 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
             else:
                 pass_aligns = {}
             sent_umr = string2umr(dehtml_sent_annot)
-            doc_umr = triple_display_to_doc_umr(dehtml_doc_annot)
+            doc_umr = triple_display_to_doc_umr(correct_doc_graph_string_format(dehtml_doc_annot))
             annotation = Annotation.query.filter_by(doc_id=doc_id, sent_id=i + 1, user_id=current_user_id).first()
 
             if annotation:
@@ -871,9 +871,26 @@ def parse_file_info(file_content):
 
     return is_legit, parsed_data
 
-if __name__ == '__main__':
-    input_file = '/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/jens_van_gysel/exported_exported_pear-stories-1-for-umr-tool (1).txt'
-    with open(input_file, 'r') as f:
-        content_string = f.read()
 
-    parse_exported_file(content_string)
+def correct_doc_graph_string_format(wrong_graph):
+    # Step 1: Remove excessive whitespace
+    wrong_graph = re.sub(r'\s+', ' ', wrong_graph).strip()
+    # Define a regular expression pattern to find the extra parentheses
+    pattern = re.compile(r"\s?(\([^\s()]+\s+:[^\s()]+\s+)\(([^\s()]+)(\)+)")
+
+    # Use a loop to ensure all occurrences are replaced
+    while True:
+        # Replace the pattern with the corrected format
+        new_graph = pattern.sub(r'\1\2\3', wrong_graph)
+        # Break the loop if no more replacements are made
+        if new_graph == wrong_graph:
+            break
+        wrong_graph = new_graph
+    return new_graph
+
+# if __name__ == '__main__':
+#     graph = """(s7s0 / sentence :temporal ((DCT :overlap (s7b) (s7b :depends-on (s7x9) (s7b :depends-on (s7x14) (s7b :depends-on (s7x6) (s7b :depends-on s7x) :modal ((ROOT :MODAL (AUTH) (AUTH :FullAff (s7x14) (AUTH :FullAff (s7x9) (AUTH :FullNeg (s7x6) (AUTH :FullAff s7x) :coref ((s6a :same-event s7i2))"""
+#
+#     correct_graph = correct_doc_graph_string_format(graph)
+#     curr_umr = triple_display_to_doc_umr(correct_graph)
+#     print(correct_graph)
