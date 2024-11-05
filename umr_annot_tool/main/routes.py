@@ -3,9 +3,8 @@ from flask import url_for, redirect, flash, make_response, jsonify, send_file
 from werkzeug.utils import secure_filename
 from typing import List
 import json
-from one_time_scripts.parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor
+from one_time_scripts.parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor, lexicon2db, file2db
 from umr_annot_tool.resources.utility_modules.parse_lexicon_file import parse_lexicon_xml, FrameDict
-from umr_annot_tool.resources.utility_modules.penmanString2umrDict import string2umr
 from flask_login import current_user
 import os
 import logging
@@ -31,59 +30,6 @@ lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 # from farasa.stemmer import FarasaStemmer
 # stemmer = FarasaStemmer(interactive=True)
 
-def lexicon2db(project_id:int, lexicon_dict: dict):
-    existing_lexicon = Lexicon.query.filter(Lexicon.project_id==project_id).first()
-    existing_lexicon.lexi = lexicon_dict
-    flag_modified(existing_lexicon, 'lexi')
-    db.session.commit()
-    flash('your lexicon has been saved to db', 'success')
-
-def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int,
-            sent_annots=None, doc_annots=None, aligns=None) -> int:
-    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user.id, project_id=current_project_id).first()
-    if existing_doc:
-        doc_id = existing_doc.id
-        flash('Upload failed: A document with the same name is already in current project.', 'success')
-    else:
-        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user.id,
-                  file_format=file_format, project_id=current_project_id)
-        db.session.add(doc)
-        db.session.commit()
-        doc_id = doc.id
-        flash('Your doc has been created!', 'success')
-        for sent_of_tokens in sents:
-            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
-            db.session.add(sent)
-            db.session.commit()
-        flash('Your sents has been created.', 'success')
-
-    print("file_format:", file_format)
-    if file_format == 'isi_editor' or has_annot:
-        for i in range(len(sents)):
-            dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-            if sent_annots:
-                dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
-            else:
-                dehtml_sent_annot = ""
-            if doc_annots:
-                dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
-                print("every doc_annot in file: ", doc_annots[i])
-            else:
-                dehtml_doc_annot = ""
-            if aligns:
-                pass_aligns = aligns[i]
-            else:
-                pass_aligns = {}
-            sent_umr = string2umr(dehtml_sent_annot)
-            annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=pass_aligns,
-                                    user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
-                                    sent_id=i + 1, #sentence id counts from 1
-                                    doc_id=doc_id,
-                                    sent_umr=sent_umr, doc_umr={}, actions=[])
-            db.session.add(annotation)
-        db.session.commit()
-        flash('Your annotations has been created.', 'success')
-    return doc_id
 
 @main.route("/new_project", methods=['GET', 'POST'])
 def new_project():
@@ -148,16 +94,16 @@ def upload_document(current_project_id):
                     if file_format == 'isi_editor':
                         new_content_string, sents, sent_annots, doc_annots = process_exported_file_isi_editor(content_string)
                         file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id)
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id, current_user_id=current_user.id)
                     else:
                         new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
                             content_string)
                         file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id)
+                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id, current_user_id=current_user.id)
                 else:  # doesn't have annotation
                     info2display = html(content_string, file_format, lang=lang)
                     file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
-                            sents=info2display.sents, has_annot=False, current_project_id=current_project_id)
+                            sents=info2display.sents, has_annot=False, current_project_id=current_project_id, current_user_id=current_user.id)
             try:  # when uploaded file already come with annotation, convert strings to umr and save to database
                 dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
                 doc_id = request.get_json(force=True)["doc_id"]

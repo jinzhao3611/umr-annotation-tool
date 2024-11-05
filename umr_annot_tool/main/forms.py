@@ -29,6 +29,10 @@ class UploadForm(FlaskForm):
     if_exported = BooleanField('exported_file')
     submit = SubmitField('Annotate')
 
+class UploadFormSimpleVersion(FlaskForm):
+    files = MultipleFileField('File(s) Upload')
+    submit = SubmitField('Annotate')
+
 
 class UploadLexiconForm(FlaskForm):
     file = FileField()

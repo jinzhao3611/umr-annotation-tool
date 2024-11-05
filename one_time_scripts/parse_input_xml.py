@@ -20,8 +20,12 @@ from itertools import accumulate
 import operator
 from bs4 import BeautifulSoup
 import re, regex
-from typing import NamedTuple, Optional, List
-import json
+from typing import NamedTuple, List
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Lexicon
+from sqlalchemy.orm.attributes import flag_modified
+from umr_annot_tool import db
+from flask import flash
+from umr_annot_tool.resources.utility_modules.penmanString2umrDict import string2umr
 
 
 class InfoToDisplay(NamedTuple):
@@ -749,6 +753,122 @@ def parse_toolbox4(xml_string: str) -> 'ExtractedXMLInfo':
         dfs.append(df)
     return ExtractedXMLInfo(sents_of_words, dfs, sents_gls, notes, [])
 
+def lexicon2db(project_id:int, lexicon_dict: dict):
+    existing_lexicon = Lexicon.query.filter(Lexicon.project_id==project_id).first()
+    existing_lexicon.lexi = lexicon_dict
+    flag_modified(existing_lexicon, 'lexi')
+    db.session.commit()
+    flash('your lexicon has been saved to db', 'success')
+
+def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int, current_user_id:int,
+            sent_annots=None, doc_annots=None, aligns=None) -> int:
+    existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user_id, project_id=current_project_id).first()
+    if existing_doc:
+        doc_id = existing_doc.id
+        flash('Upload failed: A document with the same name is already in current project.', 'success')
+    else:
+        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user_id,
+                  file_format=file_format, project_id=current_project_id)
+        db.session.add(doc)
+        db.session.commit()
+        doc_id = doc.id
+        flash('Your doc has been created!', 'success')
+        for sent_of_tokens in sents:
+            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
+            db.session.add(sent)
+            db.session.commit()
+        flash('Your sents has been created.', 'success')
+
+    if file_format == 'isi_editor' or has_annot:
+        for i in range(len(sents)):
+            dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
+            if sent_annots:
+                dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
+            else:
+                dehtml_sent_annot = ""
+            if doc_annots:
+                dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
+            else:
+                dehtml_doc_annot = ""
+            if aligns:
+                pass_aligns = aligns[i]
+            else:
+                pass_aligns = {}
+            sent_umr = string2umr(dehtml_sent_annot)
+            annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=pass_aligns,
+                                    user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
+                                    sent_id=i + 1, #sentence id counts from 1
+                                    doc_id=doc_id,
+                                    sent_umr=sent_umr, doc_umr={}, actions=[])
+            db.session.add(annotation)
+        db.session.commit()
+        flash('Your annotations has been created.', 'success')
+    return doc_id
+
+def file2db_override(doc_id:int, filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int, current_user_id:int,
+            sent_annots=None, doc_annots=None, aligns=None) -> int:
+    print("file2db_override is called")
+    if file_format == 'isi_editor' or has_annot:
+        for i in range(len(sents)):
+            if sent_annots:
+                dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
+            else:
+                dehtml_sent_annot = ""
+            if doc_annots:
+                dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
+            else:
+                dehtml_doc_annot = ""
+            if aligns:
+                pass_aligns = aligns[i]
+            else:
+                pass_aligns = {}
+            sent_umr = string2umr(dehtml_sent_annot)
+            annotation = Annotation.query.filter_by(doc_id=doc_id, sent_id=i + 1, user_id=current_user_id).first()
+
+            if annotation:
+                annotation.sent_annot = dehtml_sent_annot
+                annotation.doc_annot = dehtml_doc_annot
+                annotation.alignment = pass_aligns
+                annotation.sent_umr = sent_umr
+                annotation.doc_umr = {}
+                annotation.actions = []
+                db.session.commit()
+                flash('Your annotations has been overriden.', 'success')
+            else:
+                flash("Error: Annotation with the specified doc_id and sent_id does not exist.", "Error")
+    return doc_id
+
+def parse_file_info(file_content):
+    print("parse_file_info is called")
+    # Define a dictionary to store parsed values
+    parsed_data = {
+        "user_name": None,
+        "user_id": None,
+        "file_language": None,
+        "file_format": None,
+        "doc_id": None
+    }
+
+    # Define regex patterns to extract the needed information
+    patterns = {
+        "user_name": r"user name:\s*(\S+)",
+        "user_id": r"user id:\s*(\d+)",
+        "file_language": r"file language:\s*(\S+)",
+        "file_format": r"file format:\s*(\S+)",
+        "doc_id": r"Doc ID in database:\s*(\d+)"
+    }
+
+    # Extract data using regex patterns
+    for key, pattern in patterns.items():
+        match = re.search(pattern, file_content)
+        if match:
+            parsed_data[key] = match.group(1)
+
+    # Check if all required fields were extracted successfully
+    is_legit = all(value is not None for value in parsed_data.values())
+    print(parsed_data)
+
+    return is_legit, parsed_data
 
 if __name__ == '__main__':
     input_file = '/Users/jinzhao/schoolwork/lab-work/umr_annot_tool_resources/people/jens_van_gysel/exported_exported_pear-stories-1-for-umr-tool (1).txt'

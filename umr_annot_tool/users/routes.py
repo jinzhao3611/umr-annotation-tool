@@ -8,8 +8,9 @@ from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
 import json
-
-from one_time_scripts.parse_input_xml import html
+from umr_annot_tool.main.forms import UploadFormSimpleVersion
+from werkzeug.utils import secure_filename
+from one_time_scripts.parse_input_xml import parse_exported_file, process_exported_file_isi_editor, file2db_override, parse_file_info
 from lemminflect import getLemma
 
 
@@ -342,6 +343,69 @@ def project(project_id):
                            projectDocs=projectDocs, qcDocs=qcDocs, qcUploaders=qcUploaders, qcUploaderIds=qcUploaderIds, annotatedDocs=annotatedDocs,
                            daDocs=daDocs, daUploaders=daUploaders,  daFilenames=daFilenames, permission=current_permission,
                            form=form, dummy_user_id=dummy_user_id)
+
+@login_required
+@users.route("/upload_by_annotator/<int:current_project_id>", methods=['GET', 'POST'])
+def upload_document(current_project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    form = UploadFormSimpleVersion()
+    sent_annots = []
+    doc_annots = []
+    doc_id = 0
+    if form.validate_on_submit():
+        if form.files.data and form.files.data[0].filename:
+            for form_file in form.files.data:
+                content_string = form_file.read().decode(encoding="utf-8", errors="ignore")
+                is_legit, data = parse_file_info(content_string)
+                if is_legit:
+                    filename = secure_filename(form_file.filename)
+                    # user_name = data["user_name"]
+                    # user_id = data["user_id"]
+                    lang = data["file_language"]
+                    file_format = data["file_format"]
+
+                    try:
+                        doc_id = int(data["doc_id"])
+                    except ValueError:
+                        print("The string is not a valid integer.")
+
+                else:
+                    flash("Error: Uploaded file is not in the correct format or missing required information.", "error")
+                    return redirect(url_for('users.project', project_id=current_project_id))
+
+                if file_format == 'isi_editor':
+                    new_content_string, sents, sent_annots, doc_annots = process_exported_file_isi_editor(content_string)
+                    file2db_override(doc_id=doc_id,filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
+                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id, current_user_id=current_user.id)
+                else:
+                    new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
+                        content_string)
+                    file2db_override(doc_id=doc_id,filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
+                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id, current_user_id=current_user.id)
+
+            try:  # when uploaded file already come with annotation, convert strings to umr and save to database
+                doc_id = request.get_json(force=True)["doc_id"]
+                sentUmrDicts = json.loads(request.get_json(force=True)["sentUmrDicts"])
+                docUmrDicts = json.loads(request.get_json(force=True)["docUmrDicts"])
+                annotations = Annotation.query.filter(Annotation.doc_id == doc_id,
+                                                      Annotation.user_id == current_user.id).order_by(
+                    Annotation.sent_id).all()
+                for i, annot in enumerate(annotations):
+                    annot.sent_umr = sentUmrDicts[i]
+                    annot.doc_umr = docUmrDicts[i]
+                    flag_modified(annot, 'sent_umr')
+                    flag_modified(annot, 'doc_umr')
+                    db.session.add(annot)
+                logging.info(db.session.commit())
+            except:
+                print("convert strings to umr to database failed")
+
+            return redirect(url_for('users.project', project_id=current_project_id))
+        else:
+            flash('Please upload a file.', 'danger')
+
+    return render_template('upload_by_annotator.html', title='upload_by_annotator', form=form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
 
 @users.route("/user/<string:username>")
 def user_posts(username):
