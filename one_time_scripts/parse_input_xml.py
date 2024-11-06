@@ -823,7 +823,10 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
             else:
                 pass_aligns = {}
             sent_umr = string2umr(dehtml_sent_annot)
-            doc_umr = triple_display_to_doc_umr(correct_doc_graph_string_format(dehtml_doc_annot))
+            if correct_doc_graph_string_format(dehtml_doc_annot):
+                doc_umr = triple_display_to_doc_umr(correct_doc_graph_string_format(dehtml_doc_annot))
+            else:
+                doc_umr = {}
             annotation = Annotation.query.filter_by(doc_id=doc_id, sent_id=i + 1, user_id=current_user_id).first()
 
             if annotation:
