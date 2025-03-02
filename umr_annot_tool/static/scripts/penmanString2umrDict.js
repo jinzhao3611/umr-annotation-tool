@@ -268,7 +268,7 @@ function string2umr(annotText) {
  */
 function text2umr(annotText="", loaded_alignment='') {
     if (annotText && annotText!=="empty umr") { //annotText!=="empty umr" is because the older version saved <i>empty umr<i> in database sometimes
-        umr = string2umr(annotText); //populated umr
+        let umr = string2umr(annotText); //populated umr
 
         //fill in the alignment information to umr
         if(loaded_alignment){
@@ -281,9 +281,18 @@ function text2umr(annotText="", loaded_alignment='') {
                         align_info = matches[i].replace(/\((s\d*[a-z]\d*)\):\sundefined/gm, '-1--1');
                     }
                     let loc = getLocs(variable);
-                    umr[loc + '.a'] = align_info;
+                    if (loc) {
+                        umr[loc + '.a'] = align_info;
+                        // Ensure variable is recorded even if only alignment exists
+                        if (!umr[loc + '.v']) {
+                            umr[loc + '.v'] = variable;
+                        }
+                        recordVariable(variable, loc);
+                    }
                 }
             }
         }
+        return umr;
     }
+    return {}; // Return empty object if no valid UMR
 }

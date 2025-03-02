@@ -7,31 +7,12 @@ from flask_login import current_user
 
 
 class UploadForm(FlaskForm):
-    files = MultipleFileField('File(s) Upload')
-    language_mode = SelectField('Language', choices=[("arapahoe","arapahoe"),
-                                                     ("arabic", "arabic"),
-                                                     ("chinese", "chinese"),
-                                                     ("default", "default"),
-                                                     ("english", "english"),
-                                                     ("navajo", "navajo"),
-                                                     ("sanapana", "sanapana"),
-                                                     ("secoya", "secoya"),
-                                                     ("kukama", "kukama"),])
-    file_format = SelectField('Format', choices=[('plain_text', 'plain_text'),
-                                                 ('flex1', 'flex1'),
-                                                 ('flex2', 'flex2'),
-                                                 ('flex3', 'flex3'),
-                                                 ('toolbox1', 'toolbox1'),
-                                                 ('toolbox2', 'toolbox2'),
-                                                 ('toolbox3', 'toolbox3'),
-                                                 ('toolbox4', 'toolbox4'),
-                                                 ('isi_editor', 'isi_editor')])
-    if_exported = BooleanField('exported_file')
-    submit = SubmitField('Annotate')
+    files = MultipleFileField('UMR File(s) Upload')
+    submit = SubmitField('Upload')
 
 class UploadFormSimpleVersion(FlaskForm):
-    files = MultipleFileField('File(s) Upload')
-    submit = SubmitField('Annotate')
+    files = MultipleFileField('UMR File(s) Upload')
+    submit = SubmitField('Upload')
 
 
 class UploadLexiconForm(FlaskForm):

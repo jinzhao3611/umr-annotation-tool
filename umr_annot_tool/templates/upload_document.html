@@ -4,31 +4,19 @@
 {% endblock head %}
 {% block content %}
     <div class="content-section">
+        <div class="alert alert-info" role="alert">
+            <strong>Note:</strong> Please upload UMR format files only (.umr extension)
+        </div>
         <form method="post" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Upload File</legend>
+                <legend class="border-bottom mb-4">Upload UMR File</legend>
                 <div class="input-group mb-3">
-                      <div class="input-group-prepend">
+                    <div class="input-group-prepend">
                         {{ form.files }}
-                      </div>
+                    </div>
                 </div>
-
-                <div>
-                    {{ form.file_format.label(class="form-check-label") }}
-                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.file_format(class="form-check-input")}}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.if_exported.label(class="form-check-label") }}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.if_exported(class="form-check-input")}}
-                </div>
-                <br>
-
-                <div>
-                    {{ form.language_mode.label(class="form-check-label") }}
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.language_mode(class="form-check-input")}}
-                </div>
-
             </fieldset>
-
             <div class="input-group-append">
                 {{ form.submit(class="btn btn-outline-info", id="btnSubmit") }}
             </div>

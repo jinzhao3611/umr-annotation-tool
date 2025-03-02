@@ -3084,7 +3084,14 @@ function UMR2db() {
     let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
     console.log('test2821',annot_str)
     if(annot_str!==''){
-        umr = string2umr(annot_str); //in this way, I get rid of the .d items in umr dict
+        // Use text2umr instead of string2umr to properly load alignments
+        let loaded_alignment = '';
+        for (let key in alignments) {
+            if (alignments.hasOwnProperty(key)) {
+                loaded_alignment += `(${key}): ${alignments[key]}\n`;
+            }
+        }
+        umr = text2umr(annot_str, loaded_alignment);
     }
     console.log('test2824',umr)
     let alignments2save = {};

@@ -1,23 +1,24 @@
 import sqlalchemy.exc
-from flask import url_for, redirect, flash, make_response, jsonify, send_file
+from flask import url_for, redirect, flash, make_response, jsonify, send_file, render_template, request, abort, send_from_directory, current_app
 from werkzeug.utils import secure_filename
 from typing import List
 import json
 from one_time_scripts.parse_input_xml import html, parse_exported_file, process_exported_file_isi_editor, lexicon2db, file2db
 from umr_annot_tool.resources.utility_modules.parse_lexicon_file import parse_lexicon_xml, FrameDict
-from flask_login import current_user
+from flask_login import current_user, login_required
 import os
 import logging
 from datetime import datetime
 from bs4 import BeautifulSoup
-
-from flask import render_template, request, Blueprint
+from flask import Blueprint
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from sqlalchemy.orm.attributes import flag_modified
 from umr_annot_tool.resources.utility_modules.suggest_sim_words import generate_candidate_list, find_suggested_words
+from .umr_parser import parse_umr_file
+import sys
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
@@ -74,10 +75,57 @@ def new_project():
         return redirect(url_for('users.account'))
     return render_template('new_project.html', form=form, title='create project')
 
+
+def handle_file_upload(form_file, current_project_id):
+    """Reads content from uploaded UMR file and processes it."""
+    current_app.logger.info("Starting handle_file_upload function")
+    content_string = form_file.read().decode(encoding="utf-8", errors="ignore")
+    filename = secure_filename(form_file.filename)
+    
+    # Extract language from filename (e.g., english_umr-0001.umr -> english)
+    lang = filename.split('_')[0] if '_' in filename else 'unknown'
+    current_app.logger.info(f"Processing file: {filename} with language: {lang}")
+    
+    try:
+        new_content_string, sents, sent_annots, doc_annots, alignments = parse_umr_file(content_string)
+        
+        # Convert alignment strings to dictionaries
+        aligns = []
+        for alignment_str in alignments:
+            align_dict = {}
+            if alignment_str:
+                # Parse lines like "s1p: 0-0" or "s1p: 0-0, 3-4" into a dictionary
+                for line in alignment_str.split('\n'):
+                    if line.strip():
+                        var, spans = line.split(':')
+                        # Handle multiple spans separated by commas
+                        align_dict[var.strip()] = spans.strip()
+            aligns.append(align_dict)
+            
+        file2db(filename=filename,
+                file_format='umr',  # Hardcoded to 'umr' since it's the only format we handle
+                content_string=new_content_string,
+                lang=lang,
+                sents=sents,
+                sent_annots=sent_annots,
+                doc_annots=doc_annots,
+                aligns=aligns,
+                current_project_id=current_project_id,
+                current_user_id=current_user.id)
+    except Exception as e:
+        current_app.logger.error(f"Error in handle_file_upload: {str(e)}")
+        current_app.logger.exception("Full traceback:")
+        flash(f'Error parsing UMR file: {str(e)}', 'danger')
+        return False
+        
+    current_app.logger.info("File upload completed successfully")
+    return True
+
+
 @main.route("/upload_document/<int:current_project_id>", methods=['GET', 'POST'])
+@login_required
 def upload_document(current_project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
+    current_app.logger.info(f"Processing upload request for project {current_project_id}")
     form = UploadForm()
     sent_annots = []
     doc_annots = []
@@ -85,48 +133,24 @@ def upload_document(current_project_id):
     if form.validate_on_submit():
         if form.files.data and form.files.data[0].filename:
             for form_file in form.files.data:
-                content_string = form_file.read().decode(encoding="utf-8", errors="ignore")
-                filename = secure_filename(form_file.filename)
-                file_format = form.file_format.data
-                lang = form.language_mode.data
-                is_exported = form.if_exported.data
-                if is_exported:  # has annotation
-                    if file_format == 'isi_editor':
-                        new_content_string, sents, sent_annots, doc_annots = process_exported_file_isi_editor(content_string)
-                        file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id, current_user_id=current_user.id)
-                    else:
-                        new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
-                            content_string)
-                        file2db(filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                                sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id, current_user_id=current_user.id)
-                else:  # doesn't have annotation
-                    info2display = html(content_string, file_format, lang=lang)
-                    file2db(filename=filename, file_format=file_format, content_string=content_string, lang=lang,
-                            sents=info2display.sents, has_annot=False, current_project_id=current_project_id, current_user_id=current_user.id)
-            try:  # when uploaded file already come with annotation, convert strings to umr and save to database
-                dummy_user_id = User.query.filter(User.username == "dummy_user").first().id
-                doc_id = request.get_json(force=True)["doc_id"]
-                sentUmrDicts = json.loads(request.get_json(force=True)["sentUmrDicts"])
-                docUmrDicts = json.loads(request.get_json(force=True)["docUmrDicts"])
-                annotations = Annotation.query.filter(Annotation.doc_id == doc_id,
-                                                      Annotation.user_id == dummy_user_id).order_by(
-                    Annotation.sent_id).all()
-                for i, annot in enumerate(annotations):
-                    annot.sent_umr = sentUmrDicts[i]
-                    annot.doc_umr = docUmrDicts[i]
-                    flag_modified(annot, 'sent_umr')
-                    flag_modified(annot, 'doc_umr')
-                    db.session.add(annot)
-                logging.info(db.session.commit())
-            except:
-                print("convert strings to umr to database failed")
-
+                if not form_file.filename.endswith('.umr'):
+                    current_app.logger.warning(f"Skipping non-UMR file: {form_file.filename}")
+                    flash('Only .umr files are allowed.', 'danger')
+                    continue
+                    
+                if handle_file_upload(form_file, current_project_id):
+                    flash('File uploaded successfully!', 'success')
+                else:
+                    current_app.logger.error(f"Failed to upload file: {form_file.filename}")
+                
             return redirect(url_for('users.project', project_id=current_project_id))
         else:
             flash('Please upload a file.', 'danger')
 
-    return render_template('upload_document.html', title='upload', form=form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
+    return render_template('upload_document.html', title='upload', form=form,
+                         sent_annots=json.dumps(sent_annots),
+                         doc_annots=json.dumps(doc_annots),
+                         doc_id=doc_id)
 
 @main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
 def upload_lexicon(current_project_id):
@@ -153,89 +177,52 @@ def sentlevel_typing(doc_sent_id):
 
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])
     owner = User.query.get_or_404(owner_user_id)
 
-    #check who is the admin of the project containing this file:
-    project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    admin_id = Projectuser.query.filter(Projectuser.project_id == project_id, Projectuser.permission=="admin").first().user_id
-    admin = User.query.filter(User.id == admin_id).first()
-    permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
-
-    doc = Doc.query.get_or_404(doc_id)
-    info2display = html(doc.content, doc.file_format, lang=doc.lang)
-    # find the correct frame_dict for current annotation
-    if doc.lang == "chinese":
-        frame_dict = json.load(open(FRAME_FILE_CHINESE, "r"))
-    elif doc.lang == "english":
-        frame_dict = json.load(open(FRAME_FILE_ENGLISH, "r"))
-    elif doc.lang == "arabic":
-        frame_dict = json.load(open(FRAME_FILE_ARABIC, "r",encoding='utf-8'))
-    else:
-        try: #this is to find if there is user defined frame_dict: keys are lemmas, values are lemma information including inflected forms of the lemma
-            frame_dict = Lexicon.query.filter_by(project_id=project_id).first().lexi
-        except AttributeError: #there is no frame_dict for this language at all
-            frame_dict = {}
-
-    snt_id = int(request.args.get('snt_id', default_sent_id))
-    if "set_sentence" in request.form:
-        snt_id = int(request.form["sentence_id"])
-
     if request.method == 'POST':
-        # add umr to db
-        logging.info("post request received")
         try:
             amr_html = request.get_json(force=True)["amr"]
-            amr_html = amr_html.replace('<span class="text-success">', '')  # get rid of the head highlight tag
+            amr_html = amr_html.replace('<span class="text-success">', '')
             amr_html = amr_html.replace('</span>', '')
-            print("amr_html: ", amr_html)
             align_info = request.get_json(force=True)["align"]
-            print("align_info: ", align_info)
             snt_id_info = request.get_json(force=True)["snt_id"]
-            print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
-            print("umr_dict: ", umr_dict)
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner.id).first()
-            if existing:  # update the existing Annotation object
+            if existing:
                 existing.sent_annot = amr_html
                 existing.alignment = align_info
                 existing.sent_umr = umr_dict
                 flag_modified(existing, 'alignment')
                 flag_modified(existing, 'sent_umr')
-                logging.info(f"User {owner.id} committed: {amr_html}")
-                logging.info(db.session.commit())
+                current_app.logger.info(f"Updated annotation for user {owner.id}")
+                db.session.commit()
             else:
                 annotation = Annotation(sent_annot=amr_html, doc_annot='', alignment=align_info, author=owner,
                                         sent_id=snt_id_info,
                                         doc_id=doc_id,
                                         sent_umr=umr_dict, doc_umr={}, actions=[])
                 flag_modified(annotation, 'umr')
-                logging.info(f"User {owner.id} committed: {amr_html}")
+                current_app.logger.info(f"Created new annotation for user {owner.id}")
                 db.session.add(annotation)
-                logging.info(db.session.commit())
-            msg = 'Success: current doc-level annotation is added to database.'
-            msg_category = 'success'
-            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+                db.session.commit()
+            return make_response(jsonify({"msg": "Success: annotation saved", "msg_category": "success"}), 200)
         except Exception as e:
-            print(e)
-            print('Failure: Add current annotation and alignments to database failed.')
-        # add partial graph to db
+            current_app.logger.error(f"Error saving annotation: {str(e)}")
+            return make_response(jsonify({"msg": "Error saving annotation", "msg_category": "danger"}), 500)
+
         try:
             partial_graphs = request.get_json(force=True)["partial_graphs"]
-            print("partial_graphs: ", partial_graphs)
             pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
             pg.partial_umr = partial_graphs
             flag_modified(pg, 'partial_umr')
             db.session.commit()
-            msg = 'Success: partial graphs are added to database.'
-            msg_category = 'success'
-            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+            return make_response(jsonify({"msg": "Success: partial graphs saved", "msg_category": "success"}), 200)
         except Exception as e:
-            print(e)
-            print('Failure: Add partial graphs to database failed.')
+            current_app.logger.error(f"Error saving partial graphs: {str(e)}")
+            return make_response(jsonify({"msg": "Error saving partial graphs", "msg_category": "danger"}), 500)
 
     try:
         curr_annotation = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
@@ -243,11 +230,13 @@ def sentlevel_typing(doc_sent_id):
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
         curr_alignment = curr_annotation.alignment
+        actions_list = curr_annotation.actions if curr_annotation.actions else []
     except Exception as e:
         print(e)
-        curr_annotation_string= ""
+        curr_annotation_string = ""
         curr_sent_umr = {}
         curr_alignment = {}
+        actions_list = []
 
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
@@ -353,8 +342,6 @@ def sentlevel(doc_sent_id):
             print("snt_id_info: ", snt_id_info)
             umr_dict = request.get_json(force=True)["umr"]
             print("umr_dict: ", umr_dict)
-            actions = request.get_json(force=True)["actions"]
-            print("actions: ", actions)
 
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner.id).first()
@@ -362,10 +349,8 @@ def sentlevel(doc_sent_id):
                 existing.sent_annot = amr_html
                 existing.alignment = align_info
                 existing.sent_umr = umr_dict
-                existing.actions = actions
                 flag_modified(existing, 'alignment')
                 flag_modified(existing, 'sent_umr')
-                flag_modified(existing, 'actions')
                 logging.info(f"User {owner.id} committed: {amr_html}")
                 logging.info(db.session.commit())
             else:
@@ -404,11 +389,13 @@ def sentlevel(doc_sent_id):
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
         curr_alignment = curr_annotation.alignment
+        actions_list = curr_annotation.actions if curr_annotation.actions else []
     except Exception as e:
         print(e)
-        curr_annotation_string= ""
+        curr_annotation_string = ""
         curr_sent_umr = {}
         curr_alignment = {}
+        actions_list = []
 
     # load all annotations for current document used for export_annot()
     annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
@@ -436,8 +423,7 @@ def sentlevel(doc_sent_id):
         all_doc_annots_no_skipping[i-1] = da
 
     exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
-    actions_list = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.sent_id == snt_id,
-                                                         Annotation.user_id == owner_user_id).first().actions
+
     lattice = Lattice.query.filter(Lattice.project_id == project_id).first()
     aspectSettingsJSON = lattice.aspect
     personSettingsJSON = lattice.person
@@ -447,7 +433,7 @@ def sentlevel(doc_sent_id):
 
     pg = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
     partial_graphs_json = pg.partial_umr
-    print("partial_graphs_json: ", partial_graphs_json)
+    print("partial_graphs_json:", partial_graphs_json)
 
     return render_template('sentlevel.html', lang=doc.lang, filename=doc.filename, snt_id=snt_id, doc_id=doc_id,
                            info2display=info2display,
@@ -513,16 +499,18 @@ def sentlevelview(doc_sent_id):
         curr_annotation_string = curr_annotation.sent_annot.strip()
         curr_sent_umr = curr_annotation.sent_umr
         curr_alignment = curr_annotation.alignment
+        actions_list = curr_annotation.actions if curr_annotation.actions else []
     except Exception as e:
         print(e)
-        curr_annotation_string= ""
+        curr_annotation_string = ""
         curr_sent_umr = {}
         curr_alignment = {}
+        actions_list = []
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
     all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
@@ -566,40 +554,34 @@ def doclevel(doc_sent_id):
         return redirect(url_for('users.login'))
     doc_id = int(doc_sent_id.split("_")[0])
     default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])# html post 0 here, it means it's my own annotation
+    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2])==0 else int(doc_sent_id.split("_")[2])
     owner = User.query.get_or_404(owner_user_id)
 
     current_snt_id = default_sent_id
     if "set_sentence" in request.form:
         current_snt_id = int(request.form["sentence_id"])
 
-    # add to db
     if request.method == 'POST':
         try:
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr_dict"]
-            print("umr_dict: ", umr_dict)
             doc_annot_str = request.get_json(force=True)["doc_annot_str"]
-            print("doc_annot_str: ", doc_annot_str)
+            
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner_user_id).first()
-            if existing:  # update the existing Annotation object
+            if existing:
                 existing.doc_umr = umr_dict
                 existing.doc_annot = doc_annot_str
                 flag_modified(existing, 'doc_umr')
                 flag_modified(existing, 'doc_annot')
                 db.session.commit()
-                msg = 'Success: current annotation and alignments are added to database.'
-                msg_category = 'success'
-                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+                return make_response(jsonify({"msg": "Success: document-level annotation saved", "msg_category": "success"}), 200)
             else:
-                print("the sent level annotation of the current sent doesn't exist")
-                msg = "the sent level annotation of the current sent doesn't exist."
-                msg_category = 'success'
-                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+                current_app.logger.warning("No sentence-level annotation exists for the current sentence")
+                return make_response(jsonify({"msg": "No sentence-level annotation exists", "msg_category": "warning"}), 200)
         except Exception as e:
-            print(e)
-            print("add doc level annotation to database failed")
+            current_app.logger.error(f"Error saving document-level annotation: {str(e)}")
+            return make_response(jsonify({"msg": "Error saving document-level annotation", "msg_category": "danger"}), 500)
 
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
@@ -696,7 +678,7 @@ def doclevelview(doc_sent_id):
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
-    if doc.file_format == 'plain_text' or 'isi_editor':
+    if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
         sent_annot_pairs = list(zip(sents, annotations))
     else:
         _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
@@ -748,292 +730,20 @@ def doclevelview(doc_sent_id):
         admin=current_user
         permission = ""
 
+    # print("Sent annot pairs1: ", repr(sent_annot_pairs[0][1].doc_annot))
+    # print("Sent annot pairs4: ", repr(sent_annot_pairs[3][1].doc_annot))
     return render_template('doclevelview.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
-                           content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
+                           content_string=doc.content.replace('\\', '\\\\'),
+                           # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
                            admin=admin,
                            owner=owner,
                            permission=permission)
-
-@main.route("/about")
-def about():
-    return render_template('about.html', title='About')
-
-def get_lexicon_dicts(project_id:int):
-    try:
-        frames_dict = Lexicon.query.filter(Lexicon.project_id==project_id).first().lexi
-    except AttributeError:
-        frames_dict = {}
-        flash(f'there is no existing lexicon for current project, you can start to add now', 'success')
-
-    citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in
-                     frames_dict[lemma]["inflected_forms"]}
-
-    return frames_dict, citation_dict
-
-def populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma):
-    lexicon_item_form = LexiconItemForm()
-    lexicon_item = {} #this is the value of a key(lemma) look up in frame dict
-
-    if look_up_inflected:
-        if look_up_inflected in citation_dict:
-            look_up_lemma = citation_dict[look_up_inflected]
-            lexicon_item = fd.flatten[look_up_lemma]
-        else:
-            flash(f'inflected form {look_up_inflected} is not in current lexicon', 'danger')
-    elif look_up_lemma:
-        if look_up_lemma in fd.flatten.keys():
-            lexicon_item = fd.flatten[look_up_lemma]
-        else:
-            flash(f'lemma {look_up_lemma} is not in current lexicon', 'danger')
-
-    print("lexicon_item: ", lexicon_item)
-
-    # following is to populate lexicon_item_form by lookup inflected_form or lemma
-    lexicon_item_form.lemma.data = look_up_lemma #assigned ehl to ehl-00 here
-    lexicon_item_form.root.data = lexicon_item.get('root', "")
-    lexicon_item_form.pos.data = lexicon_item.get('pos', "")
-    for surface_form in lexicon_item.get('inflected_forms', []):
-        print("surface form:", surface_form)
-        entry = InflectedForm()
-        entry.inflected_form = surface_form
-        lexicon_item_form.inflected_forms.append_entry(entry)
-    for sense in lexicon_item.get('sense', []):
-        print("sense:", sense)
-        entry = SenseForm()
-        entry.gloss = sense.get('gloss')
-        entry.args = sense.get('args')
-        entry.coding_frames = sense.get('coding_frames')
-        lexicon_item_form.senses.append_entry(entry)
-    return lexicon_item_form, lexicon_item
-
-# see https://stackoverflow.com/questions/49066046/append-entry-to-fieldlist-with-flask-wtforms-using-ajax
-# and https://stackoverflow.com/questions/51817148/dynamically-add-new-wtforms-fieldlist-entries-from-user-interface
-@main.route("/lexiconlookup/<project_id>", methods=['GET', 'POST'])
-def lexiconlookup(project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-    doc = Doc.query.get_or_404(doc_id)
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
-    fd = FrameDict.from_dict(frames_dict)
-
-    autocomplete_lemmas = list(fd.flatten.keys())
-    autocomplete_inflected = list(citation_dict.keys())
-
-    # handle the suggested inflected and lemma list
-    if request.method == 'POST':
-        try:
-            selected_word = request.get_json(force=True)['selected_word']
-            print("selected_word: ", selected_word)
-            word_candidates = generate_candidate_list(doc.content, doc.file_format)
-            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
-            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-            return res
-        except:
-            print("no word selected")
-
-    look_up_form = LookUpLexiconItemForm()
-
-    if look_up_form.validate_on_submit() and (look_up_form.inflected_form.data or look_up_form.lemma_form.data): # if click on look up button
-        look_up_inflected = look_up_form.inflected_form.data
-        look_up_lemma = look_up_form.lemma_form.data
-        return redirect(
-            url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma,
-                    doc_id=doc_id, snt_id=snt_id))
-
-    return render_template('lexicon_lookup.html', project_id=project_id, project_name=project_name,
-                           look_up_form=look_up_form,
-                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                           doc_id=doc_id, snt_id=snt_id,
-                           autocomplete_lemmas=json.dumps(autocomplete_lemmas), autocomplete_inflected=json.dumps(autocomplete_inflected))
-
-@main.route("/lexiconadd/<project_id>", methods=['GET', 'POST'])
-def lexiconadd(project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-    doc = Doc.query.get_or_404(doc_id)
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
-    fd = FrameDict.from_dict(frames_dict)
-    lexicon_add_form = LexiconAddForm()
-
-    if request.method == 'POST':
-        # handle the suggested inflected and lemma list
-        try:
-            selected_word = request.get_json(force=True)['selected_word']
-            print("selected_word: ", selected_word)
-            word_candidates = generate_candidate_list(doc.content, doc.file_format)
-            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
-            res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-            return res
-        except:
-            print("no word selected")
-
-        if lexicon_add_form.add_inflected.data: #clicked on Add New Inflected Form Field button
-            getattr(lexicon_add_form, 'inflected_forms').append_entry()
-
-        if lexicon_add_form.add_sense.data:#clicked on Add New Inflected Form Field button
-            getattr(lexicon_add_form, 'senses').append_entry()
-
-        for ndx, this_entry in enumerate(lexicon_add_form.inflected_forms.entries):
-            if this_entry.data['remove']:  # This was the entry on which the person hit the delete button
-                # TODO: WTForms seems to say you shouldn't do the following, but it seems to work.
-                del lexicon_add_form.inflected_forms.entries[ndx]
-                break
-        for ndx, this_entry in enumerate(lexicon_add_form.senses.entries):
-            if this_entry.data['remove']:  # This was the entry on which the person hit the delete button
-                # TODO: WTForms seems to say you shouldn't do the following, but it seems to work.
-                del lexicon_add_form.senses.entries[ndx]
-                break
-        print("form error", lexicon_add_form.errors)
-        if lexicon_add_form.data['save'] and lexicon_add_form.lemma.data: # if click on Save button
-            new_lexicon_entry = {lexicon_add_form.lemma.data: {"root": lexicon_add_form.root.data,
-                                                                "pos": lexicon_add_form.pos.data,
-                                                                "inflected_forms": [element['inflected_form'] for element in
-                                                                                    lexicon_add_form.inflected_forms.data
-                                                                                    if element['inflected_form'] != ""],
-                                                                "sense": lexicon_add_form.senses.data
-                                                                }
-                                 }
-            look_up_lemma = lexicon_add_form.lemma.data
-            print("new_lexicon_entry: ", new_lexicon_entry)
-
-            fd.add_frame(look_up_lemma, new_lexicon_entry[look_up_lemma]) #deal with homonym case: automatically number those hymonym lemmas
-            # add to database
-            existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
-            existing_lexicon.lexi = fd.flatten
-            flag_modified(existing_lexicon, 'lexi')
-            db.session.commit()
-            flash('This entry is added and saved successfully', 'success')
-        print("form error", lexicon_add_form.errors)
-
-    return render_template('lexicon_add.html', project_id=project_id, project_name=project_name,
-                           lexicon_add_form=lexicon_add_form,
-                           frames_dict=json.dumps(fd.flatten), citation_dict=json.dumps(citation_dict),
-                           doc_id=doc_id, snt_id=snt_id)
-
-# https://stackoverflow.com/questions/30121763/how-to-use-a-wtforms-fieldlist-of-formfields
-# https://stackoverflow.com/questions/62776469/how-do-i-edit-a-wtforms-fieldlist-to-remove-a-value-in-the-middle-of-the-list
-@main.route("/lexiconresult/<project_id>", methods=['GET'])
-def lexiconresult_get(project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
-    fd = FrameDict.from_dict(frames_dict)
-
-    look_up_inflected = request.args.get('look_up_inflected', None)
-    look_up_lemma = request.args.get('look_up_lemma', None)
-    print("look_up_inflected: ", look_up_inflected)
-    print("look_up_lemma: ", look_up_lemma)
-    print("frames_dict: ", frames_dict)
-    print("citation_dict: ", citation_dict)
-
-    lexicon_item_form, lexicon_item = populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma)
-
-    return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
-                           lexicon_item_form=lexicon_item_form,
-                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                           doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
-
-@main.route("/lexiconresult/<project_id>", methods=['POST'])
-def lexiconresult_post(project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    project_name = Project.query.filter(Project.id==project_id).first().project_name
-    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
-    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-    doc = Doc.query.get_or_404(doc_id)
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
-    fd = FrameDict.from_dict(frames_dict)
-    # handle the suggested inflected and lemma list
-    try:
-        selected_word = request.get_json(force=True)['selected_word']
-        print("selected_word: ", selected_word)
-        word_candidates = generate_candidate_list(doc.content, doc.file_format)
-        similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
-        res = make_response(jsonify({"similar_word_list": similar_word_list}), 200)
-        return res
-    except:
-        print("no word selected")
-
-    lexicon_item_form = LexiconItemForm()
-
-    if lexicon_item_form.add_inflected.data: #clicked on Add New Inflected Form Field button
-        getattr(lexicon_item_form, 'inflected_forms').append_entry()
-
-    if lexicon_item_form.add_sense.data:#clicked on Add New Inflected Form Field button
-        getattr(lexicon_item_form, 'senses').append_entry()
-
-    for ndx, this_entry in enumerate(lexicon_item_form.inflected_forms.entries):
-        if this_entry.data['remove']:  # This was the entry on which the person hit the delete button
-            # TODO: WTForms seems to say you shouldn't do the following, but it seems to work.
-            del lexicon_item_form.inflected_forms.entries[ndx]
-            break
-    for ndx, this_entry in enumerate(lexicon_item_form.senses.entries):
-        if this_entry.data['remove']:  # This was the entry on which the person hit the delete button
-            # TODO: WTForms seems to say you shouldn't do the following, but it seems to work.
-            del lexicon_item_form.senses.entries[ndx]
-            break
-
-    if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data: # if click on save and lemma in form is not empty
-        # this is entry to be added in frame_dict
-        new_lexicon_entry = {lexicon_item_form.lemma.data: {"root": lexicon_item_form.root.data,
-                                                            "pos": lexicon_item_form.pos.data,
-                                                            "inflected_forms": [element['inflected_form'] for element in lexicon_item_form.inflected_forms.data if element['inflected_form'] != ""],
-                                                            "sense": lexicon_item_form.senses.data
-                                                            }
-                             }
-        look_up_lemma = lexicon_item_form.lemma.data
-        if lexicon_item_form.update_mode.data == 'edit':
-            try:
-                fd.edit_frame(look_up_lemma, new_lexicon_entry[look_up_lemma])
-                flash('This entry is edited and saved successfully', 'success')
-                # add to database
-                existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
-                existing_lexicon.lexi = fd.flatten
-                flag_modified(existing_lexicon, 'lexi')
-                db.session.commit()
-            except KeyError:
-                flash('This entry is not in lexicon yet, use "add new entry" mode instead of "edit current entry" mode', 'danger')
-        elif lexicon_item_form.update_mode.data == 'delete':
-            try:
-                fd.delete_frame(lexicon_item_form.lemma.data)
-                flash('This entry is deleted and saved successfully', 'success')
-            except Exception:
-                flash('This entry is not in lexicon yet, delete failed', 'danger')
-                # update citation_dict as well
-            # add to database
-            existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
-            existing_lexicon.lexi = fd.flatten
-            flag_modified(existing_lexicon, 'lexi')
-            db.session.commit()
-            return redirect(
-                url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected='', look_up_lemma='',
-                        doc_id=doc_id, snt_id=snt_id))
-
-
-
-    citation_dict = {inflected_form: lemma for lemma in fd.flatten for inflected_form in
-                             fd.flatten[lemma]["inflected_forms"]}
-    print("citation_dict: ", citation_dict)
-
-    return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
-                           lexicon_item_form=lexicon_item_form,
-                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
-                           doc_id=doc_id, snt_id=snt_id)
 
 @main.route("/")
 @main.route("/display_post")
@@ -1053,7 +763,7 @@ def guidelines():
 @main.route('/<path:filename>', methods=['GET', 'POST'])
 def download(filename):
     # Appending app path to upload folder path within app root folder
-    uploads = "static/sample_files/" + filename
+    uploads = "resources/sample_input_files/" + filename
     # Returning file from appended path
     return send_file(uploads, as_attachment=True, attachment_filename=filename)
 
@@ -1073,14 +783,17 @@ def download(filename):
 #local dict get from farasapy
 @main.route('/getfarasalemma', methods=['GET', 'POST'])
 def getfarasalemma():
-    token = request.get_json(force=True)["token"]
-    print("inflected_form: ", token)
-    if token in lemma_dict:
-        lemma = lemma_dict[token]
-    else:
-        lemma = token
-    print("lemma_form from local dictionary: ", lemma)
-    return make_response(jsonify({"text": lemma}), 200)
+    try:
+        token = request.get_json(force=True)["token"]
+        current_app.logger.info(f"Looking up lemma for token: {token}")
+        
+        lemma = lemma_dict.get(token, token)
+        current_app.logger.info(f"Found lemma: {lemma}")
+        
+        return make_response(jsonify({"text": lemma}), 200)
+    except Exception as e:
+        current_app.logger.error(f"Error getting lemma: {str(e)}")
+        return make_response(jsonify({"error": "Failed to get lemma"}), 500)
 
 
 @main.route("/doclevel_thyme/<string:doc_sent_id>", methods=['GET', 'POST'])
@@ -1102,28 +815,23 @@ def doclevel_thyme(doc_sent_id):
         try:
             snt_id_info = request.get_json(force=True)["snt_id"]
             umr_dict = request.get_json(force=True)["umr_dict"]
-            print("umr_dict: ", umr_dict)
             doc_annot_str = request.get_json(force=True)["doc_annot_str"]
-            print("doc_annot_str: ", doc_annot_str)
+            
             existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
                                                Annotation.user_id == owner_user_id).first()
-            if existing:  # update the existing Annotation object
+            if existing:
                 existing.doc_umr = umr_dict
                 existing.doc_annot = doc_annot_str
                 flag_modified(existing, 'doc_umr')
                 flag_modified(existing, 'doc_annot')
                 db.session.commit()
-                msg = 'Success: current annotation and alignments are added to database.'
-                msg_category = 'success'
-                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+                return make_response(jsonify({"msg": "Success: document-level annotation saved", "msg_category": "success"}), 200)
             else:
-                print("the sent level annotation of the current sent doesn't exist")
-                msg = "the sent level annotation of the current sent doesn't exist."
-                msg_category = 'success'
-                return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+                current_app.logger.warning("No sentence-level annotation exists for the current sentence")
+                return make_response(jsonify({"msg": "No sentence-level annotation exists", "msg_category": "warning"}), 200)
         except Exception as e:
-            print(e)
-            print("add doc level annotation to database failed")
+            current_app.logger.error(f"Error saving document-level annotation: {str(e)}")
+            return make_response(jsonify({"msg": "Error saving document-level annotation", "msg_category": "danger"}), 500)
 
     doc = Doc.query.get_or_404(doc_id)
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
@@ -1152,7 +860,7 @@ def doclevel_thyme(doc_sent_id):
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
 
-    # this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
+    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
     # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
     # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
     # had no annotations, in which case the annotations for all following lines were moved up one slot.
@@ -1167,8 +875,7 @@ def doclevel_thyme(doc_sent_id):
         all_aligns_no_skipping[i - 1] = a
         all_doc_annots_no_skipping[i - 1] = da
 
-    exported_items = [list(p) for p in
-                      zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     # check who is the admin of the project containing this file:
     try:
@@ -1179,15 +886,16 @@ def doclevel_thyme(doc_sent_id):
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
         if owner.id == current_user.id:
-            permission = 'edit'  # this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
         else:
-            permission = Projectuser.query.filter(Projectuser.project_id == project_id,
-                                                  Projectuser.user_id == current_user.id).first().permission
+            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
     except AttributeError:
         project_name = ""
         admin = current_user
         permission = ""
 
+    # print("Sent annot pairs1: ", repr(sent_annot_pairs[0][1].doc_annot))
+    # print("Sent annot pairs4: ", repr(sent_annot_pairs[3][1].doc_annot))
     return render_template('doclevel_thyme.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs,
                            sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
@@ -1205,17 +913,226 @@ def doclevel_thyme(doc_sent_id):
 # manual_segmentation
 @main.route('/update_segmentation', methods=['POST'])
 def update_segmentation():
-    doc_id = request.form.get('doc_id')
-    sent_id = int(request.form.get('snt_id'))
-    segment_result = request.form.get('segmentation_result')
+    try:
+        doc_id = request.form.get('doc_id')
+        sent_id = int(request.form.get('snt_id'))
+        segment_result = request.form.get('segmentation_result')
 
+        doc = Doc.query.get_or_404(doc_id)
+        content = doc.content.strip().split('\n')
+        
+        # Only allow segmentation if there is exactly one annotation
+        if len(Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.sent_id == sent_id).all()) == 1:
+            content[sent_id - 1] = segment_result
+            doc.content = '\n'.join(content)
+            db.session.commit()
+            current_app.logger.info(f"Updated segmentation for document {doc_id}, sentence {sent_id}")
+            flash('Segmentation updated successfully', 'success')
+        else:
+            current_app.logger.warning(f"Cannot segment sentence {sent_id} - multiple annotations exist")
+            flash('Cannot update segmentation - sentence has multiple annotations', 'warning')
+            
+    except Exception as e:
+        current_app.logger.error(f"Error updating segmentation: {str(e)}")
+        flash('Failed to update segmentation', 'danger')
+        
+    return redirect(url_for('main.sentlevel_typing', doc_sent_id=f"{doc_id}_{sent_id}_0"))
+
+@main.route("/about")
+def about():
+    return render_template('about.html', title='About')
+
+def get_lexicon_dicts(project_id:int):
+    try:
+        frames_dict = Lexicon.query.filter(Lexicon.project_id==project_id).first().lexi
+    except AttributeError:
+        frames_dict = {}
+        flash(f'No existing lexicon found for current project', 'success')
+
+    citation_dict = {inflected_form: lemma for lemma in frames_dict for inflected_form in
+                     frames_dict[lemma]["inflected_forms"]}
+
+    return frames_dict, citation_dict
+
+def populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma):
+    lexicon_item_form = LexiconItemForm()
+    lexicon_item = {}
+
+    if look_up_inflected:
+        if look_up_inflected in citation_dict:
+            look_up_lemma = citation_dict[look_up_inflected]
+            lexicon_item = fd.flatten[look_up_lemma]
+        else:
+            flash(f'Inflected form {look_up_inflected} not found in lexicon', 'danger')
+    elif look_up_lemma:
+        if look_up_lemma in fd.flatten.keys():
+            lexicon_item = fd.flatten[look_up_lemma]
+        else:
+            flash(f'Lemma {look_up_lemma} not found in lexicon', 'danger')
+
+    lexicon_item_form.lemma.data = look_up_lemma
+    lexicon_item_form.root.data = lexicon_item.get('root', "")
+    lexicon_item_form.pos.data = lexicon_item.get('pos', "")
+    
+    for surface_form in lexicon_item.get('inflected_forms', []):
+        entry = InflectedForm()
+        entry.inflected_form = surface_form
+        lexicon_item_form.inflected_forms.append_entry(entry)
+        
+    for sense in lexicon_item.get('sense', []):
+        entry = SenseForm()
+        entry.gloss = sense.get('gloss')
+        entry.args = sense.get('args')
+        entry.coding_frames = sense.get('coding_frames')
+        lexicon_item_form.senses.append_entry(entry)
+        
+    return lexicon_item_form, lexicon_item
+
+@main.route("/lexiconlookup/<project_id>", methods=['GET', 'POST'])
+def lexiconlookup(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))
+    snt_id = int(request.args.get('snt_id', 1))
     doc = Doc.query.get_or_404(doc_id)
-    content = doc.content.strip().split('\n')
-    if len(Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.sent_id == sent_id).all()) == 1:
-        # if other annotators has  annotated this sentence, cannot segment
-        content[sent_id - 1] = segment_result
-        doc.content = '\n'.join(content)
-        db.session.commit()
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)
+    fd = FrameDict.from_dict(frames_dict)
 
-    # print(doc_id,'1375,test')
-    return redirect(url_for('main.sentlevel_typing', doc_sent_id=str(doc_id) + '_' + str(sent_id) + '_' + str(0)))
+    autocomplete_lemmas = list(fd.flatten.keys())
+    autocomplete_inflected = list(citation_dict.keys())
+
+    if request.method == 'POST':
+        try:
+            selected_word = request.get_json(force=True)['selected_word']
+            current_app.logger.info(f"Finding similar words for: {selected_word}")
+            word_candidates = generate_candidate_list(doc.content, doc.file_format)
+            similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+            return make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+        except Exception as e:
+            current_app.logger.error(f"Error finding similar words: {str(e)}")
+            return make_response(jsonify({"error": "Failed to find similar words"}), 500)
+
+    look_up_form = LookUpLexiconItemForm()
+
+    if look_up_form.validate_on_submit() and (look_up_form.inflected_form.data or look_up_form.lemma_form.data):
+        look_up_inflected = look_up_form.inflected_form.data
+        look_up_lemma = look_up_form.lemma_form.data
+        return redirect(
+            url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected=look_up_inflected, look_up_lemma=look_up_lemma,
+                    doc_id=doc_id, snt_id=snt_id))
+
+    return render_template('lexicon_lookup.html', project_id=project_id, project_name=project_name,
+                           look_up_form=look_up_form,
+                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
+                           doc_id=doc_id, snt_id=snt_id,
+                           autocomplete_lemmas=json.dumps(autocomplete_lemmas), autocomplete_inflected=json.dumps(autocomplete_inflected))
+
+@main.route("/lexiconresult/<project_id>", methods=['GET'])
+def lexiconresult_get(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+    doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
+    snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    fd = FrameDict.from_dict(frames_dict)
+
+    look_up_inflected = request.args.get('look_up_inflected', None)
+    look_up_lemma = request.args.get('look_up_lemma', None)
+
+    lexicon_item_form, lexicon_item = populate_lexicon_item_form_by_lookup(fd, citation_dict, look_up_inflected, look_up_lemma)
+
+    return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
+                           lexicon_item_form=lexicon_item_form,
+                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
+                           doc_id=doc_id, snt_id=snt_id, look_up_lemma=look_up_lemma)
+
+@main.route("/lexiconresult/<project_id>", methods=['POST'])
+def lexiconresult_post(project_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('users.login'))
+    project_name = Project.query.filter(Project.id==project_id).first().project_name
+    doc_id = int(request.args.get('doc_id'))
+    snt_id = int(request.args.get('snt_id', 1))
+    doc = Doc.query.get_or_404(doc_id)
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)
+    fd = FrameDict.from_dict(frames_dict)
+    
+    try:
+        selected_word = request.get_json(force=True)['selected_word']
+        current_app.logger.info(f"Finding similar words for: {selected_word}")
+        word_candidates = generate_candidate_list(doc.content, doc.file_format)
+        similar_word_list = find_suggested_words(word=selected_word, word_candidates=word_candidates)
+        return make_response(jsonify({"similar_word_list": similar_word_list}), 200)
+    except Exception as e:
+        current_app.logger.error(f"Error finding similar words: {str(e)}")
+        return make_response(jsonify({"error": "Failed to find similar words"}), 500)
+
+    lexicon_item_form = LexiconItemForm()
+
+    if lexicon_item_form.add_inflected.data:
+        getattr(lexicon_item_form, 'inflected_forms').append_entry()
+
+    if lexicon_item_form.add_sense.data:
+        getattr(lexicon_item_form, 'senses').append_entry()
+
+    for ndx, this_entry in enumerate(lexicon_item_form.inflected_forms.entries):
+        if this_entry.data['remove']:
+            del lexicon_item_form.inflected_forms.entries[ndx]
+            break
+    for ndx, this_entry in enumerate(lexicon_item_form.senses.entries):
+        if this_entry.data['remove']:
+            del lexicon_item_form.senses.entries[ndx]
+            break
+
+    if lexicon_item_form.validate_on_submit() and lexicon_item_form.lemma.data:
+        new_lexicon_entry = {
+            lexicon_item_form.lemma.data: {
+                "root": lexicon_item_form.root.data,
+                "pos": lexicon_item_form.pos.data,
+                "inflected_forms": [element['inflected_form'] for element in lexicon_item_form.inflected_forms.data if element['inflected_form'] != ""],
+                "sense": lexicon_item_form.senses.data
+            }
+        }
+        look_up_lemma = lexicon_item_form.lemma.data
+        
+        try:
+            if lexicon_item_form.update_mode.data == 'edit':
+                fd.edit_frame(look_up_lemma, new_lexicon_entry[look_up_lemma])
+                current_app.logger.info(f"Edited lexicon entry for lemma: {look_up_lemma}")
+                flash('Entry edited successfully', 'success')
+                
+                existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+                existing_lexicon.lexi = fd.flatten
+                flag_modified(existing_lexicon, 'lexi')
+                db.session.commit()
+                
+            elif lexicon_item_form.update_mode.data == 'delete':
+                fd.delete_frame(lexicon_item_form.lemma.data)
+                current_app.logger.info(f"Deleted lexicon entry for lemma: {look_up_lemma}")
+                flash('Entry deleted successfully', 'success')
+                
+                existing_lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+                existing_lexicon.lexi = fd.flatten
+                flag_modified(existing_lexicon, 'lexi')
+                db.session.commit()
+                
+                return redirect(
+                    url_for('main.lexiconresult_get', project_id=project_id, look_up_inflected='', look_up_lemma='',
+                            doc_id=doc_id, snt_id=snt_id))
+                            
+        except KeyError:
+            current_app.logger.error(f"Failed to edit lexicon entry - lemma not found: {look_up_lemma}")
+            flash('Entry not found in lexicon. Use "add new entry" mode instead.', 'danger')
+        except Exception as e:
+            current_app.logger.error(f"Error updating lexicon: {str(e)}")
+            flash('Failed to update lexicon entry', 'danger')
+
+    citation_dict = {inflected_form: lemma for lemma in fd.flatten for inflected_form in
+                             fd.flatten[lemma]["inflected_forms"]}
+
+    return render_template('lexicon_result.html', project_id=project_id, project_name=project_name,
+                           lexicon_item_form=lexicon_item_form,
+                           frames_dict=json.dumps(frames_dict), citation_dict=json.dumps(citation_dict),
+                           doc_id=doc_id, snt_id=snt_id)

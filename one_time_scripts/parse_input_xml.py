@@ -131,73 +131,47 @@ def parse_exported_file(content_string: str) -> Tuple[str, List[List[str]], List
 
 def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
     """
-    :param file_format:
-    :param content_string: raw string got read in from file, could be either flex or toolbox xml string, or a txt string
-    :return: sents: [['aphleamkehlta', 'nenhlet', 'mahla', "apkehlpa'vayam", "aptenyay'a", 'yavhan'], ...]
-            sents_html: html string of all sentences of one document, it's the html of sentences preview table in annotation page
-            sent_htmls: a list of html strings of a single sentence ( linguistic information NOT included)
-            df_htmls: a list of html strings of a single sentence ( linguistic information included)
-            gls: [['', 'Viajó un hombre, parece cazando o buscando miel'], ...]
-            notes: ['RA', ...]
+    Process a UMR format file and generate HTML for display.
+    
+    :param content_string: Raw string from the UMR file
+    :param file_format: File format (ignored as we only handle UMR format)
+    :param lang: Language of the content (affects text direction)
+    :return: InfoToDisplay object containing:
+            sents: List of sentences split into words
+            sents_html: HTML string of all sentences for preview
+            sent_htmls: List of HTML strings for individual sentences
+            df_htmls: Empty list (no linguistic info in UMR format)
+            gls: Empty list (no translations in UMR format)
+            notes: Empty list (no notes in UMR format)
     """
-    if lang == 'arabic':
-        justify = 'right'
-    else:
-        justify = 'center'
-
-    gls = []
-    notes = []
-    df_htmls = []
+    justify = 'right' if lang == 'arabic' else 'center'
+    
+    # Extract sentences from the UMR format
     sents = []
-    sents_html = ''
-    if file_format == 'plain_text' or file_format == 'exported_file' or file_format== 'isi_editor': # split content string into List[List[str]]
-        sents = [(['Sentence:'] + sent.split()) for sent in content_string.strip().split('\n')]
-        sents_df = pd.DataFrame(content_string.strip().split('\n'))
-        sents_df.index = sents_df.index + 1
-        sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify=justify)
-
-    elif file_format in ['flex1', 'flex2', 'flex3', 'toolbox1', 'toolbox2', 'toolbox3', 'toolbox4']:
-        try:
-            # ET.fromstring(content_string)
-            sents, dfs, sents_gls, conv_turns, paragraph_groups = parse_xml(content_string, file_format)
-            sents_df = pd.DataFrame([' '.join(sent) for sent in sents])
-            sents_df.index = sents_df.index + 1
-            sents_html = ''
-            if paragraph_groups:
-                paragraph_slice_indice = list(accumulate(paragraph_groups, operator.add))
-                print('paragraph_slice_indice', paragraph_slice_indice)
-
-                for i, slice_index in enumerate(paragraph_slice_indice):
-                    sents_html += 'Paragraph: ' + str(i+1)
-                    if i == 0:
-                        sents_html += sents_df[:slice_index].to_html(header=False, classes="table table-striped table-sm", justify=justify)
-                    else:
-                        sents_html += sents_df[paragraph_slice_indice[i-1]:slice_index].to_html(header=False, classes="table table-striped table-sm", justify=justify)
-            else:
-                sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify=justify)
-            for df in dfs:
-                df.columns = range(1, len(df.columns) + 1)
-                df_html = df.to_html(header=False, classes="table table-striped table-sm", justify=justify).replace(
-                    'border="1"',
-                    'border="0"')
-                soup = BeautifulSoup(df_html, "html.parser")
-                words_row = soup.findAll('tr')[0]
-                words_row['id'] = 'current-words'
-                gram_row = soup.findAll('tr')[3]
-                gram_row['class'] = 'optional-rows'
-                df_htmls.append(str(soup))
-            for translation in sents_gls:
-                gls.append(translation)
-            for conv_turn in conv_turns:
-                notes.append(conv_turn)
-        except ET.ParseError:
-            print('not xml format')
-
-    sent_htmls = []  # a list of single sentence htmls
+    for line in content_string.strip().split('\n'):
+        if line.startswith('# :: snt'):
+            # Remove the "# :: snt" prefix and any leading/trailing whitespace
+            sent = line.split('\t')[1].strip()
+            sents.append(['Sentence:'] + sent.split())
+    
+    # Create HTML for all sentences
+    sents_df = pd.DataFrame([' '.join(sent[1:]) for sent in sents])  # Remove 'Sentence:' prefix
+    sents_df.index = sents_df.index + 1
+    sents_html = sents_df.to_html(header=False, classes="table table-striped table-sm", justify=justify)
+    
+    # Add sentence IDs for coloring
+    sentid_p = re.compile(r"(<th>)(\d+)(<\/th>\s+<td)(>)")
+    sents_html = sentid_p.sub(r'\1\2\3 id="sentid-\2"\4', sents_html)
+    
+    # Create HTML for individual sentences
+    sent_htmls = []
     for sent in sents:
-        target_sent_html = pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(header=False, index=False,
-                                                                                        classes="table table-striped table-sm",
-                                                                                        justify=justify)
+        target_sent_html = pd.DataFrame([sent], columns=range(1, len(sent) + 1)).to_html(
+            header=False, 
+            index=False,
+            classes="table table-striped table-sm",
+            justify=justify
+        )
         if lang == 'arabic':
             target_sent_html = re.sub(
                 r'class="dataframe table table-striped table-sm">',
@@ -205,19 +179,16 @@ def html(content_string: str, file_format: str, lang:str) -> 'InfoToDisplay':
                 target_sent_html
             )
         sent_htmls.append(target_sent_html)
-
-    # https: // stackoverflow.com / questions / 43312995 / pandas - to - html - add - attributes - to - table - tag
+    
+    # Add RTL support for Arabic
     if lang == 'arabic':
         sents_html = re.sub(
             r'class="dataframe table table-striped table-sm">',
             r'class="dataframe table table-striped table-sm" dir="rtl" style="text-align:right">',
             sents_html
         )
-        # html string for all sentences
-    #manually add id to each sentence td in order to color them
-    sentid_p = re.compile(r"(<th>)(\d+)(<\/th>\s+<td)(>)")
-    sents_html = sentid_p.sub(r'\1\2\3 id="sentid-\2"\4', sents_html)
-    return InfoToDisplay(sents, sents_html, sent_htmls, df_htmls, gls, notes)
+    
+    return InfoToDisplay(sents, sents_html, sent_htmls, [], [], [])
 
 def parse_xml(xml_string, file_format) -> 'ExtractedXMLInfo':
     if file_format == 'flex1' or file_format == 'flex2':
@@ -760,54 +731,112 @@ def lexicon2db(project_id:int, lexicon_dict: dict):
     db.session.commit()
     flash('your lexicon has been saved to db', 'success')
 
-def file2db(filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int, current_user_id:int,
+def file2db(filename: str, content_string: str, lang: str, sents: List[List[str]], file_format: str, current_project_id:int, current_user_id:int,
             sent_annots=None, doc_annots=None, aligns=None) -> int:
     existing_doc = Doc.query.filter_by(filename=filename, user_id=current_user_id, project_id=current_project_id).first()
     if existing_doc:
         doc_id = existing_doc.id
         flash('Upload failed: A document with the same name is already in current project.', 'success')
     else:
-        doc = Doc(lang=lang, filename=filename, content=content_string, user_id=current_user_id,
-                  file_format=file_format, project_id=current_project_id)
-        db.session.add(doc)
-        db.session.commit()
-        doc_id = doc.id
-        flash('Your doc has been created!', 'success')
-        for sent_of_tokens in sents:
-            sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
-            db.session.add(sent)
+        try:
+            # Find the lowest unused doc_id by checking for gaps in the sequence
+            used_ids = sorted([d[0] for d in db.session.query(Doc.id).all()])
+            new_id = 1
+            for used_id in used_ids:
+                if used_id != new_id:
+                    break
+                new_id += 1
+            
+            # Create new document with the lowest available ID
+            doc = Doc(
+                id=new_id,
+                filename=filename,
+                lang=lang,
+                content=content_string,
+                file_format=file_format,
+                user_id=current_user_id,
+                project_id=current_project_id
+            )
+            
+            db.session.add(doc)
             db.session.commit()
-        flash('Your sents has been created.', 'success')
-
-    if file_format == 'isi_editor' or has_annot:
-        for i in range(len(sents)):
+            doc_id = doc.id
+            flash('Your doc has been created!', 'success')
+            
+            # Create sentences with the new document ID
+            for sent_of_tokens in sents:
+                sent = Sent(content=" ".join(sent_of_tokens), doc_id=doc.id)
+                db.session.add(sent)
+            db.session.commit()
+            flash('Your sentences have been created.', 'success')
+            
+            # Create annotations if needed
             dummy_user_id = User.query.filter(User.username=="dummy_user").first().id
-            if sent_annots:
-                dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
-            else:
-                dehtml_sent_annot = ""
-            if doc_annots:
-                dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
-            else:
-                dehtml_doc_annot = ""
-            if aligns:
-                pass_aligns = aligns[i]
-            else:
-                pass_aligns = {}
-            sent_umr = string2umr(dehtml_sent_annot)
-            annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=pass_aligns,
-                                    user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
-                                    sent_id=i + 1, #sentence id counts from 1
-                                    doc_id=doc_id,
-                                    sent_umr=sent_umr, doc_umr={}, actions=[])
-            db.session.add(annotation)
-        db.session.commit()
-        flash('Your annotations has been created.', 'success')
+            for i in range(len(sents)):
+                if sent_annots:
+                    dehtml_sent_annot = BeautifulSoup(sent_annots[i]).get_text()
+                else:
+                    dehtml_sent_annot = ""
+                if doc_annots:
+                    dehtml_doc_annot = doc_annots[i] #assuming doc_annots contains clean doc_annots, do not need Beautiful soup to parse
+                else:
+                    dehtml_doc_annot = ""
+                if aligns:
+                    pass_aligns = aligns[i]
+                else:
+                    pass_aligns = {}
+                sent_umr = string2umr(dehtml_sent_annot)
+                annotation = Annotation(sent_annot=dehtml_sent_annot, doc_annot=dehtml_doc_annot, alignment=pass_aligns,
+                                        user_id=dummy_user_id, # pre-existing annotations are assigned to dummy user, waiting for annotators to check out
+                                        sent_id=i + 1, #sentence id counts from 1
+                                        doc_id=doc_id,
+                                        sent_umr=sent_umr, doc_umr={}, actions=[])
+                db.session.add(annotation)
+            db.session.commit()
+            flash('Your annotations have been created.', 'success')
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error creating document: {str(e)}', 'danger')
+            return None
+
     return doc_id
 
 def file2db_override(doc_id:int, filename: str, file_format: str, content_string: str, lang: str, sents: List[List[str]], has_annot: bool, current_project_id:int, current_user_id:int,
             sent_annots=None, doc_annots=None, aligns=None) -> int:
     print("file2db_override is called")
+    
+    # Find the lowest unused doc_id
+    used_ids = [d[0] for d in db.session.query(Doc.id).order_by(Doc.id).all()]
+    new_id = 1
+    for used_id in used_ids:
+        if used_id != new_id:
+            break
+        new_id += 1
+            
+    # Update the document with the new ID
+    doc = Doc.query.get(doc_id)
+    if doc:
+        try:
+            # Update document ID and related annotations
+            old_id = doc.id
+            doc.id = new_id
+            
+            # Update all annotations that reference this document
+            annotations = Annotation.query.filter_by(doc_id=old_id).all()
+            for annotation in annotations:
+                annotation.doc_id = new_id
+                
+            # Update all sentences that reference this document    
+            sentences = Sent.query.filter_by(doc_id=old_id).all()
+            for sentence in sentences:
+                sentence.doc_id = new_id
+                
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating document ID: {str(e)}', 'danger')
+            return None
+    
     if file_format == 'isi_editor' or has_annot:
         for i in range(len(sents)):
             if sent_annots:
@@ -827,7 +856,7 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
                 doc_umr = triple_display_to_doc_umr(correct_doc_graph_string_format(dehtml_doc_annot))
             else:
                 doc_umr = {}
-            annotation = Annotation.query.filter_by(doc_id=doc_id, sent_id=i + 1, user_id=current_user_id).first()
+            annotation = Annotation.query.filter_by(doc_id=new_id, sent_id=i + 1, user_id=current_user_id).first()
 
             if annotation:
                 annotation.sent_annot = dehtml_sent_annot
@@ -837,10 +866,10 @@ def file2db_override(doc_id:int, filename: str, file_format: str, content_string
                 annotation.doc_umr = doc_umr
                 annotation.actions = []
                 db.session.commit()
-                flash('Your annotations has been overriden.', 'success')
+                flash('Your annotations have been overridden.', 'success')
             else:
                 flash("Error: Annotation with the specified doc_id and sent_id does not exist.", "Error")
-    return doc_id
+    return new_id
 
 def parse_file_info(file_content):
     print("parse_file_info is called")

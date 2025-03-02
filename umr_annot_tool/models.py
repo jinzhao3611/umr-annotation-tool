@@ -65,20 +65,18 @@ class Post(db.Model):
 class Doc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.Text, nullable=False)
-    file_format = db.Column(db.Text, nullable=False)
-    content = db.Column(db.Text, nullable=False)
     lang = db.Column(db.Text, nullable=False)
-
-    sents = db.relationship('Sent', backref='document', lazy=True)
-    annotations = db.relationship('Annotation', backref='document', lazy=True)
+    content = db.Column(db.Text, nullable=False)
+    file_format = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    sents = db.relationship('Sent', backref='doc', lazy=True)
+    annotations = db.relationship('Annotation', backref='doc', lazy=True)
     docqcs = db.relationship('Docqc', backref='doc', lazy=True)
     docdas = db.relationship('Docda', backref='doc', lazy=True)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
-
     def __repr__(self):
-        return f"Doc('{self.id}')"
+        return f"Doc('{self.filename}', '{self.lang}')"
 
 class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
