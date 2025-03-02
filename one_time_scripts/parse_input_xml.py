@@ -739,17 +739,8 @@ def file2db(filename: str, content_string: str, lang: str, sents: List[List[str]
         flash('Upload failed: A document with the same name is already in current project.', 'success')
     else:
         try:
-            # Find the lowest unused doc_id by checking for gaps in the sequence
-            used_ids = sorted([d[0] for d in db.session.query(Doc.id).all()])
-            new_id = 1
-            for used_id in used_ids:
-                if used_id != new_id:
-                    break
-                new_id += 1
-            
-            # Create new document with the lowest available ID
+            # Create new document - ID will be auto-assigned by the model
             doc = Doc(
-                id=new_id,
                 filename=filename,
                 lang=lang,
                 content=content_string,

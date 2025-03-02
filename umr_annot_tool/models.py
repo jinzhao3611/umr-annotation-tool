@@ -4,7 +4,7 @@ from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer # email and password reset
 from sqlalchemy.ext.mutable import MutableDict
-from sqlalchemy import Column, Integer, JSON
+from sqlalchemy import Column, Integer, JSON, text
 from sqlalchemy.dialects.postgresql import ARRAY
 
 
@@ -51,6 +51,11 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}'"
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('user')
+        super(User, self).__init__(**kwargs)
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -61,6 +66,19 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.title}', '{self.date_posted}')"
+
+def get_lowest_unused_id(table_name):
+    """Get the lowest unused ID for a given table by finding gaps in the sequence."""
+    sql = text(f"SELECT id FROM {table_name} ORDER BY id")
+    result = db.session.execute(sql)
+    used_ids = [r[0] for r in result]
+    
+    new_id = 1
+    for used_id in sorted(used_ids):
+        if used_id != new_id:
+            break
+        new_id += 1
+    return new_id
 
 class Doc(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,6 +93,11 @@ class Doc(db.Model):
     docqcs = db.relationship('Docqc', backref='doc', lazy=True)
     docdas = db.relationship('Docda', backref='doc', lazy=True)
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('doc')
+        super(Doc, self).__init__(**kwargs)
+
     def __repr__(self):
         return f"Doc('{self.filename}', '{self.lang}')"
 
@@ -82,6 +105,11 @@ class Sent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
+
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('sent')
+        super(Sent, self).__init__(**kwargs)
 
     def __repr__(self):
         return f"Sent('{self.id}')"
@@ -98,8 +126,13 @@ class Annotation(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('annotation')
+        super(Annotation, self).__init__(**kwargs)
+
     def __repr__(self):
-        return f"Annot('{self.id}'"
+        return f"Annot('{self.id}')"
 
 
 class Lexicon(db.Model):
@@ -107,12 +140,22 @@ class Lexicon(db.Model):
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     lexi = db.Column(MutableDict.as_mutable(JSON), nullable=False)
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('lexicon')
+        super(Lexicon, self).__init__(**kwargs)
+
 class Projectuser(db.Model): #this table keeps track of each user's permission for each project
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     permission = db.Column(db.Text, default="view", nullable=False)
+
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('projectuser')
+        super(Projectuser, self).__init__(**kwargs)
 
 
 
@@ -129,6 +172,10 @@ class Project(db.Model): #this table keeps track of the Project and the qc user 
     lattices = db.relationship('Lattice', backref='project', lazy=True)
     partialgraphs = db.relationship('Partialgraph', backref='project', lazy=True)
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('project')
+        super(Project, self).__init__(**kwargs)
 
 class Docqc(db.Model): # this table is used to document which member in the project has uploaded annotations to qc folder, because once the file is uploaded, the file will be duplicated and put under project qc user
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
@@ -136,12 +183,22 @@ class Docqc(db.Model): # this table is used to document which member in the proj
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     upload_member_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('docqc')
+        super(Docqc, self).__init__(**kwargs)
+
 
 class Docda(db.Model):
     id = db.Column(db.Integer, primary_key=True) #maybe not necessary
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
+
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('docda')
+        super(Docda, self).__init__(**kwargs)
 
 class Lattice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -152,7 +209,17 @@ class Lattice(db.Model):
     modal = db.Column(MutableDict.as_mutable(JSON), nullable=False)
     discourse = db.Column(MutableDict.as_mutable(JSON), nullable=False)
 
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('lattice')
+        super(Lattice, self).__init__(**kwargs)
+
 class Partialgraph(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
     partial_umr = db.Column(MutableDict.as_mutable(JSON), nullable=False)
+
+    def __init__(self, **kwargs):
+        if 'id' not in kwargs:
+            kwargs['id'] = get_lowest_unused_id('partialgraph')
+        super(Partialgraph, self).__init__(**kwargs)
