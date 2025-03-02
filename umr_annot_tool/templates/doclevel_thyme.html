@@ -183,7 +183,7 @@
 
                                 <div class="col-sm-4" style="overflow-x: scroll">
                                     <h5>Doc-Level Annotation:</h5>
-                                    {% if pair[1].doc_annot | length %}
+                                    {% if pair[1] and pair[1].doc_annot | length %}
                     {#            if current sentence doc_annotation is not empty in database, load from database#}
                                         {% if loop.index == current_snt_id %}
                                             {% autoescape false %}
@@ -288,7 +288,11 @@
 
                             <script type="text/javascript">
                                 fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% if current_sent_pair[1] %}
+                                    load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% else %}
+                                    load_doc_history(`{}`, ``, `{{ current_snt_id }}`);
+                                {% endif %}
                                 showBlueBox();
                             </script>
                         </div>
@@ -332,17 +336,7 @@
                                             <li class="dropdown-item"><a tabindex="-1" >:MOD</a></li>
                                             <li class="dropdown-item"><a tabindex="-1" >:PURP</a></li>
                                             <li class="dropdown-item"><a tabindex="-1" >:COND</a></li>
-                                            <li class="dropdown-submenu">
-                                                <a class="dropdown-item" tabindex="-1" >:MODSTR</a>
-                                                <ul class="dropdown-menu">
-                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :AFF')">:AFF</a></li>
-                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTAFF')">:NEUTAFF</a></li>
-                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTAFF')">:PARTAFF</a></li>
-                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEG')">:NEG</a></li>
-                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :NEUTNEG')">:NEUTNEG</a></li>
-                                                    <li class="dropdown-item"><a tabindex="-1" href="javascript:noteDocLevelRel(':modal :PARTNEG')">:PARTNEG</a></li>
-                                                </ul>
-                                            </li>
+                                            <li class="dropdown-item"><a tabindex="-1" >:MODSTR</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
@@ -382,7 +376,11 @@
 
                             <script type="text/javascript">
                                 fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% if current_sent_pair[1] %}
+                                    load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% else %}
+                                    load_doc_history(`{}`, ``, `{{ current_snt_id }}`);
+                                {% endif %}
                                 showBlueBox();
                             </script>
                         </div>

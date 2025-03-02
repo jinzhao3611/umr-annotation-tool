@@ -398,9 +398,9 @@ def sentlevel(doc_sent_id):
         actions_list = []
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
     all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
@@ -587,20 +587,28 @@ def doclevel(doc_sent_id):
     sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
-    sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
-    if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
-        sent_annot_pairs = list(zip(sents, annotations))
-    else:
-        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
-        sent_annot_pairs = list(zip(df_html, annotations))
+    # Debug logging
+    current_app.logger.info(f"Current sentence ID: {current_snt_id}")
+    current_app.logger.info(f"All sentence IDs: {[sent.id for sent in sents]}")
+    current_app.logger.info(f"All annotation sent_ids: {[annot.sent_id for annot in annotations]}")
+    current_app.logger.info(f"All annotation contents: {[bool(annot.sent_annot) for annot in annotations]}")
+    current_app.logger.info(f"Number of sentences: {len(sents)}")
+    current_app.logger.info(f"Number of annotations: {len(annotations)}")
 
+    # Create pairs based on position rather than ID
+    sent_annot_pairs = list(zip(sents, annotations))
 
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+        if not current_sent_pair[1] or not current_sent_pair[1].sent_annot:
+            # If there's no sentence-level annotation, redirect to sentence-level page
+            current_app.logger.warning(f"No annotation found for sentence at position {current_snt_id}")
+            flash('Please create a sentence-level annotation first', 'warning')
+            return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id)+'_'+str(owner.id)))
     except IndexError:
-        flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
+        flash('Invalid sentence ID', 'danger')
+        return redirect(url_for('main.sentlevel', doc_sent_id=str(doc_id)+'_1_'+str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.sent_annot for annot in annotations]
@@ -608,24 +616,9 @@ def doclevel(doc_sent_id):
     all_doc_annots = [annot.doc_annot for annot in annotations]
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
-    # all_doc_umrs = [annot.doc_umr for annot in annotations]
 
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
-    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
-    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
-    # had no annotations, in which case the annotations for all following lines were moved up one slot.
-    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
-    # in later stages don't need this.
-    sent_with_annot_ids = [annot.sent_id for annot in annotations]
-    all_annots_no_skipping = [""] * len(all_sents)
-    all_aligns_no_skipping = [""] * len(all_sents)
-    all_doc_annots_no_skipping = [""] * len(all_sents)
-    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
-
-    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
+    # Create exported items directly from the paired lists
+    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
 
     #check who is the admin of the project containing this file:
     try:
@@ -635,7 +628,7 @@ def doclevel(doc_sent_id):
                                             Projectuser.permission == "admin").first().user_id
         admin = User.query.filter(User.id == admin_id).first()
         if owner.id == current_user.id:
-            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
+            permission = 'edit' #this means got into the sentlevel page through My Annotations
         else:
             permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
     except AttributeError:
@@ -643,17 +636,13 @@ def doclevel(doc_sent_id):
         admin=current_user
         permission = ""
 
-    # print("Sent annot pairs1: ", repr(sent_annot_pairs[0][1].doc_annot))
-    # print("Sent annot pairs4: ", repr(sent_annot_pairs[3][1].doc_annot))
-    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
+    return render_template('doclevel.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(all_sent_umrs),
                            filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
                            current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
                            file_format=doc.file_format,
                            content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
-                           # all_doc_annots=all_doc_annots,
-                           # all_doc_umrs=all_doc_umrs,
                            project_name=project_name,
                            admin=admin,
                            owner=owner,
@@ -678,17 +667,21 @@ def doclevelview(doc_sent_id):
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
 
-    if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
-        sent_annot_pairs = list(zip(sents, annotations))
-    else:
-        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
-        sent_annot_pairs = list(zip(df_html, annotations))
+    # Create a dictionary mapping sentence_id to annotation
+    annot_dict = {annot.sent_id: annot for annot in annotations}
+    
+    # Create pairs with None for missing annotations
+    sent_annot_pairs = [(sent, annot_dict.get(sent.id)) for sent in sents]
 
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+        if current_sent_pair[1] is None:
+            # If there's no sentence-level annotation, redirect to sentence-level page
+            flash('Please create a sentence-level annotation first', 'warning')
+            return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id)+'_'+str(owner.id)))
     except IndexError:
-        flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_'+str(current_snt_id) +'_'+str(owner.id)))
+        flash('Invalid sentence ID', 'danger')
+        return redirect(url_for('main.sentlevelview', doc_sent_id=str(doc_id)+'_1_'+str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.sent_annot for annot in annotations]
@@ -730,8 +723,6 @@ def doclevelview(doc_sent_id):
         admin=current_user
         permission = ""
 
-    # print("Sent annot pairs1: ", repr(sent_annot_pairs[0][1].doc_annot))
-    # print("Sent annot pairs4: ", repr(sent_annot_pairs[3][1].doc_annot))
     return render_template('doclevelview.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs, sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,
                            title='Doc Level Annotation', current_snt_id=current_snt_id,
@@ -838,20 +829,22 @@ def doclevel_thyme(doc_sent_id):
     annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
         Annotation.sent_id).all()
     sentAnnotUmrs = [annot.sent_umr for annot in annotations]
-    print(type(sentAnnotUmrs))
 
-    if doc.file_format == 'plain_text' or doc.file_format == 'isi_editor':
-        sent_annot_pairs = list(zip(sents, annotations))
-    else:
-        _, sents_html, sent_htmls, df_html, gls, notes = html(doc.content, doc.file_format, lang=doc.lang)
-        sent_annot_pairs = list(zip(df_html, annotations))
+    # Create a dictionary mapping sentence_id to annotation
+    annot_dict = {annot.sent_id: annot for annot in annotations}
+    
+    # Create pairs with None for missing annotations
+    sent_annot_pairs = [(sent, annot_dict.get(sent.id)) for sent in sents]
 
     try:
         current_sent_pair = sent_annot_pairs[current_snt_id - 1]
+        if current_sent_pair[1] is None:
+            # If there's no sentence-level annotation, redirect to sentence-level page
+            flash('Please create a sentence-level annotation first', 'warning')
+            return redirect(url_for('main.sentlevel_typing', doc_sent_id=str(doc_id)+'_'+str(current_snt_id)+'_'+str(owner.id)))
     except IndexError:
-        flash('You have not created sentence level annotation yet', 'danger')
-        return redirect(
-            url_for('main.sentlevel', doc_sent_id=str(doc_id) + '_' + str(current_snt_id) + '_' + str(owner.id)))
+        flash('Invalid sentence ID', 'danger')
+        return redirect(url_for('main.sentlevel_typing', doc_sent_id=str(doc_id)+'_1_'+str(owner.id)))
 
     # load all annotations for current document used for export_annot()
     all_annots = [annot.sent_annot for annot in annotations]
@@ -894,8 +887,6 @@ def doclevel_thyme(doc_sent_id):
         admin = current_user
         permission = ""
 
-    # print("Sent annot pairs1: ", repr(sent_annot_pairs[0][1].doc_annot))
-    # print("Sent annot pairs4: ", repr(sent_annot_pairs[3][1].doc_annot))
     return render_template('doclevel_thyme.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs,
                            sentAnnotUmrs=json.dumps(sentAnnotUmrs),
                            filename=doc.filename,

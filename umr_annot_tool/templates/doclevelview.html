@@ -179,7 +179,7 @@
 
                                 <div class="col-sm-4" style="overflow-x: scroll">
                                     <h5>Doc-Level Annotation:</h5>
-                                    {% if pair[1].doc_annot | length %}
+                                    {% if pair[1] and pair[1].doc_annot | length %}
                     {#            if current sentence doc_annotation is not empty in database, load from database#}
                                         {% if loop.index == current_snt_id %}
                                             {% autoescape false %}
@@ -288,7 +288,11 @@
 
                         <script type="text/javascript">
                             fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                            load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                            {% if current_sent_pair[1] %}
+                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                            {% else %}
+                                load_doc_history(`{}`, ``, `{{ current_snt_id }}`);
+                            {% endif %}
                             showBlueBox();
                         </script>
                     </div>

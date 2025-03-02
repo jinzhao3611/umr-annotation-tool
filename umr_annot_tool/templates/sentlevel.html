@@ -811,7 +811,69 @@
             <button class="btn btn-info btn-sm" id="redo-button" title="currently nothing to undo" onclick="undo(1);">redo</button>
             <button class="btn btn-info btn-sm" id="reset-box" onclick="reset();">reset</button>
             <hr>
-            <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="UMR2db()">doc level annot</a>
+            <!-- <a class="btn btn-info btn-sm" id="annot-button" title="click to do doc-level annotation" href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}" onclick="event.preventDefault(); UMR2db().then(data => { if (data && data.msg_category === 'success') window.location.href = this.href; }).catch(() => {});">doc level annot</a> -->
+            <a class="btn btn-info btn-sm" 
+            href="{{ url_for('main.doclevel', doc_sent_id=doc_id ~ '_' ~ snt_id ~ '_' ~ owner.id, _anchor='amr') }}"
+            onclick="handleDoclevelClick(event)">
+            doc level annot
+            </a>
+
+            <script>
+            function handleDoclevelClick(event) {
+                event.preventDefault();
+                const link = event.currentTarget.href;
+                console.log('Starting save...');
+                
+                // Log AMR content
+                const amrDiv = document.getElementById('amr');
+                console.log('AMR div content:', amrDiv.innerHTML);
+                console.log('AMR div outer HTML:', amrDiv.outerHTML);
+                
+                try {
+                    const result = UMR2db();
+                    
+                    // If UMR2db returns a Promise
+                    if (result && typeof result.then === 'function') {
+                        result
+                            .then(response => {
+                                console.log('Save response:', response);
+                                if (response && response.msg_category === 'success') {
+                                    console.log('Save successful, waiting before navigation...');
+                                    // Add a delay to ensure database commit
+                                    setTimeout(() => {
+                                        console.log('Navigating to:', link);
+                                        window.location.href = link;
+                                    }, 1000);
+                                } else {
+                                    console.error('Save failed:', response);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error during save:', error);
+                            });
+                    } else {
+                        // If UMR2db doesn't return a Promise, wait a bit for the save to complete
+                        setTimeout(() => {
+                            const errorMsg = document.getElementById('error_msg');
+                            if (errorMsg && errorMsg.className.includes('alert-success')) {
+                                console.log('Save successful, waiting before navigation...');
+                                // Add a delay to ensure database commit
+                                setTimeout(() => {
+                                    console.log('Navigating to:', link);
+                                    window.location.href = link;
+                                }, 1000);
+                            } else {
+                                console.error('Save may have failed, checking error message');
+                            }
+                        }, 500);
+                    }
+                } catch (error) {
+                    console.error('Error calling UMR2db:', error);
+                }
+            }
+            </script>
+
+
             <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconlookup', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">lexicon lookup</a>
             <a class="btn btn-info btn-sm" id="lexicon" title="click to do get/edit current suggest lemma" href="{{ url_for('main.lexiconlookup', project_id=project_id, doc_id=doc_id, snt_id=snt_id) }}" onclick="UMR2db(); get_selected_word()">add to Lexicon</a>
             <a class="btn btn-info btn-sm" id="search" title="search" href="{{ url_for('users.search', project_id=0) }}" onclick="UMR2db()">search</a>

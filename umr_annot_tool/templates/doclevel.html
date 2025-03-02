@@ -129,7 +129,7 @@
                                         </p>
                                     {% else %}
                                         <p>{{ loop.index }}.
-                                            {% for word in pair[0].split() %}
+                                            {% for word in pair[0].content.split() %}
                                                 <span class="highlightable" data-key="{{ word }}">{{ word }}</span>
                                             {% endfor %}
                                         </p>
@@ -147,7 +147,7 @@
                             {% for pair in sent_annot_pairs %}
                                 <div id="doc_annot{{ loop.index }}" style="overflow-x: scroll;">
                                     <h5>Doc-Level Annotation:</h5>
-                                    {% if pair[1].doc_annot | length %}
+                                    {% if pair[1] and pair[1].doc_annot | length %}
                                         {% if loop.index == current_snt_id %}
                                             {% autoescape false %}
                                                 <div id="amr">{{ pair[1].doc_annot }}<br></div>
@@ -288,8 +288,11 @@
 
                             <script type="text/javascript">
                                 fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                                {#fillInDocAnnots({{ all_doc_annots|safe }}, {{ all_doc_umrs|safe }}, {{ doc_id }}, {{ owner.id }});#}
-                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% if current_sent_pair[1] %}
+                                    load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% else %}
+                                    load_doc_history(`{}`, ``, `{{ current_snt_id }}`);
+                                {% endif %}
                                 showBlueBox();
                             </script>
                         </div>
@@ -378,8 +381,11 @@
 
                             <script type="text/javascript">
                                 fillInSentAnnots({{ sentAnnotUmrs | safe }});
-                                {#fillInDocAnnots({{ all_doc_annots|safe }}, {{ all_doc_umrs|safe }}, {{ doc_id }}, {{ owner.id }});#}
-                                load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% if current_sent_pair[1] %}
+                                    load_doc_history(`{{ current_sent_pair[1].doc_umr|tojson|safe }}`, `{{ current_sent_pair[1].doc_annot | safe }}`, `{{ current_snt_id }}`);
+                                {% else %}
+                                    load_doc_history(`{}`, ``, `{{ current_snt_id }}`);
+                                {% endif %}
                                 showBlueBox();
                             </script>
                         </div>

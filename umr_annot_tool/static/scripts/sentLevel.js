@@ -2647,16 +2647,26 @@ function UMR2db() {
         }
     }
 
-    fetch(`/sentlevel/${doc_sent_id}`, {
+    return fetch(`/sentlevel/${doc_sent_id}`, {
         method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+          },
         body: JSON.stringify({"amr": annot_str, "align": alignments2save, "snt_id": snt_id, "umr": umr, "actions": actions})
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
         setInnerHTML("error_msg", data["msg"]);
         document.getElementById("error_msg").className = `alert alert-${data['msg_category']}`;
+        
+        // If save was successful, go to doc level page
+        if (data.msg_category === 'success') {
+            window.location.href = `/doclevel/${doc_sent_id}#amr`;
+        }
+        return data;
     }).catch(function (error) {
         console.log("Fetch error from UMR2db: " + error);
+        throw error;
     });
 }
 
