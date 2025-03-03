@@ -2,7 +2,7 @@ from pathlib import Path
 from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, SearchUmrForm, UpdateProjectForm
+from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UpdateProjectForm
 from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda, Lattice, Lexicon, Partialgraph
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
@@ -12,6 +12,7 @@ from umr_annot_tool.main.forms import UploadFormSimpleVersion
 from werkzeug.utils import secure_filename
 from one_time_scripts.parse_input_xml import parse_exported_file, process_exported_file_isi_editor, file2db_override, parse_file_info
 from lemminflect import getLemma
+from sqlalchemy import or_
 
 
 users = Blueprint('users', __name__)
@@ -447,47 +448,6 @@ def reset_token(token):
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-@users.route('/search/<string:project_id>', methods=['GET', 'POST'])
-def search(project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    member_id = request.args.get('member_id', 0)
-    search_umr_form = SearchUmrForm()
-    umr_results = []
-    sent_results = []
-
-    if search_umr_form.validate_on_submit():
-        concept = search_umr_form.concept.data
-        word = search_umr_form.word.data
-        triple = search_umr_form.triple.data
-
-        h, r, c = "", "", ""
-
-        if triple:
-            h, r, c = triple.split()
-
-        docs = Doc.query.filter(Doc.project_id == project_id, Doc.user_id == member_id).all()
-        doc_ids = [doc.id for doc in docs]
-        for doc_id in doc_ids:
-            annots = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == member_id).all()
-            for annot in annots:
-                umr_dict = dict(annot.sent_umr)
-                for value in umr_dict.values():
-                    if (concept and concept in str(value)) or (word and getLemma(word, upos="VERB")[0] in str(value)):
-                        # todo: bug: sent didn't got returned
-                        sent = Sent.query.filter(Sent.id == annot.sent_id).first()
-                        umr_results.append(annot.sent_annot)
-                        sent_results.append(sent)
-                    elif triple:
-                        if c and (c in str(value) or getLemma(c, upos="VERB")[0] in str(value)):
-                            k = list(umr_dict.keys())[list(umr_dict.values()).index(value)]
-                            if umr_dict.get(k.replace(".c", '.r'),"") == r and (h=="*" or umr_dict.get(k[:-4] + k[-2:], "")):
-                                sent = Sent.query.filter(Sent.id == annot.sent_id).first()
-                                umr_results.append(annot.sent_annot)
-                                sent_results.append(sent)
-
-    return render_template('search.html', title='search', search_umr_form=search_umr_form, umr_results=umr_results, sent_results = sent_results)
-
 @users.route('/partialgraph/<int:project_id>', methods=['GET', 'POST'])
 def partialgraph(project_id):
     if not current_user.is_authenticated:
@@ -801,3 +761,137 @@ def statistics_all():
 @users.route('/settings/<int:project_id>', methods=['GET', 'POST'])
 def settings(project_id):
     return render_template('settings.html', project_id=project_id)
+
+@users.route("/search", methods=['GET'])
+@login_required
+def search():
+    query = request.args.get('query', '')
+    scope = request.args.get('scope', 'all')
+    doc_id = request.args.get('doc_id')
+    project_id = request.args.get('project_id')
+    
+    if not query:
+        return render_template('search.html', 
+                             title='Search Annotations',
+                             doc_id=doc_id,
+                             project_id=project_id)
+        
+    try:
+        # Get dummy user id
+        dummy_user_id = User.query.filter_by(username='dummy_user').first().id if User.query.filter_by(username='dummy_user').first() else None
+        
+        # Base query for sentences
+        sentence_query = Sent.query.filter(Sent.content.ilike(f'%{query}%'))
+        
+        # Base query for annotations - exclude dummy user and empty sentence annotations
+        annotation_query = Annotation.query.filter(
+            or_(
+                Annotation.sent_annot.ilike(f'%{query}%'),
+                Annotation.doc_annot.ilike(f'%{query}%')
+            )
+        ).filter(Annotation.sent_annot != '')  # Only return results with sentence annotations
+        
+        if dummy_user_id:
+            annotation_query = annotation_query.filter(Annotation.user_id != dummy_user_id)
+        
+        # Apply scope constraints
+        if scope == 'document' and doc_id:
+            sentence_query = sentence_query.filter(Sent.doc_id == doc_id)
+            annotation_query = annotation_query.filter(Annotation.doc_id == doc_id)
+        elif scope == 'project' and project_id:
+            # Get all documents in the project
+            project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
+            doc_ids = [doc.id for doc in project_docs]
+            sentence_query = sentence_query.filter(Sent.doc_id.in_(doc_ids))
+            annotation_query = annotation_query.filter(Annotation.doc_id.in_(doc_ids))
+        
+        results = []
+        # Process sentence matches
+        for sent in sentence_query.all():
+            # Get the document for this sentence
+            doc = Doc.query.get(sent.doc_id)
+            if not doc:
+                continue
+                
+            # Get all annotations for this sentence that have sentence-level content
+            # and match the document's project
+            annotations = Annotation.query.join(
+                Doc, Doc.id == Annotation.doc_id
+            ).filter(
+                Annotation.doc_id == sent.doc_id,
+                Annotation.sent_annot != '',
+                Doc.project_id == doc.project_id
+            )
+            
+            if dummy_user_id:
+                annotations = annotations.filter(Annotation.user_id != dummy_user_id)
+                
+            for annotation in annotations.all():
+                project = Project.query.get(doc.project_id)
+                if not project:
+                    continue
+                    
+                user = User.query.get(annotation.user_id)
+                if not user or user.username == 'dummy_user':
+                    continue
+                
+                results.append({
+                    'project_name': project.project_name,
+                    'username': user.username,
+                    'sentence': sent.content,
+                    'sent_annot': annotation.sent_annot,
+                    'doc_annot': annotation.doc_annot,
+                    'doc_id': annotation.doc_id,
+                    'sent_id': annotation.sent_id,
+                    'user_id': annotation.user_id
+                })
+        
+        # Process annotation matches
+        for annotation in annotation_query.all():
+            # Skip if we already found this annotation through sentence search
+            if any(r['doc_id'] == annotation.doc_id and 
+                   r['sent_id'] == annotation.sent_id and 
+                   r['user_id'] == annotation.user_id for r in results):
+                continue
+                
+            sent = Sent.query.get(annotation.sent_id)
+            if not sent:
+                continue
+                
+            doc = Doc.query.get(annotation.doc_id)
+            if not doc:
+                continue
+                
+            project = Project.query.get(doc.project_id)
+            if not project:
+                continue
+                
+            user = User.query.get(annotation.user_id)
+            if not user or user.username == 'dummy_user':
+                continue
+            
+            results.append({
+                'project_name': project.project_name,
+                'username': user.username,
+                'sentence': sent.content,
+                'sent_annot': annotation.sent_annot,
+                'doc_annot': annotation.doc_annot,
+                'doc_id': annotation.doc_id,
+                'sent_id': annotation.sent_id,
+                'user_id': annotation.user_id
+            })
+        
+        return render_template('search.html', 
+                             title='Search Results',
+                             results=results,
+                             query=query,
+                             doc_id=doc_id,
+                             project_id=project_id)
+                             
+    except Exception as e:
+        current_app.logger.error(f"Search error: {str(e)}")
+        flash('An error occurred while searching. Please try again.', 'danger')
+        return render_template('search.html', 
+                             title='Search Annotations',
+                             doc_id=doc_id,
+                             project_id=project_id)

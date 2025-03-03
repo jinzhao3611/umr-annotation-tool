@@ -239,9 +239,9 @@ def sentlevel_typing(doc_sent_id):
         actions_list = []
 
     # load all annotations for current document used for export_annot()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.user_id == owner_user_id).order_by(
+    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner_user_id).order_by(
         Annotation.sent_id).all()
-    filtered_sentences = Sent.query.filter(Sent.doc_id == doc_id).order_by(Sent.id).all()
+    filtered_sentences = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
     annotated_sent_ids = [annot.sent_id for annot in annotations if (annot.sent_umr != {} or annot.sent_annot)] #this is used to color annotated sentences
     all_annots = [annot.sent_annot for annot in annotations]
     all_aligns = [annot.alignment for annot in annotations]
@@ -258,10 +258,16 @@ def sentlevel_typing(doc_sent_id):
     all_annots_no_skipping = [""] * len(all_sents)
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
-    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+    for i, annot in enumerate(annotations):
+        try:
+            sent_idx = next((idx for idx, s in enumerate(all_sents) if s.id == annot.sent_id), None)
+            if sent_idx is not None:
+                all_annots_no_skipping[sent_idx] = all_annots[i]
+                all_aligns_no_skipping[sent_idx] = all_aligns[i]
+                all_doc_annots_no_skipping[sent_idx] = all_doc_annots[i]
+        except Exception as e:
+            current_app.logger.error(f"Error processing annotation {i}: {str(e)}")
+            continue
 
     exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
@@ -417,10 +423,16 @@ def sentlevel(doc_sent_id):
     all_annots_no_skipping = [""] * len(all_sents)
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
-    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+    for i, annot in enumerate(annotations):
+        try:
+            sent_idx = next((idx for idx, s in enumerate(all_sents) if s.id == annot.sent_id), None)
+            if sent_idx is not None:
+                all_annots_no_skipping[sent_idx] = all_annots[i]
+                all_aligns_no_skipping[sent_idx] = all_aligns[i]
+                all_doc_annots_no_skipping[sent_idx] = all_doc_annots[i]
+        except Exception as e:
+            current_app.logger.error(f"Error processing annotation {i}: {str(e)}")
+            continue
 
     exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
@@ -527,10 +539,16 @@ def sentlevelview(doc_sent_id):
     all_annots_no_skipping = [""] * len(all_sents)
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
-    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
+    for i, annot in enumerate(annotations):
+        try:
+            sent_idx = next((idx for idx, s in enumerate(all_sents) if s.id == annot.sent_id), None)
+            if sent_idx is not None:
+                all_annots_no_skipping[sent_idx] = all_annots[i]
+                all_aligns_no_skipping[sent_idx] = all_aligns[i]
+                all_doc_annots_no_skipping[sent_idx] = all_doc_annots[i]
+        except Exception as e:
+            current_app.logger.error(f"Error processing annotation {i}: {str(e)}")
+            continue
 
     exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
@@ -617,8 +635,26 @@ def doclevel(doc_sent_id):
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
 
-    # Create exported items directly from the paired lists
-    exported_items = [list(p) for p in zip(all_sents, all_annots, all_aligns, all_doc_annots)]
+    # Handle empty annotations the same way as sentence level route
+    sent_with_annot_ids = [annot.sent_id for annot in annotations]
+    all_annots_no_skipping = [""] * len(all_sents)
+    all_aligns_no_skipping = [""] * len(all_sents)
+    all_doc_annots_no_skipping = [""] * len(all_sents)
+
+    # Fill in the annotations where they exist
+    for i, annot in enumerate(annotations):
+        try:
+            sent_idx = next((idx for idx, s in enumerate(all_sents) if s.id == annot.sent_id), None)
+            if sent_idx is not None:
+                all_annots_no_skipping[sent_idx] = all_annots[i]
+                all_aligns_no_skipping[sent_idx] = all_aligns[i]
+                all_doc_annots_no_skipping[sent_idx] = all_doc_annots[i]
+        except Exception as e:
+            current_app.logger.error(f"Error processing annotation {i}: {str(e)}")
+            continue
+
+    # Create exported items with properly aligned annotations
+    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     #check who is the admin of the project containing this file:
     try:
@@ -691,21 +727,25 @@ def doclevelview(doc_sent_id):
     all_sents = [sent2.content for sent2 in sents]
     all_sent_umrs = [annot.sent_umr for annot in annotations]
 
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
-    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
-    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
-    # had no annotations, in which case the annotations for all following lines were moved up one slot.
-    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
-    # in later stages don't need this.
+    # Handle empty annotations the same way as sentence level route
     sent_with_annot_ids = [annot.sent_id for annot in annotations]
     all_annots_no_skipping = [""] * len(all_sents)
     all_aligns_no_skipping = [""] * len(all_sents)
     all_doc_annots_no_skipping = [""] * len(all_sents)
-    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i-1] = sa
-        all_aligns_no_skipping[i-1] = a
-        all_doc_annots_no_skipping[i-1] = da
 
+    # Fill in the annotations where they exist
+    for i, annot in enumerate(annotations):
+        try:
+            sent_idx = next((idx for idx, s in enumerate(all_sents) if s.id == annot.sent_id), None)
+            if sent_idx is not None:
+                all_annots_no_skipping[sent_idx] = all_annots[i]
+                all_aligns_no_skipping[sent_idx] = all_aligns[i]
+                all_doc_annots_no_skipping[sent_idx] = all_doc_annots[i]
+        except Exception as e:
+            current_app.logger.error(f"Error processing annotation {i}: {str(e)}")
+            continue
+
+    # Create exported items with properly aligned annotations
     exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
 
     #check who is the admin of the project containing this file:
@@ -737,202 +777,13 @@ def doclevelview(doc_sent_id):
                            owner=owner,
                            permission=permission)
 
-@main.route("/")
-@main.route("/display_post")
-def display_post():
-    # posts = Post.query.all()
-    page = request.args.get('page', default=1, type=int)
-    # posts = Post.query.paginate(page=page, per_page=2)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,
-                                                                  per_page=2)  # if we want to order the posts from the lastest to the oldest
-    return render_template('display_post.html', posts=posts)
-
+@main.route("/about")
+def about():
+    return render_template('about.html', title='About')
 
 @main.route("/guide")
 def guidelines():
     return render_template('user_guide.html')
-
-@main.route('/<path:filename>', methods=['GET', 'POST'])
-def download(filename):
-    # Appending app path to upload folder path within app root folder
-    uploads = "resources/sample_input_files/" + filename
-    # Returning file from appended path
-    return send_file(uploads, as_attachment=True, attachment_filename=filename)
-
-# #farasapy
-# @main.route('/getfarasalemma', methods=['GET', 'POST'])
-# def getfarasalemma():
-#     import time
-#     token = request.get_json(force=True)["token"]
-#     print("inflected_form: ", token)
-#     t0 = time.time()
-#     stemmed = stemmer.stem(token)
-#     t1 = time.time()
-#     print("elapsed time: ", t1-t0)
-#     print("lemma_form: ", stemmed)
-#     return make_response(jsonify({"text": stemmed}), 200)
-
-#local dict get from farasapy
-@main.route('/getfarasalemma', methods=['GET', 'POST'])
-def getfarasalemma():
-    try:
-        token = request.get_json(force=True)["token"]
-        current_app.logger.info(f"Looking up lemma for token: {token}")
-        
-        lemma = lemma_dict.get(token, token)
-        current_app.logger.info(f"Found lemma: {lemma}")
-        
-        return make_response(jsonify({"text": lemma}), 200)
-    except Exception as e:
-        current_app.logger.error(f"Error getting lemma: {str(e)}")
-        return make_response(jsonify({"error": "Failed to get lemma"}), 500)
-
-
-@main.route("/doclevel_thyme/<string:doc_sent_id>", methods=['GET', 'POST'])
-def doclevel_thyme(doc_sent_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    doc_id = int(doc_sent_id.split("_")[0])
-    default_sent_id = int(doc_sent_id.split("_")[1])
-    owner_user_id = current_user.id if int(doc_sent_id.split("_")[2]) == 0 else int(
-        doc_sent_id.split("_")[2])  # html post 0 here, it means it's my own annotation
-    owner = User.query.get_or_404(owner_user_id)
-
-    current_snt_id = default_sent_id
-    if "set_sentence" in request.form:
-        current_snt_id = int(request.form["sentence_id"])
-
-    # add to db
-    if request.method == 'POST':
-        try:
-            snt_id_info = request.get_json(force=True)["snt_id"]
-            umr_dict = request.get_json(force=True)["umr_dict"]
-            doc_annot_str = request.get_json(force=True)["doc_annot_str"]
-            
-            existing = Annotation.query.filter(Annotation.sent_id == snt_id_info, Annotation.doc_id == doc_id,
-                                               Annotation.user_id == owner_user_id).first()
-            if existing:
-                existing.doc_umr = umr_dict
-                existing.doc_annot = doc_annot_str
-                flag_modified(existing, 'doc_umr')
-                flag_modified(existing, 'doc_annot')
-                db.session.commit()
-                return make_response(jsonify({"msg": "Success: document-level annotation saved", "msg_category": "success"}), 200)
-            else:
-                current_app.logger.warning("No sentence-level annotation exists for the current sentence")
-                return make_response(jsonify({"msg": "No sentence-level annotation exists", "msg_category": "warning"}), 200)
-        except Exception as e:
-            current_app.logger.error(f"Error saving document-level annotation: {str(e)}")
-            return make_response(jsonify({"msg": "Error saving document-level annotation", "msg_category": "danger"}), 500)
-
-    doc = Doc.query.get_or_404(doc_id)
-    sents = Sent.query.filter(Sent.doc_id == doc.id).order_by(Sent.id).all()
-    annotations = Annotation.query.filter(Annotation.doc_id == doc.id, Annotation.user_id == owner.id).order_by(
-        Annotation.sent_id).all()
-    sentAnnotUmrs = [annot.sent_umr for annot in annotations]
-
-    # Create a dictionary mapping sentence_id to annotation
-    annot_dict = {annot.sent_id: annot for annot in annotations}
-    
-    # Create pairs with None for missing annotations
-    sent_annot_pairs = [(sent, annot_dict.get(sent.id)) for sent in sents]
-
-    try:
-        current_sent_pair = sent_annot_pairs[current_snt_id - 1]
-        if current_sent_pair[1] is None:
-            # If there's no sentence-level annotation, redirect to sentence-level page
-            flash('Please create a sentence-level annotation first', 'warning')
-            return redirect(url_for('main.sentlevel_typing', doc_sent_id=str(doc_id)+'_'+str(current_snt_id)+'_'+str(owner.id)))
-    except IndexError:
-        flash('Invalid sentence ID', 'danger')
-        return redirect(url_for('main.sentlevel_typing', doc_sent_id=str(doc_id)+'_1_'+str(owner.id)))
-
-    # load all annotations for current document used for export_annot()
-    all_annots = [annot.sent_annot for annot in annotations]
-    all_aligns = [annot.alignment for annot in annotations]
-    all_doc_annots = [annot.doc_annot for annot in annotations]
-    all_sents = [sent2.content for sent2 in sents]
-    all_sent_umrs = [annot.sent_umr for annot in annotations]
-
-    #this is a bandit solution: At early stages, I only created annotation entry in annotation table when an annotation
-    # is created, then I changed to create an annotation entry for every sentence uploaded with or without annotation created,
-    # however, when people export files from early stages, annotations were misaligned with the text lines - some lines
-    # had no annotations, in which case the annotations for all following lines were moved up one slot.
-    # Therefore, here I manually fill in empty strings in place for sentences that has no annotation. But annotations created
-    # in later stages don't need this.
-    sent_with_annot_ids = [annot.sent_id for annot in annotations]
-    all_annots_no_skipping = [""] * len(all_sents)
-    all_aligns_no_skipping = [""] * len(all_sents)
-    all_doc_annots_no_skipping = [""] * len(all_sents)
-    for i, sa, a, da in zip(sent_with_annot_ids, all_annots, all_aligns, all_doc_annots):
-        all_annots_no_skipping[i - 1] = sa
-        all_aligns_no_skipping[i - 1] = a
-        all_doc_annots_no_skipping[i - 1] = da
-
-    exported_items = [list(p) for p in zip(all_sents, all_annots_no_skipping, all_aligns_no_skipping, all_doc_annots_no_skipping)]
-
-    # check who is the admin of the project containing this file:
-    try:
-        project_id = Doc.query.filter(Doc.id == doc_id).first().project_id
-        project_name = Projectuser.query.filter(Projectuser.project_id == project_id,
-                                                Projectuser.permission == "admin").first().project_name
-        admin_id = Projectuser.query.filter(Projectuser.project_id == project_id,
-                                            Projectuser.permission == "admin").first().user_id
-        admin = User.query.filter(User.id == admin_id).first()
-        if owner.id == current_user.id:
-            permission = 'edit' #this means got into the sentlevel page through My Annotations, a hack to make sure the person can annotate, this person could be either admin or edit or annotate
-        else:
-            permission = Projectuser.query.filter(Projectuser.project_id==project_id, Projectuser.user_id==current_user.id).first().permission
-    except AttributeError:
-        project_name = ""
-        admin = current_user
-        permission = ""
-
-    return render_template('doclevel_thyme.html', doc_id=doc_id, sent_annot_pairs=sent_annot_pairs,
-                           sentAnnotUmrs=json.dumps(sentAnnotUmrs),
-                           filename=doc.filename,
-                           title='Doc Level Annotation', current_snt_id=current_snt_id,
-                           current_sent_pair=current_sent_pair, exported_items=exported_items, lang=doc.lang,
-                           file_format=doc.file_format,
-                           content_string=doc.content.replace('\\', '\\\\'),
-                           # this is for toolbox4 format that has a lot of unescaped backslashes
-                           all_sent_umrs=all_sent_umrs,
-                           project_name=project_name,
-                           admin=admin,
-                           owner=owner,
-                           permission=permission)
-
-# manual_segmentation
-@main.route('/update_segmentation', methods=['POST'])
-def update_segmentation():
-    try:
-        doc_id = request.form.get('doc_id')
-        sent_id = int(request.form.get('snt_id'))
-        segment_result = request.form.get('segmentation_result')
-
-        doc = Doc.query.get_or_404(doc_id)
-        content = doc.content.strip().split('\n')
-        
-        # Only allow segmentation if there is exactly one annotation
-        if len(Annotation.query.filter(Annotation.doc_id == doc_id, Annotation.sent_id == sent_id).all()) == 1:
-            content[sent_id - 1] = segment_result
-            doc.content = '\n'.join(content)
-            db.session.commit()
-            current_app.logger.info(f"Updated segmentation for document {doc_id}, sentence {sent_id}")
-            flash('Segmentation updated successfully', 'success')
-        else:
-            current_app.logger.warning(f"Cannot segment sentence {sent_id} - multiple annotations exist")
-            flash('Cannot update segmentation - sentence has multiple annotations', 'warning')
-            
-    except Exception as e:
-        current_app.logger.error(f"Error updating segmentation: {str(e)}")
-        flash('Failed to update segmentation', 'danger')
-        
-    return redirect(url_for('main.sentlevel_typing', doc_sent_id=f"{doc_id}_{sent_id}_0"))
-
-@main.route("/about")
-def about():
-    return render_template('about.html', title='About')
 
 def get_lexicon_dicts(project_id:int):
     try:

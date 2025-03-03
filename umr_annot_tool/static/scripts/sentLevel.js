@@ -2701,48 +2701,103 @@ function export_actions() {
     }
 }
 function export_annot(exported_items, content_string) {
+    console.log("Exported items:", exported_items);
+    console.log("Content string:", content_string);
+    
     let doc_name = document.getElementById('filename').innerText;
-    exported_items.forEach(e => {
-        e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
-        e[1] = e[1].replace(/&nbsp;/g, " ");
-        e[1] = e[1].replace(/<br>/g, "");
-        e[1] = e[1].replace('<div id="amr">', '');
-        e[1] = e[1].replace('</div>', '');
-
-        let align_str = '';
-        for (const key in e[2]) {
-            if (e[2].hasOwnProperty(key)) {
-                align_str += key + ": " + e[2][key] + "\n";
-            }
+    let lang = document.getElementById('lang').innerText.toLowerCase();
+    
+    // Clean up the data
+    exported_items.forEach((e, index) => {
+        console.log(`Processing item ${index}:`, e);
+        
+        // Clean up sentence level annotation
+        if (e[1]) {
+            console.log(`Before cleaning annotation ${index}:`, e[1]);
+            e[1] = e[1].replace(/<\/?(a|span)\b[^<>]*>/g, "");
+            e[1] = e[1].replace(/&nbsp;/g, " ");
+            e[1] = e[1].replace(/<br>/g, "");
+            e[1] = e[1].replace('<div id="amr">', '');
+            e[1] = e[1].replace('</div>', '');
+            e[1] = e[1].trim();
+            console.log(`After cleaning annotation ${index}:`, e[1]);
         }
-        e[2] = align_str;
-    })
 
+        // Format alignment string
+        if (e[2]) {
+            console.log(`Before cleaning alignment ${index}:`, e[2]);
+            let align_str = '';
+            for (const key in e[2]) {
+                if (e[2].hasOwnProperty(key)) {
+                    align_str += key + ": " + e[2][key] + "\n";
+                }
+            }
+            e[2] = align_str.trim();
+            console.log(`After cleaning alignment ${index}:`, e[2]);
+        }
 
-    let output_str = exported_items.map((a, index) =>
-        index + 1 + '\t' + a[0]
-        + "\n# sentence level graph:\n"
-        + a[1]
-        + "\n# alignment:"
-        + a[2]
-        + "\n# document level annotation:\n"
-        + docUmrTransform(deHTML2(a[3]), false).replaceAll('<br>', '\n')
-        + "\n").join("\n\n# :: snt");
+        // Clean up document level annotation
+        if (e[3]) {
+            console.log(`Before cleaning doc annotation ${index}:`, e[3]);
+            e[3] = docUmrTransform(deHTML2(e[3]), false).replaceAll('<br>', '\n').trim();
+            console.log(`After cleaning doc annotation ${index}:`, e[3]);
+        }
+    });
+
+    let output_str = exported_items.map((a, index) => {
+        // Get sentence words and create index line
+        let words = a[0].trim().split(/\s+/);
+        let indices = words.map((_, i) => i + 1).join(" ");
+        let wordLine = words.join(" ");
+        
+        // Create the sentence block
+        let block = [];
+        block.push("################################################################################");
+        block.push(`# meta-info`);
+        block.push(`# :: snt${index + 1}\t${wordLine}`);
+        block.push(`Index: ${indices}`);
+        block.push(`Words: ${wordLine}`);
+        block.push("");
+        
+        // Add sentence level graph if it exists
+        block.push("# sentence level graph:");
+        if (a[1]) {
+            block.push(a[1]);
+        }
+        block.push("");
+        
+        // Add alignment if it exists
+        block.push("# alignment:");
+        if (a[2]) {
+            block.push(a[2]);
+        }
+        block.push("");
+        
+        // Add document level annotation if it exists
+        block.push("# document level annotation:");
+        if (a[3]) {
+            block.push(a[3]);
+        }
+        
+        return block.join("\n");
+    }).join("\n\n");
+
+    console.log("Final output:", output_str);
 
     let filename;
-    let text = "user name: " + document.getElementById('username').innerText + '\n';
-    text += "user id: " + document.getElementById('user_id').innerText + '\n';
-    text += "file language: " + document.getElementById('lang').innerText + '\n';
-    text += "file format: " + document.getElementById('file_format').innerText + '\n';
-    text += "Doc ID in database: " + document.getElementById('doc_id').innerText + '\n';
 
-    let curr_time = new Date();
-    text += "export time: " + curr_time.toLocaleString() + '\n\n';
-    text += '# :: snt';
     if (window.BlobBuilder && window.saveAs) {
-        filename = 'exported_' + doc_name;
-        text += output_str;
-        text += '\n\n' + '# Source File: \n' + content_string;
+        filename = `${doc_name}`;
+        let text = output_str;
+        
+        // Add source file content at the end if available
+        if (content_string) {
+            text += '\n\n################################################################################\n';
+            text += '# Source File Content:\n';
+            text += content_string;
+        }
+        
+        console.log("Final file content:", text);
         console.log('Saving file ' + filename + ' on your computer, typically in default download directory');
         var bb = new BlobBuilder();
         bb.append(text);

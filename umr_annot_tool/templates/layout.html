@@ -36,7 +36,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle"> {# targeted by the navbar-toggler button above, will collapse on mobile device #}
                         <div class="navbar-nav mr-auto">
-                            <a class="nav-item nav-link" href="{{ url_for('main.display_post') }}">Home</a>
+                            <a class="nav-item nav-link" href="/">Home</a>
                         </div>
                         <!-- Navbar Right Side -->
                         <div class="navbar-nav">
@@ -44,6 +44,7 @@
                                 <a class="nav-item nav-link" href="{{ url_for('main.new_project') }}">New Project</a>
                                 <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">New Post</a>
                                 <a class="nav-item nav-link" href="{{ url_for('users.account') }}">Account</a>
+                                <a class="nav-item nav-link" href="{{ url_for('users.search') }}">Search</a>
                                 <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
                             {% else %}
                                 <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>

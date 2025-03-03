@@ -1,48 +1,112 @@
 {% extends "layout.html" %}
 
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/default2.css') }}">
-{% endblock head %}
-
 {% block content %}
-    <form method="post" enctype="multipart/form-data" id="lookup">
-        {{ search_umr_form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Search UMR </legend>
-                <div>
-                  {{ search_umr_form.concept.label }}{{ search_umr_form.concept(class="form-control form-control-sm")}}<br/>
-                </div>
-                <p>OR</p>
-                <div>
-                  {{ search_umr_form.word.label }}{{ search_umr_form.word(class="form-control form-control-sm")}}<br/>
-                </div>
-                <p>OR</p>
-                <div>
-                  {{ search_umr_form.triple.label }}{{ search_umr_form.triple(class="form-control form-control-sm")}}<br/>
-                </div>
-        </fieldset>
-
-        <div class="input-group-append">
-            {{ search_umr_form.submit(class="btn btn-outline-info", id="btnSubmit") }}
+<div class="container mt-4">
+    <!-- Search Form -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Search Annotations</h3>
         </div>
-    </form>
-
-    <div class="content-section">
-        <legend class="border-bottom mb-4">Results</legend>
-        <ul class="list-group" id="otherDocs">
-            {% for umr_result in umr_results %}
-                <li class="list-group-item d-flex justify-content-between align-items-center" >
-                    <p>{{ umr_result|safe }}</p>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('users.search') }}">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="query" placeholder="Enter search term..." 
+                               value="{{ request.args.get('query', '') }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="scope">Search Scope:</label>
+                        <select class="form-control" id="scope" name="scope">
+                            {% if doc_id %}
+                                <option value="document" {% if request.args.get('scope') == 'document' %}selected{% endif %}>Current Document</option>
+                            {% endif %}
+                            {% if project_id %}
+                                <option value="project" {% if request.args.get('scope') == 'project' %}selected{% endif %}>Current Project</option>
+                            {% endif %}
+                            <option value="all" {% if request.args.get('scope') == 'all' or not request.args.get('scope') %}selected{% endif %}>All Projects</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <script>
-        document.getElementById("concept").value = "";
-        document.getElementById("word").value = "";
-        document.getElementById("triple").value = ""
-    </script>
+    <!-- Search Results -->
+    {% if results %}
+    <div class="card">
+        <div class="card-header">
+            <h4>Search Results</h4>
+            <small class="text-muted">Found {{ results|length }} results</small>
+        </div>
+        <div class="card-body p-0">
+            {% for result in results %}
+            <div class="search-result border-bottom p-4">
+                <!-- Project and User Info -->
+                <div class="mb-3">
+                    <span class="badge bg-primary me-2">Project: {{ result.project_name }}</span>
+                    <span class="badge bg-secondary">Annotator: {{ result.username }}</span>
+                </div>
+                
+                <!-- Sentence -->
+                <div class="mb-3">
+                    <h5>Sentence:</h5>
+                    <p class="mb-2">{{ result.sentence }}</p>
+                </div>
 
-{% endblock content %}
+                <!-- Sentence Level Annotation -->
+                <div class="mb-3">
+                    <h5>Sentence Level Annotation:</h5>
+                    <div class="bg-light p-3 rounded">
+                        {% if result.sent_annot %}
+                            <pre class="annotation-content mb-0" style="white-space: pre-wrap; font-family: monospace;">{{ result.sent_annot | safe | replace('<div id="amr">', '') | replace('</div>', '') }}</pre>
+                        {% else %}
+                            <em>No sentence level annotation</em>
+                        {% endif %}
+                    </div>
+                </div>
 
+                <!-- Document Level Annotation -->
+                <div class="mb-3">
+                    <h5>Document Level Annotation:</h5>
+                    <div class="bg-light p-3 rounded">
+                        {% if result.doc_annot %}
+                            <pre class="annotation-content mb-0" style="white-space: pre-wrap; font-family: monospace;">{{ result.doc_annot | safe | replace('<div id="amr">', '') | replace('</div>', '') }}</pre>
+                        {% else %}
+                            <em>No document level annotation</em>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- View Links -->
+                <div class="mt-3">
+                    <a href="{{ url_for('main.sentlevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
+                       class="btn btn-sm btn-outline-primary">
+                        View Sentence Level
+                    </a>
+                    <a href="{{ url_for('main.doclevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
+                       class="btn btn-sm btn-outline-secondary">
+                        View Document Level
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% elif request.args.get('query') %}
+    <div class="alert alert-info">No results found for your search.</div>
+    {% endif %}
+</div>
+
+<style>
+.annotation-content {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    tab-size: 4;
+}
+</style>
+{% endblock %} 

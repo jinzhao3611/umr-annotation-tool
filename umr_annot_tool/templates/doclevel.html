@@ -35,7 +35,7 @@
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('main.display_post') }}">Home</a>
+                                <a class="nav-link" href="/">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('main.about') }}">About</a>
@@ -296,7 +296,7 @@
                                             Save
                                         </button>
                                         <button class="btn btn-outline-secondary" id="export-box" 
-                                                onclick="export_annot({{ exported_items}}, `{{content_string }}`)">
+                                                onclick="console.log('Export clicked'); console.log('Exported items:', {{ exported_items|tojson|safe }}); console.log('Content string:', `{{content_string}}`); export_annot({{ exported_items|tojson|safe }}, `{{content_string }}`)">
                                             Export
                                         </button>
                                         <button class="btn btn-outline-secondary" id="reset-box">
@@ -364,8 +364,8 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../static/scripts/docLevelJquery.js"></script>
-        <script src="../static/scripts/doclevel.js"></script>
         <script src="../static/scripts/sentLevel.js"></script>
+        <script src="../static/scripts/doclevel.js"></script>
         <script src="../static/scripts/umrDict2penmanString.js"></script>
         <script src="../static/scripts/utils.js"></script>
         <script src="../static/scripts/penmanString2umrDict.js"></script>
@@ -384,6 +384,12 @@
                 load_doc_history(`{}`, ``, `{{ current_snt_id }}`);
             {% endif %}
             showBlueBox();
+            
+            // Check if export_annot is available
+            console.log('Checking export_annot function:', typeof export_annot);
+            if (typeof export_annot !== 'function') {
+                console.error('export_annot function is not defined!');
+            }
         </script>
     </body>
 </html>
