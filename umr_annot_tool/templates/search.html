@@ -1,112 +1,76 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="container mt-4">
-    <!-- Search Form -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h3>Search Annotations</h3>
+<div class="content-section">
+    <form method="GET" action="{{ url_for('users.search') }}" class="mb-4">
+        <div class="form-group">
+            <input type="text" class="form-control" name="query" placeholder="Search for sentences or annotations..." value="{{ query if query }}">
         </div>
-        <div class="card-body">
-            <form method="GET" action="{{ url_for('users.search') }}">
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="query" placeholder="Enter search term..." 
-                               value="{{ request.args.get('query', '') }}">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Search</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="scope">Search Scope:</label>
-                        <select class="form-control" id="scope" name="scope">
-                            {% if doc_id %}
-                                <option value="document" {% if request.args.get('scope') == 'document' %}selected{% endif %}>Current Document</option>
-                            {% endif %}
-                            {% if project_id %}
-                                <option value="project" {% if request.args.get('scope') == 'project' %}selected{% endif %}>Current Project</option>
-                            {% endif %}
-                            <option value="all" {% if request.args.get('scope') == 'all' or not request.args.get('scope') %}selected{% endif %}>All Projects</option>
-                        </select>
-                    </div>
-                </div>
-            </form>
+        
+        <div class="form-group">
+            <label for="search_type">Search in:</label>
+            <select class="form-control" id="search_type" name="search_type">
+                <option value="both" {% if search_type == 'both' %}selected{% endif %}>Both Sentences and Annotations</option>
+                <option value="sentence" {% if search_type == 'sentence' %}selected{% endif %}>Sentences Only</option>
+                <option value="annotation" {% if search_type == 'annotation' %}selected{% endif %}>Annotations Only</option>
+            </select>
         </div>
-    </div>
 
-    <!-- Search Results -->
+        {% if doc_id %}
+            <input type="hidden" name="doc_id" value="{{ doc_id }}">
+            <input type="hidden" name="scope" value="document">
+        {% elif project_id %}
+            <input type="hidden" name="project_id" value="{{ project_id }}">
+            <input type="hidden" name="scope" value="project">
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
     {% if results %}
-    <div class="card">
-        <div class="card-header">
-            <h4>Search Results</h4>
-            <small class="text-muted">Found {{ results|length }} results</small>
-        </div>
-        <div class="card-body p-0">
-            {% for result in results %}
-            <div class="search-result border-bottom p-4">
-                <!-- Project and User Info -->
-                <div class="mb-3">
-                    <span class="badge bg-primary me-2">Project: {{ result.project_name }}</span>
-                    <span class="badge bg-secondary">Annotator: {{ result.username }}</span>
-                </div>
-                
-                <!-- Sentence -->
-                <div class="mb-3">
-                    <h5>Sentence:</h5>
-                    <p class="mb-2">{{ result.sentence }}</p>
-                </div>
-
-                <!-- Sentence Level Annotation -->
-                <div class="mb-3">
-                    <h5>Sentence Level Annotation:</h5>
-                    <div class="bg-light p-3 rounded">
-                        {% if result.sent_annot %}
-                            <pre class="annotation-content mb-0" style="white-space: pre-wrap; font-family: monospace;">{{ result.sent_annot | safe | replace('<div id="amr">', '') | replace('</div>', '') }}</pre>
-                        {% else %}
-                            <em>No sentence level annotation</em>
-                        {% endif %}
+        <h2>Search Results</h2>
+        {% for result in results %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Project:</strong> {{ result.project_name }} |
+                            <strong>Annotator:</strong> {{ result.username }}
+                        </div>
+                        <span class="badge {% if result.match_type == 'sentence' %}badge-primary{% else %}badge-success{% endif %}">
+                            {{ result.match_type|title }} Match
+                        </span>
                     </div>
                 </div>
-
-                <!-- Document Level Annotation -->
-                <div class="mb-3">
-                    <h5>Document Level Annotation:</h5>
-                    <div class="bg-light p-3 rounded">
-                        {% if result.doc_annot %}
-                            <pre class="annotation-content mb-0" style="white-space: pre-wrap; font-family: monospace;">{{ result.doc_annot | safe | replace('<div id="amr">', '') | replace('</div>', '') }}</pre>
-                        {% else %}
-                            <em>No document level annotation</em>
-                        {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">Sentence:</h5>
+                    <p class="card-text">{{ result.sentence }}</p>
+                    
+                    {% if result.sent_annot %}
+                        <h5 class="card-title">Sentence Annotation:</h5>
+                        <div class="card-text">{{ result.sent_annot|safe }}</div>
+                    {% endif %}
+                    
+                    {% if result.doc_annot %}
+                        <h5 class="card-title">Document Annotation:</h5>
+                        <div class="card-text">{{ result.doc_annot|safe }}</div>
+                    {% endif %}
+                    
+                    <div class="mt-2">
+                        <a href="{{ url_for('main.sentlevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
+                           class="btn btn-sm btn-outline-primary">
+                            View Sentence Level
+                        </a>
+                        <a href="{{ url_for('main.doclevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
+                           class="btn btn-sm btn-outline-secondary">
+                            View Document Level
+                        </a>
                     </div>
-                </div>
-
-                <!-- View Links -->
-                <div class="mt-3">
-                    <a href="{{ url_for('main.sentlevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
-                       class="btn btn-sm btn-outline-primary">
-                        View Sentence Level
-                    </a>
-                    <a href="{{ url_for('main.doclevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
-                       class="btn btn-sm btn-outline-secondary">
-                        View Document Level
-                    </a>
                 </div>
             </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% elif request.args.get('query') %}
-    <div class="alert alert-info">No results found for your search.</div>
+        {% endfor %}
+    {% elif query %}
+        <div class="alert alert-info">No results found for your search.</div>
     {% endif %}
 </div>
-
-<style>
-.annotation-content {
-    background-color: transparent;
-    border: none;
-    margin: 0;
-    padding: 0;
-    tab-size: 4;
-}
-</style>
-{% endblock %} 
+{% endblock content %} 

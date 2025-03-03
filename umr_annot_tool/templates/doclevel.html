@@ -16,7 +16,7 @@
         <!-- Custom CSS -->
         <link rel="stylesheet" href="../static/styles/doclevel.css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
-        
+
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon_io/favicon-16x16.png') }}">
 
         <title>{% if title %}UMR Annotation Tool - {{ title }}{% else %}UMR Annotation Tool{% endif %}</title>
@@ -88,9 +88,9 @@
                     <!-- Document info -->
                     <div class="card mb-4">
                         <div class="card-body">
-                            <script type="text/javascript">
-                                initializeDoc({{ sentAnnotUmrs | safe}})
-                            </script>
+                        <script type="text/javascript">
+                            initializeDoc({{ sentAnnotUmrs | safe}})
+                        </script>
                             <div class="table-responsive">
                                 <table class="table table-borderless mb-0">
                                     <tr>
@@ -98,26 +98,26 @@
                                         <td id="username">{{ owner.username }}</td>
                                         <th class="text-muted">Annotator ID:</th>
                                         <td id="user_id">{{ owner.id }}</td>
-                                    </tr>
-                                    <tr>
+                        </tr>
+                        <tr>
                                         <th class="text-muted">File Name:</th>
                                         <td id="filename">{{ filename }}</td>
                                         <th class="text-muted">File Language:</th>
                                         <td id="lang">{{ lang }}</td>
-                                    </tr>
-                                    <tr>
+                        </tr>
+                        <tr>
                                         <th class="text-muted">Doc ID:</th>
                                         <td id="doc_id">{{ doc_id }}</td>
                                         <th class="text-muted">File Format:</th>
                                         <td id="file_format">{{ file_format }}</td>
-                                    </tr>
-                                    <tr>
+                        </tr>
+                        <tr>
                                         <th class="text-muted">Project:</th>
                                         <td id="project_name">{{ project_name }}</td>
                                         <th class="text-muted">Admin:</th>
                                         <td id="project_admin">{{ admin.username }}</td>
-                                    </tr>
-                                </table>
+                        </tr>
+                    </table>
                             </div>
                         </div>
                     </div>
@@ -131,19 +131,19 @@
                                     <h5 class="card-title mb-0">Sentence Level Annotations</h5>
                                 </div>
                                 <div class="card-body p-0">
-                                    {% for pair in sent_annot_pairs %}
+                            {% for pair in sent_annot_pairs %}
                                         <div id="sent_annot{{ loop.index }}" class="p-3 border-bottom">
-                                            {% autoescape off %}
+                                    {% autoescape off %}
                                                 <p class="mb-2">
                                                     <span class="badge bg-secondary me-2">{{ loop.index }}</span>
-                                                    {% for word in pair[0].content.split() %}
-                                                        <span class="highlightable" data-key="{{ word }}">{{ word }}</span>
-                                                    {% endfor %}
-                                                </p>
+                                            {% for word in pair[0].content.split() %}
+                                                <span class="highlightable" data-key="{{ word }}">{{ word }}</span>
+                                            {% endfor %}
+                                        </p>
                                                 <div id="amr{{ loop.index }}" class="mt-2"></div>
-                                            {% endautoescape %}
-                                        </div>
-                                    {% endfor %}
+                                    {% endautoescape %}
+                                </div>
+                            {% endfor %}
                                 </div>
                             </div>
                         </div>
@@ -155,41 +155,41 @@
                                     <h5 class="card-title mb-0">Document Level Annotations</h5>
                                 </div>
                                 <div class="card-body p-0">
-                                    {% for pair in sent_annot_pairs %}
+                            {% for pair in sent_annot_pairs %}
                                         <div id="doc_annot{{ loop.index }}" class="doc-annot-container {% if not loop.last %}border-bottom{% endif %}">
                                             <div class="d-flex align-items-center mb-2">
                                                 <span class="badge bg-secondary me-2">{{ loop.index }}</span>
                                                 <small class="text-muted">Annotation</small>
                                             </div>
                                             {% if pair[1] and pair[1].doc_annot | length %}
-                                                {% if loop.index == current_snt_id %}
-                                                    {% autoescape false %}
+                                        {% if loop.index == current_snt_id %}
+                                            {% autoescape false %}
                                                         <div id="amr">{{ pair[1].doc_annot }}</div>
-                                                    {% endautoescape %}
-                                                {% else %}
-                                                    {% autoescape false %}
+                                            {% endautoescape %}
+                                        {% else %}
+                                            {% autoescape false %}
                                                         <div id="amr_doc{{ loop.index }}">{{ pair[1].doc_annot }}</div>
-                                                    {% endautoescape %}
-                                                {% endif %}
-                                            {% else %}
-                                                {% if loop.index == current_snt_id %}
+                                            {% endautoescape %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% if loop.index == current_snt_id %}
                                                     <div id="amr"><div class="umr-content">(s{{ loop.index }}s0 / sentence)</div></div>
-                                                {% else %}
+                                        {% else %}
                                                     <div id="amr_doc{{ loop.index }}"><div class="umr-content">(s{{ loop.index }}s0 / sentence)</div></div>
-                                                {% endif %}
-                                            {% endif %}
-                                        </div>
-                                    {% endfor %}
+                                        {% endif %}
+                                    {% endif %}
                                 </div>
-                            </div>
+                            {% endfor %}
                         </div>
+                    </div>
+                </div>
                     </div>
                 </div>
 
                 <!-- Right side menu -->
                 <div class="col-lg-4">
                     <div class="position-sticky" style="top: 5rem;">
-                        {% if permission in ['admin', 'edit'] %}
+                {% if permission in ['admin', 'edit'] %}
                             <!-- Navigation controls -->
                             <div class="card mb-4">
                                 <div class="card-body">
@@ -204,7 +204,7 @@
                                                 Save & Go
                                             </button>
                                         </div>
-                                    </form>
+                            </form>
 
                                     <!-- Relations dropdown -->
                                     <div class="dropdown">
@@ -257,13 +257,13 @@
                                         <label class="form-label">Reference:</label>
                                         <select id="parentArgOptions" class="form-select mb-2" onchange="setParentArgValue()">
                                             <option value="">Meta nodes</option>
-                                            <option value="DCT">DCT</option>
-                                            <option value="PAST_REF">PAST_REF</option>
-                                            <option value="PRESENT_REF">PRESENT_REF</option>
-                                            <option value="FUTURE_REF">FUTURE_REF</option>
-                                            <option value="ROOT">ROOT</option>
-                                            <option value="AUTH">AUTH</option>
-                                        </select>
+                                                <option value="DCT">DCT</option>
+                                                <option value="PAST_REF">PAST_REF</option>
+                                                <option value="PRESENT_REF">PRESENT_REF</option>
+                                                <option value="FUTURE_REF">FUTURE_REF</option>
+                                                <option value="ROOT">ROOT</option>
+                                                <option value="AUTH">AUTH</option>
+                                            </select>
                                         <textarea id="parentArg" class="form-control" rows="1" 
                                                   onfocus="fillInArgs('parentArg')"></textarea>
                                     </div>
@@ -272,20 +272,20 @@
                                         <label class="form-label">Current:</label>
                                         <select id="childArgOptions" class="form-select mb-2" onchange="setChildArgValue()">
                                             <option value="">Meta nodes</option>
-                                            <option value="DCT">DCT</option>
-                                            <option value="PAST_REF">PAST_REF</option>
-                                            <option value="PRESENT_REF">PRESENT_REF</option>
-                                            <option value="FUTURE_REF">FUTURE_REF</option>
-                                            <option value="ROOT">ROOT</option>
-                                            <option value="AUTH">AUTH</option>
-                                        </select>
+                                                <option value="DCT">DCT</option>
+                                                <option value="PAST_REF">PAST_REF</option>
+                                                <option value="PRESENT_REF">PRESENT_REF</option>
+                                                <option value="FUTURE_REF">FUTURE_REF</option>
+                                                <option value="ROOT">ROOT</option>
+                                                <option value="AUTH">AUTH</option>
+                                            </select>
                                         <textarea id="childArg" class="form-control" rows="1"
                                                   onfocus="fillInArgs('childArg')"></textarea>
-                                    </div>
-                                    
+                            </div>
+
                                     <button id="submit-doc-rel" class="btn btn-primary w-100" 
                                             onclick="initialCommand();">Submit</button>
-                                </div>
+                            </div>
                             </div>
 
                             <!-- Action buttons -->
@@ -304,7 +304,7 @@
                                         </button>
                                         <button class="btn btn-outline-danger" id="delete-box">
                                             <a href="javascript:changeDocShowStatus('show delete');">Delete</a>
-                                        </button>
+                                    </button>
                                         <a class="btn btn-outline-primary" id="sent-level-button"
                                            href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">
                                             Sentence Level
@@ -317,7 +317,7 @@
                                 </div>
                             </div>
                         {% endif %}
-                    </div>
+                        </div>
                 </div>
             </div>
         </main>

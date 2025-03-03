@@ -769,6 +769,7 @@ def search():
     scope = request.args.get('scope', 'all')
     doc_id = request.args.get('doc_id')
     project_id = request.args.get('project_id')
+    search_type = request.args.get('search_type', 'both')  # Options: 'sentence', 'annotation', 'both'
     
     if not query:
         return render_template('search.html', 
@@ -780,53 +781,98 @@ def search():
         # Get dummy user id
         dummy_user_id = User.query.filter_by(username='dummy_user').first().id if User.query.filter_by(username='dummy_user').first() else None
         
-        # Base query for sentences
-        sentence_query = Sent.query.filter(Sent.content.ilike(f'%{query}%'))
-        
-        # Base query for annotations - exclude dummy user and empty sentence annotations
-        annotation_query = Annotation.query.filter(
-            or_(
-                Annotation.sent_annot.ilike(f'%{query}%'),
-                Annotation.doc_annot.ilike(f'%{query}%')
-            )
-        ).filter(Annotation.sent_annot != '')  # Only return results with sentence annotations
-        
-        if dummy_user_id:
-            annotation_query = annotation_query.filter(Annotation.user_id != dummy_user_id)
-        
-        # Apply scope constraints
-        if scope == 'document' and doc_id:
-            sentence_query = sentence_query.filter(Sent.doc_id == doc_id)
-            annotation_query = annotation_query.filter(Annotation.doc_id == doc_id)
-        elif scope == 'project' and project_id:
-            # Get all documents in the project
-            project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
-            doc_ids = [doc.id for doc in project_docs]
-            sentence_query = sentence_query.filter(Sent.doc_id.in_(doc_ids))
-            annotation_query = annotation_query.filter(Annotation.doc_id.in_(doc_ids))
-        
         results = []
-        # Process sentence matches
-        for sent in sentence_query.all():
-            # Get the document for this sentence
-            doc = Doc.query.get(sent.doc_id)
-            if not doc:
-                continue
+        
+        # Search in sentences if requested
+        if search_type in ['sentence', 'both']:
+            # Base query for sentences
+            sentence_query = Sent.query.filter(Sent.content.ilike(f'%{query}%'))
+            
+            # Apply scope constraints for sentences
+            if scope == 'document' and doc_id:
+                sentence_query = sentence_query.filter(Sent.doc_id == doc_id)
+            elif scope == 'project' and project_id:
+                project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
+                doc_ids = [doc.id for doc in project_docs]
+                sentence_query = sentence_query.filter(Sent.doc_id.in_(doc_ids))
+            
+            # Process sentence matches
+            for sent in sentence_query.all():
+                doc = Doc.query.get(sent.doc_id)
+                if not doc:
+                    continue
+                    
+                # Get all annotations for this sentence
+                annotations = Annotation.query.join(
+                    Doc, Doc.id == Annotation.doc_id
+                ).filter(
+                    Annotation.doc_id == sent.doc_id,
+                    Annotation.real_sent_id == sent.id,
+                    Annotation.sent_annot != '',
+                    Doc.project_id == doc.project_id
+                )
                 
-            # Get all annotations for this sentence that have sentence-level content
-            # and match the document's project
-            annotations = Annotation.query.join(
-                Doc, Doc.id == Annotation.doc_id
-            ).filter(
-                Annotation.doc_id == sent.doc_id,
-                Annotation.sent_annot != '',
-                Doc.project_id == doc.project_id
-            )
+                if dummy_user_id:
+                    annotations = annotations.filter(Annotation.user_id != dummy_user_id)
+                    
+                for annotation in annotations.all():
+                    project = Project.query.get(doc.project_id)
+                    if not project:
+                        continue
+                        
+                    user = User.query.get(annotation.user_id)
+                    if not user or user.username == 'dummy_user':
+                        continue
+                    
+                    results.append({
+                        'project_name': project.project_name,
+                        'username': user.username,
+                        'sentence': sent.content,
+                        'sent_annot': annotation.sent_annot,
+                        'doc_annot': annotation.doc_annot,
+                        'doc_id': annotation.doc_id,
+                        'sent_id': sent.id,
+                        'user_id': annotation.user_id,
+                        'match_type': 'sentence'
+                    })
+        
+        # Search in annotations if requested
+        if search_type in ['annotation', 'both']:
+            # Base query for annotations
+            annotation_query = Annotation.query.filter(
+                or_(
+                    Annotation.sent_annot.ilike(f'%{query}%'),
+                    Annotation.doc_annot.ilike(f'%{query}%')
+                )
+            ).filter(Annotation.sent_annot != '')
             
             if dummy_user_id:
-                annotations = annotations.filter(Annotation.user_id != dummy_user_id)
-                
-            for annotation in annotations.all():
+                annotation_query = annotation_query.filter(Annotation.user_id != dummy_user_id)
+            
+            # Apply scope constraints for annotations
+            if scope == 'document' and doc_id:
+                annotation_query = annotation_query.filter(Annotation.doc_id == doc_id)
+            elif scope == 'project' and project_id:
+                project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
+                doc_ids = [doc.id for doc in project_docs]
+                annotation_query = annotation_query.filter(Annotation.doc_id.in_(doc_ids))
+            
+            # Process annotation matches
+            for annotation in annotation_query.all():
+                # Skip if we already found this annotation through sentence search
+                if any(r['doc_id'] == annotation.doc_id and 
+                       r['sent_id'] == annotation.real_sent_id and 
+                       r['user_id'] == annotation.user_id for r in results):
+                    continue
+                    
+                sent = Sent.query.get(annotation.real_sent_id)
+                if not sent:
+                    continue
+                    
+                doc = Doc.query.get(annotation.doc_id)
+                if not doc:
+                    continue
+                    
                 project = Project.query.get(doc.project_id)
                 if not project:
                     continue
@@ -842,51 +888,18 @@ def search():
                     'sent_annot': annotation.sent_annot,
                     'doc_annot': annotation.doc_annot,
                     'doc_id': annotation.doc_id,
-                    'sent_id': annotation.sent_id,
-                    'user_id': annotation.user_id
+                    'sent_id': sent.id,
+                    'user_id': annotation.user_id,
+                    'match_type': 'annotation'
                 })
-        
-        # Process annotation matches
-        for annotation in annotation_query.all():
-            # Skip if we already found this annotation through sentence search
-            if any(r['doc_id'] == annotation.doc_id and 
-                   r['sent_id'] == annotation.sent_id and 
-                   r['user_id'] == annotation.user_id for r in results):
-                continue
-                
-            sent = Sent.query.get(annotation.sent_id)
-            if not sent:
-                continue
-                
-            doc = Doc.query.get(annotation.doc_id)
-            if not doc:
-                continue
-                
-            project = Project.query.get(doc.project_id)
-            if not project:
-                continue
-                
-            user = User.query.get(annotation.user_id)
-            if not user or user.username == 'dummy_user':
-                continue
-            
-            results.append({
-                'project_name': project.project_name,
-                'username': user.username,
-                'sentence': sent.content,
-                'sent_annot': annotation.sent_annot,
-                'doc_annot': annotation.doc_annot,
-                'doc_id': annotation.doc_id,
-                'sent_id': annotation.sent_id,
-                'user_id': annotation.user_id
-            })
         
         return render_template('search.html', 
                              title='Search Results',
                              results=results,
                              query=query,
                              doc_id=doc_id,
-                             project_id=project_id)
+                             project_id=project_id,
+                             search_type=search_type)
                              
     except Exception as e:
         current_app.logger.error(f"Search error: {str(e)}")
