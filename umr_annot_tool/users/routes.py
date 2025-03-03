@@ -2,8 +2,8 @@ from pathlib import Path
 from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
+from umr_annot_tool.models import User, Post, Doc, DocVersion, Annotation, Sent, Projectuser, Project, Lattice, Lexicon, Partialgraph
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UpdateProjectForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Docqc, Docda, Lattice, Lexicon, Partialgraph
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
