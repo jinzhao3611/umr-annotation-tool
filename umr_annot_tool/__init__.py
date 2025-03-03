@@ -29,13 +29,13 @@ def create_app(config_class=None):
         os.makedirs('logs')
 
     # Configure Flask app logger
-    flask_handler = logging.FileHandler('logs/flask_app.log')
+    flask_handler = logging.FileHandler('logs/flask_app.log', mode='w')
     flask_handler.setLevel(logging.DEBUG)
     flask_formatter = logging.Formatter('%(asctime)s [FLASK] %(levelname)s: %(message)s')
     flask_handler.setFormatter(flask_formatter)
     
     # Configure SQLAlchemy logger
-    sql_handler = logging.FileHandler('logs/sqlalchemy.log')
+    sql_handler = logging.FileHandler('logs/sqlalchemy.log', mode='w')
     sql_handler.setLevel(logging.INFO)
     sql_formatter = logging.Formatter('%(asctime)s [SQL] %(levelname)s: %(message)s')
     sql_handler.setFormatter(sql_formatter)
