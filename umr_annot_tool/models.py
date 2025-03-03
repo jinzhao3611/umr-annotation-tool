@@ -125,6 +125,8 @@ class Annotation(db.Model):
     sent_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
+    real_sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=True)
+
 
     def __init__(self, **kwargs):
         if 'id' not in kwargs:
@@ -133,6 +135,7 @@ class Annotation(db.Model):
 
     def __repr__(self):
         return f"Annot('{self.id}')"
+
 
 
 class Lexicon(db.Model):
