@@ -1,28 +1,75 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Create a New Project</legend>
-                <div class="form-group">
-                    {{ form.projectname.label(class="form-control-label") }}
-
-                    {% if form.projectname.errors %}
-                        {{ form.projectname(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.projectname.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <h2 class="text-center mb-4">Create New Project</h2>
+                            <form method="POST" action="">
+                                {{ form.hidden_tag() }}
+                                <div class="mb-4">
+                                    {{ form.projectname.label(class="form-label") }}
+                                    {% if form.projectname.errors %}
+                                        {{ form.projectname(class="form-control is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.projectname.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {{ form.projectname(class="form-control", placeholder="Enter project name") }}
+                                    {% endif %}
+                                </div>
+                                <div class="mb-4">
+                                    {{ form.language.label(class="form-label") }}
+                                    {{ form.language(class="form-select") }}
+                                    {% if form.language.errors %}
+                                        <div class="invalid-feedback">
+                                            {% for error in form.language.errors %}
+                                                <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-4" id="custom-language-div" style="display: none;">
+                                    {{ form.custom_language.label(class="form-label") }}
+                                    {{ form.custom_language(class="form-control", placeholder="Enter custom language name") }}
+                                </div>
+                                <div class="d-grid gap-2">
+                                    {{ form.submit(class="btn btn-primary btn-lg") }}
+                                </div>
+                            </form>
                         </div>
-                    {% else %}
-                        {{ form.projectname(class="form-control form-control-lg") }}
-                    {% endif %}
+                    </div>
                 </div>
-            </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
             </div>
-        </form>
+        </div>
     </div>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const languageSelect = document.getElementById('language');
+    const customLanguageDiv = document.getElementById('custom-language-div');
+    
+    // Initial check
+    if (languageSelect.value === 'other') {
+        customLanguageDiv.style.display = 'block';
+    } else {
+        customLanguageDiv.style.display = 'none';
+    }
+    
+    // Add change listener
+    languageSelect.addEventListener('change', function() {
+        if (this.value === 'other') {
+            customLanguageDiv.style.display = 'block';
+        } else {
+            customLanguageDiv.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock scripts %}

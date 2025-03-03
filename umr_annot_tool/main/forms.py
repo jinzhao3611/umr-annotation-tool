@@ -75,10 +75,15 @@ class LexiconAddForm(FlaskForm):
 
 
 class CreateProjectForm(FlaskForm):
-    class Meta:
-        csrf = False
-    projectname = StringField('Projectname', validators=[DataRequired(), Length(min=2, max=20)])
-    submit = SubmitField('Create')
+    projectname = StringField('Project Name', validators=[DataRequired(), Length(min=2, max=100)])
+    language = SelectField('Language', choices=[
+        ('English', 'English'),
+        ('Chinese', 'Chinese'),
+        ('Arapaho', 'Arapaho'),
+        ('other', 'Other (specify below)')
+    ], validators=[DataRequired()])
+    custom_language = StringField('Custom Language Name')
+    submit = SubmitField('Create Project')
 
     def validate_projectname(self, projectname):
         project = Projectuser.query.filter(Projectuser.project_name==projectname.data, Projectuser.user_id==current_user.id).first()
