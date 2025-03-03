@@ -29,7 +29,7 @@ def get_lowest_unused_id(table_name):
 
 
 class User(db.Model, UserMixin):
-    __tablename__ = "user"
+    __tablename__ = "app_user"
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -49,7 +49,7 @@ class User(db.Model, UserMixin):
 
     def __init__(self, **kwargs):
         if 'id' not in kwargs:
-            kwargs['id'] = get_lowest_unused_id('user')
+            kwargs['id'] = get_lowest_unused_id('app_user')
         super(User, self).__init__(**kwargs)
 
     def get_reset_token(self, expires_sec=1800):
@@ -80,7 +80,8 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
 
     # Foreign key to User
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)
+
 
     def __init__(self, **kwargs):
         if 'id' not in kwargs:
@@ -99,7 +100,7 @@ class Project(db.Model):
     language = db.Column(db.String(50), nullable=False)
 
     # The user who created this project (optional)
-    created_by_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    created_by_user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=True)
 
     # One-to-one relationships to Lexicon, Lattice, Partialgraph
     lexicon = db.relationship("Lexicon", uselist=False, back_populates="project")
@@ -124,7 +125,7 @@ class Projectuser(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     project_name = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
     # e.g. "admin", "annotate", "view"
@@ -150,7 +151,7 @@ class Doc(db.Model):
     filename = db.Column(db.Text, nullable=False)
 
     # The user who uploaded this doc (presumably an admin)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)
     # Which project does this doc belong to?
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
 
@@ -204,7 +205,7 @@ class DocVersion(db.Model):
     doc_id = db.Column(db.Integer, db.ForeignKey('doc.id'), nullable=False)
     # The user who owns/created this version (for checkout or qc),
     # or possibly null if it's a shared adjudication version
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=True)
 
     # "checkout", "qc", "adjudication", "final", etc.
     stage = db.Column(db.String(50), nullable=False, default='checkout')
