@@ -644,6 +644,7 @@ def doclevel(doc_sent_id):
                            content_string=doc.content.replace('\\', '\\\\'), # this is for toolbox4 format that has a lot of unescaped backslashes
                            all_sent_umrs=all_sent_umrs,
                            project_name=project_name,
+                           project_id=project_id,
                            admin=admin,
                            owner=owner,
                            permission=permission)
@@ -1026,7 +1027,7 @@ def lexiconresult_get(project_id):
     project_name = Project.query.filter(Project.id==project_id).first().project_name
     doc_id = int(request.args.get('doc_id')) #used to suggest words with similar lemma
     snt_id = int(request.args.get('snt_id', 1)) #used to go back to the original sentence number when click on sent-level-annot button
-    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id) #this is lexi from database
+    frames_dict, citation_dict = get_lexicon_dicts(project_id=project_id)
     fd = FrameDict.from_dict(frames_dict)
 
     look_up_inflected = request.args.get('look_up_inflected', None)

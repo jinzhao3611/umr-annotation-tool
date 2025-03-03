@@ -48,58 +48,36 @@ function initializeDoc(sent_annot_umrs) {
  */
 function docUmrTransform(html_umr_s, nested){
     //this is a bandit solution, in early stages, the root variable is in the form of s1, now it's s1s0, this is for the purpose of being compatible with the early stage form(export new file with new form)
-    let root_pattern = /(\(s\d+)( \/ sentence)/g //match s1 / sentence
-    html_umr_s = html_umr_s.replace(root_pattern, "$1" + "s0" + "$2") //change it to s1s0 / sentence
-
-    let regex1 = /([a-zA-Z0-9\-]+) \/ (?=.*?\1)[a-zA-Z0-9\-]+ /g //match s1t / s1t (space at the end): match variable
-    let regex2 = /\(([a-zA-Z0-9]+) \/ (?=.*?\1)[a-zA-Z0-9]+\)/g //match (AUTH / AUTH) : match constant
-    let html_umr_s1 = html_umr_s.replace(regex1, "$1"+ " ");
-    html_umr_s1 = html_umr_s1.replace(regex2, "$1");
-
-    if (!html_umr_s1.includes('&nbsp;')){
-        console.log("before html_fy: ", html_umr_s1);
-        html_umr_s1 = html_umr_s1.replaceAll('  ', '&nbsp;&nbsp;');
-        html_umr_s1 = html_umr_s1.replaceAll('\n', '<br>');
-        console.log("after html_fy: ", html_umr_s1);
-    }
-
-    let regexp = /&nbsp;&nbsp;:(temporal|modal|coref)\s(\(.+?\))/g; //match &nbsp;&nbsp;:temporal (s2d :after (s1t)
-    let array = [...html_umr_s1.matchAll(regexp)];
-
+    let html_umr_s2 = '';
     let temporals = [];
     let modals = [];
     let corefs = [];
-    for(let i=0; i<array.length; i++){
-      if (array[i][1] === "temporal"){
-        temporals.push(array[i][2]);
-      }else if (array[i][1] === "modal"){
-        modals.push(array[i][2]);
-      }else if (array[i][1] === "coref"){
-        corefs.push(array[i][2]);
-      }
+
+    let lines = html_umr_s.split('<br>\n');
+    let root_line = lines[0];
+    html_umr_s2 = root_line + '\n';
+
+    for(let i=1; i<lines.length; i++){
+        let line = lines[i].trim();
+        if(line.includes(':temporal')){
+            temporals.push(line.replace(/&nbsp;/g, ' ').trim());
+        }else if(line.includes(':modal')){
+            modals.push(line.replace(/&nbsp;/g, ' ').trim());
+        }else if(line.includes(':coref')){
+            corefs.push(line.replace(/&nbsp;/g, ' ').trim());
+        }
     }
 
-    if (temporals.length ===0 && modals.length===0 && corefs.length ===0){
-        return html_umr_s1;
-    }
-
-    let html_umr_list = html_umr_s1.split('<br>');
-    let html_umr_s2 = html_umr_list[0] + "<br>\n";
-
-      //add temporal lines
+    //add temporal lines
     if(temporals.length !== 0){
         if(nested){
             temporals = chainUp(temporals);
         }
-        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:temporal (';
+        html_umr_s2 += '  :temporal (\n';
         for(let i=0; i<temporals.length; i++){
-            if(i===0){
-                html_umr_s2 = html_umr_s2 + temporals[i];
-            }else{
-                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +temporals[i];
-            }
+            html_umr_s2 += '    ' + temporals[i] + '\n';
         }
-        html_umr_s2 =html_umr_s2 + ')<br>\n';
+        html_umr_s2 += '  )\n';
     }
 
     //add modal lines
@@ -107,15 +85,11 @@ function docUmrTransform(html_umr_s, nested){
         if(nested){
             modals = chainUp(modals);
         }
-        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:modal (';
+        html_umr_s2 += '  :modal (\n';
         for(let i=0; i<modals.length; i++){
-            if(i===0){
-                html_umr_s2 = html_umr_s2 + modals[i];
-            }else{
-                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' +modals[i];
-            }
+            html_umr_s2 += '    ' + modals[i] + '\n';
         }
-        html_umr_s2 =html_umr_s2 + ')<br>\n';
+        html_umr_s2 += '  )\n';
     }
 
     //add coref lines
@@ -123,19 +97,13 @@ function docUmrTransform(html_umr_s, nested){
         if(nested){
             corefs = chainUp(corefs);
         }
-        html_umr_s2 = html_umr_s2 + '&nbsp;&nbsp;:coref (';
+        html_umr_s2 += '  :coref (\n';
         for(let i=0; i<corefs.length; i++){
-            if(i===0){
-                html_umr_s2 = html_umr_s2 + corefs[i];
-            }else{
-                html_umr_s2 = html_umr_s2 + '<br>\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + corefs[i];
-            }
+            html_umr_s2 += '    ' + corefs[i] + '\n';
         }
-        html_umr_s2 =html_umr_s2 + ')<br>\n';
+        html_umr_s2 += '  )\n';
     }
-    html_umr_s2 =html_umr_s2 + ')<br>\n'
-
-    html_umr_s2 = html_umr_s2.replace('\)<br>\n\)<br>' , '\)\)<br>')
+    html_umr_s2 += ')\n';
 
     return html_umr_s2;
 }

@@ -14,8 +14,6 @@ function docUmr2TripleDisplay(docUmr, showDocUmrStatus="show"){
             let child = docUmr[loc_key + '.1.v']; // Get parent value of triple (e.g., s1a, s1x18)
             let subRelationType = docUmr[loc_key + '.1.r']; // Get parent value of triple (e.g., :before, :depends-on)
             let triple = `(${parent} ${subRelationType} ${child})`;
-            // console.log("parent: ");
-            // console.log(parent);
             if (relationType === ":temporal") {
                 temporalGroup.add(triple);
             } else if (relationType=== ":modal") {
@@ -30,29 +28,56 @@ function docUmr2TripleDisplay(docUmr, showDocUmrStatus="show"){
     let modalGroupList = Array.from(modalGroup)
     let corefGroupList = Array.from(corefGroup)
 
-
-    // Organize into a nested structure
-    let triples = `(${docUmr["1.v"]} / ${docUmr["1.c"]}\n`;
+    // Build the output with proper indentation
+    let lines = [];
+    lines.push(`(${docUmr["1.v"]} / ${docUmr["1.c"]}`);
+    
     if (temporalGroupList.length > 0) {
-        triples += "  :temporal (" + temporalGroupList.join("\n    ") + ")\n";
+        lines.push("  :temporal (");
+        temporalGroupList.forEach(triple => {
+            lines.push("    " + triple);
+        });
+        lines.push("  )");
     }
+    
     if (modalGroupList.length > 0) {
-        triples += "  :modal (" + modalGroupList.join("\n    ") + ")\n";
+        lines.push("  :modal (");
+        modalGroupList.forEach(triple => {
+            lines.push("    " + triple);
+        });
+        lines.push("  )");
     }
+    
     if (corefGroupList.length > 0) {
-        triples += "  :coref (" + corefGroupList.join("\n    ") + ")";
+        lines.push("  :coref (");
+        corefGroupList.forEach(triple => {
+            lines.push("    " + triple);
+        });
+        lines.push("  )");
     }
-    triples += ")";
+    
+    lines.push(")");
+
+    // Convert to HTML with preserved formatting
+    let output = '<div class="umr-content">' + 
+                 lines.map(line => {
+                     // Escape HTML special characters
+                     line = line.replace(/&/g, '&amp;')
+                              .replace(/</g, '&lt;')
+                              .replace(/>/g, '&gt;');
+                     // Convert spaces to non-breaking spaces for indentation
+                     let indent = line.match(/^ */)[0];
+                     return indent.replace(/ /g, '&nbsp;') + line.trimLeft();
+                 }).join('<br>') +
+                 '</div>';
 
     if(showDocUmrStatus === "show delete"){
         let pattern = /\([a-zA-Z0-9]+ (?::[a-zA-Z\-]+|undefined) (?:[a-zA-Z0-9]+|undefined)\)/g;
-
-        // Use replace() to wrap the matched pattern with <span class="deletable">
-        return triples.replace(pattern, function (match) {
+        return output.replace(pattern, function (match) {
             return `<span class="deletable">${match}</span>`;
-        })
-    }else{
-        return triples
+        });
+    } else {
+        return output;
     }
 }
 

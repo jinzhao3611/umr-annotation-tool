@@ -267,11 +267,19 @@ function setInnerHTML(id, value) {
 }
 
 function setDocGraphInnerHTML(elementId, text) {
-    // Replace newlines with <br> and preserve indentation with &nbsp;
-    const formattedText = text
-        .replace(/\n/g, '<br>')  // Replace newlines with <br>
-        .replace(/ {2}:/g, '&nbsp;&nbsp;:')
-        .replace(/ {2}\(/g, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;('); // Replace two spaces with &nbsp;&nbsp;
+    // First, normalize line endings and remove any extra spaces at line ends
+    let formattedText = text
+        .replace(/\r\n/g, '\n')
+        .replace(/\r/g, '\n')
+        .replace(/ +$/gm, '');
+
+    // Replace spaces with &nbsp; for indentation, preserving the exact number of spaces
+    formattedText = formattedText.replace(/^( +)/gm, (match) => {
+        return '&nbsp;'.repeat(match.length);
+    });
+
+    // Replace newlines with <br> tags
+    formattedText = formattedText.replace(/\n/g, '<br>\n');
 
     // Set the formatted text as innerHTML
     document.getElementById(elementId).innerHTML = formattedText;
