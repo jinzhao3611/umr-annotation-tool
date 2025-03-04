@@ -186,7 +186,7 @@ def handle_file_upload(form_file, current_project_id):
             logger.info(f"Number of sent_annots: {len(sent_annots) if sent_annots else 0}")
             logger.info(f"Number of doc_annots: {len(doc_annots) if doc_annots else 0}")
             logger.info(f"Number of alignments: {len(aligns) if aligns else 0}")
-            logger.info(f"type of alignments: {type(aligns[0])}")
+            logger.info(f"type of alignment: {type(aligns[0])}")
             logger.info(f"alignments: {aligns}")
             
         except Exception as e:
