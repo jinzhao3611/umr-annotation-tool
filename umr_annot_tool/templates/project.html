@@ -39,7 +39,7 @@
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value=0>
+                        <input type="hidden" name="delete_doc_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value={{ projectDoc.id }}>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -58,7 +58,7 @@
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post" onsubmit="return confirm('Do you really want to delete this document? Once the document is deleted, checked-out copies of this document by other annotators will be deleted as well');">
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value={{ projectDoc.id }}>
+                        <input type="hidden" name="delete_doc_id" value={{ projectDoc.id }}>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -99,7 +99,7 @@
                         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                             <input type="hidden" name="remove_member_id" value=0>
                             <input type="hidden" name="new_member_name" value="">
-                            <input type="hidden" name="update_doc_id" value=0>
+                            <input type="hidden" name="delete_doc_id" value=0>
                             <input type="hidden" name="annotated_doc_id" value=0>
                             <input type="hidden" name="delete_annot_doc_id" value=0>
                             <input type="hidden" name="add_qc_doc_id" value={{ annotatedDoc.id }}>
@@ -123,7 +123,7 @@
                         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                             <input type="hidden" name="remove_member_id" value=0>
                             <input type="hidden" name="new_member_name" value="">
-                            <input type="hidden" name="update_doc_id" value=0>
+                            <input type="hidden" name="delete_doc_id" value=0>
                             <input type="hidden" name="annotated_doc_id" value=0>
                             <input type="hidden" name="delete_annot_doc_id" value=0>
                             <input type="hidden" name="add_qc_doc_id" value=0>
@@ -142,7 +142,7 @@
                         <form action="{{ url_for('users.project', project_id=project_id)}}" method="post" onsubmit="return confirm('Do you really want to delete this annotation? This action is irreversible');">
                             <input type="hidden" name="remove_member_id" value=0>
                             <input type="hidden" name="new_member_name" value="">
-                            <input type="hidden" name="update_doc_id" value=0>
+                            <input type="hidden" name="delete_doc_id" value=0>
                             <input type="hidden" name="annotated_doc_id" value=0>
                             <input type="hidden" name="delete_annot_doc_id" value={{ annotatedDoc.id }}>
                             <input type="hidden" name="add_qc_doc_id" value=0>
@@ -186,7 +186,7 @@
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value=0>
+                        <input type="hidden" name="delete_doc_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -231,7 +231,7 @@
                     <form action="{{ url_for('users.project', project_id=project_id)}}" method="post">
                         <input type="hidden" name="remove_member_id" value=0>
                         <input type="hidden" name="new_member_name" value="">
-                        <input type="hidden" name="update_doc_id" value=0>
+                        <input type="hidden" name="delete_doc_id" value=0>
                         <input type="hidden" name="annotated_doc_id" value=0>
                         <input type="hidden" name="delete_annot_doc_id" value=0>
                         <input type="hidden" name="add_qc_doc_id" value=0>
@@ -324,7 +324,7 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <input type="hidden" name="delete_project" value=0>
-            <input type="hidden" name="update_doc_id" value=0>
+            <input type="hidden" name="delete_doc_id" value=0>
             <input type="hidden" name="remove_member_id" value=0>
             <input type="hidden" name="annotated_doc_id" value=0>
             <input type="hidden" name="delete_annot_doc_id" value=0>
@@ -361,7 +361,7 @@
                             {{ member_name }}
                             <form method="POST" action="">
                                 <input type="hidden" name="delete_project" value=0>
-                                <input type="hidden" name="update_doc_id" value=0>
+                                <input type="hidden" name="delete_doc_id" value=0>
                                 <input type="hidden" name="remove_member_id" value={{ member.user_id }}>
                                 <input type="hidden" name="annotated_doc_id" value=0>
                                 <input type="hidden" name="delete_annot_doc_id" value=0>
@@ -375,7 +375,7 @@
                 </ul>
                 <form method="POST" action="">
                     <input type="hidden" name="delete_project" value=0>
-                    <input type="hidden" name="update_doc_id" value=0>
+                    <input type="hidden" name="delete_doc_id" value=0>
                     <input type="hidden" name="remove_member_id" value=0>
                     <input type="hidden" name="annotated_doc_id" value=0>
                     <input type="hidden" name="delete_annot_doc_id" value=0>

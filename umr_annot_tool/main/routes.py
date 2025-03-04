@@ -16,6 +16,20 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Pr
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 
+# Create logs directory if it doesn't exist
+os.makedirs('logs', exist_ok=True)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('logs/umr_annotation.log'),
+        logging.StreamHandler()  # This will also print to console
+    ]
+)
+logger = logging.getLogger(__name__)
+
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
@@ -108,7 +122,7 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
         db.session.add(doc_version_entry)
         for sent_annot, doc_annot, align, sent in zip(sent_annots, doc_annots, aligns, sents):
             sent_entry = Sent(
-                content = sent,
+                content = " ".join(sent),
                 doc = doc_entry
             )
             db.session.add(sent_entry)
@@ -125,11 +139,15 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
                         align = json.loads(trimmed)
                     except json.JSONDecodeError:
                         # align was not valid JSON, handle or fallback
-                        print("DEBUG: Invalid JSON, using empty dict")
+                        logger.info("DEBUG: Invalid JSON, using empty dict")
+                        logger.info(f"Alignment type: {type(align)}")
+                        logger.info(f"Alignment content: {align}")
                         align = {}
-        else:
-            # align was an empty string
-            align = {}
+                else:
+                    logger.info("DEBUG: Empty alignment string")
+                    logger.info(f"Alignment type: {type(align)}")
+                    logger.info(f"Alignment content: {align}")
+                    align = {}
             annotation_entry = Annotation(
                 sent_annot=sent_annot,
                 doc_annot=doc_annot,
@@ -141,10 +159,10 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
         db.session.commit()
         return doc_entry.id
     except Exception as e:
-        print(f"Error creating document in database: {str(e)}")
+        logging.error(f"Error creating document in database: {str(e)}")
         import traceback
-        print("Full traceback:")
-        print(traceback.format_exc())
+        logging.error("Full traceback:")
+        logging.error(traceback.format_exc())
         flash('Error creating document in database', 'danger')
         return None
 
@@ -152,38 +170,35 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
 
 def handle_file_upload(form_file, current_project_id):
     """Reads content from uploaded UMR file and processes it."""
-    print("Starting handle_file_upload function")
-    print(f"Uploaded file: {form_file.filename}")
-    
-    # check current user's permission
-    permission = check_user_permission(current_project_id)
-    if not permission:
-        return False
+    logger.info("Starting handle_file_upload function")
+    logger.info(f"Uploaded file: {form_file.filename}")
     
     try:
         # Read and decode file content
         content = form_file.read().decode('utf-8')
-        print(f"Successfully read file content, length: {len(content)}")
+        logger.info(f"Successfully read file content, length: {len(content)}")
         
         # Parse file content
         try:
             sents, sent_annots, doc_annots, aligns = parse_umr_file(content)
-            print(f"File parsed successfully:")
-            print(f"Number of sentences: {len(sents)}")
-            print(f"Number of sent_annots: {len(sent_annots) if sent_annots else 0}")
-            print(f"Number of doc_annots: {len(doc_annots) if doc_annots else 0}")
-            print(f"Number of alignments: {len(aligns) if aligns else 0}")
+            logger.info(f"File parsed successfully:")
+            logger.info(f"Number of sentences: {len(sents)}")
+            logger.info(f"Number of sent_annots: {len(sent_annots) if sent_annots else 0}")
+            logger.info(f"Number of doc_annots: {len(doc_annots) if doc_annots else 0}")
+            logger.info(f"Number of alignments: {len(aligns) if aligns else 0}")
+            logger.info(f"type of alignments: {type(aligns[0])}")
+            logger.info(f"alignments: {aligns}")
             
         except Exception as e:
-            print(f"Error parsing file content: {str(e)}")
+            logger.error(f"Error parsing file content: {str(e)}")
             import traceback
-            print("Full traceback:")
-            print(traceback.format_exc())
+            logger.error("Full traceback:")
+            logger.error(traceback.format_exc())
             flash('Error parsing file content', 'danger')
-            return False
+            return redirect(request.url)
         
         # Create document in database
-        print("Starting to create document in database")
+        logger.info("Starting to create document in database")
         doc_id = file2db(
             filename=form_file.filename,
             sents=sents,
@@ -194,59 +209,66 @@ def handle_file_upload(form_file, current_project_id):
             aligns=aligns
         )
         if doc_id:
-            print(f"Document created successfully with ID: {doc_id}")
-
-            
+            logger.info(f"Document created successfully with ID: {doc_id}")
+            return sent_annots, doc_annots, doc_id
     except Exception as e:
-        print(f"Error reading file: {str(e)}")
+        logger.error(f"Error reading file: {str(e)}")
         flash('Error reading file', 'danger')
-        return False
+        return redirect(request.url)
 
 
 @main.route("/upload_document/<int:current_project_id>", methods=['GET', 'POST'])
 @login_required
 def upload_document(current_project_id):
-    print("Entering upload_document route")
-    print(f"Method: {request.method}")
+    logger.info("Entering upload_document route")
+    logger.info(f"Method: {request.method}")
+    # check current user's permission
+    permission = check_user_permission(current_project_id)
+    if not permission:
+        return False
+    
     
     form = UploadForm()
+    sent_annots = []
+    doc_annots  = []
+    doc_id      = None
     
     if form.validate_on_submit():
-        print("Form validated")
+        logger.info("Form validated")
         if form.files.data:
             form_file = form.files.data[0]  # Get the first file
-            print(f"Got file: {form_file.filename}")
+            logger.info(f"Got file: {form_file.filename}")
             
             if form_file.filename == '':
-                print("Empty filename")
+                logger.error("Empty filename")
                 flash('No file selected', 'danger')
                 return redirect(request.url)
                 
             if not form_file.filename.endswith('.umr'):
-                print("Invalid file extension")
+                logger.error("Invalid file extension")
                 flash('Only .umr files are allowed', 'danger')
                 return redirect(request.url)
                 
-            print("About to call handle_file_upload")
-            if handle_file_upload(form_file, current_project_id):
-                print("handle_file_upload succeeded")
-                flash('Your file has been uploaded!', 'success')
-                return redirect(url_for('users.account'))
+            logger.info("About to call handle_file_upload")
+            sent_annots, doc_annots, doc_id = handle_file_upload(form_file, current_project_id)
+            logger.info("handle_file_upload succeeded")
+            flash('Your file has been uploaded!', 'success')
+            return redirect(url_for('users.project', project_id=current_project_id))
 
         else:
-            print("No file in form.files.data")
+            logger.error("No file in form.files.data")
             flash('No file selected', 'danger')
             return redirect(request.url)
             
     elif request.method == 'POST':
-        print("Form validation failed")
+        logger.error("Form validation failed")
         for field, errors in form.errors.items():
             for error in errors:
                 flash(f'Error in {field}: {error}', 'danger')
-                print(f'Error in {field}: {error}')
+                logger.error(f'Error in {field}: {error}')
             
-    print("Rendering upload form")
-    return render_template('upload_document.html', title='Upload Document', form=form)
+    logger.info("Rendering upload form")
+    return render_template('upload_document.html', title='Upload Document', form=form, sent_annots=sent_annots, doc_annots=doc_annots, doc_id=doc_id)
 
 @main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
 def upload_lexicon(current_project_id):

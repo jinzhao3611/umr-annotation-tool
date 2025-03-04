@@ -163,7 +163,7 @@ def project(project_id):
     if request.method == 'POST':
         # For clarity, let's read all hidden inputs that might appear:
         delete_project       = request.form.get('delete_project', '0')
-        update_doc_id        = request.form.get('update_doc_id', '0')
+        delete_doc_id        = request.form.get('delete_doc_id', '0')
         remove_member_id     = request.form.get('remove_member_id', '0')
         new_member_name      = request.form.get('new_member_name', '').strip()
         annotated_doc_id     = request.form.get('annotated_doc_id', '0')
@@ -250,6 +250,19 @@ def project(project_id):
                     msg_list.append("No user found by that name.")
             else:
                 msg_list.append("You do not have permission to add members.")
+
+        # delete from documents in project
+        if delete_doc_id.isdigit() and int(delete_doc_id) != 0:
+            doc_id = int(delete_doc_id)
+            # delete all annotations that belong to different docversions of this doc
+            doc_version_ids = [dv.id for dv in DocVersion.query.filter_by(doc_id=doc_id)]
+            Annotation.query.filter(Annotation.doc_version_id.in_(doc_version_ids)).delete(synchronize_session=False)
+            DocVersion.query.filter(DocVersion.doc_id == doc_id).delete()
+            Sent.query.filter(Sent.doc_id == doc_id).delete()
+            # delete the doc
+            Doc.query.filter(Doc.id == doc_id).delete()
+            db.session.commit()
+            msg_list.append(f"Document (id={doc_id}) deleted from project.")
 
         # 3.5. Updating doc states: add to My Annotations, delete doc, etc.
         #     Example of "add to My Annotations"
@@ -344,7 +357,7 @@ def project(project_id):
 
     try:
         # for all the entries in doc_version, get the user_id of the lines that have stage == 'checkout' and the doc_id = id in doc table that has project_id == project_id
-        checked_out_by = [DocVersion.query.filter(DocVersion.stage == 'checkout', DocVersion.doc_id == doc.id).first().user_id for doc in projectDocs]
+        checked_out_by = [DocVersion.query.filter(DocVersion.stage == 'checkout', DocVersion.doc_id == doc.id).first().username for doc in projectDocs]
     except AttributeError:
         checked_out_by = []
 
@@ -388,69 +401,6 @@ def project(project_id):
         current_year=current_year
     )
 
-
-@login_required
-@users.route("/upload_by_annotator/<int:current_project_id>", methods=['GET', 'POST'])
-def upload_document(current_project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    form = UploadFormSimpleVersion()
-    sent_annots = []
-    doc_annots = []
-    doc_id = 0
-    if form.validate_on_submit():
-        if form.files.data and form.files.data[0].filename:
-            for form_file in form.files.data:
-                content_string = form_file.read().decode(encoding="utf-8", errors="ignore")
-                is_legit, data = parse_file_info(content_string)
-                if is_legit:
-                    filename = secure_filename(form_file.filename)
-                    # user_name = data["user_name"]
-                    # user_id = data["user_id"]
-                    lang = data["file_language"]
-                    file_format = data["file_format"]
-
-                    try:
-                        doc_id = int(data["doc_id"])
-                    except ValueError:
-                        print("The string is not a valid integer.")
-
-                else:
-                    flash("Error: Uploaded file is not in the correct format or missing required information.", "error")
-                    return redirect(url_for('users.project', project_id=current_project_id))
-
-                if file_format == 'isi_editor':
-                    new_content_string, sents, sent_annots, doc_annots = process_exported_file_isi_editor(content_string)
-                    file2db_override(doc_id=doc_id,filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, current_project_id=current_project_id, current_user_id=current_user.id)
-                else:
-                    new_content_string, sents, sent_annots, doc_annots, aligns = parse_exported_file(
-                        content_string)
-                    file2db_override(doc_id=doc_id,filename=filename, file_format=file_format, content_string=new_content_string, lang=lang,
-                            sents=sents, has_annot=True, sent_annots=sent_annots, doc_annots=doc_annots, aligns=aligns, current_project_id=current_project_id, current_user_id=current_user.id)
-
-            try:  # when uploaded file already come with annotation, convert strings to umr and save to database
-                doc_id = request.get_json(force=True)["doc_id"]
-                sentUmrDicts = json.loads(request.get_json(force=True)["sentUmrDicts"])
-                docUmrDicts = json.loads(request.get_json(force=True)["docUmrDicts"])
-                annotations = Annotation.query.filter(Annotation.doc_id == doc_id,
-                                                      Annotation.user_id == current_user.id).order_by(
-                    Annotation.sent_id).all()
-                for i, annot in enumerate(annotations):
-                    annot.sent_umr = sentUmrDicts[i]
-                    annot.doc_umr = docUmrDicts[i]
-                    flag_modified(annot, 'sent_umr')
-                    flag_modified(annot, 'doc_umr')
-                    db.session.add(annot)
-                logging.info(db.session.commit())
-            except:
-                print("convert strings to umr to database failed")
-
-            return redirect(url_for('users.project', project_id=current_project_id))
-        else:
-            flash('Please upload a file.', 'danger')
-
-    return render_template('upload_by_annotator.html', title='upload_by_annotator', form=form, sent_annots=json.dumps(sent_annots), doc_annots=json.dumps(doc_annots), doc_id=doc_id)
 
 @users.route("/user/<string:username>")
 def user_posts(username):
