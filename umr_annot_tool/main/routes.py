@@ -12,10 +12,9 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from flask import Blueprint
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph, DocVersion
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
-from sqlalchemy.orm.attributes import flag_modified
 
 main = Blueprint('main', __name__)
 FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
@@ -83,15 +82,82 @@ def new_project():
         return redirect(url_for('users.account'))
     return render_template('new_project.html', form=form, title='create project')
 
+def check_user_permission(current_project_id):
+    """Check if the current user has permission to upload documents to the project."""
+    # Get the project
+    project = Projectuser.query.filter_by(project_id=current_project_id, user_id=current_user.id).first().permission
+    if project == 'admin':
+        return True
+    else:
+        return False
+
+def file2db(filename:str, sents:List[str], current_project_id:int, current_user_id:int, sent_annots:List[str], doc_annots:List[str], aligns:List[Dict[str, List[str]]]):
+    """Reads content from uploaded UMR file and commits the data to the database."""
+    try:
+        doc_entry = Doc(
+            filename=filename,
+            user_id = current_user_id,
+            project_id = current_project_id
+        )
+        db.session.add(doc_entry)
+        doc_version_entry = DocVersion(
+            doc= doc_entry,
+            user_id = current_user_id,
+            stage = 'initial',
+        )
+        db.session.add(doc_version_entry)
+        for sent_annot, doc_annot, align, sent in zip(sent_annots, doc_annots, aligns, sents):
+            sent_entry = Sent(
+                content = sent,
+                doc = doc_entry
+            )
+            db.session.add(sent_entry)
+            # If align is None, treat it as empty
+            if align is None:
+                align = {}
+            # If align is a string, decide how to parse
+            elif isinstance(align, str):
+                # Trim whitespace
+                trimmed = align.strip()
+                if trimmed:
+                    # Attempt to parse JSON
+                    try:
+                        align = json.loads(trimmed)
+                    except json.JSONDecodeError:
+                        # align was not valid JSON, handle or fallback
+                        print("DEBUG: Invalid JSON, using empty dict")
+                        align = {}
+        else:
+            # align was an empty string
+            align = {}
+            annotation_entry = Annotation(
+                sent_annot=sent_annot,
+                doc_annot=doc_annot,
+                alignment=align,
+                doc_version=doc_version_entry,
+                sent=sent_entry
+            )
+            db.session.add(annotation_entry)
+        db.session.commit()
+        return doc_entry.id
+    except Exception as e:
+        print(f"Error creating document in database: {str(e)}")
+        import traceback
+        print("Full traceback:")
+        print(traceback.format_exc())
+        flash('Error creating document in database', 'danger')
+        return None
+
+    
 
 def handle_file_upload(form_file, current_project_id):
     """Reads content from uploaded UMR file and processes it."""
     print("Starting handle_file_upload function")
     print(f"Uploaded file: {form_file.filename}")
     
-    # Validate project access
-    valid, project = validate_project_access(current_project_id)
-    if not valid:
+    # check current user's permission
+    permission = check_user_permission(current_project_id)
+    if not permission:
         return False
     
     try:
@@ -101,7 +167,7 @@ def handle_file_upload(form_file, current_project_id):
         
         # Parse file content
         try:
-            doc_content_string, sents, sent_annots, doc_annots, aligns = parse_umr_file(content)
+            sents, sent_annots, doc_annots, aligns = parse_umr_file(content)
             print(f"File parsed successfully:")
             print(f"Number of sentences: {len(sents)}")
             print(f"Number of sent_annots: {len(sent_annots) if sent_annots else 0}")
@@ -117,30 +183,19 @@ def handle_file_upload(form_file, current_project_id):
             return False
         
         # Create document in database
-        try:
-            print("Starting to create document in database")
-            doc_id = file2db(
-                filename=form_file.filename,
-                content_string=content,
-                lang='english',
-                sents=sents,
-                file_format='umr',
-                current_project_id=current_project_id,
-                current_user_id=current_user.id,
-                sent_annots=sent_annots,
-                doc_annots=doc_annots,
-                aligns=aligns
-            )
+        print("Starting to create document in database")
+        doc_id = file2db(
+            filename=form_file.filename,
+            sents=sents,
+            current_project_id=current_project_id,
+            current_user_id=current_user.id,
+            sent_annots=sent_annots,
+            doc_annots=doc_annots,
+            aligns=aligns
+        )
+        if doc_id:
             print(f"Document created successfully with ID: {doc_id}")
-            return True
-            
-        except Exception as e:
-            print(f"Error creating document in database: {str(e)}")
-            import traceback
-            print("Full traceback:")
-            print(traceback.format_exc())
-            flash('Error creating document in database', 'danger')
-            return False
+
             
     except Exception as e:
         print(f"Error reading file: {str(e)}")
@@ -195,21 +250,7 @@ def upload_document(current_project_id):
 
 @main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
 def upload_lexicon(current_project_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('users.login'))
-    lexicon_form = UploadLexiconForm()
-    if lexicon_form.validate_on_submit():
-        if lexicon_form.file.data:
-            content_string = lexicon_form.file.data.read().decode("utf-8")
-            file_format = lexicon_form.format.data
-            frames_dict = parse_lexicon_xml(content_string, file_format)
-            fd = FrameDict.from_dict(frames_dict)
-            lexicon2db(project_id=current_project_id, lexicon_dict=fd.flatten)
-            return redirect(url_for('users.project', project_id=current_project_id))
-        else:
-            flash("please upload a lexicon file", "danger")
-
-    return render_template('upload_lexicon.html', title='upload', lexicon_form=lexicon_form, project_id=current_project_id)
+    pass
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
 def sentlevel(doc_sent_id):
@@ -236,84 +277,3 @@ def about():
 @main.route("/guide")
 def guidelines():
     return render_template('user_guide.html')
-
-
-
-def validate_project_access(project_id: int, required_permission: str = None) -> Tuple[bool, Optional[Project]]:
-    """Validate user's access to a project."""
-    if not current_user.is_authenticated:
-        flash('Please log in to access this page', 'warning')
-        return False, None
-        
-    project = Project.query.get_or_404(project_id)
-    if not project:
-        flash('Project not found', 'danger')
-        return False, None
-        
-    project_user = Projectuser.query.filter_by(
-        user_id=current_user.id,
-        project_id=project_id
-    ).first()
-    
-    if not project_user:
-        flash('You do not have access to this project', 'danger')
-        return False, None
-        
-    if required_permission and project_user.permission != required_permission:
-        flash(f'You need {required_permission} permission for this action', 'warning')
-        return False, None
-        
-    return True, project
-
-def get_document_info(doc_id: int) -> Tuple[Optional[Doc], List[Sent], List[Annotation]]:
-    """Get document and its related data."""
-    doc = Doc.query.get_or_404(doc_id)
-    if not doc:
-        return None, [], []
-        
-    sentences = Sent.query.filter_by(doc_id=doc_id).order_by(Sent.id).all()
-    annotations = Annotation.query.filter_by(doc_id=doc_id).order_by(Annotation.sent_id).all()
-    
-    return doc, sentences, annotations
-
-def handle_annotation_update(annotation: Annotation, data: Dict) -> bool:
-    """Update annotation with new data."""
-    pass
-
-def get_project_stats(project_id: int) -> Dict:
-    """Get statistics for a project."""
-    docs = Doc.query.filter_by(project_id=project_id).all()
-    stats = {
-        'doc_count': len(docs),
-        'sent_count': 0,
-        'token_count': 0,
-        'annotated_docs': set(),
-        'annotated_sent_count': 0,
-        'annotated_concept_count': 0
-    }
-    
-    for doc in docs:
-        sents = Sent.query.filter_by(doc_id=doc.id).all()
-        stats['sent_count'] += len(sents)
-        stats['token_count'] += sum(len(sent.content.split()) for sent in sents)
-        
-        annotations = Annotation.query.filter_by(doc_id=doc.id).all()
-        for annot in annotations:
-            if len(annot.sent_annot) > len('<div id="amr"></div>'):
-                stats['annotated_sent_count'] += 1
-                stats['annotated_docs'].add(doc.id)
-                stats['annotated_concept_count'] += sum(1 for k in annot.sent_umr if k.endswith(".c"))
-                
-    stats['annotated_doc_count'] = len(stats['annotated_docs'])
-    del stats['annotated_docs']  # Remove set before returning
-    
-    return stats
-
-@main.route("/annotate/<int:doc_id>/<int:current_snt_id>/<int:owner_id>", methods=['GET', 'POST'])
-def annotate(doc_id, current_snt_id, owner_id):
-    # ... existing code ...
-    
-    # Replace html() call with get_display_info()
-    info2display = get_display_info(doc.content, doc.file_format, lang=doc.lang)
-    
-    # ... rest of the function ...

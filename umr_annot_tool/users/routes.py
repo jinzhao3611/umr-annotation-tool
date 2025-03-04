@@ -342,9 +342,11 @@ def project(project_id):
     daFilenames = []
     daUploaders = []
 
-
-    # for all the entries in doc_version, get the user_id of the lines that have stage == 'checkout' and the doc_id = id in doc table that has project_id == project_id
-    checked_out_by = [DocVersion.query.filter(DocVersion.stage == 'checkout', DocVersion.doc_id == doc.id).first().user_id for doc in projectDocs]
+    try:
+        # for all the entries in doc_version, get the user_id of the lines that have stage == 'checkout' and the doc_id = id in doc table that has project_id == project_id
+        checked_out_by = [DocVersion.query.filter(DocVersion.stage == 'checkout', DocVersion.doc_id == doc.id).first().user_id for doc in projectDocs]
+    except AttributeError:
+        checked_out_by = []
 
     # Members & their user info
     memberships = Projectuser.query.filter_by(project_id=project_id).all()
