@@ -288,7 +288,7 @@ def lexiconlookup(project_id, doc_id, snt_id):
         lexicon = Lexicon.query.filter_by(project_id=project_id).first()
         if not lexicon:
             flash('No lexicon found for this project', 'warning')
-            return redirect(url_for('main.sentlevelview', doc_sent_id=f"{doc_id}_{snt_id}_{current_user.id}"))
+            return redirect(url_for('main.sentlevel', doc_sent_id=f"{doc_id}_{snt_id}_{current_user.id}"))
         
         # Get the document and sentence
         doc = Doc.query.get_or_404(doc_id)
@@ -305,22 +305,11 @@ def lexiconlookup(project_id, doc_id, snt_id):
     except Exception as e:
         logger.error(f"Error in lexicon lookup: {str(e)}", exc_info=True)
         flash('Error accessing lexicon', 'danger')
-        return redirect(url_for('main.sentlevelview', doc_sent_id=f"{doc_id}_{snt_id}_{current_user.id}"))
+        return redirect(url_for('main.sentlevel', doc_sent_id=f"{doc_id}_{snt_id}_{current_user.id}"))
 
 @main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
-def sentlevel(doc_sent_id):
-    """Handle sentence-level annotation view and updates."""
-    pass
-
-
-@main.route("/doclevel/<string:doc_sent_id>", methods=['GET', 'POST'])
-def doclevel(doc_sent_id):
-    """Handle document-level annotation view and updates."""
-    pass
-
-@main.route("/sentlevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
 @login_required
-def sentlevelview(doc_sent_id):
+def sentlevel(doc_sent_id):
     """Handle sentence-level annotation view."""
     logger = logging.getLogger(__name__)
     try:
@@ -456,7 +445,7 @@ def sentlevelview(doc_sent_id):
         frame_dict = json.loads(json.dumps(frame_dict))
         partial_graphs_json = json.dumps(partial_graphs)
         
-        return render_template('sentlevelview.html',
+        return render_template('sentlevel.html',
                             doc_id=doc_id,
                             snt_id=snt_id,
                             owner=owner,

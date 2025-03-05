@@ -124,7 +124,7 @@
                     {% for projectDoc in projectDocs %}
                     <div class="document-item">
                         <div class="document-info">
-                            <a href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ dummy_user_id ) }}" 
+                            <a href="{{ url_for('main.sentlevel', doc_sent_id=projectDoc.id ~ '_initial_' ~ docversion_users[loop.index0] ) }}" 
                                title="{{ projectDoc.content }}" class="document-link">
                                 <i class="fas fa-file-alt"></i>
                                 <span>{{projectDoc.filename}}</span>
@@ -182,7 +182,7 @@
                         {% if checked_out_by[loop.index0] == current_user.username %}
                         <div class="document-item checked-out">
                             <div class="document-info">
-                                <a href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ dummy_user_id ) }}" 
+                                <a href="{{ url_for('main.sentlevel', doc_sent_id=projectDoc.id ~ '_checkedout_' ~ current_user.id ) }}" 
                                    title="{{ projectDoc.content }}" class="document-link">
                                     <i class="fas fa-pencil-alt"></i>
                                     <span>{{projectDoc.filename}}</span>

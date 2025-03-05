@@ -64,7 +64,7 @@
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush sentences-container">
                         {% for sent in info2display.sents %}
-                        <a href="{{ url_for('main.sentlevelview', doc_sent_id=doc_id ~ '_' ~ loop.index ~ '_' ~ owner.id) }}" 
+                        <a href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ loop.index ~ '_' ~ owner.id) }}" 
                            class="list-group-item list-group-item-action {% if loop.index == snt_id %}active{% endif %}">
                             <small class="text-muted">#{{ loop.index }}</small>
                             <span class="sentence-text">{{ sent }}</span>
@@ -334,7 +334,7 @@
     function prevSentence() {
         const currentId = parseInt("{{ snt_id }}");
         if (currentId > 1) {
-            window.location.href = "{{ url_for('main.sentlevelview', doc_sent_id=doc_id) }}_" + (currentId - 1) + "_{{ owner.id }}";
+            window.location.href = "{{ url_for('main.sentlevel', doc_sent_id=doc_id) }}_" + (currentId - 1) + "_{{ owner.id }}";
         }
     }
 
@@ -342,7 +342,7 @@
         const currentId = parseInt("{{ snt_id }}");
         const maxId = parseInt("{{ info2display.sents|length }}");
         if (currentId < maxId) {
-            window.location.href = "{{ url_for('main.sentlevelview', doc_sent_id=doc_id) }}_" + (currentId + 1) + "_{{ owner.id }}";
+            window.location.href = "{{ url_for('main.sentlevel', doc_sent_id=doc_id) }}_" + (currentId + 1) + "_{{ owner.id }}";
         }
     }
 </script>

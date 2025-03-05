@@ -283,7 +283,7 @@
                             <button class="btn btn-outline-secondary" id="export-box" onclick="export_annot({{ exported_items}}, `{{content_string }}`)">export</button>
                             <button class="btn btn-outline-secondary" id="reset-box" disabled><a title="reset" href="javascript:reset();">reset</a></button>
                             <button class="btn btn-outline-secondary" id="delete-box" disabled><a title="delete" href="javascript:changeShowStatus('delete');">delete</a></button>
-                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevelview', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
+                            <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ current_snt_id ~'_' ~ owner.id ) }}">sent-level-annot</a>
                         </div>
 
                         <script type="text/javascript">
