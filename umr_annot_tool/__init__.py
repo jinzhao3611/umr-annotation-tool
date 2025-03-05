@@ -67,9 +67,6 @@ def create_app(config_class=None):
     login_manager.init_app(app)
     mail.init_app(app)
 
-    with app.app_context():
-        db.create_all()
-
     from umr_annot_tool.users.routes import users
     from umr_annot_tool.posts.routes import posts
     from umr_annot_tool.main.routes import main

@@ -9,11 +9,13 @@ logger = logging.getLogger(__name__)
 def init_db():
     """Initialize the database with all tables."""
     # Set the database URL with username
-    os.environ['DATABASE_URL'] = 'postgresql://jinzhao@localhost/umr_230523'
-    logger.info(f"Setting database path to: {os.environ['DATABASE_URL']}")
+    database_url = 'postgresql://jinzhao@localhost/umr_230523'
+    os.environ['DATABASE_URL'] = database_url
+    logger.info(f"Setting database path to: {database_url}")
     
     # Create the Flask app and push an application context
     app = create_app()
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.app_context().push()
     
     # Log the app's database URI configuration
