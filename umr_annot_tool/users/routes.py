@@ -136,269 +136,261 @@ def account():
 @users.route("/project/<int:project_id>", methods=['GET', 'POST'])
 def project(project_id):
     """
-    Handle the main project page. This includes:
-      - Displaying project documents, annotated documents, QC documents, double annotated files, etc.
-      - Handling modifications to project name, membership, or document sets
+    Handle the main project page with sections for:
+    - Project management (name change, member management)
+    - Document listing with initial versions
+    - Checked out documents for current user
+    - Quality control documents
     """
-
-    # 1. Fetch the project object from the database or 404 if not found
+    # 1. Basic setup and permission check
     project = Project.query.get_or_404(project_id)
     form = UpdateProjectForm()
-    # 2. Confirm the current_user has access to this project
-    #    This part will depend on your own permission logic. For example:
+    
+    # Check user's project membership
     membership = Projectuser.query.filter_by(
-        project_id=project_id, user_id=current_user.id
+        project_id=project_id, 
+        user_id=current_user.id
     ).first()
     if not membership:
-        # No membership found, user has no permission
-        abort(403)  # or redirect somewhere
-
-    # We’ll store any messages to flash to the user
-    msg_list = []
-
-
-
-    # 3. Process POST requests. Your forms use hidden fields like 'delete_project',
-    #    'update_doc_id', 'annotated_doc_id', etc. We read them and decide what to do.
+        abort(403)
+    
+    # 2. Handle POST requests
     if request.method == 'POST':
-        # For clarity, let's read all hidden inputs that might appear:
-        delete_project       = request.form.get('delete_project', '0')
-        delete_doc_id        = request.form.get('delete_doc_id', '0')
-        remove_member_id     = request.form.get('remove_member_id', '0')
-        new_member_name      = request.form.get('new_member_name', '').strip()
-        annotated_doc_id     = request.form.get('annotated_doc_id', '0')
-        delete_annot_doc_id  = request.form.get('delete_annot_doc_id', '0')
-        add_qc_doc_id        = request.form.get('add_qc_doc_id', '0')
-        rm_qc_doc_id         = request.form.get('rm_qc_doc_id', '0')
-        rm_qc_user_id        = request.form.get('rm_qc_user_id', '0')
-        add_da_doc_id        = request.form.get('add_da_doc_id', '0')
-        rm_da_doc_id         = request.form.get('rm_da_doc_id', '0')
-        rm_da_user_id        = request.form.get('rm_da_user_id', '0')
-
-        # 3.1. Changing the project name (via WTForms or a direct form field)
-        #      If using WTForms, you'll handle validation differently. Example:
-        if form.validate_on_submit():
-            project_name = form.project_name.data
-            if project_name:
-                project.project_name = project_name
-                Projectuser.query.filter_by(project_id=project_id).update({'project_name': project_name})
-                db.session.commit()
-                msg_list.append(f"Project name updated to: {project.project_name}")
-
-        # 3.2. Deleting the entire project
-        if delete_project == '1':
-            if membership.permission == 'admin':  # or however you store permissions
-                # Actually delete project from DB
-                # This typically means removing documents, membership, etc.
-                Annotation.query.filter(Annotation.doc_id.in_(DocVersion.doc_id.in_(Doc.query.filter(Doc.project_id == project_id).all()))).delete()
-                DocVersion.query.filter(DocVersion.doc_id.in_(Doc.query.filter(Doc.project_id == project_id).all())).delete()
-                Sent.query.filter(Sent.doc_id.in_(Doc.query.filter(Doc.project_id == project_id).all())).delete()
-                Projectuser.query.filter(Projectuser.project_id == project_id).delete()
-                Partialgraph.query.filter(Partialgraph.project_id == project_id).delete()
-                Lattice.query.filter(Lattice.project_id == project_id).delete()
-                Lexicon.query.filter(Lexicon.project_id == project_id).delete()
-                Doc.query.filter(Doc.project_id == project_id).delete()
-                Project.query.filter(Project.id == project_id).delete()
-                db.session.commit()
-                flash("Project deleted successfully", "info")
-                return redirect(url_for('users.dashboard'))  # or anywhere you want
-            else:
-                msg_list.append("You do not have permission to delete this project.")
-
-        # 3.3. Removing a project member
-        if remove_member_id.isdigit() and int(remove_member_id) != 0:
-            if membership.permission == 'admin':
-                member_to_remove = Projectuser.query.filter_by(
-                    project_id=project_id, user_id=int(remove_member_id)
+        msg_list = []
+        
+        # 2.1 Project name update
+        if form.validate_on_submit() and form.project_name.data:
+            project.project_name = form.project_name.data
+            Projectuser.query.filter_by(project_id=project_id).update({'project_name': form.project_name.data})
+            msg_list.append(f"Project name updated to: {form.project_name.data}")
+        
+        # 2.2 Member management
+        new_member_name = request.form.get('new_member_name', '').strip()
+        remove_member_id = request.form.get('remove_member_id', '0')
+        
+        if new_member_name and membership.permission == 'admin':
+            user_to_add = User.query.filter_by(username=new_member_name).first()
+            if user_to_add:
+                existing = Projectuser.query.filter_by(
+                    project_id=project_id, 
+                    user_id=user_to_add.id
                 ).first()
-                if member_to_remove:
-                    # remove annotations that belong to the docversions that are produced by the member
-                    Annotation.query.filter(Annotation.doc_id.in_(DocVersion.query.filter(DocVersion.user_id == int(remove_member_id)).all())).delete()
-                    # remove docversions that are produced by the member
-                    DocVersion.query.filter(DocVersion.user_id == int(remove_member_id)).delete()
-                    # remove the member
-                    db.session.delete(member_to_remove)
-                    db.session.commit()
-                    msg_list.append("Removed member from project.")
-            else:
-                msg_list.append("You do not have permission to remove members.")
-
-        # 3.4. Adding a new member
-        if new_member_name:
-            if membership.permission == 'admin':
-                # find user by username
-                user_to_add = User.query.filter_by(username=new_member_name).first()
-                if user_to_add:
-                    # check if already in project
-                    existing = Projectuser.query.filter_by(
-                        project_id=project_id, user_id=user_to_add.id
-                    ).first()
-                    if not existing:
-                        # Add new membership
-                        new_membership = Projectuser(
-                            project_id=project_id,
-                            project_name=project.name,
-                            user_id=user_to_add.id,
-                            permission='annotate'  # or whatever default
-                        )
-                        db.session.add(new_membership)
-                        db.session.commit()
-                        msg_list.append(f"Added {new_member_name} to project.")
-                    else:
-                        msg_list.append(f"{new_member_name} is already in project.")
+                if not existing:
+                    new_membership = Projectuser(
+                        project_id=project_id,
+                        project_name=project.project_name,
+                        user_id=user_to_add.id,
+                        permission='annotate'
+                    )
+                    db.session.add(new_membership)
+                    msg_list.append(f"Added {new_member_name} to project.")
                 else:
-                    msg_list.append("No user found by that name.")
+                    msg_list.append(f"{new_member_name} is already in project.")
             else:
-                msg_list.append("You do not have permission to add members.")
-
-        # delete from documents in project
-        if delete_doc_id.isdigit() and int(delete_doc_id) != 0:
+                msg_list.append("No user found by that name.")
+        
+        if remove_member_id.isdigit() and int(remove_member_id) != 0 and membership.permission == 'admin':
+            member_to_remove = Projectuser.query.filter_by(
+                project_id=project_id, 
+                user_id=int(remove_member_id)
+            ).first()
+            if member_to_remove:
+                # Clean up member's data
+                Annotation.query.filter(
+                    Annotation.doc_id.in_(
+                        DocVersion.query.filter(DocVersion.user_id == int(remove_member_id)).all()
+                    )
+                ).delete()
+                DocVersion.query.filter(DocVersion.user_id == int(remove_member_id)).delete()
+                db.session.delete(member_to_remove)
+                msg_list.append("Removed member from project.")
+        
+        # 2.3 Document management
+        delete_doc_id = request.form.get('delete_doc_id', '0')
+        annotated_doc_id = request.form.get('annotated_doc_id', '0')
+        delete_annot_doc_id = request.form.get('delete_annot_doc_id', '0')
+        
+        if delete_doc_id.isdigit() and int(delete_doc_id) != 0 and membership.permission == 'admin':
             doc_id = int(delete_doc_id)
-            # delete all annotations that belong to different docversions of this doc
+            # Clean up document data
             doc_version_ids = [dv.id for dv in DocVersion.query.filter_by(doc_id=doc_id)]
-            Annotation.query.filter(Annotation.doc_version_id.in_(doc_version_ids)).delete(synchronize_session=False)
+            Annotation.query.filter(Annotation.doc_version_id.in_(doc_version_ids)).delete()
             DocVersion.query.filter(DocVersion.doc_id == doc_id).delete()
             Sent.query.filter(Sent.doc_id == doc_id).delete()
-            # delete the doc
             Doc.query.filter(Doc.id == doc_id).delete()
-            db.session.commit()
             msg_list.append(f"Document (id={doc_id}) deleted from project.")
-
-        # 3.5. Updating doc states: add to My Annotations, delete doc, etc.
-        #     Example of "add to My Annotations"
+        
         if annotated_doc_id.isdigit() and int(annotated_doc_id) != 0:
-            # Your logic to mark that doc as annotated by the current user
             doc_id = int(annotated_doc_id)
             doc_version = DocVersion(
                 doc_id=doc_id,
                 user_id=current_user.id,
-                stage = 'checkout',
+                stage='checkout'
             )
             db.session.add(doc_version)
-            db.session.commit()
             msg_list.append(f"Document (id={doc_id}) added to My Annotations.")
-
-        # 3.6. Deleting an annotation from My Annotations
+        
         if delete_annot_doc_id.isdigit() and int(delete_annot_doc_id) != 0:
             doc_id = int(delete_annot_doc_id)
-            # remove the annotation of the docversion
-            Annotation.query.filter(Annotation.doc_version_id == DocVersion.query.filter(DocVersion.doc_id == doc_id, DocVersion.user_id == current_user.id, DocVersion.stage == 'checkout').first().id).delete()
-            # remove the docversion
-            DocVersion.query.filter(DocVersion.doc_id == doc_id, DocVersion.user_id == current_user.id, DocVersion.stage == 'checkout').delete()
-            db.session.commit()
-            msg_list.append(f"Deleted annotation for doc id={doc_id}.")
-
-        # 3.7. Add/remove documents from QC
-        if add_qc_doc_id.isdigit() and int(add_qc_doc_id) != 0:
-            doc_id = int(add_qc_doc_id)
-            doc_version = DocVersion(
+            checkout_version = DocVersion.query.filter_by(
                 doc_id=doc_id,
                 user_id=current_user.id,
-                stage = 'qc',
-            )
-            db.session.add(doc_version)
-            db.session.commit()
-            msg_list.append(f"Document (id={doc_id}) added to Quality Control.")
+                stage='checkout'
+            ).first()
+            if checkout_version:
+                Annotation.query.filter(Annotation.doc_version_id == checkout_version.id).delete()
+                db.session.delete(checkout_version)
+                msg_list.append(f"Deleted annotation for doc id={doc_id}.")
+        
+        # 2.4 Quality Control management
+        add_qc_doc_id = request.form.get('add_qc_doc_id', '0')
+        rm_qc_doc_id = request.form.get('rm_qc_doc_id', '0')
+        rm_qc_user_id = request.form.get('rm_qc_user_id', '0')
+        
+        if add_qc_doc_id.isdigit() and int(add_qc_doc_id) != 0:
+            doc_id = int(add_qc_doc_id)
+            # Get the checkout version
+            checkout_version = DocVersion.query.filter_by(
+                doc_id=doc_id,
+                user_id=current_user.id,
+                stage='checkout'
+            ).first()
+            
+            if checkout_version:
+                # Create new QC version
+                qc_version = DocVersion(
+                    doc_id=doc_id,
+                    user_id=current_user.id,
+                    stage='qc'
+                )
+                db.session.add(qc_version)
+                db.session.flush()  # Get the new version's ID
+                
+                # Copy annotations from checkout version to QC version
+                checkout_annotations = Annotation.query.filter_by(
+                    doc_version_id=checkout_version.id
+                ).all()
+                
+                for annotation in checkout_annotations:
+                    new_annotation = Annotation(
+                        doc_id=annotation.doc_id,
+                        doc_version_id=qc_version.id,
+                        real_sent_id=annotation.real_sent_id,
+                        sent_annot=annotation.sent_annot,
+                        sent_umr=annotation.sent_umr,
+                        doc_annot=annotation.doc_annot,
+                        user_id=current_user.id
+                    )
+                    db.session.add(new_annotation)
+                
+                msg_list.append(f"Document (id={doc_id}) submitted for Quality Control.")
+            else:
+                msg_list.append(f"Document (id={doc_id}) not found in your checked out documents.")
 
         if rm_qc_doc_id.isdigit() and int(rm_qc_doc_id) != 0:
             doc_id = int(rm_qc_doc_id)
-            Annotation.query.filter(Annotation.doc_version_id == DocVersion.query.filter(DocVersion.doc_id == doc_id, DocVersion.user_id == current_user.id, DocVersion.stage == 'qc').first().id).delete()
-            DocVersion.query.filter(DocVersion.doc_id == doc_id, DocVersion.user_id == current_user.id, DocVersion.stage == 'qc').delete()
-            db.session.commit()
-            msg_list.append(f"Document (id={doc_id}) removed from Quality Control.")
-
-        # 3.8. Add/remove documents from Double Annotated
-        if add_da_doc_id.isdigit() and int(add_da_doc_id) != 0:
-            doc_id = int(add_da_doc_id)
-            doc_version = DocVersion(
+            qc_version = DocVersion.query.filter_by(
                 doc_id=doc_id,
-                user_id=current_user.id,
-                stage = 'double_annot',
-            )
-            db.session.add(doc_version)
-            db.session.commit()
-            msg_list.append(f"Document (id={doc_id}) added to Double Annotated Files.")
-
-        if rm_da_doc_id.isdigit() and int(rm_da_doc_id) != 0:
-            doc_id = int(rm_da_doc_id)
-            user_id = int(rm_da_user_id) if rm_da_user_id.isdigit() else None
-            Annotation.query.filter(Annotation.doc_version_id == DocVersion.query.filter(DocVersion.doc_id == doc_id, DocVersion.user_id == current_user.id, DocVersion.stage == 'double_annot').first().id).delete()
-            DocVersion.query.filter(DocVersion.doc_id == doc_id, DocVersion.user_id == current_user.id, DocVersion.stage == 'double_annot').delete()
-            db.session.commit()
-            msg_list.append(
-                f"Document (id={doc_id}) removed from Double Annotated for user {user_id}."
-            )
-
-        # 3.9. Actually commit changes to the database if any
+                stage='qc'
+            ).first()
+            if qc_version:
+                Annotation.query.filter(Annotation.doc_version_id == qc_version.id).delete()
+                db.session.delete(qc_version)
+                msg_list.append(f"Document (id={doc_id}) removed from Quality Control.")
+        
+        # Commit changes and show messages
         db.session.commit()
-        # Display messages to the user
-        for m in msg_list:
-            flash(m, "info")
-        # Refresh the page to show changes
+        for msg in msg_list:
+            flash(msg, "info")
         return redirect(url_for('users.project', project_id=project_id))
-
-    # 4. For GET requests, or after processing POST, gather data to display in template
-
-    # Example: Documents in the project
-    projectDocs = Doc.query.filter_by(project_id=project_id).all()
-
-    # Example: My Annotations
-    annotatedDocs = []  # fetch from your user-specific annotation records
-
-    # Example: QC docs
-    qcDocs = []
-    qcUploaders = []
-    qcUploaderIds = []
-
-    # Example: Double annotated docs
-    daDocs = []
-    daFilenames = []
-    daUploaders = []
-
-    try:
-        # for all the entries in doc_version, get the user_id of the lines that have stage == 'checkout' and the doc_id = id in doc table that has project_id == project_id
-        checked_out_by = [DocVersion.query.filter(DocVersion.stage == 'checkout', DocVersion.doc_id == doc.id).first().username for doc in projectDocs]
-    except AttributeError:
-        checked_out_by = []
-
-    # Members & their user info
+    
+    # 3. Prepare data for template
+    # 3.1 Project documents with initial versions
+    project_docs = []
+    docversion_users = []
+    checked_out_by = []
+    
+    docs = Doc.query.filter_by(project_id=project_id).all()
+    for doc in docs:
+        initial_version = DocVersion.query.filter_by(
+            doc_id=doc.id,
+            stage='initial'
+        ).first()
+        
+        if initial_version:
+            project_docs.append({
+                'id': doc.id,
+                'filename': doc.filename
+            })
+            docversion_users.append(initial_version.user_id)
+            
+            # Get checkout information
+            checkout_version = DocVersion.query.filter_by(
+                doc_id=doc.id,
+                stage='checkout'
+            ).first()
+            checked_out_by.append(
+                User.query.get(checkout_version.user_id).username if checkout_version else ''
+            )
+    
+    # 3.2 Checked out documents for current user
+    checked_out_docs = []
+    for doc in docs:
+        checkout_version = DocVersion.query.filter_by(
+            doc_id=doc.id,
+            user_id=current_user.id,
+            stage='checkout'
+        ).first()
+        if checkout_version:
+            # Get the initial version to get the original user
+            initial_version = DocVersion.query.filter_by(
+                doc_id=doc.id,
+                stage='initial'
+            ).first()
+            checked_out_docs.append({
+                'id': doc.id,
+                'filename': doc.filename,
+                'user_id': current_user.id,
+                'initial_user_id': initial_version.user_id if initial_version else None
+            })
+    
+    # 3.3 Quality control documents
+    qc_docs = []
+    for doc in docs:
+        qc_version = DocVersion.query.filter_by(
+            doc_id=doc.id,
+            stage='qc'
+        ).first()
+        if qc_version:
+            qc_docs.append({
+                'id': doc.id,
+                'filename': doc.filename,
+                'user_id': qc_version.user_id,
+                'username': User.query.get(qc_version.user_id).username
+            })
+    
+    # 3.4 Project members
     memberships = Projectuser.query.filter_by(project_id=project_id).all()
-    members = memberships  # Each membership row
     member_names = [User.query.get(m.user_id).username for m in memberships]
-
-    # Example: Additional variables for the second content block
-    # (Slightly different from the first because your template references
-    #  `project_docs` differently than `projectDocs`. You may unify them.)
-    project_docs = projectDocs  
-    current_year = datetime.today().date().strftime("%Y-%m-%d")  # or datetime.now().year, etc.
-
-    # 5. Determine the user’s permission for the template
-    permission = membership.permission  # 'admin', 'edit', 'annotate', 'read', etc.
-    zipped_pairs = list(zip(members, member_names))
-
-
-    # 6. Render the template with the data
+    zipped_pairs = list(zip(memberships, member_names))
+    
+    # 4. Render template
     return render_template(
-        "project.html",  
-        form=form,            
+        "project.html",
+        form=form,
         project_id=project.id,
         project_name=project.project_name,
-        permission=permission,
-        projectDocs=projectDocs,
-        annotatedDocs=annotatedDocs,
-        qcDocs=qcDocs,
-        qcUploaders=qcUploaders,
-        qcUploaderIds=qcUploaderIds,
-        daDocs=daDocs,
-        daFilenames=daFilenames,
-        daUploaders=daUploaders,
+        permission=membership.permission,
+        projectDocs=project_docs,
+        docversion_users=docversion_users,
         checked_out_by=checked_out_by,
-        members=members,
+        checked_out_docs=checked_out_docs,
+        qc_docs=qc_docs,
+        members=memberships,
         member_names=member_names,
         zipped_pairs=zipped_pairs,
-        project_docs=project_docs,
         current_user=current_user,
-        current_year=current_year
+        current_year=datetime.today().date().strftime("%Y-%m-%d")
     )
 
 

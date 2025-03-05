@@ -34,92 +34,76 @@ function change_permission(project_id){
     let selectElements = document.querySelectorAll(`[id^="permission-"]`);
     for (let i=0; i <selectElements.length; i++){
         selectElements[i].addEventListener('change', (event) => {
-            console.log(`You like ${event.target.value}`);
             fetch(`/project/${project_id}`, {
                 method: 'POST',
-                body: JSON.stringify({"remove_member_id": 0,
-                "new_member_name": "",
-                "update_doc_id": 0,
-                "update_doc_project_id": 0,
-                "edit_permission_member_id": parseInt(selectElements[i].id.replace('permission-', '')),
-                "edit_permission": selectElements[i].value,
-                "annotated_doc_id": 0,
-                "delete_annot_doc_id": 0,
-                "add_qc_doc_id": 0,
-                "rm_qc_doc_id": 0,
-                "add_da_doc_id": 0,
-                "rm_da_doc_id": 0,})
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "remove_member_id": 0,
+                    "new_member_name": "",
+                    "update_doc_id": 0,
+                    "update_doc_project_id": 0,
+                    "edit_permission_member_id": parseInt(selectElements[i].id.replace('permission-', '')),
+                    "edit_permission": selectElements[i].value,
+                    "annotated_doc_id": 0,
+                    "delete_annot_doc_id": 0,
+                    "add_qc_doc_id": 0,
+                    "rm_qc_doc_id": 0,
+                    "add_da_doc_id": 0,
+                    "rm_da_doc_id": 0,
+                })
             }).then(function (response) {
                 return response.json();
-            }).then(function (data) {
             }).catch(function(error){
-                console.log("Fetch error: "+ error);
+                console.error("Fetch error:", error);
             });
         });
     }
 }
 
+// Project page functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Navigation handling
-    const navLinks = document.querySelectorAll('.nav-link[data-section]');
-    const contentSections = document.querySelectorAll('.content-section');
-
+    // Function to show a section and hide others
     function showSection(sectionId) {
         // Hide all sections
-        contentSections.forEach(section => {
+        document.querySelectorAll('.content-section').forEach(section => {
             section.classList.remove('active');
         });
-
-        // Show selected section
+        
+        // Show the selected section
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
             targetSection.classList.add('active');
         }
-
-        // Update active state in navigation
-        navLinks.forEach(link => {
+        
+        // Update active state of navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
             if (link.getAttribute('data-section') === sectionId) {
                 link.classList.add('active');
-            } else {
-                link.classList.remove('active');
             }
         });
-
-        // Store active section in localStorage
+        
+        // Store the active section in localStorage
         localStorage.setItem('activeSection', sectionId);
     }
-
+    
     // Add click handlers to navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const sectionId = link.getAttribute('data-section');
-            showSection(sectionId);
-        });
-    });
-
-    // Show last active section or default to documents
-    const lastActiveSection = localStorage.getItem('activeSection') || 'documents';
-    showSection(lastActiveSection);
-
-    // Handle collapsible sections
-    const collapsibleButtons = document.querySelectorAll('[data-toggle="collapse"]');
-    collapsibleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.classList.toggle('show');
-                const icon = button.querySelector('i');
-                if (icon) {
-                    icon.classList.toggle('fa-chevron-down');
-                    icon.classList.toggle('fa-chevron-up');
-                }
+            const sectionId = this.getAttribute('data-section');
+            if (sectionId) {
+                showSection(sectionId);
             }
         });
     });
-
-    // Export functions for external use
-    window.display_permission = display_permission;
-    window.change_permission = change_permission;
+    
+    // Show the last active section or default to documents
+    const lastActiveSection = localStorage.getItem('activeSection') || 'documents';
+    showSection(lastActiveSection);
+    
+    // Handle permission changes
+    change_permission(project_id);
 });

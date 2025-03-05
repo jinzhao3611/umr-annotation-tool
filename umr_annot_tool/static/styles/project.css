@@ -150,17 +150,12 @@
     background-color: #ebf5fb;
 }
 
-#checked-out-documents {
-    margin-top: -1rem;
-    border-top: none;
+.document-item.qc {
+    background-color: #f0f9f0;
 }
 
-#checked-out-documents .section-header {
-    background-color: #ebf5fb;
-}
-
-#checked-out-documents .document-link i {
-    color: #2980b9;
+.document-item.qc .document-link i {
+    color: #27ae60;
 }
 
 .document-info {
