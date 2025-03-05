@@ -131,8 +131,26 @@
                             </a>
                             <span class="document-meta">Checked out by: {{ checked_out_by[loop.index0] }}</span>
                         </div>
-                        {% if permission in ['admin'] %}
                         <div class="document-actions">
+                            {% if permission in ['admin', 'edit', 'annotate'] %}
+                            <form action="{{ url_for('users.project', project_id=project_id)}}" method="post" class="d-inline">
+                                <input type="hidden" name="remove_member_id" value=0>
+                                <input type="hidden" name="new_member_name" value="">
+                                <input type="hidden" name="delete_doc_id" value=0>
+                                <input type="hidden" name="annotated_doc_id" value={{ projectDoc.id }}>
+                                <input type="hidden" name="delete_annot_doc_id" value=0>
+                                <input type="hidden" name="add_qc_doc_id" value=0>
+                                <input type="hidden" name="rm_qc_doc_id" value=0>
+                                <input type="hidden" name="rm_qc_user_id" value=0>
+                                <input type="hidden" name="add_da_doc_id" value=0>
+                                <input type="hidden" name="rm_da_doc_id" value=0>
+                                <input type="hidden" name="rm_da_user_id" value=0>
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-pencil-alt"></i> Checkout for Annotation
+                                </button>
+                            </form>
+                            {% endif %}
+                            {% if permission in ['admin'] %}
                             <form method="POST" action="" class="d-inline">
                                 <input type="hidden" name="delete_doc_id" value={{ projectDoc.id }}>
                                 <button type="submit" class="btn btn-sm btn-danger" 
@@ -140,9 +158,39 @@
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- My Checked Out Documents Section -->
+        <section id="checked-out-documents" class="content-section active">
+            <div class="section-header">
+                <h2>My Checked Out Documents</h2>
+                <div class="section-actions">
+                    <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#checkedOutCollapse">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="checkedOutCollapse" class="collapse show">
+                <div class="document-list">
+                    {% for projectDoc in projectDocs %}
+                        {% if checked_out_by[loop.index0] == current_user.username %}
+                        <div class="document-item checked-out">
+                            <div class="document-info">
+                                <a href="{{ url_for('main.sentlevelview', doc_sent_id=projectDoc.id ~ '_1_' ~ dummy_user_id ) }}" 
+                                   title="{{ projectDoc.content }}" class="document-link">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    <span>{{projectDoc.filename}}</span>
+                                </a>
+                                <span class="document-meta">Checked out by you</span>
+                            </div>
                         </div>
                         {% endif %}
-                    </div>
                     {% endfor %}
                 </div>
             </div>
