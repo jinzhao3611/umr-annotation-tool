@@ -58,3 +58,68 @@ function change_permission(project_id){
         });
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Navigation handling
+    const navLinks = document.querySelectorAll('.nav-link[data-section]');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    function showSection(sectionId) {
+        // Hide all sections
+        contentSections.forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Show selected section
+        const targetSection = document.getElementById(sectionId);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+
+        // Update active state in navigation
+        navLinks.forEach(link => {
+            if (link.getAttribute('data-section') === sectionId) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // Store active section in localStorage
+        localStorage.setItem('activeSection', sectionId);
+    }
+
+    // Add click handlers to navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute('data-section');
+            showSection(sectionId);
+        });
+    });
+
+    // Show last active section or default to documents
+    const lastActiveSection = localStorage.getItem('activeSection') || 'documents';
+    showSection(lastActiveSection);
+
+    // Handle collapsible sections
+    const collapsibleButtons = document.querySelectorAll('[data-toggle="collapse"]');
+    collapsibleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.classList.toggle('show');
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                }
+            }
+        });
+    });
+
+    // Export functions for external use
+    window.display_permission = display_permission;
+    window.change_permission = change_permission;
+});

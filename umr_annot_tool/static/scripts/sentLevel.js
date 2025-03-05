@@ -2859,20 +2859,8 @@ function initializeLexicon(frames, citations) {
     } catch (e) {
         console.log("Error parsing citation_dict: " + e);
     }
-
 }
 
-function colorAnnotatedSents(annotated_sent_ids) {
-    let annotated_sent_ids_arr;
-    try {
-        annotated_sent_ids_arr = JSON.parse(annotated_sent_ids);
-    } catch (e) {
-        console.log("Error parsing annotated_sent_ids: " + e);
-    }
-    annotated_sent_ids_arr.forEach(n => {
-        document.getElementById(`sentid-${n}`).setAttribute("style", "color: green");
-    })
-}
 
 /**
  * this is a temporary function, the purpose is to test execute command function

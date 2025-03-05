@@ -1,0 +1,310 @@
+/* General Layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container-fluid {
+    height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.split-container {
+    height: calc(100vh - 40px);
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Split Panels */
+.split {
+    position: relative;
+    height: 100%;
+    min-height: 0; /* Important for Firefox */
+}
+
+.left-panel {
+    padding-right: 15px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.right-panel {
+    padding-left: 15px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* Scrollbar Styling */
+.split::-webkit-scrollbar {
+    width: 8px;
+}
+
+.split::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.split::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.split::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Make sure cards don't create horizontal scroll */
+.card {
+    max-width: 100%;
+}
+
+/* Quick Actions */
+.quick-actions .btn-group {
+    gap: 8px;
+}
+
+.quick-actions .btn {
+    flex: 1;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* Navigation */
+.navigation-controls {
+    display: flex;
+    align-items: center;
+}
+
+.navigation-controls .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Sentence List */
+.sentences-container {
+    max-height: none;
+    overflow: visible;
+}
+
+.list-group-item-action {
+    padding: 0.5rem 1rem;
+    border-left: 3px solid transparent;
+}
+
+.list-group-item-action:hover {
+    background-color: #f8f9fa;
+}
+
+.list-group-item-action.active {
+    background-color: #e9ecef;
+    border-left-color: #007bff;
+    color: inherit;
+}
+
+.list-group-item-action small {
+    width: 30px;
+    display: inline-block;
+}
+
+/* Current Sentence */
+.current-sentence {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Annotation Preview */
+.annotation-preview {
+    font-family: monospace;
+    white-space: pre-wrap;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    min-height: 200px;
+    margin-bottom: 15px;
+}
+
+/* Alignments */
+.alignments-display {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 150px;
+}
+
+.alignment-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.alignment-item .token {
+    font-weight: 600;
+    color: #495057;
+}
+
+.alignment-item .concept {
+    color: #6c757d;
+}
+
+/* Gutter (Split.js) */
+.gutter {
+    background-color: #eee;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.gutter:hover {
+    background-color: #ddd;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+}
+
+/* Make tools more compact in right panel */
+.right-panel .card-body {
+    padding: 0.75rem;
+}
+
+.right-panel .form-group {
+    margin-bottom: 0.5rem;
+}
+
+.right-panel .input-group {
+    margin-bottom: 0.5rem;
+}
+
+.right-panel .btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Cards */
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+}
+
+.card-header h5 {
+    margin: 0;
+    color: #495057;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Translations */
+.translation-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.translation-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.translation-item .badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Notes */
+.notes-box {
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.notes-box .badge {
+    margin-right: 8px;
+}
+
+/* Document Info */
+.card-header[role="button"] {
+    cursor: pointer;
+}
+
+.card-header[role="button"]:hover {
+    background-color: #f0f0f0;
+}
+
+/* Tabs */
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #6c757d;
+    padding: 0.5rem 1rem;
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+    color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+    background: none;
+}
+
+/* Additional Actions */
+.additional-actions {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 15px 0;
+    border-top: 1px solid #dee2e6;
+}
+
+.additional-actions .btn-group {
+    gap: 5px;
+}
+
+.additional-actions .btn {
+    flex: 1;
+    white-space: nowrap;
+}
+
+/* Tables */
+.table-sm {
+    margin-bottom: 0;
+}
+
+.table-sm th {
+    font-weight: 600;
+    color: #495057;
+    width: 30%;
+    padding: 0.5rem;
+}
+
+.table-sm td {
+    color: #6c757d;
+    padding: 0.5rem;
+} 

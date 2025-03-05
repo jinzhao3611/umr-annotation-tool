@@ -383,16 +383,27 @@ def sentlevelview(doc_sent_id):
         curr_annotation = None
         curr_sent_umr = {}
         curr_alignment = {}
+        curr_annotation_string = ''  # Initialize empty string
         if doc_version and current_sent:
             curr_annotation = Annotation.query.filter_by(
                 doc_version_id=doc_version.id,
                 sent_id=current_sent.id
             ).first()
+            logger.info(f"Found annotation: {curr_annotation is not None}")
             if curr_annotation:
+                logger.info(f"Raw sent_annot: {curr_annotation.sent_annot}")
+                logger.info(f"Raw sent_annot type: {type(curr_annotation.sent_annot)}")
                 try:
+                    # Handle sent_annot
                     curr_sent_umr = curr_annotation.sent_annot if curr_annotation.sent_annot else {}
+                    logger.info(f"Initial curr_sent_umr: {curr_sent_umr}")
                     if isinstance(curr_sent_umr, str):
                         curr_sent_umr = json.loads(curr_sent_umr)
+                        logger.info(f"After json.loads curr_sent_umr: {curr_sent_umr}")
+                    curr_annotation_string = curr_annotation.sent_annot if curr_annotation.sent_annot else ''
+                    logger.info(f"Final curr_annotation_string: {curr_annotation_string}")
+                    
+                    # Handle alignment
                     curr_alignment = curr_annotation.alignment if curr_annotation.alignment else {}
                     if isinstance(curr_alignment, str):
                         curr_alignment = json.loads(curr_alignment)
@@ -400,19 +411,22 @@ def sentlevelview(doc_sent_id):
                     logger.error(f"Error decoding annotation JSON: {str(e)}")
                     curr_sent_umr = {}
                     curr_alignment = {}
+                    curr_annotation_string = ''
         
         # Prepare info2display
         class Info2Display:
             def __init__(self):
                 self.sents = []
-                self.sent_htmls = []
+                self.sent_htmls = []  # For individual sentence display
+                self.sents_html = ''  # For overview of all sentences
                 self.df_htmls = []
                 self.gls = []
                 self.notes = []
         
         info2display = Info2Display()
         info2display.sents = [sent.content for sent in sentences]
-        info2display.sent_htmls = [sent.content for sent in sentences]
+        info2display.sent_htmls = [sent.content for sent in sentences]  # Individual sentences
+        info2display.sents_html = '<br>'.join([f'<span id="sentid-{sent.id}">{i+1}. {sent.content}</span>' for i, sent in enumerate(sentences)])  # Overview with numbers
         
         # Get frame dictionary based on project language
         frame_dict = {}
@@ -426,16 +440,21 @@ def sentlevelview(doc_sent_id):
         except (IOError, json.JSONDecodeError) as e:
             logger.error(f"Error loading frame dictionary: {str(e)}")
         
-        # Mark which sentences have been annotated
-        annotated_sent_ids = []
-        if doc_version:
-            annotations = Annotation.query.filter_by(doc_version_id=doc_version.id).all()
-            annotated_sent_ids = [str(a.sent_id) for a in annotations if a.sent_annot]
+        # Get partial graphs for this project
+        partial_graphs = {}
+        try:
+            pg = Partialgraph.query.filter_by(project_id=project.id).first()
+            if pg:
+                partial_graphs = pg.partial_umr if pg.partial_umr else {}
+        except Exception as e:
+            logger.error(f"Error loading partial graphs: {str(e)}")
+            partial_graphs = {}
         
         # Ensure all data is JSON serializable
         curr_sent_umr = json.loads(json.dumps(curr_sent_umr))
         curr_alignment = json.loads(json.dumps(curr_alignment))
         frame_dict = json.loads(json.dumps(frame_dict))
+        partial_graphs_json = json.dumps(partial_graphs)
         
         return render_template('sentlevelview.html',
                             doc_id=doc_id,
@@ -450,9 +469,9 @@ def sentlevelview(doc_sent_id):
                             info2display=info2display,
                             frame_dict=frame_dict,
                             curr_sent_umr=curr_sent_umr,
-                            curr_annotation_string=curr_annotation.sent_annot if curr_annotation else '',
+                            curr_annotation_string=curr_annotation_string,
                             curr_alignment=curr_alignment,
-                            annotated_sent_ids=','.join(annotated_sent_ids))
+                            partial_graphs_json=partial_graphs_json)
                             
     except (ValueError, IndexError) as e:
         logger.error(f"Error processing document ID or sentence number: {str(e)}")
