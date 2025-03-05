@@ -126,6 +126,13 @@
         <section id="documents" class="content-section active">
             <div class="section-header">
                 <h2>Documents</h2>
+                {% if permission in ['admin'] %}
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="window.location.href='{{ url_for('main.upload_document', current_project_id=project_id) }}'">
+                        <i class="fas fa-upload"></i> Upload Document
+                    </button>
+                </div>
+                {% endif %}
             </div>
             <div class="document-list">
                 {% for projectDoc in projectDocs %}
