@@ -88,6 +88,7 @@ class CreateProjectForm(FlaskForm):
     def validate_projectname(self, projectname):
         # Check both Project and Projectuser tables
         project = Project.query.filter_by(project_name=projectname.data).first()
-        if project:
-            raise ValidationError(f'This project name already exists. Please choose a different one.')
+        projectuser = Projectuser.query.filter_by(project_name=projectname.data).first()
+        if project or projectuser:
+            raise ValidationError(f'Name "{projectname.data}" already exists, choose another one.')
 

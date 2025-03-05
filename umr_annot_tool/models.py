@@ -146,14 +146,13 @@ class Annotation(db.Model):
 
     sent_annot = db.Column(db.Text, nullable=False)
     doc_annot = db.Column(db.Text, nullable=False)
-    actions = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='[]')
+    actions = db.Column(JSON, nullable=False, server_default='{}')
     alignment = db.Column(MutableDict.as_mutable(JSON), nullable=False, server_default='{}')
 
     doc_version_id = db.Column(db.Integer, db.ForeignKey('doc_version.id'), nullable=False)
     sent_id = db.Column(db.Integer, db.ForeignKey('sent.id'), nullable=False)
 
     sent = db.relationship("Sent", backref="annotations", lazy=True)
-
 
     def __repr__(self):
         return f"Annotation(id={self.id}, doc_version_id={self.doc_version_id}, sent_id={self.sent_id})"
