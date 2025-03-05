@@ -65,7 +65,7 @@ class Project(db.Model):
     __tablename__ = "project"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    project_name = db.Column(db.String(100), nullable=False)
+    project_name = db.Column(db.String(100), nullable=False, unique=True)
     language = db.Column(db.String(50), nullable=False)
 
     created_by_user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=True)

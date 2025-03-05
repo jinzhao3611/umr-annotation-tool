@@ -19,10 +19,46 @@
                         {{ form.projectname(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
+                <div class="form-group">
+                    {{ form.language.label(class="form-control-label") }}
+                    {% if form.language.errors %}
+                        {{ form.language(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.language.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.language(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group" id="custom-language-group" style="display: none;">
+                    {{ form.custom_language.label(class="form-control-label") }}
+                    {% if form.custom_language.errors %}
+                        {{ form.custom_language(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.custom_language.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.custom_language(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
         </form>
     </div>
+    <script>
+        document.getElementById('language').addEventListener('change', function() {
+            var customLanguageGroup = document.getElementById('custom-language-group');
+            if (this.value === 'other') {
+                customLanguageGroup.style.display = 'block';
+            } else {
+                customLanguageGroup.style.display = 'none';
+            }
+        });
+    </script>
 {% endblock content %}
