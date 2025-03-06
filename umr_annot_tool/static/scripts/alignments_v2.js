@@ -153,9 +153,9 @@ function renderAlignments() {
                     <span class="variable badge bg-primary me-2">${variable}</span>
                     <div class="alignments-list d-flex flex-wrap">
                         ${alignments.map(alignment => `
-                            <div class="alignment-item d-flex align-items-center me-3 mb-1">
-                                <span class="alignment badge bg-secondary me-2" onclick="makeEditable(this, '${variable}', '${alignment}')">${alignment}</span>
-                                <button class="btn btn-sm btn-danger ms-2" onclick="deleteAlignmentValue('${variable}', '${alignment}')">×</button>
+                            <div class="alignment-item d-flex align-items-center me-3 mb-1" style="gap: 15px;">
+                                <span class="alignment badge bg-secondary" onclick="makeEditable(this, '${variable}', '${alignment}')">${alignment}</span>
+                                <button class="btn btn-sm btn-danger" onclick="deleteAlignmentValue('${variable}', '${alignment}')">×</button>
                             </div>
                         `).join('')}
                     </div>

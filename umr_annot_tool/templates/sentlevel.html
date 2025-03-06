@@ -3,7 +3,7 @@
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
-    <script src="{{ url_for('static', filename='scripts/alignments.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/alignments_v2.js') }}"></script>
     <!-- Initialize state before loading any other scripts -->
     <script>
         window.state = {
@@ -223,15 +223,15 @@
                             {% for variable, alignments in curr_alignment.items() %}
                             <div class="alignment-item" data-variable="{{ variable }}">
                                 <div class="d-flex align-items-center mb-2">
-                                    <span class="variable badge bg-primary" onclick="makeEditable(this, '{{ variable }}')">{{ variable }}</span>
-                                </div>
-                                <div class="alignments-list">
-                                    {% for alignment in alignments %}
-                                    <div class="alignment-item d-flex justify-content-between align-items-center mb-1">
-                                        <span class="alignment badge bg-secondary me-1" onclick="makeEditable(this, '{{ variable }}', '{{ alignment }}')">{{ alignment }}</span>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteAlignmentValue('{{ variable }}', '{{ alignment }}')">×</button>
+                                    <span class="variable badge bg-primary me-2">{{ variable }}</span>
+                                    <div class="alignments-list d-flex flex-wrap">
+                                        {% for alignment in alignments %}
+                                        <div class="alignment-item d-flex justify-content-between align-items-center me-2 mb-1">
+                                            <span class="alignment badge bg-secondary me-1" onclick="makeEditable(this, '{{ variable }}', '{{ alignment }}')">{{ alignment }}</span>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteAlignmentValue('{{ variable }}', '{{ alignment }}')">×</button>
+                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    {% endfor %}
                                 </div>
                             </div>
                             {% endfor %}
