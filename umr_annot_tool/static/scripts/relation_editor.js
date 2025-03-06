@@ -3,6 +3,8 @@ console.log('relation_editor.js loaded');
 // Global variables to store UMR relations and their values
 let umrRelations = [];
 let umrRelationValues = {};
+// Global variable to track in-place edit mode
+let inPlaceEditMode = false;
 
 // Initialize the relation editor functionality
 function initRelationEditor() {
@@ -48,6 +50,9 @@ function initRelationEditor() {
     }
     
     try {
+        // Create and add the in-place edit toggle button
+        addInPlaceEditToggle();
+        
         // Make relations and values clickable
         makeRelationsClickable(annotationElement);
         makeValuesClickable(annotationElement);
@@ -78,6 +83,200 @@ function initRelationEditor() {
     }
 }
 
+// Function to add in-place edit toggle button
+function addInPlaceEditToggle() {
+    // Find a good place to add the toggle
+    const container = document.querySelector('.annotation-container') || document.querySelector('#amr');
+    if (!container) {
+        console.error('Could not find container for edit toggle button');
+        return;
+    }
+    
+    // Create toggle button container
+    const toggleContainer = document.createElement('div');
+    toggleContainer.className = 'edit-toggle-container';
+    toggleContainer.style.marginBottom = '15px';
+    toggleContainer.style.marginTop = '10px';
+    toggleContainer.style.display = 'flex';
+    toggleContainer.style.alignItems = 'center';
+    toggleContainer.style.padding = '10px';
+    toggleContainer.style.backgroundColor = '#f8f9fa';
+    toggleContainer.style.borderRadius = '5px';
+    toggleContainer.style.border = '1px solid #ddd';
+    
+    // Create the toggle switch
+    const toggleSwitch = document.createElement('label');
+    toggleSwitch.className = 'switch';
+    toggleSwitch.style.position = 'relative';
+    toggleSwitch.style.display = 'inline-block';
+    toggleSwitch.style.width = '60px';
+    toggleSwitch.style.height = '30px';
+    toggleSwitch.style.marginRight = '15px';
+    
+    // Create the checkbox input
+    const toggleInput = document.createElement('input');
+    toggleInput.type = 'checkbox';
+    toggleInput.id = 'edit-mode-toggle';
+    toggleInput.style.opacity = '0';
+    toggleInput.style.width = '0';
+    toggleInput.style.height = '0';
+    
+    // Create the slider
+    const toggleSlider = document.createElement('span');
+    toggleSlider.className = 'slider';
+    toggleSlider.style.position = 'absolute';
+    toggleSlider.style.cursor = 'pointer';
+    toggleSlider.style.top = '0';
+    toggleSlider.style.left = '0';
+    toggleSlider.style.right = '0';
+    toggleSlider.style.bottom = '0';
+    toggleSlider.style.backgroundColor = '#ccc';
+    toggleSlider.style.transition = '.4s';
+    toggleSlider.style.borderRadius = '34px';
+    
+    // Create status indicator text that will change with toggle state
+    const statusIndicator = document.createElement('span');
+    statusIndicator.id = 'toggle-status';
+    statusIndicator.textContent = 'OFF';
+    statusIndicator.style.position = 'absolute';
+    statusIndicator.style.right = '7px';
+    statusIndicator.style.top = '6px';
+    statusIndicator.style.fontWeight = 'bold';
+    statusIndicator.style.fontSize = '12px';
+    statusIndicator.style.color = '#666';
+    statusIndicator.style.textShadow = '0 0 2px white';
+    toggleSlider.appendChild(statusIndicator);
+    
+    // Add the slider before/after styles as inline CSS
+    const sliderStyle = document.createElement('style');
+    sliderStyle.textContent = `
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        input:checked + .slider #toggle-status {
+            left: 8px;
+            right: auto;
+            color: white;
+        }
+    `;
+    document.head.appendChild(sliderStyle);
+    
+    // Create the label text with mode icons
+    const editModeIcon = document.createElement('span');
+    editModeIcon.innerHTML = '🔽'; // Dropdown icon
+    editModeIcon.style.marginRight = '5px';
+    
+    const toggleLabel = document.createElement('span');
+    toggleLabel.innerHTML = '<b>In-place Edit Mode</b>';
+    toggleLabel.style.fontSize = '1.1em';
+    
+    // Add mode description container
+    const modeDescriptionContainer = document.createElement('div');
+    modeDescriptionContainer.style.display = 'flex';
+    modeDescriptionContainer.style.flexDirection = 'column';
+    modeDescriptionContainer.style.marginLeft = '10px';
+    
+    // Current mode indicator that will update with toggle state
+    const currentModeText = document.createElement('div');
+    currentModeText.id = 'current-mode-text';
+    currentModeText.style.fontWeight = 'bold';
+    currentModeText.style.marginBottom = '3px';
+    currentModeText.innerHTML = '<span style="color:#28a745">Branch Operation Mode</span> active (add/delete/move)';
+    
+    // Add description text
+    const descriptionText = document.createElement('div');
+    descriptionText.style.fontSize = '0.85em';
+    descriptionText.style.color = '#666';
+    descriptionText.innerHTML = 'Toggle to switch between dropdown editing and branch operations';
+    
+    // Build the toggle switch
+    toggleSwitch.appendChild(toggleInput);
+    toggleSwitch.appendChild(toggleSlider);
+    
+    // Add elements to mode description container
+    modeDescriptionContainer.appendChild(currentModeText);
+    modeDescriptionContainer.appendChild(descriptionText);
+    
+    // Add the toggle and label to the container
+    toggleContainer.appendChild(toggleSwitch);
+    toggleContainer.appendChild(editModeIcon);
+    toggleContainer.appendChild(toggleLabel);
+    toggleContainer.appendChild(modeDescriptionContainer);
+    
+    // Add the toggle container before the annotation
+    container.insertBefore(toggleContainer, container.firstChild);
+    
+    // Add event listener for the toggle
+    toggleInput.addEventListener('change', function() {
+        inPlaceEditMode = this.checked;
+        updateToggleAppearance(this.checked, editModeIcon, currentModeText, statusIndicator);
+        updateEditModeStatus();
+        
+        // Remove any open dropdowns when toggling
+        const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
+        dropdowns.forEach(dropdown => dropdown.remove());
+    });
+    
+    // Initialize toggle appearance
+    updateToggleAppearance(false, editModeIcon, currentModeText, statusIndicator);
+}
+
+// Function to update toggle button appearance
+function updateToggleAppearance(isChecked, iconElement, modeTextElement, statusElement) {
+    if (isChecked) {
+        // ON state - Dropdown Edit Mode
+        iconElement.innerHTML = '🔽'; // Dropdown icon
+        modeTextElement.innerHTML = '<span style="color:#2196F3">Dropdown Edit Mode</span> active (edit relations/values)';
+        statusElement.textContent = 'ON';
+    } else {
+        // OFF state - Branch Operation Mode
+        iconElement.innerHTML = '🌿'; // Branch icon
+        modeTextElement.innerHTML = '<span style="color:#28a745">Branch Operation Mode</span> active (add/delete/move)';
+        statusElement.textContent = 'OFF';
+    }
+}
+
+// Function to update UI based on current edit mode
+function updateEditModeStatus() {
+    const annotationElement = document.querySelector('#amr pre');
+    if (!annotationElement) return;
+    
+    // Visual indicator for edit mode
+    if (inPlaceEditMode) {
+        annotationElement.style.border = '2px solid #2196F3';
+        annotationElement.style.borderRadius = '4px';
+        annotationElement.style.padding = '8px';
+        showNotification('In-place Edit Mode is ON. Click on relations and values to edit. Branch operations disabled.', 'info', 3000);
+    } else {
+        annotationElement.style.border = '2px solid #28a745';
+        annotationElement.style.borderRadius = '4px';
+        annotationElement.style.padding = '8px';
+        showNotification('In-place Edit Mode is OFF. Branch operations enabled (add/delete/move). Dropdowns disabled.', 'info', 3000);
+    }
+}
+
 // Function to make relations in the annotation clickable
 function makeRelationsClickable(annotationElement) {
     const text = annotationElement.textContent;
@@ -94,7 +293,10 @@ function makeRelationsClickable(annotationElement) {
     relationSpans.forEach(span => {
         span.addEventListener('click', function(event) {
             event.stopPropagation();
-            showRelationDropdown(span);
+            // Only show dropdown if edit mode is enabled
+            if (inPlaceEditMode) {
+                showRelationDropdown(span);
+            }
         });
     });
 }
@@ -150,8 +352,11 @@ function makeValuesClickable(annotationElement) {
     valueSpans.forEach(span => {
         span.addEventListener('click', function(event) {
             event.stopPropagation();
-            const relationName = span.getAttribute('data-relation');
-            showValueDropdown(span, relationName);
+            // Only show dropdown if edit mode is enabled
+            if (inPlaceEditMode) {
+                const relationName = span.getAttribute('data-relation');
+                showValueDropdown(span, relationName);
+            }
         });
     });
 }
@@ -586,9 +791,11 @@ function addBranchOperations(annotationElement) {
         deleteIcon.style.opacity = '0.6';
         deleteIcon.style.display = 'none'; // Hidden by default
         
-        // Show icon on hover
+        // Show icon on hover, but only if edit mode is OFF (for branch operations)
         span.addEventListener('mouseenter', () => {
-            deleteIcon.style.display = 'inline';
+            if (!inPlaceEditMode) {
+                deleteIcon.style.display = 'inline';
+            }
         });
         
         span.addEventListener('mouseleave', () => {
@@ -597,8 +804,10 @@ function addBranchOperations(annotationElement) {
         
         // Handle delete action
         deleteIcon.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevent triggering parent click events
-            confirmDeleteBranch(span);
+            if (!inPlaceEditMode) {
+                event.stopPropagation(); // Prevent triggering parent click events
+                confirmDeleteBranch(span);
+            }
         });
         
         // Insert the delete icon after the span
@@ -607,11 +816,14 @@ function addBranchOperations(annotationElement) {
     
     // Also add right-click context menu
     annotationElement.addEventListener('contextmenu', (event) => {
-        // Find if we right-clicked on a relation span
-        let target = event.target;
-        if (target.classList.contains('relation-span')) {
-            event.preventDefault(); // Prevent default context menu
-            showBranchContextMenu(target, event.clientX, event.clientY);
+        // Only enable context menu if edit mode is OFF (for branch operations)
+        if (!inPlaceEditMode) {
+            // Find if we right-clicked on a relation span
+            let target = event.target;
+            if (target.classList.contains('relation-span')) {
+                event.preventDefault(); // Prevent default context menu
+                showBranchContextMenu(target, event.clientX, event.clientY);
+            }
         }
     });
 }
@@ -622,6 +834,9 @@ let moveMode = false;
 
 // Function to show branch context menu
 function showBranchContextMenu(relationSpan, x, y) {
+    // Only show context menu if edit mode is enabled
+    if (inPlaceEditMode) return;
+    
     // Remove any existing context menus
     const existingMenus = document.querySelectorAll('.branch-context-menu');
     existingMenus.forEach(menu => menu.remove());
@@ -913,14 +1128,20 @@ function makeVariablesClickable(annotationElement) {
     const variableSpans = annotationElement.querySelectorAll('.variable-span');
     variableSpans.forEach(span => {
         span.addEventListener('contextmenu', (event) => {
-            event.preventDefault();
-            showVariableContextMenu(span, event.clientX, event.clientY);
+            // Only show context menu if edit mode is OFF (for branch operations)
+            if (!inPlaceEditMode) {
+                event.preventDefault();
+                showVariableContextMenu(span, event.clientX, event.clientY);
+            }
         });
     });
 }
 
 // Function to show context menu for variables
 function showVariableContextMenu(variableSpan, x, y) {
+    // Only show context menu if edit mode is enabled
+    if (inPlaceEditMode) return;
+    
     // Remove any existing context menus
     const existingMenus = document.querySelectorAll('.branch-context-menu');
     existingMenus.forEach(menu => menu.remove());
