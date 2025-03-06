@@ -64,46 +64,56 @@ function change_permission(project_id){
 
 // Project page functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to show a section and hide others
+    // Handle navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.content-section');
+
     function showSection(sectionId) {
         // Hide all sections
-        document.querySelectorAll('.content-section').forEach(section => {
+        sections.forEach(section => {
             section.classList.remove('active');
         });
-        
-        // Show the selected section
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-            targetSection.classList.add('active');
+
+        // Show selected section
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.classList.add('active');
         }
-        
+
         // Update active state of navigation links
-        document.querySelectorAll('.nav-link').forEach(link => {
+        navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('data-section') === sectionId) {
                 link.classList.add('active');
             }
         });
-        
-        // Store the active section in localStorage
+
+        // Store active section in localStorage
         localStorage.setItem('activeSection', sectionId);
     }
-    
+
     // Add click handlers to navigation links
-    document.querySelectorAll('.nav-link').forEach(link => {
+    navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const sectionId = this.getAttribute('data-section');
-            if (sectionId) {
-                showSection(sectionId);
-            }
+            showSection(sectionId);
         });
     });
-    
-    // Show the last active section or default to documents
+
+    // Show last active section or default to documents
     const lastActiveSection = localStorage.getItem('activeSection') || 'documents';
     showSection(lastActiveSection);
-    
+
+    // Handle document links
+    const documentLinks = document.querySelectorAll('.document-link');
+    documentLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Don't prevent default - let the link work normally
+            // This ensures the link navigates to the sentlevel page
+        });
+    });
+
     // Handle permission changes
     change_permission(project_id);
 });

@@ -123,14 +123,29 @@ def account():
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()
-    historyDocs = Doc.query.filter(Doc.user_id == current_user.id).all()
-    belongToProject=[]
-    for hds in historyDocs:
-        belongToProject.append(Project.query.get_or_404(hds.project_id).project_name)
-    # print("belongToProject: ", belongToProject)
+    historyDocs = []
+    belongToProject = []
+    
+    # Get all documents and their versions
+    docs = Doc.query.filter(Doc.user_id == current_user.id).all()
+    for doc in docs:
+        # Get the initial version of the document
+        initial_version = DocVersion.query.filter_by(
+            doc_id=doc.id,
+            stage='initial'
+        ).first()
+        
+        if initial_version:
+            historyDocs.append({
+                'id': doc.id,
+                'filename': doc.filename,
+                'doc_version_id': initial_version.id
+            })
+            belongToProject.append(Project.query.get_or_404(doc.project_id).project_name)
+    
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form, historyDocs=historyDocs,
-                           projects=projects, belongToProject=belongToProject)
+                         image_file=image_file, form=form, historyDocs=historyDocs,
+                         projects=projects, belongToProject=belongToProject)
 
 @login_required
 @users.route("/project/<int:project_id>", methods=['GET', 'POST'])
@@ -153,6 +168,9 @@ def project(project_id):
     ).first()
     if not membership:
         abort(403)
+    
+    # Get all documents for this project
+    docs = Doc.query.filter(Doc.project_id == project_id).all()
     
     # 2. Handle POST requests
     if request.method == 'POST':
@@ -222,13 +240,23 @@ def project(project_id):
         
         if annotated_doc_id.isdigit() and int(annotated_doc_id) != 0:
             doc_id = int(annotated_doc_id)
-            doc_version = DocVersion(
+            # Check if user already has a checkout version of this document
+            existing_checkout = DocVersion.query.filter_by(
                 doc_id=doc_id,
                 user_id=current_user.id,
                 stage='checkout'
-            )
-            db.session.add(doc_version)
-            msg_list.append(f"Document (id={doc_id}) added to My Annotations.")
+            ).first()
+            
+            if existing_checkout:
+                msg_list.append(f"Document (id={doc_id}) is already checked out by you.")
+            else:
+                doc_version = DocVersion(
+                    doc_id=doc_id,
+                    user_id=current_user.id,
+                    stage='checkout'
+                )
+                db.session.add(doc_version)
+                msg_list.append(f"Document (id={doc_id}) added to My Annotations.")
         
         if delete_annot_doc_id.isdigit() and int(delete_annot_doc_id) != 0:
             doc_id = int(delete_annot_doc_id)
@@ -257,33 +285,42 @@ def project(project_id):
             ).first()
             
             if checkout_version:
-                # Create new QC version
-                qc_version = DocVersion(
+                # Check if this document already has a QC version
+                existing_qc = DocVersion.query.filter_by(
                     doc_id=doc_id,
-                    user_id=current_user.id,
                     stage='qc'
-                )
-                db.session.add(qc_version)
-                db.session.flush()  # Get the new version's ID
+                ).first()
                 
-                # Copy annotations from checkout version to QC version
-                checkout_annotations = Annotation.query.filter_by(
-                    doc_version_id=checkout_version.id
-                ).all()
-                
-                for annotation in checkout_annotations:
-                    new_annotation = Annotation(
-                        doc_id=annotation.doc_id,
-                        doc_version_id=qc_version.id,
-                        real_sent_id=annotation.real_sent_id,
-                        sent_annot=annotation.sent_annot,
-                        sent_umr=annotation.sent_umr,
-                        doc_annot=annotation.doc_annot,
-                        user_id=current_user.id
+                if existing_qc:
+                    msg_list.append(f"Document (id={doc_id}) has already been submitted for Quality Control.")
+                else:
+                    # Create new QC version
+                    qc_version = DocVersion(
+                        doc_id=doc_id,
+                        user_id=current_user.id,
+                        stage='qc'
                     )
-                    db.session.add(new_annotation)
-                
-                msg_list.append(f"Document (id={doc_id}) submitted for Quality Control.")
+                    db.session.add(qc_version)
+                    db.session.flush()  # Get the new version's ID
+                    
+                    # Copy annotations from checkout version to QC version
+                    checkout_annotations = Annotation.query.filter_by(
+                        doc_version_id=checkout_version.id
+                    ).all()
+                    
+                    for annotation in checkout_annotations:
+                        new_annotation = Annotation(
+                            doc_id=annotation.doc_id,
+                            doc_version_id=qc_version.id,
+                            real_sent_id=annotation.real_sent_id,
+                            sent_annot=annotation.sent_annot,
+                            sent_umr=annotation.sent_umr,
+                            doc_annot=annotation.doc_annot,
+                            user_id=current_user.id
+                        )
+                        db.session.add(new_annotation)
+                    
+                    msg_list.append(f"Document (id={doc_id}) submitted for Quality Control.")
             else:
                 msg_list.append(f"Document (id={doc_id}) not found in your checked out documents.")
 
@@ -305,53 +342,39 @@ def project(project_id):
         return redirect(url_for('users.project', project_id=project_id))
     
     # 3. Prepare data for template
-    # 3.1 Project documents with initial versions
+    # 3.1 Project documents
     project_docs = []
     docversion_users = []
     checked_out_by = []
-    
-    docs = Doc.query.filter_by(project_id=project_id).all()
     for doc in docs:
         initial_version = DocVersion.query.filter_by(
             doc_id=doc.id,
             stage='initial'
         ).first()
-        
         if initial_version:
             project_docs.append({
                 'id': doc.id,
-                'filename': doc.filename
+                'filename': doc.filename,
+                'doc_version_id': initial_version.id
             })
             docversion_users.append(initial_version.user_id)
-            
-            # Get checkout information
-            checkout_version = DocVersion.query.filter_by(
-                doc_id=doc.id,
-                stage='checkout'
-            ).first()
-            checked_out_by.append(
-                User.query.get(checkout_version.user_id).username if checkout_version else ''
-            )
+            checked_out_by.append(User.query.get(initial_version.user_id).username if initial_version.user_id else None)
     
-    # 3.2 Checked out documents for current user
+    # 3.2 Checked out documents
     checked_out_docs = []
     for doc in docs:
-        checkout_version = DocVersion.query.filter_by(
+        checked_out_version = DocVersion.query.filter_by(
             doc_id=doc.id,
-            user_id=current_user.id,
-            stage='checkout'
+            stage='checkout',
+            user_id=current_user.id
         ).first()
-        if checkout_version:
-            # Get the initial version to get the original user
-            initial_version = DocVersion.query.filter_by(
-                doc_id=doc.id,
-                stage='initial'
-            ).first()
+        if checked_out_version:
             checked_out_docs.append({
                 'id': doc.id,
                 'filename': doc.filename,
                 'user_id': current_user.id,
-                'initial_user_id': initial_version.user_id if initial_version else None
+                'initial_user_id': initial_version.user_id if initial_version else None,
+                'doc_version_id': checked_out_version.id
             })
     
     # 3.3 Quality control documents
@@ -366,7 +389,8 @@ def project(project_id):
                 'id': doc.id,
                 'filename': doc.filename,
                 'user_id': qc_version.user_id,
-                'username': User.query.get(qc_version.user_id).username
+                'username': User.query.get(qc_version.user_id).username,
+                'doc_version_id': qc_version.id
             })
     
     # 3.4 Project members
@@ -817,6 +841,7 @@ def search():
                         'sent_annot': annotation.sent_annot,
                         'doc_annot': annotation.doc_annot,
                         'doc_id': annotation.doc_id,
+                        'doc_version_id': annotation.doc_version_id,
                         'sent_id': sent.id,
                         'user_id': annotation.user_id,
                         'match_type': 'sentence'
@@ -874,6 +899,7 @@ def search():
                     'sent_annot': annotation.sent_annot,
                     'doc_annot': annotation.doc_annot,
                     'doc_id': annotation.doc_id,
+                    'doc_version_id': annotation.doc_version_id,
                     'sent_id': sent.id,
                     'user_id': annotation.user_id,
                     'match_type': 'annotation'

@@ -124,6 +124,6 @@
         </div>
     </form>
 
-    <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_sent_id=doc_id ~ '_' ~ '1' ~'_' ~ current_user.id ) }}">sent-level-annot</a>
+    <a class="btn btn-outline-secondary" id="annot-button" title="click to do sent-level annotation" href="{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=1) }}">sent-level-annot</a>
 
 {% endblock content2 %}

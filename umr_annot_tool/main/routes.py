@@ -229,7 +229,6 @@ def upload_document(current_project_id):
     if not permission:
         return False
     
-    
     form = UploadForm()
     sent_annots = []
     doc_annots  = []
@@ -272,160 +271,120 @@ def upload_document(current_project_id):
     logger.info("Rendering upload form")
     return render_template('upload_document.html', title='Upload Document', form=form, sent_annots=sent_annots, doc_annots=doc_annots, doc_id=doc_id)
 
-@main.route("/upload_lexicon/<int:current_project_id>", methods=['GET', 'POST'])
-def upload_lexicon(current_project_id):
-    pass
-
-@main.route("/lexiconlookup/<int:project_id>/<int:doc_id>/<int:snt_id>", methods=['GET', 'POST'])
+@main.route("/sentlevel/<int:doc_version_id>/<int:sent_id>", methods=['GET', 'POST'])
 @login_required
-def lexiconlookup(project_id, doc_id, snt_id):
-    """Handle lexicon lookup and editing."""
-    try:
-        # Get the project
-        project = Project.query.get_or_404(project_id)
-        
-        # Get the lexicon for this project
-        lexicon = Lexicon.query.filter_by(project_id=project_id).first()
-        if not lexicon:
-            flash('No lexicon found for this project', 'warning')
-            return redirect(url_for('main.sentlevel', doc_sent_id=f"{doc_id}_{snt_id}_{current_user.id}"))
-        
-        # Get the document and sentence
-        doc = Doc.query.get_or_404(doc_id)
-        sent = Sent.query.filter_by(doc_id=doc_id).order_by(Sent.id).all()[snt_id - 1]
-        
-        return render_template('lexicon_lookup.html',
-                            title='Lexicon Lookup',
-                            project=project,
-                            lexicon=lexicon.data,
-                            doc=doc,
-                            sent=sent,
-                            snt_id=snt_id)
-                            
-    except Exception as e:
-        logger.error(f"Error in lexicon lookup: {str(e)}", exc_info=True)
-        flash('Error accessing lexicon', 'danger')
-        return redirect(url_for('main.sentlevel', doc_sent_id=f"{doc_id}_{snt_id}_{current_user.id}"))
-
-@main.route("/sentlevel/<string:doc_sent_id>", methods=['GET', 'POST'])
-@login_required
-def sentlevel(doc_sent_id):
-    """Handle sentence-level annotation view."""
+def sentlevel(doc_version_id, sent_id):
+    """Handle sentence-level annotation view.
+    
+    Args:
+        doc_version_id (int): The ID of the document version
+        sent_id (int): The ID of the sentence to display
+    """
     logger = logging.getLogger(__name__)
+    
     try:
-        # Log the current user information
-        logger.info(f"Current user ID: {current_user.id if current_user else 'No current user'}")
+        # Get the document version and verify it exists
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        logger.info(f"Found document version: {doc_version_id}")
         
-        # Parse the doc_sent_id string to get doc_id, sent_id, and user_id
-        parts = doc_sent_id.split('_')
-        if len(parts) < 2:  # Need at least doc_id and sent_id
-            flash('Invalid document ID format - need at least document ID and sentence ID', 'danger')
+        # Get the document and project from the doc_version
+        doc = doc_version.doc
+        if not doc:
+            logger.error(f"Document not found for version {doc_version_id}")
+            flash('Document not found', 'danger')
+            return redirect(url_for('users.account'))
+            
+        project = Project.query.get_or_404(doc.project_id)
+        logger.info(f"Found project: {project.project_name}")
+        
+        # Check if user has permission to access this document
+        project_user = Projectuser.query.filter_by(
+            project_id=project.id,
+            user_id=current_user.id
+        ).first()
+        
+        if not project_user:
+            logger.error(f"User {current_user.id} does not have permission to access project {project.id}")
+            flash('You do not have permission to access this document', 'danger')
             return redirect(url_for('users.account'))
         
-        doc_id = int(parts[0])
-        snt_id = int(parts[1])
-        
-        # Always use current_user.id as the user_id since this is a view operation
-        user_id = current_user.id
-        
-        logger.info(f"Processing request for doc_id={doc_id}, snt_id={snt_id}, user_id={user_id}")
-        
-        # Get the document and its owner
-        doc = Doc.query.get_or_404(doc_id)
-        owner = User.query.get_or_404(user_id)
-        
-        # Get the project information
-        project = Project.query.get_or_404(doc.project_id)
-        admin = User.query.get_or_404(project.created_by_user_id)
-        
         # Get all sentences for this document
-        sentences = Sent.query.filter_by(doc_id=doc_id).order_by(Sent.id).all()
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
         if not sentences:
+            logger.error(f"No sentences found for document {doc.id}")
             flash('No sentences found for this document', 'danger')
             return redirect(url_for('users.account'))
         
-        # Get the current sentence and its annotations
+        logger.info(f"Found {len(sentences)} sentences for document {doc.id}")
+        
+        # Get the current sentence
         try:
-            current_sent = sentences[int(snt_id) - 1] if 0 < int(snt_id) <= len(sentences) else sentences[0]
+            if sent_id < 1 or sent_id > len(sentences):
+                logger.error(f"Invalid sentence number: {sent_id}. Must be between 1 and {len(sentences)}")
+                flash(f'Invalid sentence number: {sent_id}. Must be between 1 and {len(sentences)}', 'danger')
+                return redirect(url_for('users.account'))
+                
+            current_sent = sentences[sent_id - 1]
+            logger.info(f"Found sentence {sent_id}: {current_sent.content[:50]}...")
         except (IndexError, ValueError) as e:
-            logger.error(f"Error accessing sentence {snt_id}: {str(e)}")
-            flash(f'Invalid sentence number: {snt_id}', 'danger')
+            logger.error(f"Error accessing sentence: {str(e)}")
+            flash(f'Error accessing sentence: {str(e)}', 'danger')
             return redirect(url_for('users.account'))
-        
-        # Get the document version for the owner
-        doc_version = DocVersion.query.filter_by(
-            doc_id=doc_id,
-            user_id=user_id
-        ).first()
-        
-        if not doc_version:
-            logger.info(f"Creating new document version for user {user_id}")
-            doc_version = DocVersion(
-                doc_id=doc_id,
-                user_id=user_id,
-                stage='initial'
-            )
-            db.session.add(doc_version)
-            db.session.commit()
         
         # Get annotations for the current sentence
         curr_annotation = None
         curr_sent_umr = {}
         curr_alignment = {}
-        curr_annotation_string = ''  # Initialize empty string
-        if doc_version and current_sent:
+        curr_annotation_string = ''
+        
+        if current_sent:
             curr_annotation = Annotation.query.filter_by(
-                doc_version_id=doc_version.id,
+                doc_version_id=doc_version_id,
                 sent_id=current_sent.id
             ).first()
-            logger.info(f"Found annotation: {curr_annotation is not None}")
+            
             if curr_annotation:
-                logger.info(f"Raw sent_annot: {curr_annotation.sent_annot}")
-                logger.info(f"Raw sent_annot type: {type(curr_annotation.sent_annot)}")
                 try:
                     # Handle sent_annot
                     curr_sent_umr = curr_annotation.sent_annot if curr_annotation.sent_annot else {}
-                    logger.info(f"Initial curr_sent_umr: {curr_sent_umr}")
                     if isinstance(curr_sent_umr, str):
                         curr_sent_umr = json.loads(curr_sent_umr)
-                        logger.info(f"After json.loads curr_sent_umr: {curr_sent_umr}")
                     curr_annotation_string = curr_annotation.sent_annot if curr_annotation.sent_annot else ''
-                    logger.info(f"Final curr_annotation_string: {curr_annotation_string}")
                     
                     # Handle alignment
                     curr_alignment = curr_annotation.alignment if curr_annotation.alignment else {}
                     if isinstance(curr_alignment, str):
                         curr_alignment = json.loads(curr_alignment)
+                    logger.info(f"Successfully loaded annotation for sentence {sent_id}")
                 except json.JSONDecodeError as e:
                     logger.error(f"Error decoding annotation JSON: {str(e)}")
                     curr_sent_umr = {}
                     curr_alignment = {}
                     curr_annotation_string = ''
         
-        # Prepare info2display
-        class Info2Display:
-            def __init__(self):
-                self.sents = []
-                self.sent_htmls = []  # For individual sentence display
-                self.sents_html = ''  # For overview of all sentences
-                self.df_htmls = []
-                self.gls = []
-                self.notes = []
+        # Prepare display information
+        try:
+            info2display = {
+                'sents': [sent.content for sent in sentences],
+                'sent_htmls': [sent.content for sent in sentences],
+                'sents_html': '<br>'.join([
+                    f'<span id="sentid-{sent.id}">{i+1}. {sent.content}</span>' 
+                    for i, sent in enumerate(sentences)
+                ])
+            }
+            logger.info("Successfully prepared display information")
+        except Exception as e:
+            logger.error(f"Error preparing display information: {str(e)}")
+            flash('Error preparing display information', 'danger')
+            return redirect(url_for('users.account'))
         
-        info2display = Info2Display()
-        info2display.sents = [sent.content for sent in sentences]
-        info2display.sent_htmls = [sent.content for sent in sentences]  # Individual sentences
-        info2display.sents_html = '<br>'.join([f'<span id="sentid-{sent.id}">{i+1}. {sent.content}</span>' for i, sent in enumerate(sentences)])  # Overview with numbers
-        
-        # Get frame dictionary based on project language
+        # Load frame dictionary based on project language
         frame_dict = {}
         try:
-            if project.language.lower() == 'english':
-                with open(FRAME_FILE_ENGLISH, 'r') as f:
-                    frame_dict = json.load(f)
-            elif project.language.lower() == 'chinese':
-                with open(FRAME_FILE_CHINESE, 'r') as f:
-                    frame_dict = json.load(f)
+            frame_file = FRAME_FILE_ENGLISH if project.language.lower() == 'english' else FRAME_FILE_CHINESE
+            with open(frame_file, 'r') as f:
+                frame_dict = json.load(f)
+            logger.info(f"Successfully loaded frame dictionary from {frame_file}")
         except (IOError, json.JSONDecodeError) as e:
             logger.error(f"Error loading frame dictionary: {str(e)}")
         
@@ -435,9 +394,9 @@ def sentlevel(doc_sent_id):
             pg = Partialgraph.query.filter_by(project_id=project.id).first()
             if pg:
                 partial_graphs = pg.partial_umr if pg.partial_umr else {}
+            logger.info("Successfully loaded partial graphs")
         except Exception as e:
             logger.error(f"Error loading partial graphs: {str(e)}")
-            partial_graphs = {}
         
         # Ensure all data is JSON serializable
         curr_sent_umr = json.loads(json.dumps(curr_sent_umr))
@@ -445,16 +404,17 @@ def sentlevel(doc_sent_id):
         frame_dict = json.loads(json.dumps(frame_dict))
         partial_graphs_json = json.dumps(partial_graphs)
         
+        logger.info("Rendering sentlevel template")
         return render_template('sentlevel.html',
-                            doc_id=doc_id,
-                            snt_id=snt_id,
-                            owner=owner,
+                            doc_id=doc.id,
+                            doc_version_id=doc_version_id,
+                            snt_id=sent_id,
+                            owner=User.query.get_or_404(doc_version.user_id),
                             filename=doc.filename,
                             lang=project.language,
-                            file_format='plain_text',
                             project_name=project.project_name,
                             project_id=project.id,
-                            admin=admin,
+                            admin=User.query.get_or_404(project.created_by_user_id),
                             info2display=info2display,
                             frame_dict=frame_dict,
                             curr_sent_umr=curr_sent_umr,
@@ -462,18 +422,10 @@ def sentlevel(doc_sent_id):
                             curr_alignment=curr_alignment,
                             partial_graphs_json=partial_graphs_json)
                             
-    except (ValueError, IndexError) as e:
-        logger.error(f"Error processing document ID or sentence number: {str(e)}")
-        flash(f'Invalid document ID or sentence number: {str(e)}', 'danger')
-        return redirect(url_for('users.account'))
     except Exception as e:
-        logger.error(f"Unexpected error: {str(e)}", exc_info=True)
+        logger.error(f"Unexpected error in sentlevel: {str(e)}", exc_info=True)
         flash(f'Error loading document: {str(e)}', 'danger')
         return redirect(url_for('users.account'))
-
-@main.route("/doclevelview/<string:doc_sent_id>", methods=['GET', 'POST'])
-def doclevelview(doc_sent_id):
-    pass
 
 @main.route("/about")
 def about():

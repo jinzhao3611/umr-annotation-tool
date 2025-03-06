@@ -1,0 +1,141 @@
+/* Icon Button Styles */
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-icon i {
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+/* Delete Button Styles */
+.btn-icon.btn-danger {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    background-color: #ff6b6b !important;
+    border: none !important;
+    color: white !important;
+    transition: all 0.2s ease-in-out !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.btn-icon.btn-danger:hover {
+    background-color: #ff5252 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3) !important;
+}
+
+.btn-icon.btn-danger:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(255, 107, 107, 0.2) !important;
+}
+
+.btn-icon.btn-danger .delete-icon {
+    position: absolute !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+    opacity: 1 !important;
+    transition: opacity 0.2s ease-in-out !important;
+}
+
+.btn-icon.btn-danger .fa-trash {
+    opacity: 0 !important;
+    transform: scale(0.8) !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+.btn-icon.btn-danger:hover .delete-icon {
+    opacity: 0 !important;
+}
+
+.btn-icon.btn-danger:hover .fa-trash {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+.btn-icon.btn-danger:disabled {
+    background-color: #ffb3b3 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.btn-icon.btn-danger:disabled .delete-icon,
+.btn-icon.btn-danger:disabled .fa-trash {
+    opacity: 0.5 !important;
+}
+
+/* Switch Styles */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Form Switch Styles */
+.form-switch .form-check-input {
+    width: 3em;
+    height: 1.5em;
+    cursor: pointer;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+} 

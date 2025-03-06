@@ -57,13 +57,9 @@
                     {% endif %}
                     
                     <div class="mt-2">
-                        <a href="{{ url_for('main.sentlevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
+                        <a href="{{ url_for('main.sentlevel', doc_version_id=result.doc_version_id, sent_id=result.sent_id) }}" 
                            class="btn btn-sm btn-outline-primary">
                             View Sentence Level
-                        </a>
-                        <a href="{{ url_for('main.doclevel', doc_sent_id=result.doc_id ~ '_' ~ result.sent_id ~ '_' ~ result.user_id) }}" 
-                           class="btn btn-sm btn-outline-secondary">
-                            View Document Level
                         </a>
                     </div>
                 </div>

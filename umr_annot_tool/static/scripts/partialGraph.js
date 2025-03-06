@@ -84,12 +84,11 @@ function recordPartialGraph(){
     delete graphDict['1.r'];
 
     partial_graphs[graphName] = graphDict;
-    let doc_id = document.getElementById('doc_id').innerText;
+    let doc_version_id = document.getElementById('doc_version_id').innerText;
     let snt_id = document.getElementById('curr_shown_sent_id').innerText;
     let owner_id = document.getElementById('user_id').innerText;
-    let doc_sent_id = doc_id + "_" + snt_id + "_" + owner_id;
 
-    fetch(`/sentlevel/${doc_sent_id}`, {
+    fetch(`/sentlevel/${doc_version_id}/${snt_id}`, {
         method: 'POST',
         body: JSON.stringify({"partial_graphs": partial_graphs})
     }).then(function (response) {
