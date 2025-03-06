@@ -1,14 +1,14 @@
 console.log('relation_editor.js loaded');
 
-// These will be populated from the template
+// Global variables to store UMR relations and their values
 let umrRelations = [];
 let umrRelationValues = {};
 
 // Initialize the relation editor functionality
 function initRelationEditor() {
-    console.log('Initializing relation editor');
+    console.log('Initializing relation editor...');
     
-    // Load relations from the template
+    // Load relations and values data
     try {
         const relationsElement = document.getElementById('umr-relations-data');
         if (relationsElement) {
@@ -16,7 +16,7 @@ function initRelationEditor() {
             console.log(`Loaded ${umrRelations.length} relations from server`);
         } else {
             console.warn('Relations data element not found, using default relations');
-            // Fallback to a minimal set of common relations if server data isn't available
+            // Fallback to a minimal set of common relations
             umrRelations = [
                 ':ARG0', ':ARG1', ':ARG2', ':ARG3', ':ARG4', ':ARG5',
                 ':mod', ':time', ':location', ':manner', ':purpose', ':cause'
@@ -40,35 +40,42 @@ function initRelationEditor() {
         ];
     }
     
+    // Get the annotation element
     const annotationElement = document.querySelector('#amr pre');
     if (!annotationElement) {
-        console.log('No annotation found');
+        console.error('Annotation element not found');
         return;
     }
     
-    // Parse the annotation text to make relations clickable
-    makeRelationsClickable(annotationElement);
-    
-    // Also make values clickable for relations with predefined values
-    makeValuesClickable(annotationElement);
-    
-    // Make variables clickable for branch operations
-    makeVariablesClickable(annotationElement);
-    
-    // Add context menu for branch operations
-    addBranchOperations(annotationElement);
-    
-    // Add event listener to document to close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-        const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
-        dropdowns.forEach(dropdown => {
-            if (!dropdown.contains(event.target) && 
-                !event.target.classList.contains('relation-span') && 
-                !event.target.classList.contains('value-span')) {
-                dropdown.remove();
-            }
+    try {
+        // Make relations and values clickable
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
+        makeVariablesClickable(annotationElement);  // Make variables clickable for branch addition
+        
+        // Setup branch operations (delete, move)
+        addBranchOperations(annotationElement);
+        
+        // Extract sentence tokens for later use in concept suggestion
+        extractSentenceTokens();
+        
+        // Add event listener to document to close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target) && 
+                    !event.target.classList.contains('relation-span') && 
+                    !event.target.classList.contains('value-span')) {
+                    dropdown.remove();
+                }
+            });
         });
-    });
+        
+        console.log('Relation editor initialized successfully');
+    } catch (error) {
+        console.error('Error initializing relation editor:', error);
+        showNotification('Error initializing editor: ' + error.message, 'error');
+    }
 }
 
 // Function to make relations in the annotation clickable
@@ -901,6 +908,460 @@ function makeVariablesClickable(annotationElement) {
     });
     
     annotationElement.innerHTML = html;
+    
+    // Add context menu to variable spans
+    const variableSpans = annotationElement.querySelectorAll('.variable-span');
+    variableSpans.forEach(span => {
+        span.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            showVariableContextMenu(span, event.clientX, event.clientY);
+        });
+    });
+}
+
+// Function to show context menu for variables
+function showVariableContextMenu(variableSpan, x, y) {
+    // Remove any existing context menus
+    const existingMenus = document.querySelectorAll('.branch-context-menu');
+    existingMenus.forEach(menu => menu.remove());
+    
+    // Create context menu
+    const menu = document.createElement('div');
+    menu.className = 'branch-context-menu';
+    menu.style.position = 'fixed';
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+    menu.style.backgroundColor = '#fff';
+    menu.style.border = '1px solid #ccc';
+    menu.style.borderRadius = '4px';
+    menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    menu.style.padding = '5px 0';
+    menu.style.zIndex = '1000';
+    
+    // Add "Add Branch" item
+    const addItem = document.createElement('div');
+    addItem.textContent = '➕ Add Branch';
+    addItem.style.padding = '8px 12px';
+    addItem.style.cursor = 'pointer';
+    
+    addItem.addEventListener('mouseover', () => {
+        addItem.style.backgroundColor = '#f0f0f0';
+    });
+    
+    addItem.addEventListener('mouseout', () => {
+        addItem.style.backgroundColor = '';
+    });
+    
+    addItem.addEventListener('click', () => {
+        menu.remove();
+        showAddBranchDialog(variableSpan);
+    });
+    
+    menu.appendChild(addItem);
+    
+    // Add the menu to the document
+    document.body.appendChild(menu);
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', () => {
+        menu.remove();
+    }, { once: true });
+}
+
+// Global state for token tracking
+let sentenceTokens = [];
+
+// Function to extract tokens from the current sentence section
+function extractSentenceTokens() {
+    // Get the current sentence element
+    const currentSentence = document.querySelector('.current-sentence');
+    if (!currentSentence) return [];
+    
+    // Extract all tokens (words) from the sentence
+    const text = currentSentence.textContent;
+    const tokens = text.split(/\s+/).filter(token => 
+        token.length > 0 && 
+        !token.match(/^[.,;:!?()[\]{}]$/) // Filter out solo punctuation
+    );
+    
+    // Store in global for reuse
+    sentenceTokens = [...new Set(tokens)]; // Remove duplicates
+    return sentenceTokens;
+}
+
+// Function to get all available concepts
+async function getAllConcepts() {
+    // Extract tokens from the current sentence
+    const sentenceTokens = extractSentenceTokens();
+    
+    try {
+        // Fetch the predefined concepts from the server
+        const response = await fetch('/get_concepts');
+        const conceptsData = await response.json();
+        
+        // Combine tokens with predefined concepts
+        const allConcepts = [
+            ...sentenceTokens,
+            ...conceptsData.discourse_concepts,
+            ...conceptsData.ne_types,
+            ...conceptsData.non_event_rolesets
+        ];
+        
+        // Remove duplicates and sort
+        return [...new Set(allConcepts)].sort();
+    } catch (error) {
+        console.error('Error fetching concepts:', error);
+        // If fetch fails, just return sentence tokens
+        return sentenceTokens;
+    }
+}
+
+// Function to generate a unique variable for a concept
+function generateUniqueVariable(conceptName, annotationText) {
+    // Extract all existing variables from the annotation
+    const existingVariables = [];
+    const variableRegex = /\bs[0-9]+[a-z]+[0-9]*\b/g;
+    let match;
+    
+    while ((match = variableRegex.exec(annotationText)) !== null) {
+        existingVariables.push(match[0]);
+    }
+    
+    // Get the sentence number from the URL
+    const urlParts = window.location.pathname.split('/');
+    const sentId = parseInt(urlParts[urlParts.length - 1]) || 1;
+    
+    // Get the first letter of the concept (or 'x' if not available)
+    const conceptInitial = conceptName && conceptName.length > 0 
+        ? conceptName[0].toLowerCase()
+        : 'x';
+    
+    // Generate candidate variable name
+    let baseVariable = `s${sentId}${conceptInitial}`;
+    let counter = 1;
+    let candidateVariable = `${baseVariable}`;
+    
+    // Keep incrementing counter until we find a unique variable
+    while (existingVariables.includes(candidateVariable)) {
+        candidateVariable = `${baseVariable}${counter}`;
+        counter++;
+    }
+    
+    return candidateVariable;
+}
+
+// Function to show dialog for adding a branch
+async function showAddBranchDialog(parentVariableSpan) {
+    const parentVariable = parentVariableSpan.textContent;
+    const annotationElement = document.querySelector('#amr pre');
+    const annotationText = annotationElement.textContent;
+    
+    // Create dialog container
+    const dialogContainer = document.createElement('div');
+    dialogContainer.className = 'add-branch-dialog-container';
+    dialogContainer.style.position = 'fixed';
+    dialogContainer.style.top = '0';
+    dialogContainer.style.left = '0';
+    dialogContainer.style.width = '100%';
+    dialogContainer.style.height = '100%';
+    dialogContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    dialogContainer.style.display = 'flex';
+    dialogContainer.style.justifyContent = 'center';
+    dialogContainer.style.alignItems = 'center';
+    dialogContainer.style.zIndex = '2000';
+    
+    // Create dialog
+    const dialog = document.createElement('div');
+    dialog.className = 'add-branch-dialog';
+    dialog.style.width = '500px';
+    dialog.style.backgroundColor = 'white';
+    dialog.style.borderRadius = '8px';
+    dialog.style.padding = '20px';
+    dialog.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+    
+    // Dialog header
+    dialog.innerHTML = `
+        <h3 style="margin-top: 0; margin-bottom: 20px;">Add Branch to ${parentVariable}</h3>
+        <form id="add-branch-form">
+            <div style="margin-bottom: 16px;">
+                <label for="relation" style="display: block; margin-bottom: 8px; font-weight: bold;">Relation:</label>
+                <select id="relation" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Select a relation...</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label for="node-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Node Type:</label>
+                <select id="node-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="concept">Variable/Concept</option>
+                    <option value="string">String</option>
+                    <option value="number">Number</option>
+                </select>
+            </div>
+            
+            <div id="concept-input-container" style="margin-bottom: 16px;">
+                <label for="concept-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Concept:</label>
+                <input type="text" id="concept-input" list="concept-list" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Type or select a concept">
+                <datalist id="concept-list"></datalist>
+                <div style="display: flex; align-items: center; margin-top: 10px;">
+                    <label style="margin-right: 10px;">
+                        <input type="checkbox" id="generate-variable" checked> 
+                        Generate variable
+                    </label>
+                    <div id="variable-preview" style="color: #666; margin-left: 10px;"></div>
+                </div>
+            </div>
+            
+            <div id="string-input-container" style="display: none; margin-bottom: 16px;">
+                <label for="string-input" style="display: block; margin-bottom: 8px; font-weight: bold;">String Value:</label>
+                <input type="text" id="string-input" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder='Enter value (without quotes)'>
+            </div>
+            
+            <div id="number-input-container" style="display: none; margin-bottom: 16px;">
+                <label for="number-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Number Value:</label>
+                <input type="number" id="number-input" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter a number">
+            </div>
+            
+            <div style="text-align: right; margin-top: 20px;">
+                <button type="button" id="cancel-add-branch" style="padding: 8px 16px; margin-right: 10px; border: 1px solid #ccc; background-color: #f5f5f5; border-radius: 4px; cursor: pointer;">Cancel</button>
+                <button type="submit" id="confirm-add-branch" style="padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Branch</button>
+            </div>
+        </form>
+    `;
+    
+    dialogContainer.appendChild(dialog);
+    document.body.appendChild(dialogContainer);
+    
+    // Populate relations dropdown
+    const relationSelect = document.getElementById('relation');
+    umrRelations.forEach(relation => {
+        const option = document.createElement('option');
+        option.value = relation;
+        option.textContent = relation;
+        relationSelect.appendChild(option);
+    });
+    
+    // Populate concepts datalist
+    const conceptList = document.getElementById('concept-list');
+    const concepts = await getAllConcepts();
+    concepts.forEach(concept => {
+        const option = document.createElement('option');
+        option.value = concept;
+        conceptList.appendChild(option);
+    });
+    
+    // Handle node type changes
+    const nodeTypeSelect = document.getElementById('node-type');
+    const conceptContainer = document.getElementById('concept-input-container');
+    const stringContainer = document.getElementById('string-input-container');
+    const numberContainer = document.getElementById('number-input-container');
+    
+    nodeTypeSelect.addEventListener('change', () => {
+        const selectedType = nodeTypeSelect.value;
+        
+        // Show/hide appropriate input container
+        conceptContainer.style.display = selectedType === 'concept' ? 'block' : 'none';
+        stringContainer.style.display = selectedType === 'string' ? 'block' : 'none';
+        numberContainer.style.display = selectedType === 'number' ? 'block' : 'none';
+    });
+    
+    // Generate variable preview
+    const conceptInput = document.getElementById('concept-input');
+    const generateVariableCheckbox = document.getElementById('generate-variable');
+    const variablePreview = document.getElementById('variable-preview');
+    
+    // Update variable preview when concept input changes
+    conceptInput.addEventListener('input', () => {
+        if (generateVariableCheckbox.checked && conceptInput.value) {
+            const variable = generateUniqueVariable(conceptInput.value, annotationText);
+            variablePreview.textContent = `Variable: ${variable}`;
+        } else {
+            variablePreview.textContent = '';
+        }
+    });
+    
+    // Update variable preview when checkbox changes
+    generateVariableCheckbox.addEventListener('change', () => {
+        if (generateVariableCheckbox.checked && conceptInput.value) {
+            const variable = generateUniqueVariable(conceptInput.value, annotationText);
+            variablePreview.textContent = `Variable: ${variable}`;
+        } else {
+            variablePreview.textContent = '';
+        }
+    });
+    
+    // Handle cancel button
+    const cancelButton = document.getElementById('cancel-add-branch');
+    cancelButton.addEventListener('click', () => {
+        dialogContainer.remove();
+    });
+    
+    // Handle form submission
+    const form = document.getElementById('add-branch-form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        // Get form values
+        const relation = relationSelect.value;
+        const nodeType = nodeTypeSelect.value;
+        
+        // Validate relation
+        if (!relation) {
+            showNotification('Please select a relation', 'error');
+            return;
+        }
+        
+        let childNode = '';
+        
+        // Get and validate child node based on type
+        if (nodeType === 'concept') {
+            const concept = conceptInput.value.trim();
+            if (!concept) {
+                showNotification('Please enter a concept', 'error');
+                return;
+            }
+            
+            // Validate concept format
+            const conceptRegex = /^[^\s\(\):]+$/;
+            if (!conceptRegex.test(concept)) {
+                showNotification('Invalid concept format. Concepts cannot contain spaces, parentheses, or colons.', 'error');
+                return;
+            }
+            
+            // Generate variable if checkbox is checked
+            if (generateVariableCheckbox.checked) {
+                const variable = generateUniqueVariable(concept, annotationText);
+                childNode = `(${variable} / ${concept})`;
+            } else {
+                childNode = concept;
+            }
+        } else if (nodeType === 'string') {
+            const stringValue = document.getElementById('string-input').value.trim();
+            if (!stringValue) {
+                showNotification('Please enter a string value', 'error');
+                return;
+            }
+            
+            // Validate string format
+            const stringRegex = /^[^"\s]+$/;
+            if (!stringRegex.test(stringValue)) {
+                showNotification('Invalid string format. Strings cannot contain spaces or quotes.', 'error');
+                return;
+            }
+            
+            childNode = `"${stringValue}"`;
+        } else if (nodeType === 'number') {
+            const numberValue = document.getElementById('number-input').value.trim();
+            if (!numberValue) {
+                showNotification('Please enter a number value', 'error');
+                return;
+            }
+            
+            // Validate number format
+            const numberRegex = /^[0-9]+(\.[0-9]+)?$/;
+            if (!numberRegex.test(numberValue)) {
+                showNotification('Invalid number format', 'error');
+                return;
+            }
+            
+            childNode = numberValue;
+        }
+        
+        // Add the branch to the annotation
+        addBranchToAnnotation(parentVariable, relation, childNode);
+        
+        // Close the dialog
+        dialogContainer.remove();
+    });
+}
+
+// Function to add a branch to the annotation
+function addBranchToAnnotation(parentVariable, relation, childNode) {
+    // Get the annotation element
+    const annotationElement = document.querySelector('#amr pre');
+    const originalText = annotationElement.textContent;
+    
+    // Find the parent variable in the text
+    const variableMatches = findAllMatches(originalText, parentVariable);
+    
+    if (variableMatches.length === 0) {
+        console.error('Could not locate the parent variable in the text');
+        showNotification('Error: Could not locate the parent variable', 'error');
+        return;
+    }
+    
+    // Get the line with the parent variable
+    const variablePos = variableMatches[0]; // Use the first occurrence (main declaration should be first)
+    const lineStart = originalText.lastIndexOf('\n', variablePos) + 1;
+    const lineEnd = originalText.indexOf('\n', variablePos);
+    const variableLine = originalText.substring(lineStart, lineEnd === -1 ? originalText.length : lineEnd);
+    
+    // Determine the indentation level
+    const variableIndent = variableLine.search(/\S/);
+    const newBranchIndent = variableIndent + 2; // Indent by 2 spaces more than parent
+    
+    // Create the new branch text
+    const newBranchText = '\n' + ' '.repeat(newBranchIndent) + relation + ' ' + childNode;
+    
+    // Find the insertion point
+    // We'll insert after the line with the parent variable
+    let insertionPoint = lineEnd === -1 ? originalText.length : lineEnd;
+    
+    // Create updated text
+    const updatedText = originalText.substring(0, insertionPoint) + newBranchText + originalText.substring(insertionPoint);
+    
+    // Update the annotation display
+    annotationElement.textContent = updatedText;
+    
+    // Reinitialize the relation editor
+    makeRelationsClickable(annotationElement);
+    makeValuesClickable(annotationElement);
+    makeVariablesClickable(annotationElement);
+    addBranchOperations(annotationElement);
+    
+    // Save the updated annotation
+    saveAddBranch(updatedText, parentVariable, relation, childNode);
+    
+    showNotification(`Added branch "${relation} ${childNode}" to ${parentVariable}`, 'success');
+}
+
+// Function to save the branch addition
+function saveAddBranch(updatedAnnotation, parentVariable, relation, childNode) {
+    // Get sentence ID and document ID from the URL
+    const urlParts = window.location.pathname.split('/');
+    const sent_id = urlParts[urlParts.length - 1];
+    const doc_version_id = urlParts[urlParts.length - 2];
+    
+    console.log(`Adding branch: ${relation} ${childNode} to ${parentVariable}`);
+    
+    // Use fetch API to send the update to the server
+    fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            annotation: updatedAnnotation,
+            operation: 'add_branch',
+            parent_variable: parentVariable,
+            relation: relation,
+            child_node: childNode
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Update successful:', data);
+    })
+    .catch(error => {
+        console.error('Error updating annotation:', error);
+        showNotification('Error saving changes: ' + error.message, 'error');
+    });
 }
 
 // Function to start a branch move operation

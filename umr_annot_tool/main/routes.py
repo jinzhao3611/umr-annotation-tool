@@ -591,55 +591,77 @@ def has_permission_for_doc(user, doc_id):
 
 @main.route("/update_annotation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
 def update_annotation(doc_version_id, sent_id):
-    """Update an annotation with various operations (delete branch, etc.)."""
+    # Check if the user is logged in
     if not current_user.is_authenticated:
-        return jsonify({"error": "Not authenticated"}), 401
+        return jsonify({'success': False, 'message': 'User is not authenticated'}), 401
+    
+    # Get the request data
+    data = request.get_json()
+    
+    # Check if the required fields are present
+    if not all(k in data for k in ['annotation']):
+        return jsonify({'success': False, 'message': 'Missing required fields'}), 400
     
     try:
-        data = request.get_json()
-        updated_annotation = data.get('annotation')
-        operation = data.get('operation')
-        
-        # Validate inputs
-        if not updated_annotation or not operation:
-            return jsonify({"error": "Missing required fields"}), 400
-        
         # Get the document version
         doc_version = DocVersion.query.get_or_404(doc_version_id)
         
-        # Check if the user has permission to modify this document
+        # Check if the user has permission to modify the document
         if not has_permission_for_doc(current_user, doc_version.doc_id):
-            return jsonify({"error": "Not authorized to modify this document"}), 403
+            return jsonify({'success': False, 'message': 'User does not have permission to modify this document'}), 403
         
-        # Get sentence annotation
-        sent = Sent.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
-        if not sent:
-            return jsonify({"error": "Sentence not found"}), 404
+        # Get the annotation object
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
         
-        # Save the updated annotation
-        sent.umr = updated_annotation
+        if not annotation:
+            return jsonify({'success': False, 'message': 'Annotation not found'}), 404
+        
+        # Update the annotation
+        annotation.annotation = data['annotation']
+        
+        # Handle specific operations
+        if 'operation' in data:
+            if data['operation'] == 'delete_branch':
+                if 'deleted_relation' in data:
+                    deleted_relation = data['deleted_relation']
+                    current_app.logger.info(f"Branch deletion: User {current_user.username} deleted branch '{deleted_relation}' from sentence {sent_id} in document version {doc_version_id}")
+            
+            elif data['operation'] == 'move_branch':
+                if all(k in data for k in ['source_relation', 'target_node']):
+                    source_relation = data['source_relation']
+                    target_node = data['target_node']
+                    is_variable_target = data.get('is_variable_target', False)
+                    target_type = "variable" if is_variable_target else "relation"
+                    current_app.logger.info(f"Branch move: User {current_user.username} moved branch '{source_relation}' to {target_type} '{target_node}' in sentence {sent_id} in document version {doc_version_id}")
+                    
+            elif data['operation'] == 'add_branch':
+                if all(k in data for k in ['parent_variable', 'relation', 'child_node']):
+                    parent_variable = data['parent_variable']
+                    relation = data['relation']
+                    child_node = data['child_node']
+                    current_app.logger.info(f"Branch addition: User {current_user.username} added branch '{relation} {child_node}' to variable '{parent_variable}' in sentence {sent_id} in document version {doc_version_id}")
+        
         db.session.commit()
         
-        # Log the operation
-        if operation == 'delete_branch':
-            relation = data.get('relation', 'unknown')
-            current_app.logger.info(f"User {current_user.username} deleted branch {relation} in doc_version {doc_version_id}, sentence {sent_id}")
-        elif operation == 'move_branch':
-            source_relation = data.get('source_relation', 'unknown')
-            target_node = data.get('target_node', 'unknown')
-            is_variable_target = data.get('is_variable_target', False)
-            target_type = "variable" if is_variable_target else "relation"
-            current_app.logger.info(f"User {current_user.username} moved branch from {source_relation} to {target_node} ({target_type}) in doc_version {doc_version_id}, sentence {sent_id}")
-        else:
-            current_app.logger.info(f"User {current_user.username} performed operation {operation} in doc_version {doc_version_id}, sentence {sent_id}")
-        
-        return jsonify({
-            "success": True,
-            "message": f"Operation {operation} successful",
-            "doc_version_id": doc_version_id,
-            "sent_id": sent_id
-        }), 200
-        
+        return jsonify({'success': True, 'message': 'Annotation updated successfully'})
+    
     except Exception as e:
         current_app.logger.error(f"Error updating annotation: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+@main.route("/get_concepts", methods=['GET'])
+@login_required
+def get_concepts():
+    """Provide predefined concepts for use in the branch addition feature"""
+    from umr_annot_tool.resources.rolesets import discourse_concepts, non_event_rolesets
+    from umr_annot_tool.resources.ne_types import ne_types
+    
+    try:
+        return jsonify({
+            'discourse_concepts': discourse_concepts,
+            'ne_types': ne_types,
+            'non_event_rolesets': non_event_rolesets
+        })
+    except Exception as e:
+        current_app.logger.error(f"Error fetching concepts: {str(e)}")
+        return jsonify({'success': False, 'message': str(e)}), 500
