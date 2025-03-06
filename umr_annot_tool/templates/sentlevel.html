@@ -171,6 +171,11 @@
                     <script type="application/json" id="umr-relations-data">
                         {{ relations_list|safe }}
                     </script>
+                    
+                    <!-- Hidden element to store relations with values for value editor -->
+                    <script type="application/json" id="umr-relation-values-data">
+                        {{ relations_data|safe }}
+                    </script>
                 </div>
             </div>
         </div>

@@ -435,6 +435,9 @@ def sentlevel(doc_version_id, sent_id):
         # Get the list of known relations from rolesets for the relation editor
         relations_list = list(known_relations.keys())
         
+        # Also pass the full relations data for value editing
+        relations_data = {k: v for k, v in known_relations.items() if 'values' in v}
+        
         logger.info("Rendering sentlevel template")
         return render_template('sentlevel.html',
                             doc_id=doc.id,
@@ -452,7 +455,8 @@ def sentlevel(doc_version_id, sent_id):
                             curr_annotation_string=curr_annotation_string,
                             curr_alignment=curr_alignment,
                             partial_graphs_json=partial_graphs_json,
-                            relations_list=json.dumps(relations_list))
+                            relations_list=json.dumps(relations_list),
+                            relations_data=json.dumps(relations_data))
                             
     except Exception as e:
         logger.error(f"Unexpected error in sentlevel: {str(e)}", exc_info=True)
@@ -514,6 +518,53 @@ def update_relation(doc_version_id, sent_id):
         
     except Exception as e:
         current_app.logger.error(f"Error updating relation: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@main.route("/update_value/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
+def update_value(doc_version_id, sent_id):
+    """Update a relation's value in an annotation and save it."""
+    if not current_user.is_authenticated:
+        return jsonify({"error": "Not authenticated"}), 401
+    
+    try:
+        data = request.get_json()
+        updated_annotation = data.get('annotation')
+        relation = data.get('relation')
+        old_value = data.get('old_value')
+        new_value = data.get('new_value')
+        
+        # Validate inputs
+        if not updated_annotation or not relation or not old_value or not new_value:
+            return jsonify({"error": "Missing required fields"}), 400
+        
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to modify this document
+        if not has_permission_for_doc(current_user, doc_version.doc_id):
+            return jsonify({"error": "Not authorized to modify this document"}), 403
+        
+        # Get sentence annotation
+        sent = Sent.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
+        if not sent:
+            return jsonify({"error": "Sentence not found"}), 404
+        
+        # Save the updated annotation
+        sent.umr = updated_annotation
+        db.session.commit()
+        
+        # Log the change
+        current_app.logger.info(f"User {current_user.username} updated value for {relation} from {old_value} to {new_value} in doc_version {doc_version_id}, sentence {sent_id}")
+        
+        return jsonify({
+            "success": True,
+            "message": f"Updated value for {relation} from {old_value} to {new_value}",
+            "doc_version_id": doc_version_id,
+            "sent_id": sent_id
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error updating value: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 def has_permission_for_doc(user, doc_id):
