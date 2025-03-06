@@ -30,10 +30,10 @@ function initModificationLattice() {
         // Keep default empty object
     }
     
-    // Set up the dimensions and margins
-    const margin = { top: 50, right: 250, bottom: 50, left: 150 };
+    // Set up the dimensions and margins - increase top margin to move lattice down
+    const margin = { top: 80, right: 250, bottom: 50, left: 150 };
     const width = 700 - margin.left - margin.right;
-    const height = 250 - margin.top - margin.bottom;
+    const height = 300 - margin.top - margin.bottom;
     
     // Remove any existing SVG
     d3.select("#modification-lattice-container svg").remove();
@@ -63,34 +63,41 @@ function initModificationLattice() {
         
     // Level 1: child nodes
     const childNodes = modificationNodes.filter(node => node.level === 1);
-    const ySpacing = 40;
+    const ySpacing = 45; // Increase spacing between nodes
     
     childNodes.forEach((node, i) => {
+        const yPos = (i * ySpacing) - ((childNodes.length - 1) * ySpacing / 2);
+        
         // Draw node
         svg.append("circle")
             .attr("cx", 100)
-            .attr("cy", (i * ySpacing) - ((childNodes.length - 1) * ySpacing / 2))
+            .attr("cy", yPos)
             .attr("r", 10)
             .style("fill", "#fff")
             .style("stroke", "steelblue")
             .style("stroke-width", "2px");
             
+        // Calculate text width based on node ID length
+        const textLength = node.id.length * 8; // Approximate width of text
+        
         // Draw label
         svg.append("text")
             .attr("x", 115)
-            .attr("y", (i * ySpacing) - ((childNodes.length - 1) * ySpacing / 2) + 5)
+            .attr("y", yPos + 5)
             .text(node.id);
             
         // Draw link to parent
         svg.append("path")
-            .attr("d", `M 10 0 L 90 ${(i * ySpacing) - ((childNodes.length - 1) * ySpacing / 2)}`)
+            .attr("d", `M 10 0 L 90 ${yPos}`)
             .attr("stroke", "steelblue")
             .attr("stroke-width", 2)
             .attr("fill", "none");
             
-        // Add toggle switch
+        // Add toggle switch - position it after the text
+        const toggleXPosition = 115 + textLength + 10; // Position after text with some margin
+        
         const toggleGroup = svg.append("g")
-            .attr("transform", `translate(${160}, ${(i * ySpacing) - ((childNodes.length - 1) * ySpacing / 2) - 10})`);
+            .attr("transform", `translate(${toggleXPosition}, ${yPos - 10})`);
             
         // Create a foreignObject to contain the HTML toggle switch
         const fo = toggleGroup.append("foreignObject")

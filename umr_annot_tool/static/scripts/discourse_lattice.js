@@ -75,9 +75,9 @@ function initDiscourseLattice() {
     }
 
     // Set up the dimensions and margins
-    const margin = { top: 50, right: 200, bottom: 50, left: 120 };
+    const margin = { top: 50, right: 250, bottom: 50, left: 120 };
     const width = 960 - margin.left - margin.right;
-    const height = 600 - margin.top - margin.bottom;
+    const height = 700 - margin.top - margin.bottom;
 
     // Remove any existing SVG
     d3.select("#discourse-lattice-container svg").remove();
@@ -178,8 +178,12 @@ function initDiscourseLattice() {
         .append("foreignObject")
         .attr("width", 30)
         .attr("height", 17)
-        .attr("x", d => d.children ? -45 : 15)
-        .attr("y", -25)
+        .attr("x", d => {
+            // Calculate position based on text length and node type
+            const textLength = d.data.name.length * 6.5; // Approximate width of text
+            return d.children ? -textLength - 35 : textLength + 10; // Adjust based on whether node has children
+        })
+        .attr("y", -10) // Position vertically closer to center
         .append("xhtml:label")
         .attr("class", "toggle-switch");
 
