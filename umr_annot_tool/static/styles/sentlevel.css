@@ -280,4 +280,37 @@ html, body {
     .sentences-container {
         max-height: 200px;
     }
+}
+
+.token {
+    position: relative;
+    display: inline-block;
+    margin: 0 2px;
+    padding: 2px 4px;
+    margin-top: 15px;
+    vertical-align: baseline;
+}
+
+.token-index {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75em;
+    color: #666;
+    background-color: #fff;
+    padding: 0 2px;
+    border-radius: 2px;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.current-sentence {
+    line-height: 2.5;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin-top: 10px;
 } 

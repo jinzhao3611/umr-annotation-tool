@@ -345,19 +345,24 @@ def sentlevel(doc_version_id, sent_id):
             
             if curr_annotation:
                 try:
-                    # Handle sent_annot
+                    logger.info(f"Found annotation: {curr_annotation}")
+                    logger.info(f"Raw sent_annot: {curr_annotation.sent_annot}")
+                    logger.info(f"Raw sent_annot type: {type(curr_annotation.sent_annot)}")
+                    
+                    # Handle sent_annot - don't try to parse PENMAN as JSON
                     curr_sent_umr = curr_annotation.sent_annot if curr_annotation.sent_annot else {}
-                    if isinstance(curr_sent_umr, str):
-                        curr_sent_umr = json.loads(curr_sent_umr)
                     curr_annotation_string = curr_annotation.sent_annot if curr_annotation.sent_annot else ''
+                    
+                    logger.info(f"Processed curr_sent_umr: {curr_sent_umr}")
+                    logger.info(f"Processed curr_annotation_string: {curr_annotation_string}")
                     
                     # Handle alignment
                     curr_alignment = curr_annotation.alignment if curr_annotation.alignment else {}
                     if isinstance(curr_alignment, str):
                         curr_alignment = json.loads(curr_alignment)
                     logger.info(f"Successfully loaded annotation for sentence {sent_id}")
-                except json.JSONDecodeError as e:
-                    logger.error(f"Error decoding annotation JSON: {str(e)}")
+                except Exception as e:
+                    logger.error(f"Error processing annotation: {str(e)}")
                     curr_sent_umr = {}
                     curr_alignment = {}
                     curr_annotation_string = ''
@@ -366,7 +371,13 @@ def sentlevel(doc_version_id, sent_id):
         try:
             info2display = {
                 'sents': [sent.content for sent in sentences],
-                'sent_htmls': [sent.content for sent in sentences],
+                'sent_htmls': [
+                    ' '.join([
+                        f'<span class="token" data-index="{i}"><sup class="token-index">{i}</sup>{token}</span>'
+                        for i, token in enumerate(sent.content.split())
+                    ])
+                    for sent in sentences
+                ],
                 'sents_html': '<br>'.join([
                     f'<span id="sentid-{sent.id}">{i+1}. {sent.content}</span>' 
                     for i, sent in enumerate(sentences)

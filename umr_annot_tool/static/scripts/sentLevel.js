@@ -29,7 +29,7 @@ const state = {
 };
 
 // Initialize the application
-function initialize(frameJson, lang, partialGraphsJson) {
+function initialize(frameJson, partialGraphsJson) {
     try {
         // Use the global state values if available
         if (window.state) {
@@ -39,11 +39,9 @@ function initialize(frameJson, lang, partialGraphsJson) {
             state.maxSentId = window.state.maxSentId;
         }
 
-        // Parse frame dictionary
-        state.frameDict = JSON.parse(frameJson);
-
-        // Parse partial graphs
-        state.partialGraphs = JSON.parse(partialGraphsJson);
+        // Set frame dictionary and partial graphs
+        state.frameDict = frameJson;
+        state.partialGraphs = partialGraphsJson;
 
         // Initialize UMR
         state.umr = { n: 0 };
