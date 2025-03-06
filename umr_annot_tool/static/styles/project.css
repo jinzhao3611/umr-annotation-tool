@@ -1,8 +1,10 @@
 /* Project Container */
 .project-container {
     display: flex;
-    min-height: calc(100vh - 60px);
+    height: calc(100vh - 60px);
     background-color: #f8f9fa;
+    position: relative;
+    overflow: hidden;
 }
 
 /* Sidebar */
@@ -14,6 +16,8 @@
     display: flex;
     flex-direction: column;
     border-right: 1px solid #34495e;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .project-header {
@@ -71,7 +75,8 @@
     margin-bottom: 0.5rem;
 }
 
-.nav-link {
+/* Navigation Links */
+.nav-section .nav-link {
     display: flex;
     align-items: center;
     color: #bdc3c7;
@@ -79,28 +84,31 @@
     padding: 0.5rem;
     border-radius: 4px;
     transition: all 0.2s ease;
+    cursor: pointer;
 }
 
-.nav-link:hover {
+.nav-section .nav-link:hover {
     color: #ecf0f1;
     background-color: #34495e;
 }
 
-.nav-link.active {
+.nav-section .nav-link.active {
     color: #ecf0f1;
     background-color: #3498db;
 }
 
-.nav-link i {
+.nav-section .nav-link i {
     margin-right: 0.75rem;
     width: 20px;
 }
 
-/* Main Content */
-.main-content {
+/* Project Content */
+.project-content {
     flex: 1;
     padding: 2rem;
     overflow-y: auto;
+    height: 100%;
+    background-color: #f8f9fa;
 }
 
 .content-section {
@@ -275,7 +283,7 @@
         border-bottom: 1px solid #34495e;
     }
 
-    .main-content {
+    .project-content {
         padding: 1rem;
     }
 }
