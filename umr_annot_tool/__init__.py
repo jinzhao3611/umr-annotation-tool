@@ -67,13 +67,25 @@ def create_app(config_class=None):
     login_manager.init_app(app)
     mail.init_app(app)
 
-    from umr_annot_tool.users.routes import users
-    from umr_annot_tool.posts.routes import posts
-    from umr_annot_tool.main.routes import main
-    from umr_annot_tool.errors.handlers import errors
-    app.register_blueprint(users)
-    app.register_blueprint(posts)
-    app.register_blueprint(main)
-    app.register_blueprint(errors)
+    try:
+        app.logger.info("Registering blueprints...")
+        from umr_annot_tool.users.routes import users
+        from umr_annot_tool.posts.routes import posts
+        from umr_annot_tool.main.routes import main
+        from umr_annot_tool.errors.handlers import errors
+        
+        app.logger.info("Registering users blueprint...")
+        app.register_blueprint(users)
+        app.logger.info("Registering posts blueprint...")
+        app.register_blueprint(posts)
+        app.logger.info("Registering main blueprint...")
+        app.register_blueprint(main)
+        app.logger.info("Registering errors blueprint...")
+        app.register_blueprint(errors)
+        app.logger.info("All blueprints registered successfully")
+    except Exception as e:
+        app.logger.error(f"Error registering blueprints: {str(e)}")
+        import traceback
+        app.logger.error(traceback.format_exc())
 
     return app

@@ -1,32 +1,123 @@
 {% extends "layout.html" %}
+
 {% block head %}
-    <script src="../static/scripts/lattice.js"></script>
-    <title>Tangled tree visualization</title>
-    <link rel="stylesheet" type="text/css" href="../static/styles/lattice.css">
-{% endblock head %}
+    <title>Person Lattice</title>
+    <style>
+        .node {
+            cursor: pointer;
+        }
+        .node text {
+            font: 12px sans-serif;
+        }
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 2px;
+        }
+        .toggle-switch {
+            position: absolute;
+            display: inline-block;
+            width: 30px;
+            height: 17px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 17px;
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 13px;
+            width: 13px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background-color: #2196F3;
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(13px);
+        }
+        #error-msg {
+            color: red;
+            margin-top: 10px;
+        }
+        .success-msg {
+            color: green;
+            margin-top: 10px;
+        }
+        #debug-info {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            display: none;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
-    <div id="lattice"></div>
-    <div id="error_msg"></div>
-    <script type="module">
-        import define from "../static/scripts/person.js";
-        import {Runtime, Library, Inspector} from "../static/scripts/runtime.js";
-
-        const runtime = new Runtime();
-        const main = runtime.module(define, Inspector.into(document.getElementById("lattice")));
-
-        let btn = document.createElement("button");
-        btn.innerHTML = "Apply Changes";
-        btn.style = "padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px;";
-        btn.onclick = function(){
-            fetchLatticeSetting('person', {{ project_id }});
-        }//https://stackoverflow.com/questions/14034737/creating-a-button-dynamically-with-arguments-for-onclick
-        document.getElementById('lattice').appendChild(btn);
-
-        const elm = await waitForElm('#lattice > div:nth-child(2) > svg'); //https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
-        waitForElm('#lattice > div:nth-child(2) > svg').then((elm) => {
-            applyCurrentSettings({{ current_setting | safe }});
-        });
+    <div class="content-section">
+        <h2>Person Lattice</h2>
+        <p>Use the toggle switches to enable/disable person values in the UMR annotation.</p>
+        <div id="lattice-container"></div>
+        <div id="error-msg"></div>
+        <!-- Hidden element to store current settings -->
+        <script type="application/json" id="current-setting">
+            {{ current_setting | safe }}
         </script>
-{% endblock content %}
+    </div>
 
+    <!-- Debug info - hidden by default -->
+    <div id="debug-info">
+        <h3>Debug Information</h3>
+        <pre id="debug-content"></pre>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Load D3.js first -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- Load our custom script -->
+    <script src="{{ url_for('static', filename='scripts/person_lattice.js') }}"></script>
+    
+    <!-- Initialize the person lattice -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded in person.html');
+            
+            // Enable debug info with a key combination (Ctrl+Shift+D)
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                    const debugInfo = document.getElementById('debug-info');
+                    debugInfo.style.display = debugInfo.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+            
+            // Initialize the person lattice visualization
+            if (typeof initPersonLattice === 'function') {
+                console.log('Calling initPersonLattice function...');
+                initPersonLattice();
+            } else {
+                console.error('Error: initPersonLattice function not found!');
+                document.getElementById('error-msg').textContent = 'Error: Failed to load lattice visualization';
+            }
+        });
+    </script>
+{% endblock %} 

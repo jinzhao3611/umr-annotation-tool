@@ -278,74 +278,78 @@ html, body {
     overflow: hidden;
 }
 
+/* Navbar */
+.navbar {
+    height: 60px;
+}
+
+/* Main Content */
+.main-content {
+    height: calc(100vh - 120px); /* Subtract navbar and footer height */
+    padding-top: 56px; /* Reduce padding to match navbar height */
+    overflow: hidden;
+}
+
+/* Footer */
+.footer {
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Alerts */
+.alert {
+    margin: 0;
+    border-radius: 0;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
 /* Site Header */
 .site-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1000;
+}
+
+/* Brand Colors */
+.bg-steel {
     background-color: #5f788a;
-    height: 60px;
-    pointer-events: all;
-}
-
-.site-header .navbar {
-    background-color: #5f788a;
-    height: 60px;
-    padding: 0.5rem 1rem;
-    pointer-events: all;
-}
-
-.site-header .navbar-nav {
-    pointer-events: all;
-}
-
-.site-header .navbar-nav .nav-link {
-    color: #e9ecef;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    transition: color 0.2s ease-in-out;
-    pointer-events: all;
-}
-
-.site-header .navbar-nav .nav-link:hover {
-    color: #ffffff;
-}
-
-.site-header .navbar-nav .nav-link.active {
-    color: #ffffff;
-    border-bottom: 2px solid #ffffff;
 }
 
 .navbar-brand {
     font-weight: bold;
     color: #cbd5db;
-    pointer-events: all;
 }
 
 .navbar-brand:hover {
     color: #fff;
 }
 
-/* Main Content Area */
-.main-content {
-    margin-top: 60px;
-    height: calc(100vh - 60px);
-    position: relative;
-    overflow: hidden;
+.nav-link {
+    color: #cbd5db;
+}
+
+.nav-link:hover {
+    color: #fff;
+}
+
+.nav-link.active {
+    font-weight: bold;
 }
 
 /* Content Area */
 #content {
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Project Container */
-.project-container {
-    position: relative;
-    z-index: 1;
+    margin-top: 60px;
+    margin-bottom: 60px;
 }
 
 /* Responsive Adjustments */

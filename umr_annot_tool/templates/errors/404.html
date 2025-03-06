@@ -1,7 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
-        <h1>Oops. Page Not Found(404)</h1>
-        <p>That page does not exist. Please try a different location. </p>
+        <h1>Oops. Page Not Found (404)</h1>
+        <p>That page does not exist. Please try a different location.</p>
+        
+        <div style="border: 2px solid red; padding: 10px; margin-top: 20px;">
+            <h2>Debug Information</h2>
+            <p>URL: {{ request.path }}</p>
+            <p>Method: {{ request.method }}</p>
+            <p>Time: {{ now }}</p>
+        </div>
     </div>
 {% endblock content %}

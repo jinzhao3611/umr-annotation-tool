@@ -64,9 +64,15 @@ function change_permission(project_id){
 
 // Project page functionality
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Project page script loaded');
+    
     // Handle navigation
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navLinks = document.querySelectorAll('.nav-link[data-section]');
+    const externalLinks = document.querySelectorAll('.nav-link:not([data-section])');
     const sections = document.querySelectorAll('.content-section');
+
+    console.log('Internal nav links:', navLinks.length);
+    console.log('External nav links:', externalLinks.length);
 
     function showSection(sectionId) {
         // Hide all sections
@@ -92,12 +98,21 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('activeSection', sectionId);
     }
 
-    // Add click handlers to navigation links
+    // Add click handlers ONLY to internal navigation links (with data-section attribute)
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const sectionId = this.getAttribute('data-section');
+            console.log('Showing section:', sectionId);
             showSection(sectionId);
+        });
+    });
+
+    // For external links, let the default navigation happen
+    externalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            console.log('External link clicked:', this.href);
+            // Don't prevent default - let the link navigate normally
         });
     });
 

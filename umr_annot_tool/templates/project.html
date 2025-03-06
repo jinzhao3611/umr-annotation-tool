@@ -9,6 +9,15 @@
         const checked_out_docs = {{ checked_out_docs|tojson|safe }};
         console.log('Checked out docs:', checked_out_docs);
     </script>
+    
+    <!-- D3.js for lattice visualizations -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- Custom scripts for lattice visualizations -->
+    <script src="{{ url_for('static', filename='scripts/person_lattice.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/discourse_lattice.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/aspect_lattice.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/modal_lattice.js') }}"></script>
 {% endblock head %}
 
 {% block content %}
@@ -60,17 +69,17 @@
                 <h2>Annotation Tools</h2>
                 <ul>
                     <li>
-                        <a href="{{ url_for('users.partialgraph', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="{{ url_for('users.partialgraph', project_id=project_id) }}" class="nav-link">
                             <i class="fas fa-project-diagram"></i> Partial Graphs
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.alllexicon', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="{{ url_for('users.alllexicon', project_id=project_id) }}" class="nav-link">
                             <i class="fas fa-book"></i> Lexicon
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.statistics', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="{{ url_for('users.statistics', project_id=project_id) }}" class="nav-link">
                             <i class="fas fa-chart-bar"></i> Statistics
                         </a>
                     </li>
@@ -82,32 +91,32 @@
                 <h2>Annotation Lattices</h2>
                 <ul>
                     <li>
-                        <a href="{{ url_for('users.discourse', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="#" class="nav-link" data-section="discourse-lattice">
                             <i class="fas fa-comments"></i> Discourse Relations
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.aspect', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="#" class="nav-link" data-section="aspect-lattice">
                             <i class="fas fa-clock"></i> Aspect
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.person', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="#" class="nav-link" data-section="person-lattice">
                             <i class="fas fa-user"></i> Person
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.number', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="{{ url_for('users.number', project_id=project_id) }}" class="nav-link">
                             <i class="fas fa-hashtag"></i> Number
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.modal', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="#" class="nav-link" data-section="modal-lattice">
                             <i class="fas fa-sliders-h"></i> Modal Strength
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.modification', project_id=project_id) }}" class="nav-link external-link">
+                        <a href="{{ url_for('users.modification', project_id=project_id) }}" class="nav-link">
                             <i class="fas fa-edit"></i> Modification
                         </a>
                     </li>
@@ -118,7 +127,7 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="project-content">
+    <div class="main-content">
         <!-- Documents Section -->
         <section id="documents" class="content-section active">
             <div class="section-header">
@@ -320,6 +329,322 @@
                 </form>
             </div>
         </section>
+
+        <!-- Modal Strength Lattice Section -->
+        <section id="modal-lattice" class="content-section">
+            <div class="section-header">
+                <h2>Modal Strength Lattice</h2>
+            </div>
+            <div class="modal-lattice-container">
+                <p>Use the toggle switches to enable/disable modal strength values in the UMR annotation.</p>
+                
+                <style>
+                    .node {
+                        cursor: pointer;
+                    }
+                    .node text {
+                        font: 12px sans-serif;
+                    }
+                    .link {
+                        fill: none;
+                        stroke: #ccc;
+                        stroke-width: 2px;
+                    }
+                    .toggle-switch {
+                        position: absolute;
+                        display: inline-block;
+                        width: 30px;
+                        height: 17px;
+                    }
+                    .toggle-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+                    .toggle-slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        transition: .4s;
+                        border-radius: 17px;
+                    }
+                    .toggle-slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 13px;
+                        width: 13px;
+                        left: 2px;
+                        bottom: 2px;
+                        background-color: white;
+                        transition: .4s;
+                        border-radius: 50%;
+                    }
+                    input:checked + .toggle-slider {
+                        background-color: #2196F3;
+                    }
+                    input:checked + .toggle-slider:before {
+                        transform: translateX(13px);
+                    }
+                    #modal-error-msg {
+                        color: red;
+                        margin-top: 10px;
+                    }
+                    .success-msg {
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <div id="modal-lattice-container"></div>
+                <div id="modal-error-msg"></div>
+                
+                <!-- Hidden element to store current settings -->
+                <script type="application/json" id="modal-current-setting">
+                    {{ modal_setting|default("{}")|safe }}
+                </script>
+            </div>
+        </section>
+
+        <!-- Aspect Lattice Section -->
+        <section id="aspect-lattice" class="content-section">
+            <div class="section-header">
+                <h2>Aspect Lattice</h2>
+            </div>
+            <div class="aspect-lattice-container">
+                <p>Use the toggle switches to enable/disable aspect values in the UMR annotation.</p>
+                
+                <style>
+                    .node {
+                        cursor: pointer;
+                    }
+                    .node text {
+                        font: 12px sans-serif;
+                    }
+                    .link {
+                        fill: none;
+                        stroke: #ccc;
+                        stroke-width: 2px;
+                    }
+                    .toggle-switch {
+                        position: absolute;
+                        display: inline-block;
+                        width: 30px;
+                        height: 17px;
+                    }
+                    .toggle-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+                    .toggle-slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        transition: .4s;
+                        border-radius: 17px;
+                    }
+                    .toggle-slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 13px;
+                        width: 13px;
+                        left: 2px;
+                        bottom: 2px;
+                        background-color: white;
+                        transition: .4s;
+                        border-radius: 50%;
+                    }
+                    input:checked + .toggle-slider {
+                        background-color: #2196F3;
+                    }
+                    input:checked + .toggle-slider:before {
+                        transform: translateX(13px);
+                    }
+                    #aspect-error-msg {
+                        color: red;
+                        margin-top: 10px;
+                    }
+                    .success-msg {
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <div id="aspect-lattice-container"></div>
+                <div id="aspect-error-msg"></div>
+                
+                <!-- Hidden element to store current settings -->
+                <script type="application/json" id="aspect-current-setting">
+                    {{ aspect_setting|default("{}")|safe }}
+                </script>
+            </div>
+        </section>
+
+        <!-- Discourse Lattice Section -->
+        <section id="discourse-lattice" class="content-section">
+            <div class="section-header">
+                <h2>Discourse Relations Lattice</h2>
+            </div>
+            <div class="discourse-lattice-container">
+                <p>Use the toggle switches to enable/disable discourse relation values in the UMR annotation.</p>
+                
+                <style>
+                    .node {
+                        cursor: pointer;
+                    }
+                    .node text {
+                        font: 12px sans-serif;
+                    }
+                    .link {
+                        fill: none;
+                        stroke: #ccc;
+                        stroke-width: 2px;
+                    }
+                    .toggle-switch {
+                        position: absolute;
+                        display: inline-block;
+                        width: 30px;
+                        height: 17px;
+                    }
+                    .toggle-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+                    .toggle-slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        transition: .4s;
+                        border-radius: 17px;
+                    }
+                    .toggle-slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 13px;
+                        width: 13px;
+                        left: 2px;
+                        bottom: 2px;
+                        background-color: white;
+                        transition: .4s;
+                        border-radius: 50%;
+                    }
+                    input:checked + .toggle-slider {
+                        background-color: #2196F3;
+                    }
+                    input:checked + .toggle-slider:before {
+                        transform: translateX(13px);
+                    }
+                    #discourse-error-msg {
+                        color: red;
+                        margin-top: 10px;
+                    }
+                    .success-msg {
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <div id="discourse-lattice-container"></div>
+                <div id="discourse-error-msg"></div>
+                
+                <!-- Hidden element to store current settings -->
+                <script type="application/json" id="discourse-current-setting">
+                    {{ discourse_setting|default("{}")|safe }}
+                </script>
+            </div>
+        </section>
+
+        <!-- Person Lattice Section -->
+        <section id="person-lattice" class="content-section">
+            <div class="section-header">
+                <h2>Person Lattice</h2>
+            </div>
+            <div class="person-lattice-container">
+                <p>Use the toggle switches to enable/disable person values in the UMR annotation.</p>
+                
+                <style>
+                    .node {
+                        cursor: pointer;
+                    }
+                    .node text {
+                        font: 12px sans-serif;
+                    }
+                    .link {
+                        fill: none;
+                        stroke: #ccc;
+                        stroke-width: 2px;
+                    }
+                    .toggle-switch {
+                        position: absolute;
+                        display: inline-block;
+                        width: 30px;
+                        height: 17px;
+                    }
+                    .toggle-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+                    .toggle-slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        transition: .4s;
+                        border-radius: 17px;
+                    }
+                    .toggle-slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 13px;
+                        width: 13px;
+                        left: 2px;
+                        bottom: 2px;
+                        background-color: white;
+                        transition: .4s;
+                        border-radius: 50%;
+                    }
+                    input:checked + .toggle-slider {
+                        background-color: #2196F3;
+                    }
+                    input:checked + .toggle-slider:before {
+                        transform: translateX(13px);
+                    }
+                    #error-msg {
+                        color: red;
+                        margin-top: 10px;
+                    }
+                    .success-msg {
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <div id="lattice-container"></div>
+                <div id="error-msg"></div>
+                
+                <!-- Hidden element to store current settings -->
+                <script type="application/json" id="current-setting">
+                    {{ person_setting|default("{}")|safe }}
+                </script>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -339,3 +664,120 @@
     <p>&copy; {{ current_year }} - Annotation Workflow System</p>
 </footer>
 {% endblock content %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Modal Strength Lattice Initialization
+        const modalLatticeSection = document.getElementById('modal-lattice');
+        const modalLatticeLink = document.querySelector('a.nav-link[data-section="modal-lattice"]');
+        
+        let modalLatticeInitialized = false;
+        function initModalLatticeIfNeeded() {
+            if (!modalLatticeInitialized && typeof initModalLattice === 'function') {
+                console.log('Initializing modal strength lattice in project page');
+                initModalLattice();
+                modalLatticeInitialized = true;
+            }
+        }
+        
+        // Aspect Lattice Initialization
+        const aspectLatticeSection = document.getElementById('aspect-lattice');
+        const aspectLatticeLink = document.querySelector('a.nav-link[data-section="aspect-lattice"]');
+        
+        let aspectLatticeInitialized = false;
+        function initAspectLatticeIfNeeded() {
+            if (!aspectLatticeInitialized && typeof initAspectLattice === 'function') {
+                console.log('Initializing aspect lattice in project page');
+                initAspectLattice();
+                aspectLatticeInitialized = true;
+            }
+        }
+        
+        // Discourse Lattice Initialization
+        const discourseLatticeSection = document.getElementById('discourse-lattice');
+        const discourseLatticeLink = document.querySelector('a.nav-link[data-section="discourse-lattice"]');
+        
+        let discourseLatticeInitialized = false;
+        function initDiscourseLatticeIfNeeded() {
+            if (!discourseLatticeInitialized && typeof initDiscourseLattice === 'function') {
+                console.log('Initializing discourse lattice in project page');
+                initDiscourseLattice();
+                discourseLatticeInitialized = true;
+            }
+        }
+        
+        // Person Lattice Initialization
+        const personLatticeSection = document.getElementById('person-lattice');
+        const personLatticeLink = document.querySelector('a.nav-link[data-section="person-lattice"]');
+        
+        let personLatticeInitialized = false;
+        function initPersonLatticeIfNeeded() {
+            if (!personLatticeInitialized && typeof initPersonLattice === 'function') {
+                console.log('Initializing person lattice in project page');
+                initPersonLattice();
+                personLatticeInitialized = true;
+            }
+        }
+        
+        // Initialize if the sections are currently visible
+        if (modalLatticeSection && modalLatticeSection.classList.contains('active')) {
+            initModalLatticeIfNeeded();
+        }
+        
+        if (aspectLatticeSection && aspectLatticeSection.classList.contains('active')) {
+            initAspectLatticeIfNeeded();
+        }
+        
+        if (discourseLatticeSection && discourseLatticeSection.classList.contains('active')) {
+            initDiscourseLatticeIfNeeded();
+        }
+        
+        if (personLatticeSection && personLatticeSection.classList.contains('active')) {
+            initPersonLatticeIfNeeded();
+        }
+        
+        // Add click listeners for navigation
+        if (modalLatticeLink) {
+            modalLatticeLink.addEventListener('click', function() {
+                setTimeout(initModalLatticeIfNeeded, 100);
+            });
+        }
+        
+        if (aspectLatticeLink) {
+            aspectLatticeLink.addEventListener('click', function() {
+                setTimeout(initAspectLatticeIfNeeded, 100);
+            });
+        }
+        
+        if (discourseLatticeLink) {
+            discourseLatticeLink.addEventListener('click', function() {
+                setTimeout(initDiscourseLatticeIfNeeded, 100);
+            });
+        }
+        
+        if (personLatticeLink) {
+            personLatticeLink.addEventListener('click', function() {
+                setTimeout(initPersonLatticeIfNeeded, 100);
+            });
+        }
+        
+        // Initialize when a section is shown
+        const allNavLinks = document.querySelectorAll('.nav-link[data-section]');
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const sectionId = this.getAttribute('data-section');
+                if (sectionId === 'person-lattice') {
+                    setTimeout(initPersonLatticeIfNeeded, 100);
+                } else if (sectionId === 'discourse-lattice') {
+                    setTimeout(initDiscourseLatticeIfNeeded, 100);
+                } else if (sectionId === 'aspect-lattice') {
+                    setTimeout(initAspectLatticeIfNeeded, 100);
+                } else if (sectionId === 'modal-lattice') {
+                    setTimeout(initModalLatticeIfNeeded, 100);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

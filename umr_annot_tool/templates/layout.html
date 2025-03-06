@@ -106,5 +106,48 @@
                 </div>
             </div>
         </footer>
+
+        <!-- JavaScript Dependencies -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+        
+        <!-- Custom JavaScript -->
+        <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+        
+        <!-- Debug info -->
+        <div id="debug-info" style="display: none;">
+            <pre id="debug-content"></pre>
+        </div>
+
+        <!-- Error handling -->
+        <script>
+            window.onerror = function(msg, url, lineNo, columnNo, error) {
+                console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+                const debugContent = document.getElementById('debug-content');
+                if (debugContent) {
+                    debugContent.textContent += 'Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error) + '\n\n';
+                }
+                return false;
+            };
+
+            // Basic navigation test
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM loaded in layout');
+                const links = document.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        console.log('Link clicked:', this.href);
+                    });
+                });
+            });
+        </script>
+
+        <!-- Page-specific scripts -->
+        {% block scripts %}{% endblock %}
     </body>
 </html>
