@@ -16,7 +16,7 @@
 body {
     background: #f8f9fa;
     color: var(--text-color);
-    margin-top: 5rem;
+    margin-top: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
 }
@@ -286,7 +286,7 @@ html, body {
 /* Main Content */
 .main-content {
     height: calc(100vh - 120px); /* Subtract navbar and footer height */
-    padding-top: 60px; /* Space for fixed navbar */
+    padding-top: 56px; /* Reduce padding to match navbar height */
     overflow: hidden;
 }
 

@@ -8,30 +8,41 @@ html, body {
 
 /* Layout Structure */
 .container-fluid {
-    height: 100%;
+    height: calc(100vh - 120px);
     padding: 0;
     margin: 0;
-    margin-top: 60px !important;
+    padding-top: 60px;
 }
 
 .split-container {
-    height: calc(100vh - 60px);
+    height: 100%;
     margin: 0;
     padding: 0;
     display: flex;
+    position: relative;
 }
 
 /* Panel Layout */
 .split {
     position: relative;
     height: 100%;
-    min-height: 0;
 }
 
 .left-panel, .right-panel {
     height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding: 15px;
+    padding-bottom: 80px;
+}
+
+/* Make sure footer doesn't overlap content */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #5f788a;
+    z-index: 1000;
 }
 
 /* Card Base Styles */
@@ -313,4 +324,75 @@ html, body {
     word-wrap: break-word;
     overflow-wrap: break-word;
     margin-top: 10px;
+}
+
+/* Alignment Styles */
+.add-alignment .input-group {
+    gap: 0.5rem;
+}
+
+.alignment-item {
+    background-color: white;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+}
+
+.alignment-item:last-child {
+    margin-bottom: 0;
+}
+
+.alignments-list {
+    margin-left: 1rem;
+}
+
+.alignment-item .btn {
+    padding: 0.125rem 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.alignment-item .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.alignment-item .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.alignment-item .btn i {
+    font-size: 0.75rem;
+}
+
+.variable.badge {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.65rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.variable.badge:hover {
+    background-color: #0056b3;
+}
+
+.alignment.badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.alignment.badge:hover {
+    background-color: #5a6268;
+}
+
+/* Editable input styles */
+.form-control-sm.editing {
+    padding: 0.25rem 0.5rem;
+    height: calc(1.5em + 0.5rem + 2px);
+    font-size: 0.875rem;
+    border-radius: 0.2rem;
+    margin: 0;
 } 

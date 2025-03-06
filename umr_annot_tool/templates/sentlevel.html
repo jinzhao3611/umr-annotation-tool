@@ -3,6 +3,7 @@
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/alignments.js') }}"></script>
     <!-- Initialize state before loading any other scripts -->
     <script>
         window.state = {
@@ -305,14 +306,31 @@
                     <h5 class="mb-0">Alignments</h5>
                 </div>
                 <div class="card-body">
+                    <!-- Add new alignment -->
+                    <div class="add-alignment mb-3">
+                        <div class="input-group mb-2">
+                            <input type="text" class="form-control" id="new-variable" placeholder="Variable">
+                            <input type="text" class="form-control" id="new-alignment" placeholder="Alignment">
+                            <button class="btn btn-info" onclick="addAlignment()">Add Alignment</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Existing alignments -->
                     <div class="alignments-display">
                         {% if curr_alignment %}
-                            {% for token, concepts in curr_alignment.items() %}
-                            <div class="alignment-item">
-                                <span class="token badge bg-primary me-2">{{ token }}</span>
-                                {% for concept in concepts %}
-                                <span class="concept badge bg-secondary me-1">{{ concept }}</span>
-                                {% endfor %}
+                            {% for variable, alignments in curr_alignment.items() %}
+                            <div class="alignment-item" data-variable="{{ variable }}">
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="variable badge bg-primary" onclick="makeEditable(this, '{{ variable }}')">{{ variable }}</span>
+                                </div>
+                                <div class="alignments-list">
+                                    {% for alignment in alignments %}
+                                    <div class="alignment-item d-flex justify-content-between align-items-center mb-1">
+                                        <span class="alignment badge bg-secondary me-1" onclick="makeEditable(this, '{{ variable }}', '{{ alignment }}')">{{ alignment }}</span>
+                                        <button class="btn btn-sm btn-danger" onclick="deleteAlignmentValue('{{ variable }}', '{{ alignment }}')">×</button>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
                             {% endfor %}
                         {% else %}
@@ -336,6 +354,10 @@
             dragInterval: 1,
             cursor: 'col-resize'
         });
+
+        // Initialize alignments
+        const currentAlignments = {{ curr_alignment|tojson|safe }};
+        initializeAlignments(currentAlignments);
 
         // Initialize with the current data
         const frameDict = {{ frame_dict|tojson|safe }};
