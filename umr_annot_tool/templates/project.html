@@ -18,6 +18,8 @@
     <script src="{{ url_for('static', filename='scripts/discourse_lattice.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/aspect_lattice.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/modal_lattice.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/modification_lattice.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/number_lattice.js') }}"></script>
 {% endblock head %}
 
 {% block content %}
@@ -106,7 +108,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.number', project_id=project_id) }}" class="nav-link">
+                        <a href="#" class="nav-link" data-section="number-lattice">
                             <i class="fas fa-hashtag"></i> Number
                         </a>
                     </li>
@@ -116,7 +118,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ url_for('users.modification', project_id=project_id) }}" class="nav-link">
+                        <a href="#" class="nav-link" data-section="modification-lattice">
                             <i class="fas fa-edit"></i> Modification
                         </a>
                     </li>
@@ -645,6 +647,164 @@
                 </script>
             </div>
         </section>
+        
+        <!-- Modification Lattice Section -->
+        <section id="modification-lattice" class="content-section">
+            <div class="section-header">
+                <h2>Modification Lattice</h2>
+            </div>
+            <div class="modification-lattice-container">
+                <p>Use the toggle switches to enable/disable modification values in the UMR annotation.</p>
+                
+                <style>
+                    .node {
+                        cursor: pointer;
+                    }
+                    .node text {
+                        font: 12px sans-serif;
+                    }
+                    .link {
+                        fill: none;
+                        stroke: #ccc;
+                        stroke-width: 2px;
+                    }
+                    .toggle-switch {
+                        position: absolute;
+                        display: inline-block;
+                        width: 30px;
+                        height: 17px;
+                    }
+                    .toggle-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+                    .toggle-slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        transition: .4s;
+                        border-radius: 17px;
+                    }
+                    .toggle-slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 13px;
+                        width: 13px;
+                        left: 2px;
+                        bottom: 2px;
+                        background-color: white;
+                        transition: .4s;
+                        border-radius: 50%;
+                    }
+                    input:checked + .toggle-slider {
+                        background-color: #2196F3;
+                    }
+                    input:checked + .toggle-slider:before {
+                        transform: translateX(13px);
+                    }
+                    #modification-error-msg {
+                        color: red;
+                        margin-top: 10px;
+                    }
+                    .success-msg {
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <div id="modification-lattice-container"></div>
+                <div id="modification-error-msg"></div>
+                
+                <!-- Hidden element to store current settings -->
+                <script type="application/json" id="modification-current-setting">
+                    {{ modification_setting|default("{}")|safe }}
+                </script>
+            </div>
+        </section>
+        
+        <!-- Number Lattice Section -->
+        <section id="number-lattice" class="content-section">
+            <div class="section-header">
+                <h2>Number Lattice</h2>
+            </div>
+            <div class="number-lattice-container">
+                <p>Use the toggle switches to enable/disable number values in the UMR annotation.</p>
+                
+                <style>
+                    .node {
+                        cursor: pointer;
+                    }
+                    .node text {
+                        font: 12px sans-serif;
+                    }
+                    .link {
+                        fill: none;
+                        stroke: #ccc;
+                        stroke-width: 2px;
+                    }
+                    .toggle-switch {
+                        position: absolute;
+                        display: inline-block;
+                        width: 30px;
+                        height: 17px;
+                    }
+                    .toggle-switch input {
+                        opacity: 0;
+                        width: 0;
+                        height: 0;
+                    }
+                    .toggle-slider {
+                        position: absolute;
+                        cursor: pointer;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: #ccc;
+                        transition: .4s;
+                        border-radius: 17px;
+                    }
+                    .toggle-slider:before {
+                        position: absolute;
+                        content: "";
+                        height: 13px;
+                        width: 13px;
+                        left: 2px;
+                        bottom: 2px;
+                        background-color: white;
+                        transition: .4s;
+                        border-radius: 50%;
+                    }
+                    input:checked + .toggle-slider {
+                        background-color: #2196F3;
+                    }
+                    input:checked + .toggle-slider:before {
+                        transform: translateX(13px);
+                    }
+                    #number-error-msg {
+                        color: red;
+                        margin-top: 10px;
+                    }
+                    .success-msg {
+                        color: green;
+                        margin-top: 10px;
+                    }
+                </style>
+                
+                <div id="number-lattice-container"></div>
+                <div id="number-error-msg"></div>
+                
+                <!-- Hidden element to store current settings -->
+                <script type="application/json" id="number-current-setting">
+                    {{ number_setting|default("{}")|safe }}
+                </script>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -720,6 +880,32 @@
             }
         }
         
+        // Modification Lattice Initialization
+        const modificationLatticeSection = document.getElementById('modification-lattice');
+        const modificationLatticeLink = document.querySelector('a.nav-link[data-section="modification-lattice"]');
+        
+        let modificationLatticeInitialized = false;
+        function initModificationLatticeIfNeeded() {
+            if (!modificationLatticeInitialized && typeof initModificationLattice === 'function') {
+                console.log('Initializing modification lattice in project page');
+                initModificationLattice();
+                modificationLatticeInitialized = true;
+            }
+        }
+        
+        // Number Lattice Initialization
+        const numberLatticeSection = document.getElementById('number-lattice');
+        const numberLatticeLink = document.querySelector('a.nav-link[data-section="number-lattice"]');
+        
+        let numberLatticeInitialized = false;
+        function initNumberLatticeIfNeeded() {
+            if (!numberLatticeInitialized && typeof initNumberLattice === 'function') {
+                console.log('Initializing number lattice in project page');
+                initNumberLattice();
+                numberLatticeInitialized = true;
+            }
+        }
+        
         // Initialize if the sections are currently visible
         if (modalLatticeSection && modalLatticeSection.classList.contains('active')) {
             initModalLatticeIfNeeded();
@@ -735,6 +921,14 @@
         
         if (personLatticeSection && personLatticeSection.classList.contains('active')) {
             initPersonLatticeIfNeeded();
+        }
+        
+        if (modificationLatticeSection && modificationLatticeSection.classList.contains('active')) {
+            initModificationLatticeIfNeeded();
+        }
+        
+        if (numberLatticeSection && numberLatticeSection.classList.contains('active')) {
+            initNumberLatticeIfNeeded();
         }
         
         // Add click listeners for navigation
@@ -762,6 +956,18 @@
             });
         }
         
+        if (modificationLatticeLink) {
+            modificationLatticeLink.addEventListener('click', function() {
+                setTimeout(initModificationLatticeIfNeeded, 100);
+            });
+        }
+        
+        if (numberLatticeLink) {
+            numberLatticeLink.addEventListener('click', function() {
+                setTimeout(initNumberLatticeIfNeeded, 100);
+            });
+        }
+        
         // Initialize when a section is shown
         const allNavLinks = document.querySelectorAll('.nav-link[data-section]');
         allNavLinks.forEach(link => {
@@ -775,6 +981,10 @@
                     setTimeout(initAspectLatticeIfNeeded, 100);
                 } else if (sectionId === 'modal-lattice') {
                     setTimeout(initModalLatticeIfNeeded, 100);
+                } else if (sectionId === 'modification-lattice') {
+                    setTimeout(initModificationLatticeIfNeeded, 100);
+                } else if (sectionId === 'number-lattice') {
+                    setTimeout(initNumberLatticeIfNeeded, 100);
                 }
             });
         });

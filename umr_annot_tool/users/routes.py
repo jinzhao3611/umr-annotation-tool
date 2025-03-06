@@ -173,11 +173,27 @@ def project(project_id):
     docs = Doc.query.filter(Doc.project_id == project_id).all()
     
     # Get lattice settings
+    person_setting = {}
+    aspect_setting = {}
+    discourse_setting = {}
+    modal_setting = {}
+    modification_setting = {}
+    number_setting = {}
+    
     lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
-    person_setting = lattice_setting.data.get('person', {}) if lattice_setting else {}
-    discourse_setting = lattice_setting.data.get('discourse', {}) if lattice_setting else {}
-    aspect_setting = lattice_setting.data.get('aspect', {}) if lattice_setting else {}
-    modal_setting = lattice_setting.data.get('modal', {}) if lattice_setting else {}
+    if lattice_setting:
+        if lattice_setting.data and 'person' in lattice_setting.data:
+            person_setting = lattice_setting.data['person']
+        if lattice_setting.data and 'aspect' in lattice_setting.data:
+            aspect_setting = lattice_setting.data['aspect']
+        if lattice_setting.data and 'discourse' in lattice_setting.data:
+            discourse_setting = lattice_setting.data['discourse']
+        if lattice_setting.data and 'modal' in lattice_setting.data:
+            modal_setting = lattice_setting.data['modal']
+        if lattice_setting.data and 'modification' in lattice_setting.data:
+            modification_setting = lattice_setting.data['modification']
+        if lattice_setting.data and 'number' in lattice_setting.data:
+            number_setting = lattice_setting.data['number']
     
     # 2. Handle POST requests
     if request.method == 'POST':
@@ -482,9 +498,11 @@ def project(project_id):
         current_user=current_user,
         current_year=datetime.today().date().strftime("%Y-%m-%d"),
         person_setting=json.dumps(person_setting),
-        discourse_setting=json.dumps(discourse_setting),
         aspect_setting=json.dumps(aspect_setting),
-        modal_setting=json.dumps(modal_setting)
+        discourse_setting=json.dumps(discourse_setting),
+        modal_setting=json.dumps(modal_setting),
+        modification_setting=json.dumps(modification_setting),
+        number_setting=json.dumps(number_setting)
     )
 
 
@@ -755,25 +773,36 @@ def person(project_id):
 def number(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
+    
     if request.method == 'POST':
         try:
+            print("ROUTE DEBUG: Processing POST request for number")
             number_setting = request.get_json(force=True)['lattice_setting']
             lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            
             if not lattice_setting:
+                print("ROUTE DEBUG: Lattice settings not found")
                 return make_response(jsonify({"msg": "Lattice settings not found", "msg_category": "error"}), 404)
+            
             lattice_setting.data['number'] = number_setting
             flag_modified(lattice_setting, 'data')
             db.session.commit()
             msg = 'Number settings are applied successfully.'
             msg_category = 'success'
+            print("ROUTE DEBUG: Number settings saved successfully")
             return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
         except Exception as e:
+            print(f"ROUTE DEBUG: Error in POST request: {str(e)}")
             print(e)
             print("get number setting error")
-            return make_response(jsonify({"msg": "Error saving settings", "msg_category": "error"}), 500)
-    
+            return make_response(jsonify({"msg": str(e), "msg_category": "error"}), 500)
+            
+    # For GET request, get the current settings from database
+    print("ROUTE DEBUG: Processing GET request")
     lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
     current_setting = lattice_setting.data.get('number', {}) if lattice_setting else {}
+    print(f"ROUTE DEBUG: Rendering template with current_setting={current_setting}")
+    
     return render_template('number.html', project_id=project_id, current_setting=json.dumps(current_setting))
 
 @users.route('/modal/<int:project_id>', methods=['GET', 'POST'])
@@ -826,6 +855,30 @@ def modal(project_id):
 def modification(project_id): #there is no post here like the previous ones, because users are not allowed to toggle off any modification items in the dropdown menu
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
+    
+    if request.method == 'POST':
+        try:
+            print("ROUTE DEBUG: Processing POST request for modification")
+            modification_setting = request.get_json(force=True)['lattice_setting']
+            lattice_setting = Lattice.query.filter(Lattice.project_id == project_id).first()
+            
+            if not lattice_setting:
+                print("ROUTE DEBUG: Lattice settings not found")
+                return make_response(jsonify({"msg": "Lattice settings not found", "msg_category": "error"}), 404)
+            
+            lattice_setting.data['modification'] = modification_setting
+            flag_modified(lattice_setting, 'data')
+            db.session.commit()
+            msg = 'Modification settings are applied successfully.'
+            msg_category = 'success'
+            print("ROUTE DEBUG: Modification settings saved successfully")
+            return make_response(jsonify({"msg": msg, "msg_category": msg_category}), 200)
+        except Exception as e:
+            print(f"ROUTE DEBUG: Error in POST request: {str(e)}")
+            print(e)
+            print("get modification setting error")
+            return make_response(jsonify({"msg": str(e), "msg_category": "error"}), 500)
+            
     return render_template('modification.html', project_id=project_id)
 
 @users.route('/statistics/<int:project_id>', methods=['GET', 'POST'])
