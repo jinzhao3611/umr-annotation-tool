@@ -306,12 +306,18 @@
                 </div>
                 <div class="card-body">
                     <div class="alignments-display">
-                        {% for alignment in curr_alignment %}
-                        <div class="alignment-item">
-                            <span class="token">{{ alignment.token }}</span>
-                            <span class="concept">{{ alignment.concept }}</span>
-                        </div>
-                        {% endfor %}
+                        {% if curr_alignment %}
+                            {% for token, concepts in curr_alignment.items() %}
+                            <div class="alignment-item">
+                                <span class="token badge bg-primary me-2">{{ token }}</span>
+                                {% for concept in concepts %}
+                                <span class="concept badge bg-secondary me-1">{{ concept }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="alert alert-info mb-0">No alignments available for this sentence.</div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

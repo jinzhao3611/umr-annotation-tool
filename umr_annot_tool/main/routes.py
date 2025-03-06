@@ -358,8 +358,14 @@ def sentlevel(doc_version_id, sent_id):
                     
                     # Handle alignment
                     curr_alignment = curr_annotation.alignment if curr_annotation.alignment else {}
+                    logger.info(f"Raw alignment data: {curr_alignment}")
+                    logger.info(f"Raw alignment type: {type(curr_alignment)}")
+                    
                     if isinstance(curr_alignment, str):
                         curr_alignment = json.loads(curr_alignment)
+                        logger.info(f"Parsed alignment data: {curr_alignment}")
+                    
+                    logger.info(f"Final alignment data: {curr_alignment}")
                     logger.info(f"Successfully loaded annotation for sentence {sent_id}")
                 except Exception as e:
                     logger.error(f"Error processing annotation: {str(e)}")
