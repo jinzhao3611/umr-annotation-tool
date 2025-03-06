@@ -624,6 +624,12 @@ def update_annotation(doc_version_id, sent_id):
         if operation == 'delete_branch':
             relation = data.get('relation', 'unknown')
             current_app.logger.info(f"User {current_user.username} deleted branch {relation} in doc_version {doc_version_id}, sentence {sent_id}")
+        elif operation == 'move_branch':
+            source_relation = data.get('source_relation', 'unknown')
+            target_node = data.get('target_node', 'unknown')
+            is_variable_target = data.get('is_variable_target', False)
+            target_type = "variable" if is_variable_target else "relation"
+            current_app.logger.info(f"User {current_user.username} moved branch from {source_relation} to {target_node} ({target_type}) in doc_version {doc_version_id}, sentence {sent_id}")
         else:
             current_app.logger.info(f"User {current_user.username} performed operation {operation} in doc_version {doc_version_id}, sentence {sent_id}")
         

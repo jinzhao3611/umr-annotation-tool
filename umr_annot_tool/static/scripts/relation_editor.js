@@ -52,6 +52,9 @@ function initRelationEditor() {
     // Also make values clickable for relations with predefined values
     makeValuesClickable(annotationElement);
     
+    // Make variables clickable for branch operations
+    makeVariablesClickable(annotationElement);
+    
     // Add context menu for branch operations
     addBranchOperations(annotationElement);
     
@@ -529,7 +532,7 @@ function getCsrfToken() {
 }
 
 // Function to show notification
-function showNotification(message, type) {
+function showNotification(message, type, duration = 3000) {
     const notification = document.createElement('div');
     notification.textContent = message;
     notification.style.position = 'fixed';
@@ -544,16 +547,18 @@ function showNotification(message, type) {
         notification.style.backgroundColor = '#4caf50';
     } else if (type === 'error') {
         notification.style.backgroundColor = '#f44336';
+    } else if (type === 'info') {
+        notification.style.backgroundColor = '#2196f3';
     } else {
         notification.style.backgroundColor = '#2196f3';
     }
     
     document.body.appendChild(notification);
     
-    // Remove notification after 3 seconds
+    // Remove notification after specified duration
     setTimeout(() => {
         notification.remove();
-    }, 3000);
+    }, duration);
 }
 
 // Function to add branch operations to the annotation tree
@@ -604,6 +609,10 @@ function addBranchOperations(annotationElement) {
     });
 }
 
+// Global variables to track branch move state
+let moveSourceSpan = null;
+let moveMode = false;
+
 // Function to show branch context menu
 function showBranchContextMenu(relationSpan, x, y) {
     // Remove any existing context menus
@@ -644,6 +653,27 @@ function showBranchContextMenu(relationSpan, x, y) {
     });
     
     menu.appendChild(deleteItem);
+    
+    // Add "Move Branch" item
+    const moveItem = document.createElement('div');
+    moveItem.textContent = '🔄 Move Branch';
+    moveItem.style.padding = '8px 12px';
+    moveItem.style.cursor = 'pointer';
+    
+    moveItem.addEventListener('mouseover', () => {
+        moveItem.style.backgroundColor = '#f0f0f0';
+    });
+    
+    moveItem.addEventListener('mouseout', () => {
+        moveItem.style.backgroundColor = '';
+    });
+    
+    moveItem.addEventListener('click', () => {
+        menu.remove();
+        startBranchMove(relationSpan);
+    });
+    
+    menu.appendChild(moveItem);
     
     // Add the menu to the document
     document.body.appendChild(menu);
@@ -841,6 +871,331 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
             annotation: updatedAnnotation,
             operation: 'delete_branch',
             relation: deletedRelation
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Update successful:', data);
+    })
+    .catch(error => {
+        console.error('Error updating annotation:', error);
+        showNotification('Error saving changes: ' + error.message, 'error');
+    });
+}
+
+// Function to make variables in the annotation clickable
+function makeVariablesClickable(annotationElement) {
+    const text = annotationElement.innerHTML;
+    // This pattern matches variables like s1, s2a, s10b, etc.
+    const variableRegex = /(\b)(s[0-9]+[a-z]*[0-9]*)\b(?![^<]*>)/g;
+    
+    let html = text.replace(variableRegex, function(match, prefix, variable) {
+        // Don't replace if it's already inside a span
+        if (prefix.includes('span')) return match;
+        return `${prefix}<span class="variable-span" style="cursor:pointer; color:#9c27b0;">${variable}</span>`;
+    });
+    
+    annotationElement.innerHTML = html;
+}
+
+// Function to start a branch move operation
+function startBranchMove(sourceSpan) {
+    moveSourceSpan = sourceSpan;
+    moveMode = true;
+    
+    // Show notification for move mode
+    showNotification('Select a destination node (relation or variable) to move the branch to. Click again on the source to cancel.', 'info', 10000);
+    
+    // Add visual feedback
+    sourceSpan.style.backgroundColor = '#ffffcc';
+    sourceSpan.style.padding = '2px';
+    sourceSpan.style.borderRadius = '3px';
+    
+    // Add move mode class to the annotation container
+    const annotationElement = document.querySelector('#amr pre');
+    annotationElement.classList.add('move-mode');
+    
+    // Highlight valid target nodes (both relations and variables)
+    const relationSpans = annotationElement.querySelectorAll('.relation-span');
+    const variableSpans = annotationElement.querySelectorAll('.variable-span');
+    
+    // Function to setup a potential target node
+    const setupPotentialTarget = (span, isVariable) => {
+        if (span !== sourceSpan) {
+            span.classList.add('potential-target');
+            span.style.backgroundColor = isVariable ? '#f0e6ff' : '#e6f7ff'; // Different color for variables
+            span.style.padding = '2px';
+            span.style.borderRadius = '3px';
+            span.style.transition = 'background-color 0.2s';
+            
+            // Save the original click handler
+            if (!span._originalClickHandler) {
+                span._originalClickHandler = span.onclick;
+            }
+            
+            // Override the click handler during move mode
+            span.onclick = (event) => {
+                event.stopPropagation();
+                if (moveMode) {
+                    completeBranchMove(sourceSpan, span, isVariable);
+                } else if (span._originalClickHandler) {
+                    span._originalClickHandler(event);
+                }
+            };
+            
+            // Hover effect for potential targets
+            span.addEventListener('mouseenter', () => {
+                if (moveMode) {
+                    span.style.backgroundColor = isVariable ? '#d9c3ff' : '#bae7ff';
+                }
+            });
+            
+            span.addEventListener('mouseleave', () => {
+                if (moveMode) {
+                    span.style.backgroundColor = isVariable ? '#f0e6ff' : '#e6f7ff';
+                }
+            });
+        } else {
+            // For the source span, clicking again cancels the move
+            span.onclick = (event) => {
+                event.stopPropagation();
+                cancelBranchMove();
+            };
+        }
+    };
+    
+    // Setup relation spans as targets
+    relationSpans.forEach(span => setupPotentialTarget(span, false));
+    
+    // Setup variable spans as targets
+    variableSpans.forEach(span => setupPotentialTarget(span, true));
+    
+    // Add a click handler to the document to cancel move mode when clicking outside
+    document.addEventListener('click', cancelBranchMove, { once: true });
+}
+
+// Function to cancel branch move operation
+function cancelBranchMove() {
+    if (!moveMode) return;
+    
+    moveMode = false;
+    
+    // Remove visual feedback
+    if (moveSourceSpan) {
+        moveSourceSpan.style.backgroundColor = '';
+        moveSourceSpan.style.padding = '';
+        moveSourceSpan.style.borderRadius = '';
+    }
+    
+    // Reset all relation and variable spans
+    const annotationElement = document.querySelector('#amr pre');
+    annotationElement.classList.remove('move-mode');
+    
+    const allSpans = annotationElement.querySelectorAll('.relation-span, .variable-span');
+    allSpans.forEach(span => {
+        span.classList.remove('potential-target');
+        span.style.backgroundColor = '';
+        span.style.padding = '';
+        span.style.borderRadius = '';
+        
+        // Restore original click handler
+        if (span._originalClickHandler) {
+            span.onclick = span._originalClickHandler;
+        }
+    });
+    
+    // Clear move state
+    moveSourceSpan = null;
+    
+    // Show notification
+    showNotification('Branch move canceled', 'info');
+}
+
+// Function to complete a branch move operation
+function completeBranchMove(sourceSpan, targetSpan, isVariableTarget) {
+    // Get the annotation element
+    const annotationElement = document.querySelector('#amr pre');
+    const originalText = annotationElement.textContent;
+    
+    // Identify the source branch
+    const sourceRelation = sourceSpan.textContent;
+    const sourceIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(sourceSpan);
+    
+    // Find the relation occurrence in the text
+    let relationMatches = findAllMatches(originalText, sourceRelation);
+    
+    if (relationMatches.length <= sourceIndex) {
+        console.error('Could not locate the source branch in the text');
+        showNotification('Error: Could not locate the source branch', 'error');
+        cancelBranchMove();
+        return;
+    }
+    
+    const sourcePos = relationMatches[sourceIndex];
+    
+    // Determine the branch boundaries
+    const sourceBranchInfo = getBranchBoundaries(originalText, sourcePos);
+    
+    if (!sourceBranchInfo) {
+        console.error('Could not determine source branch boundaries');
+        showNotification('Error: Could not determine source branch boundaries', 'error');
+        cancelBranchMove();
+        return;
+    }
+    
+    // Get the source branch text
+    const { start: sourceStart, end: sourceEnd, branchText: sourceBranchText, parentIndent: sourceIndent } = sourceBranchInfo;
+    
+    // Identify the target location
+    const targetText = targetSpan.textContent;
+    
+    // Different handling based on target type
+    let targetPos, targetLineStart, targetLineEnd, targetLine, targetIndent;
+    
+    if (isVariableTarget) {
+        // Find the target variable occurrence in the text
+        const targetSpans = annotationElement.querySelectorAll('.variable-span');
+        const targetIndex = Array.from(targetSpans).indexOf(targetSpan);
+        let variableMatches = findAllMatches(originalText, targetText);
+        
+        if (variableMatches.length <= targetIndex) {
+            console.error('Could not locate the target variable in the text');
+            showNotification('Error: Could not locate the target variable', 'error');
+            cancelBranchMove();
+            return;
+        }
+        
+        targetPos = variableMatches[targetIndex];
+    } else {
+        // Find the target relation occurrence in the text
+        const targetSpans = annotationElement.querySelectorAll('.relation-span');
+        const targetIndex = Array.from(targetSpans).indexOf(targetSpan);
+        let targetMatches = findAllMatches(originalText, targetText);
+        
+        if (targetMatches.length <= targetIndex) {
+            console.error('Could not locate the target node in the text');
+            showNotification('Error: Could not locate the target node', 'error');
+            cancelBranchMove();
+            return;
+        }
+        
+        targetPos = targetMatches[targetIndex];
+    }
+    
+    // Get the target line info
+    targetLineStart = originalText.lastIndexOf('\n', targetPos) + 1;
+    targetLineEnd = originalText.indexOf('\n', targetPos);
+    targetLine = originalText.substring(targetLineStart, targetLineEnd === -1 ? originalText.length : targetLineEnd);
+    
+    // Determine the indentation level at the target
+    targetIndent = targetLine.search(/\S/);
+    
+    // Find the insertion point - different for variables and relations
+    let insertionPoint;
+    
+    if (isVariableTarget) {
+        // For variables, we need to find where to insert the branch
+        // Usually we want to insert after the line with the variable
+        insertionPoint = targetLineEnd === -1 ? originalText.length : targetLineEnd;
+        
+        // But we need to check if there are any existing relations/branches after this variable
+        // If so, we need to insert before the first one
+        let nextLineStart = insertionPoint + 1;
+        const nextLineEnd = originalText.indexOf('\n', nextLineStart);
+        if (nextLineEnd !== -1) {
+            const nextLine = originalText.substring(nextLineStart, nextLineEnd);
+            const nextLineIndent = nextLine.search(/\S/);
+            
+            // If the next line is more indented, it's part of the current node's content
+            // If it has a relation, we should insert our branch before it
+            if (nextLineIndent > targetIndent && nextLine.includes(':')) {
+                // Find the first relation on the next line
+                const firstRelPos = nextLine.indexOf(':');
+                if (firstRelPos !== -1) {
+                    // We'll insert before this relation
+                    // No adjustment needed - we'll insert at current insertionPoint
+                }
+            }
+        }
+    } else {
+        // For relations, insert after the relation's line
+        insertionPoint = targetLineEnd === -1 ? originalText.length : targetLineEnd;
+    }
+    
+    // Calculate needed indentation adjustment
+    const newIndent = targetIndent + 2; // Add 2 spaces more than target's indent
+    const indentAdjustment = newIndent - sourceIndent;
+    
+    // Adjust the indentation of the source branch
+    const adjustedBranchLines = sourceBranchText.split('\n').filter(line => line.trim().length > 0);
+    
+    const adjustedBranchText = adjustedBranchLines.map(line => {
+        const lineIndent = line.search(/\S/);
+        const lineContent = line.trim();
+        
+        // Calculate new indentation for this line
+        const newLineIndent = lineIndent + indentAdjustment;
+        return ' '.repeat(newLineIndent) + lineContent;
+    }).join('\n') + '\n'; // Add newline at end
+    
+    // Create updated text
+    // First remove the source branch
+    let updatedText = originalText.substring(0, sourceStart) + originalText.substring(sourceEnd);
+    
+    // Then adjust the insertion point if it was affected by the removal
+    if (insertionPoint > sourceStart) {
+        // If the insertion point was after the source branch, adjust it
+        insertionPoint -= (sourceEnd - sourceStart);
+    }
+    
+    // Then insert the adjusted branch at the insertion point
+    updatedText = updatedText.substring(0, insertionPoint) + '\n' + adjustedBranchText + updatedText.substring(insertionPoint);
+    
+    // Update the annotation display
+    annotationElement.textContent = updatedText;
+    
+    // Reinitialize the relation editor
+    makeRelationsClickable(annotationElement);
+    makeValuesClickable(annotationElement);
+    makeVariablesClickable(annotationElement);
+    addBranchOperations(annotationElement);
+    
+    // Exit move mode
+    cancelBranchMove();
+    
+    // Save the updated annotation
+    saveBranchMove(updatedText, sourceRelation, targetText, isVariableTarget);
+    
+    showNotification(`Moved branch from "${sourceRelation}" to "${targetText}" ${isVariableTarget ? '(variable)' : ''}`, 'success');
+}
+
+// Function to save a branch move operation
+function saveBranchMove(updatedAnnotation, sourceRelation, targetNode, isVariableTarget) {
+    // Get sentence ID and document ID from the URL
+    const urlParts = window.location.pathname.split('/');
+    const sent_id = urlParts[urlParts.length - 1];
+    const doc_version_id = urlParts[urlParts.length - 2];
+    
+    console.log(`Moving branch from ${sourceRelation} to ${targetNode} ${isVariableTarget ? '(variable)' : ''}`);
+    
+    // Use fetch API to send the update to the server
+    fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            annotation: updatedAnnotation,
+            operation: 'move_branch',
+            source_relation: sourceRelation,
+            target_node: targetNode,
+            is_variable_target: isVariableTarget
         })
     })
     .then(response => {
