@@ -72,7 +72,7 @@ def logout():
     # Remove session keys set by Flask-Principal
     for key in ('identity.name', 'identity.auth_type'):
         session.pop(key, None)
-    return redirect(url_for('main.display_post'))
+    return redirect(url_for('users.login'))
 
 
 @users.route("/account", methods=['GET', 'POST'])
