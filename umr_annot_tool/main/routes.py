@@ -588,3 +588,52 @@ def has_permission_for_doc(user, doc_id):
     
     # Check if user has admin, edit, or annotate permission
     return project_user.permission in ['admin', 'edit', 'annotate']
+
+@main.route("/update_annotation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
+def update_annotation(doc_version_id, sent_id):
+    """Update an annotation with various operations (delete branch, etc.)."""
+    if not current_user.is_authenticated:
+        return jsonify({"error": "Not authenticated"}), 401
+    
+    try:
+        data = request.get_json()
+        updated_annotation = data.get('annotation')
+        operation = data.get('operation')
+        
+        # Validate inputs
+        if not updated_annotation or not operation:
+            return jsonify({"error": "Missing required fields"}), 400
+        
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to modify this document
+        if not has_permission_for_doc(current_user, doc_version.doc_id):
+            return jsonify({"error": "Not authorized to modify this document"}), 403
+        
+        # Get sentence annotation
+        sent = Sent.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
+        if not sent:
+            return jsonify({"error": "Sentence not found"}), 404
+        
+        # Save the updated annotation
+        sent.umr = updated_annotation
+        db.session.commit()
+        
+        # Log the operation
+        if operation == 'delete_branch':
+            relation = data.get('relation', 'unknown')
+            current_app.logger.info(f"User {current_user.username} deleted branch {relation} in doc_version {doc_version_id}, sentence {sent_id}")
+        else:
+            current_app.logger.info(f"User {current_user.username} performed operation {operation} in doc_version {doc_version_id}, sentence {sent_id}")
+        
+        return jsonify({
+            "success": True,
+            "message": f"Operation {operation} successful",
+            "doc_version_id": doc_version_id,
+            "sent_id": sent_id
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error updating annotation: {str(e)}")
+        return jsonify({"error": str(e)}), 500

@@ -52,6 +52,9 @@ function initRelationEditor() {
     // Also make values clickable for relations with predefined values
     makeValuesClickable(annotationElement);
     
+    // Add context menu for branch operations
+    addBranchOperations(annotationElement);
+    
     // Add event listener to document to close dropdown when clicking outside
     document.addEventListener('click', function(event) {
         const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
@@ -551,6 +554,308 @@ function showNotification(message, type) {
     setTimeout(() => {
         notification.remove();
     }, 3000);
+}
+
+// Function to add branch operations to the annotation tree
+function addBranchOperations(annotationElement) {
+    // Get all the relation spans
+    const relationSpans = annotationElement.querySelectorAll('.relation-span');
+    
+    // Add delete icons to each relation span
+    relationSpans.forEach(span => {
+        // Create delete icon
+        const deleteIcon = document.createElement('span');
+        deleteIcon.innerHTML = '🗑️';
+        deleteIcon.className = 'delete-branch-icon';
+        deleteIcon.title = 'Delete this branch';
+        deleteIcon.style.cursor = 'pointer';
+        deleteIcon.style.marginLeft = '4px';
+        deleteIcon.style.fontSize = '12px';
+        deleteIcon.style.opacity = '0.6';
+        deleteIcon.style.display = 'none'; // Hidden by default
+        
+        // Show icon on hover
+        span.addEventListener('mouseenter', () => {
+            deleteIcon.style.display = 'inline';
+        });
+        
+        span.addEventListener('mouseleave', () => {
+            deleteIcon.style.display = 'none';
+        });
+        
+        // Handle delete action
+        deleteIcon.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent triggering parent click events
+            confirmDeleteBranch(span);
+        });
+        
+        // Insert the delete icon after the span
+        span.insertAdjacentElement('afterend', deleteIcon);
+    });
+    
+    // Also add right-click context menu
+    annotationElement.addEventListener('contextmenu', (event) => {
+        // Find if we right-clicked on a relation span
+        let target = event.target;
+        if (target.classList.contains('relation-span')) {
+            event.preventDefault(); // Prevent default context menu
+            showBranchContextMenu(target, event.clientX, event.clientY);
+        }
+    });
+}
+
+// Function to show branch context menu
+function showBranchContextMenu(relationSpan, x, y) {
+    // Remove any existing context menus
+    const existingMenus = document.querySelectorAll('.branch-context-menu');
+    existingMenus.forEach(menu => menu.remove());
+    
+    // Create context menu
+    const menu = document.createElement('div');
+    menu.className = 'branch-context-menu';
+    menu.style.position = 'fixed';
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
+    menu.style.backgroundColor = '#fff';
+    menu.style.border = '1px solid #ccc';
+    menu.style.borderRadius = '4px';
+    menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    menu.style.padding = '5px 0';
+    menu.style.zIndex = '1000';
+    
+    // Add menu items
+    const deleteItem = document.createElement('div');
+    deleteItem.textContent = '🗑️ Delete Branch';
+    deleteItem.style.padding = '8px 12px';
+    deleteItem.style.cursor = 'pointer';
+    deleteItem.style.hover = 'background-color: #f0f0f0';
+    
+    deleteItem.addEventListener('mouseover', () => {
+        deleteItem.style.backgroundColor = '#f0f0f0';
+    });
+    
+    deleteItem.addEventListener('mouseout', () => {
+        deleteItem.style.backgroundColor = '';
+    });
+    
+    deleteItem.addEventListener('click', () => {
+        menu.remove();
+        confirmDeleteBranch(relationSpan);
+    });
+    
+    menu.appendChild(deleteItem);
+    
+    // Add the menu to the document
+    document.body.appendChild(menu);
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', () => {
+        menu.remove();
+    }, { once: true });
+}
+
+// Function to confirm branch deletion
+function confirmDeleteBranch(relationSpan) {
+    // Create confirmation dialog
+    const dialog = document.createElement('div');
+    dialog.className = 'branch-delete-dialog';
+    dialog.style.position = 'fixed';
+    dialog.style.top = '50%';
+    dialog.style.left = '50%';
+    dialog.style.transform = 'translate(-50%, -50%)';
+    dialog.style.backgroundColor = '#fff';
+    dialog.style.border = '1px solid #ccc';
+    dialog.style.borderRadius = '4px';
+    dialog.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    dialog.style.padding = '20px';
+    dialog.style.zIndex = '2000';
+    dialog.style.minWidth = '300px';
+    
+    const relation = relationSpan.textContent;
+    
+    dialog.innerHTML = `
+        <h4 style="margin-top: 0;">Delete Branch</h4>
+        <p>Are you sure you want to delete the branch starting with <strong>${relation}</strong> and all its subbranches?</p>
+        <div style="text-align: right; margin-top: 20px;">
+            <button id="cancel-delete" style="margin-right: 10px; padding: 5px 10px;">Cancel</button>
+            <button id="confirm-delete" style="padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 4px;">Delete</button>
+        </div>
+    `;
+    
+    // Add the dialog to the document
+    document.body.appendChild(dialog);
+    
+    // Add backdrop
+    const backdrop = document.createElement('div');
+    backdrop.className = 'dialog-backdrop';
+    backdrop.style.position = 'fixed';
+    backdrop.style.top = '0';
+    backdrop.style.left = '0';
+    backdrop.style.width = '100%';
+    backdrop.style.height = '100%';
+    backdrop.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    backdrop.style.zIndex = '1999';
+    document.body.appendChild(backdrop);
+    
+    // Handle buttons
+    const cancelButton = dialog.querySelector('#cancel-delete');
+    const confirmButton = dialog.querySelector('#confirm-delete');
+    
+    cancelButton.addEventListener('click', () => {
+        dialog.remove();
+        backdrop.remove();
+    });
+    
+    confirmButton.addEventListener('click', () => {
+        dialog.remove();
+        backdrop.remove();
+        deleteBranch(relationSpan);
+    });
+}
+
+// Function to delete a branch from the annotation
+function deleteBranch(relationSpan) {
+    const annotationElement = document.querySelector('#amr pre');
+    const originalText = annotationElement.textContent;
+    
+    // Find the position of the relation in the original text
+    const relationText = relationSpan.textContent;
+    const spanIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(relationSpan);
+    
+    // Find the relation occurrence in the text (need to find the specific instance)
+    let relationMatches = findAllMatches(originalText, relationText);
+    
+    if (relationMatches.length <= spanIndex) {
+        console.error('Could not locate the relation in the text');
+        showNotification('Error: Could not locate the branch to delete', 'error');
+        return;
+    }
+    
+    const relationPos = relationMatches[spanIndex];
+    
+    // Determine the branch boundaries
+    const branchInfo = getBranchBoundaries(originalText, relationPos);
+    
+    if (!branchInfo) {
+        console.error('Could not determine branch boundaries');
+        showNotification('Error: Could not determine branch boundaries', 'error');
+        return;
+    }
+    
+    const { start, end, parentIndent } = branchInfo;
+    
+    // Create updated text by removing the branch
+    const updatedText = originalText.substring(0, start) + originalText.substring(end);
+    
+    // Update the annotation display
+    annotationElement.textContent = updatedText;
+    
+    // Reinitialize the relation editor
+    makeRelationsClickable(annotationElement);
+    makeValuesClickable(annotationElement);
+    addBranchOperations(annotationElement);
+    
+    // Save the updated annotation
+    saveBranchDeletion(updatedText, relationText);
+    
+    showNotification(`Deleted branch: ${relationText}`, 'success');
+}
+
+// Function to find all matches of a substring in a string
+function findAllMatches(str, substr) {
+    const positions = [];
+    let pos = str.indexOf(substr);
+    
+    while (pos !== -1) {
+        positions.push(pos);
+        pos = str.indexOf(substr, pos + 1);
+    }
+    
+    return positions;
+}
+
+// Function to determine the boundaries of a branch in the annotation text
+function getBranchBoundaries(text, relationPosition) {
+    // Find the line with the relation
+    let lineStart = text.lastIndexOf('\n', relationPosition) + 1;
+    let lineEnd = text.indexOf('\n', relationPosition);
+    if (lineEnd === -1) lineEnd = text.length;
+    
+    const line = text.substring(lineStart, lineEnd);
+    
+    // Determine the indentation level of this relation
+    const indent = line.search(/\S/);
+    
+    // Find where this branch ends (the next line with the same or less indentation)
+    let currentPos = lineEnd + 1;
+    let branchEnd = lineEnd;
+    
+    while (currentPos < text.length) {
+        const nextLineStart = currentPos;
+        const nextLineEnd = text.indexOf('\n', nextLineStart);
+        const endPos = nextLineEnd === -1 ? text.length : nextLineEnd;
+        const nextLine = text.substring(nextLineStart, endPos);
+        
+        // Skip empty lines
+        if (nextLine.trim() === '') {
+            currentPos = endPos + 1;
+            continue;
+        }
+        
+        const nextIndent = nextLine.search(/\S/);
+        
+        // If we find a line with same or less indentation, we've reached the end of the branch
+        if (nextIndent <= indent) {
+            break;
+        }
+        
+        branchEnd = endPos;
+        currentPos = endPos + 1;
+    }
+    
+    return {
+        start: lineStart,
+        end: branchEnd + 1, // Include the newline at the end
+        branchText: text.substring(lineStart, branchEnd + 1),
+        parentIndent: indent
+    };
+}
+
+// Function to save the branch deletion
+function saveBranchDeletion(updatedAnnotation, deletedRelation) {
+    // Get sentence ID and document ID from the URL
+    const urlParts = window.location.pathname.split('/');
+    const sent_id = urlParts[urlParts.length - 1];
+    const doc_version_id = urlParts[urlParts.length - 2];
+    
+    console.log(`Deleting branch with relation: ${deletedRelation}`);
+    
+    // Use fetch API to send the update to the server
+    fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            annotation: updatedAnnotation,
+            operation: 'delete_branch',
+            relation: deletedRelation
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Update successful:', data);
+    })
+    .catch(error => {
+        console.error('Error updating annotation:', error);
+        showNotification('Error saving changes: ' + error.message, 'error');
+    });
 }
 
 // Initialize relation editor when DOM is loaded
