@@ -224,39 +224,89 @@ def project(project_id):
                 msg_list.append("Removed member from project.")
         
         # 2.3 Document management
-        delete_doc_id = request.form.get('delete_doc_id', '0')
+        delete_doc = request.form.get('delete_doc', '0')
         annotated_doc_id = request.form.get('annotated_doc_id', '0')
         delete_annot_doc_id = request.form.get('delete_annot_doc_id', '0')
         
-        if delete_doc_id.isdigit() and int(delete_doc_id) != 0 and membership.permission == 'admin':
-            doc_id = int(delete_doc_id)
-            # Clean up document data
-            doc_version_ids = [dv.id for dv in DocVersion.query.filter_by(doc_id=doc_id)]
-            Annotation.query.filter(Annotation.doc_version_id.in_(doc_version_ids)).delete()
-            DocVersion.query.filter(DocVersion.doc_id == doc_id).delete()
-            Sent.query.filter(Sent.doc_id == doc_id).delete()
-            Doc.query.filter(Doc.id == doc_id).delete()
-            msg_list.append(f"Document (id={doc_id}) deleted from project.")
+        if delete_doc.isdigit() and int(delete_doc) != 0 and membership.permission == 'admin':
+            doc_id = int(delete_doc)
+            try:
+                # First delete all annotations from all doc versions
+                doc_versions = DocVersion.query.filter_by(doc_id=doc_id).all()
+                for doc_version in doc_versions:
+                    # Delete annotations for this version
+                    Annotation.query.filter_by(doc_version_id=doc_version.id).delete(synchronize_session='fetch')
+                
+                # Delete all doc versions
+                DocVersion.query.filter_by(doc_id=doc_id).delete(synchronize_session='fetch')
+                
+                # Delete all sentences
+                Sent.query.filter_by(doc_id=doc_id).delete(synchronize_session='fetch')
+                
+                # Finally delete the document itself
+                Doc.query.filter_by(id=doc_id).delete(synchronize_session='fetch')
+                
+                db.session.commit()
+                msg_list.append(f"Document and all related data successfully deleted.")
+            except Exception as e:
+                db.session.rollback()
+                msg_list.append(f"Error deleting document: {str(e)}")
+                print(f"Error deleting document: {str(e)}")
         
         if annotated_doc_id.isdigit() and int(annotated_doc_id) != 0:
             doc_id = int(annotated_doc_id)
-            # Check if user already has a checkout version of this document
-            existing_checkout = DocVersion.query.filter_by(
-                doc_id=doc_id,
-                user_id=current_user.id,
-                stage='checkout'
-            ).first()
-            
-            if existing_checkout:
-                msg_list.append(f"Document (id={doc_id}) is already checked out by you.")
-            else:
-                doc_version = DocVersion(
+            try:
+                # Check if user already has a checkout version of this document
+                existing_checkout = DocVersion.query.filter_by(
                     doc_id=doc_id,
                     user_id=current_user.id,
                     stage='checkout'
-                )
-                db.session.add(doc_version)
-                msg_list.append(f"Document (id={doc_id}) added to My Annotations.")
+                ).first()
+                
+                if existing_checkout:
+                    msg_list.append(f"Document (id={doc_id}) is already checked out by you.")
+                else:
+                    # Get the initial version to copy annotations from
+                    initial_version = DocVersion.query.filter_by(
+                        doc_id=doc_id,
+                        stage='initial'
+                    ).first()
+                    
+                    if not initial_version:
+                        msg_list.append(f"Error: Could not find initial version of document.")
+                        raise Exception("No initial version found")
+                    
+                    # Create new checkout version
+                    checkout_version = DocVersion(
+                        doc_id=doc_id,
+                        user_id=current_user.id,
+                        stage='checkout'
+                    )
+                    db.session.add(checkout_version)
+                    db.session.flush()  # Get the new version's ID
+                    
+                    # Copy annotations from initial version to checkout version
+                    initial_annotations = Annotation.query.filter_by(
+                        doc_version_id=initial_version.id
+                    ).all()
+                    
+                    for annotation in initial_annotations:
+                        new_annotation = Annotation(
+                            doc_version_id=checkout_version.id,
+                            sent_id=annotation.sent_id,
+                            sent_annot=annotation.sent_annot,
+                            doc_annot=annotation.doc_annot,
+                            actions=annotation.actions,
+                            alignment=annotation.alignment,
+                        )
+                        db.session.add(new_annotation)
+                    
+                    db.session.commit()
+                    msg_list.append(f"Document checked out successfully with copied annotations.")
+            except Exception as e:
+                db.session.rollback()
+                msg_list.append(f"Error checking out document: {str(e)}")
+                print(f"Error checking out document: {str(e)}")
         
         if delete_annot_doc_id.isdigit() and int(delete_annot_doc_id) != 0:
             doc_id = int(delete_annot_doc_id)
@@ -310,13 +360,12 @@ def project(project_id):
                     
                     for annotation in checkout_annotations:
                         new_annotation = Annotation(
-                            doc_id=annotation.doc_id,
                             doc_version_id=qc_version.id,
-                            real_sent_id=annotation.real_sent_id,
+                            sent_id=annotation.sent_id,
                             sent_annot=annotation.sent_annot,
-                            sent_umr=annotation.sent_umr,
                             doc_annot=annotation.doc_annot,
-                            user_id=current_user.id
+                            alignment=annotation.alignment,
+                            actions=annotation.actions,
                         )
                         db.session.add(new_annotation)
                     
@@ -351,14 +400,24 @@ def project(project_id):
             doc_id=doc.id,
             stage='initial'
         ).first()
+        
+        # Find if anyone has checked out this document
+        checkout_version = DocVersion.query.filter_by(
+            doc_id=doc.id,
+            stage='checkout'
+        ).first()
+        
         if initial_version:
             project_docs.append({
                 'id': doc.id,
                 'filename': doc.filename,
                 'doc_version_id': initial_version.id
             })
-            docversion_users.append(initial_version.user_id)
-            checked_out_by.append(User.query.get(initial_version.user_id).username if initial_version.user_id else None)
+            # Use checkout version's user if it exists, otherwise None
+            if checkout_version:
+                checked_out_by.append(User.query.get(checkout_version.user_id).username)
+            else:
+                checked_out_by.append(None)
     
     # 3.2 Checked out documents
     checked_out_docs = []
@@ -668,7 +727,7 @@ def statistics(project_id):
             if len(annot.sent_annot) > len('<div id="amr"></div>'):
                 total_annotated_sentence_count += 1
                 total_annotated_docs.add(doc.id)
-                umr = annot.sent_umr
+                umr = annot.sent_annot
                 for k in umr:
                     if k.endswith(".c"):
                         total_annotated_concept_count +=1
@@ -698,7 +757,7 @@ def statistics(project_id):
                     if len(annot.sent_annot) > len('<div id="amr"></div>'):
                         annotated_sentence_count_this_annotator += 1
                         annotated_documents_this_annotator.add(annot.doc_id)
-                        umr = annot.sent_umr
+                        umr = annot.sent_annot
                         for k in umr:
                             if k.endswith(".c"):
                                 annotated_concept_count_this_annotator += 1
@@ -817,7 +876,7 @@ def search():
                     Doc, Doc.id == Annotation.doc_id
                 ).filter(
                     Annotation.doc_id == sent.doc_id,
-                    Annotation.real_sent_id == sent.id,
+                    Annotation.sent_id == sent.id,
                     Annotation.sent_annot != '',
                     Doc.project_id == doc.project_id
                 )
@@ -872,11 +931,11 @@ def search():
             for annotation in annotation_query.all():
                 # Skip if we already found this annotation through sentence search
                 if any(r['doc_id'] == annotation.doc_id and 
-                       r['sent_id'] == annotation.real_sent_id and 
+                       r['sent_id'] == annotation.sent_id and 
                        r['user_id'] == annotation.user_id for r in results):
                     continue
                     
-                sent = Sent.query.get(annotation.real_sent_id)
+                sent = Sent.query.get(annotation.sent_id)
                 if not sent:
                     continue
                     
