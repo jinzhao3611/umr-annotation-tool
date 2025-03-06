@@ -19,6 +19,26 @@
     <script src="{{ url_for('static', filename='scripts/penmanString2umrDict.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/umrDict2penmanString.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/partialGraph.js') }}"></script>
+    <!-- Load relation editor script -->
+    <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
+    
+    <style>
+        /* Custom styles for relation editing */
+        .relation-span {
+            position: relative;
+            cursor: pointer;
+            color: #0066cc;
+            transition: background-color 0.2s;
+        }
+        
+        .relation-span:hover {
+            background-color: #e6f7ff;
+        }
+        
+        #amr pre {
+            white-space: pre-wrap;
+        }
+    </style>
 {% endblock head %}
 
 {% block content %}
@@ -146,6 +166,11 @@
                             </div>
                         {% endif %}
                     </div>
+                    
+                    <!-- Hidden element to store relations data for relation editor -->
+                    <script type="application/json" id="umr-relations-data">
+                        {{ relations_list|safe }}
+                    </script>
                 </div>
             </div>
         </div>

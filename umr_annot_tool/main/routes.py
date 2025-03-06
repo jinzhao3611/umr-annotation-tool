@@ -15,6 +15,7 @@ from umr_annot_tool import db, bcrypt
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph, DocVersion
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
+from umr_annot_tool.resources.rolesets import known_relations
 
 # Create logs directory if it doesn't exist
 os.makedirs('logs', exist_ok=True)
@@ -41,6 +42,14 @@ lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 # from farasa.stemmer import FarasaStemmer
 # stemmer = FarasaStemmer(interactive=True)
 
+@main.route("/")
+def home():
+    """Handle requests to the root URL."""
+    logger.info("Root URL accessed, redirecting to home or login")
+    if current_user.is_authenticated:
+        return redirect(url_for('users.account'))
+    else:
+        return redirect(url_for('users.login'))
 
 @main.route("/new_project", methods=['GET', 'POST'])
 def new_project():
@@ -278,24 +287,26 @@ def sentlevel(doc_version_id, sent_id):
     
     Args:
         doc_version_id (int): The ID of the document version
-        sent_id (int): The ID of the sentence to display
+        sent_id (int): The sentence ID within the document
     """
-    logger = logging.getLogger(__name__)
+    logger.info(f"Accessing sentlevel route with doc_version_id={doc_version_id}, sent_id={sent_id}")
     
     try:
-        # Get the document version and verify it exists
+        # Get document version
         doc_version = DocVersion.query.get_or_404(doc_version_id)
-        logger.info(f"Found document version: {doc_version_id}")
+        logger.info(f"Found document version: {doc_version}")
         
-        # Get the document and project from the doc_version
-        doc = doc_version.doc
-        if not doc:
-            logger.error(f"Document not found for version {doc_version_id}")
-            flash('Document not found', 'danger')
-            return redirect(url_for('users.account'))
-            
+        # Additional debugging
+        logger.info(f"Document ID: {doc_version.doc_id}")
+        logger.info(f"Owner ID: {doc_version.user_id}")
+        
+        # Check if current user has permission to access this document
+        doc = Doc.query.get_or_404(doc_version.doc_id)
+        logger.info(f"Found document: {doc}")
+        
+        # Get project information
         project = Project.query.get_or_404(doc.project_id)
-        logger.info(f"Found project: {project.project_name}")
+        logger.info(f"Found project: {project}")
         
         # Check if user has permission to access this document
         project_user = Projectuser.query.filter_by(
@@ -421,6 +432,9 @@ def sentlevel(doc_version_id, sent_id):
         frame_dict = json.loads(json.dumps(frame_dict))
         partial_graphs_json = json.dumps(partial_graphs)
         
+        # Get the list of known relations from rolesets for the relation editor
+        relations_list = list(known_relations.keys())
+        
         logger.info("Rendering sentlevel template")
         return render_template('sentlevel.html',
                             doc_id=doc.id,
@@ -437,7 +451,8 @@ def sentlevel(doc_version_id, sent_id):
                             curr_sent_umr=curr_sent_umr,
                             curr_annotation_string=curr_annotation_string,
                             curr_alignment=curr_alignment,
-                            partial_graphs_json=partial_graphs_json)
+                            partial_graphs_json=partial_graphs_json,
+                            relations_list=json.dumps(relations_list))
                             
     except Exception as e:
         logger.error(f"Unexpected error in sentlevel: {str(e)}", exc_info=True)
@@ -451,3 +466,74 @@ def about():
 @main.route("/guide")
 def guidelines():
     return render_template('user_guide.html')
+
+@main.route("/update_relation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
+def update_relation(doc_version_id, sent_id):
+    """Update a relation in an annotation and save it."""
+    if not current_user.is_authenticated:
+        return jsonify({"error": "Not authenticated"}), 401
+    
+    try:
+        data = request.get_json()
+        updated_annotation = data.get('annotation')
+        old_relation = data.get('old_relation')
+        new_relation = data.get('new_relation')
+        
+        # Validate inputs
+        if not updated_annotation or not old_relation or not new_relation:
+            return jsonify({"error": "Missing required fields"}), 400
+        
+        if not new_relation.startswith(':'):
+            return jsonify({"error": "Invalid relation format"}), 400
+        
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to modify this document
+        if not has_permission_for_doc(current_user, doc_version.doc_id):
+            return jsonify({"error": "Not authorized to modify this document"}), 403
+        
+        # Get sentence annotation
+        sent = Sent.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
+        if not sent:
+            return jsonify({"error": "Sentence not found"}), 404
+        
+        # Save the updated annotation
+        sent.umr = updated_annotation
+        db.session.commit()
+        
+        # Log the change
+        current_app.logger.info(f"User {current_user.username} updated relation from {old_relation} to {new_relation} in doc_version {doc_version_id}, sentence {sent_id}")
+        
+        return jsonify({
+            "success": True,
+            "message": f"Updated relation from {old_relation} to {new_relation}",
+            "doc_version_id": doc_version_id,
+            "sent_id": sent_id
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error updating relation: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+def has_permission_for_doc(user, doc_id):
+    """Check if a user has permission to modify a document."""
+    if user.is_anonymous:
+        return False
+    
+    # Get the document
+    doc = Doc.query.get(doc_id)
+    if not doc:
+        return False
+    
+    # Get the user's permission for the project
+    project_user = Projectuser.query.filter_by(
+        user_id=user.id, 
+        project_id=doc.project_id
+    ).first()
+    
+    if not project_user:
+        return False
+    
+    # Check if user has admin, edit, or annotate permission
+    return project_user.permission in ['admin', 'edit', 'annotate']
