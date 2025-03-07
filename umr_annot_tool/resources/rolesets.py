@@ -439,3 +439,11 @@ non_event_rolesets = [
     'street-address-91', 'mean-91', 'have-experience-91', 'weather-91', 'range-91', 'gesture-91',
     'emit-sound-91', 'proverb-91', 'say-91'
 ]
+
+doc_level_relations = {"temporal": [':contained', ':before', ':after', ':overlap', ':depends-on'],
+                      "modal":[':modal', ':full-affirmative', ':partial-affirmative', ':strong-partial-affirmative', ':weak-partial-affirmative', ':neutral-affirmative', ':strong-neutral-affirmative', ':weak-neutral-affirmative', ':full-negative', ':partial-negative', ':strong-partial-negative', ':weak-partial-negative', ':neutral-negative', ':strong-neutral-negative', ':weak-neutral-negative', ':unspecified'],
+                      "coref":[':same-entity', ':same-event', ':subset-of']}
+
+doc_level_rolesets = {"temporal": ['document-creation-time', 'past-reference', 'present-reference', 'future-reference'],
+                      "modal": ['root', 'author', 'null-conceiver'],
+                      "coref":[]}

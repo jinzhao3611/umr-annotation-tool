@@ -440,6 +440,11 @@
         
         // Call the initialization for resizable annotations
         initResizableAnnotation();
+
+        // Format document level annotation when page loads
+        if (typeof formatDocLevelAnnotation === 'function') {
+            formatDocLevelAnnotation();
+        }
     });
 
     function prevSentence() {
@@ -499,4 +504,33 @@
         }
     }
 </script>
-{% endblock content %} 
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    // Call this function to ensure format is applied as soon as possible
+    function ensureFormatting() {
+        console.log("Ensuring document annotation formatting");
+        
+        // Try formatting immediately
+        if (typeof formatDocLevelAnnotation === 'function') {
+            formatDocLevelAnnotation();
+        }
+        
+        // Also schedule it for after a short delay to ensure DOM is ready
+        setTimeout(function() {
+            if (typeof formatDocLevelAnnotation === 'function') {
+                formatDocLevelAnnotation();
+            }
+        }, 100);
+    }
+    
+    // Run on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', function() {
+        ensureFormatting();
+    });
+    
+    // Also run directly (in case DOM is already loaded)
+    ensureFormatting();
+</script>
+{% endblock scripts %} 

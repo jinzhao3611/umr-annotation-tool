@@ -924,4 +924,130 @@ body,
 .container-fluid,
 .doc-level-container {
     background-color: #ffffff !important;
+}
+
+/* Fix spacing in document annotation pre element */
+#doc-annotation pre,
+#doc-annotation-content {
+    white-space: pre;
+    font-family: monospace;
+    line-height: 1.2;
+    margin: 0;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+}
+
+#doc-annotation pre span,
+#doc-annotation-content span {
+    display: inline;
+    line-height: 1;
+}
+
+/* Add specific styling for the document annotation display */
+#doc-annotation {
+    padding: 0;
+    margin: 0;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Remove extra spacing from pre elements */
+pre {
+    margin-bottom: 0;
+}
+
+/* Compact spacing for document annotation */
+#doc-annotation-content {
+    display: block;
+    margin: 0;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre !important;
+    tab-size: 4;
+    -moz-tab-size: 4;
+    text-align: left;
+    overflow-x: auto;
+}
+
+/* Syntax highlighting for document annotation */
+#doc-annotation-content .root-var {
+    color: #9c27b0; /* Purple */
+    font-weight: bold;
+}
+
+#doc-annotation-content .root-type {
+    color: #2196f3; /* Blue */
+    font-style: italic;
+}
+
+#doc-annotation-content .branch-name {
+    color: #4caf50; /* Green */
+    font-weight: bold;
+}
+
+#doc-annotation-content .node {
+    color: #9c27b0; /* Purple */
+}
+
+#doc-annotation-content .relation {
+    color: #ff9800; /* Orange */
+}
+
+#doc-annotation-content .parenthesis {
+    color: #607d8b; /* Blue-gray */
+}
+
+/* Ensure proper indentation and spacing for document annotation */
+#doc-annotation {
+    padding: 0;
+    margin: 0;
+}
+
+/* Additional rules to minimize vertical spacing */
+#doc-annotation-content * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    line-height: 1 !important;
+}
+
+/* Override any Bootstrap spacing that might be applied */
+#doc-annotation .mb-0,
+#doc-annotation .my-0,
+#doc-annotation .m-0 {
+    margin-bottom: 0 !important;
+}
+
+/* Ensure consistent display for all nested elements */
+#doc-annotation-content code,
+#doc-annotation-content var,
+#doc-annotation-content samp {
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+#doc-annotation-content .node.invalid {
+    color: #f44336; /* Red */
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #f44336;
+}
+
+#doc-annotation-content .relation.invalid {
+    color: #f44336; /* Red */
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: #f44336;
 } 

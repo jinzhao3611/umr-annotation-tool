@@ -16,43 +16,43 @@ console.log("Last updated: " + new Date().toLocaleString());
 console.log("Features: Structured annotation display with delete buttons");
 console.log("==========================================");
 
+// Add document-level rolesets and relations as constants
+const DOC_LEVEL_ROLESETS = {
+    "temporal": ['document-creation-time', 'past-reference', 'present-reference', 'future-reference'],
+    "modal": ['root', 'author', 'null-conceiver'],
+    "coref": []
+};
+
+const DOC_LEVEL_RELATIONS = {
+    "temporal": [':contained', ':before', ':after', ':overlap', ':depends-on'],
+    "modal": [':modal', ':full-affirmative', ':partial-affirmative', ':strong-partial-affirmative', ':weak-partial-affirmative', ':neutral-affirmative', ':strong-neutral-affirmative', ':weak-neutral-affirmative', ':full-negative', ':partial-negative', ':strong-partial-negative', ':weak-partial-negative', ':neutral-negative', ':strong-neutral-negative', ':weak-neutral-negative', ':unspecified'],
+    "coref": [':same-entity', ':same-event', ':subset-of']
+};
+
+// Variable format regex
+const VARIABLE_REGEX = /^s[0-9]+[a-z]+[0-9]*$/;
+
 // Initialize document level functionality
 function initializeDocLevel() {
-    console.log("Initializing document level functionality - V2");
+    console.log("Initializing document level functionality");
     
-    // Get values from the page
-    docLevelState.docVersionId = document.getElementById("doc_version_id").value;
-    docLevelState.sentId = document.getElementById("snt_id").value;
-    
-    console.log("Initialized with docVersionId:", docLevelState.docVersionId, "and sentId:", docLevelState.sentId);
-    
-    // Check if we have a current document annotation
-    const docAnnotationContent = document.getElementById("doc-annotation-content");
-    if (docAnnotationContent) {
-        console.log("Found existing document annotation content");
-        docLevelState.docAnnotation = docAnnotationContent.textContent.trim();
-        console.log("Annotation content:", docLevelState.docAnnotation);
-        
-        // Parse existing triples from the annotation
-        parseTriples(docLevelState.docAnnotation);
-        console.log("Parsed triples:", docLevelState.triples);
-    } else {
-        console.log("No existing document annotation content found");
-        // Check if there's a placeholder message, which means there's no annotation yet
-        const placeholder = document.getElementById("doc-annotation-placeholder");
-        if (placeholder) {
-            docLevelState.docAnnotation = "";
-        }
-    }
-    
-    // Always render the triples UI, even if there are no triples
-    console.log("Calling renderTriples() to update the UI");
-    renderTriples();
-    
-    // Setup event listeners for the forms
+    // Add event listeners to tab buttons
     setupFormEventListeners();
     
-    console.log("Document level initialization complete");
+    // Check if we have an existing annotation to display
+    const annotationContent = document.getElementById('doc-annotation-content');
+    if (annotationContent) {
+        console.log("Found existing annotation content:", annotationContent.textContent);
+        // Format it with proper syntax highlighting
+        setTimeout(() => {
+            formatDocLevelAnnotation();
+        }, 100);
+    } else {
+        console.log("No existing annotation content found");
+    }
+    
+    // Set up delete button functionality for existing triples
+    setupDeleteButtons();
 }
 
 // Set up event listeners for the triple input forms
@@ -907,19 +907,348 @@ window.addTriple = addTriple;
 window.removeTriple = removeTriple;
 window.saveDocAnnotation = saveDocAnnotation;
 window.jumpToSentence = function(sentId) {
-    if (sentId) {
-        // Ask if the user wants to save before navigating
-        const shouldSave = confirm("Do you want to save your current changes before navigating to another sentence?");
-        
+    const currentId = parseInt(window.state.currentId);
+    if (currentId !== parseInt(sentId)) {
+        const shouldSave = confirm("Do you want to save your current changes before jumping to another sentence?");
         if (shouldSave) {
-            // Save current annotation first, then navigate
             saveDocAnnotation().then(() => {
-                // Properly generate the URL with Flask's url_for
-                window.location.href = "/doclevel/" + docLevelState.docVersionId + "/" + sentId;
+                window.location.href = `/doclevel/${window.state.docVersionId}/${sentId}`;
             });
         } else {
-            // Navigate without saving - properly generate URL
-            window.location.href = "/doclevel/" + docLevelState.docVersionId + "/" + sentId;
+            window.location.href = `/doclevel/${window.state.docVersionId}/${sentId}`;
         }
     }
-}; 
+};
+
+// Function to format document level annotation with proper spacing and syntax highlighting
+function formatDocLevelAnnotation() {
+    const annotationContent = document.getElementById('doc-annotation-content');
+    if (!annotationContent) return;
+    
+    // Get the original content as plain text
+    let plainContent = annotationContent.textContent;
+    
+    // If no content, return
+    if (!plainContent || plainContent.trim() === '') return;
+    
+    // Log for debugging
+    console.log("Parsing annotation text:", plainContent);
+    
+    try {
+        // Normalize whitespace but preserve structure
+        plainContent = plainContent.replace(/[\t ]+/g, ' ').trim();
+        
+        // Extract the main components
+        const rootMatch = plainContent.match(/\(([a-z0-9]+)\s*\/\s*([^)]+?)\s*(?=:|\))/i);
+        if (!rootMatch) {
+            console.error("Could not match root pattern in content:", plainContent);
+            return;
+        }
+        
+        const rootVar = rootMatch[1].trim();
+        const rootType = rootMatch[2].trim();
+        
+        // Create formatted HTML content with syntax highlighting
+        let htmlContent = `<span class="parenthesis">(</span><span class="root-var">${rootVar}</span> / <span class="root-type">${rootType}</span>\n`;
+        
+        // Function to check if a node is valid for a branch type
+        function isValidNode(node, branchType) {
+            // Check if it's a valid variable format
+            if (VARIABLE_REGEX.test(node)) return true;
+            
+            // Check if it's in the predefined rolesets for this branch
+            return DOC_LEVEL_ROLESETS[branchType].includes(node);
+        }
+        
+        // Function to check if a relation is valid for a branch type
+        function isValidRelation(relation, branchType) {
+            return DOC_LEVEL_RELATIONS[branchType].includes(relation);
+        }
+        
+        // Function to extract branch content with a more robust approach
+        function extractBranchContent(branchName) {
+            // Find the branch section start and end
+            const startPattern = new RegExp(`:${branchName}\\s*\\(`, "i");
+            const startMatch = plainContent.match(startPattern);
+            if (!startMatch) return null;
+            
+            const startIndex = startMatch.index;
+            let parenCount = 1; // Start with 1 for the opening paren
+            let endIndex = startIndex + startMatch[0].length;
+            
+            // Find the matching closing parenthesis
+            while (parenCount > 0 && endIndex < plainContent.length) {
+                if (plainContent[endIndex] === '(') parenCount++;
+                else if (plainContent[endIndex] === ')') parenCount--;
+                endIndex++;
+            }
+            
+            if (parenCount !== 0) {
+                console.warn(`Unbalanced parentheses in ${branchName} branch`);
+                return null;
+            }
+            
+            // Extract the content between the parentheses
+            const branchContent = plainContent.substring(startIndex + startMatch[0].length, endIndex - 1).trim();
+            console.log(`Extracted raw ${branchName} branch content:`, branchContent);
+            return branchContent;
+        }
+        
+        // Function to extract triples from branch content
+        function extractTriples(branchContent) {
+            if (!branchContent) return [];
+            
+            // Special handling for database format with double parentheses
+            // The format in the database is ":branch ((triple1) (triple2))" 
+            const doubleParenPattern = /^\(\s*\(([^)]+)\)\s*\)/;
+            const doubleParenMatch = branchContent.match(doubleParenPattern);
+            
+            if (doubleParenMatch) {
+                // We have the database format with double parentheses
+                console.log("Detected database format with double parentheses");
+                
+                // Extract content from double parentheses
+                const innerContent = doubleParenMatch[1].trim();
+                console.log("Inner content:", innerContent);
+                
+                // Look for additional triples after the first one
+                const tripleParts = branchContent.split(/\)\s*\(/);
+                console.log("Triple parts:", tripleParts);
+                
+                const triples = [];
+                
+                // Process each potential triple
+                tripleParts.forEach(part => {
+                    // Clean up the part to get just the triple content
+                    let cleanPart = part.replace(/^\s*\(\s*/, '').replace(/\s*\)\s*$/, '').trim();
+                    cleanPart = cleanPart.replace(/^\s*\(\s*/, '').replace(/\s*\)\s*$/, '').trim();
+                    
+                    if (!cleanPart) return;
+                    
+                    console.log("Cleaned triple part:", cleanPart);
+                    
+                    // Extract source, relation, target
+                    const parts = cleanPart.split(/\s+/);
+                    if (parts.length >= 3) {
+                        // Find the relation part (starts with :)
+                        const relationIndex = parts.findIndex(p => p.startsWith(':'));
+                        
+                        if (relationIndex > 0 && relationIndex < parts.length - 1) {
+                            // We have a valid triple structure
+                            const source = parts[0];
+                            const relation = parts[relationIndex];
+                            const target = parts[parts.length - 1];
+                            
+                            triples.push({ source, relation, target });
+                        }
+                    }
+                });
+                
+                // If we found triples with this approach, return them
+                if (triples.length > 0) {
+                    console.log("Extracted database-format triples:", triples);
+                    return triples;
+                }
+            }
+            
+            // Handle the ((triple1)(triple2)) format directly
+            if (branchContent.startsWith('(') && branchContent.includes(')(')) {
+                console.log("Detected direct multiple triple format");
+                
+                // Split at the boundaries between triples
+                const tripleStrings = branchContent.replace(/^\(/, '').replace(/\)$/, '').split(')(');
+                console.log("Triple strings:", tripleStrings);
+                
+                const triples = [];
+                
+                tripleStrings.forEach(tripleStr => {
+                    const parts = tripleStr.trim().split(/\s+/);
+                    if (parts.length >= 3) {
+                        // Find the relation part (starts with :)
+                        const relationIndex = parts.findIndex(p => p.startsWith(':'));
+                        
+                        if (relationIndex > 0 && relationIndex < parts.length - 1) {
+                            // We have a valid triple structure
+                            const source = parts[0];
+                            const relation = parts[relationIndex];
+                            const target = parts[parts.length - 1];
+                            
+                            triples.push({ source, relation, target });
+                        }
+                    }
+                });
+                
+                if (triples.length > 0) {
+                    console.log("Extracted direct format triples:", triples);
+                    return triples;
+                }
+            }
+            
+            // Fall back to original triple extraction method if the above didn't work
+            // Find all triple patterns (node :relation node)
+            const triples = [];
+            const triplePattern = /\(\s*([^\s\(\)]+)\s+(:[\w-]+)\s+([^\s\(\)]+)\s*\)/g;
+            let match;
+            
+            while ((match = triplePattern.exec(branchContent)) !== null) {
+                triples.push({
+                    source: match[1],
+                    relation: match[2],
+                    target: match[3]
+                });
+            }
+            
+            console.log("Extracted fallback-format triples:", triples);
+            return triples;
+        }
+        
+        // Process each branch
+        function processBranch(branchName) {
+            const branchContent = extractBranchContent(branchName);
+            console.log(`${branchName} branch content:`, branchContent);
+            
+            // Start the branch HTML with proper indentation
+            let branchHtml = `    <span class="branch-name">:${branchName}</span> <span class="parenthesis">(</span>\n`;
+            
+            if (!branchContent || branchContent.trim() === '') {
+                // Empty branch
+                branchHtml += `     <span class="parenthesis">)</span>`;
+                return branchHtml;
+            }
+            
+            // Extract triples from the branch content
+            const triples = extractTriples(branchContent);
+            
+            // Format each triple
+            if (triples.length > 0) {
+                const formattedTriples = triples.map(triple => {
+                    // Apply validation
+                    const sourceClass = isValidNode(triple.source, branchName) ? "node" : "node invalid";
+                    const relationClass = isValidRelation(triple.relation, branchName) ? "relation" : "relation invalid";
+                    const targetClass = isValidNode(triple.target, branchName) ? "node" : "node invalid";
+                    
+                    // Return formatted triple with highlighting
+                    return `                     <span class="parenthesis">(</span><span class="${sourceClass}">${triple.source}</span> <span class="${relationClass}">${triple.relation}</span> <span class="${targetClass}">${triple.target}</span><span class="parenthesis">)</span>`;
+                });
+                
+                // Join the triples with line breaks
+                branchHtml += formattedTriples.join('\n');
+            }
+            
+            // Close the branch
+            branchHtml += `\n     <span class="parenthesis">)</span>`;
+            
+            return branchHtml;
+        }
+        
+        // Process all branches
+        const temporalSection = processBranch('temporal');
+        const modalSection = processBranch('modal');
+        const corefSection = processBranch('coref');
+        
+        // Add branches to the HTML
+        htmlContent += temporalSection + '\n';
+        htmlContent += modalSection + '\n';
+        htmlContent += corefSection + '\n';
+        
+        // Close the root
+        htmlContent += `<span class="parenthesis">)</span>`;
+        
+        // Set the HTML content
+        annotationContent.innerHTML = htmlContent;
+    } catch (e) {
+        console.error("Error formatting annotation with highlighting:", e);
+        console.error("Stack trace:", e.stack);
+        
+        // Fallback to plain text
+        annotationContent.textContent = plainContent;
+    }
+}
+
+// Initialize when document is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM content loaded - initializing document level annotation formatter");
+    
+    // Get the annotation content element
+    const annotationContent = document.getElementById('doc-annotation-content');
+    if (annotationContent) {
+        // Store the original text for debugging
+        const originalText = annotationContent.textContent;
+        console.log("Original annotation text from server:", originalText);
+        
+        // Format the annotation with syntax highlighting
+        setTimeout(formatDocLevelAnnotation, 100);
+    }
+});
+
+// Function to update document level annotation display
+function updateDocLevelAnnotation(annotation) {
+    const annotationContainer = document.getElementById('doc-annotation');
+    const annotationContent = document.getElementById('doc-annotation-content');
+    const placeholder = document.getElementById('doc-annotation-placeholder');
+    
+    // Add debug logging to see what we're receiving
+    console.log("Original annotation from server:", annotation);
+    
+    if (annotation && annotation.trim()) {
+        // Create the pre element if it doesn't exist
+        if (!annotationContent) {
+            if (placeholder) placeholder.style.display = 'none';
+            const pre = document.createElement('pre');
+            pre.className = 'mb-0';
+            pre.id = 'doc-annotation-content';
+            pre.textContent = annotation;
+            annotationContainer.appendChild(pre);
+        } else {
+            annotationContent.textContent = annotation;
+            if (placeholder) placeholder.style.display = 'none';
+            annotationContent.style.display = 'block';
+        }
+        
+        // Apply formatting with syntax highlighting
+        formatDocLevelAnnotation();
+    } else {
+        // Show placeholder if no annotation
+        if (annotationContent) annotationContent.style.display = 'none';
+        if (placeholder) placeholder.style.display = 'block';
+    }
+}
+
+// Navigation functions
+function prevSentence() {
+    const currentId = parseInt(window.state.currentId);
+    if (currentId > 1) {
+        const shouldSave = confirm("Do you want to save your current changes before navigating to the previous sentence?");
+        if (shouldSave) {
+            saveDocAnnotation().then(() => {
+                window.location.href = `/doclevel/${window.state.docVersionId}/${currentId - 1}`;
+            });
+        } else {
+            window.location.href = `/doclevel/${window.state.docVersionId}/${currentId - 1}`;
+        }
+    } else {
+        showNotification("You're at the first sentence already.", "warning");
+    }
+}
+
+function nextSentence() {
+    const currentId = parseInt(window.state.currentId);
+    if (currentId < window.state.maxSentId) {
+        const shouldSave = confirm("Do you want to save your current changes before navigating to the next sentence?");
+        if (shouldSave) {
+            saveDocAnnotation().then(() => {
+                window.location.href = `/doclevel/${window.state.docVersionId}/${currentId + 1}`;
+            });
+        } else {
+            window.location.href = `/doclevel/${window.state.docVersionId}/${currentId + 1}`;
+        }
+    } else {
+        showNotification("You're at the last sentence already.", "warning");
+    }
+}
+
+// Setup functionality for delete buttons on existing triples
+function setupDeleteButtons() {
+    // We'll implement this if needed later
+    console.log("Setting up delete buttons for existing triples");
+} 
