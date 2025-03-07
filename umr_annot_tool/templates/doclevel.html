@@ -1,0 +1,333 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/doclevel.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
+    <!-- Initialize state before loading any other scripts -->
+    <script>
+        window.state = {
+            currentId: {{ snt_id }},
+            docVersionId: {{ doc_version_id }},
+            maxSentId: {{ info2display.sents|length }},
+            language: "{{ lang }}"
+        };
+    </script>
+    <!-- Load application scripts -->
+    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/doclevel.js') }}"></script>
+{% endblock head %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Hidden fields for JavaScript -->
+    <input type="hidden" id="doc_version_id" value="{{ doc_version_id }}">
+    <input type="hidden" id="user_id" value="{{ owner.id }}">
+    <input type="hidden" id="snt_id" value="{{ snt_id }}">
+    <input type="hidden" id="maxSentId" value="{{ info2display.sents|length }}">
+    
+    <div class="doc-level-container">
+        <!-- Left Panel - Sentences and their annotations (read-only) -->
+        <div class="panel left-panel">
+            <!-- Document Navigation -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Navigation</h5>
+                    <div class="navigation-controls">
+                        <button class="btn btn-sm btn-outline-primary" onclick="prevSentence()">←</button>
+                        <span class="mx-2">{{ snt_id }} / {{ info2display.sents|length }}</span>
+                        <button class="btn btn-sm btn-outline-primary" onclick="nextSentence()">→</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush sentences-container">
+                        {% for sent in info2display.sents %}
+                        <a href="{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=loop.index) }}" 
+                           class="list-group-item list-group-item-action {% if loop.index == snt_id %}active{% endif %}">
+                            <small class="text-muted">#{{ loop.index }}</small>
+                            <span class="sentence-text">{{ sent }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Sentence Details -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Current Sentence</h5>
+                </div>
+                <div class="card-body">
+                    <div class="current-sentence">
+                        {% if info2display.sent_htmls and snt_id > 0 and snt_id <= info2display.sent_htmls|length %}
+                            {{ info2display.sent_htmls[snt_id-1]|safe }}
+                        {% else %}
+                            <div class="alert alert-warning">No sentence content available.</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sentence-Level Annotation (Read-only) -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Sentence-Level Annotation</h5>
+                </div>
+                <div class="card-body">
+                    <div id="sent-annotation" class="annotation-preview read-only">
+                        {% if curr_sent_annot_string %}
+                            <pre class="mb-0">{{ curr_sent_annot_string }}</pre>
+                        {% else %}
+                            <div class="alert alert-info mb-0">
+                                No sentence-level annotation available for this sentence.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Panel - Document-level annotations -->
+        <div class="panel middle-panel">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Document-Level Annotations</h5>
+                </div>
+                <div class="card-body">
+                    <div id="doc-annotation" class="annotation-preview">
+                        {% if curr_doc_annot_string %}
+                            <pre class="mb-0" id="doc-annotation-content">{{ curr_doc_annot_string }}</pre>
+                        {% else %}
+                            <div class="alert alert-info mb-0" id="doc-annotation-placeholder">
+                                No document-level annotation available for this document. Use the tools on the right to create one.
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Info -->
+            <div class="card">
+                <div class="card-header" role="button" data-bs-toggle="collapse" data-bs-target="#docInfo" aria-expanded="true" aria-controls="docInfo" style="cursor: pointer;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Document Info</h5>
+                        <i class="fas fa-chevron-up collapse-icon-right"></i>
+                    </div>
+                </div>
+                <div id="docInfo" class="collapse show">
+                    <div class="card-body">
+                        <table class="table table-sm mb-0">
+                            <tr>
+                                <th>Annotator:</th>
+                                <td id="username-middle">{{ owner.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>File:</th>
+                                <td id="filename-middle">{{ filename }}</td>
+                            </tr>
+                            <tr>
+                                <th>Language:</th>
+                                <td id="lang-middle">{{ lang }}</td>
+                            </tr>
+                            <tr>
+                                <th>Project:</th>
+                                <td id="project_name-middle">{{ project_name }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Save Button -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group w-100">
+                        <button class="btn btn-primary" onclick="saveDocAnnotation()">Save Document Annotation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Triple Addition Menu -->
+        <div class="panel right-panel">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Add Document-Level Triples</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Tab Navigation -->
+                    <ul class="nav nav-tabs" id="tripleTypeTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="temporal-tab" data-bs-toggle="tab" data-bs-target="#temporal" type="button" role="tab" aria-controls="temporal" aria-selected="true">Temporal</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="modal-tab" data-bs-toggle="tab" data-bs-target="#modal" type="button" role="tab" aria-controls="modal" aria-selected="false">Modal</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="coreference-tab" data-bs-toggle="tab" data-bs-target="#coreference" type="button" role="tab" aria-controls="coreference" aria-selected="false">Coreference</button>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="tripleTypeContent">
+                        <!-- Temporal Triples -->
+                        <div class="tab-pane fade show active" id="temporal" role="tabpanel" aria-labelledby="temporal-tab">
+                            <div class="triple-form mt-3">
+                                <div class="mb-3">
+                                    <label for="temporal-source" class="form-label">Source Node:</label>
+                                    <input type="text" class="form-control" id="temporal-source" placeholder="Enter source node">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="temporal-relation" class="form-label">Relation Type:</label>
+                                    <select class="form-select" id="temporal-relation">
+                                        <option value="before">before</option>
+                                        <option value="after">after</option>
+                                        <option value="includes">includes</option>
+                                        <option value="included-in">included-in</option>
+                                        <option value="overlaps">overlaps</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="temporal-target" class="form-label">Target Node:</label>
+                                    <input type="text" class="form-control" id="temporal-target" placeholder="Enter target node">
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="addTriple('temporal')">Add Temporal Triple</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Modal Triples -->
+                        <div class="tab-pane fade" id="modal" role="tabpanel" aria-labelledby="modal-tab">
+                            <div class="triple-form mt-3">
+                                <div class="mb-3">
+                                    <label for="modal-source" class="form-label">Source Node:</label>
+                                    <input type="text" class="form-control" id="modal-source" placeholder="Enter source node">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="modal-relation" class="form-label">Relation Type:</label>
+                                    <select class="form-select" id="modal-relation">
+                                        <option value="permissible">permissible</option>
+                                        <option value="necessary">necessary</option>
+                                        <option value="belief">belief</option>
+                                        <option value="desire">desire</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="modal-target" class="form-label">Target Node:</label>
+                                    <input type="text" class="form-control" id="modal-target" placeholder="Enter target node">
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="addTriple('modal')">Add Modal Triple</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Coreference Triples -->
+                        <div class="tab-pane fade" id="coreference" role="tabpanel" aria-labelledby="coreference-tab">
+                            <div class="triple-form mt-3">
+                                <div class="mb-3">
+                                    <label for="coref-source" class="form-label">Source Node:</label>
+                                    <input type="text" class="form-control" id="coref-source" placeholder="Enter source node">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="coref-relation" class="form-label">Relation Type:</label>
+                                    <select class="form-select" id="coref-relation">
+                                        <option value="same-entity">same-entity</option>
+                                        <option value="part-of">part-of</option>
+                                        <option value="subset">subset</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="coref-target" class="form-label">Target Node:</label>
+                                    <input type="text" class="form-control" id="coref-target" placeholder="Enter target node">
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="addTriple('coreference')">Add Coreference Triple</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Existing Triples List -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Existing Triples</h5>
+                </div>
+                <div class="card-body">
+                    <div id="existing-triples" class="existing-triples">
+                        <!-- Triples will be listed here dynamically -->
+                        <div class="alert alert-info">No triples added yet. Use the forms above to add document-level triples.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Back to Sentence Level -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="btn-group w-100">
+                        <a href="{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=snt_id) }}" class="btn btn-outline-secondary">
+                            Back to Sentence Level
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize split panels for the 3-column layout
+        Split(['.left-panel', '.middle-panel', '.right-panel'], {
+            sizes: [30, 40, 30],
+            minSize: [250, 300, 250],
+            gutterSize: 8,
+            snapOffset: 0,
+            dragInterval: 1,
+            cursor: 'col-resize'
+        });
+
+        // Handle collapse icon rotation for Document Info
+        const docInfoHeader = document.querySelector('[data-bs-target="#docInfo"]');
+        const collapseIconRight = docInfoHeader.querySelector('.collapse-icon-right');
+        
+        docInfoHeader.addEventListener('click', function() {
+            collapseIconRight.classList.toggle('fa-chevron-down');
+            collapseIconRight.classList.toggle('fa-chevron-up');
+        });
+
+        // Initialize Document Info collapse behavior
+        const docInfo = document.getElementById('docInfo');
+        docInfo.addEventListener('show.bs.collapse', function () {
+            collapseIconRight.classList.remove('fa-chevron-down');
+            collapseIconRight.classList.add('fa-chevron-up');
+        });
+        
+        docInfo.addEventListener('hide.bs.collapse', function () {
+            collapseIconRight.classList.remove('fa-chevron-up');
+            collapseIconRight.classList.add('fa-chevron-down');
+        });
+
+        // Initialize document-level annotation functionality
+        initializeDocLevel();
+    });
+
+    function prevSentence() {
+        const sntId = parseInt("{{ snt_id }}");
+        if (sntId > 1) {
+            window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=snt_id - 1) }}";
+        }
+    }
+
+    function nextSentence() {
+        const sntId = parseInt("{{ snt_id }}");
+        const maxId = parseInt("{{ info2display.sents|length }}");
+        if (sntId < maxId) {
+            window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=snt_id + 1) }}";
+        }
+    }
+</script>
+{% endblock content %} 

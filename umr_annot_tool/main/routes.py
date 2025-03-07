@@ -665,3 +665,186 @@ def get_concepts():
     except Exception as e:
         current_app.logger.error(f"Error fetching concepts: {str(e)}")
         return jsonify({'success': False, 'message': str(e)}), 500
+
+@main.route("/doclevel/<int:doc_version_id>/<int:sent_id>", methods=['GET', 'POST'])
+@login_required
+def doclevel(doc_version_id, sent_id):
+    """Handle document-level annotation view.
+    
+    Args:
+        doc_version_id (int): The ID of the document version
+        sent_id (int): The sentence ID within the document
+    """
+    logger.info(f"Accessing doclevel route with doc_version_id={doc_version_id}, sent_id={sent_id}")
+    
+    try:
+        # Get document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        logger.info(f"Found document version: {doc_version}")
+        
+        # Additional debugging
+        logger.info(f"Document ID: {doc_version.doc_id}")
+        logger.info(f"Owner ID: {doc_version.user_id}")
+        
+        # Check if current user has permission to access this document
+        doc = Doc.query.get_or_404(doc_version.doc_id)
+        logger.info(f"Found document: {doc}")
+        
+        # Get project information
+        project = Project.query.get_or_404(doc.project_id)
+        logger.info(f"Found project: {project}")
+        
+        # Check if user has permission to access this document
+        project_user = Projectuser.query.filter_by(
+            project_id=project.id,
+            user_id=current_user.id
+        ).first()
+        
+        if not project_user:
+            logger.error(f"User {current_user.id} does not have permission to access project {project.id}")
+            flash('You do not have permission to access this document', 'danger')
+            return redirect(url_for('users.account'))
+        
+        # Get all sentences for this document
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            logger.error(f"No sentences found for document {doc.id}")
+            flash('No sentences found for this document', 'danger')
+            return redirect(url_for('users.account'))
+        
+        logger.info(f"Found {len(sentences)} sentences for document {doc.id}")
+        
+        # Get the current sentence
+        try:
+            if sent_id < 1 or sent_id > len(sentences):
+                logger.error(f"Invalid sentence number: {sent_id}. Must be between 1 and {len(sentences)}")
+                flash(f'Invalid sentence number: {sent_id}. Must be between 1 and {len(sentences)}', 'danger')
+                return redirect(url_for('users.account'))
+                
+            current_sent = sentences[sent_id - 1]
+            logger.info(f"Found sentence {sent_id}: {current_sent.content[:50]}...")
+        except (IndexError, ValueError) as e:
+            logger.error(f"Error accessing sentence: {str(e)}")
+            flash(f'Error accessing sentence: {str(e)}', 'danger')
+            return redirect(url_for('users.account'))
+        
+        # Get annotations for the current sentence
+        curr_annotation = None
+        curr_sent_annot_string = ''
+        curr_doc_annot_string = ''
+        
+        if current_sent:
+            curr_annotation = Annotation.query.filter_by(
+                doc_version_id=doc_version_id,
+                sent_id=current_sent.id
+            ).first()
+            
+            if curr_annotation:
+                try:
+                    logger.info(f"Found annotation: {curr_annotation}")
+                    
+                    # Get sentence annotation
+                    curr_sent_annot_string = curr_annotation.sent_annot if curr_annotation.sent_annot else ''
+                    logger.info(f"Sentence annotation: {curr_sent_annot_string[:50]}...")
+                    
+                    # Get document annotation
+                    curr_doc_annot_string = curr_annotation.doc_annot if curr_annotation.doc_annot else ''
+                    logger.info(f"Document annotation: {curr_doc_annot_string[:50]}...")
+                    
+                    logger.info(f"Successfully loaded annotation for sentence {sent_id}")
+                except Exception as e:
+                    logger.error(f"Error processing annotation: {str(e)}")
+                    curr_sent_annot_string = ''
+                    curr_doc_annot_string = ''
+        
+        # Prepare display information
+        try:
+            info2display = {
+                'sents': [sent.content for sent in sentences],
+                'sent_htmls': [
+                    ' '.join([
+                        f'<span class="token" data-index="{i}"><sup class="token-index">{i}</sup>{token}</span>'
+                        for i, token in enumerate(sent.content.split())
+                    ])
+                    for sent in sentences
+                ],
+                'sents_html': '<br>'.join([
+                    f'<span id="sentid-{sent.id}">{i+1}. {sent.content}</span>' 
+                    for i, sent in enumerate(sentences)
+                ])
+            }
+            logger.info("Successfully prepared display information")
+        except Exception as e:
+            logger.error(f"Error preparing display information: {str(e)}")
+            flash('Error preparing display information', 'danger')
+            return redirect(url_for('users.account'))
+        
+        logger.info("Rendering doclevel template")
+        return render_template('doclevel.html',
+                            doc_id=doc.id,
+                            doc_version_id=doc_version_id,
+                            snt_id=sent_id,
+                            owner=User.query.get_or_404(doc_version.user_id),
+                            filename=doc.filename,
+                            lang=project.language,
+                            project_name=project.project_name,
+                            project_id=project.id,
+                            admin=User.query.get_or_404(project.created_by_user_id),
+                            info2display=info2display,
+                            curr_sent_annot_string=curr_sent_annot_string,
+                            curr_doc_annot_string=curr_doc_annot_string)
+                            
+    except Exception as e:
+        logger.error(f"Unexpected error in doclevel: {str(e)}", exc_info=True)
+        flash(f'Error loading document: {str(e)}', 'danger')
+        return redirect(url_for('users.account'))
+
+
+@main.route("/update_doc_annotation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
+@login_required
+def update_doc_annotation(doc_version_id, sent_id):
+    """Update document-level annotation for a sentence."""
+    try:
+        # Get the data from the request
+        data = request.get_json()
+        doc_annot = data.get('doc_annot', '')
+        
+        logger.info(f"Updating document annotation for doc_version_id={doc_version_id}, sent_id={sent_id}")
+        logger.debug(f"Document annotation: {doc_annot[:50]}...")
+        
+        # Get the current annotation
+        annotation = Annotation.query.filter_by(
+            doc_version_id=doc_version_id,
+            sent_id=sent_id
+        ).first()
+        
+        if not annotation:
+            # If annotation doesn't exist, create a new one
+            logger.info(f"No existing annotation found, creating new one")
+            sent = Sent.query.filter_by(id=sent_id).first()
+            if not sent:
+                return jsonify({'success': False, 'message': 'Sentence not found'}), 404
+                
+            annotation = Annotation(
+                doc_version_id=doc_version_id,
+                sent_id=sent_id,
+                sent_annot='',  # Empty sentence annotation
+                doc_annot=doc_annot,
+                actions={},
+                alignment={}
+            )
+            db.session.add(annotation)
+        else:
+            # Update existing annotation
+            logger.info(f"Updating existing annotation")
+            annotation.doc_annot = doc_annot
+        
+        # Save to database
+        db.session.commit()
+        logger.info(f"Successfully updated document annotation")
+        
+        return jsonify({'success': True, 'message': 'Document annotation updated successfully'})
+    
+    except Exception as e:
+        logger.error(f"Error updating document annotation: {str(e)}", exc_info=True)
+        return jsonify({'success': False, 'message': str(e)}), 500
