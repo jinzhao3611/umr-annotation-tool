@@ -33,6 +33,64 @@ function showNotification(message, type, duration = 3000) {
     }, duration);
 }
 
+// Helper function: Find all matches of a substring in a string
+function findAllMatches(str, substr) {
+    const positions = [];
+    let pos = str.indexOf(substr);
+    
+    while (pos !== -1) {
+        positions.push(pos);
+        pos = str.indexOf(substr, pos + 1);
+    }
+    
+    return positions;
+}
+
+function getBranchBoundaries(text, relationPosition) {
+    // Find the line with the relation
+    let lineStart = text.lastIndexOf('\n', relationPosition) + 1;
+    let lineEnd = text.indexOf('\n', relationPosition);
+    if (lineEnd === -1) lineEnd = text.length;
+    
+    const line = text.substring(lineStart, lineEnd);
+    
+    // Determine the indentation level of this relation
+    const indent = line.search(/\S/);
+    
+    // Find where this branch ends (the next line with the same or less indentation)
+    let currentPos = lineEnd + 1;
+    let branchEnd = lineEnd;
+    
+    while (currentPos < text.length) {
+        const nextLineStart = currentPos;
+        const nextLineEnd = text.indexOf('\n', nextLineStart);
+        const endPos = nextLineEnd === -1 ? text.length : nextLineEnd;
+        const nextLine = text.substring(nextLineStart, endPos);
+        
+        // Skip empty lines
+        if (nextLine.trim() === '') {
+            currentPos = endPos + 1;
+            continue;
+        }
+        
+        const nextIndent = nextLine.search(/\S/);
+        
+        // If we find a line with same or less indentation, we've reached the end of the branch
+        if (nextIndent <= indent) {
+            break;
+        }
+        
+        branchEnd = endPos;
+        currentPos = endPos + 1;
+    }
+    
+    return {
+        start: lineStart,
+        end: branchEnd + 1, // Include the newline at the end
+        branchText: text.substring(lineStart, branchEnd + 1),
+        parentIndent: indent
+    };
+}
 
 // Key for storing branches in localStorage, will be combined with docVersionId
 const STORAGE_KEY_PREFIX = 'umr_temp_branches_';
@@ -485,64 +543,4 @@ function addBranchToVariable(variable, branchContent) {
     }
     
     showNotification(`Branch added to ${variable}`, 'success');
-}
-
-// Helper function: Find all matches of a substring in a string
-function findAllMatches(str, substr) {
-    const positions = [];
-    let pos = str.indexOf(substr);
-    
-    while (pos !== -1) {
-        positions.push(pos);
-        pos = str.indexOf(substr, pos + 1);
-    }
-    
-    return positions;
-}
-
-// Helper function: Determine the boundaries of a branch in the annotation text
-function getBranchBoundaries(text, relationPosition) {
-    // Find the line with the relation
-    let lineStart = text.lastIndexOf('\n', relationPosition) + 1;
-    let lineEnd = text.indexOf('\n', relationPosition);
-    if (lineEnd === -1) lineEnd = text.length;
-    
-    const line = text.substring(lineStart, lineEnd);
-    
-    // Determine the indentation level of this relation
-    const indent = line.search(/\S/);
-    
-    // Find where this branch ends (the next line with the same or less indentation)
-    let currentPos = lineEnd + 1;
-    let branchEnd = lineEnd;
-    
-    while (currentPos < text.length) {
-        const nextLineStart = currentPos;
-        const nextLineEnd = text.indexOf('\n', nextLineStart);
-        const endPos = nextLineEnd === -1 ? text.length : nextLineEnd;
-        const nextLine = text.substring(nextLineStart, endPos);
-        
-        // Skip empty lines
-        if (nextLine.trim() === '') {
-            currentPos = endPos + 1;
-            continue;
-        }
-        
-        const nextIndent = nextLine.search(/\S/);
-        
-        // If we find a line with same or less indentation, we've reached the end of the branch
-        if (nextIndent <= indent) {
-            break;
-        }
-        
-        branchEnd = endPos;
-        currentPos = endPos + 1;
-    }
-    
-    return {
-        start: lineStart,
-        end: branchEnd + 1, // Include the newline at the end
-        branchText: text.substring(lineStart, branchEnd + 1),
-        parentIndent: indent
-    };
 }
