@@ -52,42 +52,6 @@
     <div class="split-container">
         <!-- Left Panel -->
         <div class="split left-panel">
-            <!-- Document Info -->
-            <div class="card">
-                <div class="card-header" role="button" data-bs-toggle="collapse" data-bs-target="#docInfo" aria-expanded="true" aria-controls="docInfo" style="cursor: pointer;">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Document Info</h5>
-                        <i class="fas fa-chevron-up collapse-icon"></i>
-                    </div>
-                </div>
-                <div id="docInfo" class="collapse show">
-                    <div class="card-body">
-                        <table class="table table-sm mb-0">
-                            <tr>
-                                <th>Annotator:</th>
-                                <td id="username">{{ owner.username }}</td>
-                            </tr>
-                            <tr>
-                                <th>File:</th>
-                                <td id="filename">{{ filename }}</td>
-                            </tr>
-                            <tr>
-                                <th>Language:</th>
-                                <td id="lang">{{ lang }}</td>
-                            </tr>
-                            <tr>
-                                <th>Project:</th>
-                                <td id="project_name">{{ project_name }}</td>
-                            </tr>
-                            <tr>
-                                <th>Admin:</th>
-                                <td id="project_admin">{{ admin.username }}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
             <!-- Document Navigation -->
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -182,6 +146,42 @@
 
         <!-- Right Panel -->
         <div class="split right-panel">
+            <!-- Document Info (Moved to top of right panel) -->
+            <div class="card mb-3">
+                <div class="card-header" role="button" data-bs-toggle="collapse" data-bs-target="#docInfoRight" aria-expanded="true" aria-controls="docInfoRight" style="cursor: pointer;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Document Info</h5>
+                        <i class="fas fa-chevron-up collapse-icon-right"></i>
+                    </div>
+                </div>
+                <div id="docInfoRight" class="collapse show">
+                    <div class="card-body">
+                        <table class="table table-sm mb-0">
+                            <tr>
+                                <th>Annotator:</th>
+                                <td id="username-right">{{ owner.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>File:</th>
+                                <td id="filename-right">{{ filename }}</td>
+                            </tr>
+                            <tr>
+                                <th>Language:</th>
+                                <td id="lang-right">{{ lang }}</td>
+                            </tr>
+                            <tr>
+                                <th>Project:</th>
+                                <td id="project_name-right">{{ project_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Admin:</th>
+                                <td id="project_admin-right">{{ admin.username }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Quick Actions -->
             <div class="card mb-3">
                 <div class="card-header">
@@ -266,25 +266,25 @@
         const partialGraphs = {{ partial_graphs_json|tojson|safe }};
         initialize(frameDict, partialGraphs);
 
-        // Handle collapse icon rotation
-        const docInfoHeader = document.querySelector('[data-bs-target="#docInfo"]');
-        const collapseIcon = docInfoHeader.querySelector('.collapse-icon');
+        // Handle collapse icon rotation for the right panel Document Info
+        const docInfoRightHeader = document.querySelector('[data-bs-target="#docInfoRight"]');
+        const collapseIconRight = docInfoRightHeader.querySelector('.collapse-icon-right');
         
-        docInfoHeader.addEventListener('click', function() {
-            collapseIcon.classList.toggle('fa-chevron-down');
-            collapseIcon.classList.toggle('fa-chevron-up');
+        docInfoRightHeader.addEventListener('click', function() {
+            collapseIconRight.classList.toggle('fa-chevron-down');
+            collapseIconRight.classList.toggle('fa-chevron-up');
         });
 
-        // Initialize collapse
-        const docInfo = document.getElementById('docInfo');
-        docInfo.addEventListener('show.bs.collapse', function () {
-            collapseIcon.classList.remove('fa-chevron-down');
-            collapseIcon.classList.add('fa-chevron-up');
+        // Initialize collapse for right panel Document Info
+        const docInfoRight = document.getElementById('docInfoRight');
+        docInfoRight.addEventListener('show.bs.collapse', function () {
+            collapseIconRight.classList.remove('fa-chevron-down');
+            collapseIconRight.classList.add('fa-chevron-up');
         });
         
-        docInfo.addEventListener('hide.bs.collapse', function () {
-            collapseIcon.classList.remove('fa-chevron-up');
-            collapseIcon.classList.add('fa-chevron-down');
+        docInfoRight.addEventListener('hide.bs.collapse', function () {
+            collapseIconRight.classList.remove('fa-chevron-up');
+            collapseIconRight.classList.add('fa-chevron-down');
         });
     });
 
