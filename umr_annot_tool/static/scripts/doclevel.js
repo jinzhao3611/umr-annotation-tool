@@ -315,39 +315,45 @@ function showNotification(message, type = 'info') {
 
 // Save document annotation to the database
 function saveDocAnnotation() {
-    if (!docLevelState.isDirty) {
-        showNotification("No changes to save", "info");
-        return;
-    }
-    
-    // Send the annotation to the server
-    fetch(`/update_doc_annotation/${docLevelState.docVersionId}/${docLevelState.sentId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken()
-        },
-        body: JSON.stringify({
-            doc_annot: docLevelState.docAnnotation
+    return new Promise((resolve, reject) => {
+        if (!docLevelState.isDirty) {
+            showNotification("No changes to save", "info");
+            resolve(); // Resolve immediately if no changes
+            return;
+        }
+        
+        // Send the annotation to the server
+        fetch(`/update_doc_annotation/${docLevelState.docVersionId}/${docLevelState.sentId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({
+                doc_annot: docLevelState.docAnnotation
+            })
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            docLevelState.isDirty = false;
-            showNotification("Document annotation saved successfully", "success");
-        } else {
-            showNotification("Error saving document annotation: " + data.message, "error");
-        }
-    })
-    .catch(error => {
-        console.error('Error saving document annotation:', error);
-        showNotification("Error saving document annotation: " + error.message, "error");
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                docLevelState.isDirty = false;
+                showNotification("Document annotation saved successfully", "success");
+                resolve(data); // Resolve the promise
+            } else {
+                showNotification("Error saving document annotation: " + data.message, "error");
+                reject(new Error(data.message));
+            }
+        })
+        .catch(error => {
+            console.error('Error saving document annotation:', error);
+            showNotification("Error saving document annotation: " + error.message, "error");
+            reject(error);
+        });
     });
 }
 

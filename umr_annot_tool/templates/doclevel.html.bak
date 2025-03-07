@@ -27,7 +27,7 @@
     <input type="hidden" id="maxSentId" value="{{ info2display.sents|length }}">
     
     <div class="doc-level-container">
-        <!-- Left Panel - All sentence-level annotations (read-only) -->
+        <!-- Left Panel - Sentences and their annotations (read-only) -->
         <div class="panel left-panel">
             <!-- All Sentence-Level Annotations (Read-only) -->
             <div class="card">
@@ -64,51 +64,22 @@
         <!-- Middle Panel - Document-level annotations -->
         <div class="panel middle-panel">
             <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="card-header">
                     <h5 class="mb-0">Document-Level Annotations</h5>
-                    <div class="annotation-navigation">
-                        <button class="btn btn-sm btn-outline-primary" onclick="prevSentence()">←</button>
-                        <span class="mx-2">Sentence #{{ snt_id }}</span>
-                        <button class="btn btn-sm btn-outline-primary" onclick="nextSentence()">→</button>
-                    </div>
                 </div>
                 <div class="card-body">
-                    <!-- Current sentence indicator -->
-                    <div class="current-sentence-indicator mb-3">
-                        <div class="d-flex align-items-center">
-                            <span class="badge bg-primary me-2">Currently Editing:</span>
-                            <span class="current-sentence-text">{{ info2display.sents[snt_id-1] }}</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Document-level annotation for current sentence -->
                     <div id="doc-annotation" class="annotation-preview">
                         {% if curr_doc_annot_string %}
                             <pre class="mb-0" id="doc-annotation-content">{{ curr_doc_annot_string }}</pre>
                         {% else %}
                             <div class="alert alert-info mb-0" id="doc-annotation-placeholder">
-                                No document-level annotation available for this sentence. Use the tools on the right to create one.
+                                No document-level annotation available for this document. Use the tools on the right to create one.
                             </div>
                         {% endif %}
                     </div>
-                    
-                    <!-- Sentence selection dropdown -->
-                    <div class="sentence-selector mt-3">
-                        <label for="sentenceSelector" class="form-label">Jump to sentence:</label>
-                        <select class="form-select" id="sentenceSelector" onchange="jumpToSentence(this.value)">
-                            {% for sent in info2display.sents %}
-                                <option value="{{ loop.index }}" {% if loop.index == snt_id %}selected{% endif %}>
-                                    Sentence #{{ loop.index }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Right Panel - Triple Addition Menu -->
-        <div class="panel right-panel">
             <!-- Document Info -->
             <div class="card">
                 <div class="card-header" role="button" data-bs-toggle="collapse" data-bs-target="#docInfo" aria-expanded="true" aria-controls="docInfo" style="cursor: pointer;">
@@ -122,19 +93,19 @@
                         <table class="table table-sm mb-0">
                             <tr>
                                 <th>Annotator:</th>
-                                <td id="username-right">{{ owner.username }}</td>
+                                <td id="username-middle">{{ owner.username }}</td>
                             </tr>
                             <tr>
                                 <th>File:</th>
-                                <td id="filename-right">{{ filename }}</td>
+                                <td id="filename-middle">{{ filename }}</td>
                             </tr>
                             <tr>
                                 <th>Language:</th>
-                                <td id="lang-right">{{ lang }}</td>
+                                <td id="lang-middle">{{ lang }}</td>
                             </tr>
                             <tr>
                                 <th>Project:</th>
-                                <td id="project_name-right">{{ project_name }}</td>
+                                <td id="project_name-middle">{{ project_name }}</td>
                             </tr>
                         </table>
                     </div>
@@ -142,7 +113,7 @@
             </div>
 
             <!-- Save Button -->
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">Actions</h5>
                 </div>
@@ -152,14 +123,7 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Triple Addition -->
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5 class="mb-0">Add Document-Level Triples</h5>
-                </div>
-                <div class="card-body">
-                    <!-- Tab Navigation -->
+
                     <ul class="nav nav-tabs" id="tripleTypeTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="temporal-tab" data-bs-toggle="tab" data-bs-target="#temporal" type="button" role="tab" aria-controls="temporal" aria-selected="true">Temporal</button>
@@ -319,19 +283,7 @@
     function prevSentence() {
         const sntId = parseInt("{{ snt_id }}");
         if (sntId > 1) {
-            // Ask if the user wants to save before navigating
-            const shouldSave = confirm("Do you want to save your current changes before navigating to the previous sentence?");
-            
-            const targetId = sntId - 1;
-            if (shouldSave) {
-                // Save current annotation first, then navigate
-                saveDocAnnotation().then(() => {
-                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-                });
-            } else {
-                // Navigate without saving
-                window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-            }
+            window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=snt_id - 1) }}";
         }
     }
 
@@ -339,37 +291,7 @@
         const sntId = parseInt("{{ snt_id }}");
         const maxId = parseInt("{{ info2display.sents|length }}");
         if (sntId < maxId) {
-            // Ask if the user wants to save before navigating
-            const shouldSave = confirm("Do you want to save your current changes before navigating to the next sentence?");
-            
-            const targetId = sntId + 1;
-            if (shouldSave) {
-                // Save current annotation first, then navigate
-                saveDocAnnotation().then(() => {
-                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-                });
-            } else {
-                // Navigate without saving
-                window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-            }
-        }
-    }
-
-    function jumpToSentence(sentId) {
-        if (sentId) {
-            // Ask if the user wants to save before navigating
-            const shouldSave = confirm("Do you want to save your current changes before navigating to another sentence?");
-            
-            if (shouldSave) {
-                // Save current annotation first, then navigate
-                saveDocAnnotation().then(() => {
-                    // Properly generate the URL with Flask's url_for
-                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + sentId);
-                });
-            } else {
-                // Navigate without saving - properly generate URL
-                window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + sentId);
-            }
+            window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=snt_id + 1) }}";
         }
     }
 </script>

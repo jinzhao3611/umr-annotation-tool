@@ -757,6 +757,28 @@ def doclevel(doc_version_id, sent_id):
                     curr_sent_annot_string = ''
                     curr_doc_annot_string = ''
         
+        # Get all sentence-level annotations for this document
+        all_sent_annotations = {}
+        try:
+            # Query all annotations for this document version
+            all_annotations = Annotation.query.filter_by(
+                doc_version_id=doc_version_id
+            ).all()
+            
+            # Create a dictionary mapping sentence indices to their annotations
+            for annotation in all_annotations:
+                # Find the index of this sentence in the sentences list
+                for i, sent in enumerate(sentences):
+                    if sent.id == annotation.sent_id:
+                        sent_index = i + 1  # 1-indexed for UI consistency
+                        all_sent_annotations[str(sent_index)] = annotation.sent_annot
+                        break
+            
+            logger.info(f"Loaded {len(all_sent_annotations)} sentence-level annotations for document")
+        except Exception as e:
+            logger.error(f"Error loading all sentence annotations: {str(e)}")
+            all_sent_annotations = {}
+        
         # Prepare display information
         try:
             info2display = {
@@ -792,7 +814,8 @@ def doclevel(doc_version_id, sent_id):
                             admin=User.query.get_or_404(project.created_by_user_id),
                             info2display=info2display,
                             curr_sent_annot_string=curr_sent_annot_string,
-                            curr_doc_annot_string=curr_doc_annot_string)
+                            curr_doc_annot_string=curr_doc_annot_string,
+                            all_sent_annotations=all_sent_annotations)
                             
     except Exception as e:
         logger.error(f"Unexpected error in doclevel: {str(e)}", exc_info=True)
