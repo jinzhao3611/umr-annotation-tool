@@ -284,6 +284,14 @@ function addInPlaceEditToggle() {
             console.log('Turning edit mode ON, removing all trash bin icons');
             const deleteIcons = document.querySelectorAll('.delete-branch-icon');
             deleteIcons.forEach(icon => icon.remove());
+        } else {
+            console.log('Turning edit mode OFF, restoring branch operations');
+            // For OFF mode, we need to ensure everything for branch operations is ready
+            const annotationElement = document.querySelector('#amr pre');
+            if (annotationElement) {
+                // Re-add variable clickability for branch operations
+                makeVariablesClickable(annotationElement);
+            }
         }
         
         // Update edit mode status
@@ -352,6 +360,9 @@ function updateEditModeStatus() {
         
         // Re-add branch operations with trash bins when in-place edit is OFF
         addBranchOperations(annotationElement);
+        
+        // Re-add variable clickability for branch addition
+        makeVariablesClickable(annotationElement);
         
         // Show notification
         try {
@@ -1281,7 +1292,14 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
 
 // Function to make variables in the annotation clickable
 function makeVariablesClickable(annotationElement) {
-    const text = annotationElement.innerHTML;
+    console.log('Making variables clickable for branch addition');
+    
+    // First, get the raw text without any span wrappers
+    let text = annotationElement.innerHTML;
+    
+    // Remove any existing variable-span elements to avoid duplication
+    text = text.replace(/<span class="variable-span"[^>]*>(.*?)<\/span>/g, '$1');
+    
     // This pattern matches variables like s1, s2a, s10b, etc.
     const variableRegex = /(\b)(s[0-9]+[a-z]*[0-9]*)\b(?![^<]*>)/g;
     
@@ -1293,14 +1311,24 @@ function makeVariablesClickable(annotationElement) {
     
     annotationElement.innerHTML = html;
     
+    console.log('Adding context menu to variable spans');
+    
     // Add context menu to variable spans
     const variableSpans = annotationElement.querySelectorAll('.variable-span');
+    console.log(`Found ${variableSpans.length} variable spans`);
+    
     variableSpans.forEach(span => {
-        span.addEventListener('contextmenu', (event) => {
+        // Remove any existing event listeners
+        const newSpan = span.cloneNode(true);
+        span.parentNode.replaceChild(newSpan, span);
+        
+        // Add the context menu event listener
+        newSpan.addEventListener('contextmenu', (event) => {
+            console.log('Variable contextmenu event triggered');
             // Only show context menu if edit mode is OFF (for branch operations)
             if (!inPlaceEditMode) {
                 event.preventDefault();
-                showVariableContextMenu(span, event.clientX, event.clientY);
+                showVariableContextMenu(newSpan, event.clientX, event.clientY);
             }
         });
     });
