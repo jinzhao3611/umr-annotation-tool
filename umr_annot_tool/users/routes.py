@@ -361,7 +361,8 @@ def project(project_id):
                 # Check if this document already has a QC version
                 existing_qc = DocVersion.query.filter_by(
                     doc_id=doc_id,
-                    stage='qc'
+                    stage='qc',
+                    user_id=current_user.id
                 ).first()
                 
                 if existing_qc:
@@ -462,11 +463,12 @@ def project(project_id):
     # 3.3 Quality control documents
     qc_docs = []
     for doc in docs:
-        qc_version = DocVersion.query.filter_by(
+        # Change from first() to all() to get all QC versions for this document
+        qc_versions = DocVersion.query.filter_by(
             doc_id=doc.id,
             stage='qc'
-        ).first()
-        if qc_version:
+        ).all()
+        for qc_version in qc_versions:
             qc_docs.append({
                 'id': doc.id,
                 'filename': doc.filename,
