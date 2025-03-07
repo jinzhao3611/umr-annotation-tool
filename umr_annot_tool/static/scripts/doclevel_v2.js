@@ -137,7 +137,7 @@ function initializeDocLevel() {
             
             // Set up navigation button event listeners
             setupNavigationButtons();
-        } else {
+    } else {
             console.error("Annotation content element not found");
         }
     } catch (error) {
@@ -923,19 +923,36 @@ function getSaveEndpointUrl(docVersionId, sentId) {
     const currentUrl = window.location;
     console.log("Current URL:", currentUrl.href);
     
-    // Check if there's a blueprint prefix by analyzing the current URL path
-    // The current URL is likely a doclevel route, so we can use its pattern to determine the prefix
-    const urlPath = currentUrl.pathname;
-    const docLevelMatch = urlPath.match(/^(\/[^\/]*)?\/doclevel\/\d+\/\d+$/);
+    // Get the current URL path segments
+    const pathSegments = currentUrl.pathname.split('/').filter(Boolean);
+    console.log("Path segments:", pathSegments);
     
-    let prefix = '';
-    if (docLevelMatch && docLevelMatch[1]) {
-        // If there's a prefix in the current URL path, use it
-        prefix = docLevelMatch[1];
+    // Directly use document version ID and sentence ID from the current URL if possible
+    let urlDocVersionId = docVersionId;
+    let urlSentId = sentId;
+    
+    // If the current URL contains the IDs, use those since they're already working for view
+    if (pathSegments.length >= 3 && pathSegments[0] === 'doclevel') {
+        // The URL is in format /doclevel/doc_version_id/sent_id
+        // Let's use those IDs for consistency
+        const docIdFromUrl = pathSegments[1];
+        const sentIdFromUrl = pathSegments[2];
+        
+        if (docIdFromUrl && sentIdFromUrl) {
+            console.log(`Using IDs from URL: doc=${docIdFromUrl}, sent=${sentIdFromUrl}`);
+            urlDocVersionId = docIdFromUrl;
+            urlSentId = sentIdFromUrl;
+        }
     }
     
-    // Construct the URL with the correct prefix
-    const saveUrl = `${window.location.origin}${prefix}/update_doc_annotation/${docVersionId}/${sentId}`;
+    // Replace doclevel with update_doc_annotation in the path to keep everything else the same
+    const saveUrlPath = currentUrl.pathname.replace(
+        /\/doclevel\/(\d+)\/(\d+)/, 
+        `/update_doc_annotation/${urlDocVersionId}/${urlSentId}`
+    );
+    
+    // Construct the final URL using the original origin and the modified path
+    const saveUrl = `${window.location.origin}${saveUrlPath}`;
     
     // Log the URL we're using for debugging
     console.log("Save URL constructed:", saveUrl);
@@ -1022,7 +1039,7 @@ function generatePlainTextAnnotation() {
                        tripleType === branchName;
             });
             
-            // Start the branch
+                // Start the branch
             plainText += `    :${branchName} `;
             
             // Only add nested structure if there are triples
@@ -1061,80 +1078,301 @@ function generatePlainTextAnnotation() {
 
 // Save document annotation to the database
 function saveDocAnnotation() {
-    return new Promise((resolve, reject) => {
-        console.log("Starting save process...");
-        
-        if (!docLevelState.isDirty) {
-            console.log("No changes to save (state is not dirty)");
-            showNotification("No changes to save", "info");
-            resolve(); // Resolve immediately if no changes
-            return;
-        }
-        
-        console.log("Current docLevelState:", JSON.stringify({
-            docVersionId: docLevelState.docVersionId,
-            sentId: docLevelState.sentId,
-            triples: docLevelState.triples.length,
-            isDirty: docLevelState.isDirty
-        }));
-        
-        // Make sure we have the doc version ID and sentence ID
-        if (!docLevelState.docVersionId || !docLevelState.sentId) {
-            console.error("Missing docVersionId or sentId");
-            const docVersionId = window.state?.docVersionId;
-            const sentId = window.state?.currentId;
-            
-            if (docVersionId && sentId) {
-                console.log("Using window.state values:", docVersionId, sentId);
-                docLevelState.docVersionId = docVersionId;
-                docLevelState.sentId = sentId;
-            } else {
-                console.error("Cannot determine document version or sentence ID");
-                showNotification("Error: Missing document information", "error");
-                reject(new Error("Missing docVersionId or sentId"));
-                return;
-            }
-        }
-        
-        // Get the save URL
-        const saveUrl = getSaveEndpointUrl(docLevelState.docVersionId, docLevelState.sentId);
-        console.log("Using save URL:", saveUrl);
-        console.log("Annotation to save:", docLevelState.docAnnotation);
-        
-        // Send the annotation to the server
-        fetch(saveUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCsrfToken()
-            },
-            body: JSON.stringify({
-                doc_annot: docLevelState.docAnnotation
-            })
-        })
+    console.log("Starting save document annotation process...");
+    
+    // Check if there are changes to save
+    if (!docLevelState.isDirty) {
+        console.log("No changes to save, skipping...");
+        return Promise.resolve({success: true, message: "No changes to save"});
+    }
+    
+    // Get docVersionId and sentId from current state
+    const docVersionId = docLevelState.docVersionId;
+    const sentId = docLevelState.sentId;
+    
+    if (!docVersionId || !sentId) {
+        console.error("Missing required docVersionId or sentId for saving", docLevelState);
+        showNotification('error', "Missing document information for saving");
+        return Promise.reject("Missing document information");
+    }
+    
+    console.log(`Saving annotation for document ${docVersionId}, sentence ${sentId}...`);
+    
+    // Get the plain text representation
+    const plainTextAnnotation = generatePlainTextAnnotation();
+    console.log("Generated plain text annotation:", plainTextAnnotation);
+    
+    // Get the save URL
+    const saveUrl = getSaveEndpointUrl(docVersionId, sentId);
+    console.log("Using save URL:", saveUrl);
+    
+    // Get CSRF token if available
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    console.log("CSRF token available:", !!csrfToken);
+    
+    // Create the payload with more context information
+    const payload = {
+        doc_version_id: docVersionId,
+        sent_id: sentId,
+        annotation: plainTextAnnotation,
+        sentence_number: sentId, // Include the sentence number as a separate field
+        is_current_version: true
+    };
+    
+    console.log("Sending payload:", JSON.stringify(payload));
+    
+    // Create the request options
+    const fetchOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        credentials: 'same-origin', // Include cookies
+        body: JSON.stringify(payload)
+    };
+    
+    // Add CSRF token if available
+    if (csrfToken) {
+        fetchOptions.headers['X-CSRFToken'] = csrfToken;
+    }
+    
+    console.log("Fetch options:", fetchOptions);
+    
+    // Send the request
+    return fetch(saveUrl, fetchOptions)
         .then(response => {
+            console.log("Save response status:", response.status);
+            
             if (!response.ok) {
-                console.error(`▶ POST ${saveUrl} ${response.status} (${response.statusText})`);
-                throw new Error(`HTTP error! status: ${response.status}`);
+                console.error("Save failed with status:", response.status);
+                if (response.status === 404) {
+                    console.log("Got 404, attempting alternative save...");
+                    return response.text().then(text => {
+                        console.error("Error response text:", text);
+                        return attemptAlternativeSave(docVersionId, sentId, plainTextAnnotation);
+                    });
+                }
+                
+                // For other errors, try to parse the error message
+                return response.json().then(data => {
+                    console.error("Save error:", data);
+                    throw new Error(data.message || `Save failed with status ${response.status}`);
+                }).catch(e => {
+                    // If we can't parse JSON, just show the status
+                    throw new Error(`Save failed with status ${response.status}`);
+                });
             }
+            
             return response.json();
         })
         .then(data => {
+            console.log("Save response data:", data);
+            
             if (data.success) {
+                // If save was successful, clear the dirty flag
                 docLevelState.isDirty = false;
-                console.log("Save successful:", data);
-                showNotification("Document annotation saved successfully", "success");
-                resolve(data);
+                
+                // Show a detailed success message
+                if (data.annotation_id) {
+                    showNotification('success', `Annotation updated successfully (ID: ${data.annotation_id})`);
+                } else {
+                    showNotification('success', "Annotation saved successfully");
+                }
+                
+                console.log(`Annotation ${data.annotation_id ? "updated" : "saved"} with sent_id: ${data.actual_sent_id || data.sent_id}`);
+                return data;
             } else {
-                console.error("Save returned error:", data);
-                throw new Error(data.message || 'Save failed');
+                console.error("Save returned success=false:", data);
+                showNotification('error', data.message || "Failed to save changes");
+                throw new Error(data.message || "Unknown error saving document");
             }
         })
         .catch(error => {
-            console.error(`▶ Error saving document annotation:`, error);
-            showNotification("Error saving document annotation: " + error.message, "error");
-            reject(error);
+            console.error("Save error:", error);
+            showNotification('error', `Error saving changes: ${error.message}`);
+            throw error;
         });
+}
+
+// Alternative save method with diagnostic info
+function attemptAlternativeSave(docVersionId, sentId, plainTextAnnotation) {
+    console.log("Attempting alternative save method...");
+    
+    // Get CSRF token if available
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    
+    // Create the payload with diagnostic information
+    const payload = {
+        doc_version_id: docVersionId,
+        sent_id: sentId,
+        annotation: plainTextAnnotation,
+        sentence_number: sentId, // Add sentence number as separate field
+        sentence_position: sentId, // Add sentence position as another possible identifier
+        is_current_version: true,
+        client_info: {
+            url: window.location.href,
+            path: window.location.pathname,
+            referrer: document.referrer
+        }
+    };
+    
+    // Try a fallback URL with explicit /main/ prefix
+    const alternativeUrl = `${window.location.origin}/main/update_doc_annotation/${docVersionId}/${sentId}`;
+    console.log("Using alternative save URL:", alternativeUrl);
+    
+    // Send the request with the updated payload
+    return fetch(alternativeUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            ...(csrfToken && {'X-CSRFToken': csrfToken})
+        },
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        console.log("Alternative save response status:", response.status);
+        
+        if (!response.ok) {
+            console.error("Alternative save failed with status:", response.status);
+            return response.text().then(text => {
+                console.error("Error response text:", text);
+                return submitFormFallback(docVersionId, sentId, plainTextAnnotation);
+            });
+        }
+        
+        return response.json();
+    })
+    .then(data => {
+        console.log("Alternative save response data:", data);
+        
+        if (data.success) {
+            docLevelState.isDirty = false;
+            
+            // Show a detailed success message
+            if (data.annotation_id) {
+                showNotification('success', `Annotation updated successfully (ID: ${data.annotation_id}, alternative method)`);
+            } else {
+                showNotification('success', "Annotation saved successfully (alternative method)");
+            }
+            
+            console.log(`Annotation ${data.annotation_id ? "updated" : "saved"} with sent_id: ${data.actual_sent_id || data.sent_id}`);
+            return data;
+        } else {
+            console.error("Alternative save returned success=false:", data);
+            showNotification('error', data.message || "Failed to save changes");
+            throw new Error(data.message || "Unknown error saving document");
+        }
+    })
+    .catch(error => {
+        console.error("Alternative save error:", error);
+        showNotification('error', `Error saving changes (alternative method): ${error.message}`);
+        throw error;
+    });
+}
+
+// Form submission fallback as a last resort
+function submitFormFallback(docVersionId, sentId, plainTextAnnotation) {
+    console.log("Trying form submission fallback...");
+    
+    return new Promise((resolve, reject) => {
+        try {
+            // Create a hidden form
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `${window.location.origin}/update_doc_annotation/${docVersionId}/${sentId}`;
+            form.style.display = 'none';
+            
+            // Add document version ID field
+            const docVersionField = document.createElement('input');
+            docVersionField.type = 'hidden';
+            docVersionField.name = 'doc_version_id';
+            docVersionField.value = docVersionId;
+            form.appendChild(docVersionField);
+            
+            // Add sent ID field
+            const sentIdField = document.createElement('input');
+            sentIdField.type = 'hidden';
+            sentIdField.name = 'sent_id';
+            sentIdField.value = sentId;
+            form.appendChild(sentIdField);
+            
+            // Add sentence number field (might be useful for lookup)
+            const sentNumberField = document.createElement('input');
+            sentNumberField.type = 'hidden';
+            sentNumberField.name = 'sentence_number';
+            sentNumberField.value = sentId;
+            form.appendChild(sentNumberField);
+            
+            // Add the annotation data
+            const annotField = document.createElement('input');
+            annotField.type = 'hidden';
+            annotField.name = 'annotation';
+            annotField.value = plainTextAnnotation;
+            form.appendChild(annotField);
+            
+            // Add the CSRF token if available
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+            if (csrfToken) {
+                const csrfField = document.createElement('input');
+                csrfField.type = 'hidden';
+                csrfField.name = 'csrf_token';
+                csrfField.value = csrfToken;
+                form.appendChild(csrfField);
+            }
+            
+            // Add to body
+            document.body.appendChild(form);
+            
+            console.log("Form created with action:", form.action);
+            
+            // Use fetch API to submit the form instead of traditional form submission
+            const formData = new FormData(form);
+            
+            // Remove form from DOM after gathering data
+            document.body.removeChild(form);
+            
+            // Send as form data
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                console.log("Form submission response status:", response.status);
+                if (!response.ok) {
+                    console.error("Form submission failed with status:", response.status);
+                    return response.text().then(text => {
+                        console.error("Form submission error text:", text);
+                        throw new Error(`Form submission failed with status ${response.status}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Form submission response:", data);
+                if (data.success) {
+                    docLevelState.isDirty = false;
+                    showNotification('success', "Changes saved successfully (form fallback)");
+                    resolve(data);
+                } else {
+                    console.error("Form submission returned success=false:", data);
+                    showNotification('error', data.message || "Failed to save changes");
+                    reject(new Error(data.message || "Unknown error saving document"));
+                }
+            })
+            .catch(error => {
+                console.error("Form submission error:", error);
+                showNotification('error', `Error saving changes (form fallback): ${error.message}`);
+                reject(error);
+            });
+        } catch (error) {
+            console.error("Error creating form:", error);
+            showNotification('error', `Error creating form: ${error.message}`);
+            reject(error);
+        }
     });
 }
 
@@ -1236,7 +1474,7 @@ function formatDocLevelAnnotation() {
                     return `        <div class="triple-container" data-branch="${branchName}" data-source="${triple.source}" data-relation="${triple.relation}" data-target="${triple.target}" style="cursor: context-menu;">
 <span class="parenthesis">(</span><span class="node">${triple.source}</span> <span class="relation">${triple.relation}</span> <span class="node">${triple.target}</span><span class="parenthesis">)</span>
 <span class="delete-triple-icon" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); cursor: pointer;"><i class="fas fa-trash-alt" style="color: #dc3545;"></i></span>
-</div>`;
+                     </div>`;
                 });
                 
                 // Join the triple elements
@@ -1270,8 +1508,8 @@ function formatDocLevelAnnotation() {
         }
         
         // Schedule setup of delete handlers
-        setTimeout(() => {
-            setupDeleteButtons();
+            setTimeout(() => {
+                setupDeleteButtons();
         }, 100);
         
         return htmlContent;
@@ -1558,9 +1796,9 @@ function setupDeleteButtons() {
         const deleteIcon = container.querySelector('.delete-triple-icon');
         if (deleteIcon) {
             deleteIcon.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
+            e.preventDefault();
+            e.stopPropagation();
+            
                 // Get triple data from parent container
                 const branch = container.getAttribute('data-branch');
                 const source = container.getAttribute('data-source');

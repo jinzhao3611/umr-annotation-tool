@@ -830,44 +830,127 @@ def update_doc_annotation(doc_version_id, sent_id):
     try:
         # Get the data from the request
         data = request.get_json()
-        doc_annot = data.get('doc_annot', '')
+        
+        # Log incoming request details
+        logger.info(f"Received update request for doc_version_id={doc_version_id}, sent_id={sent_id}")
+        logger.info(f"Request data type: {request.content_type}")
+        
+        if not data:
+            # Try to get form data if JSON body isn't present
+            logger.info("No JSON data found, trying to get form data")
+            doc_annot = request.form.get('annotation', request.form.get('doc_annot', ''))
+            sentence_number = request.form.get('sentence_number', sent_id)
+        else:
+            # Use the new 'annotation' field name, but fall back to 'doc_annot' for backward compatibility
+            doc_annot = data.get('annotation', data.get('doc_annot', ''))
+            sentence_number = data.get('sentence_number', sent_id)
+            logger.info(f"Data keys: {list(data.keys())}")
         
         logger.info(f"Updating document annotation for doc_version_id={doc_version_id}, sent_id={sent_id}")
-        logger.debug(f"Document annotation: {doc_annot[:50]}...")
+        logger.debug(f"Document annotation preview: {doc_annot[:50]}...")
         
-        # Get the current annotation
-        annotation = Annotation.query.filter_by(
-            doc_version_id=doc_version_id,
-            sent_id=sent_id
-        ).first()
-        
-        if not annotation:
-            # If annotation doesn't exist, create a new one
-            logger.info(f"No existing annotation found, creating new one")
-            sent = Sent.query.filter_by(id=sent_id).first()
-            if not sent:
-                return jsonify({'success': False, 'message': 'Sentence not found'}), 404
+        try:
+            # First find the actual sentence to get its real ID
+            # This handles the case where sent_id might be a position rather than a database ID
+            actual_sent = None
+            
+            # First try direct ID lookup
+            actual_sent = Sent.query.filter_by(id=sent_id).first()
+            
+            # If that didn't work, try getting the sentence by position
+            if not actual_sent:
+                logger.info(f"Sentence with ID {sent_id} not found directly, trying position lookup")
                 
-            annotation = Annotation(
+                # Get document version
+                doc_version = DocVersion.query.get(doc_version_id)
+                if not doc_version:
+                    logger.error(f"Document version with ID {doc_version_id} not found")
+                    return jsonify({
+                        'success': False, 
+                        'message': f'Document version with ID {doc_version_id} not found'
+                    }), 404
+                
+                # Get document
+                doc_id = doc_version.doc_id
+                logger.info(f"Found document version with doc_id={doc_id}")
+                
+                # Get all sentences for this document
+                sentences = Sent.query.filter_by(doc_id=doc_id).order_by(Sent.id).all()
+                logger.info(f"Found {len(sentences)} sentences for doc_id={doc_id}")
+                
+                # Use sentence_number or sent_id as position
+                position = int(sentence_number) if sentence_number else sent_id
+                
+                if 1 <= position <= len(sentences):
+                    actual_sent = sentences[position - 1]
+                    logger.info(f"Found sentence by position {position}, actual DB ID: {actual_sent.id}")
+                else:
+                    # Sentence not found
+                    logger.error(f"Sentence position {position} out of range (1-{len(sentences)})")
+                    available_positions = [f"{i+1}:{s.id}" for i, s in enumerate(sentences)]
+                    return jsonify({
+                        'success': False, 
+                        'message': f'Sentence not found. Position {position} out of range (1-{len(sentences)})',
+                        'available_positions': available_positions
+                    }), 404
+            
+            # Now that we have the actual sentence, we can look for an existing annotation
+            # or create a new one if needed
+            logger.info(f"Using actual sentence ID: {actual_sent.id}")
+            
+            # Look for existing annotation with the ACTUAL sentence ID
+            annotation = Annotation.query.filter_by(
                 doc_version_id=doc_version_id,
-                sent_id=sent_id,
-                sent_annot='',  # Empty sentence annotation
-                doc_annot=doc_annot,
-                actions={},
-                alignment={}
-            )
-            db.session.add(annotation)
-        else:
-            # Update existing annotation
-            logger.info(f"Updating existing annotation")
-            annotation.doc_annot = doc_annot
+                sent_id=actual_sent.id
+            ).first()
+            
+            if annotation:
+                # Update existing annotation
+                logger.info(f"Found existing annotation (id={annotation.id}), updating content")
+                annotation.doc_annot = doc_annot
+            else:
+                # Only create a new annotation if one doesn't exist
+                logger.info(f"No annotation found for doc_version_id={doc_version_id}, sent_id={actual_sent.id}, creating new")
+                annotation = Annotation(
+                    doc_version_id=doc_version_id,
+                    sent_id=actual_sent.id,
+                    sent_annot='',
+                    doc_annot=doc_annot,
+                    actions={},
+                    alignment={}
+                )
+                db.session.add(annotation)
+            
+            # Save changes
+            db.session.commit()
+            logger.info(f"Successfully saved annotation (id={annotation.id})")
+            
+            return jsonify({
+                'success': True,
+                'message': 'Document annotation updated successfully',
+                'doc_version_id': doc_version_id,
+                'sent_id': sent_id,
+                'actual_sent_id': actual_sent.id,
+                'annotation_id': annotation.id
+            })
         
-        # Save to database
-        db.session.commit()
-        logger.info(f"Successfully updated document annotation")
-        
-        return jsonify({'success': True, 'message': 'Document annotation updated successfully'})
+        except Exception as db_error:
+            db.session.rollback()
+            logger.error(f"Database error: {str(db_error)}", exc_info=True)
+            return jsonify({
+                'success': False,
+                'message': f'Database error: {str(db_error)}',
+                'doc_version_id': doc_version_id,
+                'sent_id': sent_id
+            }), 500
     
     except Exception as e:
         logger.error(f"Error updating document annotation: {str(e)}", exc_info=True)
-        return jsonify({'success': False, 'message': str(e)}), 500
+        error_details = {
+            'success': False, 
+            'message': f"Error: {str(e)}",
+            'doc_version_id': doc_version_id,
+            'sent_id': sent_id,
+            'exception_type': type(e).__name__
+        }
+        return jsonify(error_details), 500
