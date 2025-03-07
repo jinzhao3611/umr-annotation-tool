@@ -168,21 +168,23 @@
                             <div class="triple-form mt-3">
                                 <div class="mb-3">
                                     <label for="temporal-source" class="form-label">Source Node:</label>
-                                    <input type="text" class="form-control" id="temporal-source" placeholder="Enter source node">
+                                    <input type="text" class="form-control" id="temporal-source" placeholder="Enter source node" list="temporal-source-options">
+                                    <datalist id="temporal-source-options">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                                 <div class="mb-3">
                                     <label for="temporal-relation" class="form-label">Relation Type:</label>
                                     <select class="form-select" id="temporal-relation">
-                                        <option value="before">before</option>
-                                        <option value="after">after</option>
-                                        <option value="includes">includes</option>
-                                        <option value="included-in">included-in</option>
-                                        <option value="overlaps">overlaps</option>
+                                        <!-- Options will be populated by JavaScript -->
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="temporal-target" class="form-label">Target Node:</label>
-                                    <input type="text" class="form-control" id="temporal-target" placeholder="Enter target node">
+                                    <input type="text" class="form-control" id="temporal-target" placeholder="Enter target node" list="temporal-target-options">
+                                    <datalist id="temporal-target-options">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                                 <button class="btn btn-primary w-100" onclick="addTriple('temporal')">Add Temporal Triple</button>
                             </div>
@@ -193,20 +195,23 @@
                             <div class="triple-form mt-3">
                                 <div class="mb-3">
                                     <label for="modal-source" class="form-label">Source Node:</label>
-                                    <input type="text" class="form-control" id="modal-source" placeholder="Enter source node">
+                                    <input type="text" class="form-control" id="modal-source" placeholder="Enter source node" list="modal-source-options">
+                                    <datalist id="modal-source-options">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                                 <div class="mb-3">
                                     <label for="modal-relation" class="form-label">Relation Type:</label>
                                     <select class="form-select" id="modal-relation">
-                                        <option value="permissible">permissible</option>
-                                        <option value="necessary">necessary</option>
-                                        <option value="belief">belief</option>
-                                        <option value="desire">desire</option>
+                                        <!-- Options will be populated by JavaScript -->
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="modal-target" class="form-label">Target Node:</label>
-                                    <input type="text" class="form-control" id="modal-target" placeholder="Enter target node">
+                                    <input type="text" class="form-control" id="modal-target" placeholder="Enter target node" list="modal-target-options">
+                                    <datalist id="modal-target-options">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                                 <button class="btn btn-primary w-100" onclick="addTriple('modal')">Add Modal Triple</button>
                             </div>
@@ -216,20 +221,24 @@
                         <div class="tab-pane fade" id="coreference" role="tabpanel" aria-labelledby="coreference-tab">
                             <div class="triple-form mt-3">
                                 <div class="mb-3">
-                                    <label for="coref-source" class="form-label">Source Node:</label>
-                                    <input type="text" class="form-control" id="coref-source" placeholder="Enter source node">
+                                    <label for="coreference-source" class="form-label">Source Node:</label>
+                                    <input type="text" class="form-control" id="coreference-source" placeholder="Enter source node" list="coreference-source-options">
+                                    <datalist id="coreference-source-options">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="coref-relation" class="form-label">Relation Type:</label>
-                                    <select class="form-select" id="coref-relation">
-                                        <option value="same-entity">same-entity</option>
-                                        <option value="part-of">part-of</option>
-                                        <option value="subset">subset</option>
+                                    <label for="coreference-relation" class="form-label">Relation Type:</label>
+                                    <select class="form-select" id="coreference-relation">
+                                        <!-- Options will be populated by JavaScript -->
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="coref-target" class="form-label">Target Node:</label>
-                                    <input type="text" class="form-control" id="coref-target" placeholder="Enter target node">
+                                    <label for="coreference-target" class="form-label">Target Node:</label>
+                                    <input type="text" class="form-control" id="coreference-target" placeholder="Enter target node" list="coreference-target-options">
+                                    <datalist id="coreference-target-options">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                                 <button class="btn btn-primary w-100" onclick="addTriple('coreference')">Add Coreference Triple</button>
                             </div>
@@ -525,12 +534,32 @@
         }, 100);
     }
     
+    // Explicitly call populateTripleForms after a delay to ensure DOM is ready
+    function ensureTripleFormsPopulated() {
+        console.log("Ensuring triple forms are populated");
+        
+        // First try immediately
+        if (typeof populateTripleForms === 'function') {
+            populateTripleForms();
+        }
+        
+        // Also try after a delay to ensure DOM is fully ready
+        setTimeout(function() {
+            if (typeof populateTripleForms === 'function') {
+                console.log("Delayed call to populate triple forms");
+                populateTripleForms();
+            }
+        }, 500);
+    }
+    
     // Run on DOMContentLoaded
     document.addEventListener('DOMContentLoaded', function() {
         ensureFormatting();
+        ensureTripleFormsPopulated();
     });
     
     // Also run directly (in case DOM is already loaded)
     ensureFormatting();
+    ensureTripleFormsPopulated();
 </script>
 {% endblock scripts %} 

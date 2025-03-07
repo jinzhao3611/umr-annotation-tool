@@ -34,115 +34,271 @@ const DOC_LEVEL_RELATIONS = {
 // Variable format regex
 const VARIABLE_REGEX = /^s[0-9]+[a-z]+[0-9]*$/;
 
+// Directly populate all relation dropdowns with hard-coded values as a fallback
+function populateRelationDropdownsDirectly() {
+    console.log("FALLBACK: Directly populating relation dropdowns with exact values from Python dictionaries");
+    
+    // Temporal relations - exact match with doc_level_relations["temporal"]
+    const temporalRelations = [':contained', ':before', ':after', ':overlap', ':depends-on'];
+    const temporalSelect = document.getElementById('temporal-relation');
+    if (temporalSelect) {
+        temporalSelect.innerHTML = '';
+        temporalRelations.forEach(relation => {
+            const option = document.createElement('option');
+            option.value = relation;
+            option.textContent = relation.replace(':', '');
+            temporalSelect.appendChild(option);
+        });
+        console.log("Populated temporal relation dropdown with", temporalRelations.length, "options");
+    } else {
+        console.error("Could not find temporal-relation element");
+    }
+    
+    // Modal relations - exact match with doc_level_relations["modal"]
+    const modalRelations = [':modal', ':full-affirmative', ':partial-affirmative', ':strong-partial-affirmative', 
+                           ':weak-partial-affirmative', ':neutral-affirmative', ':strong-neutral-affirmative', 
+                           ':weak-neutral-affirmative', ':full-negative', ':partial-negative', ':strong-partial-negative', 
+                           ':weak-partial-negative', ':neutral-negative', ':strong-neutral-negative', 
+                           ':weak-neutral-negative', ':unspecified'];
+    const modalSelect = document.getElementById('modal-relation');
+    if (modalSelect) {
+        modalSelect.innerHTML = '';
+        modalRelations.forEach(relation => {
+            const option = document.createElement('option');
+            option.value = relation;
+            option.textContent = relation.replace(':', '');
+            modalSelect.appendChild(option);
+        });
+        console.log("Populated modal relation dropdown with", modalRelations.length, "options");
+    } else {
+        console.error("Could not find modal-relation element");
+    }
+    
+    // Coreference relations - exact match with doc_level_relations["coref"]
+    const corefRelations = [':same-entity', ':same-event', ':subset-of'];
+    const corefSelect = document.getElementById('coreference-relation');
+    if (corefSelect) {
+        corefSelect.innerHTML = '';
+        corefRelations.forEach(relation => {
+            const option = document.createElement('option');
+            option.value = relation;
+            option.textContent = relation.replace(':', '');
+            corefSelect.appendChild(option);
+        });
+        console.log("Populated coreference relation dropdown with", corefRelations.length, "options");
+    } else {
+        console.error("Could not find coreference-relation element");
+    }
+    
+    // Also populate datalists with the rolesets
+    
+    // Temporal rolesets - exact match with doc_level_rolesets["temporal"]
+    const temporalRolesets = ['document-creation-time', 'past-reference', 'present-reference', 'future-reference'];
+    const temporalSourceDatalist = document.getElementById('temporal-source-options');
+    const temporalTargetDatalist = document.getElementById('temporal-target-options');
+    
+    if (temporalSourceDatalist) {
+        temporalSourceDatalist.innerHTML = '';
+        temporalRolesets.forEach(node => {
+            const option = document.createElement('option');
+            option.value = node;
+            temporalSourceDatalist.appendChild(option);
+        });
+        console.log("Populated temporal source datalist with", temporalRolesets.length, "options");
+        
+        if (temporalTargetDatalist) {
+            temporalTargetDatalist.innerHTML = temporalSourceDatalist.innerHTML;
+        }
+    }
+    
+    // Modal rolesets - exact match with doc_level_rolesets["modal"]
+    const modalRolesets = ['root', 'author', 'null-conceiver'];
+    const modalSourceDatalist = document.getElementById('modal-source-options');
+    const modalTargetDatalist = document.getElementById('modal-target-options');
+    
+    if (modalSourceDatalist) {
+        modalSourceDatalist.innerHTML = '';
+        modalRolesets.forEach(node => {
+            const option = document.createElement('option');
+            option.value = node;
+            modalSourceDatalist.appendChild(option);
+        });
+        console.log("Populated modal source datalist with", modalRolesets.length, "options");
+        
+        if (modalTargetDatalist) {
+            modalTargetDatalist.innerHTML = modalSourceDatalist.innerHTML;
+        }
+    }
+    
+    // Coreference rolesets - doc_level_rolesets["coref"] is empty, so we don't add any predefined options
+    const corefSourceDatalist = document.getElementById('coreference-source-options');
+    const corefTargetDatalist = document.getElementById('coreference-target-options');
+    
+    if (corefSourceDatalist) {
+        corefSourceDatalist.innerHTML = '';
+        console.log("Cleared coreference source datalist (no predefined rolesets)");
+        
+        if (corefTargetDatalist) {
+            corefTargetDatalist.innerHTML = '';
+        }
+    }
+}
+
 // Initialize document level functionality
 function initializeDocLevel() {
     console.log("Initializing document-level annotation interface");
     
-    try {
-        // Get the annotation content element
-        const annotationContent = document.getElementById('doc-annotation-content');
-        if (annotationContent) {
-            // Store the original text for debugging
-            const originalText = annotationContent.textContent;
-            console.log("Original annotation text from server:", originalText);
+    // Set up UI components
+    setupTripleTypeTabs();
+    setupNavigationButtons();
+    setupDeleteButtons();
+    populateTripleForms();
+    
+    // As a fallback, use a delay to populate relation dropdowns directly 
+    setTimeout(populateRelationDropdownsDirectly, 1000);
+    
+    // Check if we have an existing annotation to load
+    loadExistingAnnotation();
+    
+    // Initialize the dirty flag
+    docLevelState.isDirty = false;
+    
+    console.log("Document-level interface initialized");
+}
+
+// Set up the triple type tabs
+function setupTripleTypeTabs() {
+    const tabLinks = document.querySelectorAll('#tripleTypeTabs .nav-link');
+    console.log("Setting up triple type tabs - found", tabLinks.length, "tabs");
+    
+    tabLinks.forEach(tabLink => {
+        tabLink.addEventListener('click', function() {
+            const tripleType = this.id.replace('-tab', '');
+            console.log(`Switched to ${tripleType} triple tab`);
             
-            // Extract the root variable and type from the original annotation
-            const rootMatch = originalText.match(/^\s*\(\s*([^\s\/]+)\s*\/\s*([^\s\)]+)/);
-            if (rootMatch) {
-                // Store the exact values from the annotation
-                const extractedRootVar = rootMatch[1].trim();
-                const extractedRootType = rootMatch[2].trim();
+            // As a fallback, try to populate the forms for this tab when it's clicked
+            try {
+                const relationSelect = document.getElementById(`${tripleType}-relation`);
+                const sourceDatalist = document.getElementById(`${tripleType}-source-options`);
+                const targetDatalist = document.getElementById(`${tripleType}-target-options`);
                 
-                // Only update if we actually found something meaningful
-                if (extractedRootVar && extractedRootVar !== 's0') {
-                    docLevelState.rootVar = extractedRootVar;
-                    docLevelState.rootType = extractedRootType;
-                    console.log(`Extracted root information from annotation: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
-                } else {
-                    console.log(`Found generic root: ${extractedRootVar}, keeping current value: ${docLevelState.rootVar}`);
-                }
-            } else {
-                // Only set default if we don't already have a value
-                if (!docLevelState.rootVar) {
-                    console.log("Could not extract root variable and type, using defaults");
-                    docLevelState.rootVar = "s0";
-                    docLevelState.rootType = "sentence";
-                } else {
-                    console.log(`No root found in annotation, keeping current: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
-                }
-            }
-            
-            // Make sure we have the right CSS classes applied to the container
-            const annotationContainer = document.getElementById('doc-annotation');
-            if (annotationContainer) {
-                // Ensure proper CSS classes are applied
-                annotationContainer.classList.add('card');
-                annotationContent.style.fontFamily = 'monospace';
-                annotationContent.style.whiteSpace = 'pre-wrap';
-                annotationContent.style.fontSize = '0.9rem';
-                annotationContent.style.lineHeight = '1.4';
-                annotationContent.style.wordBreak = 'break-word';
-            }
-            
-            // Parse the initial annotation to build the triples array
-            if (originalText && originalText.trim() !== '') {
-                docLevelState.docAnnotation = originalText.trim();
-                parseTriples(originalText);
-            }
-            
-            // Format the annotation with syntax highlighting and interactive elements
-            const formattedHtml = formatDocLevelAnnotation();
-            annotationContent.innerHTML = formattedHtml;
-            
-            // Set up save button event listener
-            const saveButton = document.getElementById('save-doc-annotation-btn');
-            if (saveButton) {
-                saveButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    console.log("Save button clicked");
-                    saveDocAnnotation()
-                        .then(() => {
-                            console.log("Save operation completed");
-                        })
-                        .catch(error => {
-                            console.error("Save operation failed:", error);
-                        });
+                console.log(`Tab click check - elements found for ${tripleType}:`, {
+                    relationSelect: !!relationSelect,
+                    sourceDatalist: !!sourceDatalist,
+                    targetDatalist: !!targetDatalist
                 });
+                
+                // If the relation dropdown is empty, populate it
+                if (relationSelect && (!relationSelect.options || relationSelect.options.length === 0)) {
+                    console.log(`Populating empty ${tripleType} relation dropdown on tab click`);
+                    
+                    // Clear any existing options
+                    relationSelect.innerHTML = '';
+                    
+                    // Add options from DOC_LEVEL_RELATIONS
+                    if (DOC_LEVEL_RELATIONS && DOC_LEVEL_RELATIONS[tripleType]) {
+                        DOC_LEVEL_RELATIONS[tripleType].forEach(relation => {
+                            const option = document.createElement('option');
+                            option.value = relation;
+                            option.textContent = relation.replace(':', '');
+                            relationSelect.appendChild(option);
+                        });
+                        console.log(`Added ${DOC_LEVEL_RELATIONS[tripleType].length} options to ${tripleType} relation dropdown`);
+                    } else {
+                        console.error(`DOC_LEVEL_RELATIONS not available for ${tripleType}`);
+                    }
+                    
+                    // Show a list of the options for debugging
+                    const optionValues = Array.from(relationSelect.options).map(opt => opt.value);
+                    console.log(`${tripleType} relation options:`, optionValues);
+                }
+            } catch (error) {
+                console.error(`Error populating ${tripleType} form on tab click:`, error);
             }
+        });
+    });
+}
+
+// Populate the triple forms with relations and node suggestions
+function populateTripleForms() {
+    console.log("======== START POPULATING TRIPLE FORMS ========");
+    console.log("DOC_LEVEL_RELATIONS:", DOC_LEVEL_RELATIONS);
+    console.log("DOC_LEVEL_ROLESETS:", DOC_LEVEL_ROLESETS);
+    
+    // Get the triple types (temporal, modal, coreference)
+    const tripleTypes = Object.keys(DOC_LEVEL_RELATIONS);
+    console.log("Triple types found:", tripleTypes);
+    
+    // For each triple type, populate the relation dropdown and node datalists
+    tripleTypes.forEach(tripleType => {
+        console.log(`Populating forms for ${tripleType} triples`);
+        
+        // STEP 1: Populate relation dropdown
+        const relationSelect = document.getElementById(`${tripleType}-relation`);
+        console.log(`Relation select for ${tripleType}:`, relationSelect);
+        
+        if (relationSelect) {
+            // Clear existing options
+            relationSelect.innerHTML = '';
             
-            // Make sure delete functionality works
-            setTimeout(() => {
-                setupDeleteButtons();
+            // Add relations ONLY from this triple type's array in DOC_LEVEL_RELATIONS
+            if (DOC_LEVEL_RELATIONS[tripleType] && DOC_LEVEL_RELATIONS[tripleType].length > 0) {
+                console.log(`Adding ${DOC_LEVEL_RELATIONS[tripleType].length} relations for ${tripleType}`);
                 
-                // Verify visibility of delete icons
-                const deleteIcons = document.querySelectorAll('.delete-triple-icon');
-                console.log(`Found ${deleteIcons.length} delete icons`);
+                DOC_LEVEL_RELATIONS[tripleType].forEach(relation => {
+                    const option = document.createElement('option');
+                    option.value = relation;
+                    option.textContent = relation.replace(':', '');
+                    relationSelect.appendChild(option);
+                });
                 
-                // Check if any triple containers exist but don't have visible delete icons
-                const containers = document.querySelectorAll('.triple-container');
-                console.log(`Found ${containers.length} triple containers`);
-                
-                // Make sure delete icons are visible on hover
-                const style = document.createElement('style');
-                style.textContent = `
-                    .triple-container:hover .delete-triple-icon {
-                        display: inline-block !important;
-                    }
-                    .triple-container .delete-triple-icon {
-                        display: none;
-                    }
-                `;
-                document.head.appendChild(style);
-            }, 200);
-            
-            // Set up navigation button event listeners
-            setupNavigationButtons();
-    } else {
-            console.error("Annotation content element not found");
+                console.log(`${tripleType} relation select now has ${relationSelect.options.length} options`);
+            } else {
+                console.error(`No relations found for ${tripleType} in DOC_LEVEL_RELATIONS`);
+            }
+        } else {
+            console.error(`Could not find relation select element for ${tripleType}`);
         }
-    } catch (error) {
-        console.error("Error initializing doc-level interface:", error);
-    }
+        
+        // STEP 2: Populate source node datalist
+        const sourceDatalist = document.getElementById(`${tripleType}-source-options`);
+        console.log(`Source datalist for ${tripleType}:`, sourceDatalist);
+        
+        if (sourceDatalist) {
+            // Clear existing options
+            sourceDatalist.innerHTML = '';
+            
+            // Add ONLY the rolesets for this triple type from DOC_LEVEL_ROLESETS
+            if (DOC_LEVEL_ROLESETS[tripleType] && DOC_LEVEL_ROLESETS[tripleType].length > 0) {
+                console.log(`Adding ${DOC_LEVEL_ROLESETS[tripleType].length} source options for ${tripleType}`);
+                
+                DOC_LEVEL_ROLESETS[tripleType].forEach(node => {
+                    const option = document.createElement('option');
+                    option.value = node;
+                    sourceDatalist.appendChild(option);
+                });
+                
+                console.log(`Added ${DOC_LEVEL_ROLESETS[tripleType].length} predefined rolesets to ${tripleType} source datalist`);
+            } else {
+                console.log(`No predefined rolesets for ${tripleType} in DOC_LEVEL_ROLESETS`);
+            }
+        } else {
+            console.error(`Could not find source datalist element for ${tripleType}`);
+        }
+        
+        // STEP 3: Populate target node datalist (same options as source)
+        const targetDatalist = document.getElementById(`${tripleType}-target-options`);
+        console.log(`Target datalist for ${tripleType}:`, targetDatalist);
+        
+        if (targetDatalist && sourceDatalist) {
+            targetDatalist.innerHTML = sourceDatalist.innerHTML;
+            console.log(`Copied ${sourceDatalist.options.length} options to ${tripleType} target datalist`);
+        } else {
+            console.error(`Could not find target datalist element for ${tripleType}`);
+        }
+    });
+    
+    console.log("======== TRIPLE FORMS POPULATION COMPLETE ========");
 }
 
 // Parse triples from the annotation text and update docLevelState
@@ -366,16 +522,25 @@ function parseTriples(annotationText) {
     
     // Helper function to add a triple to the state
     function addTripleToState(source, relation, target, tripleType) {
-        console.log(`Adding triple: ${source} ${relation} ${target} (${tripleType})`);
-        
-        docLevelState.triples.push({
+        // Create a new triple object
+        const newTriple = {
             id: generateUniqueId(),
             type: tripleType,
-            source: source.trim(),
-            relation: relation.trim(),
-            target: target.trim(),
+            source: source,
+            relation: relation,
+            target: target,
             sentId: docLevelState.sentId
-        });
+        };
+        
+        console.log("Adding new triple to state:", newTriple);
+        
+        // Add to the triples array
+        docLevelState.triples.push(newTriple);
+        
+        // Mark the state as dirty (unsaved changes)
+        docLevelState.isDirty = true;
+        
+        return newTriple;
     }
     
     // Helper function to parse UMR triples from branch content
@@ -581,62 +746,107 @@ function setupNavigationButtons() {
 
 // Add a new triple to the document annotation
 function addTriple(tripleType) {
-    console.log(`Adding new ${tripleType} triple`);
-    // Get input values based on the triple type
-    let source, relation, target;
+    console.log(`Adding new ${tripleType} triple...`);
     
-    if (tripleType === 'temporal') {
-        source = document.getElementById('temporal-source').value.trim();
-        relation = document.getElementById('temporal-relation').value.trim();
-        target = document.getElementById('temporal-target').value.trim();
-    } else if (tripleType === 'modal') {
-        source = document.getElementById('modal-source').value.trim();
-        relation = document.getElementById('modal-relation').value.trim();
-        target = document.getElementById('modal-target').value.trim();
-    } else if (tripleType === 'coreference') {
-        source = document.getElementById('coref-source').value.trim();
-        relation = document.getElementById('coref-relation').value.trim();
-        target = document.getElementById('coref-target').value.trim();
+    try {
+        // Get the values from the form
+        const sourceEl = document.getElementById(`${tripleType}-source`);
+        const relationEl = document.getElementById(`${tripleType}-relation`);
+        const targetEl = document.getElementById(`${tripleType}-target`);
+        
+        if (!sourceEl || !relationEl || !targetEl) {
+            console.error(`Could not find all form elements for ${tripleType} triple`);
+            showNotification(`Error: Could not find form elements for ${tripleType} triple`, "error");
+            return;
+        }
+        
+        // Validate the values
+        const source = sourceEl.value.trim();
+        const relation = relationEl.value.trim();
+        const target = targetEl.value.trim();
+        
+        if (!source || !relation || !target) {
+            console.error("Missing values for new triple", { source, relation, target });
+            showNotification("Please fill in all fields for the new triple", "error");
+            return;
+        }
+        
+        // If relation doesn't start with a colon, add it
+        const formattedRelation = relation.startsWith(':') ? relation : `:${relation}`;
+        
+        // Add the triple to the state
+        addTripleToState(source, formattedRelation, target, tripleType);
+        
+        // Clear the form
+        clearTripleForm(tripleType);
+        
+        // Update the UI
+        renderTriples();
+        
+        // Update the datalists to include the new nodes
+        updateNodeDatalistOptions(source, target, tripleType);
+        
+        console.log(`Added new ${tripleType} triple: ${source} ${formattedRelation} ${target}`);
+        showNotification(`Added new ${tripleType} triple`, "success");
+    } catch (error) {
+        console.error(`Error adding ${tripleType} triple:`, error);
+        showNotification(`Error adding triple: ${error.message}`, "error");
+    }
+}
+
+// Update node datalist options to include new nodes
+function updateNodeDatalistOptions(source, target, tripleType) {
+    console.log(`Updating ${tripleType} datalist options to include new nodes:`, source, target);
+    
+    // Only update the datalists for the current triple type
+    const sourceDatalist = document.getElementById(`${tripleType}-source-options`);
+    const targetDatalist = document.getElementById(`${tripleType}-target-options`);
+    
+    if (sourceDatalist && targetDatalist) {
+        // Check if the values already exist in the datalist
+        let sourceExists = false;
+        let targetExists = false;
+        
+        // Check existing options in source datalist
+        for (let i = 0; i < sourceDatalist.options.length; i++) {
+            if (sourceDatalist.options[i].value === source) {
+                sourceExists = true;
+            }
+            if (sourceDatalist.options[i].value === target) {
+                targetExists = true;
+            }
+        }
+        
+        // Add source to datalist if it doesn't exist
+        if (!sourceExists && source) {
+            const option = document.createElement('option');
+            option.value = source;
+            sourceDatalist.appendChild(option);
+            
+            // Also add to target datalist
+            const targetOption = document.createElement('option');
+            targetOption.value = source;
+            targetDatalist.appendChild(targetOption);
+            
+            console.log(`Added source node "${source}" to ${tripleType} datalists`);
+        }
+        
+        // Add target to datalist if it doesn't exist
+        if (!targetExists && target) {
+            const option = document.createElement('option');
+            option.value = target;
+            sourceDatalist.appendChild(option);
+            
+            // Also add to target datalist
+            const targetOption = document.createElement('option');
+            targetOption.value = target;
+            targetDatalist.appendChild(targetOption);
+            
+            console.log(`Added target node "${target}" to ${tripleType} datalists`);
+        }
     } else {
-        console.error("Invalid triple type:", tripleType);
-        showNotification("Invalid triple type", "error");
-        return;
+        console.error(`Could not find datalist elements for ${tripleType}`);
     }
-    
-    // Validate inputs
-    if (!source || !relation || !target) {
-        showNotification("Please fill in all fields for the triple", "error");
-        return;
-    }
-    
-    // Create a new triple object
-    const newTriple = {
-        id: generateUniqueId(),
-        type: tripleType,
-        source: source,
-        relation: relation,
-        target: target,
-        sentId: docLevelState.sentId
-    };
-    
-    console.log("Adding new triple:", newTriple);
-    
-    // Add to the triples array
-    docLevelState.triples.push(newTriple);
-    
-    // Mark the state as dirty (unsaved changes)
-    docLevelState.isDirty = true;
-    
-    // Update the UI directly using renderTriples which will handle the structured display
-    renderTriples();
-    
-    // Show notification
-    showNotification(`Added ${tripleType} triple: ${source} ${relation} ${target}`, "success");
-    
-    // Clear the form
-    clearTripleForm(tripleType);
-    
-    console.log("Triple added successfully");
 }
 
 // Remove a triple from the document annotation
@@ -1883,4 +2093,108 @@ function rebuildTripleArray() {
     docLevelState.rootType = savedRootType;
     
     console.log(`Rebuilt triples array with ${docLevelState.triples.length} triples, root is ${docLevelState.rootVar}`);
+}
+
+// Load existing annotation if available
+function loadExistingAnnotation() {
+    try {
+        // Get the annotation content element
+        const annotationContent = document.getElementById('doc-annotation-content');
+        if (annotationContent) {
+            // Store the original text for debugging
+            const originalText = annotationContent.textContent;
+            console.log("Original annotation text from server:", originalText);
+            
+            // Extract the root variable and type from the original annotation
+            const rootMatch = originalText.match(/^\s*\(\s*([^\s\/]+)\s*\/\s*([^\s\)]+)/);
+            if (rootMatch) {
+                // Store the exact values from the annotation
+                const extractedRootVar = rootMatch[1].trim();
+                const extractedRootType = rootMatch[2].trim();
+                
+                // Only update if we actually found something meaningful
+                if (extractedRootVar && extractedRootVar !== 's0') {
+                    docLevelState.rootVar = extractedRootVar;
+                    docLevelState.rootType = extractedRootType;
+                    console.log(`Extracted root information from annotation: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+                } else {
+                    console.log(`Found generic root: ${extractedRootVar}, keeping current value: ${docLevelState.rootVar}`);
+                }
+            } else {
+                // Only set default if we don't already have a value
+                if (!docLevelState.rootVar) {
+                    console.log("Could not extract root variable and type, using defaults");
+                    docLevelState.rootVar = "s0";
+                    docLevelState.rootType = "sentence";
+                } else {
+                    console.log(`No root found in annotation, keeping current: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+                }
+            }
+            
+            // Make sure we have the right CSS classes applied to the container
+            const annotationContainer = document.getElementById('doc-annotation');
+            if (annotationContainer) {
+                // Ensure proper CSS classes are applied
+                annotationContainer.classList.add('card');
+                annotationContent.style.fontFamily = 'monospace';
+                annotationContent.style.whiteSpace = 'pre-wrap';
+                annotationContent.style.fontSize = '0.9rem';
+                annotationContent.style.lineHeight = '1.4';
+                annotationContent.style.wordBreak = 'break-word';
+            }
+            
+            // Parse the initial annotation to build the triples array
+            if (originalText && originalText.trim() !== '') {
+                docLevelState.docAnnotation = originalText.trim();
+                parseTriples(originalText);
+            }
+            
+            // Format the annotation with syntax highlighting and interactive elements
+            const formattedHtml = formatDocLevelAnnotation();
+            annotationContent.innerHTML = formattedHtml;
+            
+            // Set up save button event listener
+            const saveButton = document.getElementById('save-doc-annotation-btn');
+            if (saveButton) {
+                saveButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Save button clicked");
+                    saveDocAnnotation()
+                        .then(() => {
+                            console.log("Save operation completed");
+                        })
+                        .catch(error => {
+                            console.error("Save operation failed:", error);
+                        });
+                });
+            }
+            
+            // Make sure delete functionality works
+            setTimeout(() => {
+                // Verify visibility of delete icons
+                const deleteIcons = document.querySelectorAll('.delete-triple-icon');
+                console.log(`Found ${deleteIcons.length} delete icons`);
+                
+                // Check if any triple containers exist but don't have visible delete icons
+                const containers = document.querySelectorAll('.triple-container');
+                console.log(`Found ${containers.length} triple containers`);
+                
+                // Make sure delete icons are visible on hover
+                const style = document.createElement('style');
+                style.textContent = `
+                    .triple-container:hover .delete-triple-icon {
+                        display: inline-block !important;
+                    }
+                    .triple-container .delete-triple-icon {
+                        display: none;
+                    }
+                `;
+                document.head.appendChild(style);
+            }, 200);
+        } else {
+            console.error("Annotation content element not found");
+        }
+    } catch (error) {
+        console.error("Error loading existing annotation:", error);
+    }
 } 
