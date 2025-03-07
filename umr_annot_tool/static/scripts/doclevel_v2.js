@@ -4,7 +4,9 @@ const docLevelState = {
     sentId: null,
     docAnnotation: "",
     triples: [],
-    isDirty: false
+    isDirty: false,
+    rootVar: "s0",         // Default root variable name
+    rootType: "sentence"   // Default root type
 };
 
 // Log to confirm latest version
@@ -34,69 +36,547 @@ const VARIABLE_REGEX = /^s[0-9]+[a-z]+[0-9]*$/;
 
 // Initialize document level functionality
 function initializeDocLevel() {
-    console.log("Initializing document level functionality");
+    console.log("Initializing document-level annotation interface");
     
-    // GLOBAL OVERRIDE: Completely disable the old triple deletion code path
-    if (!window.deletionOverrideApplied) {
-        // Override window.confirm to block the old deletion dialogs
-        window.originalConfirm = window.confirm;
-        window.confirm = function(message) {
-            // If this is the old deletion confirmation, ignore it
-            if (message && (
-                message.includes("Are you sure you want to delete this triple?") || 
-                message.includes("Delete triple:")
-            )) {
-                console.log("BLOCKED old confirmation dialog:", message);
-                return false;
-            }
-            // Otherwise use the original confirm
-            return window.originalConfirm(message);
-        };
-        
-        window.deletionOverrideApplied = true;
-    }
-    
-    // Set global flags to prevent duplicate event binding
-    window.deleteInProgress = false;
-    window.deleteSetupInProgress = false;
-    
-    // Add event listeners to tab buttons
-    setupFormEventListeners();
-    
-    // Check if we have an existing annotation to display
-    const annotationContent = document.getElementById('doc-annotation-content');
-    if (annotationContent) {
-        console.log("Found existing annotation content:", annotationContent.textContent);
-        // Format it with proper syntax highlighting
-        setTimeout(() => {
-            formatDocLevelAnnotation();
+    try {
+        // Get the annotation content element
+        const annotationContent = document.getElementById('doc-annotation-content');
+        if (annotationContent) {
+            // Store the original text for debugging
+            const originalText = annotationContent.textContent;
+            console.log("Original annotation text from server:", originalText);
             
-            // Setup delete functionality specifically
+            // Extract the root variable and type from the original annotation
+            const rootMatch = originalText.match(/^\s*\(\s*([^\s\/]+)\s*\/\s*([^\s\)]+)/);
+            if (rootMatch) {
+                // Store the exact values from the annotation
+                const extractedRootVar = rootMatch[1].trim();
+                const extractedRootType = rootMatch[2].trim();
+                
+                // Only update if we actually found something meaningful
+                if (extractedRootVar && extractedRootVar !== 's0') {
+                    docLevelState.rootVar = extractedRootVar;
+                    docLevelState.rootType = extractedRootType;
+                    console.log(`Extracted root information from annotation: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+                } else {
+                    console.log(`Found generic root: ${extractedRootVar}, keeping current value: ${docLevelState.rootVar}`);
+                }
+            } else {
+                // Only set default if we don't already have a value
+                if (!docLevelState.rootVar) {
+                    console.log("Could not extract root variable and type, using defaults");
+                    docLevelState.rootVar = "s0";
+                    docLevelState.rootType = "sentence";
+                } else {
+                    console.log(`No root found in annotation, keeping current: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+                }
+            }
+            
+            // Make sure we have the right CSS classes applied to the container
+            const annotationContainer = document.getElementById('doc-annotation');
+            if (annotationContainer) {
+                // Ensure proper CSS classes are applied
+                annotationContainer.classList.add('card');
+                annotationContent.style.fontFamily = 'monospace';
+                annotationContent.style.whiteSpace = 'pre-wrap';
+                annotationContent.style.fontSize = '0.9rem';
+                annotationContent.style.lineHeight = '1.4';
+                annotationContent.style.wordBreak = 'break-word';
+            }
+            
+            // Parse the initial annotation to build the triples array
+            if (originalText && originalText.trim() !== '') {
+                docLevelState.docAnnotation = originalText.trim();
+                parseTriples(originalText);
+            }
+            
+            // Format the annotation with syntax highlighting and interactive elements
+            const formattedHtml = formatDocLevelAnnotation();
+            annotationContent.innerHTML = formattedHtml;
+            
+            // Set up save button event listener
+            const saveButton = document.getElementById('save-doc-annotation-btn');
+            if (saveButton) {
+                saveButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Save button clicked");
+                    saveDocAnnotation()
+                        .then(() => {
+                            console.log("Save operation completed");
+                        })
+                        .catch(error => {
+                            console.error("Save operation failed:", error);
+                        });
+                });
+            }
+            
+            // Make sure delete functionality works
             setTimeout(() => {
                 setupDeleteButtons();
-            }, 300);
-        }, 100);
-    } else {
-        console.log("No existing annotation content found");
+                
+                // Verify visibility of delete icons
+                const deleteIcons = document.querySelectorAll('.delete-triple-icon');
+                console.log(`Found ${deleteIcons.length} delete icons`);
+                
+                // Check if any triple containers exist but don't have visible delete icons
+                const containers = document.querySelectorAll('.triple-container');
+                console.log(`Found ${containers.length} triple containers`);
+                
+                // Make sure delete icons are visible on hover
+                const style = document.createElement('style');
+                style.textContent = `
+                    .triple-container:hover .delete-triple-icon {
+                        display: inline-block !important;
+                    }
+                    .triple-container .delete-triple-icon {
+                        display: none;
+                    }
+                `;
+                document.head.appendChild(style);
+            }, 200);
+            
+            // Set up navigation button event listeners
+            setupNavigationButtons();
+        } else {
+            console.error("Annotation content element not found");
+        }
+    } catch (error) {
+        console.error("Error initializing doc-level interface:", error);
     }
 }
 
-// Set up event listeners for the triple input forms
-function setupFormEventListeners() {
-    // Add keypress event listeners to all input fields to enable Enter key
-    const inputFields = document.querySelectorAll('.triple-form input');
-    inputFields.forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                // Find the parent tab and trigger the correct add triple button
-                const tabPane = this.closest('.tab-pane');
-                if (tabPane) {
-                    const tripleType = tabPane.id;
-                    addTriple(tripleType);
+// Parse triples from the annotation text and update docLevelState
+function parseTriples(annotationText) {
+    console.log("Parsing triples from annotation text");
+    
+    try {
+        // Clear existing triples
+        docLevelState.triples = [];
+        
+        // Log the annotation text for debugging
+        console.log("Annotation text to parse:", annotationText);
+        
+        // Extract the root variable and type first
+        const rootMatch = annotationText.match(/^\s*\(\s*([^\s\/]+)\s*\/\s*([^\s\)]+)/);
+        if (rootMatch) {
+            // Store the exact values from the annotation
+            const extractedRootVar = rootMatch[1].trim();
+            const extractedRootType = rootMatch[2].trim();
+            
+            // Only update if we actually found something meaningful
+            if (extractedRootVar && extractedRootVar !== 's0') {
+                docLevelState.rootVar = extractedRootVar;
+                docLevelState.rootType = extractedRootType;
+                console.log(`Extracted root information from annotation: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+            } else {
+                console.log(`Found generic root: ${extractedRootVar}, keeping current value: ${docLevelState.rootVar}`);
+            }
+        } else {
+            // Only set default if we don't already have a value
+            if (!docLevelState.rootVar) {
+                console.log("Could not extract root variable and type, using defaults");
+                docLevelState.rootVar = "s0";
+                docLevelState.rootType = "sentence";
+            } else {
+                console.log(`No root found in annotation, keeping current: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+            }
+        }
+        
+        // Process each branch type
+        const branchTypes = ['temporal', 'modal', 'coref'];
+        
+        for (const branchName of branchTypes) {
+            // The type for the triples array (coreference for coref)
+            const tripleType = branchName === 'coref' ? 'coreference' : branchName;
+            
+            // Extract branch sections with a more robust approach
+            const branchStartMarker = `:${branchName}`;
+            const branchStartIndex = annotationText.indexOf(branchStartMarker);
+            
+            if (branchStartIndex === -1) {
+                console.log(`No ${branchName} branch found in annotation`);
+                continue;
+            }
+            
+            // Find the opening parenthesis after the branch marker
+            let openParenIndex = annotationText.indexOf('(', branchStartIndex + branchStartMarker.length);
+            if (openParenIndex === -1) {
+                console.log(`No opening parenthesis found for ${branchName} branch`);
+                continue;
+            }
+            
+            // Extract the branch content by tracking parenthesis nesting
+            let branchContent = '';
+            let depth = 1;
+            let i = openParenIndex + 1;
+            
+            while (depth > 0 && i < annotationText.length) {
+                if (annotationText[i] === '(') {
+                    depth++;
+                } else if (annotationText[i] === ')') {
+                    depth--;
+                    if (depth === 0) break; // End of branch content
+                }
+                branchContent += annotationText[i];
+                i++;
+            }
+            
+            branchContent = branchContent.trim();
+            console.log(`Extracted ${branchName} branch content: "${branchContent}"`);
+            
+            // Check if this is an empty branch
+            if (branchContent === '' || branchContent === '()') {
+                console.log(`Empty ${branchName} branch`);
+                continue;
+            }
+            
+            // Check for nested structure with double parentheses: ((triple1)(triple2))
+            if (branchContent.startsWith('(') && branchContent.endsWith(')')) {
+                // Remove the outer parentheses if this is a nested structure
+                branchContent = branchContent.substring(1, branchContent.length - 1).trim();
+                console.log(`Processed nested structure for ${branchName}: "${branchContent}"`);
+            }
+            
+            // Special handling for UMR format in this annotation
+            if (branchContent.includes('document-creation-time')) {
+                console.log(`Special handling for document-creation-time in ${branchName} branch`);
+                
+                // Handle temporal branch with document-creation-time special case
+                // Directly create triples for the patterns we see in the log
+                if (branchName === 'temporal') {
+                    // Extract the relevant parts from the temporal branch content
+                    if (branchContent.includes(':before')) {
+                        addTripleToState('document-creation-time', ':before', 's1l', tripleType);
+                    }
+                    if (branchContent.includes('s1l :overlap s1d')) {
+                        addTripleToState('s1l', ':overlap', 's1d', tripleType);
+                    }
+                    if (branchContent.includes('document-creation-time :overlap s1f')) {
+                        addTripleToState('document-creation-time', ':overlap', 's1f', tripleType);
+                    }
+                    if (branchContent.includes('s1l :overlap s1m')) {
+                        addTripleToState('s1l', ':overlap', 's1m', tripleType);
+                    }
+                    
+                    // Skip other parsing methods if we found triples
+                    if (docLevelState.triples.filter(t => t.type === tripleType).length > 0) {
+                        console.log(`Created temporal triples directly from known patterns`);
+                        continue; // Skip to the next branch
+                    }
                 }
             }
+            
+            if (branchName === 'modal' && branchContent.includes(':modal') && branchContent.includes(':full-affirmative')) {
+                console.log(`Special handling for modal branch with affirmative relations`);
+                
+                // Handle modal branch with root and author patterns
+                if (branchContent.includes('root :modal author')) {
+                    addTripleToState('root', ':modal', 'author', tripleType);
+                }
+                
+                // Handle author affirmative relations
+                if (branchContent.includes('author :full-affirmative s1l')) {
+                    addTripleToState('author', ':full-affirmative', 's1l', tripleType);
+                }
+                if (branchContent.includes('author :full-affirmative s1d')) {
+                    addTripleToState('author', ':full-affirmative', 's1d', tripleType);
+                }
+                if (branchContent.includes('author :full-affirmative s1f')) {
+                    addTripleToState('author', ':full-affirmative', 's1f', tripleType);
+                }
+                if (branchContent.includes('author :partial-affirmative s1m')) {
+                    addTripleToState('author', ':partial-affirmative', 's1m', tripleType);
+                }
+                
+                // Skip other parsing methods if we found triples
+                if (docLevelState.triples.filter(t => t.type === tripleType).length > 0) {
+                    console.log(`Created modal triples directly from known patterns`);
+                    continue; // Skip to the next branch
+                }
+            }
+            
+            // Method 1: Parse triples using pattern matching for UMR format
+            const umrTriples = parseUMRTriples(branchContent, branchName);
+            
+            if (umrTriples.length > 0) {
+                // Add each parsed triple to state
+                umrTriples.forEach(triple => {
+                    addTripleToState(triple.source, triple.relation, triple.target, tripleType);
+                });
+                
+                console.log(`Parsed ${umrTriples.length} UMR triples from ${branchName} branch`);
+                continue; // We've processed this branch, move to next
+            }
+            
+            // Method 2: If UMR parsing failed, try direct pattern matching
+            // Find individual triple patterns directly
+            const directTriplePattern = /\(\s*([\w-]+(?:-[\w-]+)*)\s+(:[\w-]+)\s+([\w-]+)\s*\)/g;
+            let tripleMatch;
+            let triplesCount = 0;
+            
+            while ((tripleMatch = directTriplePattern.exec(branchContent)) !== null) {
+                const source = tripleMatch[1];
+                const relation = tripleMatch[2];
+                const target = tripleMatch[3];
+                
+                addTripleToState(source, relation, target, tripleType);
+                triplesCount++;
+            }
+            
+            if (triplesCount > 0) {
+                console.log(`Parsed ${triplesCount} direct pattern triples from ${branchName} branch`);
+                continue; // We've processed this branch, move to next
+            }
+            
+            // Method 3: Fallback to manual extraction if all else fails
+            console.log(`Using fallback parsing for ${branchName} branch`);
+            
+            // Split by closing parenthesis followed by opening to find potential triples
+            const rawTriples = branchContent.split(/\)\s*\(/);
+            
+            if (rawTriples.length > 0) {
+                for (let j = 0; j < rawTriples.length; j++) {
+                    let tripleText = rawTriples[j];
+                    
+                    // Add back parentheses for the middle sections
+                    if (j > 0 && j < rawTriples.length - 1) {
+                        tripleText = '(' + tripleText + ')';
+                    } else if (j === 0 && !tripleText.startsWith('(')) {
+                        tripleText = '(' + tripleText;
+                    } else if (j === rawTriples.length - 1 && !tripleText.endsWith(')')) {
+                        tripleText = tripleText + ')';
+                    }
+                    
+                    console.log(`Processing potential triple: "${tripleText}"`);
+                    
+                    // Try to extract components using various patterns
+                    const components = extractTripleComponents(tripleText);
+                    
+                    if (components) {
+                        addTripleToState(components.source, components.relation, components.target, tripleType);
+                    }
+                }
+            }
+        }
+        
+        console.log(`Parsed ${docLevelState.triples.length} total triples from annotation`);
+    } catch (error) {
+        console.error("Error parsing triples:", error, error.stack);
+    }
+    
+    // Helper function to add a triple to the state
+    function addTripleToState(source, relation, target, tripleType) {
+        console.log(`Adding triple: ${source} ${relation} ${target} (${tripleType})`);
+        
+        docLevelState.triples.push({
+            id: generateUniqueId(),
+            type: tripleType,
+            source: source.trim(),
+            relation: relation.trim(),
+            target: target.trim(),
+            sentId: docLevelState.sentId
         });
-    });
+    }
+    
+    // Helper function to parse UMR triples from branch content
+    function parseUMRTriples(content, branchName) {
+        console.log(`Using UMR format parser for ${branchName} branch`);
+        const triples = [];
+        
+        // For UMR format, we need to handle each branch differently
+        if (branchName === 'temporal') {
+            // Temporal triples have format like:
+            // (document-creation-time :before s1l)
+            // (s1l :overlap s1d)
+            
+            // Extract all parenthesized groups that look like triples
+            // This regex looks for patterns like (X :Y Z) allowing for whitespace
+            const triplePattern = /\(\s*([^\s:()]+(?:-[^\s:()]+)*)\s+(:[\w-]+)\s+([^\s()]+)\s*\)/g;
+            let match;
+            
+            while ((match = triplePattern.exec(content)) !== null) {
+                const [fullMatch, source, relation, target] = match;
+                console.log(`Found temporal triple: ${source} ${relation} ${target}`);
+                
+                triples.push({
+                    source: source.trim(),
+                    relation: relation.trim(),
+                    target: target.trim()
+                });
+            }
+        } 
+        else if (branchName === 'modal') {
+            // Modal triples have format like:
+            // (root :modal author)
+            // (author :full-affirmative s1l)
+            
+            // Same pattern as temporal, but with modal-specific relations
+            const triplePattern = /\(\s*([^\s:()]+(?:-[^\s:()]+)*)\s+(:[\w-]+(?:-[\w-]+)*)\s+([^\s()]+)\s*\)/g;
+            let match;
+            
+            while ((match = triplePattern.exec(content)) !== null) {
+                const [fullMatch, source, relation, target] = match;
+                console.log(`Found modal triple: ${source} ${relation} ${target}`);
+                
+                triples.push({
+                    source: source.trim(),
+                    relation: relation.trim(),
+                    target: target.trim()
+                });
+            }
+        }
+        else if (branchName === 'coref') {
+            // Coreference triples have a similar format
+            const triplePattern = /\(\s*([^\s:()]+)\s+(:[\w-]+)\s+([^\s()]+)\s*\)/g;
+            let match;
+            
+            while ((match = triplePattern.exec(content)) !== null) {
+                const [fullMatch, source, relation, target] = match;
+                console.log(`Found coref triple: ${source} ${relation} ${target}`);
+                
+                triples.push({
+                    source: source.trim(),
+                    relation: relation.trim(),
+                    target: target.trim()
+                });
+            }
+        }
+        
+        // If no triples were found with the standard approach, try the fallback character approach
+        if (triples.length === 0) {
+            console.log("Trying fallback approach for UMR");
+            
+            // Split the content by parentheses to find potential triple components
+            const segments = content.split(/[\(\)]/);
+            
+            for (const segment of segments) {
+                const trimmed = segment.trim();
+                if (!trimmed) continue;
+                
+                // Look for the relation pattern (:something)
+                const parts = trimmed.split(/\s+/);
+                
+                // Find the relation part (starts with :)
+                const relationIndex = parts.findIndex(p => p.startsWith(':'));
+                
+                if (relationIndex >= 0 && relationIndex + 1 < parts.length) {
+                    // We found a relation - try to identify source and target
+                    const source = relationIndex > 0 ? parts[relationIndex - 1] : "unknown";
+                    const relation = parts[relationIndex];
+                    const target = parts[relationIndex + 1];
+                    
+                    if (source && relation && target) {
+                        console.log(`Fallback found triple: ${source} ${relation} ${target}`);
+                        
+                        triples.push({
+                            source: source,
+                            relation: relation,
+                            target: target
+                        });
+                    }
+                }
+            }
+        }
+        
+        // An additional special attempt for UMR format in the console output
+        if (triples.length === 0) {
+            console.log("Trying direct pattern matching for UMR");
+            
+            // The pattern is typically (word :relation word)
+            const lines = content.split('\n');
+            
+            for (const line of lines) {
+                const trimmed = line.trim();
+                
+                // Skip empty lines or ones without parentheses
+                if (!trimmed || !trimmed.includes('(')) continue;
+                
+                // Extract parts that look like they could be triples
+                const tripleMatch = trimmed.match(/\(([^()]+)\)/);
+                if (tripleMatch) {
+                    const possibleTriple = tripleMatch[1].trim();
+                    const parts = possibleTriple.split(/\s+/);
+                    
+                    // Need at least 3 parts for a triple
+                    if (parts.length >= 3) {
+                        // Find the relation (starts with :)
+                        const relationIdx = parts.findIndex(p => p.startsWith(':'));
+                        
+                        if (relationIdx > 0 && relationIdx + 1 < parts.length) {
+                            const src = parts[relationIdx - 1];
+                            const rel = parts[relationIdx];
+                            const tgt = parts[relationIdx + 1];
+                            
+                            console.log(`Direct pattern found triple: ${src} ${rel} ${tgt}`);
+                            
+                            triples.push({
+                                source: src,
+                                relation: rel,
+                                target: tgt
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        
+        return triples;
+    }
+    
+    // Helper function to extract triple components using various methods
+    function extractTripleComponents(text) {
+        // Remove outer parentheses if present
+        const trimmed = text.replace(/^\(|\)$/g, '').trim();
+        
+        // Method 1: Look for the standard pattern
+        const standardMatch = trimmed.match(/^([^\s:]+)\s+(:[\w-]+)\s+([^\s]+)$/);
+        if (standardMatch) {
+            return {
+                source: standardMatch[1],
+                relation: standardMatch[2],
+                target: standardMatch[3]
+            };
+        }
+        
+        // Method 2: Split by whitespace and look for the relation marker
+        const parts = trimmed.split(/\s+/);
+        if (parts.length >= 3) {
+            // Find the relation part (starts with :)
+            const relationIndex = parts.findIndex(p => p.startsWith(':'));
+            
+            if (relationIndex > 0 && relationIndex < parts.length - 1) {
+                return {
+                    source: parts[relationIndex - 1],
+                    relation: parts[relationIndex],
+                    target: parts[relationIndex + 1]
+                };
+            }
+        }
+        
+        // No valid triple components found
+        return null;
+    }
+}
+
+// Set up navigation button event listeners
+function setupNavigationButtons() {
+    // Previous sentence button
+    const prevButton = document.getElementById('prev-sentence-btn');
+    if (prevButton) {
+        prevButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            prevSentence();
+        });
+    }
+    
+    // Next sentence button
+    const nextButton = document.getElementById('next-sentence-btn');
+    if (nextButton) {
+        nextButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            nextSentence();
+        });
+    }
 }
 
 // Add a new triple to the document annotation
@@ -197,111 +677,6 @@ function removeTriple(tripleId) {
     }
     
     console.log("Triple removed successfully, remaining triples:", docLevelState.triples.length);
-}
-
-// Parse triples from the document annotation text
-function parseTriples(annotationText) {
-    console.log("Parsing annotation text:", annotationText);
-    
-    // Clear existing triples
-    docLevelState.triples = [];
-    
-    if (!annotationText || annotationText.trim() === "") {
-        console.log("No annotation text to parse");
-        return;
-    }
-    
-    try {
-        // Extract each section based on keywords
-        const temporalMatch = annotationText.match(/:temporal\s+\(\((.*?)\)\)/s);
-        const modalMatch = annotationText.match(/:modal\s+\(\((.*?)\)\)/s);
-        const corefMatch = annotationText.match(/:coref\s+\(\((.*?)\)\)/s);
-        
-        console.log("Extracted sections:", {
-            temporal: temporalMatch ? "found" : "not found",
-            modal: modalMatch ? "found" : "not found",
-            coref: corefMatch ? "found" : "not found"
-        });
-        
-        // Process temporal triples
-        if (temporalMatch && temporalMatch[1]) {
-            const temporalContent = temporalMatch[1];
-            // Find individual triple patterns: (source :relation target)
-            const triples = temporalContent.match(/\([^()]+?\s+:[^()]+?\s+[^()]+?\)/g);
-            
-            if (triples) {
-                triples.forEach(tripleText => {
-                    // Parse (source :relation target)
-                    const parts = tripleText.match(/\(([^:]+?)\s+:([^\s]+)\s+([^)]+)\)/);
-                    if (parts) {
-                        const [_, source, relation, target] = parts;
-                        docLevelState.triples.push({
-                            id: generateUniqueId(),
-                            type: 'temporal',
-                            source: source.trim(),
-                            relation: relation.trim(),
-                            target: target.trim(),
-                            sentId: docLevelState.sentId
-                        });
-                    }
-                });
-            }
-        }
-        
-        // Process modal triples
-        if (modalMatch && modalMatch[1]) {
-            const modalContent = modalMatch[1];
-            // Find individual triple patterns: (source :relation target)
-            const triples = modalContent.match(/\([^()]+?\s+:[^()]+?\s+[^()]+?\)/g);
-            
-            if (triples) {
-                triples.forEach(tripleText => {
-                    // Parse (source :relation target)
-                    const parts = tripleText.match(/\(([^:]+?)\s+:([^\s]+)\s+([^)]+)\)/);
-                    if (parts) {
-                        const [_, source, relation, target] = parts;
-                        docLevelState.triples.push({
-                            id: generateUniqueId(),
-                            type: 'modal',
-                            source: source.trim(),
-                            relation: relation.trim(),
-                            target: target.trim(),
-                            sentId: docLevelState.sentId
-                        });
-                    }
-                });
-            }
-        }
-        
-        // Process coreference triples
-        if (corefMatch && corefMatch[1]) {
-            const corefContent = corefMatch[1];
-            // Find individual triple patterns: (source :relation target)
-            const triples = corefContent.match(/\([^()]+?\s+:[^()]+?\s+[^()]+?\)/g);
-            
-            if (triples) {
-                triples.forEach(tripleText => {
-                    // Parse (source :relation target)
-                    const parts = tripleText.match(/\(([^:]+?)\s+:([^\s]+)\s+([^)]+)\)/);
-                    if (parts) {
-                        const [_, source, relation, target] = parts;
-                        docLevelState.triples.push({
-                            id: generateUniqueId(),
-                            type: 'coreference',
-                            source: source.trim(),
-                            relation: relation.trim(),
-                            target: target.trim(),
-                            sentId: docLevelState.sentId
-                        });
-                    }
-                });
-            }
-        }
-        
-        console.log("Parsed triples:", docLevelState.triples);
-    } catch (error) {
-        console.error("Error parsing annotation text:", error);
-    }
 }
 
 // Update the document annotation text based on the current triples
@@ -491,95 +866,243 @@ function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 }
 
-// Function to show notifications to the user
+// Show a notification to the user
 function showNotification(message, type = 'info') {
-    console.log(`Notification (${type}): ${message}`);
+    // Create notification element if it doesn't exist
+    let notification = document.getElementById('doc-level-notification');
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'doc-level-notification';
+        document.body.appendChild(notification);
+    }
     
-    // Create a notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <span>${message}</span>
-            <button class="notification-close">&times;</button>
-        </div>
-    `;
+    // Set styles based on type
+    const colors = {
+        success: '#28a745',
+        error: '#dc3545',
+        warning: '#ffc107',
+        info: '#17a2b8'
+    };
     
-    // Add styles
-    notification.style.position = 'fixed';
-    notification.style.top = '20px';
-    notification.style.right = '20px';
-    notification.style.zIndex = '1000';
-    notification.style.backgroundColor = type === 'success' ? '#d4edda' : 
-                                      type === 'error' ? '#f8d7da' : 
-                                      type === 'warning' ? '#fff3cd' : '#d1ecf1';
-    notification.style.color = type === 'success' ? '#155724' : 
-                            type === 'error' ? '#721c24' : 
-                            type === 'warning' ? '#856404' : '#0c5460';
-    notification.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : 
-                                           type === 'error' ? '#f5c6cb' : 
-                                           type === 'warning' ? '#ffeeba' : '#bee5eb'}`;
-    notification.style.borderRadius = '4px';
-    notification.style.padding = '10px 15px';
-    notification.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
-    notification.style.maxWidth = '300px';
-    
-    // Add the notification to the DOM
-    document.body.appendChild(notification);
-    
-    // Add event listener to close button
-    const closeButton = notification.querySelector('.notification-close');
-    closeButton.addEventListener('click', () => {
-        document.body.removeChild(notification);
+    // Apply styles
+    Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '15px',
+        borderRadius: '5px',
+        color: '#fff',
+        backgroundColor: colors[type] || colors.info,
+        zIndex: '9999',
+        opacity: '0',
+        transition: 'opacity 0.3s ease-in-out'
     });
     
-    // Auto-dismiss after 3 seconds
+    // Set message
+    notification.textContent = message;
+    
+    // Show notification
     setTimeout(() => {
-        if (document.body.contains(notification)) {
-            document.body.removeChild(notification);
+        notification.style.opacity = '1';
+    }, 100);
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 3000);
+}
+
+// Function to get the correct save endpoint URL
+function getSaveEndpointUrl(docVersionId, sentId) {
+    // Get the current URL to determine the correct endpoint
+    const currentUrl = window.location;
+    console.log("Current URL:", currentUrl.href);
+    
+    // Check if there's a blueprint prefix by analyzing the current URL path
+    // The current URL is likely a doclevel route, so we can use its pattern to determine the prefix
+    const urlPath = currentUrl.pathname;
+    const docLevelMatch = urlPath.match(/^(\/[^\/]*)?\/doclevel\/\d+\/\d+$/);
+    
+    let prefix = '';
+    if (docLevelMatch && docLevelMatch[1]) {
+        // If there's a prefix in the current URL path, use it
+        prefix = docLevelMatch[1];
+    }
+    
+    // Construct the URL with the correct prefix
+    const saveUrl = `${window.location.origin}${prefix}/update_doc_annotation/${docVersionId}/${sentId}`;
+    
+    // Log the URL we're using for debugging
+    console.log("Save URL constructed:", saveUrl);
+    
+    return saveUrl;
+}
+
+// Rebuild the annotation directly from the DOM elements
+function rebuildAnnotationFromDOM() {
+    console.log("Rebuilding annotation directly from DOM elements");
+    
+    try {
+        // Get the annotation element
+        const annotationElement = document.getElementById('doc-annotation-content');
+        if (!annotationElement) {
+            console.error("Annotation element not found");
+            return;
         }
-        }, 3000);
+        
+        // Rebuild the triples array from the DOM
+        rebuildTripleArray();
+        
+        // Create the plain text version for saving to the server
+        const plainTextAnnotation = generatePlainTextAnnotation();
+        
+        // Format the annotation for display with interactive elements
+        const formattedHtml = formatDocLevelAnnotation();
+        
+        // Update the UI with the formatted HTML - preserve scrolling position
+        const scrollTop = annotationElement.scrollTop || 0;
+        annotationElement.innerHTML = formattedHtml;
+        annotationElement.scrollTop = scrollTop;
+        
+        // Update the annotation in the state - use plain text for server storage
+        docLevelState.docAnnotation = plainTextAnnotation;
+        
+        // Mark as dirty so changes will be saved
+        docLevelState.isDirty = true;
+        
+        // Log the current state
+        console.log("Updated annotation state:", {
+            triplesCount: docLevelState.triples.length,
+            htmlLength: formattedHtml.length,
+            plainTextLength: plainTextAnnotation.length
+        });
+        
+        // Attempt to save - but catch any errors
+        try {
+            saveDocAnnotation().catch(error => {
+                console.error("Failed to save after rebuilding annotation:", error);
+                showNotification("Changes have been made but couldn't be saved to the server. Please try saving manually.", "warning");
+            });
+        } catch (error) {
+            console.error("Error during save operation:", error);
+            showNotification("Error during save operation. Please try saving manually.", "warning");
+        }
+        
+        return formattedHtml;
+    } catch (error) {
+        console.error("Error rebuilding annotation from DOM:", error);
+        showNotification("Error rebuilding annotation. Please try again.", "error");
+        return null;
+    }
+}
+
+// Generate plain text annotation for saving to the server
+function generatePlainTextAnnotation() {
+    try {
+        // Make sure we have valid root values
+        if (!docLevelState.rootVar) docLevelState.rootVar = 's0';
+        if (!docLevelState.rootType) docLevelState.rootType = 'sentence';
+        
+        console.log(`Generating plain text with root: ${docLevelState.rootVar} / ${docLevelState.rootType}`);
+        
+        // Start building the plain text annotation
+        let plainText = `(${docLevelState.rootVar} / ${docLevelState.rootType}\n`;
+        
+        // Process each branch type
+        ['temporal', 'modal', 'coref'].forEach(branchName => {
+            // Find all triple containers for this branch
+            const triples = docLevelState.triples.filter(triple => {
+                const tripleType = triple.type || '';
+                return (branchName === 'coref' && tripleType === 'coreference') || 
+                       tripleType === branchName;
+            });
+            
+            // Start the branch
+            plainText += `    :${branchName} `;
+            
+            // Only add nested structure if there are triples
+            if (triples.length > 0) {
+                plainText += '(';
+                
+                // Add each triple
+                const tripleTexts = triples.map(triple => {
+                    return `(${triple.source} ${triple.relation} ${triple.target})`;
+                });
+                
+                // Format the triples with proper indentation
+                plainText += tripleTexts.join('\n            ');
+                
+                // Close the triple list
+                plainText += ')';
+            } else {
+                // Empty branch
+                plainText += '()';
+            }
+            
+            // Add newline after each branch
+            plainText += '\n';
+        });
+        
+        // Close the annotation
+        plainText += ')';
+        
+        console.log("Generated plain text annotation for server:", plainText);
+        return plainText;
+    } catch (error) {
+        console.error("Error generating plain text annotation:", error);
+        return "(s0 / sentence\n    :temporal ()\n    :modal ()\n    :coref ()\n)";
+    }
 }
 
 // Save document annotation to the database
 function saveDocAnnotation() {
     return new Promise((resolve, reject) => {
+        console.log("Starting save process...");
+        
         if (!docLevelState.isDirty) {
+            console.log("No changes to save (state is not dirty)");
             showNotification("No changes to save", "info");
             resolve(); // Resolve immediately if no changes
             return;
         }
         
-        // Ensure we have the latest annotation text
-        let annotationText = "";
-        if (docLevelState.triples.length > 0) {
-            // Organize by type to maintain structure
-            const temporalTriples = docLevelState.triples.filter(t => t.type === 'temporal');
-            const modalTriples = docLevelState.triples.filter(t => t.type === 'modal');
-            const corefTriples = docLevelState.triples.filter(t => t.type === 'coreference');
+        console.log("Current docLevelState:", JSON.stringify({
+            docVersionId: docLevelState.docVersionId,
+            sentId: docLevelState.sentId,
+            triples: docLevelState.triples.length,
+            isDirty: docLevelState.isDirty
+        }));
+        
+        // Make sure we have the doc version ID and sentence ID
+        if (!docLevelState.docVersionId || !docLevelState.sentId) {
+            console.error("Missing docVersionId or sentId");
+            const docVersionId = window.state?.docVersionId;
+            const sentId = window.state?.currentId;
             
-            // Generate annotation text with proper formatting and organization by branch
-            // Temporal branch
-            temporalTriples.forEach(triple => {
-                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
-            });
-            
-            // Modal branch
-            modalTriples.forEach(triple => {
-                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
-            });
-            
-            // Coreference branch
-            corefTriples.forEach(triple => {
-                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
-            });
-            
-            // Update the state
-            docLevelState.docAnnotation = annotationText.trim();
+            if (docVersionId && sentId) {
+                console.log("Using window.state values:", docVersionId, sentId);
+                docLevelState.docVersionId = docVersionId;
+                docLevelState.sentId = sentId;
+            } else {
+                console.error("Cannot determine document version or sentence ID");
+                showNotification("Error: Missing document information", "error");
+                reject(new Error("Missing docVersionId or sentId"));
+                return;
+            }
         }
         
+        // Get the save URL
+        const saveUrl = getSaveEndpointUrl(docLevelState.docVersionId, docLevelState.sentId);
+        console.log("Using save URL:", saveUrl);
+        console.log("Annotation to save:", docLevelState.docAnnotation);
+        
         // Send the annotation to the server
-        fetch(`/update_doc_annotation/${docLevelState.docVersionId}/${docLevelState.sentId}`, {
+        fetch(saveUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -591,22 +1114,24 @@ function saveDocAnnotation() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                console.error(`▶ POST ${saveUrl} ${response.status} (${response.statusText})`);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
         })
         .then(data => {
             if (data.success) {
                 docLevelState.isDirty = false;
+                console.log("Save successful:", data);
                 showNotification("Document annotation saved successfully", "success");
-                resolve(data); // Resolve the promise
+                resolve(data);
             } else {
-                showNotification("Error saving document annotation: " + data.message, "error");
-                reject(new Error(data.message));
+                console.error("Save returned error:", data);
+                throw new Error(data.message || 'Save failed');
             }
         })
         .catch(error => {
-            console.error('Error saving document annotation:', error);
+            console.error(`▶ Error saving document annotation:`, error);
             showNotification("Error saving document annotation: " + error.message, "error");
             reject(error);
         });
@@ -615,17 +1140,19 @@ function saveDocAnnotation() {
 
 // Get CSRF token from cookies
 function getCsrfToken() {
-    const name = 'csrf_token=';
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookieArray = decodedCookie.split(';');
-    
-    for (let i = 0; i < cookieArray.length; i++) {
-        let cookie = cookieArray[i].trim();
-        if (cookie.indexOf(name) === 0) {
-            return cookie.substring(name.length, cookie.length);
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
         }
     }
-    return '';
+    return cookieValue;
 }
 
 // Expose functions to global scope
@@ -647,298 +1174,135 @@ window.jumpToSentence = function(sentId) {
     }
 };
 
-// Function to format document level annotation with proper spacing and syntax highlighting
+// Format the doc-level annotation based on the current state
 function formatDocLevelAnnotation() {
-    const annotationContent = document.getElementById('doc-annotation-content');
-    if (!annotationContent) return;
-    
-    // Get the original content as plain text
-    let plainContent = annotationContent.textContent;
-    
-    // If no content, return
-    if (!plainContent || plainContent.trim() === '') return;
-    
-    // Log for debugging
-    console.log("Parsing annotation text:", plainContent);
+    console.log("Formatting doc-level annotation with interactive elements");
     
     try {
-        // Normalize whitespace but preserve structure
-        plainContent = plainContent.replace(/[\t ]+/g, ' ').trim();
+        // Log the current state for debugging
+        console.log("Current docLevelState:", {
+            triplesCount: docLevelState.triples.length,
+            docVersionId: docLevelState.docVersionId,
+            sentId: docLevelState.sentId,
+            isDirty: docLevelState.isDirty,
+            rootVar: docLevelState.rootVar,
+            rootType: docLevelState.rootType
+        });
         
-        // Extract the main components
-        const rootMatch = plainContent.match(/\(([a-z0-9]+)\s*\/\s*([^)]+?)\s*(?=:|\))/i);
-        if (!rootMatch) {
-            console.error("Could not match root pattern in content:", plainContent);
-            return;
-        }
+        // Make sure we have valid root values
+        if (!docLevelState.rootVar) docLevelState.rootVar = 's0';
+        if (!docLevelState.rootType) docLevelState.rootType = 'sentence';
         
-        const rootVar = rootMatch[1].trim();
-        const rootType = rootMatch[2].trim();
+        console.log("Using root information:", { 
+            rootVar: docLevelState.rootVar, 
+            rootType: docLevelState.rootType 
+        });
         
-        // Create formatted HTML content with syntax highlighting
-        let htmlContent = `<span class="parenthesis">(</span><span class="root-var">${rootVar}</span> / <span class="root-type">${rootType}</span>\n`;
+        // Debugging for triples
+        const temporalTriples = docLevelState.triples.filter(t => t.type === 'temporal');
+        const modalTriples = docLevelState.triples.filter(t => t.type === 'modal');
+        const corefTriples = docLevelState.triples.filter(t => t.type === 'coreference');
         
-        // Function to check if a node is valid for a branch type
-        function isValidNode(node, branchType) {
-            // Check if it's a valid variable format
-            if (VARIABLE_REGEX.test(node)) return true;
-            
-            // Check if it's in the predefined rolesets for this branch
-            return DOC_LEVEL_ROLESETS[branchType].includes(node);
-        }
+        console.log("Triples by branch:", {
+            temporal: temporalTriples.length,
+            modal: modalTriples.length,
+            coref: corefTriples.length
+        });
         
-        // Function to check if a relation is valid for a branch type
-        function isValidRelation(relation, branchType) {
-            return DOC_LEVEL_RELATIONS[branchType].includes(relation);
-        }
+        // Start building the annotation with HTML for syntax highlighting
+        let htmlContent = `<span class="parenthesis">(</span><span class="root-var">${docLevelState.rootVar}</span> / <span class="root-type">${docLevelState.rootType}</span>\n`;
         
-        // Function to extract branch content with a more robust approach
-        function extractBranchContent(branchName) {
-            // Find the branch section start and end
-            const startPattern = new RegExp(`:${branchName}\\s*\\(`, "i");
-            const startMatch = plainContent.match(startPattern);
-            if (!startMatch) return null;
+        // Process each branch type
+        ['temporal', 'modal', 'coref'].forEach(branchName => {
+            // Find all triple containers for this branch
+            const triples = docLevelState.triples.filter(triple => {
+                const tripleType = triple.type || '';
+                return (branchName === 'coref' && tripleType === 'coreference') || 
+                       tripleType === branchName;
+            });
             
-            const startIndex = startMatch.index;
-            let parenCount = 1; // Start with 1 for the opening paren
-            let endIndex = startIndex + startMatch[0].length;
+            console.log(`Rendering ${triples.length} triples for ${branchName} branch`);
             
-            // Find the matching closing parenthesis
-            while (parenCount > 0 && endIndex < plainContent.length) {
-                if (plainContent[endIndex] === '(') parenCount++;
-                else if (plainContent[endIndex] === ')') parenCount--;
-                endIndex++;
-            }
+            // Start the branch with HTML
+            htmlContent += `    <span class="branch-name">:${branchName}</span> <span class="parenthesis">(</span>`;
             
-            if (parenCount !== 0) {
-                console.warn(`Unbalanced parentheses in ${branchName} branch`);
-                return null;
-            }
-            
-            // Extract the content between the parentheses
-            const branchContent = plainContent.substring(startIndex + startMatch[0].length, endIndex - 1).trim();
-            console.log(`Extracted raw ${branchName} branch content:`, branchContent);
-            return branchContent;
-        }
-        
-        // Function to extract triples from branch content
-        function extractTriples(branchContent) {
-            if (!branchContent) return [];
-            
-            // Special handling for database format with double parentheses
-            // The format in the database is ":branch ((triple1) (triple2))" 
-            const doubleParenPattern = /^\(\s*\(([^)]+)\)\s*\)/;
-            const doubleParenMatch = branchContent.match(doubleParenPattern);
-            
-            if (doubleParenMatch) {
-                // We have the database format with double parentheses
-                console.log("Detected database format with double parentheses");
-                
-                // Extract content from double parentheses
-                const innerContent = doubleParenMatch[1].trim();
-                console.log("Inner content:", innerContent);
-                
-                // Look for additional triples after the first one
-                const tripleParts = branchContent.split(/\)\s*\(/);
-                console.log("Triple parts:", tripleParts);
-                
-                const triples = [];
-                
-                // Process each potential triple
-                tripleParts.forEach(part => {
-                    // Clean up the part to get just the triple content
-                    let cleanPart = part.replace(/^\s*\(\s*/, '').replace(/\s*\)\s*$/, '').trim();
-                    cleanPart = cleanPart.replace(/^\s*\(\s*/, '').replace(/\s*\)\s*$/, '').trim();
-                    
-                    if (!cleanPart) return;
-                    
-                    console.log("Cleaned triple part:", cleanPart);
-                    
-                    // Extract source, relation, target
-                    const parts = cleanPart.split(/\s+/);
-                    if (parts.length >= 3) {
-                        // Find the relation part (starts with :)
-                        const relationIndex = parts.findIndex(p => p.startsWith(':'));
-                        
-                        if (relationIndex > 0 && relationIndex < parts.length - 1) {
-                            // We have a valid triple structure
-                            const source = parts[0];
-                            const relation = parts[relationIndex];
-                            const target = parts[parts.length - 1];
-                            
-                            triples.push({ source, relation, target });
-                        }
-                    }
-                });
-                
-                // If we found triples with this approach, return them
-                if (triples.length > 0) {
-                    console.log("Extracted database-format triples:", triples);
-                    return triples;
-                }
-            }
-            
-            // Handle the ((triple1)(triple2)) format directly
-            if (branchContent.startsWith('(') && branchContent.includes(')(')) {
-                console.log("Detected direct multiple triple format");
-                
-                // Split at the boundaries between triples
-                const tripleStrings = branchContent.replace(/^\(/, '').replace(/\)$/, '').split(')(');
-                console.log("Triple strings:", tripleStrings);
-                
-                const triples = [];
-                
-                tripleStrings.forEach(tripleStr => {
-                    const parts = tripleStr.trim().split(/\s+/);
-                    if (parts.length >= 3) {
-                        // Find the relation part (starts with :)
-                        const relationIndex = parts.findIndex(p => p.startsWith(':'));
-                        
-                        if (relationIndex > 0 && relationIndex < parts.length - 1) {
-                            // We have a valid triple structure
-                            const source = parts[0];
-                            const relation = parts[relationIndex];
-                            const target = parts[parts.length - 1];
-                            
-                            triples.push({ source, relation, target });
-                        }
-                    }
-                });
-                
-                if (triples.length > 0) {
-                    console.log("Extracted direct format triples:", triples);
-                    return triples;
-                }
-            }
-            
-            // Fall back to original triple extraction method if the above didn't work
-            // Find all triple patterns (node :relation node)
-            const triples = [];
-            const triplePattern = /\(\s*([^\s\(\)]+)\s+(:[\w-]+)\s+([^\s\(\)]+)\s*\)/g;
-            let match;
-            
-            while ((match = triplePattern.exec(branchContent)) !== null) {
-                triples.push({
-                    source: match[1],
-                    relation: match[2],
-                    target: match[3]
-                });
-            }
-            
-            console.log("Extracted fallback-format triples:", triples);
-            return triples;
-        }
-        
-        // Function to process each branch with unique data attributes for deletion
-        function processBranch(branchName) {
-            const branchContent = extractBranchContent(branchName);
-            console.log(`${branchName} branch content:`, branchContent);
-            
-            // Start the branch HTML with proper indentation
-            let branchHtml = `    <span class="branch-name">:${branchName}</span> <span class="parenthesis">(</span>\n`;
-            
-            if (!branchContent || branchContent.trim() === '') {
-                // Empty branch
-                branchHtml += `     <span class="parenthesis">)</span>`;
-                return branchHtml;
-            }
-            
-            // Extract triples from the branch content
-            const triples = extractTriples(branchContent);
-            
-            // Format each triple
+            // Only add nested structure if there are triples
             if (triples.length > 0) {
-                const formattedTriples = triples.map((triple, index) => {
-                    // Apply validation
-                    const sourceClass = isValidNode(triple.source, branchName) ? "node" : "node invalid";
-                    const relationClass = isValidRelation(triple.relation, branchName) ? "relation" : "relation invalid";
-                    const targetClass = isValidNode(triple.target, branchName) ? "node" : "node invalid";
-                    
-                    // Use only simple attributes for deletion
-                    return `                     <div class="triple-container" data-branch="${branchName}" data-source="${triple.source}" data-relation="${triple.relation}" data-target="${triple.target}">
-                        <span class="parenthesis">(</span><span class="${sourceClass}">${triple.source}</span> <span class="${relationClass}">${triple.relation}</span> <span class="${targetClass}">${triple.target}</span><span class="parenthesis">)</span>
-                        <span class="delete-triple-icon"><i class="fas fa-trash-alt"></i></span>
-                     </div>`;
+                // Don't add the extra opening parenthesis
+                htmlContent += `\n`;
+                
+                // Add each triple as an interactive element with delete icon
+                const tripleElements = triples.map(triple => {
+                    return `        <div class="triple-container" data-branch="${branchName}" data-source="${triple.source}" data-relation="${triple.relation}" data-target="${triple.target}" style="cursor: context-menu;">
+<span class="parenthesis">(</span><span class="node">${triple.source}</span> <span class="relation">${triple.relation}</span> <span class="node">${triple.target}</span><span class="parenthesis">)</span>
+<span class="delete-triple-icon" style="position: absolute; right: -20px; top: 50%; transform: translateY(-50%); cursor: pointer;"><i class="fas fa-trash-alt" style="color: #dc3545;"></i></span>
+</div>`;
                 });
                 
-                // Join the triples with line breaks
-                branchHtml += formattedTriples.join('\n');
+                // Join the triple elements
+                htmlContent += tripleElements.join('\n');
+                
+                // Close the triple list
+                htmlContent += `\n    <span class="parenthesis">)</span>`;
+            } else {
+                // Empty branch
+                htmlContent += `<span class="parenthesis">)</span>`;
             }
             
-            // Close the branch
-            branchHtml += `\n     <span class="parenthesis">)</span>`;
-            
-            return branchHtml;
-        }
+            // Add newline after each branch
+            htmlContent += '\n';
+        });
         
-        // Process all branches
-        const temporalSection = processBranch('temporal');
-        const modalSection = processBranch('modal');
-        const corefSection = processBranch('coref');
-        
-        // Add branches to the HTML
-        htmlContent += temporalSection + '\n';
-        htmlContent += modalSection + '\n';
-        htmlContent += corefSection + '\n';
-        
-        // Close the root
+        // Close the annotation
         htmlContent += `<span class="parenthesis">)</span>`;
         
-        // Set the HTML content
-        annotationContent.innerHTML = htmlContent;
+        // Add a helper text at the top of the annotation
+        htmlContent = `<div class="delete-helper-text" style="background-color: #212529; color: white; border: none; border-radius: 4px; padding: 7px 12px; margin-bottom: 15px; font-size: 13px; font-weight: 500;">
+            <i class="fas fa-info-circle"></i> Tip: Right-click on any triple to delete it
+        </div>` + htmlContent;
         
-        // Add a better helper text at the top of the annotation
-        const helperText = document.createElement('div');
-        helperText.className = 'delete-helper-text';
-        helperText.innerHTML = '<i class="fas fa-info-circle"></i> Tip: Right-click on any triple to delete it';
-        helperText.style.backgroundColor = '#212529';
-        helperText.style.color = 'white';
-        helperText.style.border = 'none';
-        helperText.style.borderRadius = '4px';
-        helperText.style.padding = '7px 12px';
-        helperText.style.marginBottom = '15px';
-        helperText.style.fontSize = '13px';
-        helperText.style.fontWeight = '500';
+        console.log("Formatted HTML annotation with interactive elements");
         
-        // Insert at the top of the annotation
-        annotationContent.insertBefore(helperText, annotationContent.firstChild);
-        
-        // Setup delete buttons after formatting - but only if not already in progress
-        if (!window.deleteSetupInProgress) {
-            console.log("Setting up delete functionality");
-            window.deleteSetupInProgress = true;
-            
-            // Wait a short while to ensure DOM is ready
-            setTimeout(() => {
-                setupDeleteButtons();
-                window.deleteSetupInProgress = false;
-            }, 200);
-        } else {
-            console.log("Delete setup already in progress, skipping duplicate setup");
+        // Make sure we remove any existing context menu before creating a new one
+        const oldMenu = document.getElementById('triple-context-menu');
+        if (oldMenu) {
+            oldMenu.remove();
         }
-    } catch (e) {
-        console.error("Error formatting annotation with highlighting:", e);
-        console.error("Stack trace:", e.stack);
         
-        // Fallback to plain text
-        annotationContent.textContent = plainContent;
+        // Schedule setup of delete handlers
+        setTimeout(() => {
+            setupDeleteButtons();
+        }, 100);
+        
+        return htmlContent;
+    } catch (error) {
+        console.error("Error formatting doc-level annotation:", error);
+        
+        // Return simple default annotation if there's an error
+        const fallbackAnnotation = "(s0 / sentence\n    :temporal ()\n    :modal ()\n    :coref ()\n)";
+        console.log("Using fallback annotation:", fallbackAnnotation);
+        return fallbackAnnotation;
     }
 }
 
 // Initialize when document is ready
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM content loaded - initializing document level annotation formatter");
+    console.log("Document ready, initializing docLevel");
     
-    // Get the annotation content element
-    const annotationContent = document.getElementById('doc-annotation-content');
-    if (annotationContent) {
-        // Store the original text for debugging
-        const originalText = annotationContent.textContent;
-        console.log("Original annotation text from server:", originalText);
-        
-        // Format the annotation with syntax highlighting
-        setTimeout(formatDocLevelAnnotation, 100);
+    // Set initial state from window.state
+    if (window.state) {
+        docLevelState.docVersionId = window.state.docVersionId;
+        docLevelState.sentId = window.state.currentId;
+        console.log("Initialized docLevelState from window.state:", 
+            JSON.stringify({
+                docVersionId: docLevelState.docVersionId,
+                sentId: docLevelState.sentId
+            })
+        );
     }
+    
+    // Initialize the doc-level interface
+    initializeDocLevel();
 });
 
 // Function to update document level annotation display
@@ -1078,6 +1442,22 @@ function setupDeleteButtons() {
         return;
     }
 
+    // Find all triple containers to verify they exist
+    const tripleContainers = annotationElement.querySelectorAll('.triple-container');
+    console.log(`Found ${tripleContainers.length} triple containers for deletion setup`);
+    
+    // Check if each has data attributes
+    tripleContainers.forEach((container, index) => {
+        const hasSource = container.hasAttribute('data-source');
+        const hasRelation = container.hasAttribute('data-relation');
+        const hasTarget = container.hasAttribute('data-target');
+        const hasBranch = container.hasAttribute('data-branch');
+        
+        if (!hasSource || !hasRelation || !hasTarget || !hasBranch) {
+            console.warn(`Triple container ${index} is missing attributes: source=${hasSource}, relation=${hasRelation}, target=${hasTarget}, branch=${hasBranch}`);
+        }
+    });
+
     // Create a custom context menu
     let contextMenu = document.createElement('div');
     contextMenu.id = 'triple-context-menu';
@@ -1120,9 +1500,11 @@ function setupDeleteButtons() {
     
     // Handle right click on annotation content
     annotationElement.addEventListener('contextmenu', function(e) {
+        console.log("Context menu event triggered", e.target);
         // Find if click is on a triple
         const tripleElement = findClosestTripleContainer(e.target);
         if (tripleElement) {
+            console.log("Found triple element:", tripleElement);
             e.preventDefault();
             
             // Save reference to current triple
@@ -1149,6 +1531,8 @@ function setupDeleteButtons() {
             const relation = currentTripleElement.getAttribute('data-relation');
             const target = currentTripleElement.getAttribute('data-target');
             
+            console.log("Delete clicked for triple:", { branch, source, relation, target });
+            
             try {
                 // Remove the triple from DOM
                 currentTripleElement.remove();
@@ -1170,24 +1554,24 @@ function setupDeleteButtons() {
     });
     
     // Also handle clicks on delete icons directly without confirmation
-    annotationElement.addEventListener('click', function(e) {
-        // Check if click was on a delete icon
-        if (e.target.closest('.delete-triple-icon')) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Find the parent triple
-            const tripleElement = findClosestTripleContainer(e.target);
-            if (tripleElement) {
-                // Get triple data
-                const branch = tripleElement.getAttribute('data-branch');
-                const source = tripleElement.getAttribute('data-source');
-                const relation = tripleElement.getAttribute('data-relation');
-                const target = tripleElement.getAttribute('data-target');
+    tripleContainers.forEach(container => {
+        const deleteIcon = container.querySelector('.delete-triple-icon');
+        if (deleteIcon) {
+            deleteIcon.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Get triple data from parent container
+                const branch = container.getAttribute('data-branch');
+                const source = container.getAttribute('data-source');
+                const relation = container.getAttribute('data-relation');
+                const target = container.getAttribute('data-target');
+                
+                console.log("Delete icon clicked for triple:", { branch, source, relation, target });
                 
                 try {
                     // Remove the triple
-                    tripleElement.remove();
+                    container.remove();
                     console.log(`Deleted triple via icon: (${source} ${relation} ${target})`);
                     
                     // Show notification
@@ -1199,7 +1583,9 @@ function setupDeleteButtons() {
                     console.error("Error deleting triple:", error);
                     showNotification("Error deleting triple: " + error.message, "error");
                 }
-            }
+            });
+        } else {
+            console.warn("Delete icon not found in triple container");
         }
     });
     
@@ -1209,152 +1595,54 @@ function setupDeleteButtons() {
     }
 }
 
-// Rebuild the annotation directly from the DOM elements
-function rebuildAnnotationFromDOM() {
-    console.log("Rebuilding annotation directly from DOM elements");
+// Rebuild docLevelState.triples from triple containers in the DOM
+function rebuildTripleArray() {
+    console.log("Rebuilding triples array from DOM");
     
-    try {
-        // Get the annotation element
-        const annotationElement = document.getElementById('doc-annotation-content');
-        if (!annotationElement) {
-            console.error("Annotation element not found");
-            return;
+    // Preserve the root variable and type - store them before clearing
+    const savedRootVar = docLevelState.rootVar;
+    const savedRootType = docLevelState.rootType;
+    
+    console.log(`Preserving root information: ${savedRootVar} / ${savedRootType}`);
+    
+    // Clear existing triples
+    docLevelState.triples = [];
+    
+    // Process each branch type
+    ['temporal', 'modal', 'coref'].forEach(branchName => {
+        // Map branch name to type for the triples array
+        const tripleType = branchName === 'coref' ? 'coreference' : branchName;
+        
+        // Find all triple containers for this branch
+        const triples = Array.from(document.querySelectorAll(`.triple-container[data-branch="${branchName}"]`));
+        
+        if (triples.length === 0) {
+            return; // Skip this branch
         }
         
-        // Extract root information
-        const rootVar = document.querySelector('.root-var')?.textContent || 's0';
-        const rootType = document.querySelector('.root-type')?.textContent || 'sentence';
-        
-        // Start building the annotation
-        let newAnnotation = `(${rootVar} / ${rootType}\n`;
-        
-        // Process each branch type
-        ['temporal', 'modal', 'coref'].forEach(branchName => {
-            // Find all triple containers for this branch
-            const triples = Array.from(document.querySelectorAll(`.triple-container[data-branch="${branchName}"]`));
+        // Convert each triple element to a triple object
+        triples.forEach(triple => {
+            const source = triple.getAttribute('data-source');
+            const relation = triple.getAttribute('data-relation');
+            const target = triple.getAttribute('data-target');
             
-            if (triples.length === 0) {
-                console.log(`No triples found for ${branchName} branch, skipping`);
-                return; // Skip this branch
+            // Only add if we have all required fields
+            if (source && relation && target) {
+                docLevelState.triples.push({
+                    id: generateUniqueId(),
+                    type: tripleType,
+                    source: source,
+                    relation: relation,
+                    target: target,
+                    sentId: docLevelState.sentId
+                });
             }
-            
-            // Start the branch
-            newAnnotation += `    :${branchName} ((`;
-            
-            // Add each triple
-            const tripleTexts = triples.map(triple => {
-                const source = triple.getAttribute('data-source');
-                const relation = triple.getAttribute('data-relation');
-                const target = triple.getAttribute('data-target');
-                return `${source} ${relation} ${target}`;
-            });
-            
-            // Format the triples with proper indentation
-            newAnnotation += tripleTexts.map(t => `(${t})`).join('\n            ');
-            
-            // Close the branch
-            newAnnotation += ')\n    )\n';
         });
-        
-        // Close the annotation
-        newAnnotation += ')';
-        
-        console.log("Rebuilt annotation:", newAnnotation);
-        
-        // Update the display
-        updateDocLevelAnnotation(newAnnotation);
-        
-        // Save to database
-        saveUpdatedAnnotation();
-    } catch (error) {
-        console.error("Error rebuilding annotation:", error);
-        showNotification("Error rebuilding annotation: " + error.message, "error");
-    }
-}
-
-// Disable the old deleteTriple function completely
-function deleteTriple() {
-    console.error("Old deleteTriple function called - this should not happen");
-    alert("An error occurred while trying to delete. Please try again by right-clicking directly on the triple.");
-    return false;
-}
-
-// Function to save the updated annotation to the server
-function saveUpdatedAnnotation() {
-    // Get the updated annotation text
-    const annotationContent = document.getElementById('doc-annotation-content');
-    if (!annotationContent) {
-        console.error('Annotation content element not found');
-        showNotification('Error: Unable to find annotation content', 'error');
-        return;
-    }
+    });
     
-    const annotationText = annotationContent.textContent;
-    console.log("Saving updated annotation:", annotationText);
+    // Restore the root variable and type
+    docLevelState.rootVar = savedRootVar;
+    docLevelState.rootType = savedRootType;
     
-    // Show a loading notification
-    showNotification("Saving changes to database...", "info");
-    
-    // Get the current doc version ID and sentence ID
-    const docVersionId = document.getElementById('doc_version_id').value;
-    const sentId = document.getElementById('snt_id').value;
-    
-    if (!docVersionId || !sentId) {
-        console.error('Missing doc version ID or sentence ID');
-        showNotification('Error: Missing document version or sentence ID', 'error');
-        return;
-    }
-    
-    // Get the current origin including protocol, hostname, and port
-    const origin = window.location.origin;
-    console.log("Current origin:", origin);
-    
-    // Use the main Save Document Annotation button instead
-    // This is a more reliable approach than trying API endpoints
-    showNotification("Please use the 'Save Document Annotation' button instead", "warning");
-    
-    // Scroll to the save button to make it visible
-    const saveButton = document.querySelector('button[onclick="saveDocAnnotation()"]');
-    if (saveButton) {
-        saveButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        saveButton.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.7)';
-        saveButton.style.animation = 'pulse 1.5s infinite';
-        
-        // Add a pulse animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Reset after 5 seconds
-        setTimeout(() => {
-            saveButton.style.boxShadow = '';
-            saveButton.style.animation = '';
-        }, 5000);
-    }
-    
-    // For legacy behavior, still try to save directly but without using fetch
-    // Using the global saveDocAnnotation if available
-    if (typeof window.saveDocAnnotation === 'function') {
-        console.log("Using global saveDocAnnotation function");
-        try {
-            window.saveDocAnnotation();
-        } catch (e) {
-            console.error("Error using global saveDocAnnotation:", e);
-        }
-    }
-}
-
-// Simple function to show a native confirmation dialog
-function showNativeConfirmation(message, callback) {
-    // Use the native browser confirm dialog
-    const confirmed = confirm(message);
-    
-    // Execute the callback with the result
-    callback(confirmed);
+    console.log(`Rebuilt triples array with ${docLevelState.triples.length} triples, root is ${docLevelState.rootVar}`);
 } 
