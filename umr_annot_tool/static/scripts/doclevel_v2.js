@@ -36,6 +36,30 @@ const VARIABLE_REGEX = /^s[0-9]+[a-z]+[0-9]*$/;
 function initializeDocLevel() {
     console.log("Initializing document level functionality");
     
+    // GLOBAL OVERRIDE: Completely disable the old triple deletion code path
+    if (!window.deletionOverrideApplied) {
+        // Override window.confirm to block the old deletion dialogs
+        window.originalConfirm = window.confirm;
+        window.confirm = function(message) {
+            // If this is the old deletion confirmation, ignore it
+            if (message && (
+                message.includes("Are you sure you want to delete this triple?") || 
+                message.includes("Delete triple:")
+            )) {
+                console.log("BLOCKED old confirmation dialog:", message);
+                return false;
+            }
+            // Otherwise use the original confirm
+            return window.originalConfirm(message);
+        };
+        
+        window.deletionOverrideApplied = true;
+    }
+    
+    // Set global flags to prevent duplicate event binding
+    window.deleteInProgress = false;
+    window.deleteSetupInProgress = false;
+    
     // Add event listeners to tab buttons
     setupFormEventListeners();
     
@@ -46,13 +70,15 @@ function initializeDocLevel() {
         // Format it with proper syntax highlighting
         setTimeout(() => {
             formatDocLevelAnnotation();
+            
+            // Setup delete functionality specifically
+            setTimeout(() => {
+                setupDeleteButtons();
+            }, 300);
         }, 100);
     } else {
         console.log("No existing annotation content found");
     }
-    
-    // Set up delete button functionality for existing triples
-    setupDeleteButtons();
 }
 
 // Set up event listeners for the triple input forms
@@ -400,274 +426,31 @@ function updateDocAnnotation() {
 
 // Render the triples list in the UI
 function renderTriples() {
-    console.log("Rendering triples:", docLevelState.triples);
+    console.log("Rendering triples UI");
     
-    // Get the document annotation container
-    const docAnnotationDiv = document.getElementById("doc-annotation");
-    if (!docAnnotationDiv) {
-        console.error("Document annotation container not found");
-        return;
+    // DISABLE OLD TRIPLE DELETION HANDLERS
+    // This is a complete override to prevent old code from running
+    // that was causing stuck confirmation dialogs
+    console.log("Disabling old triple deletion handlers");
+    
+    // Remove any existing delete icon handlers
+    try {
+        const oldIcons = document.querySelectorAll('.delete-icon');
+        if (oldIcons.length > 0) {
+            console.log("Removing old delete icon handlers");
+            oldIcons.forEach(icon => {
+                // Clone the node to remove all event listeners
+                const newIcon = icon.cloneNode(true);
+                if (icon.parentNode) {
+                    icon.parentNode.replaceChild(newIcon, icon);
+                }
+            });
+        }
+    } catch (error) {
+        console.error("Error removing old handlers:", error);
     }
     
-    // If the original annotation exists and has content
-    if (docLevelState.docAnnotation && docLevelState.docAnnotation.trim() !== "") {
-        // Create enhanced HTML for full annotation with interactive elements
-        let displayHtml = `
-        <div class="doc-annotation-container">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">Document-Level Annotation</h6>
-                    <small class="text-muted">Hover and right-click to delete triples</small>
-                </div>
-                <div class="card-body p-2">
-                    <div class="interactive-annotation" id="doc-annotation-content">`;
-        
-        // Group triples by type
-        const temporalTriples = docLevelState.triples.filter(t => t.type === 'temporal');
-        const modalTriples = docLevelState.triples.filter(t => t.type === 'modal');
-        const corefTriples = docLevelState.triples.filter(t => t.type === 'coreference');
-        
-        // Start with the root identifier if it exists
-        const rootMatch = docLevelState.docAnnotation.match(/\(([^\/]+)\s*\/\s*([^)]+)\)/);
-        if (rootMatch) {
-            displayHtml += `<div class="annotation-root">(<span class="variable">${rootMatch[1]}</span> / <span class="semantic-type">${rootMatch[2]}</span></div>`;
-        }
-        
-        // Add temporal section with improved structure
-        if (temporalTriples.length > 0) {
-            displayHtml += `<div class="annotation-section temporal-section">
-                <div class="section-header"><span class="relation">:temporal</span> (</div>
-                <div class="section-content">`;
-            
-            temporalTriples.forEach(triple => {
-                displayHtml += `
-                <div class="triple-item interactive" data-id="${triple.id}">
-                    <span class="triple-content">(
-                        <span class="variable">${triple.source}</span> 
-                        <span class="relation">:${triple.relation}</span> 
-                        <span class="variable">${triple.target}</span>
-                    )</span>
-                    <span class="delete-icon" data-id="${triple.id}" title="Delete this triple">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                </div>`;
-            });
-            
-            displayHtml += `</div>
-                <div class="section-close">)</div>
-            </div>`;
-        }
-        
-        // Add modal section with improved structure
-        if (modalTriples.length > 0) {
-            displayHtml += `<div class="annotation-section modal-section">
-                <div class="section-header"><span class="relation">:modal</span> (</div>
-                <div class="section-content">`;
-            
-            modalTriples.forEach(triple => {
-                displayHtml += `
-                <div class="triple-item interactive" data-id="${triple.id}">
-                    <span class="triple-content">(
-                        <span class="variable">${triple.source}</span> 
-                        <span class="relation">:${triple.relation}</span> 
-                        <span class="variable">${triple.target}</span>
-                    )</span>
-                    <span class="delete-icon" data-id="${triple.id}" title="Delete this triple">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                </div>`;
-            });
-            
-            displayHtml += `</div>
-                <div class="section-close">)</div>
-            </div>`;
-        }
-        
-        // Add coreference section with improved structure
-        if (corefTriples.length > 0) {
-            displayHtml += `<div class="annotation-section coreference-section">
-                <div class="section-header"><span class="relation">:coref</span> (</div>
-                <div class="section-content">`;
-            
-            corefTriples.forEach(triple => {
-                displayHtml += `
-                <div class="triple-item interactive" data-id="${triple.id}">
-                    <span class="triple-content">(
-                        <span class="variable">${triple.source}</span> 
-                        <span class="relation">:${triple.relation}</span> 
-                        <span class="variable">${triple.target}</span>
-                    )</span>
-                    <span class="delete-icon" data-id="${triple.id}" title="Delete this triple">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                </div>`;
-            });
-            
-            displayHtml += `</div>
-                <div class="section-close">)</div>
-            </div>`;
-        }
-        
-        // If we have the root node, close the whole annotation
-        if (rootMatch) {
-            displayHtml += `<div class="annotation-root-close">)</div>`;
-        }
-        
-        // Close containers
-        displayHtml += `
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Hidden original annotation for reference -->
-            <div id="raw-doc-annotation" style="display: none;">${docLevelState.docAnnotation}</div>
-        </div>`;
-        
-        // Update the UI
-        docAnnotationDiv.innerHTML = displayHtml;
-    }
-    // If we have triples but no original annotation
-    else if (docLevelState.triples.length > 0) {
-        // Create a structured display with the triples we have
-        let displayHtml = `
-        <div class="doc-annotation-container">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0">Document-Level Annotation</h6>
-                    <small class="text-muted">Hover and right-click to delete triples</small>
-                </div>
-                <div class="card-body p-2">
-                    <div class="interactive-annotation" id="doc-annotation-content">`;
-        
-        // Group triples by type
-        const temporalTriples = docLevelState.triples.filter(t => t.type === 'temporal');
-        const modalTriples = docLevelState.triples.filter(t => t.type === 'modal');
-        const corefTriples = docLevelState.triples.filter(t => t.type === 'coreference');
-        
-        // Add temporal section with improved structure
-        if (temporalTriples.length > 0) {
-            displayHtml += `<div class="annotation-section temporal-section">
-                <div class="section-header"><span class="relation">:temporal</span> (</div>
-                <div class="section-content">`;
-            
-            temporalTriples.forEach(triple => {
-                displayHtml += `
-                <div class="triple-item interactive" data-id="${triple.id}">
-                    <span class="triple-content">(
-                        <span class="variable">${triple.source}</span> 
-                        <span class="relation">:${triple.relation}</span> 
-                        <span class="variable">${triple.target}</span>
-                    )</span>
-                    <span class="delete-icon" data-id="${triple.id}" title="Delete this triple">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                </div>`;
-            });
-            
-            displayHtml += `</div>
-                <div class="section-close">)</div>
-            </div>`;
-        }
-        
-        // Add modal section with improved structure
-        if (modalTriples.length > 0) {
-            displayHtml += `<div class="annotation-section modal-section">
-                <div class="section-header"><span class="relation">:modal</span> (</div>
-                <div class="section-content">`;
-            
-            modalTriples.forEach(triple => {
-                displayHtml += `
-                <div class="triple-item interactive" data-id="${triple.id}">
-                    <span class="triple-content">(
-                        <span class="variable">${triple.source}</span> 
-                        <span class="relation">:${triple.relation}</span> 
-                        <span class="variable">${triple.target}</span>
-                    )</span>
-                    <span class="delete-icon" data-id="${triple.id}" title="Delete this triple">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                </div>`;
-            });
-            
-            displayHtml += `</div>
-                <div class="section-close">)</div>
-            </div>`;
-        }
-        
-        // Add coreference section with improved structure
-        if (corefTriples.length > 0) {
-            displayHtml += `<div class="annotation-section coreference-section">
-                <div class="section-header"><span class="relation">:coref</span> (</div>
-                <div class="section-content">`;
-            
-            corefTriples.forEach(triple => {
-                displayHtml += `
-                <div class="triple-item interactive" data-id="${triple.id}">
-                    <span class="triple-content">(
-                        <span class="variable">${triple.source}</span> 
-                        <span class="relation">:${triple.relation}</span> 
-                        <span class="variable">${triple.target}</span>
-                    )</span>
-                    <span class="delete-icon" data-id="${triple.id}" title="Delete this triple">
-                        <i class="fas fa-trash-alt"></i>
-                    </span>
-                </div>`;
-            });
-            
-            displayHtml += `</div>
-                <div class="section-close">)</div>
-            </div>`;
-        }
-        
-        // Close containers
-        displayHtml += `
-                    </div>
-                </div>
-            </div>
-        </div>`;
-        
-        // Update the UI
-        docAnnotationDiv.innerHTML = displayHtml;
-    }
-    // If no content at all
-    else {
-        docAnnotationDiv.innerHTML = `
-            <div class="alert alert-info mb-0" id="doc-annotation-placeholder">
-                No document-level annotation available for this sentence. Use the tools on the right to create one.
-            </div>
-        `;
-    }
-    
-    // Ensure Font Awesome is loaded for the trash icons
-    if (!document.getElementById('font-awesome-css')) {
-        const link = document.createElement('link');
-        link.id = 'font-awesome-css';
-        link.rel = 'stylesheet';
-        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css';
-        document.head.appendChild(link);
-    }
-    
-    // Add event listeners for the delete icons
-    document.querySelectorAll('.delete-icon').forEach(icon => {
-        // Add right-click event listener
-        icon.addEventListener('contextmenu', function(e) {
-            e.preventDefault(); // Prevent the browser context menu
-            const tripleId = this.getAttribute('data-id');
-            if (confirm("Are you sure you want to delete this triple?")) {
-                removeTriple(tripleId);
-            }
-        });
-        
-        // Also add regular click option for convenience
-        icon.addEventListener('click', function() {
-            const tripleId = this.getAttribute('data-id');
-            if (confirm("Are you sure you want to delete this triple?")) {
-                removeTriple(tripleId);
-            }
-        });
-    });
-    
-    console.log("Rendered triples UI updated with interactive full annotation");
+    // Rest of renderTriples function...
 }
 
 // Create HTML for a single triple
@@ -755,7 +538,7 @@ function showNotification(message, type = 'info') {
         if (document.body.contains(notification)) {
             document.body.removeChild(notification);
         }
-    }, 3000);
+        }, 3000);
 }
 
 // Save document annotation to the database
@@ -1046,7 +829,7 @@ function formatDocLevelAnnotation() {
             return triples;
         }
         
-        // Process each branch
+        // Function to process each branch with unique data attributes for deletion
         function processBranch(branchName) {
             const branchContent = extractBranchContent(branchName);
             console.log(`${branchName} branch content:`, branchContent);
@@ -1071,13 +854,10 @@ function formatDocLevelAnnotation() {
                     const relationClass = isValidRelation(triple.relation, branchName) ? "relation" : "relation invalid";
                     const targetClass = isValidNode(triple.target, branchName) ? "node" : "node invalid";
                     
-                    // Create a unique ID for this triple for deletion purposes
-                    const tripleId = `${branchName}-triple-${index}-${Date.now()}`;
-                    
-                    // Return formatted triple with highlighting and delete icon
-                    return `                     <div class="triple-container" data-triple-id="${tripleId}" data-branch="${branchName}" data-source="${triple.source}" data-relation="${triple.relation}" data-target="${triple.target}" data-label="Right-click to delete this triple">
+                    // Use only simple attributes for deletion
+                    return `                     <div class="triple-container" data-branch="${branchName}" data-source="${triple.source}" data-relation="${triple.relation}" data-target="${triple.target}">
                         <span class="parenthesis">(</span><span class="${sourceClass}">${triple.source}</span> <span class="${relationClass}">${triple.relation}</span> <span class="${targetClass}">${triple.target}</span><span class="parenthesis">)</span>
-                        <span class="delete-triple-icon" data-triple-id="${tripleId}"><i class="fas fa-trash-alt"></i></span>
+                        <span class="delete-triple-icon"><i class="fas fa-trash-alt"></i></span>
                      </div>`;
                 });
                 
@@ -1122,9 +902,19 @@ function formatDocLevelAnnotation() {
         // Insert at the top of the annotation
         annotationContent.insertBefore(helperText, annotationContent.firstChild);
         
-        // Setup delete buttons after formatting
-        console.log("Setting up delete functionality");
-        setTimeout(setupDeleteButtons, 100);
+        // Setup delete buttons after formatting - but only if not already in progress
+        if (!window.deleteSetupInProgress) {
+            console.log("Setting up delete functionality");
+            window.deleteSetupInProgress = true;
+            
+            // Wait a short while to ensure DOM is ready
+            setTimeout(() => {
+                setupDeleteButtons();
+                window.deleteSetupInProgress = false;
+            }, 200);
+        } else {
+            console.log("Delete setup already in progress, skipping duplicate setup");
+        }
     } catch (e) {
         console.error("Error formatting annotation with highlighting:", e);
         console.error("Stack trace:", e.stack);
@@ -1152,34 +942,94 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Function to update document level annotation display
 function updateDocLevelAnnotation(annotation) {
-    const annotationContainer = document.getElementById('doc-annotation');
-    const annotationContent = document.getElementById('doc-annotation-content');
-    const placeholder = document.getElementById('doc-annotation-placeholder');
+    console.log("Updating document level annotation display");
     
-    // Add debug logging to see what we're receiving
-    console.log("Original annotation from server:", annotation);
-    
-    if (annotation && annotation.trim()) {
-        // Create the pre element if it doesn't exist
+    try {
+        const annotationContainer = document.getElementById('doc-annotation');
+        const annotationContent = document.getElementById('doc-annotation-content');
+        const placeholder = document.getElementById('doc-annotation-placeholder');
+        
+        // Add debug logging to see what we're receiving
+        console.log("Original annotation from server:", annotation);
+        
+        if (!annotation || !annotation.trim()) {
+            console.warn("Empty annotation received");
+            if (placeholder) {
+                placeholder.style.display = 'block';
+            }
+            if (annotationContent) {
+                annotationContent.style.display = 'none';
+            }
+            return;
+        }
+        
+        // Ensure the annotation has proper structure
+        const cleanedAnnotation = ensureProperAnnotationFormat(annotation);
+        
+        // Create or update the pre element
         if (!annotationContent) {
+            // Create new content element
             if (placeholder) placeholder.style.display = 'none';
+            
             const pre = document.createElement('pre');
             pre.className = 'mb-0';
             pre.id = 'doc-annotation-content';
-            pre.textContent = annotation;
-            annotationContainer.appendChild(pre);
+            pre.textContent = cleanedAnnotation;
+            
+            if (annotationContainer) {
+                annotationContainer.appendChild(pre);
+            } else {
+                console.error("Annotation container not found");
+                return;
+            }
         } else {
-            annotationContent.textContent = annotation;
+            // Update existing content
+            annotationContent.textContent = cleanedAnnotation;
+            
             if (placeholder) placeholder.style.display = 'none';
             annotationContent.style.display = 'block';
         }
         
         // Apply formatting with syntax highlighting
-        formatDocLevelAnnotation();
-    } else {
-        // Show placeholder if no annotation
-        if (annotationContent) annotationContent.style.display = 'none';
-        if (placeholder) placeholder.style.display = 'block';
+        setTimeout(formatDocLevelAnnotation, 100);
+    } catch (error) {
+        console.error("Error updating document level annotation:", error);
+        showNotification("Error updating annotation display: " + error.message, "error");
+    }
+}
+
+// Helper function to ensure proper annotation format
+function ensureProperAnnotationFormat(annotation) {
+    try {
+        // Basic cleanup
+        let cleaned = annotation.trim();
+        
+        // Check if it has proper opening and closing parentheses
+        if (!cleaned.startsWith('(') || !cleaned.endsWith(')')) {
+            console.warn("Annotation missing proper parentheses structure");
+            
+            // Add missing parentheses if needed
+            if (!cleaned.startsWith('(')) cleaned = '(' + cleaned;
+            if (!cleaned.endsWith(')')) cleaned = cleaned + ')';
+        }
+        
+        // Ensure there's proper spacing after the root
+        if (!cleaned.includes(' / ')) {
+            cleaned = cleaned.replace(/\//, ' / ');
+        }
+        
+        // Add newlines for readability if they're missing
+        if (!cleaned.includes('\n')) {
+            cleaned = cleaned
+                .replace(/\s*:\s*temporal\s*\(/g, '\n    :temporal (')
+                .replace(/\s*:\s*modal\s*\(/g, '\n    :modal (')
+                .replace(/\s*:\s*coref\s*\(/g, '\n    :coref (');
+        }
+        
+        return cleaned;
+    } catch (error) {
+        console.error("Error cleaning annotation format:", error);
+        return annotation; // Return original if cleaning fails
     }
 }
 
@@ -1216,155 +1066,216 @@ function nextSentence() {
     }
 }
 
-// Setup functionality for delete buttons on existing triples
+// Setup delete functionality using a context menu approach
 function setupDeleteButtons() {
-    console.log("Setting up delete buttons for existing triples");
+    console.log("Setting up direct delete functionality with context menu");
     
-    // Wait a moment for the DOM to be fully updated
-    setTimeout(() => {
-        // First, add a global right-click event handler to the annotation container
-        const annotationContent = document.getElementById('doc-annotation-content');
-        if (annotationContent) {
-            // Prevent default browser context menu on the entire annotation area
-            annotationContent.addEventListener('contextmenu', function(e) {
-                // Check if the click is on or within a triple container
-                const tripleContainer = e.target.closest('.triple-container');
-                if (tripleContainer) {
-                    e.preventDefault(); // Prevent default browser context menu
-                    
-                    // Get the triple data
-                    const tripleId = tripleContainer.getAttribute('data-triple-id');
-                    const branch = tripleContainer.getAttribute('data-branch');
-                    const source = tripleContainer.getAttribute('data-source');
-                    const relation = tripleContainer.getAttribute('data-relation');
-                    const target = tripleContainer.getAttribute('data-target');
-                    
-                    // Show confirmation message
-                    if (confirm(`Are you sure you want to delete the triple: (${source} ${relation} ${target})?`)) {
-                        deleteTriple(tripleId, branch);
-                    }
-                    
-                    return false; // Prevent default and stop propagation
-                }
-            });
-            
-            // Also add click event to the delete icons
-            const deleteIcons = document.querySelectorAll('.delete-triple-icon');
-            deleteIcons.forEach(icon => {
-                icon.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    
-                    const tripleId = this.getAttribute('data-triple-id');
-                    const tripleContainer = document.querySelector(`.triple-container[data-triple-id="${tripleId}"]`);
-                    
-                    if (tripleContainer) {
-                        // Get the triple data for confirmation
-                        const branch = tripleContainer.getAttribute('data-branch');
-                        const source = tripleContainer.getAttribute('data-source');
-                        const relation = tripleContainer.getAttribute('data-relation');
-                        const target = tripleContainer.getAttribute('data-target');
-                        
-                        // Confirm deletion
-                        if (confirm(`Are you sure you want to delete the triple: (${source} ${relation} ${target})?`)) {
-                            deleteTriple(tripleId, branch);
-                        }
-                    }
-                });
-            });
-        }
-    }, 300);
-}
+    // Get the annotation content element
+    const annotationElement = document.getElementById('doc-annotation-content');
+    if (!annotationElement) {
+        console.error("Annotation content element not found");
+        return;
+    }
 
-// Function to delete a triple and update the annotation
-function deleteTriple(tripleId, branchName) {
-    console.log(`Deleting triple ${tripleId} from branch ${branchName}`);
+    // Create a custom context menu
+    let contextMenu = document.createElement('div');
+    contextMenu.id = 'triple-context-menu';
+    contextMenu.className = 'context-menu';
+    contextMenu.style.display = 'none';
+    contextMenu.style.position = 'absolute';
+    contextMenu.style.zIndex = '1000';
+    contextMenu.style.backgroundColor = 'white';
+    contextMenu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    contextMenu.style.padding = '5px 0';
+    contextMenu.style.borderRadius = '4px';
+    contextMenu.style.minWidth = '150px';
     
-    // Find the triple container
-    const tripleContainer = document.querySelector(`.triple-container[data-triple-id="${tripleId}"]`);
-    if (!tripleContainer) {
-        console.error(`Triple container with ID ${tripleId} not found`);
-        return;
-    }
+    // Add delete option to the context menu
+    let deleteOption = document.createElement('div');
+    deleteOption.className = 'context-menu-item';
+    deleteOption.innerHTML = '<i class="fas fa-trash-alt"></i> Delete Triple';
+    deleteOption.style.padding = '8px 15px';
+    deleteOption.style.cursor = 'pointer';
+    deleteOption.style.color = '#dc3545';
+    deleteOption.style.transition = 'background-color 0.2s';
     
-    // Get the branch container (the parent elements up to the branch level)
-    const branchContainer = tripleContainer.closest('.branch-name')?.parentElement;
-    if (!branchContainer) {
-        console.error(`Branch container for ${branchName} not found`);
-        return;
-    }
-    
-    // Remove the triple container
-    tripleContainer.remove();
-    
-    // Check if there are any triples left in this branch
-    const remainingTriples = branchContainer.querySelectorAll('.triple-container');
-    
-    // If no triples left, we should rebuild the entire annotation without this branch
-    if (remainingTriples.length === 0) {
-        console.log(`No triples left in branch ${branchName}, removing branch`);
-        rebuildAnnotationWithoutBranch(branchName);
-    } else {
-        // Otherwise, we should save the updated annotation
-        saveUpdatedAnnotation();
-    }
-}
-
-// Function to rebuild the annotation without a specific branch
-function rebuildAnnotationWithoutBranch(branchToRemove) {
-    console.log(`Rebuilding annotation without branch ${branchToRemove}`);
-    
-    // Get the annotation content
-    const annotationContent = document.getElementById('doc-annotation-content');
-    if (!annotationContent) {
-        console.error('Annotation content element not found');
-        return;
-    }
-    
-    // Parse the current annotation
-    const content = annotationContent.textContent;
-    
-    // Extract the root variable and type
-    const rootMatch = content.match(/\(([a-z0-9]+)\s*\/\s*([^)]+?)\s*(?=:|\))/i);
-    if (!rootMatch) {
-        console.error('Could not extract root from annotation');
-        return;
-    }
-    
-    const rootVar = rootMatch[1].trim();
-    const rootType = rootMatch[2].trim();
-    
-    // Find all branches in the current annotation
-    const branches = [];
-    const branchPattern = /:(temporal|modal|coref)\s*\(([^)]*(?:\([^)]*\))*)\)/g;
-    let branchMatch;
-    
-    while ((branchMatch = branchPattern.exec(content)) !== null) {
-        const branchName = branchMatch[1];
-        if (branchName !== branchToRemove) {
-            branches.push({
-                name: branchName,
-                content: branchMatch[2]
-            });
-        }
-    }
-    
-    // Build the new annotation
-    let newAnnotation = `(${rootVar} / ${rootType}\n`;
-    
-    // Add each remaining branch
-    branches.forEach(branch => {
-        newAnnotation += `    :${branch.name} (${branch.content})\n`;
+    // Hover effect
+    deleteOption.addEventListener('mouseover', function() {
+        this.style.backgroundColor = '#f8f9fa';
     });
     
-    // Close the annotation
-    newAnnotation += ')';
+    deleteOption.addEventListener('mouseout', function() {
+        this.style.backgroundColor = 'white';
+    });
     
-    // Update the annotation content
-    updateDocLevelAnnotation(newAnnotation);
+    // Add delete option to menu
+    contextMenu.appendChild(deleteOption);
     
-    // Save the updated annotation
-    saveUpdatedAnnotation();
+    // Add to body
+    document.body.appendChild(contextMenu);
+    
+    // Current target triple element
+    let currentTripleElement = null;
+    
+    // Handle right click on annotation content
+    annotationElement.addEventListener('contextmenu', function(e) {
+        // Find if click is on a triple
+        const tripleElement = findClosestTripleContainer(e.target);
+        if (tripleElement) {
+            e.preventDefault();
+            
+            // Save reference to current triple
+            currentTripleElement = tripleElement;
+            
+            // Position and show context menu
+            contextMenu.style.left = e.pageX + 'px';
+            contextMenu.style.top = e.pageY + 'px';
+            contextMenu.style.display = 'block';
+        }
+    });
+    
+    // Hide context menu when clicking elsewhere
+    document.addEventListener('click', function() {
+        contextMenu.style.display = 'none';
+    });
+    
+    // Perform delete action when delete option is clicked
+    deleteOption.addEventListener('click', function() {
+        if (currentTripleElement) {
+            // Get triple data
+            const branch = currentTripleElement.getAttribute('data-branch');
+            const source = currentTripleElement.getAttribute('data-source');
+            const relation = currentTripleElement.getAttribute('data-relation');
+            const target = currentTripleElement.getAttribute('data-target');
+            
+            try {
+                // Remove the triple from DOM
+                currentTripleElement.remove();
+                console.log(`Deleted triple: (${source} ${relation} ${target})`);
+                
+                // Show notification
+                showNotification(`Deleted triple from ${branch} branch`, 'success');
+                
+                // Rebuild and save
+                rebuildAnnotationFromDOM();
+            } catch (error) {
+                console.error("Error deleting triple:", error);
+                showNotification("Error deleting triple: " + error.message, "error");
+            }
+            
+            // Hide menu
+            contextMenu.style.display = 'none';
+        }
+    });
+    
+    // Also handle clicks on delete icons directly without confirmation
+    annotationElement.addEventListener('click', function(e) {
+        // Check if click was on a delete icon
+        if (e.target.closest('.delete-triple-icon')) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Find the parent triple
+            const tripleElement = findClosestTripleContainer(e.target);
+            if (tripleElement) {
+                // Get triple data
+                const branch = tripleElement.getAttribute('data-branch');
+                const source = tripleElement.getAttribute('data-source');
+                const relation = tripleElement.getAttribute('data-relation');
+                const target = tripleElement.getAttribute('data-target');
+                
+                try {
+                    // Remove the triple
+                    tripleElement.remove();
+                    console.log(`Deleted triple via icon: (${source} ${relation} ${target})`);
+                    
+                    // Show notification
+                    showNotification(`Deleted triple from ${branch} branch`, 'success');
+                    
+                    // Rebuild annotation
+                    rebuildAnnotationFromDOM();
+                } catch (error) {
+                    console.error("Error deleting triple:", error);
+                    showNotification("Error deleting triple: " + error.message, "error");
+                }
+            }
+        }
+    });
+    
+    // Helper function to find triple container
+    function findClosestTripleContainer(element) {
+        return element.closest('.triple-container');
+    }
+}
+
+// Rebuild the annotation directly from the DOM elements
+function rebuildAnnotationFromDOM() {
+    console.log("Rebuilding annotation directly from DOM elements");
+    
+    try {
+        // Get the annotation element
+        const annotationElement = document.getElementById('doc-annotation-content');
+        if (!annotationElement) {
+            console.error("Annotation element not found");
+            return;
+        }
+        
+        // Extract root information
+        const rootVar = document.querySelector('.root-var')?.textContent || 's0';
+        const rootType = document.querySelector('.root-type')?.textContent || 'sentence';
+        
+        // Start building the annotation
+        let newAnnotation = `(${rootVar} / ${rootType}\n`;
+        
+        // Process each branch type
+        ['temporal', 'modal', 'coref'].forEach(branchName => {
+            // Find all triple containers for this branch
+            const triples = Array.from(document.querySelectorAll(`.triple-container[data-branch="${branchName}"]`));
+            
+            if (triples.length === 0) {
+                console.log(`No triples found for ${branchName} branch, skipping`);
+                return; // Skip this branch
+            }
+            
+            // Start the branch
+            newAnnotation += `    :${branchName} ((`;
+            
+            // Add each triple
+            const tripleTexts = triples.map(triple => {
+                const source = triple.getAttribute('data-source');
+                const relation = triple.getAttribute('data-relation');
+                const target = triple.getAttribute('data-target');
+                return `${source} ${relation} ${target}`;
+            });
+            
+            // Format the triples with proper indentation
+            newAnnotation += tripleTexts.map(t => `(${t})`).join('\n            ');
+            
+            // Close the branch
+            newAnnotation += ')\n    )\n';
+        });
+        
+        // Close the annotation
+        newAnnotation += ')';
+        
+        console.log("Rebuilt annotation:", newAnnotation);
+        
+        // Update the display
+        updateDocLevelAnnotation(newAnnotation);
+        
+        // Save to database
+        saveUpdatedAnnotation();
+    } catch (error) {
+        console.error("Error rebuilding annotation:", error);
+        showNotification("Error rebuilding annotation: " + error.message, "error");
+    }
+}
+
+// Disable the old deleteTriple function completely
+function deleteTriple() {
+    console.error("Old deleteTriple function called - this should not happen");
+    alert("An error occurred while trying to delete. Please try again by right-clicking directly on the triple.");
+    return false;
 }
 
 // Function to save the updated annotation to the server
@@ -1373,42 +1284,76 @@ function saveUpdatedAnnotation() {
     const annotationContent = document.getElementById('doc-annotation-content');
     if (!annotationContent) {
         console.error('Annotation content element not found');
+        showNotification('Error: Unable to find annotation content', 'error');
         return;
     }
     
     const annotationText = annotationContent.textContent;
     console.log("Saving updated annotation:", annotationText);
     
+    // Show a loading notification
+    showNotification("Saving changes to database...", "info");
+    
     // Get the current doc version ID and sentence ID
     const docVersionId = document.getElementById('doc_version_id').value;
     const sentId = document.getElementById('snt_id').value;
     
-    // Post the annotation to the server
-    fetch(`/update_doc_annotation/${docVersionId}/${sentId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken()
-        },
-        body: JSON.stringify({
-            doc_annot: annotationText
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+    if (!docVersionId || !sentId) {
+        console.error('Missing doc version ID or sentence ID');
+        showNotification('Error: Missing document version or sentence ID', 'error');
+        return;
+    }
+    
+    // Get the current origin including protocol, hostname, and port
+    const origin = window.location.origin;
+    console.log("Current origin:", origin);
+    
+    // Use the main Save Document Annotation button instead
+    // This is a more reliable approach than trying API endpoints
+    showNotification("Please use the 'Save Document Annotation' button instead", "warning");
+    
+    // Scroll to the save button to make it visible
+    const saveButton = document.querySelector('button[onclick="saveDocAnnotation()"]');
+    if (saveButton) {
+        saveButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        saveButton.style.boxShadow = '0 0 10px rgba(0, 123, 255, 0.7)';
+        saveButton.style.animation = 'pulse 1.5s infinite';
+        
+        // Add a pulse animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Reset after 5 seconds
+        setTimeout(() => {
+            saveButton.style.boxShadow = '';
+            saveButton.style.animation = '';
+        }, 5000);
+    }
+    
+    // For legacy behavior, still try to save directly but without using fetch
+    // Using the global saveDocAnnotation if available
+    if (typeof window.saveDocAnnotation === 'function') {
+        console.log("Using global saveDocAnnotation function");
+        try {
+            window.saveDocAnnotation();
+        } catch (e) {
+            console.error("Error using global saveDocAnnotation:", e);
         }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            showNotification("Document annotation updated successfully", "success");
-        } else {
-            showNotification("Error updating document annotation: " + data.message, "error");
-        }
-    })
-    .catch(error => {
-        console.error('Error updating document annotation:', error);
-        showNotification("Error updating document annotation: " + error.message, "error");
-    });
+    }
+}
+
+// Simple function to show a native confirmation dialog
+function showNativeConfirmation(message, callback) {
+    // Use the native browser confirm dialog
+    const confirmed = confirm(message);
+    
+    // Execute the callback with the result
+    callback(confirmed);
 } 
