@@ -954,3 +954,213 @@ def update_doc_annotation(doc_version_id, sent_id):
             'exception_type': type(e).__name__
         }
         return jsonify(error_details), 500
+
+@main.route("/view_sentences/<int:doc_version_id>", methods=['GET'])
+@login_required
+def view_sentences(doc_version_id):
+    """View all sentences in a document in a clean, simple interface."""
+    doc_version = DocVersion.query.get_or_404(doc_version_id)
+    doc = Doc.query.get_or_404(doc_version.doc_id)
+    project = Project.query.get_or_404(doc.project_id)
+    
+    # Check user permission
+    if not check_user_permission(doc.project_id):
+        flash('You do not have permission to view this document.', 'warning')
+        return redirect(url_for('main.home'))
+    
+    # Get sentences
+    sentences = []
+    for sent in Sent.query.filter_by(doc_id=doc.id).all():
+        sentences.append(sent.content)
+    
+    # Get document owner
+    owner = User.query.get(doc_version.user_id) if doc_version.user_id else None
+    
+    # Get language
+    lang = project.language if project else "Unknown"
+    
+    return render_template('view_sentences.html',
+                          project_id=doc.project_id,
+                          doc_version_id=doc_version_id,
+                          projectDoc=doc,
+                          sentences=sentences,
+                          owner=owner,
+                          lang=lang)
+
+@main.route("/view_sent_annotation/<int:doc_version_id>/<int:sent_id>", methods=['GET'])
+@login_required
+def view_sent_annotation(doc_version_id, sent_id):
+    """View sentence-level annotation in a clean, simple interface."""
+    doc_version = DocVersion.query.get_or_404(doc_version_id)
+    doc = Doc.query.get_or_404(doc_version.doc_id)
+    
+    # Check user permission
+    if not check_user_permission(doc.project_id):
+        flash('You do not have permission to view this document.', 'warning')
+        return redirect(url_for('main.home'))
+    
+    # Get project info
+    project = Project.query.get_or_404(doc.project_id)
+    lang = project.language if project else "Unknown"
+    
+    # Get sentence
+    sentence = Sent.query.filter_by(doc_id=doc.id).all()[sent_id-1] if 0 < sent_id <= Sent.query.filter_by(doc_id=doc.id).count() else None
+    
+    if not sentence:
+        flash('Sentence not found.', 'danger')
+        return redirect(url_for('main.view_sentences', doc_version_id=doc_version_id))
+    
+    # Get annotation
+    annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sentence.id).first()
+    
+    # Get document owner/annotator
+    annotator = User.query.get(doc_version.user_id) if doc_version.user_id else None
+    
+    # Get max sentence ID for navigation
+    max_sent_id = Sent.query.filter_by(doc_id=doc.id).count()
+    
+    return render_template('view_sent_annotation.html',
+                          project_id=doc.project_id,
+                          doc_version_id=doc_version_id,
+                          sent_id=sent_id,
+                          sentence=sentence,
+                          annotation=annotation,
+                          doc=doc,
+                          annotator=annotator,
+                          lang=lang,
+                          max_sent_id=max_sent_id)
+
+@main.route("/view_doc_annotation/<int:doc_version_id>/<int:sent_id>", methods=['GET'])
+@login_required
+def view_doc_annotation(doc_version_id, sent_id):
+    """View document-level annotation in a clean, simple interface."""
+    doc_version = DocVersion.query.get_or_404(doc_version_id)
+    doc = Doc.query.get_or_404(doc_version.doc_id)
+    
+    # Check user permission
+    if not check_user_permission(doc.project_id):
+        flash('You do not have permission to view this document.', 'warning')
+        return redirect(url_for('main.home'))
+    
+    # Get project info
+    project = Project.query.get_or_404(doc.project_id)
+    lang = project.language if project else "Unknown"
+    
+    # Get sentence
+    sentence = Sent.query.filter_by(doc_id=doc.id).all()[sent_id-1] if 0 < sent_id <= Sent.query.filter_by(doc_id=doc.id).count() else None
+    
+    if not sentence:
+        flash('Sentence not found.', 'danger')
+        return redirect(url_for('main.view_sentences', doc_version_id=doc_version_id))
+    
+    # Get annotation
+    annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sentence.id).first()
+    
+    # Get document owner/annotator
+    annotator = User.query.get(doc_version.user_id) if doc_version.user_id else None
+    
+    # Get max sentence ID for navigation
+    max_sent_id = Sent.query.filter_by(doc_id=doc.id).count()
+    
+    return render_template('view_doc_annotation.html',
+                          project_id=doc.project_id,
+                          doc_version_id=doc_version_id,
+                          sent_id=sent_id,
+                          sentence=sentence,
+                          annotation=annotation,
+                          doc=doc,
+                          annotator=annotator,
+                          lang=lang,
+                          max_sent_id=max_sent_id)
+
+@main.route("/view_alignments/<int:doc_version_id>/<int:sent_id>", methods=['GET'])
+@login_required
+def view_alignments(doc_version_id, sent_id):
+    """View annotation alignments in a clean, simple interface."""
+    doc_version = DocVersion.query.get_or_404(doc_version_id)
+    doc = Doc.query.get_or_404(doc_version.doc_id)
+    
+    # Check user permission
+    if not check_user_permission(doc.project_id):
+        flash('You do not have permission to view this document.', 'warning')
+        return redirect(url_for('main.home'))
+    
+    # Get project info
+    project = Project.query.get_or_404(doc.project_id)
+    lang = project.language if project else "Unknown"
+    
+    # Get sentence
+    sentence = Sent.query.filter_by(doc_id=doc.id).all()[sent_id-1] if 0 < sent_id <= Sent.query.filter_by(doc_id=doc.id).count() else None
+    
+    if not sentence:
+        flash('Sentence not found.', 'danger')
+        return redirect(url_for('main.view_sentences', doc_version_id=doc_version_id))
+    
+    # Get annotation with alignments
+    annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sentence.id).first()
+    
+    # Get document owner/annotator
+    annotator = User.query.get(doc_version.user_id) if doc_version.user_id else None
+    
+    # Get max sentence ID for navigation
+    max_sent_id = Sent.query.filter_by(doc_id=doc.id).count()
+    
+    return render_template('view_alignments.html',
+                          project_id=doc.project_id,
+                          doc_version_id=doc_version_id,
+                          sent_id=sent_id,
+                          sentence=sentence,
+                          annotation=annotation,
+                          doc=doc,
+                          annotator=annotator,
+                          lang=lang,
+                          max_sent_id=max_sent_id)
+
+@main.route("/view_combined/<int:doc_version_id>/<int:sent_id>", methods=['GET'])
+@login_required
+def view_combined(doc_version_id, sent_id):
+    """View all annotations in a combined format (sentences, sentence-level, document-level, and alignments)."""
+    doc_version = DocVersion.query.get_or_404(doc_version_id)
+    doc = Doc.query.get_or_404(doc_version.doc_id)
+    
+    # Check user permission
+    if not check_user_permission(doc.project_id):
+        flash('You do not have permission to view this document.', 'warning')
+        return redirect(url_for('main.home'))
+    
+    # Get project info
+    project = Project.query.get_or_404(doc.project_id)
+    lang = project.language if project else "Unknown"
+    
+    # Get all sentences
+    sentences = []
+    for sent in Sent.query.filter_by(doc_id=doc.id).all():
+        sentences.append(sent.content)
+    
+    # Get current sentence
+    sentence = Sent.query.filter_by(doc_id=doc.id).all()[sent_id-1] if 0 < sent_id <= Sent.query.filter_by(doc_id=doc.id).count() else None
+    
+    if not sentence:
+        flash('Sentence not found.', 'danger')
+        return redirect(url_for('users.project', project_id=doc.project_id))
+    
+    # Get annotation
+    annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sentence.id).first()
+    
+    # Get document owner/annotator
+    annotator = User.query.get(doc_version.user_id) if doc_version.user_id else None
+    
+    # Get max sentence ID for navigation
+    max_sent_id = Sent.query.filter_by(doc_id=doc.id).count()
+    
+    return render_template('view_combined.html',
+                          project_id=doc.project_id,
+                          doc_version_id=doc_version_id,
+                          sent_id=sent_id,
+                          sentence=sentence,
+                          sentences=sentences,
+                          annotation=annotation,
+                          doc=doc,
+                          annotator=annotator,
+                          lang=lang,
+                          max_sent_id=max_sent_id)

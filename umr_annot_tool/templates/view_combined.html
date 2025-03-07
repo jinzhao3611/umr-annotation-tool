@@ -1,0 +1,327 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
+    <style>
+        /* General styles */
+        .section-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .section-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 1rem 1.5rem;
+            background-color: #f0f4f8;
+            font-weight: 500;
+        }
+        
+        .section-content {
+            padding: 1.5rem;
+            overflow: auto;
+        }
+        
+        /* Sentence list */
+        .sentence-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+        
+        .sentence-item {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+        
+        .sentence-item:last-child {
+            border-bottom: none;
+        }
+        
+        .sentence-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .sentence-item.active {
+            background-color: #e9ecef;
+            border-left: 3px solid #007bff;
+        }
+        
+        /* Annotation styles */
+        .annotation-content {
+            background-color: #f7f9fc;
+            border-radius: 6px;
+            padding: 1.25rem;
+            font-family: "Courier New", monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .original-sentence {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #007bff;
+        }
+        
+        /* Document context */
+        .document-context {
+            padding: 1rem;
+            background-color: #fffdeb;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #ffc107;
+        }
+        
+        /* Alignment styles */
+        .alignment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .alignment-table th {
+            background-color: #f0f4f8;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .alignment-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .alignment-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .alignment-key {
+            font-family: "Courier New", monospace;
+            background-color: #e9ecef;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+        
+        /* Navigation controls */
+        .navigation-controls {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Annotation columns */
+        .annotation-columns {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .annotation-column {
+            padding: 0 10px;
+        }
+        
+        /* Make the columns stack on small screens */
+        @media (max-width: 992px) {
+            .sentence-list {
+                max-height: 200px;
+            }
+            
+            .annotation-columns {
+                flex-direction: column;
+            }
+            
+            .annotation-column {
+                width: 100% !important;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+{% endblock head %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5">Document Annotations</h1>
+            <p class="lead text-muted">Viewing annotations for <strong>{{ doc.filename }}</strong></p>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('main.home') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('users.project', project_id=project_id) }}">Project</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Document Annotations</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="row navigation-controls">
+        <div class="col text-center">
+            {% if sent_id > 1 %}
+            <a href="{{ url_for('main.view_combined', doc_version_id=doc_version_id, sent_id=sent_id-1) }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left"></i> Previous Sentence
+            </a>
+            {% endif %}
+            
+            <span class="mx-2">Sentence {{ sent_id }} of {{ max_sent_id }}</span>
+            
+            {% if sent_id < max_sent_id %}
+            <a href="{{ url_for('main.view_combined', doc_version_id=doc_version_id, sent_id=sent_id+1) }}" class="btn btn-outline-primary">
+                Next Sentence <i class="fas fa-arrow-right"></i>
+            </a>
+            {% endif %}
+            
+            <a href="{{ url_for('users.project', project_id=project_id) }}" class="btn btn-outline-secondary ms-3">
+                <i class="fas fa-arrow-left me-1"></i> Back to Project
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left panel: Sentence list and current sentence -->
+        <div class="col-lg-3">
+            <!-- Sentence List Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h5 class="mb-0">Sentences</h5>
+                </div>
+                <div class="section-content">
+                    <div class="sentence-list">
+                        {% for sent in sentences %}
+                        <div class="sentence-item {% if loop.index == sent_id %}active{% endif %}">
+                            <a href="{{ url_for('main.view_combined', doc_version_id=doc_version_id, sent_id=loop.index) }}" 
+                               class="text-decoration-none text-dark">
+                                <strong>{{ loop.index }}.</strong> {{ sent|truncate(80) }}
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Sentence Section -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h5 class="mb-0">Current Sentence</h5>
+                </div>
+                <div class="section-content">
+                    <div class="original-sentence">
+                        <p class="mb-0">{{ sentence.content }}</p>
+                    </div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <span class="text-muted">ID: {{ sent_id }}</span>
+                        <span class="badge bg-primary">{{ lang }}</span>
+                    </div>
+                    <hr>
+                    <div class="mb-1 mt-3">
+                        <small class="text-muted">Annotated by:</small> 
+                        <strong>{{ annotator.username if annotator else 'None' }}</strong>
+                    </div>
+                    <div class="d-grid gap-2 mt-3">
+                        <a href="{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=sent_id) }}" 
+                           class="btn btn-primary">
+                            <i class="fas fa-edit me-1"></i> Edit Sentence Annotation
+                        </a>
+                        <a href="{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=sent_id) }}" 
+                           class="btn btn-outline-primary">
+                            <i class="fas fa-edit me-1"></i> Edit Document Annotation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right panel: Three annotation columns side by side -->
+        <div class="col-lg-9">
+            <div class="row">
+                <!-- Sentence-Level Annotation Column -->
+                <div class="col-lg-4 mb-4">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h5 class="mb-0"><i class="fas fa-align-left me-1"></i> Sentence Annotation</h5>
+                        </div>
+                        <div class="section-content">
+                            {% if annotation and annotation.sent_annot %}
+                                <div class="annotation-content">{{ annotation.sent_annot }}</div>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    No sentence-level annotation available.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document-Level Annotation Column -->
+                <div class="col-lg-4 mb-4">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h5 class="mb-0"><i class="fas fa-file-alt me-1"></i> Document Annotation</h5>
+                        </div>
+                        <div class="section-content">
+                            <div class="document-context">
+                                <h6><i class="fas fa-info-circle me-2"></i>Document Context</h6>
+                                <p class="mb-0 small">Document-level annotations capture relationships between entities and events across the entire document.</p>
+                            </div>
+                            {% if annotation and annotation.doc_annot %}
+                                <div class="annotation-content">{{ annotation.doc_annot }}</div>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    No document-level annotation available.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alignments Column -->
+                <div class="col-lg-4 mb-4">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h5 class="mb-0"><i class="fas fa-link me-1"></i> Alignments</h5>
+                        </div>
+                        <div class="section-content">
+                            {% if annotation and annotation.alignment and annotation.alignment|length > 0 %}
+                                <table class="alignment-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Key</th>
+                                            <th>Tokens</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for key, tokens in annotation.alignment.items() %}
+                                        <tr>
+                                            <td><span class="alignment-key">{{ key }}</span></td>
+                                            <td>
+                                                {% if tokens|length > 0 %}
+                                                    {% for token in tokens %}
+                                                        <span class="badge bg-light text-dark me-1">{{ token }}</span>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <span class="text-muted">None</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    No alignment information available.
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} 
