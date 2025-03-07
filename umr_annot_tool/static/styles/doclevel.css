@@ -1050,4 +1050,140 @@ pre {
     text-decoration: underline;
     text-decoration-style: wavy;
     text-decoration-color: #f44336;
+}
+
+/* Triple hover and delete styling */
+.triple-container {
+    position: relative;
+    padding: 2px;
+    border-radius: 3px;
+    margin: 1px 0;
+}
+
+.triple-container:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.delete-triple-icon {
+    display: none;
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #dc3545;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.triple-container:hover .delete-triple-icon {
+    display: inline-block;
+}
+
+.delete-triple-icon:hover {
+    color: #b02a37;
+}
+
+/* Delete icon styling */
+.delete-triple-icon i {
+    color: #dc3545;
+    font-size: 14px;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.delete-triple-icon:hover i {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Tooltip for delete information */
+.triple-container {
+    position: relative;
+}
+
+.triple-container:hover::after {
+    content: "Right-click to delete";
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Make trash icon more visible on hover */
+.triple-container:hover .delete-triple-icon {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Delete hint styling */
+.delete-hint {
+    display: none;
+    position: absolute;
+    top: -20px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-family: sans-serif;
+    z-index: 100;
+    pointer-events: none; /* Make sure it doesn't interfere with clicks */
+}
+
+.triple-container:hover .delete-hint {
+    display: block;
+}
+
+/* Update the triple container for positioning */
+.triple-container {
+    position: relative;
+    padding: 2px;
+    border-radius: 3px;
+    margin: 3px 0;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+}
+
+.triple-container:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: context-menu; /* Show context menu cursor on hover */
+}
+
+/* Add a right-click indicator */
+.triple-container::before {
+    content: 'Right-click to delete';
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #dc3545;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 3px;
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.triple-container:hover::before {
+    opacity: 0.9;
 } 

@@ -708,110 +708,54 @@ function generateUniqueId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
 }
 
-// Display a notification message to the user
+// Function to show notifications to the user
 function showNotification(message, type = 'info') {
-    // If there's already a notification, remove it
-    const existingNotification = document.querySelector('.notification-message');
-    if (existingNotification) {
-        document.body.removeChild(existingNotification);
-    }
+    console.log(`Notification (${type}): ${message}`);
     
-    // Create notification element
+    // Create a notification element
     const notification = document.createElement('div');
-    notification.className = `notification-message notification-${type}`;
+    notification.className = `notification notification-${type}`;
     notification.innerHTML = `
         <div class="notification-content">
-            <div class="notification-icon">
-                ${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}
-            </div>
-            <div class="notification-text">${message}</div>
+            <span>${message}</span>
+            <button class="notification-close">&times;</button>
         </div>
     `;
     
-    // Add to body
+    // Add styles
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.zIndex = '1000';
+    notification.style.backgroundColor = type === 'success' ? '#d4edda' : 
+                                      type === 'error' ? '#f8d7da' : 
+                                      type === 'warning' ? '#fff3cd' : '#d1ecf1';
+    notification.style.color = type === 'success' ? '#155724' : 
+                            type === 'error' ? '#721c24' : 
+                            type === 'warning' ? '#856404' : '#0c5460';
+    notification.style.border = `1px solid ${type === 'success' ? '#c3e6cb' : 
+                                           type === 'error' ? '#f5c6cb' : 
+                                           type === 'warning' ? '#ffeeba' : '#bee5eb'}`;
+    notification.style.borderRadius = '4px';
+    notification.style.padding = '10px 15px';
+    notification.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+    notification.style.maxWidth = '300px';
+    
+    // Add the notification to the DOM
     document.body.appendChild(notification);
     
-    // Add styles if not already present
-    if (!document.getElementById('notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            .notification-message {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 10000;
-                padding: 15px;
-                border-radius: 6px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                transform: translateY(-20px);
-                opacity: 0;
-                transition: all 0.3s ease;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            }
-            .notification-message.show {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            .notification-content {
-                display: flex;
-                align-items: center;
-            }
-            .notification-icon {
-                margin-right: 10px;
-                font-size: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                color: white;
-            }
-            .notification-success {
-                background-color: #f1f9f5;
-                border-left: 4px solid #28a745;
-            }
-            .notification-success .notification-icon {
-                background-color: #28a745;
-            }
-            .notification-error {
-                background-color: #fbf1f0;
-                border-left: 4px solid #dc3545;
-            }
-            .notification-error .notification-icon {
-                background-color: #dc3545;
-            }
-            .notification-info {
-                background-color: #f0f7fb;
-                border-left: 4px solid #17a2b8;
-            }
-            .notification-info .notification-icon {
-                background-color: #17a2b8;
-            }
-        `;
-        document.head.appendChild(style);
-    }
+    // Add event listener to close button
+    const closeButton = notification.querySelector('.notification-close');
+    closeButton.addEventListener('click', () => {
+        document.body.removeChild(notification);
+    });
     
-    // Show notification
+    // Auto-dismiss after 3 seconds
     setTimeout(() => {
-        notification.classList.add('show');
-        
-        // Hide after 3 seconds
-        setTimeout(() => {
-            notification.classList.remove('show');
-            
-            // Remove from DOM after transition completes
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        }, 3000);
-    }, 100);
-    
-    // Log the notification message in the console as well
-    console.log(`Notification (${type}): ${message}`);
+        if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+        }
+    }, 3000);
 }
 
 // Save document annotation to the database
@@ -1121,14 +1065,20 @@ function formatDocLevelAnnotation() {
             
             // Format each triple
             if (triples.length > 0) {
-                const formattedTriples = triples.map(triple => {
+                const formattedTriples = triples.map((triple, index) => {
                     // Apply validation
                     const sourceClass = isValidNode(triple.source, branchName) ? "node" : "node invalid";
                     const relationClass = isValidRelation(triple.relation, branchName) ? "relation" : "relation invalid";
                     const targetClass = isValidNode(triple.target, branchName) ? "node" : "node invalid";
                     
-                    // Return formatted triple with highlighting
-                    return `                     <span class="parenthesis">(</span><span class="${sourceClass}">${triple.source}</span> <span class="${relationClass}">${triple.relation}</span> <span class="${targetClass}">${triple.target}</span><span class="parenthesis">)</span>`;
+                    // Create a unique ID for this triple for deletion purposes
+                    const tripleId = `${branchName}-triple-${index}-${Date.now()}`;
+                    
+                    // Return formatted triple with highlighting and delete icon
+                    return `                     <div class="triple-container" data-triple-id="${tripleId}" data-branch="${branchName}" data-source="${triple.source}" data-relation="${triple.relation}" data-target="${triple.target}" data-label="Right-click to delete this triple">
+                        <span class="parenthesis">(</span><span class="${sourceClass}">${triple.source}</span> <span class="${relationClass}">${triple.relation}</span> <span class="${targetClass}">${triple.target}</span><span class="parenthesis">)</span>
+                        <span class="delete-triple-icon" data-triple-id="${tripleId}"><i class="fas fa-trash-alt"></i></span>
+                     </div>`;
                 });
                 
                 // Join the triples with line breaks
@@ -1156,6 +1106,25 @@ function formatDocLevelAnnotation() {
         
         // Set the HTML content
         annotationContent.innerHTML = htmlContent;
+        
+        // Add a "Right-click to delete triples" helper text at the top of the annotation
+        const helperText = document.createElement('div');
+        helperText.className = 'delete-helper-text';
+        helperText.innerHTML = '<i class="fas fa-info-circle"></i> Right-click on any triple to delete it';
+        helperText.style.backgroundColor = '#f8f9fa';
+        helperText.style.border = '1px solid #dee2e6';
+        helperText.style.borderRadius = '4px';
+        helperText.style.padding = '5px 10px';
+        helperText.style.marginBottom = '10px';
+        helperText.style.fontSize = '12px';
+        helperText.style.color = '#495057';
+        
+        // Insert at the top of the annotation
+        annotationContent.insertBefore(helperText, annotationContent.firstChild);
+        
+        // Setup delete buttons after formatting
+        console.log("Setting up delete functionality");
+        setTimeout(setupDeleteButtons, 100);
     } catch (e) {
         console.error("Error formatting annotation with highlighting:", e);
         console.error("Stack trace:", e.stack);
@@ -1249,6 +1218,197 @@ function nextSentence() {
 
 // Setup functionality for delete buttons on existing triples
 function setupDeleteButtons() {
-    // We'll implement this if needed later
     console.log("Setting up delete buttons for existing triples");
+    
+    // Wait a moment for the DOM to be fully updated
+    setTimeout(() => {
+        // First, add a global right-click event handler to the annotation container
+        const annotationContent = document.getElementById('doc-annotation-content');
+        if (annotationContent) {
+            // Prevent default browser context menu on the entire annotation area
+            annotationContent.addEventListener('contextmenu', function(e) {
+                // Check if the click is on or within a triple container
+                const tripleContainer = e.target.closest('.triple-container');
+                if (tripleContainer) {
+                    e.preventDefault(); // Prevent default browser context menu
+                    
+                    // Get the triple data
+                    const tripleId = tripleContainer.getAttribute('data-triple-id');
+                    const branch = tripleContainer.getAttribute('data-branch');
+                    const source = tripleContainer.getAttribute('data-source');
+                    const relation = tripleContainer.getAttribute('data-relation');
+                    const target = tripleContainer.getAttribute('data-target');
+                    
+                    // Show confirmation message
+                    if (confirm(`Are you sure you want to delete the triple: (${source} ${relation} ${target})?`)) {
+                        deleteTriple(tripleId, branch);
+                    }
+                    
+                    return false; // Prevent default and stop propagation
+                }
+            });
+            
+            // Also add click event to the delete icons
+            const deleteIcons = document.querySelectorAll('.delete-triple-icon');
+            deleteIcons.forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const tripleId = this.getAttribute('data-triple-id');
+                    const tripleContainer = document.querySelector(`.triple-container[data-triple-id="${tripleId}"]`);
+                    
+                    if (tripleContainer) {
+                        // Get the triple data for confirmation
+                        const branch = tripleContainer.getAttribute('data-branch');
+                        const source = tripleContainer.getAttribute('data-source');
+                        const relation = tripleContainer.getAttribute('data-relation');
+                        const target = tripleContainer.getAttribute('data-target');
+                        
+                        // Confirm deletion
+                        if (confirm(`Are you sure you want to delete the triple: (${source} ${relation} ${target})?`)) {
+                            deleteTriple(tripleId, branch);
+                        }
+                    }
+                });
+            });
+        }
+    }, 300);
+}
+
+// Function to delete a triple and update the annotation
+function deleteTriple(tripleId, branchName) {
+    console.log(`Deleting triple ${tripleId} from branch ${branchName}`);
+    
+    // Find the triple container
+    const tripleContainer = document.querySelector(`.triple-container[data-triple-id="${tripleId}"]`);
+    if (!tripleContainer) {
+        console.error(`Triple container with ID ${tripleId} not found`);
+        return;
+    }
+    
+    // Get the branch container (the parent elements up to the branch level)
+    const branchContainer = tripleContainer.closest('.branch-name')?.parentElement;
+    if (!branchContainer) {
+        console.error(`Branch container for ${branchName} not found`);
+        return;
+    }
+    
+    // Remove the triple container
+    tripleContainer.remove();
+    
+    // Check if there are any triples left in this branch
+    const remainingTriples = branchContainer.querySelectorAll('.triple-container');
+    
+    // If no triples left, we should rebuild the entire annotation without this branch
+    if (remainingTriples.length === 0) {
+        console.log(`No triples left in branch ${branchName}, removing branch`);
+        rebuildAnnotationWithoutBranch(branchName);
+    } else {
+        // Otherwise, we should save the updated annotation
+        saveUpdatedAnnotation();
+    }
+}
+
+// Function to rebuild the annotation without a specific branch
+function rebuildAnnotationWithoutBranch(branchToRemove) {
+    console.log(`Rebuilding annotation without branch ${branchToRemove}`);
+    
+    // Get the annotation content
+    const annotationContent = document.getElementById('doc-annotation-content');
+    if (!annotationContent) {
+        console.error('Annotation content element not found');
+        return;
+    }
+    
+    // Parse the current annotation
+    const content = annotationContent.textContent;
+    
+    // Extract the root variable and type
+    const rootMatch = content.match(/\(([a-z0-9]+)\s*\/\s*([^)]+?)\s*(?=:|\))/i);
+    if (!rootMatch) {
+        console.error('Could not extract root from annotation');
+        return;
+    }
+    
+    const rootVar = rootMatch[1].trim();
+    const rootType = rootMatch[2].trim();
+    
+    // Find all branches in the current annotation
+    const branches = [];
+    const branchPattern = /:(temporal|modal|coref)\s*\(([^)]*(?:\([^)]*\))*)\)/g;
+    let branchMatch;
+    
+    while ((branchMatch = branchPattern.exec(content)) !== null) {
+        const branchName = branchMatch[1];
+        if (branchName !== branchToRemove) {
+            branches.push({
+                name: branchName,
+                content: branchMatch[2]
+            });
+        }
+    }
+    
+    // Build the new annotation
+    let newAnnotation = `(${rootVar} / ${rootType}\n`;
+    
+    // Add each remaining branch
+    branches.forEach(branch => {
+        newAnnotation += `    :${branch.name} (${branch.content})\n`;
+    });
+    
+    // Close the annotation
+    newAnnotation += ')';
+    
+    // Update the annotation content
+    updateDocLevelAnnotation(newAnnotation);
+    
+    // Save the updated annotation
+    saveUpdatedAnnotation();
+}
+
+// Function to save the updated annotation to the server
+function saveUpdatedAnnotation() {
+    // Get the updated annotation text
+    const annotationContent = document.getElementById('doc-annotation-content');
+    if (!annotationContent) {
+        console.error('Annotation content element not found');
+        return;
+    }
+    
+    const annotationText = annotationContent.textContent;
+    console.log("Saving updated annotation:", annotationText);
+    
+    // Get the current doc version ID and sentence ID
+    const docVersionId = document.getElementById('doc_version_id').value;
+    const sentId = document.getElementById('snt_id').value;
+    
+    // Post the annotation to the server
+    fetch(`/update_doc_annotation/${docVersionId}/${sentId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            doc_annot: annotationText
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.success) {
+            showNotification("Document annotation updated successfully", "success");
+        } else {
+            showNotification("Error updating document annotation: " + data.message, "error");
+        }
+    })
+    .catch(error => {
+        console.error('Error updating document annotation:', error);
+        showNotification("Error updating document annotation: " + error.message, "error");
+    });
 } 
