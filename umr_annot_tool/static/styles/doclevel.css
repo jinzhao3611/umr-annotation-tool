@@ -1,12 +1,15 @@
 /* Document Level Page Specific Styles */
 
+/* Document Level Page Specific Styles - With structured annotation and delete buttons */
+
 /* Three-panel layout */
 .doc-level-container {
-    height: 100%;
+    height: calc(100vh - 80px); /* Subtract header height */
     margin: 0;
     padding: 0;
     display: flex;
     position: relative;
+    overflow: hidden; /* Prevent scrolling at container level */
 }
 
 .panel {
@@ -17,13 +20,108 @@
     padding-bottom: 80px;
 }
 
+.panel {
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
 .left-panel, .middle-panel, .right-panel {
     min-width: 250px;
 }
 
-/* Make middle panel a little wider */
+/* Make middle panel a little wider and fill height */
 .middle-panel {
     flex: 1.2;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make left and middle panels fill height */
+.left-panel, .middle-panel {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Make all panels fill height */
+.left-panel, .middle-panel, .right-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Adjust left panel flexbox properties */
+.left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.left-panel .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 30px); /* Account for margins */
+    margin-bottom: 0;
+}
+
+.left-panel .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0 !important;
+}
+
+.middle-panel .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 30px); /* Account for margins */
+    margin-bottom: 0;
+}
+
+.middle-panel .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-bottom: 0;
+}
+
+/* Adjust right panel flexbox properties */
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Make cards in right panel properly stack */
+.right-panel .card {
+    margin-bottom: 15px;
+}
+
+/* The last card in the right panel should expand to fill space */
+.right-panel .card:last-child {
+    margin-bottom: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-panel .card:last-child .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Push the back button to the bottom */
+.right-panel .card:last-child .card-body .btn-group:last-child {
+    margin-top: auto;
 }
 
 /* Annotation display styles */
@@ -33,9 +131,11 @@
 }
 
 #doc-annotation {
-    min-height: 200px;
-    max-height: 350px;
+    flex: 1;
+    min-height: 100px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Triple form styles */
@@ -152,13 +252,18 @@
 
 /* All Sentence Annotations Styles */
 .all-sent-annotations {
-    max-height: 600px;
+    flex: 1;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff; /* Ensure white background */
 }
 
 .sent-annotation-item {
     padding: 10px;
     margin-bottom: 5px;
+    background-color: #ffffff; /* Ensure white background */
+    border-radius: 4px;
 }
 
 .sent-annotation-item.current-annotation {
@@ -179,6 +284,7 @@
 
 .sent-annotation-content {
     padding-left: 10px;
+    background-color: #ffffff !important;
 }
 
 .sent-text {
@@ -208,6 +314,7 @@
     border-radius: 5px;
     margin-bottom: 15px;
     border-left: 3px solid #007bff;
+    flex-shrink: 0; /* Prevent from shrinking */
 }
 
 .current-sentence-text {
@@ -233,13 +340,588 @@
 
 /* Sentence Selector */
 .sentence-selector {
-    margin-top: 20px;
+    margin-top: auto;
     padding-top: 15px;
     border-top: 1px solid #dee2e6;
+    flex-shrink: 0; /* Prevent from shrinking */
 }
 
 .sentence-selector .form-label {
     font-weight: 600;
     color: #495057;
     margin-bottom: 8px;
+}
+
+/* Structured Annotation Styles */
+.structured-annotation {
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.5;
+    padding: 5px;
+}
+
+.annotation-branch {
+    margin-bottom: 20px;
+    border-left: 3px solid #dee2e6;
+    padding-left: 15px;
+}
+
+.branch-header {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.branch-content {
+    margin-left: 10px;
+}
+
+.temporal-branch {
+    border-left-color: #007bff;
+}
+
+.modal-branch {
+    border-left-color: #28a745;
+}
+
+.coreference-branch {
+    border-left-color: #fd7e14;
+}
+
+.triple-item {
+    margin-bottom: 8px;
+    position: relative;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    padding: 8px 10px;
+    background-color: #f8f9fa;
+}
+
+.triple-content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.triple-item .node {
+    background-color: #e9ecef;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.triple-item .relation {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.triple-item .delete-triple {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 6px;
+    font-size: 16px;
+    line-height: 1;
+}
+
+/* Original Annotation Display */
+.original-annotation {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.doc-annotation-container .card-header {
+    background-color: #f0f0f0;
+    padding: 0.5rem 1rem;
+}
+
+.doc-annotation-container .card-body {
+    padding: 0.75rem;
+}
+
+/* Make the delete section more compact */
+.doc-annotation-container .structured-annotation {
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+}
+
+.doc-annotation-container .annotation-branch {
+    margin-bottom: 10px;
+}
+
+.doc-annotation-container .branch-header {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+.doc-annotation-container .triple-item {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+/* Interactive Annotation Styles */
+.interactive-annotation {
+    position: relative;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    padding: 15px 15px 25px 15px; /* Add extra padding at bottom for resize handle */
+    min-height: 300px;
+    height: auto; /* Let it grow with content */
+    flex: 1; /* Fill available space */
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    color: #333;
+    letter-spacing: 0.01rem;
+    resize: vertical;  /* Allow vertical resizing */
+}
+
+/* Ensure the interactive annotation is resizable even in flex layout */
+.interactive-annotation {
+    position: relative;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    padding: 15px 15px 25px 15px; /* Add extra padding at bottom for resize handle */
+    min-height: 300px;
+    height: 400px; /* Set a fixed initial height to allow resize */
+    flex: none; /* Don't grow with flex container */
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    color: #333;
+    letter-spacing: 0.01rem;
+    resize: vertical;  /* Allow vertical resizing */
+}
+
+/* Container for doc-annotation to allow proper flexbox and resize */
+#doc-annotation {
+    flex: 1;
+    min-height: 100px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Create a container for the resizable element */
+#doc-annotation {
+    flex: 1;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Remove padding that might interfere */
+    overflow: visible; /* Allow resize handle to be visible */
+}
+
+/* Container for the resizable content */
+.resize-container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+    overflow: visible;
+}
+
+/* Resize handle - make it more prominent */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: ns-resize;
+    background-color: #f0f0f0;
+    background-image: linear-gradient(135deg, transparent 0%, transparent 45%, #007bff 45%, #007bff 55%, transparent 55%, transparent);
+    background-size: 10px 10px;
+    border-radius: 0 0 4px 0;
+    border-top: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+    z-index: 100;
+    box-shadow: -2px -2px 5px rgba(0,0,0,0.05);
+}
+
+/* Enhanced resize handle */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    cursor: ns-resize;
+    background-color: #e9ecef;
+    background-image: linear-gradient(135deg, transparent 0%, transparent 40%, #0d6efd 40%, #0d6efd 60%, transparent 60%, transparent);
+    background-size: 12px 12px;
+    border-radius: 0 0 4px 0;
+    border-top: 1px solid #ced4da;
+    border-left: 1px solid #ced4da;
+    z-index: 1000;
+    box-shadow: -2px -2px 8px rgba(0,0,0,0.1);
+}
+
+.resize-handle:hover {
+    background-color: #e6f2ff;
+    border-color: #bbdefb;
+}
+
+.resize-handle:hover {
+    background-color: #cfe2ff;
+    border-color: #9ec5fe;
+}
+
+/* Syntax highlighting with improved contrast */
+.interactive-annotation .variable {
+    color: #9c27b0; /* Purple for variables like s1, s1a */
+    font-weight: 500;
+    padding: 0 1px;
+}
+
+.interactive-annotation .variable {
+    color: #8e24aa; /* Darker purple for better readability */
+    font-weight: 600;
+    padding: 0 1px;
+}
+
+.interactive-annotation .relation {
+    color: #2196F3; /* Blue for relations like :ARG1, :op1 */
+    font-weight: 500;
+    padding: 0 1px;
+}
+
+.interactive-annotation .relation {
+    color: #1976d2; /* Darker blue for better readability */
+    font-weight: 600;
+    padding: 0 1px;
+}
+
+.interactive-annotation .semantic-type {
+    color: #4CAF50; /* Green for semantic types like state, process */
+    font-weight: 500;
+    padding: 0 1px;
+}
+
+.interactive-annotation .semantic-type {
+    color: #2e7d32; /* Darker green for better readability */
+    font-weight: 600;
+    padding: 0 1px;
+}
+
+/* Root node styling */
+.annotation-root {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.annotation-root {
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    padding: 4px;
+    background-color: rgba(0,0,0,0.02);
+    border-radius: 4px;
+}
+
+.annotation-root-close {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.annotation-root-close {
+    font-weight: bold;
+    margin-top: 12px;
+    font-size: 1.05rem;
+    padding: 4px;
+}
+
+/* Section styling */
+.annotation-section {
+    margin-left: 15px;
+    margin-bottom: 6px;
+    padding-left: 8px;
+    position: relative;
+}
+
+.annotation-section {
+    margin-left: 20px;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    position: relative;
+    border-left-width: 4px;
+}
+
+/* Clearer section headers */
+.section-header {
+    margin-bottom: 3px;
+}
+
+.section-header {
+    margin-bottom: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #424242;
+}
+
+/* Better content spacing */
+.section-content {
+    margin-left: 8px;
+}
+
+.section-content {
+    margin-left: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/* Better triple item styling */
+.triple-item.interactive {
+    position: relative;
+    padding: 2px 28px 2px 2px;
+    margin-bottom: 1px;
+    border-radius: 3px;
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.02);
+    line-height: 1.3;
+}
+
+.triple-item.interactive {
+    position: relative;
+    padding: 4px 32px 4px 6px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.03);
+    line-height: 1.5;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.triple-item.interactive:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Improve delete icon contrast */
+.triple-item.interactive .delete-icon {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #dc3545;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+.triple-item.interactive .delete-icon {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #dc3545;
+    background-color: rgba(255,255,255,0.8);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+/* Cleaner section close */
+.section-close {
+    margin-left: -5px;
+}
+
+.section-close {
+    margin-left: 0;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+/* Colorize different sections */
+.temporal-section {
+    border-left: 3px solid #007bff;
+}
+
+.modal-section {
+    border-left: 3px solid #28a745;
+}
+
+.coreference-section {
+    border-left: 3px solid #fd7e14;
+}
+
+/* Triple item styling for interactive view */
+.triple-item.interactive {
+    position: relative;
+    padding: 2px 28px 2px 2px;
+    margin-bottom: 1px;
+    border-radius: 3px;
+    cursor: default;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.triple-item.interactive .delete-icon {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #dc3545;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+    padding: 3px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+}
+
+/* Add back hover effects that were accidentally removed */
+.triple-item.interactive:hover .delete-icon {
+    opacity: 1;
+}
+
+.triple-item.interactive .delete-icon:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Fix spacing for more compact display */
+.section-header {
+    margin-bottom: 3px;
+}
+
+.section-content {
+    margin-left: 8px;
+}
+
+.triple-item.interactive {
+    line-height: 1.3;
+}
+
+/* Additional sentence-level-like styles */
+.interactive-annotation .variable {
+    color: #9c27b0;
+    font-weight: 500;
+    padding: 0 1px;
+}
+
+.interactive-annotation .relation {
+    color: #2196F3;
+    font-weight: 500;
+    padding: 0 1px;
+}
+
+.interactive-annotation .semantic-type {
+    color: #4CAF50;
+    font-weight: 500;
+    padding: 0 1px;
+}
+
+/* Make the card more compact */
+.doc-annotation-container .card-body {
+    padding: 0.5rem !important;
+}
+
+.doc-annotation-container .card-header {
+    padding: 0.5rem 0.75rem;
+}
+
+.interactive-annotation {
+    padding: 10px 12px;
+}
+
+/* Add spacing after sections */
+.annotation-section {
+    margin-bottom: 4px;
+}
+
+/* Custom scrollbar for better appearance */
+.interactive-annotation::-webkit-scrollbar {
+    width: 8px;
+}
+
+.interactive-annotation::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.interactive-annotation::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.interactive-annotation::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+/* Make the card more compact and support resizing */
+.doc-annotation-container .card-body {
+    padding: 0.5rem !important;
+    position: relative;
+}
+
+/* Resize handle indicator */
+.doc-annotation-container .card-body::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    width: 15px;
+    height: 15px;
+    background-image: linear-gradient(135deg, #f0f0f0 0%, #f0f0f0 50%, #cccccc 50%, #cccccc 100%);
+    background-size: 10px 10px;
+    border-radius: 0 0 4px 0;
+    cursor: ns-resize;
+    pointer-events: none;
+}
+
+/* Remove any purple background that might be appearing */
+body, 
+.container-fluid,
+.doc-level-container,
+.panel, 
+.left-panel,
+.left-panel .card,
+.left-panel .card-body,
+.all-sent-annotations,
+.sent-annotation-item,
+.annotation-content {
+    background-color: #ffffff;
+}
+
+/* Ensure specific elements don't have background color */
+.left-panel::after,
+.left-panel::before,
+.left-panel .card::after,
+.left-panel .card::before,
+.left-panel .card-body::after,
+.left-panel .card-body::before,
+.all-sent-annotations::after,
+.all-sent-annotations::before {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+/* Fix for any specific styling in imported CSS */
+.container-fluid,
+.doc-level-container {
+    background-color: #ffffff !important;
 } 

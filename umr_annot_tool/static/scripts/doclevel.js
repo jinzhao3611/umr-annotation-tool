@@ -7,6 +7,9 @@ const docLevelState = {
     isDirty: false
 };
 
+// Log to confirm latest version
+console.log("Document level script loaded - version with structured annotation and delete buttons");
+
 // Initialize document level functionality
 function initializeDocLevel() {
     console.log("Initializing document level functionality");
@@ -18,13 +21,26 @@ function initializeDocLevel() {
     // Check if we have a current document annotation
     const docAnnotationContent = document.getElementById("doc-annotation-content");
     if (docAnnotationContent) {
+        console.log("Found existing document annotation content");
         docLevelState.docAnnotation = docAnnotationContent.textContent.trim();
+        console.log("Annotation content:", docLevelState.docAnnotation);
+        
         // Parse existing triples from the annotation
         parseTriples(docLevelState.docAnnotation);
+        console.log("Parsed triples:", docLevelState.triples);
+    } else {
+        console.log("No existing document annotation content found");
+        // Check if there's a placeholder message, which means there's no annotation yet
+        const placeholder = document.getElementById("doc-annotation-placeholder");
+        if (placeholder) {
+            docLevelState.docAnnotation = "";
+        }
     }
     
-    // Render existing triples
-    renderTriples();
+    // Only update the UI if we need to display parsed triples
+    if (docLevelState.triples.length > 0) {
+        updateDocAnnotation();
+    }
     
     // Setup event listeners for the forms
     setupFormEventListeners();
@@ -90,11 +106,8 @@ function addTriple(tripleType) {
     docLevelState.triples.push(triple);
     docLevelState.isDirty = true;
     
-    // Update the document annotation text
+    // Update the document annotation text - this will also update the UI
     updateDocAnnotation();
-    
-    // Render the updated triples list
-    renderTriples();
     
     // Clear the form
     clearTripleForm(tripleType);
@@ -105,20 +118,33 @@ function addTriple(tripleType) {
 
 // Remove a triple from the document annotation
 function removeTriple(tripleId) {
+    // Find the triple to remove
     const index = docLevelState.triples.findIndex(t => t.id === tripleId);
-    if (index !== -1) {
-        const removed = docLevelState.triples.splice(index, 1)[0];
-        docLevelState.isDirty = true;
-        
-        // Update the document annotation text
-        updateDocAnnotation();
-        
-        // Render the updated triples list
-        renderTriples();
-        
-        // Show confirmation
-        showNotification(`Removed triple: ${removed.source} ${removed.relation} ${removed.target}`, 'info');
+    if (index === -1) return; // Triple not found
+    
+    // Get the triple to be removed
+    const removedTriple = docLevelState.triples[index];
+    const tripleType = removedTriple.type; // temporal, modal, or coreference
+    
+    // Remove the triple from the array
+    docLevelState.triples.splice(index, 1);
+    docLevelState.isDirty = true;
+    
+    // Check if this was the last triple of its type
+    const remainingOfType = docLevelState.triples.filter(t => t.type === tripleType).length;
+    
+    let message;
+    if (remainingOfType === 0) {
+        message = `Removed last ${tripleType} triple. ${tripleType} branch removed.`;
+    } else {
+        message = `Removed triple: ${removedTriple.source} ${removedTriple.relation} ${removedTriple.target}`;
     }
+    
+    // Update the document annotation text - this will also update the UI
+    updateDocAnnotation();
+    
+    // Show confirmation
+    showNotification(message, 'info');
 }
 
 // Parse triples from the document annotation text
@@ -134,13 +160,15 @@ function parseTriples(annotationText) {
     
     let match;
     while ((match = tripleRegex.exec(annotationText)) !== null) {
+        // Create a triple object with unique ID
         const triple = {
             id: generateUniqueId(),
             type: match[1],                 // temporal, modal, or coreference
             source: match[2],               // source node
             relation: match[3],             // relation type 
             target: match[4],               // target node
-            sentId: match[5] || docLevelState.sentId  // sentence ID or current if not specified
+            sentId: match[5] || docLevelState.sentId,  // sentence ID or current if not specified
+            original: match[0]              // original string for exact replacement
         };
         
         docLevelState.triples.push(triple);
@@ -149,36 +177,137 @@ function parseTriples(annotationText) {
 
 // Update the document annotation text based on the current triples
 function updateDocAnnotation() {
-    if (docLevelState.triples.length === 0) {
-        docLevelState.docAnnotation = "";
+    // Get the current annotation content element
+    const docAnnotationContentElement = document.getElementById("doc-annotation-content");
+    const docAnnotationDiv = document.getElementById("doc-annotation");
+    
+    // If we don't have the container, nothing to do
+    if (!docAnnotationDiv) return;
+    
+    // If we already have triples parsed
+    if (docLevelState.triples.length > 0) {
+        // Group triples by type for better organization
+        const temporalTriples = docLevelState.triples.filter(t => t.type === 'temporal');
+        const modalTriples = docLevelState.triples.filter(t => t.type === 'modal');
+        const corefTriples = docLevelState.triples.filter(t => t.type === 'coreference');
         
-        // Update the UI to show empty state
-        const docAnnotationDiv = document.getElementById("doc-annotation");
+        // Build HTML for the structured display
+        let displayHtml = `<div class="structured-annotation" id="doc-annotation-content">`;
+        
+        // Format triples into a string for the underlying data model
+        let annotationText = "";
+        
+        // Add temporal branch
+        if (temporalTriples.length > 0) {
+            displayHtml += `<div class="annotation-branch temporal-branch">
+                <div class="branch-header">Temporal Relations:</div>
+                <div class="branch-content">`;
+            
+            temporalTriples.forEach(triple => {
+                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
+                displayHtml += `
+                    <div class="triple-item" data-id="${triple.id}">
+                        <div class="triple-content">
+                            <span class="node source-node">${triple.source}</span>
+                            <span class="relation">${triple.relation}</span>
+                            <span class="node target-node">${triple.target}</span>
+                            <button class="btn btn-sm btn-danger delete-triple" onclick="removeTriple('${triple.id}')">×</button>
+                        </div>
+                    </div>`;
+            });
+            
+            displayHtml += `</div></div>`;
+        }
+        
+        // Add modal branch
+        if (modalTriples.length > 0) {
+            displayHtml += `<div class="annotation-branch modal-branch">
+                <div class="branch-header">Modal Relations:</div>
+                <div class="branch-content">`;
+            
+            modalTriples.forEach(triple => {
+                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
+                displayHtml += `
+                    <div class="triple-item" data-id="${triple.id}">
+                        <div class="triple-content">
+                            <span class="node source-node">${triple.source}</span>
+                            <span class="relation">${triple.relation}</span>
+                            <span class="node target-node">${triple.target}</span>
+                            <button class="btn btn-sm btn-danger delete-triple" onclick="removeTriple('${triple.id}')">×</button>
+                        </div>
+                    </div>`;
+            });
+            
+            displayHtml += `</div></div>`;
+        }
+        
+        // Add coreference branch
+        if (corefTriples.length > 0) {
+            displayHtml += `<div class="annotation-branch coreference-branch">
+                <div class="branch-header">Coreference Relations:</div>
+                <div class="branch-content">`;
+            
+            corefTriples.forEach(triple => {
+                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
+                displayHtml += `
+                    <div class="triple-item" data-id="${triple.id}">
+                        <div class="triple-content">
+                            <span class="node source-node">${triple.source}</span>
+                            <span class="relation">${triple.relation}</span>
+                            <span class="node target-node">${triple.target}</span>
+                            <button class="btn btn-sm btn-danger delete-triple" onclick="removeTriple('${triple.id}')">×</button>
+                        </div>
+                    </div>`;
+            });
+            
+            displayHtml += `</div></div>`;
+        }
+        
+        // Close the overall container
+        displayHtml += `</div>`;
+        
+        // Update the underlying data model
+        docLevelState.docAnnotation = annotationText.trim();
+        
+        // Update the UI
+        docAnnotationDiv.innerHTML = displayHtml;
+        
+        // Also add a hidden div with the raw format for compatibility
+        const rawAnnotation = document.createElement('div');
+        rawAnnotation.style.display = 'none';
+        rawAnnotation.id = 'raw-doc-annotation';
+        rawAnnotation.textContent = docLevelState.docAnnotation;
+        docAnnotationDiv.appendChild(rawAnnotation);
+    } 
+    // If we have no triples but there's already content, preserve it
+    else if (docAnnotationContentElement) {
+        // Keep the existing content
+        docLevelState.docAnnotation = docAnnotationContentElement.textContent.trim();
+    }
+    // Only show empty state if there are no triples and no existing content
+    else if (!docAnnotationContentElement && docLevelState.docAnnotation === "") {
+        // Show empty state
         docAnnotationDiv.innerHTML = `
             <div class="alert alert-info mb-0" id="doc-annotation-placeholder">
-                No document-level annotation available for this document. Use the tools on the right to create one.
+                No document-level annotation available for this sentence. Use the tools on the right to create one.
             </div>
         `;
-        return;
     }
-    
-    // Format triples into a string
-    let annotationText = "";
-    
-    docLevelState.triples.forEach(triple => {
-        annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
-    });
-    
-    docLevelState.docAnnotation = annotationText.trim();
-    
-    // Update the UI
-    const docAnnotationDiv = document.getElementById("doc-annotation");
-    docAnnotationDiv.innerHTML = `<pre class="mb-0" id="doc-annotation-content">${docLevelState.docAnnotation}</pre>`;
 }
 
 // Render the triples list in the UI
 function renderTriples() {
+    // Since we've removed the existing-triples section, we'll update the
+    // document annotation display directly instead
+    updateDocAnnotation();
+    
+    // The original implementation tried to render triples to a separate container
+    // that no longer exists, so we'll just skip that part
     const container = document.getElementById("existing-triples");
+    if (!container) {
+        // Container doesn't exist anymore, just return
+        return;
+    }
     
     if (docLevelState.triples.length === 0) {
         container.innerHTML = '<div class="alert alert-info">No triples added yet. Use the forms above to add document-level triples.</div>';
@@ -216,15 +345,17 @@ function renderTriples() {
         });
     }
     
-    container.innerHTML = html;
-    
-    // Add event listeners for remove buttons
-    document.querySelectorAll('.remove-triple-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const tripleId = this.getAttribute('data-id');
-            removeTriple(tripleId);
+    if (container) {
+        container.innerHTML = html;
+        
+        // Add event listeners for remove buttons
+        document.querySelectorAll('.remove-triple-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tripleId = this.getAttribute('data-id');
+                removeTriple(tripleId);
+            });
         });
-    });
+    }
 }
 
 // Create HTML for a single triple
@@ -320,6 +451,34 @@ function saveDocAnnotation() {
             showNotification("No changes to save", "info");
             resolve(); // Resolve immediately if no changes
             return;
+        }
+        
+        // Ensure we have the latest annotation text
+        let annotationText = "";
+        if (docLevelState.triples.length > 0) {
+            // Organize by type to maintain structure
+            const temporalTriples = docLevelState.triples.filter(t => t.type === 'temporal');
+            const modalTriples = docLevelState.triples.filter(t => t.type === 'modal');
+            const corefTriples = docLevelState.triples.filter(t => t.type === 'coreference');
+            
+            // Generate annotation text with proper formatting and organization by branch
+            // Temporal branch
+            temporalTriples.forEach(triple => {
+                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
+            });
+            
+            // Modal branch
+            modalTriples.forEach(triple => {
+                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
+            });
+            
+            // Coreference branch
+            corefTriples.forEach(triple => {
+                annotationText += `(${triple.type} :source ${triple.source} :relation ${triple.relation} :target ${triple.target} :sent-id ${triple.sentId})\n`;
+            });
+            
+            // Update the state
+            docLevelState.docAnnotation = annotationText.trim();
         }
         
         // Send the annotation to the server

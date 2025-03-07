@@ -15,7 +15,7 @@
     </script>
     <!-- Load application scripts -->
     <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/doclevel.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/doclevel_v2.js') }}"></script>
 {% endblock head %}
 
 {% block content %}
@@ -142,17 +142,6 @@
             </div>
 
             <!-- Save Button -->
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5 class="mb-0">Actions</h5>
-                </div>
-                <div class="card-body">
-                    <div class="btn-group w-100">
-                        <button class="btn btn-primary" onclick="saveDocAnnotation()">Save Document Annotation</button>
-                    </div>
-                </div>
-            </div>
-            
             <!-- Triple Addition -->
             <div class="card mt-3">
                 <div class="card-header">
@@ -250,24 +239,15 @@
             </div>
 
             <!-- Existing Triples List -->
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5 class="mb-0">Existing Triples</h5>
-                </div>
-                <div class="card-body">
-                    <div id="existing-triples" class="existing-triples">
-                        <!-- Triples will be listed here dynamically -->
-                        <div class="alert alert-info">No triples added yet. Use the forms above to add document-level triples.</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Back to Sentence Level -->
+            <!-- Actions -->
             <div class="card mt-3">
                 <div class="card-header">
                     <h5 class="mb-0">Actions</h5>
                 </div>
                 <div class="card-body">
+                    <div class="btn-group w-100 mb-2">
+                        <button class="btn btn-primary" onclick="saveDocAnnotation()">Save Document Annotation</button>
+                    </div>
                     <div class="btn-group w-100">
                         <a href="{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=snt_id) }}" class="btn btn-outline-secondary">
                             Back to Sentence Level
@@ -314,6 +294,152 @@
 
         // Initialize document-level annotation functionality
         initializeDocLevel();
+        
+        // Initialize resizable functionality
+        function initResizableAnnotation() {
+            console.log("Initializing resizable annotation functionality");
+            
+            // Setup a MutationObserver to detect when the annotation container is added to the DOM
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                        // Check for our target element
+                        setTimeout(() => {
+                            const annotationContainer = document.querySelector('.interactive-annotation');
+                            if (annotationContainer && !annotationContainer.hasAttribute('data-resize-initialized')) {
+                                console.log("Found annotation container, setting up resize functionality");
+                                setupResizable(annotationContainer);
+                                
+                                // Mark as initialized to prevent duplicate initialization
+                                annotationContainer.setAttribute('data-resize-initialized', 'true');
+                            }
+                        }, 100);
+                    }
+                });
+            });
+            
+            // Start observing the document with the configured parameters
+            observer.observe(document.body, { childList: true, subtree: true });
+            
+            // Also check immediately in case the element is already in the DOM
+            setTimeout(() => {
+                const annotationContainer = document.querySelector('.interactive-annotation');
+                if (annotationContainer && !annotationContainer.hasAttribute('data-resize-initialized')) {
+                    console.log("Found annotation container on initial check");
+                    setupResizable(annotationContainer);
+                    annotationContainer.setAttribute('data-resize-initialized', 'true');
+                }
+            }, 100);
+            
+            // Function to setup the resizable behavior
+            function setupResizable(element) {
+                console.log("Setting up enhanced resize functionality");
+                
+                // Create a container div if needed
+                let container = element.parentElement;
+                if (!container.classList.contains('resize-container')) {
+                    // The element is not already in a resize container, so wrap it
+                    container = document.createElement('div');
+                    container.className = 'resize-container';
+                    container.style.cssText = `
+                        position: relative;
+                        width: 100%;
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        min-height: 200px;
+                        overflow: visible;
+                    `;
+                    element.parentNode.insertBefore(container, element);
+                    container.appendChild(element);
+                }
+                
+                // Make sure the element has the right styles for resizing
+                element.style.cssText = `
+                    position: relative;
+                    width: 100%;
+                    height: 400px;
+                    overflow-y: auto;
+                    flex: none;
+                    resize: vertical;
+                `;
+                
+                // Add an explicit resize handle
+                let resizeHandle = container.querySelector('.resize-handle');
+                if (!resizeHandle) {
+                    resizeHandle = document.createElement('div');
+                    resizeHandle.className = 'resize-handle';
+                    element.appendChild(resizeHandle);
+                }
+                
+                // Store initial height in local storage if available
+                const savedHeight = localStorage.getItem('annotationContainerHeight');
+                if (savedHeight) {
+                    element.style.height = savedHeight + 'px';
+                    console.log(`Restored annotation height: ${savedHeight}px`);
+                }
+                
+                // Custom resize functionality using the handle
+                let isResizing = false;
+                let startY, startHeight;
+                
+                resizeHandle.addEventListener('mousedown', function(e) {
+                    // Start resizing
+                    isResizing = true;
+                    startY = e.clientY;
+                    startHeight = element.offsetHeight;
+                    
+                    // Add mousemove and mouseup listeners to document
+                    document.addEventListener('mousemove', handleMouseMove);
+                    document.addEventListener('mouseup', handleMouseUp);
+                    
+                    // Prevent text selection during resize
+                    document.body.style.userSelect = 'none';
+                    console.log("Resize started");
+                    
+                    // Prevent default browser behavior
+                    e.preventDefault();
+                });
+                
+                function handleMouseMove(e) {
+                    if (!isResizing) return;
+                    
+                    // Calculate new height
+                    const delta = e.clientY - startY;
+                    const newHeight = Math.max(100, startHeight + delta);
+                    
+                    // Apply new height
+                    element.style.height = newHeight + 'px';
+                    
+                    // Display size for debugging
+                    console.log("Resizing to height:", newHeight + 'px');
+                }
+                
+                function handleMouseUp() {
+                    if (!isResizing) return;
+                    
+                    // End resizing
+                    isResizing = false;
+                    
+                    // Save the height to localStorage
+                    const height = element.offsetHeight;
+                    localStorage.setItem('annotationContainerHeight', height);
+                    console.log(`Resize ended. New height: ${height}px`);
+                    
+                    // Remove event listeners
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                    
+                    // Restore text selection
+                    document.body.style.userSelect = '';
+                }
+                
+                console.log("Enhanced resize functionality fully initialized");
+            }
+        }
+        
+        // Call the initialization for resizable annotations
+        initResizableAnnotation();
     });
 
     function prevSentence() {
