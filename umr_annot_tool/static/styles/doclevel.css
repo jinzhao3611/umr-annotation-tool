@@ -1102,26 +1102,7 @@ pre {
 }
 
 .triple-container:hover::after {
-    content: "Right-click to delete";
-    position: absolute;
-    bottom: calc(100% + 5px);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    z-index: 10;
-    opacity: 0;
-    animation: fadeIn 0.3s forwards;
-    animation-delay: 0.5s;
-}
-
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+    display: none;
 }
 
 /* Make trash icon more visible on hover */
@@ -1166,26 +1147,9 @@ pre {
     cursor: context-menu; /* Show context menu cursor on hover */
 }
 
-/* Add a right-click indicator */
+/* Remove the ::before pseudo-element that creates one of the duplicate messages */
 .triple-container::before {
-    content: 'Right-click to delete';
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #dc3545;
-    color: white;
-    font-size: 10px;
-    padding: 2px 5px;
-    border-radius: 3px;
-    opacity: 0;
-    transform: translateY(-100%);
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.triple-container:hover::before {
-    opacity: 0.9;
+    display: none; /* Hide this element completely */
 }
 
 /* Notification styling */

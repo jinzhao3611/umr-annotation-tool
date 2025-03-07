@@ -887,17 +887,18 @@ function formatDocLevelAnnotation() {
         // Set the HTML content
         annotationContent.innerHTML = htmlContent;
         
-        // Add a "Right-click to delete triples" helper text at the top of the annotation
+        // Add a better helper text at the top of the annotation
         const helperText = document.createElement('div');
         helperText.className = 'delete-helper-text';
-        helperText.innerHTML = '<i class="fas fa-info-circle"></i> Right-click on any triple to delete it';
-        helperText.style.backgroundColor = '#f8f9fa';
-        helperText.style.border = '1px solid #dee2e6';
+        helperText.innerHTML = '<i class="fas fa-info-circle"></i> Tip: Right-click on any triple to delete it';
+        helperText.style.backgroundColor = '#212529';
+        helperText.style.color = 'white';
+        helperText.style.border = 'none';
         helperText.style.borderRadius = '4px';
-        helperText.style.padding = '5px 10px';
-        helperText.style.marginBottom = '10px';
-        helperText.style.fontSize = '12px';
-        helperText.style.color = '#495057';
+        helperText.style.padding = '7px 12px';
+        helperText.style.marginBottom = '15px';
+        helperText.style.fontSize = '13px';
+        helperText.style.fontWeight = '500';
         
         // Insert at the top of the annotation
         annotationContent.insertBefore(helperText, annotationContent.firstChild);
