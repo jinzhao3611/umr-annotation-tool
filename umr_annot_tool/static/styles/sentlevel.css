@@ -395,4 +395,41 @@ html, body {
     font-size: 0.875rem;
     border-radius: 0.2rem;
     margin: 0;
+}
+
+/* Temporary Branch Storage Styles */
+.temp-branches-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.temp-branch-item {
+    background-color: #f9f9f9;
+    transition: all 0.2s ease;
+}
+
+.temp-branch-item:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.temp-branch-item pre {
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
+
+.branch-description {
+    font-style: italic;
+}
+
+.empty-state {
+    color: #999;
+    padding: 20px;
+    border-radius: 4px;
+    border: 1px dashed #ccc;
+}
+
+/* Context Menu Additions */
+.branch-context-menu .store-temp-option {
+    color: #0066cc;
 } 

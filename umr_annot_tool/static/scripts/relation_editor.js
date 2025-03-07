@@ -1076,6 +1076,34 @@ function showBranchContextMenu(relationSpan, x, y) {
     });
     
     menu.appendChild(moveItem);
+
+    // Add "Store Temporarily" item
+    const storeItem = document.createElement('div');
+    storeItem.textContent = '📦 Store Temporarily';
+    storeItem.className = 'store-temp-option';
+    storeItem.style.padding = '8px 12px';
+    storeItem.style.cursor = 'pointer';
+    storeItem.style.color = '#0066cc';
+    
+    storeItem.addEventListener('mouseover', () => {
+        storeItem.style.backgroundColor = '#f0f0f0';
+    });
+    
+    storeItem.addEventListener('mouseout', () => {
+        storeItem.style.backgroundColor = '';
+    });
+    
+    storeItem.addEventListener('click', () => {
+        menu.remove();
+        // Call the storeBranchTemporarily function from tempBranchStorage.js
+        if (typeof storeBranchTemporarily === 'function') {
+            storeBranchTemporarily(relationSpan);
+        } else {
+            console.error('storeBranchTemporarily function not found');
+        }
+    });
+    
+    menu.appendChild(storeItem);
     
     // Add the menu to the document
     document.body.appendChild(menu);

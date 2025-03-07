@@ -18,9 +18,10 @@
     <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/penmanString2umrDict.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/umrDict2penmanString.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/partialGraph.js') }}"></script>
     <!-- Load relation editor script -->
     <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
+    <!-- Load temporary branch storage script -->
+    <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
     
     <style>
         /* Custom styles for relation editing */
@@ -202,6 +203,31 @@
                 </div>
             </div>
 
+                        
+            <!-- Temporary Branch Storage -->
+            <div class="card mb-3">
+                <div class="card-header" role="button" data-bs-toggle="collapse" data-bs-target="#tempBranchStorage" aria-expanded="true" aria-controls="tempBranchStorage" style="cursor: pointer;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Temporary Branch Storage</h5>
+                        <i class="fas fa-chevron-up collapse-icon-temp"></i>
+                    </div>
+                </div>
+                <div id="tempBranchStorage" class="collapse show">
+                    <div class="card-body">
+                        <div class="alert alert-info mb-3">
+                            <small>Store branches temporarily while working across sentences. Content persists within the current document.</small>
+                        </div>
+                        <!-- Temporary branches will appear here -->
+                        <div id="temp-branches-container" class="temp-branches-container">
+                            <div class="empty-state text-center text-muted p-3">
+                                <i class="fas fa-inbox fa-2x mb-2"></i>
+                                <p>No branches stored yet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
             <!-- Alignments -->
             <div class="card mb-3">
                 <div class="card-header">
@@ -259,12 +285,7 @@
 
         // Initialize alignments
         const currentAlignments = {{ curr_alignment|tojson|safe }};
-        initializeAlignments(currentAlignments);
-
-        // Initialize with the current data
-        const frameDict = {{ frame_dict|tojson|safe }};
-        const partialGraphs = {{ partial_graphs_json|tojson|safe }};
-        initialize(frameDict, partialGraphs);
+        initializeAlignments(currentAlignments);        
 
         // Handle collapse icon rotation for the right panel Document Info
         const docInfoHeader = document.querySelector('[data-bs-target="#docInfo"]');
@@ -286,6 +307,31 @@
             collapseIconRight.classList.remove('fa-chevron-up');
             collapseIconRight.classList.add('fa-chevron-down');
         });
+                
+        // Handle collapse icon rotation for Temporary Branch Storage
+        const tempStorageHeader = document.querySelector('[data-bs-target="#tempBranchStorage"]');
+        const collapseIconTemp = tempStorageHeader.querySelector('.collapse-icon-temp');
+        
+        tempStorageHeader.addEventListener('click', function() {
+            collapseIconTemp.classList.toggle('fa-chevron-down');
+            collapseIconTemp.classList.toggle('fa-chevron-up');
+        });
+
+        // Initialize collapse for Temporary Branch Storage
+        const tempBranchStorage = document.getElementById('tempBranchStorage');
+        tempBranchStorage.addEventListener('show.bs.collapse', function () {
+            collapseIconTemp.classList.remove('fa-chevron-down');
+            collapseIconTemp.classList.add('fa-chevron-up');
+        });
+        
+        tempBranchStorage.addEventListener('hide.bs.collapse', function () {
+            collapseIconTemp.classList.remove('fa-chevron-up');
+            collapseIconTemp.classList.add('fa-chevron-down');
+        });
+        
+        // Initialize temporary branch storage
+        initTempBranchStorage();
+    
     });
 
     function prevSentence() {
