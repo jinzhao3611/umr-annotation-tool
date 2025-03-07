@@ -88,6 +88,8 @@ function initRelationEditor() {
 // Function to setup the editor once we have the annotation element
 function setupEditor(annotationElement) {
     try {
+        console.log('Setting up editor with inPlaceEditMode =', inPlaceEditMode);
+        
         // Create and add the in-place edit toggle button
         addInPlaceEditToggle();
         
@@ -96,7 +98,7 @@ function setupEditor(annotationElement) {
         makeValuesClickable(annotationElement);
         makeVariablesClickable(annotationElement);  // Make variables clickable for branch addition
         
-        // Setup branch operations (delete, move)
+        // Setup branch operations (delete, move) - this will only add trash bins if inPlaceEditMode is false
         addBranchOperations(annotationElement);
         
         // Extract sentence tokens for later use in concept suggestion
@@ -271,8 +273,20 @@ function addInPlaceEditToggle() {
     
     // Add event listener for the toggle
     toggleInput.addEventListener('change', function() {
+        // Update inPlaceEditMode state
         inPlaceEditMode = this.checked;
+        
+        // Update the toggle appearance
         updateToggleAppearance(this.checked, editModeIcon, currentModeText, statusIndicator);
+        
+        // If turning edit mode ON, immediately remove all delete icons
+        if (inPlaceEditMode) {
+            console.log('Turning edit mode ON, removing all trash bin icons');
+            const deleteIcons = document.querySelectorAll('.delete-branch-icon');
+            deleteIcons.forEach(icon => icon.remove());
+        }
+        
+        // Update edit mode status
         updateEditModeStatus();
         
         // Remove any open dropdowns when toggling
@@ -309,6 +323,10 @@ function updateEditModeStatus() {
         return;
     }
     
+    // Remove all existing delete icons to start fresh
+    const existingIcons = document.querySelectorAll('.delete-branch-icon');
+    existingIcons.forEach(icon => icon.remove());
+    
     // Visual indicator for edit mode
     if (inPlaceEditMode) {
         console.log('Enabling in-place edit mode UI');
@@ -331,6 +349,9 @@ function updateEditModeStatus() {
         annotationElement.style.border = '2px solid #28a745';
         annotationElement.style.borderRadius = '4px';
         annotationElement.style.padding = '8px';
+        
+        // Re-add branch operations with trash bins when in-place edit is OFF
+        addBranchOperations(annotationElement);
         
         // Show notification
         try {
@@ -915,6 +936,14 @@ function showNotification(message, type, duration = 3000) {
 
 // Function to add branch operations to the annotation tree
 function addBranchOperations(annotationElement) {
+    // If in-place edit mode is on, do not add branch operations
+    if (inPlaceEditMode) {
+        console.log('In-place edit mode is ON, skipping branch operations');
+        return;
+    }
+
+    console.log('Adding branch operations (trash bins)');
+    
     // Get all the relation spans
     const relationSpans = annotationElement.querySelectorAll('.relation-span');
     
@@ -935,7 +964,7 @@ function addBranchOperations(annotationElement) {
         span.addEventListener('mouseenter', () => {
             if (!inPlaceEditMode) {
                 deleteIcon.style.display = 'inline';
-            }
+            } 
         });
         
         span.addEventListener('mouseleave', () => {
