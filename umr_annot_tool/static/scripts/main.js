@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Common utility functions
-function showNotification(message, type = 'info') {
+function showNotification(message, type = 'info', duration = 5000) {
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
     alertDiv.role = 'alert';
@@ -35,8 +35,21 @@ function showNotification(message, type = 'info') {
             <span aria-hidden="true">&times;</span>
         </button>
     `;
-    document.getElementById('content').insertBefore(alertDiv, document.getElementById('content').firstChild);
-    setTimeout(() => alertDiv.remove(), 5000);
+    
+    // Find the appropriate container - try content first, fallback to main-content
+    const contentElement = document.getElementById('content');
+    const mainContentElement = document.querySelector('.main-content');
+    
+    if (contentElement) {
+        contentElement.insertBefore(alertDiv, contentElement.firstChild);
+    } else if (mainContentElement) {
+        mainContentElement.insertBefore(alertDiv, mainContentElement.firstChild);
+    } else {
+        // Final fallback to body if neither element exists
+        document.body.insertBefore(alertDiv, document.body.firstChild);
+    }
+    
+    setTimeout(() => alertDiv.remove(), duration);
 }
 
 // Handle form submissions

@@ -6,6 +6,19 @@ let umrRelationValues = {};
 // Global variable to track in-place edit mode
 let inPlaceEditMode = false;
 
+// DOM ready check to initialize the editor
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing relation editor');
+    // Initialize the editor with a small delay to ensure DOM is fully ready
+    setTimeout(initRelationEditor, 300);
+});
+
+// Backup initialization - if the script loads after DOMContentLoaded
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    console.log('Document already ready, initializing relation editor');
+    setTimeout(initRelationEditor, 300);
+}
+
 // Initialize the relation editor functionality
 function initRelationEditor() {
     console.log('Initializing relation editor...');
@@ -45,10 +58,35 @@ function initRelationEditor() {
     // Get the annotation element
     const annotationElement = document.querySelector('#amr pre');
     if (!annotationElement) {
-        console.error('Annotation element not found');
+        console.error('Annotation element not found. Selector: #amr pre');
+        // Try alternative selectors
+        const alternativeElement = document.querySelector('pre') || document.querySelector('.annotation');
+        if (alternativeElement) {
+            console.log('Found alternative annotation element:', alternativeElement);
+            // Continue with the alternative element
+            setupEditor(alternativeElement);
+        } else {
+            console.error('No suitable annotation element found. Editor initialization failed.');
+            // Add a small delay and try again in case DOM is still loading
+            setTimeout(() => {
+                const retryElement = document.querySelector('#amr pre');
+                if (retryElement) {
+                    console.log('Found annotation element on retry');
+                    setupEditor(retryElement);
+                } else {
+                    console.error('Failed to find annotation element even after delay');
+                }
+            }, 1000);
+        }
         return;
     }
     
+    // Setup the editor with the found element
+    setupEditor(annotationElement);
+}
+
+// Function to setup the editor once we have the annotation element
+function setupEditor(annotationElement) {
     try {
         // Create and add the in-place edit toggle button
         addInPlaceEditToggle();
@@ -67,19 +105,22 @@ function initRelationEditor() {
         // Add event listener to document to close dropdowns when clicking outside
         document.addEventListener('click', function(event) {
             const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(event.target) && 
-                    !event.target.classList.contains('relation-span') && 
-                    !event.target.classList.contains('value-span')) {
-                    dropdown.remove();
+            if (dropdowns.length > 0) {
+                const isClickInsideDropdown = Array.from(dropdowns).some(dropdown => 
+                    dropdown.contains(event.target)
+                );
+                const isClickOnRelationSpan = event.target.classList.contains('relation-span');
+                const isClickOnValueSpan = event.target.classList.contains('value-span');
+                
+                if (!isClickInsideDropdown && !isClickOnRelationSpan && !isClickOnValueSpan) {
+                    dropdowns.forEach(dropdown => dropdown.remove());
                 }
-            });
+            }
         });
         
-        console.log('Relation editor initialized successfully');
+        console.log('Relation editor setup complete');
     } catch (error) {
-        console.error('Error initializing relation editor:', error);
-        showNotification('Error initializing editor: ' + error.message, 'error');
+        console.error('Error setting up relation editor:', error);
     }
 }
 
@@ -260,25 +301,60 @@ function updateToggleAppearance(isChecked, iconElement, modeTextElement, statusE
 
 // Function to update UI based on current edit mode
 function updateEditModeStatus() {
+    console.log('Updating edit mode status. inPlaceEditMode =', inPlaceEditMode);
+    
     const annotationElement = document.querySelector('#amr pre');
-    if (!annotationElement) return;
+    if (!annotationElement) {
+        console.error('Cannot find annotation element (#amr pre) to update edit mode');
+        return;
+    }
     
     // Visual indicator for edit mode
     if (inPlaceEditMode) {
+        console.log('Enabling in-place edit mode UI');
         annotationElement.style.border = '2px solid #2196F3';
         annotationElement.style.borderRadius = '4px';
         annotationElement.style.padding = '8px';
-        showNotification('In-place Edit Mode is ON. Click on relations and values to edit. Branch operations disabled.', 'info', 3000);
+        
+        // Make sure event handlers are attached for edit mode
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
+        
+        // Show notification
+        try {
+            showNotification('In-place Edit Mode is ON. Click on relations and values to edit. Branch operations disabled.', 'info', 3000);
+        } catch (error) {
+            console.error('Error showing notification:', error);
+        }
     } else {
+        console.log('Disabling in-place edit mode UI');
         annotationElement.style.border = '2px solid #28a745';
         annotationElement.style.borderRadius = '4px';
         annotationElement.style.padding = '8px';
-        showNotification('In-place Edit Mode is OFF. Branch operations enabled (add/delete/move). Dropdowns disabled.', 'info', 3000);
+        
+        // Show notification
+        try {
+            showNotification('In-place Edit Mode is OFF. Branch operations enabled (add/delete/move). Dropdowns disabled.', 'info', 3000);
+        } catch (error) {
+            console.error('Error showing notification:', error);
+        }
     }
+    
+    // Remove any open dropdowns when toggling
+    const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
+    dropdowns.forEach(dropdown => dropdown.remove());
+    
+    console.log('Edit mode status updated');
 }
 
 // Function to make relations in the annotation clickable
 function makeRelationsClickable(annotationElement) {
+    if (!annotationElement) {
+        console.error('makeRelationsClickable: annotationElement is null or undefined');
+        return;
+    }
+    
+    console.log('Making relations clickable...');
     const text = annotationElement.textContent;
     const relationRegex = /(\s+)(:[A-Za-z0-9\-]+)/g;
     
@@ -290,14 +366,23 @@ function makeRelationsClickable(annotationElement) {
     
     // Add click event listeners to all relation spans
     const relationSpans = annotationElement.querySelectorAll('.relation-span');
-    relationSpans.forEach(span => {
+    console.log(`Found ${relationSpans.length} relation spans`);
+    
+    relationSpans.forEach((span, index) => {
         span.addEventListener('click', function(event) {
+            console.log(`Relation span clicked: ${span.textContent}`);
             event.stopPropagation();
             // Only show dropdown if edit mode is enabled
             if (inPlaceEditMode) {
+                console.log('Edit mode is enabled, showing dropdown');
                 showRelationDropdown(span);
+            } else {
+                console.log('Edit mode is NOT enabled, dropdown not shown');
             }
         });
+        
+        // Add a data attribute to help identify spans
+        span.setAttribute('data-relation-index', index);
     });
 }
 
@@ -363,27 +448,50 @@ function makeValuesClickable(annotationElement) {
 
 // Function to show the relation dropdown
 function showRelationDropdown(relationSpan) {
+    console.log('showRelationDropdown called with span:', relationSpan); 
+    
     // Remove any existing dropdowns
-    const existingDropdowns = document.querySelectorAll('.relation-dropdown');
+    const existingDropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
     existingDropdowns.forEach(dropdown => dropdown.remove());
     
     const currentRelation = relationSpan.textContent;
+    console.log('Current relation:', currentRelation);
+    
+    // Get position of the span
     const spanRect = relationSpan.getBoundingClientRect();
+    console.log('Span position:', spanRect.left, spanRect.top, spanRect.bottom);
     
     // Create dropdown element
     const dropdown = document.createElement('div');
     dropdown.className = 'relation-dropdown';
-    dropdown.style.position = 'absolute';
-    dropdown.style.left = `${spanRect.left}px`;
-    dropdown.style.top = `${spanRect.bottom + window.scrollY}px`;
-    dropdown.style.zIndex = '1000';
-    dropdown.style.background = '#fff';
-    dropdown.style.border = '1px solid #ccc';
-    dropdown.style.borderRadius = '4px';
-    dropdown.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
-    dropdown.style.maxHeight = '300px';
-    dropdown.style.overflowY = 'auto';
-    dropdown.style.minWidth = '150px';
+    
+    // Set fixed styling to make it more visible
+    const dropdownStyle = {
+        position: 'fixed',
+        left: `${spanRect.left}px`,
+        top: `${spanRect.bottom + 5}px`,
+        zIndex: '9999',
+        background: '#fff',
+        border: '2px solid #0066cc',
+        borderRadius: '4px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        maxHeight: '300px',
+        overflowY: 'auto',
+        minWidth: '200px',
+        padding: '5px'
+    };
+    
+    // Apply styles
+    Object.assign(dropdown.style, dropdownStyle);
+    
+    // Add visible debug information to help troubleshoot
+    const debugInfo = document.createElement('div');
+    debugInfo.textContent = `Current relation: ${currentRelation}`;
+    debugInfo.style.padding = '5px';
+    debugInfo.style.backgroundColor = '#f0f0f0';
+    debugInfo.style.borderBottom = '1px solid #ccc';
+    debugInfo.style.fontSize = '12px';
+    dropdown.appendChild(debugInfo);
     
     // Create search input
     const searchInput = document.createElement('input');
@@ -392,8 +500,9 @@ function showRelationDropdown(relationSpan) {
     searchInput.style.width = '100%';
     searchInput.style.padding = '8px';
     searchInput.style.boxSizing = 'border-box';
-    searchInput.style.border = 'none';
-    searchInput.style.borderBottom = '1px solid #eee';
+    searchInput.style.border = '1px solid #ccc';
+    searchInput.style.borderRadius = '4px';
+    searchInput.style.margin = '5px 0';
     
     // Add search input to dropdown
     dropdown.appendChild(searchInput);
@@ -401,6 +510,8 @@ function showRelationDropdown(relationSpan) {
     // Create relation list container
     const relationList = document.createElement('div');
     relationList.className = 'relation-list';
+    relationList.style.maxHeight = '250px';
+    relationList.style.overflowY = 'auto';
     dropdown.appendChild(relationList);
     
     // Function to render filtered relations
@@ -412,6 +523,7 @@ function showRelationDropdown(relationSpan) {
         const filteredRelations = umrRelations.filter(rel => 
             rel.toLowerCase().includes(filter.toLowerCase())
         );
+        console.log('Filtered relations:', filteredRelations.length);
         
         // Add current relation at the top if not in the list
         if (!umrRelations.includes(currentRelation) && currentRelation.startsWith(':')) {
@@ -426,46 +538,58 @@ function showRelationDropdown(relationSpan) {
             relationList.appendChild(currentItem);
         }
         
-        // Add filtered relations
-        filteredRelations.forEach(relation => {
-            const item = document.createElement('div');
-            item.textContent = relation;
-            item.style.padding = '8px 16px';
-            item.style.cursor = 'pointer';
+        // Ensure we have some visible content even if relations array is empty
+        if (filteredRelations.length === 0 && !currentRelation.startsWith(':')) {
+            const placeholder = document.createElement('div');
+            placeholder.textContent = 'Example relations: :ARG0, :ARG1, :time, :location';
+            placeholder.style.padding = '8px 16px';
+            placeholder.style.color = '#666';
+            relationList.appendChild(placeholder);
             
-            // Highlight current relation
-            if (relation === currentRelation) {
-                item.style.backgroundColor = '#e6f7ff';
-                item.textContent += ' (current)';
-            }
-            
-            // Hover effect
-            item.addEventListener('mouseover', function() {
-                if (relation !== currentRelation) {
-                    this.style.backgroundColor = '#f0f0f0';
+            // Add some default relations if the list is empty
+            [':ARG0', ':ARG1', ':ARG2', ':mod', ':time', ':location'].forEach(relation => {
+                const item = document.createElement('div');
+                item.textContent = relation;
+                item.style.padding = '8px 16px';
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function() {
+                    replaceRelation(relationSpan, relation);
+                });
+                relationList.appendChild(item);
+            });
+        } else {
+            // Add filtered relations
+            filteredRelations.forEach(relation => {
+                const item = document.createElement('div');
+                item.textContent = relation;
+                item.style.padding = '8px 16px';
+                item.style.cursor = 'pointer';
+                
+                // Highlight current relation
+                if (relation === currentRelation) {
+                    item.style.backgroundColor = '#e6f7ff';
+                    item.textContent += ' (current)';
                 }
+                
+                // Hover effect
+                item.addEventListener('mouseover', function() {
+                    if (relation !== currentRelation) {
+                        this.style.backgroundColor = '#f0f0f0';
+                    }
+                });
+                item.addEventListener('mouseout', function() {
+                    if (relation !== currentRelation) {
+                        this.style.backgroundColor = '';
+                    }
+                });
+                
+                // Click event
+                item.addEventListener('click', function() {
+                    replaceRelation(relationSpan, relation);
+                });
+                
+                relationList.appendChild(item);
             });
-            item.addEventListener('mouseout', function() {
-                if (relation !== currentRelation) {
-                    this.style.backgroundColor = '';
-                }
-            });
-            
-            // Click event
-            item.addEventListener('click', function() {
-                replaceRelation(relationSpan, relation);
-            });
-            
-            relationList.appendChild(item);
-        });
-        
-        // Show message if no relations found
-        if (filteredRelations.length === 0 && (umrRelations.includes(currentRelation) || !currentRelation.startsWith(':'))) {
-            const noResults = document.createElement('div');
-            noResults.textContent = 'No relations found';
-            noResults.style.padding = '8px 16px';
-            noResults.style.color = '#999';
-            relationList.appendChild(noResults);
         }
     }
     
@@ -479,9 +603,25 @@ function showRelationDropdown(relationSpan) {
     
     // Add dropdown to document
     document.body.appendChild(dropdown);
+    console.log('Dropdown added to the document body at position:', 
+        dropdown.style.left, dropdown.style.top, 
+        'Size:', dropdown.offsetWidth, dropdown.offsetHeight);
     
     // Focus search input
     searchInput.focus();
+    
+    // Close dropdown when clicking outside
+    setTimeout(() => {
+        const closeListener = function(event) {
+            if (!dropdown.contains(event.target) && 
+                event.target !== relationSpan && 
+                !relationSpan.contains(event.target)) {
+                dropdown.remove();
+                document.removeEventListener('click', closeListener);
+            }
+        };
+        document.addEventListener('click', closeListener);
+    }, 100);
 }
 
 // Function to show the value dropdown
@@ -1478,82 +1618,35 @@ async function showAddBranchDialog(parentVariableSpan) {
                 return;
             }
             
-            // Validate number format
-            const numberRegex = /^[0-9]+(\.[0-9]+)?$/;
-            if (!numberRegex.test(numberValue)) {
-                showNotification('Invalid number format', 'error');
-                return;
-            }
-            
             childNode = numberValue;
         }
         
-        // Add the branch to the annotation
-        addBranchToAnnotation(parentVariable, relation, childNode);
+        // Add the new branch to the annotation
+        const updatedAnnotation = annotationText.replace(parentVariable, `${parentVariable} (${childNode})`);
         
-        // Close the dialog
-        dialogContainer.remove();
+        // Update the annotation display
+        annotationElement.textContent = updatedAnnotation;
+        
+        // Reinitialize the relation editor
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
+        addBranchOperations(annotationElement);
+        
+        // Save the updated annotation
+        saveBranchInsertion(updatedAnnotation, childNode);
+        
+        showNotification('Branch added successfully', 'success');
     });
 }
 
-// Function to add a branch to the annotation
-function addBranchToAnnotation(parentVariable, relation, childNode) {
-    // Get the annotation element
-    const annotationElement = document.querySelector('#amr pre');
-    const originalText = annotationElement.textContent;
-    
-    // Find the parent variable in the text
-    const variableMatches = findAllMatches(originalText, parentVariable);
-    
-    if (variableMatches.length === 0) {
-        console.error('Could not locate the parent variable in the text');
-        showNotification('Error: Could not locate the parent variable', 'error');
-        return;
-    }
-    
-    // Get the line with the parent variable
-    const variablePos = variableMatches[0]; // Use the first occurrence (main declaration should be first)
-    const lineStart = originalText.lastIndexOf('\n', variablePos) + 1;
-    const lineEnd = originalText.indexOf('\n', variablePos);
-    const variableLine = originalText.substring(lineStart, lineEnd === -1 ? originalText.length : lineEnd);
-    
-    // Determine the indentation level
-    const variableIndent = variableLine.search(/\S/);
-    const newBranchIndent = variableIndent + 2; // Indent by 2 spaces more than parent
-    
-    // Create the new branch text
-    const newBranchText = '\n' + ' '.repeat(newBranchIndent) + relation + ' ' + childNode;
-    
-    // Find the insertion point
-    // We'll insert after the line with the parent variable
-    let insertionPoint = lineEnd === -1 ? originalText.length : lineEnd;
-    
-    // Create updated text
-    const updatedText = originalText.substring(0, insertionPoint) + newBranchText + originalText.substring(insertionPoint);
-    
-    // Update the annotation display
-    annotationElement.textContent = updatedText;
-    
-    // Reinitialize the relation editor
-    makeRelationsClickable(annotationElement);
-    makeValuesClickable(annotationElement);
-    makeVariablesClickable(annotationElement);
-    addBranchOperations(annotationElement);
-    
-    // Save the updated annotation
-    saveAddBranch(updatedText, parentVariable, relation, childNode);
-    
-    showNotification(`Added branch "${relation} ${childNode}" to ${parentVariable}`, 'success');
-}
-
-// Function to save the branch addition
-function saveAddBranch(updatedAnnotation, parentVariable, relation, childNode) {
+// Function to save the branch insertion
+function saveBranchInsertion(updatedAnnotation, newBranch) {
     // Get sentence ID and document ID from the URL
     const urlParts = window.location.pathname.split('/');
     const sent_id = urlParts[urlParts.length - 1];
     const doc_version_id = urlParts[urlParts.length - 2];
     
-    console.log(`Adding branch: ${relation} ${childNode} to ${parentVariable}`);
+    console.log(`Adding branch: ${newBranch}`);
     
     // Use fetch API to send the update to the server
     fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
@@ -1565,9 +1658,7 @@ function saveAddBranch(updatedAnnotation, parentVariable, relation, childNode) {
         body: JSON.stringify({
             annotation: updatedAnnotation,
             operation: 'add_branch',
-            parent_variable: parentVariable,
-            relation: relation,
-            child_node: childNode
+            relation: newBranch
         })
     })
     .then(response => {
@@ -1584,316 +1675,3 @@ function saveAddBranch(updatedAnnotation, parentVariable, relation, childNode) {
         showNotification('Error saving changes: ' + error.message, 'error');
     });
 }
-
-// Function to start a branch move operation
-function startBranchMove(sourceSpan) {
-    moveSourceSpan = sourceSpan;
-    moveMode = true;
-    
-    // Show notification for move mode
-    showNotification('Select a destination node (relation or variable) to move the branch to. Click again on the source to cancel.', 'info', 10000);
-    
-    // Add visual feedback
-    sourceSpan.style.backgroundColor = '#ffffcc';
-    sourceSpan.style.padding = '2px';
-    sourceSpan.style.borderRadius = '3px';
-    
-    // Add move mode class to the annotation container
-    const annotationElement = document.querySelector('#amr pre');
-    annotationElement.classList.add('move-mode');
-    
-    // Highlight valid target nodes (both relations and variables)
-    const relationSpans = annotationElement.querySelectorAll('.relation-span');
-    const variableSpans = annotationElement.querySelectorAll('.variable-span');
-    
-    // Function to setup a potential target node
-    const setupPotentialTarget = (span, isVariable) => {
-        if (span !== sourceSpan) {
-            span.classList.add('potential-target');
-            span.style.backgroundColor = isVariable ? '#f0e6ff' : '#e6f7ff'; // Different color for variables
-            span.style.padding = '2px';
-            span.style.borderRadius = '3px';
-            span.style.transition = 'background-color 0.2s';
-            
-            // Save the original click handler
-            if (!span._originalClickHandler) {
-                span._originalClickHandler = span.onclick;
-            }
-            
-            // Override the click handler during move mode
-            span.onclick = (event) => {
-                event.stopPropagation();
-                if (moveMode) {
-                    completeBranchMove(sourceSpan, span, isVariable);
-                } else if (span._originalClickHandler) {
-                    span._originalClickHandler(event);
-                }
-            };
-            
-            // Hover effect for potential targets
-            span.addEventListener('mouseenter', () => {
-                if (moveMode) {
-                    span.style.backgroundColor = isVariable ? '#d9c3ff' : '#bae7ff';
-                }
-            });
-            
-            span.addEventListener('mouseleave', () => {
-                if (moveMode) {
-                    span.style.backgroundColor = isVariable ? '#f0e6ff' : '#e6f7ff';
-                }
-            });
-        } else {
-            // For the source span, clicking again cancels the move
-            span.onclick = (event) => {
-                event.stopPropagation();
-                cancelBranchMove();
-            };
-        }
-    };
-    
-    // Setup relation spans as targets
-    relationSpans.forEach(span => setupPotentialTarget(span, false));
-    
-    // Setup variable spans as targets
-    variableSpans.forEach(span => setupPotentialTarget(span, true));
-    
-    // Add a click handler to the document to cancel move mode when clicking outside
-    document.addEventListener('click', cancelBranchMove, { once: true });
-}
-
-// Function to cancel branch move operation
-function cancelBranchMove() {
-    if (!moveMode) return;
-    
-    moveMode = false;
-    
-    // Remove visual feedback
-    if (moveSourceSpan) {
-        moveSourceSpan.style.backgroundColor = '';
-        moveSourceSpan.style.padding = '';
-        moveSourceSpan.style.borderRadius = '';
-    }
-    
-    // Reset all relation and variable spans
-    const annotationElement = document.querySelector('#amr pre');
-    annotationElement.classList.remove('move-mode');
-    
-    const allSpans = annotationElement.querySelectorAll('.relation-span, .variable-span');
-    allSpans.forEach(span => {
-        span.classList.remove('potential-target');
-        span.style.backgroundColor = '';
-        span.style.padding = '';
-        span.style.borderRadius = '';
-        
-        // Restore original click handler
-        if (span._originalClickHandler) {
-            span.onclick = span._originalClickHandler;
-        }
-    });
-    
-    // Clear move state
-    moveSourceSpan = null;
-    
-    // Show notification
-    showNotification('Branch move canceled', 'info');
-}
-
-// Function to complete a branch move operation
-function completeBranchMove(sourceSpan, targetSpan, isVariableTarget) {
-    // Get the annotation element
-    const annotationElement = document.querySelector('#amr pre');
-    const originalText = annotationElement.textContent;
-    
-    // Identify the source branch
-    const sourceRelation = sourceSpan.textContent;
-    const sourceIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(sourceSpan);
-    
-    // Find the relation occurrence in the text
-    let relationMatches = findAllMatches(originalText, sourceRelation);
-    
-    if (relationMatches.length <= sourceIndex) {
-        console.error('Could not locate the source branch in the text');
-        showNotification('Error: Could not locate the source branch', 'error');
-        cancelBranchMove();
-        return;
-    }
-    
-    const sourcePos = relationMatches[sourceIndex];
-    
-    // Determine the branch boundaries
-    const sourceBranchInfo = getBranchBoundaries(originalText, sourcePos);
-    
-    if (!sourceBranchInfo) {
-        console.error('Could not determine source branch boundaries');
-        showNotification('Error: Could not determine source branch boundaries', 'error');
-        cancelBranchMove();
-        return;
-    }
-    
-    // Get the source branch text
-    const { start: sourceStart, end: sourceEnd, branchText: sourceBranchText, parentIndent: sourceIndent } = sourceBranchInfo;
-    
-    // Identify the target location
-    const targetText = targetSpan.textContent;
-    
-    // Different handling based on target type
-    let targetPos, targetLineStart, targetLineEnd, targetLine, targetIndent;
-    
-    if (isVariableTarget) {
-        // Find the target variable occurrence in the text
-        const targetSpans = annotationElement.querySelectorAll('.variable-span');
-        const targetIndex = Array.from(targetSpans).indexOf(targetSpan);
-        let variableMatches = findAllMatches(originalText, targetText);
-        
-        if (variableMatches.length <= targetIndex) {
-            console.error('Could not locate the target variable in the text');
-            showNotification('Error: Could not locate the target variable', 'error');
-            cancelBranchMove();
-            return;
-        }
-        
-        targetPos = variableMatches[targetIndex];
-    } else {
-        // Find the target relation occurrence in the text
-        const targetSpans = annotationElement.querySelectorAll('.relation-span');
-        const targetIndex = Array.from(targetSpans).indexOf(targetSpan);
-        let targetMatches = findAllMatches(originalText, targetText);
-        
-        if (targetMatches.length <= targetIndex) {
-            console.error('Could not locate the target node in the text');
-            showNotification('Error: Could not locate the target node', 'error');
-            cancelBranchMove();
-            return;
-        }
-        
-        targetPos = targetMatches[targetIndex];
-    }
-    
-    // Get the target line info
-    targetLineStart = originalText.lastIndexOf('\n', targetPos) + 1;
-    targetLineEnd = originalText.indexOf('\n', targetPos);
-    targetLine = originalText.substring(targetLineStart, targetLineEnd === -1 ? originalText.length : targetLineEnd);
-    
-    // Determine the indentation level at the target
-    targetIndent = targetLine.search(/\S/);
-    
-    // Find the insertion point - different for variables and relations
-    let insertionPoint;
-    
-    if (isVariableTarget) {
-        // For variables, we need to find where to insert the branch
-        // Usually we want to insert after the line with the variable
-        insertionPoint = targetLineEnd === -1 ? originalText.length : targetLineEnd;
-        
-        // But we need to check if there are any existing relations/branches after this variable
-        // If so, we need to insert before the first one
-        let nextLineStart = insertionPoint + 1;
-        const nextLineEnd = originalText.indexOf('\n', nextLineStart);
-        if (nextLineEnd !== -1) {
-            const nextLine = originalText.substring(nextLineStart, nextLineEnd);
-            const nextLineIndent = nextLine.search(/\S/);
-            
-            // If the next line is more indented, it's part of the current node's content
-            // If it has a relation, we should insert our branch before it
-            if (nextLineIndent > targetIndent && nextLine.includes(':')) {
-                // Find the first relation on the next line
-                const firstRelPos = nextLine.indexOf(':');
-                if (firstRelPos !== -1) {
-                    // We'll insert before this relation
-                    // No adjustment needed - we'll insert at current insertionPoint
-                }
-            }
-        }
-    } else {
-        // For relations, insert after the relation's line
-        insertionPoint = targetLineEnd === -1 ? originalText.length : targetLineEnd;
-    }
-    
-    // Calculate needed indentation adjustment
-    const newIndent = targetIndent + 2; // Add 2 spaces more than target's indent
-    const indentAdjustment = newIndent - sourceIndent;
-    
-    // Adjust the indentation of the source branch
-    const adjustedBranchLines = sourceBranchText.split('\n').filter(line => line.trim().length > 0);
-    
-    const adjustedBranchText = adjustedBranchLines.map(line => {
-        const lineIndent = line.search(/\S/);
-        const lineContent = line.trim();
-        
-        // Calculate new indentation for this line
-        const newLineIndent = lineIndent + indentAdjustment;
-        return ' '.repeat(newLineIndent) + lineContent;
-    }).join('\n') + '\n'; // Add newline at end
-    
-    // Create updated text
-    // First remove the source branch
-    let updatedText = originalText.substring(0, sourceStart) + originalText.substring(sourceEnd);
-    
-    // Then adjust the insertion point if it was affected by the removal
-    if (insertionPoint > sourceStart) {
-        // If the insertion point was after the source branch, adjust it
-        insertionPoint -= (sourceEnd - sourceStart);
-    }
-    
-    // Then insert the adjusted branch at the insertion point
-    updatedText = updatedText.substring(0, insertionPoint) + '\n' + adjustedBranchText + updatedText.substring(insertionPoint);
-    
-    // Update the annotation display
-    annotationElement.textContent = updatedText;
-    
-    // Reinitialize the relation editor
-    makeRelationsClickable(annotationElement);
-    makeValuesClickable(annotationElement);
-    makeVariablesClickable(annotationElement);
-    addBranchOperations(annotationElement);
-    
-    // Exit move mode
-    cancelBranchMove();
-    
-    // Save the updated annotation
-    saveBranchMove(updatedText, sourceRelation, targetText, isVariableTarget);
-    
-    showNotification(`Moved branch from "${sourceRelation}" to "${targetText}" ${isVariableTarget ? '(variable)' : ''}`, 'success');
-}
-
-// Function to save a branch move operation
-function saveBranchMove(updatedAnnotation, sourceRelation, targetNode, isVariableTarget) {
-    // Get sentence ID and document ID from the URL
-    const urlParts = window.location.pathname.split('/');
-    const sent_id = urlParts[urlParts.length - 1];
-    const doc_version_id = urlParts[urlParts.length - 2];
-    
-    console.log(`Moving branch from ${sourceRelation} to ${targetNode} ${isVariableTarget ? '(variable)' : ''}`);
-    
-    // Use fetch API to send the update to the server
-    fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken()
-        },
-        body: JSON.stringify({
-            annotation: updatedAnnotation,
-            operation: 'move_branch',
-            source_relation: sourceRelation,
-            target_node: targetNode,
-            is_variable_target: isVariableTarget
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Update successful:', data);
-    })
-    .catch(error => {
-        console.error('Error updating annotation:', error);
-        showNotification('Error saving changes: ' + error.message, 'error');
-    });
-}
-
-// Initialize relation editor when DOM is loaded
-document.addEventListener('DOMContentLoaded', initRelationEditor); 
