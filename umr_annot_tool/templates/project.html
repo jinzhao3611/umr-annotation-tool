@@ -71,11 +71,6 @@
                 <h2>Annotation Tools</h2>
                 <ul>
                     <li>
-                        <a href="{{ url_for('users.partialgraph', project_id=project_id) }}" class="nav-link">
-                            <i class="fas fa-project-diagram"></i> Partial Graphs
-                        </a>
-                    </li>
-                    <li>
                         <a href="{{ url_for('users.alllexicon', project_id=project_id) }}" class="nav-link">
                             <i class="fas fa-book"></i> Lexicon
                         </a>
@@ -265,6 +260,76 @@
                         </div>
                     </div>
                     {% endfor %}
+                    
+                    <!-- Adjudication Selection Section -->
+                    <div class="adjudication-selection">
+                        <div class="selection-header">
+                            <i class="fas fa-balance-scale"></i> Adjudication
+                        </div>
+                        <p class="selection-description">
+                            Select exactly two documents to compare their annotations side by side.
+                        </p>
+                        
+                        <form id="adjudication-form" method="POST" action="{{ url_for('main.adjudication_select') }}">
+                            <div class="doc-checkbox-list">
+                                {% for doc in qc_docs %}
+                                <div class="doc-checkbox-item">
+                                    <input type="checkbox" name="selected_docs" value="{{ doc.doc_version_id }}" 
+                                           id="doc-{{ doc.doc_version_id }}" class="adjudication-checkbox">
+                                    <label for="doc-{{ doc.doc_version_id }}">{{ doc.filename }} (QC by: {{ doc.username }})</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-primary" id="compare-btn" disabled>
+                                    <i class="fas fa-columns"></i> Compare Documents
+                                </button>
+                                <span id="selection-error" class="text-danger ml-3" style="display: none;">
+                                    Please select exactly 2 documents to compare.
+                                </span>
+                            </div>
+                        </form>
+                        
+                        <script>
+                            // Handle checkbox selection limit (exactly 2)
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const checkboxes = document.querySelectorAll('.adjudication-checkbox');
+                                const compareBtn = document.getElementById('compare-btn');
+                                const errorMsg = document.getElementById('selection-error');
+                                
+                                checkboxes.forEach(checkbox => {
+                                    checkbox.addEventListener('change', updateSelection);
+                                });
+                                
+                                function updateSelection() {
+                                    const selected = document.querySelectorAll('.adjudication-checkbox:checked');
+                                    
+                                    if (selected.length === 2) {
+                                        compareBtn.disabled = false;
+                                        errorMsg.style.display = 'none';
+                                    } else {
+                                        compareBtn.disabled = true;
+                                        if (selected.length > 2) {
+                                            errorMsg.style.display = 'inline';
+                                        } else {
+                                            errorMsg.style.display = 'none';
+                                        }
+                                    }
+                                }
+                                
+                                // Handle form submission
+                                document.getElementById('adjudication-form').addEventListener('submit', function(e) {
+                                    const selected = document.querySelectorAll('.adjudication-checkbox:checked');
+                                    
+                                    if (selected.length !== 2) {
+                                        e.preventDefault();
+                                        errorMsg.style.display = 'inline';
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
                 {% else %}
                     <div class="no-documents">
                         <p>No documents are currently under quality control.</p>

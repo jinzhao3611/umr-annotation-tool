@@ -1,0 +1,232 @@
+{% extends "layout.html" %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/doclevel.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/adjudication.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
+    
+    <!-- Initialize state before loading any other scripts -->
+    <script>
+        window.state = {
+            docVersion1Id: {{ doc_version_1_id }},
+            docVersion2Id: {{ doc_version_2_id }},
+            currentSentId: {{ sent_id }},
+            maxSentId: {{ max_sent_id }},
+            language: "{{ lang }}"
+        };
+    </script>
+    
+    <!-- Load application scripts -->
+    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/adjudication.js') }}"></script>
+    
+    <style>
+        .adjudication-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 120px);
+        }
+        
+        .comparison-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .doc-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            overflow: auto;
+        }
+        
+        .doc-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .doc-owner {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        .annotation-section {
+            flex: 1;
+            overflow: auto;
+            margin-bottom: 15px;
+        }
+        
+        .annotation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e9ecef;
+            padding: 8px 12px;
+            border-radius: 5px 5px 0 0;
+            font-weight: bold;
+        }
+        
+        .annotation-content {
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            padding: 15px;
+            max-height: 400px;
+            overflow: auto;
+        }
+        
+        .navigation-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .sent-text {
+            text-align: center;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        /* Difference highlighting */
+        .highlight-add {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 2px;
+            border-radius: 3px;
+        }
+        
+        .highlight-remove {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 2px;
+            border-radius: 3px;
+            text-decoration: line-through;
+        }
+        
+        .highlight-change {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 2px;
+            border-radius: 3px;
+        }
+        
+        /* Split.js gutter styling */
+        .gutter {
+            background-color: #eee;
+            background-repeat: no-repeat;
+            background-position: 50%;
+        }
+
+        .gutter.gutter-horizontal {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+            cursor: col-resize;
+        }
+    </style>
+{% endblock head %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="adjudication-container">
+        <!-- Navigation bar with sentence navigation and info -->
+        <div class="navigation-bar">
+            <div class="nav-buttons">
+                <button id="prev-btn" class="btn btn-outline-primary" {% if sent_id == 1 %}disabled{% endif %}>
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                <button id="next-btn" class="btn btn-outline-primary" {% if sent_id == max_sent_id %}disabled{% endif %}>
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="sent-counter">
+                Sentence {{ sent_id }} of {{ max_sent_id }}
+            </div>
+            <div class="back-button">
+                <a href="{{ url_for('users.project', project_id=project_id) }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Project
+                </a>
+            </div>
+        </div>
+        
+        <!-- Current sentence text -->
+        <div class="sent-text">
+            {{ sent_text }}
+        </div>
+        
+        <!-- Side-by-side comparison container -->
+        <div class="comparison-container" id="split-container">
+            <!-- Left column - First document -->
+            <div class="doc-column" id="doc1-column">
+                <div class="doc-info">
+                    <div class="doc-name">{{ doc1.filename }}</div>
+                    <div class="doc-owner">QC by: {{ doc1.username }}</div>
+                </div>
+                
+                <!-- Sentence level annotation -->
+                <div class="annotation-section">
+                    <div class="annotation-header">
+                        <span>Sentence-Level Annotation</span>
+                    </div>
+                    <div class="annotation-content" id="doc1-sent-annotation">
+                        <pre>{{ doc1_sent_annotation }}</pre>
+                    </div>
+                </div>
+                
+                <!-- Document level annotation -->
+                <div class="annotation-section">
+                    <div class="annotation-header">
+                        <span>Document-Level Annotation</span>
+                    </div>
+                    <div class="annotation-content" id="doc1-doc-annotation">
+                        <pre>{{ doc1_doc_annotation }}</pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right column - Second document -->
+            <div class="doc-column" id="doc2-column">
+                <div class="doc-info">
+                    <div class="doc-name">{{ doc2.filename }}</div>
+                    <div class="doc-owner">QC by: {{ doc2.username }}</div>
+                </div>
+                
+                <!-- Sentence level annotation -->
+                <div class="annotation-section">
+                    <div class="annotation-header">
+                        <span>Sentence-Level Annotation</span>
+                    </div>
+                    <div class="annotation-content" id="doc2-sent-annotation">
+                        <pre>{{ doc2_sent_annotation }}</pre>
+                    </div>
+                </div>
+                
+                <!-- Document level annotation -->
+                <div class="annotation-section">
+                    <div class="annotation-header">
+                        <span>Document-Level Annotation</span>
+                    </div>
+                    <div class="annotation-content" id="doc2-doc-annotation">
+                        <pre>{{ doc2_doc_annotation }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} 

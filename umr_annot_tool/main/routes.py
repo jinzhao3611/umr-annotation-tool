@@ -1164,3 +1164,121 @@ def view_combined(doc_version_id, sent_id):
                           annotator=annotator,
                           lang=lang,
                           max_sent_id=max_sent_id)
+
+@main.route("/adjudication_select", methods=['POST'])
+@login_required
+def adjudication_select():
+    """Process the selection of two documents for adjudication and redirect to the adjudication view."""
+    selected_docs = request.form.getlist('selected_docs')
+    
+    # Validate selection
+    if len(selected_docs) != 2:
+        flash('Please select exactly 2 documents for comparison.', 'danger')
+        return redirect(request.referrer or url_for('users.projects'))
+    
+    # Extract the document version IDs
+    doc_version_1_id = int(selected_docs[0])
+    doc_version_2_id = int(selected_docs[1])
+    
+    # Redirect to adjudication view with the first sentence
+    return redirect(url_for('main.adjudication', 
+                           doc_version_1_id=doc_version_1_id,
+                           doc_version_2_id=doc_version_2_id,
+                           sent_id=1))
+
+@main.route("/adjudication/<int:doc_version_1_id>/<int:doc_version_2_id>/<int:sent_id>", methods=['GET'])
+@login_required
+def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
+    """Display the adjudication view comparing two document versions side by side."""
+    try:
+        # Get document versions
+        doc_version_1 = DocVersion.query.get_or_404(doc_version_1_id)
+        doc_version_2 = DocVersion.query.get_or_404(doc_version_2_id)
+        
+        # Get the documents information
+        doc1 = Doc.query.get_or_404(doc_version_1.doc_id)
+        doc2 = Doc.query.get_or_404(doc_version_2.doc_id)
+        
+        # Get user information for each document
+        user1 = User.query.get_or_404(doc_version_1.user_id)
+        user2 = User.query.get_or_404(doc_version_2.user_id)
+        
+        # Get project information
+        project = Project.query.get_or_404(doc1.project_id)
+        
+        # Ensure both documents are from the same project
+        if doc1.project_id != doc2.project_id:
+            flash('The selected documents must be from the same project.', 'danger')
+            return redirect(url_for('users.project', project_id=doc1.project_id))
+        
+        # Check if the user has permission to view these documents
+        membership = Projectuser.query.filter_by(
+            project_id=doc1.project_id, 
+            user_id=current_user.id
+        ).first()
+        
+        if not membership:
+            abort(403)
+        
+        # Get all sentences from the document (assuming both documents have the same sentences)
+        sents = Sent.query.filter_by(doc_id=doc1.id).all()
+        
+        # Validate the sentence ID
+        if sent_id < 1 or sent_id > len(sents):
+            flash('Invalid sentence ID.', 'danger')
+            return redirect(url_for('main.adjudication', 
+                                   doc_version_1_id=doc_version_1_id,
+                                   doc_version_2_id=doc_version_2_id,
+                                   sent_id=1))
+        
+        # Get the current sentence
+        current_sent = sents[sent_id - 1]
+        
+        # Get annotations for the current sentence in both documents
+        annotation1 = Annotation.query.filter_by(
+            doc_version_id=doc_version_1_id, 
+            sent_id=current_sent.id
+        ).first()
+        
+        annotation2 = Annotation.query.filter_by(
+            doc_version_id=doc_version_2_id, 
+            sent_id=current_sent.id
+        ).first()
+        
+        # Prepare data for the template
+        doc1_data = {
+            'filename': doc1.filename,
+            'username': user1.username
+        }
+        
+        doc2_data = {
+            'filename': doc2.filename,
+            'username': user2.username
+        }
+        
+        # Get the sentence-level and document-level annotations
+        doc1_sent_annotation = annotation1.sent_annot if annotation1 else "No annotation available"
+        doc1_doc_annotation = annotation1.doc_annot if annotation1 else "No annotation available"
+        doc2_sent_annotation = annotation2.sent_annot if annotation2 else "No annotation available"
+        doc2_doc_annotation = annotation2.doc_annot if annotation2 else "No annotation available"
+        
+        # Render the adjudication template
+        return render_template('adjudication.html',
+                              doc_version_1_id=doc_version_1_id,
+                              doc_version_2_id=doc_version_2_id,
+                              sent_id=sent_id,
+                              max_sent_id=len(sents),
+                              project_id=doc1.project_id,
+                              sent_text=current_sent.content,
+                              doc1=doc1_data,
+                              doc2=doc2_data,
+                              doc1_sent_annotation=doc1_sent_annotation,
+                              doc1_doc_annotation=doc1_doc_annotation,
+                              doc2_sent_annotation=doc2_sent_annotation,
+                              doc2_doc_annotation=doc2_doc_annotation,
+                              lang=project.language)
+    
+    except Exception as e:
+        logger.error(f"Error in adjudication: {str(e)}")
+        flash('An error occurred while preparing the adjudication view.', 'danger')
+        return redirect(url_for('users.projects'))
