@@ -883,125 +883,8 @@ def modification(project_id): #there is no post here like the previous ones, bec
             
     return render_template('modification.html', project_id=project_id)
 
-@users.route('/statistics/<int:project_id>', methods=['GET', 'POST'])
-def statistics(project_id):
-    project_name = Project.query.filter(Project.id == project_id).first().project_name
-    docs = Doc.query.filter(Doc.project_id==project_id).all()
-    uploaded_document_count = len(docs)
-    uploaded_sentence_count = 0
-    uploaded_token_count = 0
-    total_annotated_docs = set()
-    total_annotated_sentence_count = 0
-    total_annotated_concept_count = 0
-    for doc in docs:
-        sents_of_doc = Sent.query.filter(Sent.doc_id==doc.id).all()
-        uploaded_sentence_count += len(sents_of_doc)
-        for sent in sents_of_doc:
-            uploaded_token_count += len(sent.content.split())
-        annotations_of_doc = Annotation.query.filter(Annotation.doc_id==doc.id).all()
-        for annot in annotations_of_doc:
-            if len(annot.sent_annot) > len('<div id="amr"></div>'):
-                total_annotated_sentence_count += 1
-                total_annotated_docs.add(doc.id)
-                umr = annot.sent_annot
-                for k in umr:
-                    if k.endswith(".c"):
-                        total_annotated_concept_count +=1
-    total_annotated_document_count = len(total_annotated_docs)
-    project_users = Projectuser.query.filter(Projectuser.project_id==project_id).all()
-    annotator_ids = [project_user.user_id for project_user in project_users]
-    annotator_names = [User.query.filter(User.id==annotator_id).first().username for annotator_id in annotator_ids]
-    checked_out_document_counts = []
-    checked_out_sentence_counts = []
-    annotated_document_counts = []
-    annotated_sentence_counts = []
-    annotated_concept_counts = []
-    for annotator_id in annotator_ids:
-        checked_out_documents_this_annotator = set()
-        checked_out_sentence_count_this_annotator = 0
-        annotated_documents_this_annotator = set()
-        annotated_sentence_count_this_annotator = 0
-        annotated_concept_count_this_annotator = 0
-        for doc in docs:
-            print("annotator_id: ", annotator_id)
-            print("doc_id: ", doc.id)
-            annots = Annotation.query.filter(Annotation.user_id==annotator_id, Annotation.doc_id==doc.id).all()
-            for annot in annots:
-                if annot:
-                    checked_out_documents_this_annotator.add(annot.doc_id)
-                    checked_out_sentence_count_this_annotator += 1
-                    if len(annot.sent_annot) > len('<div id="amr"></div>'):
-                        annotated_sentence_count_this_annotator += 1
-                        annotated_documents_this_annotator.add(annot.doc_id)
-                        umr = annot.sent_annot
-                        for k in umr:
-                            if k.endswith(".c"):
-                                annotated_concept_count_this_annotator += 1
-        checked_out_document_counts.append(len(checked_out_documents_this_annotator))
-        checked_out_sentence_counts.append(checked_out_sentence_count_this_annotator)
-        annotated_document_counts.append(len(annotated_documents_this_annotator))
-        annotated_sentence_counts.append(annotated_sentence_count_this_annotator)
-        annotated_concept_counts.append(annotated_concept_count_this_annotator)
 
 
-    return render_template('statistics.html', project_id=project_id, project_name=project_name,
-                           uploaded_document_count=uploaded_document_count,
-                           uploaded_sentence_count=uploaded_sentence_count,
-                           uploaded_token_count=uploaded_token_count,
-                           total_annotated_document_count=total_annotated_document_count,
-                           total_annotated_sentence_count=total_annotated_sentence_count,
-                           total_annotated_concept_count=total_annotated_concept_count,
-                           annotator_ids=annotator_ids,
-                           annotator_names=annotator_names,
-                           checked_out_document_counts=checked_out_document_counts,
-                           checked_out_sentence_counts=checked_out_sentence_counts,
-                           annotated_document_counts=annotated_document_counts,
-                           annotated_sentence_counts=annotated_sentence_counts,
-                           annotated_concept_counts=annotated_concept_counts,
-                           )
-
-@users.route('/statistics_all', methods=['GET', 'POST'])
-def statistics_all():
-    stats_all = []
-    for lang in ["arapahoe","arabic","chinese","english","navajo","sanapana","secoya","kukama","default"]:
-    # for lang in ["arapahoe", "sanapana"]:
-        docs = Doc.query.filter(Doc.lang==lang).all()
-        uploaded_document_count = len(docs)
-        uploaded_sentence_count = 0
-        uploaded_token_count = 0
-        total_annotated_docs = set()
-        total_annotated_sentence_count = 0
-        total_annotated_concept_count = 0
-        for doc in docs:
-            sents_of_doc = Sent.query.filter(Sent.doc_id==doc.id).all()
-            uploaded_sentence_count += len(sents_of_doc)
-            for sent in sents_of_doc:
-                uploaded_token_count += len(sent.content.split())
-            annotations_of_doc = Annotation.query.filter(Annotation.doc_id==doc.id).all()
-            for annot in annotations_of_doc:
-                if len(annot.sent_annot) > len('<div id="amr"></div>'):
-                    total_annotated_sentence_count += 1
-                    total_annotated_docs.add(doc.id)
-                    umr = annot.sent_umr
-                    for k in umr:
-                        if k.endswith(".c"):
-                            total_annotated_concept_count +=1
-        total_annotated_document_count = len(total_annotated_docs)
-        curr_lang_stat= [uploaded_document_count, uploaded_sentence_count, uploaded_token_count, total_annotated_document_count, total_annotated_sentence_count, total_annotated_concept_count]
-        stats_all.append(curr_lang_stat)
-
-
-    return render_template('statistics_all.html',
-                           arapahoe_stats=stats_all[0],
-                           arabic_stats=stats_all[1],
-                           chinese_stats=stats_all[2],
-                           english_stats=stats_all[3],
-                           navajo_stats=stats_all[4],
-                           sanapana_stats=stats_all[5],
-                           secoya_stats=stats_all[6],
-                           kukama_stats=stats_all[7],
-                           default_stats=stats_all[8]
-                           )
 
 @users.route('/settings/<int:project_id>', methods=['GET', 'POST'])
 def settings(project_id):
@@ -1180,3 +1063,106 @@ def search():
                              doc_id=doc_id,
                              project_id=project_id,
                              stage_filter='all')
+
+@users.route('/statistics/<int:project_id>', methods=['GET'])
+@login_required
+def statistics(project_id):
+    """Display statistics for a project."""
+    # Verify the project exists and user has access
+    project = Project.query.get_or_404(project_id)
+    
+    # Get project users
+    project_users = Projectuser.query.filter_by(project_id=project_id).all()
+    user_ids = [pu.user_id for pu in project_users]
+    users = User.query.filter(User.id.in_(user_ids)).all()
+    
+    # Get all docs for this project
+    docs = Doc.query.filter_by(project_id=project_id).all()
+    doc_ids = [doc.id for doc in docs]
+    
+    # Count initial documents (docs with no versions or only initial versions)
+    initial_docs_count = 0
+    for doc in docs:
+        versions = DocVersion.query.filter_by(doc_id=doc.id).all()
+        if not versions or all(v.stage == 'initial' for v in versions):
+            initial_docs_count += 1
+    
+    # Get all sentences
+    sents = Sent.query.filter(Sent.doc_id.in_(doc_ids)).all()
+    total_sentences = len(sents)
+    
+    # Get doc versions
+    doc_versions = DocVersion.query.filter(DocVersion.doc_id.in_(doc_ids)).all()
+    
+    # Organize document versions by stage
+    initial_versions = [dv for dv in doc_versions if dv.stage == 'initial']
+    checkout_versions = [dv for dv in doc_versions if dv.stage == 'checkout']
+    qc_versions = [dv for dv in doc_versions if dv.stage == 'qc']
+    
+    # Get unique documents that are checked out
+    checked_out_docs = set(dv.doc_id for dv in checkout_versions)
+    not_checked_out_docs = set(doc.id for doc in docs) - checked_out_docs
+    
+    # Get unique QC files
+    qc_docs = set(dv.doc_id for dv in qc_versions)
+    
+    # Count annotations
+    doc_version_ids = [dv.id for dv in doc_versions]
+    annotations = Annotation.query.filter(Annotation.doc_version_id.in_(doc_version_ids)).all()
+    
+    # Count sentence-level and document-level annotations
+    sentence_level_annotations = 0
+    document_level_annotations = 0
+    sentence_variables = 0
+    document_relations = 0
+    
+    import re
+    
+    for annotation in annotations:
+        if annotation.sent_annot and annotation.sent_annot.strip():
+            sentence_level_annotations += 1
+            # Count variables in sentence annotations (variables are typically in format like "p1, p2, x3, etc.")
+            variables = re.findall(r'[a-z][0-9]+', annotation.sent_annot)
+            sentence_variables += len(variables)
+        
+        if annotation.doc_annot and annotation.doc_annot.strip():
+            document_level_annotations += 1
+            # Count relations in document annotations (typically in format like "(rel arg1 arg2)")
+            relations = re.findall(r'\([^\)]+\)', annotation.doc_annot)
+            document_relations += len(relations)
+    
+    # Count files by user
+    user_stats = {}
+    for user in users:
+        checkout_count = DocVersion.query.filter_by(user_id=user.id, stage='checkout').count()
+        qc_count = DocVersion.query.filter_by(user_id=user.id, stage='qc').count()
+        user_stats[user.username] = {
+            'checkout_count': checkout_count,
+            'qc_count': qc_count
+        }
+    
+    # Create statistics object
+    statistics = {
+        'project_name': project.project_name,
+        'initial_docs_count': initial_docs_count,
+        'total_docs': len(docs),
+        'total_sentences': total_sentences,
+        'total_relations': document_relations,
+        'sentence_level_annotations': sentence_level_annotations,
+        'document_level_annotations': document_level_annotations,
+        'total_variables': sentence_variables,
+        'total_relations': document_relations,
+        'checked_out_docs': len(checked_out_docs),
+        'not_checked_out_docs': len(not_checked_out_docs),
+        'qc_docs': len(qc_docs),
+        'user_stats': user_stats
+    }
+    
+    # For timestamp in template
+    current_datetime = datetime.utcnow()
+    
+    return render_template('statistics.html', 
+                          title='Project Statistics',
+                          project_id=project_id,
+                          statistics=statistics,
+                          now=lambda: current_datetime)
