@@ -717,8 +717,6 @@ def update_annotation(doc_version_id, sent_id):
         annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=current_sent.id).first()
         
         if not annotation:
-            current_app.logger.warning(f"Annotation not found for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
-            
             # Create a new annotation
             annotation = Annotation(
                 doc_version_id=doc_version_id,
@@ -922,8 +920,7 @@ def save_alignments():
 @login_required
 def get_concepts():
     """Provide predefined concepts for use in the branch addition feature"""
-    from umr_annot_tool.resources.rolesets import discourse_concepts, non_event_rolesets
-    from umr_annot_tool.resources.ne_types import ne_types
+    from umr_annot_tool.resources.rolesets import discourse_concepts, non_event_rolesets, ne_types
     
     try:
         return jsonify({
@@ -933,7 +930,7 @@ def get_concepts():
         })
     except Exception as e:
         current_app.logger.error(f"Error fetching concepts: {str(e)}")
-        return jsonify({'success': False, 'message': str(e)}), 500
+        return jsonify({'error': str(e)}), 500
 
 @main.route("/doclevel/<int:doc_version_id>/<int:sent_id>", methods=['GET', 'POST'])
 @login_required
