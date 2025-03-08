@@ -43,7 +43,62 @@
     </form>
 
     {% if results %}
-        <h2>Search Results</h2>
+        {% set total_results = results|length %}
+        {% set initial_count = results|selectattr('doc_version_stage', 'equalto', 'initial')|list|length %}
+        {% set checkout_count = results|selectattr('doc_version_stage', 'equalto', 'checkout')|list|length %}
+        {% set qc_count = results|selectattr('doc_version_stage', 'equalto', 'qc')|list|length %}
+        {% set other_count = total_results - initial_count - checkout_count - qc_count %}
+        {% set sentence_count = results|selectattr('match_type', 'equalto', 'sentence')|list|length %}
+        {% set annotation_count = results|selectattr('match_type', 'equalto', 'annotation')|list|length %}
+        
+        <h2>Search Results <small class="text-muted">({{ total_results }} found)</small></h2>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Results Summary</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="font-weight-bold">By Stage:</h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="badge badge-secondary">Initial</span>: {{ initial_count }} 
+                                ({{ (initial_count / total_results * 100)|round|int }}%)
+                            </li>
+                            <li>
+                                <span class="badge badge-info">Checkout</span>: {{ checkout_count }} 
+                                ({{ (checkout_count / total_results * 100)|round|int }}%)
+                            </li>
+                            <li>
+                                <span class="badge badge-success">QC</span>: {{ qc_count }} 
+                                ({{ (qc_count / total_results * 100)|round|int }}%)
+                            </li>
+                            {% if other_count > 0 %}
+                            <li>
+                                <span class="badge badge-light">Other</span>: {{ other_count }} 
+                                ({{ (other_count / total_results * 100)|round|int }}%)
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="font-weight-bold">By Match Type:</h6>
+                        <ul class="list-unstyled">
+                            <li>
+                                <span class="badge badge-primary">Sentence</span>: {{ sentence_count }} 
+                                ({{ (sentence_count / total_results * 100)|round|int }}%)
+                            </li>
+                            <li>
+                                <span class="badge badge-success">Annotation</span>: {{ annotation_count }} 
+                                ({{ (annotation_count / total_results * 100)|round|int }}%)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="search-results">
             {% for result in results %}
                 <div class="card mb-3">
@@ -72,13 +127,6 @@
                             <h5 class="card-title">Document Annotation:</h5>
                             <div class="card-text annotation-content">{{ result.doc_annot|safe }}</div>
                         {% endif %}
-                        
-                        <div class="mt-2">
-                            <a href="{{ url_for('main.sentlevel', doc_version_id=result.doc_version_id, sent_id=result.sent_id) }}" 
-                               class="btn btn-sm btn-outline-primary">
-                                View Sentence Level
-                            </a>
-                        </div>
                     </div>
                 </div>
             {% endfor %}
