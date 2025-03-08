@@ -1836,6 +1836,22 @@ async function showAddBranchDialog(parentVariableSpan) {
     const annotationElement = document.querySelector('#amr pre');
     const annotationText = annotationElement.textContent;
     
+    // Find the full node (variable / concept) of the parent
+    let parentFullNode = parentVariable;
+    let parentConcept = '';
+    
+    // Search for the full node pattern in the annotation text
+    const variableRegex = new RegExp(`\\(\\s*${parentVariable}\\s*/\\s*([^\\s\\(\\):]+)`, 'g');
+    const match = variableRegex.exec(annotationText);
+    if (match && match[1]) {
+        parentConcept = match[1];
+        parentFullNode = `${parentVariable} / ${parentConcept}`;
+    }
+    
+    // Get sentence tokens for display
+    const sentenceTokens = extractSentenceTokens();
+    console.log('Sentence tokens:', sentenceTokens);
+    
     // Create dialog container
     const dialogContainer = document.createElement('div');
     dialogContainer.className = 'add-branch-dialog-container';
@@ -1853,26 +1869,18 @@ async function showAddBranchDialog(parentVariableSpan) {
     // Create dialog
     const dialog = document.createElement('div');
     dialog.className = 'add-branch-dialog';
-    dialog.style.width = '650px';
+    dialog.style.width = '700px';
+    dialog.style.maxWidth = '90vw';
+    dialog.style.maxHeight = '90vh';
+    dialog.style.overflow = 'auto';
     dialog.style.backgroundColor = 'white';
     dialog.style.borderRadius = '8px';
     dialog.style.padding = '20px';
     dialog.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
     
-    // Get sentence tokens for display
-    const tokens = extractSentenceTokens();
-    console.log('Sentence tokens:', tokens);
-    
-    // Fetch all concept types
-    const allConcepts = await getAllConcepts();
-    
-    // Filter out tokens from the all concepts list to avoid duplication
-    const tokenSet = new Set(tokens);
-    const otherConcepts = allConcepts.filter(concept => !tokenSet.has(concept));
-    
     // Dialog header
     dialog.innerHTML = `
-        <h3 style="margin-top: 0; margin-bottom: 20px;">Add Branch to ${parentVariable}</h3>
+        <h3 style="margin-top: 0; margin-bottom: 20px;">Add Branch to ${parentFullNode}</h3>
         <form id="add-branch-form">
             <div style="margin-bottom: 16px;">
                 <label for="relation" style="display: block; margin-bottom: 8px; font-weight: bold;">Relation:</label>
@@ -1881,71 +1889,15 @@ async function showAddBranchDialog(parentVariableSpan) {
                 </select>
             </div>
             
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Input Type:</label>
-                <div style="display: flex; gap: 10px;">
-                    <label style="margin-right: 15px;">
-                        <input type="radio" name="input-type" value="concept" checked> Concept
-                    </label>
-                    <label style="margin-right: 15px;">
-                        <input type="radio" name="input-type" value="string"> String
-                    </label>
-                    <label>
-                        <input type="radio" name="input-type" value="number"> Number
-                    </label>
-                </div>
-            </div>
+            <!-- Child node selection will be dynamically loaded here based on the relation -->
+            <div id="child-node-container"></div>
             
-            <div id="concept-input-container">
-                <div style="margin-bottom: 16px;">
-                    <label for="concept-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Concept:</label>
-                    <input type="text" id="concept-input" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Type or select a concept">
-                    <div style="display: flex; align-items: center; margin-top: 10px;">
-                        <label style="margin-right: 10px;">
-                            <input type="checkbox" id="generate-variable" checked> 
-                            Generate variable
-                        </label>
-                        <div id="variable-preview" style="color: #666; margin-left: 10px;"></div>
-                    </div>
+            <div id="name-tokens-container" style="display: none; margin-top: 16px; padding: 12px; background-color: #f9f9f9; border-radius: 4px; border: 1px solid #eee;">
+                <h4 style="margin-top: 0; margin-bottom: 12px;">Select tokens for name:</h4>
+                <div id="name-tokens-selection" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px;"></div>
+                <div id="selected-name-tokens" style="margin-top: 8px;">
+                    <p style="font-weight: bold; margin-bottom: 8px;">Selected tokens: <span id="selected-tokens-text"></span></p>
                 </div>
-                
-                <div style="margin-bottom: 16px;">
-                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Sentence Tokens:</label>
-                    <div id="token-container" style="max-height: 120px; overflow-y: auto; padding: 8px; border: 1px solid #eee; border-radius: 4px; display: flex; flex-wrap: wrap; gap: 5px;">
-                        ${tokens.map(token => `
-                            <span class="token-chip" style="background-color: #e1f5fe; padding: 5px 10px; border-radius: 15px; cursor: pointer; user-select: none; display: inline-block; margin: 3px;">
-                                ${token}
-                            </span>
-                        `).join('')}
-                    </div>
-                </div>
-                
-                <div style="margin-bottom: 16px; display: flex; gap: 10px;">
-                    <div style="flex: 1;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Other Concepts:</label>
-                        <select id="concept-categories" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                            <option value="discourse">Discourse Concepts</option>
-                            <option value="ne">Named Entity Types</option>
-                            <option value="rolesets">Non-Event Rolesets</option>
-                        </select>
-                    </div>
-                    <div style="flex: 2;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">&nbsp;</label>
-                        <select id="concept-select" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                            <option value="">Select from list...</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            <div id="string-input-container" style="display: none; margin-bottom: 16px;">
-                <label for="string-input" style="display: block; margin-bottom: 8px; font-weight: bold;">String Value:</label>
-                <input type="text" id="string-input" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder='Enter value (without quotes)'>
-            </div>
-            
-            <div id="number-input-container" style="display: none; margin-bottom: 16px;">
-                <label for="number-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Number Value:</label>
-                <input type="number" id="number-input" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter a number">
             </div>
             
             <div style="text-align: right; margin-top: 20px;">
@@ -1958,238 +1910,543 @@ async function showAddBranchDialog(parentVariableSpan) {
     dialogContainer.appendChild(dialog);
     document.body.appendChild(dialogContainer);
     
-    // Populate relations dropdown
-    const relationSelect = document.getElementById('relation');
-    umrRelations.forEach(relation => {
-        const option = document.createElement('option');
-        option.value = relation;
-        option.textContent = relation;
-        relationSelect.appendChild(option);
-    });
-    
-    // Handle token chip clicks
-    document.querySelectorAll('.token-chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-            document.getElementById('concept-input').value = chip.textContent.trim();
-            updateVariablePreview();
-        });
-    });
-    
-    // Fetch concept data from server
+    // Fetch required data from the server
     try {
-        const response = await fetch('/get_concepts');
-        const conceptsData = await response.json();
+        // Get concept data from the server (only endpoint we need for now)
+        const conceptsResponse = await fetch('/get_concepts');
+        const conceptsData = await conceptsResponse.json();
         
-        // Setup concept category switching
-        const conceptCategorySelect = document.getElementById('concept-categories');
-        const conceptSelect = document.getElementById('concept-select');
+        console.log('Concepts data:', conceptsData);
         
-        // Function to update concept options based on selected category
-        const updateConceptOptions = () => {
-            // Clear existing options except the first one
-            while (conceptSelect.options.length > 1) {
-                conceptSelect.remove(1);
-            }
-            
-            // Get the selected category
-            const selectedCategory = conceptCategorySelect.value;
-            let conceptsToShow = [];
-            
-            if (selectedCategory === 'discourse') {
-                conceptsToShow = conceptsData.discourse_concepts || [];
-            } else if (selectedCategory === 'ne') {
-                conceptsToShow = conceptsData.ne_types || [];
-            } else if (selectedCategory === 'rolesets') {
-                conceptsToShow = conceptsData.non_event_rolesets || [];
-            }
-            
-            // Add options for the selected category
-            conceptsToShow.forEach(concept => {
-                const option = document.createElement('option');
-                option.value = concept;
-                option.textContent = concept;
-                conceptSelect.appendChild(option);
-            });
+        // Hardcoded mapping for relations with predefined values
+        // This is a subset of the most commonly used relations with fixed values from rolesets.py
+        const relationsWithValues = {
+            ':aspect': ['habitual', 'generic', 'iterative', 'inceptive', 'imperfective', 'process', 'atelic-process', 'perfective', 'state', 'reversible-state', 'irreversible-state', 'inherent-state', 'point-state', 'activity', 'undirected-activity', 'directed-activity', 'endeavor', 'semelfactive', 'undirected-endeavor', 'directed-endeavor', 'performance', 'incremental-accomplishment', 'nonincremental-accomplishment', 'directed-achievement', 'reversible-directed-achievement', 'irreversible-directed-achievement'],
+            ':degree': ['intensifier', 'downtoner', 'equal'],
+            ':modal-strength': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative'],
+            ':mode': ['imperative', 'interrogative', 'expressive'],
+            ':polarity': ['-', 'umr-unknown', 'truth-value'],
+            ':polite': ['+'],
+            ':refer-number': ['singular', 'non-singular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal'],
+            ':refer-person': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', 'excl', 'incl'],
+            ':refer-definiteness': ['class'],
+            ':axis-relative-polarities': ['left-handed', 'right-handed'],
+            ':framework-type': ['absolute', 'intrinsic', 'relative'],
+            ':anchor-framework-translation': ['rotated', 'reflected']
         };
         
-        // Initial population
-        updateConceptOptions();
+        // Extract needed concept categories
+        const discourseConceptsList = conceptsData.discourse_concepts || [];
+        const neTypesList = conceptsData.ne_types || [];
+        const nonEventRolesetsList = conceptsData.non_event_rolesets || [];
         
-        // Add change listener to update options when category changes
-        conceptCategorySelect.addEventListener('change', updateConceptOptions);
+        // Define abstract concepts list (simplified subset, as the full list is quite long)
+        const abstractConceptsList = [
+            'person', 'individual-person', 'place', 'event', 'name', 'umr-choice',
+            'manner', 'umr-unknown', 'umr-unintelligible', 'umr-empty',
+            'date-entity', 'string-entity', 'ordinal-entity', 'url-entity',
+            'monetary-quantity', 'distance-quantity', 'temporal-quantity',
+            'date-interval', 'value-interval', 'between', 'relative-position'
+        ];
         
-        // Handle selection from the concept dropdown
-        conceptSelect.addEventListener('change', () => {
-            if (conceptSelect.value) {
-                document.getElementById('concept-input').value = conceptSelect.value;
-                updateVariablePreview();
+        // Populate relations dropdown
+        const relationSelect = document.getElementById('relation');
+        umrRelations.forEach(relation => {
+            const option = document.createElement('option');
+            option.value = relation;
+            option.textContent = relation;
+            relationSelect.appendChild(option);
+        });
+        
+        // Function to update the child node container based on selected relation
+        function updateChildNodeContainer() {
+            const selectedRelation = relationSelect.value;
+            const childNodeContainer = document.getElementById('child-node-container');
+            
+            if (!selectedRelation) {
+                childNodeContainer.innerHTML = '';
+                return;
             }
+            
+            console.log(`Selected relation: ${selectedRelation}`);
+            
+            // Check if the relation has predefined values in our mapping
+            const predefinedValues = relationsWithValues[selectedRelation];
+            
+            if (predefinedValues && predefinedValues.length > 0) {
+                // Relation has predefined values - only allow selection from these values
+                console.log(`Relation ${selectedRelation} has predefined values:`, predefinedValues);
+                
+                childNodeContainer.innerHTML = `
+                    <div style="margin-bottom: 16px;">
+                        <label for="predefined-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Value:</label>
+                        <select id="predefined-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select a value...</option>
+                            ${predefinedValues.map(value => `<option value="${value}">${value}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+                
+                // Hide name tokens container as it's not needed for predefined values
+                document.getElementById('name-tokens-container').style.display = 'none';
+            } else {
+                // Relation doesn't have predefined values - show all the different options
+                console.log(`Relation ${selectedRelation} doesn't have predefined values`);
+                
+                childNodeContainer.innerHTML = `
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Child Node Type:</label>
+                        <select id="child-node-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select type...</option>
+                            <option value="token">Sentence Token</option>
+                            <option value="discourse">Discourse Concept</option>
+                            <option value="abstract">Abstract Concept</option>
+                            <option value="ne">Named Entity</option>
+                            <option value="non-event">Non-Event Roleset</option>
+                            <option value="string">String Value</option>
+                            <option value="number">Number Value</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Container for token selection -->
+                    <div id="token-selection-container" style="display: none; margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token:</label>
+                        <div style="max-height: 150px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                            <div id="tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                                ${sentenceTokens.map(token => `
+                                    <div class="token-item" data-token="${token}" style="padding: 8px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        ${token}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Container for discourse concept selection -->
+                    <div id="discourse-selection-container" style="display: none; margin-bottom: 16px;">
+                        <label for="discourse-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select discourse concept:</label>
+                        <select id="discourse-concept" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select concept...</option>
+                            ${discourseConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <!-- Container for abstract concept selection -->
+                    <div id="abstract-selection-container" style="display: none; margin-bottom: 16px;">
+                        <label for="abstract-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select abstract concept:</label>
+                        <select id="abstract-concept" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select concept...</option>
+                            ${abstractConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <!-- Container for named entity selection -->
+                    <div id="ne-selection-container" style="display: none; margin-bottom: 16px;">
+                        <label for="ne-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Select named entity type:</label>
+                        <select id="ne-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select entity type...</option>
+                            ${neTypesList.map(type => `<option value="${type}">${type}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <!-- Container for non-event roleset selection -->
+                    <div id="non-event-selection-container" style="display: none; margin-bottom: 16px;">
+                        <label for="non-event-roleset" style="display: block; margin-bottom: 8px; font-weight: bold;">Select non-event roleset:</label>
+                        <select id="non-event-roleset" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select roleset...</option>
+                            ${nonEventRolesetsList.map(roleset => `<option value="${roleset}">${roleset}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <!-- Container for string value input -->
+                    <div id="string-input-container" style="display: none; margin-bottom: 16px;">
+                        <label for="string-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter string value:</label>
+                        <input type="text" id="string-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter string value (without quotes)">
+                    </div>
+                    
+                    <!-- Container for number value input -->
+                    <div id="number-input-container" style="display: none; margin-bottom: 16px;">
+                        <label for="number-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter number value:</label>
+                        <input type="number" id="number-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter numeric value">
+                    </div>
+                `;
+                
+                // Setup child node type selection
+                const childNodeTypeSelect = document.getElementById('child-node-type');
+                const tokenContainer = document.getElementById('token-selection-container');
+                const discourseContainer = document.getElementById('discourse-selection-container');
+                const abstractContainer = document.getElementById('abstract-selection-container');
+                const neContainer = document.getElementById('ne-selection-container');
+                const nonEventContainer = document.getElementById('non-event-selection-container');
+                const stringContainer = document.getElementById('string-input-container');
+                const numberContainer = document.getElementById('number-input-container');
+                const nameTokensContainer = document.getElementById('name-tokens-container');
+                
+                // Handle child node type selection change
+                childNodeTypeSelect.addEventListener('change', () => {
+                    const selectedType = childNodeTypeSelect.value;
+                    
+                    // Hide all containers first
+                    tokenContainer.style.display = 'none';
+                    discourseContainer.style.display = 'none';
+                    abstractContainer.style.display = 'none';
+                    neContainer.style.display = 'none';
+                    nonEventContainer.style.display = 'none';
+                    stringContainer.style.display = 'none';
+                    numberContainer.style.display = 'none';
+                    nameTokensContainer.style.display = 'none';
+                    
+                    // Show the appropriate container based on selection
+                    if (selectedType === 'token') {
+                        tokenContainer.style.display = 'block';
+                    } else if (selectedType === 'discourse') {
+                        discourseContainer.style.display = 'block';
+                    } else if (selectedType === 'abstract') {
+                        abstractContainer.style.display = 'block';
+                    } else if (selectedType === 'ne') {
+                        neContainer.style.display = 'block';
+                        // For NE types, also show the name tokens container
+                        nameTokensContainer.style.display = 'block';
+                        populateNameTokensSelection();
+                    } else if (selectedType === 'non-event') {
+                        nonEventContainer.style.display = 'block';
+                    } else if (selectedType === 'string') {
+                        stringContainer.style.display = 'block';
+                    } else if (selectedType === 'number') {
+                        numberContainer.style.display = 'block';
+                    }
+                });
+                
+                // Handle token selection - simplified without lemmatization
+                const tokenItems = document.querySelectorAll('.token-item');
+                
+                tokenItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        // Reset active state for all items
+                        tokenItems.forEach(el => el.style.backgroundColor = '#f0f8ff');
+                        
+                        // Highlight the selected item
+                        item.style.backgroundColor = '#d1e7ff';
+                    });
+                });
+                
+                // Set up named entity selection to show name tokens
+                const neTypeSelect = document.getElementById('ne-type');
+                neTypeSelect.addEventListener('change', () => {
+                    if (neTypeSelect.value) {
+                        // Show the name tokens selection when an NE type is selected
+                        nameTokensContainer.style.display = 'block';
+                        populateNameTokensSelection();
+                    } else {
+                        nameTokensContainer.style.display = 'none';
+                    }
+                });
+            }
+        }
+        
+        // Function to populate name tokens selection for named entities
+        function populateNameTokensSelection() {
+            const nameTokensSelection = document.getElementById('name-tokens-selection');
+            const selectedTokensText = document.getElementById('selected-tokens-text');
+            
+            // Clear any existing content
+            nameTokensSelection.innerHTML = '';
+            selectedTokensText.textContent = '';
+            
+            // Add tokens from the sentence
+            sentenceTokens.forEach(token => {
+                const tokenChip = document.createElement('div');
+                tokenChip.className = 'name-token-chip';
+                tokenChip.setAttribute('data-token', token);
+                tokenChip.textContent = token;
+                tokenChip.style.padding = '6px 12px';
+                tokenChip.style.backgroundColor = '#edf2fa';
+                tokenChip.style.borderRadius = '16px';
+                tokenChip.style.cursor = 'pointer';
+                tokenChip.style.userSelect = 'none';
+                tokenChip.style.display = 'inline-block';
+                
+                // Add click handler to toggle selection
+                tokenChip.addEventListener('click', () => {
+                    tokenChip.classList.toggle('selected');
+                    if (tokenChip.classList.contains('selected')) {
+                        tokenChip.style.backgroundColor = '#c2d8f9';
+                    } else {
+                        tokenChip.style.backgroundColor = '#edf2fa';
+                    }
+                    
+                    // Update the selected tokens text
+                    updateSelectedNameTokens();
+                });
+                
+                nameTokensSelection.appendChild(tokenChip);
+            });
+        }
+        
+        // Function to update selected name tokens display
+        function updateSelectedNameTokens() {
+            const selectedChips = document.querySelectorAll('.name-token-chip.selected');
+            const selectedTokensText = document.getElementById('selected-tokens-text');
+            
+            const selectedTokens = Array.from(selectedChips).map(chip => chip.getAttribute('data-token'));
+            selectedTokensText.textContent = selectedTokens.join(' ');
+        }
+        
+        // Set up relation change handler
+        relationSelect.addEventListener('change', updateChildNodeContainer);
+        
+        // Handle form submission
+        const form = document.getElementById('add-branch-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            // Get the selected relation
+            const selectedRelation = relationSelect.value;
+            if (!selectedRelation) {
+                showNotification('Please select a relation', 'error');
+                return;
+            }
+            
+            // Initialize variables for the branch
+            let childNode = '';
+            let subBranches = '';
+            
+            // Handle different types of relations and child nodes
+            const predefinedValues = relationsWithValues[selectedRelation];
+            
+            if (predefinedValues && predefinedValues.length > 0) {
+                // For relations with predefined values
+                const predefinedValue = document.getElementById('predefined-value').value;
+                if (!predefinedValue) {
+                    showNotification('Please select a value', 'error');
+                    return;
+                }
+                
+                childNode = predefinedValue;
+            } else {
+                // For relations without predefined values
+                const childNodeType = document.getElementById('child-node-type')?.value;
+                if (!childNodeType) {
+                    showNotification('Please select a child node type', 'error');
+                    return;
+                }
+                
+                if (childNodeType === 'token') {
+                    // For token selection
+                    const selectedTokenItem = document.querySelector('.token-item[style*="background-color: rgb(209, 231, 255)"]');
+                    if (!selectedTokenItem) {
+                        showNotification('Please select a token', 'error');
+                        return;
+                    }
+                    
+                    const selectedToken = selectedTokenItem.getAttribute('data-token');
+                    
+                    // Check if it's a number
+                    if (!isNaN(selectedToken)) {
+                        // Numbers are used directly
+                        childNode = selectedToken;
+                    } else {
+                        // For other tokens, generate a variable
+                        const variable = generateUniqueVariable(selectedToken, annotationText);
+                        childNode = `(${variable} / ${selectedToken})`;
+                    }
+                } else if (childNodeType === 'discourse') {
+                    // For discourse concepts
+                    const selectedConcept = document.getElementById('discourse-concept').value;
+                    if (!selectedConcept) {
+                        showNotification('Please select a discourse concept', 'error');
+                        return;
+                    }
+                    
+                    // Generate variable for the concept
+                    const variable = generateUniqueVariable(selectedConcept, annotationText);
+                    childNode = `(${variable} / ${selectedConcept})`;
+                } else if (childNodeType === 'abstract') {
+                    // For abstract concepts
+                    const selectedConcept = document.getElementById('abstract-concept').value;
+                    if (!selectedConcept) {
+                        showNotification('Please select an abstract concept', 'error');
+                        return;
+                    }
+                    
+                    // Generate variable for the concept
+                    const variable = generateUniqueVariable(selectedConcept, annotationText);
+                    childNode = `(${variable} / ${selectedConcept})`;
+                } else if (childNodeType === 'ne') {
+                    // For named entities
+                    const selectedNeType = document.getElementById('ne-type').value;
+                    if (!selectedNeType) {
+                        showNotification('Please select a named entity type', 'error');
+                        return;
+                    }
+                    
+                    // Generate variable for the NE
+                    const variable = generateUniqueVariable(selectedNeType, annotationText);
+                    
+                    // Check if name tokens are selected
+                    const selectedNameTokens = Array.from(document.querySelectorAll('.name-token-chip.selected'))
+                        .map(chip => chip.getAttribute('data-token'));
+                    
+                    if (selectedNameTokens.length > 0) {
+                        // Generate name variable
+                        const nameVariable = generateUniqueVariable('name', annotationText);
+                        
+                        // Create op relations for each token
+                        const opRelations = selectedNameTokens.map((token, index) => 
+                            `:op${index + 1} "${token}"`).join(' ');
+                        
+                        // Create the sub-branch for name
+                        subBranches = `:name (${nameVariable} / name ${opRelations})`;
+                    }
+                    
+                    // Create the main node with optional sub-branches
+                    childNode = `(${variable} / ${selectedNeType}${subBranches ? ' ' + subBranches : ''})`;
+                } else if (childNodeType === 'non-event') {
+                    // For non-event rolesets
+                    const selectedRoleset = document.getElementById('non-event-roleset').value;
+                    if (!selectedRoleset) {
+                        showNotification('Please select a non-event roleset', 'error');
+                        return;
+                    }
+                    
+                    // Generate variable for the roleset
+                    const variable = generateUniqueVariable(selectedRoleset, annotationText);
+                    childNode = `(${variable} / ${selectedRoleset})`;
+                } else if (childNodeType === 'string') {
+                    // For string values
+                    const stringValue = document.getElementById('string-value').value;
+                    if (!stringValue) {
+                        showNotification('Please enter a string value', 'error');
+                        return;
+                    }
+                    
+                    childNode = `"${stringValue}"`;
+                } else if (childNodeType === 'number') {
+                    // For number values
+                    const numberValue = document.getElementById('number-value').value;
+                    if (!numberValue) {
+                        showNotification('Please enter a number value', 'error');
+                        return;
+                    }
+                    
+                    childNode = numberValue;
+                }
+            }
+            
+            // Construct the full branch
+            const newBranch = `${selectedRelation} ${childNode}`;
+            
+            // Add the new branch to the annotation with proper positioning
+            // We need to find the full node pattern and insert the branch after it
+            const lines = annotationText.split('\n');
+            let updatedLines = [...lines];
+            let nodeFound = false;
+            
+            // Pattern to find the full node including the parenthesis
+            // This pattern matches: (variable / concept, where variable is the exact variable
+            const nodePattern = new RegExp(`\\(\\s*${parentVariable}\\s*/\\s*[^\\s\\(\\):]+`);
+            
+            for (let i = 0; i < lines.length; i++) {
+                if (nodePattern.test(lines[i])) {
+                    // Found the line containing our node
+                    let currentLine = lines[i];
+                    
+                    // Find the indentation of the current line
+                    const indentMatch = currentLine.match(/^(\s*)/);
+                    const currentIndent = indentMatch ? indentMatch[1] : '';
+                    const nextIndent = currentIndent + '    '; // Add one level of indentation (4 spaces)
+                    
+                    // Check if the line already has other relations
+                    if (currentLine.includes(')')) {
+                        // This line has a closing parenthesis, we need to insert before it
+                        const closingParenIndex = currentLine.lastIndexOf(')');
+                        if (closingParenIndex !== -1) {
+                            // Insert the branch before the closing parenthesis
+                            const beforeParen = currentLine.substring(0, closingParenIndex).trimRight();
+                            const afterParen = currentLine.substring(closingParenIndex);
+                            
+                            // Update the current line and add a new line for our branch
+                            updatedLines[i] = beforeParen;
+                            updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
+                            updatedLines.splice(i+2, 0, afterParen);
+                            
+                            nodeFound = true;
+                            break;
+                        }
+                    } else {
+                        // This line doesn't have a closing parenthesis, simpler case
+                        // Add our branch on the next line with proper indentation
+                        updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
+                        nodeFound = true;
+                        break;
+                    }
+                }
+            }
+            
+            if (!nodeFound) {
+                // Fallback: if we can't find the full node pattern, use the simple approach
+                const variableIndices = [];
+                let searchIndex = 0;
+                while (true) {
+                    const index = annotationText.indexOf(parentVariable, searchIndex);
+                    if (index === -1) break;
+                    variableIndices.push(index);
+                    searchIndex = index + parentVariable.length;
+                }
+                
+                let updatedAnnotation = annotationText;
+                
+                // Make sure we have the right index
+                const spanIndex = Array.from(annotationElement.querySelectorAll('.variable-span'))
+                    .filter(span => span.textContent === parentVariable)
+                    .indexOf(parentVariableSpan);
+                    
+                if (spanIndex >= 0 && spanIndex < variableIndices.length) {
+                    const targetIndex = variableIndices[spanIndex] + parentVariable.length;
+                    // Simple insertion after the variable - this is the fallback approach
+                    updatedAnnotation = annotationText.substring(0, targetIndex) + 
+                                       ` ${newBranch}` + 
+                                       annotationText.substring(targetIndex);
+                } else {
+                    // Fallback - add to the first occurrence
+                    const targetIndex = variableIndices[0] + parentVariable.length;
+                    updatedAnnotation = annotationText.substring(0, targetIndex) + 
+                                       ` ${newBranch}` + 
+                                       annotationText.substring(targetIndex);
+                }
+                
+                // Update the annotation element with the fallback method
+                annotationElement.textContent = updatedAnnotation;
+            } else {
+                // Update the annotation element with our properly formatted insertion
+                annotationElement.textContent = updatedLines.join('\n');
+            }
+            
+            // Reinitialize the relation editor
+            makeRelationsClickable(annotationElement);
+            makeValuesClickable(annotationElement);
+            makeVariablesClickable(annotationElement);
+            addBranchOperations(annotationElement);
+            
+            // Save the updated annotation
+            saveBranchInsertion(annotationElement.textContent, newBranch);
+            
+            // Remove the dialog
+            dialogContainer.remove();
+            
+            showNotification('Branch added successfully', 'success');
+        });
+        
+        // Handle cancel button
+        const cancelButton = document.getElementById('cancel-add-branch');
+        cancelButton.addEventListener('click', () => {
+            dialogContainer.remove();
         });
         
     } catch (error) {
-        console.error('Error fetching concepts:', error);
+        console.error('Error setting up dialog:', error);
+        showNotification('Error setting up dialog: ' + error.message, 'error');
     }
-    
-    // Handle input type selection (radio buttons)
-    const inputTypeRadios = document.querySelectorAll('input[name="input-type"]');
-    const conceptContainer = document.getElementById('concept-input-container');
-    const stringContainer = document.getElementById('string-input-container');
-    const numberContainer = document.getElementById('number-input-container');
-    
-    inputTypeRadios.forEach(radio => {
-        radio.addEventListener('change', () => {
-            const selectedType = document.querySelector('input[name="input-type"]:checked').value;
-            
-            // Show/hide appropriate input container
-            conceptContainer.style.display = selectedType === 'concept' ? 'block' : 'none';
-            stringContainer.style.display = selectedType === 'string' ? 'block' : 'none';
-            numberContainer.style.display = selectedType === 'number' ? 'block' : 'none';
-        });
-    });
-    
-    // Generate variable preview
-    const conceptInput = document.getElementById('concept-input');
-    const generateVariableCheckbox = document.getElementById('generate-variable');
-    const variablePreview = document.getElementById('variable-preview');
-    
-    // Function to update variable preview
-    function updateVariablePreview() {
-        if (generateVariableCheckbox.checked && conceptInput.value) {
-            const variable = generateUniqueVariable(conceptInput.value, annotationText);
-            variablePreview.textContent = `Variable: ${variable}`;
-        } else {
-            variablePreview.textContent = '';
-        }
-    }
-    
-    // Update variable preview when concept input changes
-    conceptInput.addEventListener('input', updateVariablePreview);
-    
-    // Update variable preview when checkbox changes
-    generateVariableCheckbox.addEventListener('change', updateVariablePreview);
-    
-    // Handle cancel button
-    const cancelButton = document.getElementById('cancel-add-branch');
-    cancelButton.addEventListener('click', () => {
-        dialogContainer.remove();
-    });
-    
-    // Handle form submission
-    const form = document.getElementById('add-branch-form');
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        
-        // Get form values
-        const relation = relationSelect.value;
-        const inputType = document.querySelector('input[name="input-type"]:checked').value;
-        
-        // Validate relation
-        if (!relation) {
-            showNotification('Please select a relation', 'error');
-            return;
-        }
-        
-        let childNode = '';
-        
-        // Get and validate child node based on type
-        if (inputType === 'concept') {
-            const concept = conceptInput.value.trim();
-            if (!concept) {
-                showNotification('Please enter a concept', 'error');
-                return;
-            }
-            
-            // Validate concept format
-            const conceptRegex = /^[^\s\(\):]+$/;
-            if (!conceptRegex.test(concept)) {
-                showNotification('Invalid concept format. Concepts cannot contain spaces, parentheses, or colons.', 'error');
-                return;
-            }
-            
-            // Generate variable if checkbox is checked
-            if (generateVariableCheckbox.checked) {
-                const variable = generateUniqueVariable(concept, annotationText);
-                childNode = `(${variable} / ${concept})`;
-            } else {
-                childNode = concept;
-            }
-        } else if (inputType === 'string') {
-            const stringValue = document.getElementById('string-input').value.trim();
-            if (!stringValue) {
-                showNotification('Please enter a string value', 'error');
-                return;
-            }
-            
-            // Validate string format
-            const stringRegex = /^[^"\s]+$/;
-            if (!stringRegex.test(stringValue)) {
-                showNotification('Invalid string format. Strings cannot contain spaces or quotes.', 'error');
-                return;
-            }
-            
-            childNode = `"${stringValue}"`;
-        } else if (inputType === 'number') {
-            const numberValue = document.getElementById('number-input').value.trim();
-            if (!numberValue) {
-                showNotification('Please enter a number value', 'error');
-                return;
-            }
-            
-            childNode = numberValue;
-        }
-        
-        // Construct the full branch
-        const newBranch = `${relation} ${childNode}`;
-        
-        // Add the new branch to the annotation
-        // We need to find all occurrences of the parent variable and add the branch to the correct one
-        const allSpans = annotationElement.querySelectorAll('.variable-span');
-        const matchingSpans = Array.from(allSpans).filter(span => span.textContent === parentVariable);
-        const spanIndex = matchingSpans.indexOf(parentVariableSpan);
-        
-        // Find all occurrences of the variable in the text
-        const variableIndices = [];
-        let searchIndex = 0;
-        while (true) {
-            const index = annotationText.indexOf(parentVariable, searchIndex);
-            if (index === -1) break;
-            variableIndices.push(index);
-            searchIndex = index + parentVariable.length;
-        }
-        
-        let updatedAnnotation = annotationText;
-        
-        // Make sure we have the right index
-        if (spanIndex >= 0 && spanIndex < variableIndices.length) {
-            const targetIndex = variableIndices[spanIndex] + parentVariable.length;
-            updatedAnnotation = annotationText.substring(0, targetIndex) + 
-                                ` ${newBranch}` + 
-                                annotationText.substring(targetIndex);
-        } else {
-            // Fallback - add to the first occurrence
-            const targetIndex = variableIndices[0] + parentVariable.length;
-            updatedAnnotation = annotationText.substring(0, targetIndex) + 
-                                ` ${newBranch}` + 
-                                annotationText.substring(targetIndex);
-        }
-        
-        // Update the annotation display
-        annotationElement.textContent = updatedAnnotation;
-        
-        // Reinitialize the relation editor
-        makeRelationsClickable(annotationElement);
-        makeValuesClickable(annotationElement);
-        makeVariablesClickable(annotationElement);
-        addBranchOperations(annotationElement);
-        
-        // Save the updated annotation
-        saveBranchInsertion(updatedAnnotation, newBranch);
-        
-        // Remove the dialog
-        dialogContainer.remove();
-        
-        showNotification('Branch added successfully', 'success');
-    });
 }
 
 // Function to save the branch insertion
