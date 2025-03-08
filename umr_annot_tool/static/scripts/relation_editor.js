@@ -1853,11 +1853,22 @@ async function showAddBranchDialog(parentVariableSpan) {
     // Create dialog
     const dialog = document.createElement('div');
     dialog.className = 'add-branch-dialog';
-    dialog.style.width = '500px';
+    dialog.style.width = '650px';
     dialog.style.backgroundColor = 'white';
     dialog.style.borderRadius = '8px';
     dialog.style.padding = '20px';
     dialog.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+    
+    // Get sentence tokens for display
+    const tokens = extractSentenceTokens();
+    console.log('Sentence tokens:', tokens);
+    
+    // Fetch all concept types
+    const allConcepts = await getAllConcepts();
+    
+    // Filter out tokens from the all concepts list to avoid duplication
+    const tokenSet = new Set(tokens);
+    const otherConcepts = allConcepts.filter(concept => !tokenSet.has(concept));
     
     // Dialog header
     dialog.innerHTML = `
@@ -1871,24 +1882,59 @@ async function showAddBranchDialog(parentVariableSpan) {
             </div>
             
             <div style="margin-bottom: 16px;">
-                <label for="node-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Node Type:</label>
-                <select id="node-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                    <option value="concept">Variable/Concept</option>
-                    <option value="string">String</option>
-                    <option value="number">Number</option>
-                </select>
+                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Input Type:</label>
+                <div style="display: flex; gap: 10px;">
+                    <label style="margin-right: 15px;">
+                        <input type="radio" name="input-type" value="concept" checked> Concept
+                    </label>
+                    <label style="margin-right: 15px;">
+                        <input type="radio" name="input-type" value="string"> String
+                    </label>
+                    <label>
+                        <input type="radio" name="input-type" value="number"> Number
+                    </label>
+                </div>
             </div>
             
-            <div id="concept-input-container" style="margin-bottom: 16px;">
-                <label for="concept-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Concept:</label>
-                <input type="text" id="concept-input" list="concept-list" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Type or select a concept">
-                <datalist id="concept-list"></datalist>
-                <div style="display: flex; align-items: center; margin-top: 10px;">
-                    <label style="margin-right: 10px;">
-                        <input type="checkbox" id="generate-variable" checked> 
-                        Generate variable
-                    </label>
-                    <div id="variable-preview" style="color: #666; margin-left: 10px;"></div>
+            <div id="concept-input-container">
+                <div style="margin-bottom: 16px;">
+                    <label for="concept-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Concept:</label>
+                    <input type="text" id="concept-input" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Type or select a concept">
+                    <div style="display: flex; align-items: center; margin-top: 10px;">
+                        <label style="margin-right: 10px;">
+                            <input type="checkbox" id="generate-variable" checked> 
+                            Generate variable
+                        </label>
+                        <div id="variable-preview" style="color: #666; margin-left: 10px;"></div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Sentence Tokens:</label>
+                    <div id="token-container" style="max-height: 120px; overflow-y: auto; padding: 8px; border: 1px solid #eee; border-radius: 4px; display: flex; flex-wrap: wrap; gap: 5px;">
+                        ${tokens.map(token => `
+                            <span class="token-chip" style="background-color: #e1f5fe; padding: 5px 10px; border-radius: 15px; cursor: pointer; user-select: none; display: inline-block; margin: 3px;">
+                                ${token}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 16px; display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">Other Concepts:</label>
+                        <select id="concept-categories" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="discourse">Discourse Concepts</option>
+                            <option value="ne">Named Entity Types</option>
+                            <option value="rolesets">Non-Event Rolesets</option>
+                        </select>
+                    </div>
+                    <div style="flex: 2;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: bold;">&nbsp;</label>
+                        <select id="concept-select" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                            <option value="">Select from list...</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             
@@ -1921,28 +1967,84 @@ async function showAddBranchDialog(parentVariableSpan) {
         relationSelect.appendChild(option);
     });
     
-    // Populate concepts datalist
-    const conceptList = document.getElementById('concept-list');
-    const concepts = await getAllConcepts();
-    concepts.forEach(concept => {
-        const option = document.createElement('option');
-        option.value = concept;
-        conceptList.appendChild(option);
+    // Handle token chip clicks
+    document.querySelectorAll('.token-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.getElementById('concept-input').value = chip.textContent.trim();
+            updateVariablePreview();
+        });
     });
     
-    // Handle node type changes
-    const nodeTypeSelect = document.getElementById('node-type');
+    // Fetch concept data from server
+    try {
+        const response = await fetch('/get_concepts');
+        const conceptsData = await response.json();
+        
+        // Setup concept category switching
+        const conceptCategorySelect = document.getElementById('concept-categories');
+        const conceptSelect = document.getElementById('concept-select');
+        
+        // Function to update concept options based on selected category
+        const updateConceptOptions = () => {
+            // Clear existing options except the first one
+            while (conceptSelect.options.length > 1) {
+                conceptSelect.remove(1);
+            }
+            
+            // Get the selected category
+            const selectedCategory = conceptCategorySelect.value;
+            let conceptsToShow = [];
+            
+            if (selectedCategory === 'discourse') {
+                conceptsToShow = conceptsData.discourse_concepts || [];
+            } else if (selectedCategory === 'ne') {
+                conceptsToShow = conceptsData.ne_types || [];
+            } else if (selectedCategory === 'rolesets') {
+                conceptsToShow = conceptsData.non_event_rolesets || [];
+            }
+            
+            // Add options for the selected category
+            conceptsToShow.forEach(concept => {
+                const option = document.createElement('option');
+                option.value = concept;
+                option.textContent = concept;
+                conceptSelect.appendChild(option);
+            });
+        };
+        
+        // Initial population
+        updateConceptOptions();
+        
+        // Add change listener to update options when category changes
+        conceptCategorySelect.addEventListener('change', updateConceptOptions);
+        
+        // Handle selection from the concept dropdown
+        conceptSelect.addEventListener('change', () => {
+            if (conceptSelect.value) {
+                document.getElementById('concept-input').value = conceptSelect.value;
+                updateVariablePreview();
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error fetching concepts:', error);
+    }
+    
+    // Handle input type selection (radio buttons)
+    const inputTypeRadios = document.querySelectorAll('input[name="input-type"]');
     const conceptContainer = document.getElementById('concept-input-container');
     const stringContainer = document.getElementById('string-input-container');
     const numberContainer = document.getElementById('number-input-container');
     
-    nodeTypeSelect.addEventListener('change', () => {
-        const selectedType = nodeTypeSelect.value;
-        
-        // Show/hide appropriate input container
-        conceptContainer.style.display = selectedType === 'concept' ? 'block' : 'none';
-        stringContainer.style.display = selectedType === 'string' ? 'block' : 'none';
-        numberContainer.style.display = selectedType === 'number' ? 'block' : 'none';
+    inputTypeRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            const selectedType = document.querySelector('input[name="input-type"]:checked').value;
+            
+            // Show/hide appropriate input container
+            conceptContainer.style.display = selectedType === 'concept' ? 'block' : 'none';
+            stringContainer.style.display = selectedType === 'string' ? 'block' : 'none';
+            numberContainer.style.display = selectedType === 'number' ? 'block' : 'none';
+        });
     });
     
     // Generate variable preview
@@ -1950,25 +2052,21 @@ async function showAddBranchDialog(parentVariableSpan) {
     const generateVariableCheckbox = document.getElementById('generate-variable');
     const variablePreview = document.getElementById('variable-preview');
     
-    // Update variable preview when concept input changes
-    conceptInput.addEventListener('input', () => {
+    // Function to update variable preview
+    function updateVariablePreview() {
         if (generateVariableCheckbox.checked && conceptInput.value) {
             const variable = generateUniqueVariable(conceptInput.value, annotationText);
             variablePreview.textContent = `Variable: ${variable}`;
         } else {
             variablePreview.textContent = '';
         }
-    });
+    }
+    
+    // Update variable preview when concept input changes
+    conceptInput.addEventListener('input', updateVariablePreview);
     
     // Update variable preview when checkbox changes
-    generateVariableCheckbox.addEventListener('change', () => {
-        if (generateVariableCheckbox.checked && conceptInput.value) {
-            const variable = generateUniqueVariable(conceptInput.value, annotationText);
-            variablePreview.textContent = `Variable: ${variable}`;
-        } else {
-            variablePreview.textContent = '';
-        }
-    });
+    generateVariableCheckbox.addEventListener('change', updateVariablePreview);
     
     // Handle cancel button
     const cancelButton = document.getElementById('cancel-add-branch');
@@ -1983,7 +2081,7 @@ async function showAddBranchDialog(parentVariableSpan) {
         
         // Get form values
         const relation = relationSelect.value;
-        const nodeType = nodeTypeSelect.value;
+        const inputType = document.querySelector('input[name="input-type"]:checked').value;
         
         // Validate relation
         if (!relation) {
@@ -1994,7 +2092,7 @@ async function showAddBranchDialog(parentVariableSpan) {
         let childNode = '';
         
         // Get and validate child node based on type
-        if (nodeType === 'concept') {
+        if (inputType === 'concept') {
             const concept = conceptInput.value.trim();
             if (!concept) {
                 showNotification('Please enter a concept', 'error');
@@ -2015,7 +2113,7 @@ async function showAddBranchDialog(parentVariableSpan) {
             } else {
                 childNode = concept;
             }
-        } else if (nodeType === 'string') {
+        } else if (inputType === 'string') {
             const stringValue = document.getElementById('string-input').value.trim();
             if (!stringValue) {
                 showNotification('Please enter a string value', 'error');
@@ -2030,7 +2128,7 @@ async function showAddBranchDialog(parentVariableSpan) {
             }
             
             childNode = `"${stringValue}"`;
-        } else if (nodeType === 'number') {
+        } else if (inputType === 'number') {
             const numberValue = document.getElementById('number-input').value.trim();
             if (!numberValue) {
                 showNotification('Please enter a number value', 'error');
@@ -2040,8 +2138,40 @@ async function showAddBranchDialog(parentVariableSpan) {
             childNode = numberValue;
         }
         
+        // Construct the full branch
+        const newBranch = `${relation} ${childNode}`;
+        
         // Add the new branch to the annotation
-        const updatedAnnotation = annotationText.replace(parentVariable, `${parentVariable} (${childNode})`);
+        // We need to find all occurrences of the parent variable and add the branch to the correct one
+        const allSpans = annotationElement.querySelectorAll('.variable-span');
+        const matchingSpans = Array.from(allSpans).filter(span => span.textContent === parentVariable);
+        const spanIndex = matchingSpans.indexOf(parentVariableSpan);
+        
+        // Find all occurrences of the variable in the text
+        const variableIndices = [];
+        let searchIndex = 0;
+        while (true) {
+            const index = annotationText.indexOf(parentVariable, searchIndex);
+            if (index === -1) break;
+            variableIndices.push(index);
+            searchIndex = index + parentVariable.length;
+        }
+        
+        let updatedAnnotation = annotationText;
+        
+        // Make sure we have the right index
+        if (spanIndex >= 0 && spanIndex < variableIndices.length) {
+            const targetIndex = variableIndices[spanIndex] + parentVariable.length;
+            updatedAnnotation = annotationText.substring(0, targetIndex) + 
+                                ` ${newBranch}` + 
+                                annotationText.substring(targetIndex);
+        } else {
+            // Fallback - add to the first occurrence
+            const targetIndex = variableIndices[0] + parentVariable.length;
+            updatedAnnotation = annotationText.substring(0, targetIndex) + 
+                                ` ${newBranch}` + 
+                                annotationText.substring(targetIndex);
+        }
         
         // Update the annotation display
         annotationElement.textContent = updatedAnnotation;
@@ -2049,10 +2179,14 @@ async function showAddBranchDialog(parentVariableSpan) {
         // Reinitialize the relation editor
         makeRelationsClickable(annotationElement);
         makeValuesClickable(annotationElement);
+        makeVariablesClickable(annotationElement);
         addBranchOperations(annotationElement);
         
         // Save the updated annotation
-        saveBranchInsertion(updatedAnnotation, childNode);
+        saveBranchInsertion(updatedAnnotation, newBranch);
+        
+        // Remove the dialog
+        dialogContainer.remove();
         
         showNotification('Branch added successfully', 'success');
     });
