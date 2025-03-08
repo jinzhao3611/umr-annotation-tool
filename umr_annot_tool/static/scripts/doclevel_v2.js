@@ -301,6 +301,184 @@ function populateTripleForms() {
     console.log("======== TRIPLE FORMS POPULATION COMPLETE ========");
 }
 
+// Add a triple to the state
+function addTripleToState(source, relation, target, tripleType) {
+    // Create a new triple object
+    const newTriple = {
+        id: generateUniqueId(),
+        type: tripleType,
+        source: source,
+        relation: relation,
+        target: target,
+        sentId: docLevelState.sentId
+    };
+    
+    console.log("Adding new triple to state:", newTriple);
+    
+    // Add to the triples array
+    docLevelState.triples.push(newTriple);
+    
+    // Mark the state as dirty (unsaved changes)
+    docLevelState.isDirty = true;
+    
+    return newTriple;
+}
+
+// Helper function to parse UMR triples from branch content
+function parseUMRTriples(content, branchName) {
+    console.log(`Using improved UMR format parser for ${branchName} branch`);
+    const triples = [];
+    
+    // First, clean up whitespace and format for consistent parsing
+    const cleanContent = content.replace(/\s+/g, ' ').trim();
+    console.log(`Cleaned content for parsing: "${cleanContent}"`);
+    
+    // Log the full content for better debugging
+    console.log(`Full branch content for ${branchName}:`, content);
+    
+    // Look for the specific database format first
+    const dbFormatPattern = /\(([^()]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([^()]+)\)/g;
+    let match;
+    
+    while ((match = dbFormatPattern.exec(content)) !== null) {
+        const [fullMatch, source, relation, target] = match;
+        console.log(`Found ${branchName} triple from DB format: ${source} ${relation} ${target}`);
+        
+        triples.push({
+            source: source.trim(),
+            relation: relation.trim(),
+            target: target.trim()
+        });
+    }
+    
+    // If we found triples with the DB format, return them
+    if (triples.length > 0) {
+        return triples;
+    }
+    
+    // Try our standard enhanced regex for parenthesized triples
+    const enhancedRegex = /\(([a-zA-Z0-9-_]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([a-zA-Z0-9-_]+)\)/g;
+    
+    while ((match = enhancedRegex.exec(cleanContent)) !== null) {
+        const [fullMatch, source, relation, target] = match;
+        console.log(`Found ${branchName} triple with enhanced regex: ${source} ${relation} ${target}`);
+        
+        triples.push({
+            source: source.trim(),
+            relation: relation.trim(),
+            target: target.trim()
+        });
+    }
+    
+    // If no triples were found with the enhanced regex, try additional patterns
+    if (triples.length === 0) {
+        console.log("Using alternative parsing approach for complex UMR structure");
+        
+        // Try a very permissive pattern that just looks for words with relations
+        const loosePattern = /([a-zA-Z0-9-_]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([a-zA-Z0-9-_]+)/g;
+        
+        while ((match = loosePattern.exec(content)) !== null) {
+            const [fullMatch, source, relation, target] = match;
+            console.log(`Found loose pattern triple: ${source} ${relation} ${target}`);
+            
+            // Check if this is a real relation or just random text
+            if (relation.startsWith(':')) {
+                triples.push({
+                    source: source.trim(),
+                    relation: relation.trim(),
+                    target: target.trim()
+                });
+            }
+        }
+        
+        // If we still don't have triples, try a more direct line-by-line approach
+        if (triples.length === 0) {
+            const lines = content.split('\n');
+            
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+                
+                // Skip empty lines or lines that don't look like triples
+                if (!trimmedLine) continue;
+                
+                // Extract patterns that look like (X :Y Z)
+                const lineTripleMatch = trimmedLine.match(/\(([^\s\(\):]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([^\s\(\):]+)\)/);
+                if (lineTripleMatch) {
+                    const [_, src, rel, tgt] = lineTripleMatch;
+                    console.log(`Line-by-line found triple: ${src} ${rel} ${tgt}`);
+                    
+                    triples.push({
+                        source: src.trim(),
+                        relation: rel.trim(),
+                        target: tgt.trim()
+                    });
+                }
+            }
+        }
+    }
+    
+    // If we still don't have triples, look for the specific patterns from the example images
+    if (triples.length === 0 && branchName === 'temporal') {
+        // Example: (document-creation-time :overlap s1f)
+        if (content.includes('document-creation-time')) {
+            const dctPattern = /document-creation-time\s+(:[\w-]+)\s+([^\s\(\)]+)/g;
+            while ((match = dctPattern.exec(content)) !== null) {
+                triples.push({
+                    source: 'document-creation-time',
+                    relation: match[1],
+                    target: match[2]
+                });
+            }
+        }
+        
+        // Example: (s1l :overlap s1m)
+        const generalPattern = /([a-zA-Z0-9]+)\s+(:[\w-]+)\s+([a-zA-Z0-9]+)/g;
+        while ((match = generalPattern.exec(content)) !== null) {
+            triples.push({
+                source: match[1],
+                relation: match[2],
+                target: match[3]
+            });
+        }
+    }
+    
+    return triples;
+}
+
+// Helper function to extract triple components using various methods
+function extractTripleComponents(text) {
+    // Remove outer parentheses if present
+    const trimmed = text.replace(/^\(|\)$/g, '').trim();
+    
+    // Method 1: Look for the standard pattern
+    const standardMatch = trimmed.match(/^([^\s:]+)\s+(:[\w-]+)\s+([^\s]+)$/);
+    if (standardMatch) {
+        return {
+            source: standardMatch[1],
+            relation: standardMatch[2],
+            target: standardMatch[3]
+        };
+    }
+    
+    // Method 2: Split by whitespace and look for the relation marker
+    const parts = trimmed.split(/\s+/);
+    if (parts.length >= 3) {
+        // Find the relation part (starts with :)
+        const relationIndex = parts.findIndex(p => p.startsWith(':'));
+        
+        if (relationIndex > 0 && relationIndex < parts.length - 1) {
+            return {
+                source: parts[relationIndex - 1],
+                relation: parts[relationIndex],
+                target: parts[relationIndex + 1]
+            };
+        }
+    }
+    
+    // No valid triple components found
+    return null;
+}
+
 // Parse triples from the annotation text and update docLevelState
 function parseTriples(annotationText) {
     console.log("Parsing triples from annotation text with enhanced handling");
@@ -519,165 +697,6 @@ function parseTriples(annotationText) {
     } catch (error) {
         console.error("Error parsing triples:", error, error.stack);
     }
-    
-    // Helper function to add a triple to the state
-    function addTripleToState(source, relation, target, tripleType) {
-        // Create a new triple object
-        const newTriple = {
-            id: generateUniqueId(),
-            type: tripleType,
-            source: source,
-            relation: relation,
-            target: target,
-            sentId: docLevelState.sentId
-        };
-        
-        console.log("Adding new triple to state:", newTriple);
-        
-        // Add to the triples array
-        docLevelState.triples.push(newTriple);
-        
-        // Mark the state as dirty (unsaved changes)
-        docLevelState.isDirty = true;
-        
-        return newTriple;
-    }
-    
-    // Helper function to parse UMR triples from branch content
-    function parseUMRTriples(content, branchName) {
-        console.log(`Using improved UMR format parser for ${branchName} branch`);
-        const triples = [];
-        
-        // First, clean up whitespace and format for consistent parsing
-        const cleanContent = content.replace(/\s+/g, ' ').trim();
-        console.log(`Cleaned content for parsing: "${cleanContent}"`);
-        
-        // This enhanced regex handles more complex parenthetical nesting
-        // It captures triples in the form (source :relation target) with flexible formatting
-        // including multi-character variables and compound terms like 'document-creation-time'
-        const enhancedRegex = /\(([a-zA-Z0-9-_]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([a-zA-Z0-9-_]+)\)/g;
-        let match;
-        
-        while ((match = enhancedRegex.exec(cleanContent)) !== null) {
-            const [fullMatch, source, relation, target] = match;
-            console.log(`Found ${branchName} triple: ${source} ${relation} ${target}`);
-            
-            triples.push({
-                source: source.trim(),
-                relation: relation.trim(),
-                target: target.trim()
-            });
-        }
-        
-        // If no triples were found with the enhanced regex, try additional patterns
-        if (triples.length === 0) {
-            console.log("Using alternative parsing approach for complex UMR structure");
-            
-            // Handle more complex patterns like those in the example images
-            // where there might be nested structures
-            
-            // First, try to find individual triple-like patterns with a simpler regex
-            const simpleTriplePattern = /\(([^\s\(\):]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([^\s\(\):]+)\)/g;
-            while ((match = simpleTriplePattern.exec(cleanContent)) !== null) {
-                const [fullMatch, source, relation, target] = match;
-                console.log(`Found simple triple: ${source} ${relation} ${target}`);
-                
-                triples.push({
-                    source: source.trim(),
-                    relation: relation.trim(),
-                    target: target.trim()
-                });
-            }
-            
-            // If we still don't have triples, try a more direct line-by-line approach
-            if (triples.length === 0) {
-                const lines = content.split('\n');
-                
-                for (const line of lines) {
-                    const trimmedLine = line.trim();
-                    
-                    // Skip empty lines or lines that don't look like triples
-                    if (!trimmedLine || !trimmedLine.includes('(') || !trimmedLine.includes(')')) {
-                        continue;
-                    }
-                    
-                    // Extract patterns that look like (X :Y Z)
-                    const lineTripleMatch = trimmedLine.match(/\(([^\s\(\):]+)\s+(:[\w-]+(?:-[\w-]+)*)\s+([^\s\(\):]+)\)/);
-                    if (lineTripleMatch) {
-                        const [_, src, rel, tgt] = lineTripleMatch;
-                        console.log(`Line-by-line found triple: ${src} ${rel} ${tgt}`);
-                        
-                        triples.push({
-                            source: src.trim(),
-                            relation: rel.trim(),
-                            target: tgt.trim()
-                        });
-                    }
-                }
-            }
-        }
-        
-        // If we still don't have triples, look for the specific patterns from the example images
-        if (triples.length === 0 && branchName === 'temporal') {
-            // Example: (document-creation-time :overlap s1f)
-            if (content.includes('document-creation-time')) {
-                const dctPattern = /\(document-creation-time\s+(:[\w-]+)\s+([^\s\(\)]+)\)/g;
-                while ((match = dctPattern.exec(content)) !== null) {
-                    triples.push({
-                        source: 'document-creation-time',
-                        relation: match[1],
-                        target: match[2]
-                    });
-                }
-            }
-            
-            // Example: (s1l :overlap s1m)
-            const generalPattern = /\(([a-zA-Z0-9]+)\s+(:[\w-]+)\s+([a-zA-Z0-9]+)\)/g;
-            while ((match = generalPattern.exec(content)) !== null) {
-                triples.push({
-                    source: match[1],
-                    relation: match[2],
-                    target: match[3]
-                });
-            }
-        }
-        
-        return triples;
-    }
-    
-    // Helper function to extract triple components using various methods
-    function extractTripleComponents(text) {
-        // Remove outer parentheses if present
-        const trimmed = text.replace(/^\(|\)$/g, '').trim();
-        
-        // Method 1: Look for the standard pattern
-        const standardMatch = trimmed.match(/^([^\s:]+)\s+(:[\w-]+)\s+([^\s]+)$/);
-        if (standardMatch) {
-            return {
-                source: standardMatch[1],
-                relation: standardMatch[2],
-                target: standardMatch[3]
-            };
-        }
-        
-        // Method 2: Split by whitespace and look for the relation marker
-        const parts = trimmed.split(/\s+/);
-        if (parts.length >= 3) {
-            // Find the relation part (starts with :)
-            const relationIndex = parts.findIndex(p => p.startsWith(':'));
-            
-            if (relationIndex > 0 && relationIndex < parts.length - 1) {
-                return {
-                    source: parts[relationIndex - 1],
-                    relation: parts[relationIndex],
-                    target: parts[relationIndex + 1]
-                };
-            }
-        }
-        
-        // No valid triple components found
-        return null;
-    }
 }
 
 // Set up navigation button event listeners
@@ -734,17 +753,25 @@ function addTriple(tripleType) {
         // Add the triple to the state
         addTripleToState(source, formattedRelation, target, tripleType);
         
+        // Mark state as dirty to indicate unsaved changes
+        docLevelState.isDirty = true;
+        
         // Clear the form
         clearTripleForm(tripleType);
         
         // Update the UI
         renderTriples();
         
+        // Update the document annotation display with the new triple
+        updateDocLevelAnnotationDisplay();
+        
         // Update the datalists to include the new nodes
         updateNodeDatalistOptions(source, target, tripleType);
         
+        // Show save reminder
+        showNotification(`Added new ${tripleType} triple. Remember to click Save to persist your changes.`, "success");
+        
         console.log(`Added new ${tripleType} triple: ${source} ${formattedRelation} ${target}`);
-        showNotification(`Added new ${tripleType} triple`, "success");
     } catch (error) {
         console.error(`Error adding ${tripleType} triple:`, error);
         showNotification(`Error adding triple: ${error.message}`, "error");
@@ -835,6 +862,9 @@ function removeTriple(tripleId) {
     
     // Update the UI directly using renderTriples
     renderTriples();
+    
+    // Update the document tree display
+    updateDocLevelAnnotationDisplay();
     
     // Show confirmation
     if (remainingOfType === 0) {
@@ -1016,15 +1046,31 @@ function createTripleHtml(triple) {
 
 // Clear a triple form after submission
 function clearTripleForm(tripleType) {
-    if (tripleType === 'temporal') {
-        document.getElementById('temporal-source').value = '';
-        document.getElementById('temporal-target').value = '';
-    } else if (tripleType === 'modal') {
-        document.getElementById('modal-source').value = '';
-        document.getElementById('modal-target').value = '';
-    } else if (tripleType === 'coreference') {
-        document.getElementById('coref-source').value = '';
-        document.getElementById('coref-target').value = '';
+    try {
+        if (tripleType === 'temporal') {
+            const sourceEl = document.getElementById('temporal-source');
+            const targetEl = document.getElementById('temporal-target');
+            
+            if (sourceEl) sourceEl.value = '';
+            if (targetEl) targetEl.value = '';
+        } else if (tripleType === 'modal') {
+            const sourceEl = document.getElementById('modal-source');
+            const targetEl = document.getElementById('modal-target');
+            
+            if (sourceEl) sourceEl.value = '';
+            if (targetEl) targetEl.value = '';
+        } else if (tripleType === 'coreference') {
+            // Fix: Use 'coreference' instead of 'coref' for element IDs
+            const sourceEl = document.getElementById('coreference-source');
+            const targetEl = document.getElementById('coreference-target');
+            
+            if (sourceEl) sourceEl.value = '';
+            if (targetEl) targetEl.value = '';
+        }
+        
+        console.log(`Cleared ${tripleType} form fields`);
+    } catch (error) {
+        console.error(`Error clearing ${tripleType} form:`, error);
     }
 }
 
@@ -2153,5 +2199,65 @@ function loadExistingAnnotation() {
         }
     } catch (error) {
         console.error("Error loading existing annotation:", error);
+    }
+}
+
+// Update the document-level annotation display to show the latest triples
+function updateDocLevelAnnotationDisplay() {
+    console.log("Updating document-level annotation display");
+    console.log("Current triples in state:", docLevelState.triples);
+    
+    try {
+        // Find the document annotation content element
+        const annotationContainer = document.getElementById('doc-annotation');
+        if (!annotationContainer) {
+            console.error("Could not find doc-annotation container");
+            return;
+        }
+        
+        // Log the current state for debugging
+        const temporalCount = docLevelState.triples.filter(t => t.type === 'temporal').length;
+        const modalCount = docLevelState.triples.filter(t => t.type === 'modal').length;
+        const corefCount = docLevelState.triples.filter(t => t.type === 'coreference').length;
+        
+        console.log(`Rendering triples - temporal: ${temporalCount}, modal: ${modalCount}, coref: ${corefCount}`);
+        
+        // Format the current state into a nice HTML display
+        const formattedHtml = formatDocLevelAnnotation();
+        
+        // Update the content
+        if (formattedHtml) {
+            console.log("Setting new formatted HTML content");
+            
+            // Check if we should create or update the content
+            const existingContent = document.getElementById('doc-annotation-content');
+            if (existingContent) {
+                existingContent.innerHTML = formattedHtml;
+            } else {
+                // No content element exists yet, create a new one
+                const newContent = document.createElement('pre');
+                newContent.id = 'doc-annotation-content';
+                newContent.className = 'mb-0';
+                newContent.innerHTML = formattedHtml;
+                
+                // Clear the container first
+                annotationContainer.innerHTML = '';
+                annotationContainer.appendChild(newContent);
+            }
+            
+            // If there are unsaved changes, show a reminder
+            if (docLevelState.isDirty) {
+                showNotification("You have unsaved changes. Click the Save button to persist them.", "info");
+            }
+            
+            // Re-setup right-click menu and other interactive features
+            setupDeleteButtons();
+            
+            console.log("Document annotation display updated successfully");
+        } else {
+            console.error("formatDocLevelAnnotation returned empty content");
+        }
+    } catch (error) {
+        console.error("Error updating document annotation display:", error);
     }
 } 
