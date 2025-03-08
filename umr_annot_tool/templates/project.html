@@ -166,11 +166,8 @@
                 {% for projectDoc in projectDocs %}
                 <div class="document-item">
                     <div class="document-info">
-                        <a href="{{ url_for('main.sentlevel', doc_version_id=projectDoc.doc_version_id, sent_id=1) }}" 
-                           title="{{ projectDoc.content }}" class="document-link">
-                            <i class="fas fa-file-alt"></i>
-                            <span>{{projectDoc.filename}}</span>
-                        </a>
+                        <i class="fas fa-file-alt"></i>
+                        <span>{{projectDoc.filename}}</span>
                         <span class="document-meta">
                             {% if checked_out_by[loop.index0] %}
                                 Checked out by: {{ checked_out_by[loop.index0] }}
@@ -181,7 +178,7 @@
                         <div class="document-actions mt-2">
                             <a href="{{ url_for('main.view_combined', doc_version_id=projectDoc.doc_version_id, sent_id=1) }}" 
                                class="btn btn-sm btn-outline-primary" title="View document annotations">
-                                <i class="fas fa-eye"></i> View All Annotations
+                                <i class="fas fa-eye"></i> View Sentences and Annotations
                             </a>
                         </div>
                     </div>
