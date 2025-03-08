@@ -6,7 +6,11 @@
 .adjudication-container {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 120px);
+    height: calc(100vh - var(--navbar-height) - var(--footer-height) - 40px);
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 10;
 }
 
 /* Split view container */
@@ -14,6 +18,7 @@
     display: flex;
     flex: 1;
     overflow: hidden;
+    margin-top: 10px;
 }
 
 /* Document columns */
@@ -25,6 +30,8 @@
     overflow: auto;
     border-radius: 5px;
     background-color: #ffffff;
+    margin: 0 5px;
+    box-shadow: var(--shadow-sm);
 }
 
 /* Document header with info */
@@ -49,14 +56,16 @@
     color: #495057;
 }
 
-/* Annotation sections */
+/* Annotation section */
 .annotation-section {
     flex: 1;
-    overflow: auto;
+    overflow: visible;
     margin-bottom: 15px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 20;
 }
 
+/* Annotation header */
 .annotation-header {
     display: flex;
     justify-content: space-between;
@@ -65,8 +74,11 @@
     padding: 8px 12px;
     border-radius: 5px 5px 0 0;
     font-weight: bold;
+    position: relative;
+    z-index: 21;
 }
 
+/* Annotation content */
 .annotation-content {
     border: 1px solid #dee2e6;
     border-top: none;
@@ -74,7 +86,9 @@
     padding: 15px;
     max-height: 400px;
     overflow: auto;
-    background-color: #fdfdfd;
+    position: relative;
+    background-color: white;
+    z-index: 22;
 }
 
 /* Navigation bar */
@@ -82,22 +96,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
+    padding: 10px;
     background-color: #f8f9fa;
     border-radius: 5px;
     margin-bottom: 15px;
-    border: 1px solid #dee2e6;
+    box-shadow: var(--shadow-sm);
 }
 
-/* Sentence text display */
+/* Sentence text */
 .sent-text {
     text-align: center;
-    padding: 12px 15px;
+    padding: 10px;
     background-color: #e9ecef;
     border-radius: 5px;
     margin-bottom: 15px;
     font-style: italic;
-    border: 1px solid #dee2e6;
+    position: relative;
+    z-index: 15;
 }
 
 /* Difference highlighting */

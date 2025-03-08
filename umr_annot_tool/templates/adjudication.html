@@ -25,13 +25,18 @@
         .adjudication-container {
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 120px);
+            height: calc(100vh - var(--navbar-height) - var(--footer-height) - 40px);
+            margin: 0;
+            padding: 0;
+            position: relative;
+            z-index: 10;
         }
         
         .comparison-container {
             display: flex;
             flex: 1;
             overflow: hidden;
+            margin-top: 10px;
         }
         
         .doc-column {
@@ -40,6 +45,9 @@
             flex-direction: column;
             padding: 10px;
             overflow: auto;
+            border-radius: 5px;
+            background-color: #ffffff;
+            margin: 0 5px;
         }
         
         .doc-info {
@@ -59,8 +67,10 @@
         
         .annotation-section {
             flex: 1;
-            overflow: auto;
+            overflow: visible;
             margin-bottom: 15px;
+            position: relative;
+            z-index: 20;
         }
         
         .annotation-header {
@@ -71,6 +81,8 @@
             padding: 8px 12px;
             border-radius: 5px 5px 0 0;
             font-weight: bold;
+            position: relative;
+            z-index: 21;
         }
         
         .annotation-content {
@@ -80,6 +92,9 @@
             padding: 15px;
             max-height: 400px;
             overflow: auto;
+            position: relative;
+            background-color: white;
+            z-index: 22;
         }
         
         .navigation-bar {
@@ -99,6 +114,8 @@
             border-radius: 5px;
             margin-bottom: 15px;
             font-style: italic;
+            position: relative;
+            z-index: 15;
         }
         
         /* Difference highlighting */
