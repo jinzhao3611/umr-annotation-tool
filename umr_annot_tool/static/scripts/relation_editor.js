@@ -1262,8 +1262,28 @@ function deleteBranch(relationSpan) {
         
         let cutEnd = nextColon;
         
-        // Remove the relation and its value
-        let updatedText = fullText.substring(0, cutStart) + fullText.substring(cutEnd);
+        // Get the text to be deleted
+        const textToDelete = fullText.substring(cutStart, cutEnd);
+        console.log(`Simple branch text to delete: "${textToDelete}"`);
+        
+        // Check if the simple branch contains any parentheses
+        const unmatchedParentheses = extractUnmatchedParentheses(textToDelete);
+        
+        // For simple relations, just delete the whole thing as they don't typically have parentheses
+        // But if there are unmatched parentheses, preserve them
+        let updatedText;
+        if (unmatchedParentheses.length > 0) {
+            console.log(`Preserving unmatched parentheses in simple branch: "${unmatchedParentheses}"`);
+            // Insert the unmatched parentheses at the cut point
+            updatedText = fullText.substring(0, cutStart) + 
+                          unmatchedParentheses + 
+                          fullText.substring(cutEnd);
+            
+            // Display a special notification about preserved parentheses
+            showNotification(`Deleted branch and preserved unmatched parentheses: ${unmatchedParentheses}`, 'info', 5000);
+        } else {
+            updatedText = fullText.substring(0, cutStart) + fullText.substring(cutEnd);
+        }
         
         // Update the DOM
         annotationElement.textContent = updatedText;
@@ -1315,15 +1335,55 @@ function deleteBranch(relationSpan) {
     // End of the branch is after the closing parenthesis
     let branchEnd = closeParenIndex + 1;
     
-    // Get the branch content for logging
+    // Get the branch content for analysis
     const branchContent = fullText.substring(branchStart, branchEnd);
-    console.log(`Deleting branch from ${branchStart} to ${branchEnd}`);
-    console.log(`Branch content: "${branchContent}"`);
+    console.log(`Complex branch to delete: "${branchContent}"`);
     
-    // Direct string manipulation to remove the branch
-    const beforeBranch = fullText.substring(0, branchStart);
-    const afterBranch = fullText.substring(branchEnd);
-    const updatedText = beforeBranch + afterBranch;
+    // Check if the branch content has balanced parentheses
+    const hasBalancedParentheses = isBalancedParentheses(branchContent);
+    console.log(`Branch has balanced parentheses: ${hasBalancedParentheses}`);
+    
+    let updatedText;
+    
+    if (hasBalancedParentheses) {
+        // If parentheses are balanced, delete the entire branch
+        updatedText = fullText.substring(0, branchStart) + fullText.substring(branchEnd);
+        console.log('Deleting entire branch with balanced parentheses');
+    } else {
+        // If parentheses are unbalanced, preserve the unmatched ones
+        const unmatchedParentheses = extractUnmatchedParentheses(branchContent);
+        console.log(`Preserving unmatched parentheses: "${unmatchedParentheses}"`);
+        
+        if (unmatchedParentheses.length > 0) {
+            // Add a debug line to ensure the content is really there
+            console.log(`Unmatched parentheses: ${unmatchedParentheses.split('').map(c => c.charCodeAt(0)).join(',')}`);
+            
+            // Insert the preserved parentheses at the position where the branch was
+            // and preserve indentation
+            let indentation = '';
+            let startPos = branchStart;
+            // Find the start of the line containing the branch
+            while (startPos > 0 && fullText[startPos - 1] !== '\n') {
+                startPos--;
+            }
+            // Extract the indentation
+            while (startPos < branchStart && /\s/.test(fullText[startPos])) {
+                indentation += fullText[startPos];
+                startPos++;
+            }
+            
+            // Replace the branch with just the unmatched parentheses with proper indentation
+            updatedText = fullText.substring(0, branchStart) + 
+                         unmatchedParentheses + 
+                         fullText.substring(branchEnd);
+            
+            // Display a special notification about preserved parentheses
+            showNotification(`Preserved unmatched parentheses: ${unmatchedParentheses}`, 'info', 5000);
+        } else {
+            // No unmatched parentheses to preserve, just delete the branch
+            updatedText = fullText.substring(0, branchStart) + fullText.substring(branchEnd);
+        }
+    }
     
     // Clean up formatting - remove any consecutive blank lines
     const cleanedLines = updatedText.split('\n').reduce((acc, line) => {
@@ -1333,13 +1393,27 @@ function deleteBranch(relationSpan) {
         return acc;
     }, []);
     
-    const finalText = cleanedLines.join('\n');
+    updatedText = cleanedLines.join('\n');
+    
+    // For debugging: verify the parentheses are still there
+    if (updatedText.includes('(') || updatedText.includes(')')) {
+        console.log('Final text contains parentheses');
+        
+        // Print a portion of the text around any parentheses for verification
+        for (let i = 0; i < updatedText.length; i++) {
+            if (updatedText[i] === '(' || updatedText[i] === ')') {
+                const start = Math.max(0, i - 10);
+                const end = Math.min(updatedText.length, i + 10);
+                console.log(`Parenthesis at position ${i}: "${updatedText.substring(start, end)}"`);
+            }
+        }
+    }
     
     // Check if anything actually changed
-    if (finalText === fullText) {
+    if (updatedText === fullText) {
         console.error('Text did not change after deletion attempt');
         
-        // Fallback: try line-by-line deletion
+        // Fallback: try line-by-line deletion with the same strategy
         const lines = fullText.split('\n');
         let startLine = 0;
         let charactersProcessed = 0;
@@ -1367,11 +1441,41 @@ function deleteBranch(relationSpan) {
             endLine = i;
         }
         
-        console.log(`Fallback: Removing lines ${startLine} to ${endLine}`);
+        // Extract the branch content from the lines
+        const branchLines = lines.slice(startLine, endLine + 1);
+        const branchText = branchLines.join('\n');
         
-        // Remove these lines
-        lines.splice(startLine, endLine - startLine + 1);
+        console.log(`Fallback: Examining branch from line ${startLine} to ${endLine}`);
+        console.log(`Branch text: "${branchText}"`);
+        
+        // Check if the branch content has balanced parentheses
+        const hasBalancedParentheses = isBalancedParentheses(branchText);
+        
+        if (hasBalancedParentheses) {
+            // If parentheses are balanced, remove the lines
+            lines.splice(startLine, endLine - startLine + 1);
+            console.log('Removing lines with balanced parentheses');
+        } else {
+            // If parentheses are unbalanced, extract the unmatched ones
+            const unmatchedParentheses = extractUnmatchedParentheses(branchText);
+            console.log(`Preserving unmatched parentheses: "${unmatchedParentheses}"`);
+            
+            if (unmatchedParentheses.length > 0) {
+                // Replace the lines with just the unmatched parentheses (indented properly)
+                lines.splice(startLine, endLine - startLine + 1, indentMatch[0] + unmatchedParentheses);
+                console.log(`Inserted unmatched parentheses at line ${startLine}`);
+            } else {
+                // No unmatched parentheses, just remove the lines
+                lines.splice(startLine, endLine - startLine + 1);
+            }
+        }
+        
         const fallbackText = lines.join('\n');
+        
+        // Debug: verify the parentheses are still in the fallback text
+        if (unmatchedParentheses.length > 0 && fallbackText.includes(unmatchedParentheses)) {
+            console.log(`Verified: unmatched parentheses "${unmatchedParentheses}" are in the fallback text`);
+        }
         
         // Update the DOM
         annotationElement.textContent = fallbackText;
@@ -1389,8 +1493,9 @@ function deleteBranch(relationSpan) {
         return;
     }
     
-    // Update the DOM
-    annotationElement.textContent = finalText;
+    // Update the DOM with the final text
+    console.log('Setting annotation element text content');
+    annotationElement.textContent = updatedText;
     
     // Re-initialize interactive elements
     makeRelationsClickable(annotationElement);
@@ -1399,9 +1504,99 @@ function deleteBranch(relationSpan) {
     addBranchOperations(annotationElement);
     
     // Save the updated annotation
-    saveBranchDeletion(finalText, relationText);
+    saveBranchDeletion(updatedText, relationText);
     
     showNotification(`Deleted branch: ${relationText}`, 'success');
+}
+
+// Helper function to check if parentheses are balanced in a string
+function isBalancedParentheses(text) {
+    let stack = [];
+    
+    for (let char of text) {
+        if (char === '(') {
+            stack.push(char);
+        } else if (char === ')') {
+            if (stack.length === 0) {
+                return false; // Closing parenthesis without matching opening
+            }
+            stack.pop();
+        }
+    }
+    
+    return stack.length === 0; // If stack is empty, all parentheses are matched
+}
+
+// Helper function to extract unmatched parentheses from a string
+function extractUnmatchedParentheses(text) {
+    let result = '';
+    let stack = [];
+    
+    // First, identify all unmatched parentheses
+    let unmatchedOpen = [];
+    let unmatchedClose = [];
+    
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] === '(') {
+            stack.push(i);
+        } else if (text[i] === ')') {
+            if (stack.length === 0) {
+                // Unmatched closing parenthesis
+                unmatchedClose.push(i);
+            } else {
+                // This matches an opening parenthesis
+                stack.pop();
+            }
+        }
+    }
+    
+    // Any remaining items in the stack are unmatched opening parentheses
+    unmatchedOpen = stack;
+    
+    // Log the unmatched parentheses for debugging
+    if (unmatchedOpen.length > 0) {
+        let openPositions = unmatchedOpen.map(pos => pos).join(', ');
+        console.log(`Found ${unmatchedOpen.length} unmatched opening parentheses at positions: ${openPositions}`);
+    }
+    
+    if (unmatchedClose.length > 0) {
+        let closePositions = unmatchedClose.map(pos => pos).join(', ');
+        console.log(`Found ${unmatchedClose.length} unmatched closing parentheses at positions: ${closePositions}`);
+    }
+    
+    // Special handling for cases with multiple unmatched closing parentheses in a row
+    // like ':aspect state))' - we want to preserve all of them
+    if (unmatchedClose.length > 0) {
+        // Check for consecutive unmatched closing parentheses
+        let consecutiveCount = 0;
+        for (let i = 0; i < unmatchedClose.length - 1; i++) {
+            if (unmatchedClose[i + 1] - unmatchedClose[i] === 1) {
+                consecutiveCount++;
+            }
+        }
+        if (consecutiveCount > 0) {
+            console.log(`Found ${consecutiveCount + 1} consecutive unmatched closing parentheses`);
+        }
+    }
+    
+    // Build a string with just the unmatched parentheses in their original order
+    if (unmatchedOpen.length > 0 || unmatchedClose.length > 0) {
+        // Create an array marking all positions that have unmatched parentheses
+        let positions = new Array(text.length).fill(false);
+        unmatchedOpen.forEach(i => positions[i] = true);
+        unmatchedClose.forEach(i => positions[i] = true);
+        
+        // Extract just those characters
+        for (let i = 0; i < text.length; i++) {
+            if (positions[i]) {
+                result += text[i];
+            }
+        }
+        
+        console.log(`Preserving unmatched parentheses: '${result}'`);
+    }
+    
+    return result;
 }
 
 // Helper function to escape special regex characters
@@ -1987,3 +2182,37 @@ window.UMR2db = function() {
         return originalUmr2db();
     }
 };
+
+// Let's add a unit test function to verify our extraction works as expected
+function testUnmatchedParenthesesExtraction() {
+    // Test cases
+    const testCases = [
+        { input: ':aspect state))', expected: '))', description: 'Multiple closing parentheses' },
+        { input: ':aspect (state', expected: '(', description: 'Single opening parenthesis' },
+        { input: ':aspect (state))', expected: ')', description: 'One extra closing parenthesis' },
+        { input: ':aspect ((state)', expected: '(', description: 'One extra opening parenthesis' },
+        { input: ':aspect (state', expected: '(', description: 'Unclosed parenthesis' },
+        { input: ':aspect state)', expected: ')', description: 'Unopened parenthesis' },
+        { input: ':aspect (state)', expected: '', description: 'Balanced parentheses' }
+    ];
+    
+    console.log('Running unmatched parentheses extraction tests...');
+    
+    testCases.forEach(testCase => {
+        const result = extractUnmatchedParentheses(testCase.input);
+        const passed = result === testCase.expected;
+        
+        console.log(`Test case: ${testCase.description}`);
+        console.log(`Input: "${testCase.input}"`);
+        console.log(`Expected: "${testCase.expected}"`);
+        console.log(`Result: "${result}"`);
+        console.log(`Test ${passed ? 'PASSED' : 'FAILED'}`);
+        console.log('---');
+    });
+}
+
+// Automatically run tests when in development mode
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    console.log('Development environment detected, running tests...');
+    setTimeout(testUnmatchedParenthesesExtraction, 2000);
+}
