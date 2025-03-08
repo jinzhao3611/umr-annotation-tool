@@ -819,19 +819,27 @@ function replaceValue(valueSpan, newValue) {
 
 // Function to save the annotation update
 function saveAnnotationUpdate(updatedAnnotation, oldRelation, newRelation) {
-    // Get sentence ID and document ID from the URL
-    const urlParts = window.location.pathname.split('/');
-    const sent_id = urlParts[urlParts.length - 1];
-    const doc_version_id = urlParts[urlParts.length - 2];
+    // Get sentence ID and document ID from the hidden fields
+    const sent_id = document.getElementById('snt_id').value;
+    const doc_version_id = document.getElementById('doc_version_id').value;
     
     console.log(`Replacing ${oldRelation} with ${newRelation}`);
+    console.log(`Using sent_id=${sent_id}, doc_version_id=${doc_version_id}`);
+    
+    const url = `/update_relation/${doc_version_id}/${sent_id}`;
+    console.log(`Making request to URL: ${url}`);
+    console.log(`Request body:`, {
+        annotation: updatedAnnotation,
+        old_relation: oldRelation,
+        new_relation: newRelation
+    });
     
     // Use fetch API to send the update to the server
-    fetch(`/update_relation/${doc_version_id}/${sent_id}`, {
+    fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken() // Function to get CSRF token
+            'X-CSRFToken': getCsrfToken()
         },
         body: JSON.stringify({
             annotation: updatedAnnotation,
@@ -841,28 +849,30 @@ function saveAnnotationUpdate(updatedAnnotation, oldRelation, newRelation) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
         }
         return response.json();
     })
     .then(data => {
-        console.log('Update successful:', data);
-        // Show success message
-        showNotification('Relation updated successfully', 'success');
+        if (data.success) {
+            console.log('Relation updated successfully');
+            showNotification('Relation updated successfully', 'success');
+        } else {
+            console.error('Error updating relation:', data.error);
+            showNotification(`Error: ${data.error}`, 'error');
+        }
     })
     .catch(error => {
         console.error('Error updating relation:', error);
-        // Show error message
-        showNotification('Error updating relation: ' + error.message, 'error');
+        showNotification(`Error: ${error.message}`, 'error');
     });
 }
 
 // Function to save the value update
 function saveValueUpdate(updatedAnnotation, relationName, oldValue, newValue) {
-    // Get sentence ID and document ID from the URL
-    const urlParts = window.location.pathname.split('/');
-    const sent_id = urlParts[urlParts.length - 1];
-    const doc_version_id = urlParts[urlParts.length - 2];
+    // Get sentence ID and document ID from the hidden fields
+    const sent_id = document.getElementById('snt_id').value;
+    const doc_version_id = document.getElementById('doc_version_id').value;
     
     console.log(`Replacing value for ${relationName} from ${oldValue} to ${newValue}`);
     
@@ -871,7 +881,7 @@ function saveValueUpdate(updatedAnnotation, relationName, oldValue, newValue) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCsrfToken() // Function to get CSRF token
+            'X-CSRFToken': getCsrfToken()
         },
         body: JSON.stringify({
             annotation: updatedAnnotation,
@@ -1283,10 +1293,9 @@ function getBranchBoundaries(text, relationPosition) {
 
 // Function to save the branch deletion
 function saveBranchDeletion(updatedAnnotation, deletedRelation) {
-    // Get sentence ID and document ID from the URL
-    const urlParts = window.location.pathname.split('/');
-    const sent_id = urlParts[urlParts.length - 1];
-    const doc_version_id = urlParts[urlParts.length - 2];
+    // Get sentence ID and document ID from the hidden fields
+    const sent_id = document.getElementById('snt_id').value;
+    const doc_version_id = document.getElementById('doc_version_id').value;
     
     console.log(`Deleting branch with relation: ${deletedRelation}`);
     
@@ -1726,10 +1735,9 @@ async function showAddBranchDialog(parentVariableSpan) {
 
 // Function to save the branch insertion
 function saveBranchInsertion(updatedAnnotation, newBranch) {
-    // Get sentence ID and document ID from the URL
-    const urlParts = window.location.pathname.split('/');
-    const sent_id = urlParts[urlParts.length - 1];
-    const doc_version_id = urlParts[urlParts.length - 2];
+    // Get sentence ID and document ID from the hidden fields
+    const sent_id = document.getElementById('snt_id').value;
+    const doc_version_id = document.getElementById('doc_version_id').value;
     
     console.log(`Adding branch: ${newBranch}`);
     
@@ -1760,3 +1768,92 @@ function saveBranchInsertion(updatedAnnotation, newBranch) {
         showNotification('Error saving changes: ' + error.message, 'error');
     });
 }
+
+// Function to finalize and get the current UMR string
+function finalizeUmrString() {
+    console.log('Finalizing UMR string before saving to database...');
+    
+    // Get the annotation element
+    const annotationElement = document.querySelector('#amr pre');
+    if (!annotationElement) {
+        console.error('Annotation element not found when finalizing UMR string');
+        return null;
+    }
+    
+    // Get the current UMR text including any in-progress edits
+    const currentUmrString = annotationElement.textContent.trim();
+    
+    // Close any open edit dropdowns
+    const dropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
+    dropdowns.forEach(dropdown => dropdown.remove());
+    
+    // Remove any temporary UI elements
+    const tempElements = document.querySelectorAll('.temp-edit-element, .edit-overlay');
+    tempElements.forEach(element => element.remove());
+    
+    // If in edit mode, flush any pending edits
+    if (inPlaceEditMode) {
+        // This will depend on your edit mode implementation
+        // For now, we'll just ensure the UMR text is correct
+        console.log('In-place edit mode active, ensuring all edits are applied');
+    }
+    
+    return currentUmrString;
+}
+
+// Hook into the UMR2db function to ensure relation edits are saved
+const originalUmr2db = window.UMR2db;
+window.UMR2db = function() {
+    try {
+        // Finalize the UMR string
+        const finalUmrString = finalizeUmrString();
+        if (!finalUmrString) {
+            console.error('Failed to finalize UMR string');
+            return originalUmr2db();
+        }
+        
+        // Get document and sentence IDs
+        const docVersionId = document.getElementById('doc_version_id').value;
+        const sentId = document.getElementById('snt_id').value;
+        
+        // Get CSRF token if available
+        const csrfToken = getCsrfToken();
+        
+        // Call the save API directly to ensure fresh content is saved
+        fetch('/save_umr', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken || ''
+            },
+            body: JSON.stringify({
+                doc_version_id: docVersionId,
+                sent_id: sentId,
+                umr_string: finalUmrString
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('UMR saved successfully');
+                showNotification('UMR saved successfully', 'success');
+            } else {
+                console.error('Error saving UMR:', data.error);
+                showNotification(`Error: ${data.error}`, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error saving UMR:', error);
+            showNotification(`Error saving UMR: ${error.message}`, 'error');
+        });
+    } catch (error) {
+        console.error('Exception in overridden UMR2db:', error);
+        // Fall back to original implementation
+        return originalUmr2db();
+    }
+};

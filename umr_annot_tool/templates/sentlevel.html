@@ -13,12 +13,13 @@
             language: "{{ lang }}"
         };
     </script>
+    <!-- Load utilities first -->
+    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
     <!-- Load application scripts -->
     <script src="{{ url_for('static', filename='scripts/sentLevel.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/penmanString2umrDict.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/umrDict2penmanString.js') }}"></script>
-    <!-- Load relation editor script -->
+    <!-- Load relation editor script after main application scripts -->
     <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
     <!-- Load temporary branch storage script -->
     <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
@@ -115,7 +116,7 @@
             <!-- Annotation Preview -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Annotation Preview</h5>
+                    <h5 class="mb-0">Sentence-Level UMRAnnotation Preview</h5>
                 </div>
                 <div class="card-body">
                     <div id="amr" class="annotation-preview">
@@ -204,7 +205,6 @@
                         <a class="btn btn-outline-secondary" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">
                             Back
                         </a>
-                    </div>
                 </div>
             </div>
 

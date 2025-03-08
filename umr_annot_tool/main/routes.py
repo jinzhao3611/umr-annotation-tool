@@ -474,36 +474,77 @@ def guidelines():
 @main.route("/update_relation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
 def update_relation(doc_version_id, sent_id):
     """Update a relation in an annotation and save it."""
+    current_app.logger.info(f"Update relation called with doc_version_id={doc_version_id}, sent_id={sent_id}")
+    
     if not current_user.is_authenticated:
+        current_app.logger.warning("User not authenticated")
         return jsonify({"error": "Not authenticated"}), 401
     
     try:
         data = request.get_json()
+        current_app.logger.info(f"Received data: {data}")
+        
         updated_annotation = data.get('annotation')
         old_relation = data.get('old_relation')
         new_relation = data.get('new_relation')
         
         # Validate inputs
         if not updated_annotation or not old_relation or not new_relation:
+            current_app.logger.warning("Missing required fields in request")
             return jsonify({"error": "Missing required fields"}), 400
         
         if not new_relation.startswith(':'):
+            current_app.logger.warning(f"Invalid relation format: {new_relation}")
             return jsonify({"error": "Invalid relation format"}), 400
         
         # Get the document version
+        current_app.logger.info(f"Looking up DocVersion with id={doc_version_id}")
         doc_version = DocVersion.query.get_or_404(doc_version_id)
+        current_app.logger.info(f"Found DocVersion: {doc_version}")
         
         # Check if the user has permission to modify this document
+        current_app.logger.info(f"Checking if user {current_user.username} has permission for doc_id={doc_version.doc_id}")
         if not has_permission_for_doc(current_user, doc_version.doc_id):
+            current_app.logger.warning(f"User {current_user.username} not authorized to modify document {doc_version.doc_id}")
             return jsonify({"error": "Not authorized to modify this document"}), 403
         
-        # Get sentence annotation
-        sent = Sent.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
-        if not sent:
-            return jsonify({"error": "Sentence not found"}), 404
+        # Get the document
+        doc = Doc.query.get(doc_version.doc_id)
+        if not doc:
+            current_app.logger.error(f"Doc with id={doc_version.doc_id} not found")
+            return jsonify({"error": f"Document not found"}), 404
+        
+        # First get all sentences for this document, in order
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            current_app.logger.error(f"No sentences found for document {doc.id}")
+            return jsonify({"error": "No sentences found for this document"}), 404
+        
+        # Now get the current sentence by index (1-based)
+        if sent_id < 1 or sent_id > len(sentences):
+            current_app.logger.error(f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}")
+            return jsonify({"error": f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}"}), 400
+        
+        current_sent = sentences[sent_id - 1]
+        current_app.logger.info(f"Found current sentence: {current_sent}")
+        
+        # Get annotation for this sentence using the actual sentence ID
+        current_app.logger.info(f"Looking up Annotation with doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=current_sent.id).first()
+        
+        if not annotation:
+            current_app.logger.warning(f"Annotation not found for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+            
+            # Try to list all annotations for this doc_version to debug
+            all_annotations = Annotation.query.filter_by(doc_version_id=doc_version_id).all()
+            current_app.logger.info(f"All annotations for doc_version_id={doc_version_id}: {all_annotations}")
+            
+            return jsonify({"error": "Annotation not found"}), 404
+        
+        current_app.logger.info(f"Found Annotation: {annotation}")
         
         # Save the updated annotation
-        sent.umr = updated_annotation
+        annotation.sent_annot = updated_annotation
         db.session.commit()
         
         # Log the change
@@ -517,17 +558,22 @@ def update_relation(doc_version_id, sent_id):
         }), 200
         
     except Exception as e:
-        current_app.logger.error(f"Error updating relation: {str(e)}")
+        current_app.logger.error(f"Error updating relation: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
 @main.route("/update_value/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
 def update_value(doc_version_id, sent_id):
     """Update a relation's value in an annotation and save it."""
+    current_app.logger.info(f"Update value called with doc_version_id={doc_version_id}, sent_id={sent_id}")
+    
     if not current_user.is_authenticated:
+        current_app.logger.warning("User not authenticated")
         return jsonify({"error": "Not authenticated"}), 401
     
     try:
         data = request.get_json()
+        current_app.logger.info(f"Received data: {data}")
+        
         updated_annotation = data.get('annotation')
         relation = data.get('relation')
         old_value = data.get('old_value')
@@ -535,22 +581,57 @@ def update_value(doc_version_id, sent_id):
         
         # Validate inputs
         if not updated_annotation or not relation or not old_value or not new_value:
+            current_app.logger.warning("Missing required fields in request")
             return jsonify({"error": "Missing required fields"}), 400
         
         # Get the document version
+        current_app.logger.info(f"Looking up DocVersion with id={doc_version_id}")
         doc_version = DocVersion.query.get_or_404(doc_version_id)
+        current_app.logger.info(f"Found DocVersion: {doc_version}")
         
         # Check if the user has permission to modify this document
+        current_app.logger.info(f"Checking if user {current_user.username} has permission for doc_id={doc_version.doc_id}")
         if not has_permission_for_doc(current_user, doc_version.doc_id):
+            current_app.logger.warning(f"User {current_user.username} not authorized to modify document {doc_version.doc_id}")
             return jsonify({"error": "Not authorized to modify this document"}), 403
         
-        # Get sentence annotation
-        sent = Sent.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
-        if not sent:
-            return jsonify({"error": "Sentence not found"}), 404
+        # Get the document
+        doc = Doc.query.get(doc_version.doc_id)
+        if not doc:
+            current_app.logger.error(f"Doc with id={doc_version.doc_id} not found")
+            return jsonify({"error": f"Document not found"}), 404
+        
+        # First get all sentences for this document, in order
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            current_app.logger.error(f"No sentences found for document {doc.id}")
+            return jsonify({"error": "No sentences found for this document"}), 404
+        
+        # Now get the current sentence by index (1-based)
+        if sent_id < 1 or sent_id > len(sentences):
+            current_app.logger.error(f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}")
+            return jsonify({"error": f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}"}), 400
+        
+        current_sent = sentences[sent_id - 1]
+        current_app.logger.info(f"Found current sentence: {current_sent}")
+        
+        # Get annotation for this sentence using the actual sentence ID
+        current_app.logger.info(f"Looking up Annotation with doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=current_sent.id).first()
+        
+        if not annotation:
+            current_app.logger.warning(f"Annotation not found for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+            
+            # Try to list all annotations for this doc_version to debug
+            all_annotations = Annotation.query.filter_by(doc_version_id=doc_version_id).all()
+            current_app.logger.info(f"All annotations for doc_version_id={doc_version_id}: {all_annotations}")
+            
+            return jsonify({"error": "Annotation not found"}), 404
+        
+        current_app.logger.info(f"Found Annotation: {annotation}")
         
         # Save the updated annotation
-        sent.umr = updated_annotation
+        annotation.sent_annot = updated_annotation
         db.session.commit()
         
         # Log the change
@@ -564,7 +645,7 @@ def update_value(doc_version_id, sent_id):
         }), 200
         
     except Exception as e:
-        current_app.logger.error(f"Error updating value: {str(e)}")
+        current_app.logger.error(f"Error updating value: {str(e)}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
 def has_permission_for_doc(user, doc_id):
@@ -648,6 +729,159 @@ def update_annotation(doc_version_id, sent_id):
     except Exception as e:
         current_app.logger.error(f"Error updating annotation: {str(e)}")
         return jsonify({'success': False, 'message': str(e)}), 500
+
+@main.route("/save_umr", methods=['POST'])
+@login_required
+def save_umr():
+    """Route to save UMR annotations from the in-place relation editor"""
+    try:
+        # Get the request data
+        data = request.get_json()
+        
+        # Check if the required fields are present
+        if not all(k in data for k in ['doc_version_id', 'sent_id', 'umr_string']):
+            return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+        
+        doc_version_id = data['doc_version_id']
+        sent_id = data['sent_id']
+        umr_string = data['umr_string']
+        
+        current_app.logger.info(f"Save UMR called with doc_version_id={doc_version_id}, sent_id={sent_id}")
+        
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to modify the document
+        if not has_permission_for_doc(current_user, doc_version.doc_id):
+            return jsonify({'success': False, 'error': 'User does not have permission to modify this document'}), 403
+        
+        # Get the document
+        doc = Doc.query.get(doc_version.doc_id)
+        if not doc:
+            current_app.logger.error(f"Doc with id={doc_version.doc_id} not found")
+            return jsonify({'success': False, 'error': 'Document not found'}), 404
+        
+        # First get all sentences for this document, in order
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            current_app.logger.error(f"No sentences found for document {doc.id}")
+            return jsonify({'success': False, 'error': 'No sentences found for this document'}), 404
+        
+        # Now get the current sentence by index (1-based)
+        if int(sent_id) < 1 or int(sent_id) > len(sentences):
+            current_app.logger.error(f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}")
+            return jsonify({'success': False, 'error': f'Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}'}), 400
+        
+        current_sent = sentences[int(sent_id) - 1]
+        current_app.logger.info(f"Found current sentence: {current_sent}")
+        
+        # Get the annotation object
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=current_sent.id).first()
+        
+        if not annotation:
+            # Create a new annotation if it doesn't exist
+            annotation = Annotation(
+                doc_version_id=doc_version_id,
+                sent_id=current_sent.id,
+                sent_annot=umr_string,
+                doc_annot="",  # Initialize with empty doc annotation
+                actions={},
+                alignment={}
+            )
+            db.session.add(annotation)
+        else:
+            # Update the existing annotation
+            annotation.sent_annot = umr_string
+        
+        # Log the update
+        current_app.logger.info(f"UMR Update: User {current_user.username} updated UMR for sentence {sent_id} in document version {doc_version_id}")
+        
+        # Commit the transaction
+        db.session.commit()
+        
+        return jsonify({'success': True})
+    
+    except Exception as e:
+        current_app.logger.error(f"Error saving UMR: {str(e)}", exc_info=True)
+        db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@main.route("/save_alignments", methods=['POST'])
+@login_required
+def save_alignments():
+    """Route to save alignment data"""
+    try:
+        # Get the request data
+        data = request.get_json()
+        
+        # Check if the required fields are present
+        if not all(k in data for k in ['doc_version_id', 'sent_id', 'alignments']):
+            return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+        
+        doc_version_id = data['doc_version_id']
+        sent_id = data['sent_id']
+        alignments = data['alignments']
+        
+        current_app.logger.info(f"Save alignments called with doc_version_id={doc_version_id}, sent_id={sent_id}")
+        
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to modify the document
+        if not has_permission_for_doc(current_user, doc_version.doc_id):
+            return jsonify({'success': False, 'error': 'User does not have permission to modify this document'}), 403
+        
+        # Get the document
+        doc = Doc.query.get(doc_version.doc_id)
+        if not doc:
+            current_app.logger.error(f"Doc with id={doc_version.doc_id} not found")
+            return jsonify({'success': False, 'error': 'Document not found'}), 404
+        
+        # First get all sentences for this document, in order
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            current_app.logger.error(f"No sentences found for document {doc.id}")
+            return jsonify({'success': False, 'error': 'No sentences found for this document'}), 404
+        
+        # Now get the current sentence by index (1-based)
+        if int(sent_id) < 1 or int(sent_id) > len(sentences):
+            current_app.logger.error(f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}")
+            return jsonify({'success': False, 'error': f'Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}'}), 400
+        
+        current_sent = sentences[int(sent_id) - 1]
+        current_app.logger.info(f"Found current sentence: {current_sent}")
+        
+        # Get the alignment object
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=current_sent.id).first()
+        
+        if not annotation:
+            # Create a new annotation if it doesn't exist
+            annotation = Annotation(
+                doc_version_id=doc_version_id,
+                sent_id=current_sent.id,
+                sent_annot="",
+                doc_annot="",
+                actions={},
+                alignment=alignments
+            )
+            db.session.add(annotation)
+        else:
+            # Update the existing alignment
+            annotation.alignment = alignments
+        
+        # Log the update
+        current_app.logger.info(f"Alignment Update: User {current_user.username} updated alignments for sentence {sent_id} in document version {doc_version_id}")
+        
+        # Commit the transaction
+        db.session.commit()
+        
+        return jsonify({'success': True})
+    
+    except Exception as e:
+        current_app.logger.error(f"Error saving alignments: {str(e)}", exc_info=True)
+        db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @main.route("/get_concepts", methods=['GET'])
 @login_required
@@ -1288,3 +1522,107 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
         logger.error(f"Error in adjudication: {str(e)}")
         flash('An error occurred while preparing the adjudication view.', 'danger')
         return redirect(url_for('users.projects'))
+
+@main.route("/debug_update_relation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
+def debug_update_relation(doc_version_id, sent_id):
+    """Debug route for relation updates."""
+    if not current_user.is_authenticated:
+        return jsonify({"error": "Not authenticated"}), 401
+    
+    try:
+        # Log all request data for debugging
+        current_app.logger.info(f"Debug update_relation called with doc_version_id={doc_version_id}, sent_id={sent_id}")
+        current_app.logger.info(f"Request data: {request.get_json()}")
+        
+        # Get annotation for this sentence to check if it exists
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
+        annotation_exists = annotation is not None
+        
+        return jsonify({
+            "success": True,
+            "message": "Debug relation update endpoint called successfully",
+            "doc_version_id": doc_version_id,
+            "sent_id": sent_id,
+            "annotation_exists": annotation_exists,
+            "request_data": request.get_json()
+        })
+        
+    except Exception as e:
+        current_app.logger.error(f"Error in debug_update_relation: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@main.route("/update_relation_query", methods=['POST'])
+def update_relation_query():
+    """Update a relation in an annotation using query parameters."""
+    if not current_user.is_authenticated:
+        return jsonify({"error": "Not authenticated"}), 401
+    
+    try:
+        # Get parameters from query string
+        doc_version_id = request.args.get('doc_version_id', type=int)
+        sent_id = request.args.get('sent_id', type=int)
+        
+        if not doc_version_id or not sent_id:
+            return jsonify({"error": "Missing doc_version_id or sent_id parameters"}), 400
+        
+        # Get data from request body
+        data = request.get_json()
+        updated_annotation = data.get('annotation')
+        old_relation = data.get('old_relation')
+        new_relation = data.get('new_relation')
+        
+        # Validate inputs
+        if not updated_annotation or not old_relation or not new_relation:
+            return jsonify({"error": "Missing required fields in request body"}), 400
+        
+        if not new_relation.startswith(':'):
+            return jsonify({"error": "Invalid relation format"}), 400
+        
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to modify this document
+        if not has_permission_for_doc(current_user, doc_version.doc_id):
+            return jsonify({"error": "Not authorized to modify this document"}), 403
+        
+        # Get annotation for this sentence
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
+        
+        if not annotation:
+            return jsonify({"error": "Annotation not found"}), 404
+        
+        # Save the updated annotation
+        annotation.sent_annot = updated_annotation
+        db.session.commit()
+        
+        # Log the change
+        current_app.logger.info(f"User {current_user.username} updated relation from {old_relation} to {new_relation} in doc_version {doc_version_id}, sentence {sent_id}")
+        
+        return jsonify({
+            "success": True,
+            "message": f"Updated relation from {old_relation} to {new_relation}",
+            "doc_version_id": doc_version_id,
+            "sent_id": sent_id
+        }), 200
+        
+    except Exception as e:
+        current_app.logger.error(f"Error updating relation: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@main.route("/test_param_route/<int:param1>/<int:param2>", methods=['GET'])
+def test_param_route(param1, param2):
+    """Test route with parameters to verify routing pattern works."""
+    return jsonify({
+        "success": True,
+        "message": "Test parameter route is working correctly",
+        "param1": param1,
+        "param2": param2
+    })
+
+@main.route("/test_route", methods=['GET'])
+def test_route():
+    """Test route to verify routing is working."""
+    return jsonify({
+        "success": True,
+        "message": "Test route is working correctly"
+    })

@@ -173,6 +173,130 @@ function redo() {
     console.log('Redoing last action...');
 }
 
+// Save UMR annotation to database
+function UMR2db() {
+    try {
+        console.log('Saving UMR to database...');
+        
+        // Get the annotation element and extract the UMR string
+        const annotationElement = document.querySelector('#amr pre');
+        if (!annotationElement) {
+            console.error('Annotation element not found');
+            showNotification('Error: Annotation element not found', 'error');
+            return;
+        }
+        
+        const umrString = annotationElement.textContent.trim();
+        if (!umrString) {
+            console.error('Empty UMR annotation');
+            showNotification('Error: Empty UMR annotation', 'error');
+            return;
+        }
+        
+        // Get document and sentence IDs
+        const docVersionId = document.getElementById('doc_version_id').value;
+        const sentId = document.getElementById('snt_id').value;
+        
+        // Get CSRF token if available
+        const csrfToken = getCsrfTokenFromDocument();
+        
+        // Make the API call to save the UMR
+        fetch('/save_umr', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken || ''
+            },
+            body: JSON.stringify({
+                doc_version_id: docVersionId,
+                sent_id: sentId,
+                umr_string: umrString
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                console.log('UMR saved successfully');
+                showNotification('UMR saved successfully', 'success');
+            } else {
+                console.error('Error saving UMR:', data.error);
+                showNotification(`Error: ${data.error}`, 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error saving UMR:', error);
+            showNotification(`Error saving UMR: ${error.message}`, 'error');
+        });
+    } catch (error) {
+        console.error('Exception in UMR2db:', error);
+        showNotification(`Error: ${error.message}`, 'error');
+    }
+}
+
+// Helper function to show notifications
+function showNotification(message, type, duration = 3000) {
+    // Check if notification container exists, create if not
+    let notificationContainer = document.getElementById('notification-container');
+    if (!notificationContainer) {
+        notificationContainer = document.createElement('div');
+        notificationContainer.id = 'notification-container';
+        notificationContainer.style.position = 'fixed';
+        notificationContainer.style.top = '20px';
+        notificationContainer.style.right = '20px';
+        notificationContainer.style.zIndex = '9999';
+        document.body.appendChild(notificationContainer);
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} notification`;
+    notification.style.minWidth = '300px';
+    notification.style.marginBottom = '10px';
+    notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+    notification.innerHTML = message;
+    
+    // Add close button
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'btn-close';
+    closeBtn.style.float = 'right';
+    closeBtn.addEventListener('click', () => {
+        notification.remove();
+    });
+    notification.appendChild(closeBtn);
+    
+    // Add to container
+    notificationContainer.appendChild(notification);
+    
+    // Auto remove after duration
+    setTimeout(() => {
+        notification.remove();
+    }, duration);
+}
+
+// Helper function to get CSRF token from the document
+function getCsrfTokenFromDocument() {
+    // Try to get from meta tag first
+    const metaTag = document.querySelector('meta[name="csrf-token"]');
+    if (metaTag) {
+        return metaTag.getAttribute('content');
+    }
+    
+    // Try to get from hidden input field
+    const csrfInput = document.querySelector('input[name="csrf_token"]');
+    if (csrfInput) {
+        return csrfInput.value;
+    }
+    
+    // Return null if not found
+    return null;
+}
+
 // Export functions for use in HTML
 window.initialize = initialize;
 window.prevSentence = prevSentence;
@@ -181,3 +305,5 @@ window.saveAnnotation = saveAnnotation;
 window.resetAnnotation = resetAnnotation;
 window.undo = undo;
 window.redo = redo;
+window.UMR2db = UMR2db;
+window.showNotification = showNotification;
