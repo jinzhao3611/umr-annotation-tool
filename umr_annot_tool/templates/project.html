@@ -311,9 +311,6 @@
                                 <input type="checkbox" name="selected_docs" value="{{ projectDoc.doc_version_id }}" 
                                        id="init-doc-{{ projectDoc.doc_version_id }}" class="adjudication-checkbox" data-section="initial">
                                 <label for="init-doc-{{ projectDoc.doc_version_id }}">{{ projectDoc.filename }}
-                                    {% if checked_out_by[loop.index0] %}
-                                        <small>({{ checked_out_by[loop.index0] }})</small>
-                                    {% endif %}
                                 </label>
                             </div>
                             {% endfor %}
