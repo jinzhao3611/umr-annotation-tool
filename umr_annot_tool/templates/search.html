@@ -36,7 +36,8 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <strong>Project:</strong> {{ result.project_name }} |
-                                <strong>Annotator:</strong> {{ result.username }}
+                                <strong>Annotator:</strong> {{ result.username }} |
+                                <strong>Stage:</strong> <span class="badge {% if result.doc_version_stage == 'initial' %}badge-secondary{% elif result.doc_version_stage == 'checkout' %}badge-info{% elif result.doc_version_stage == 'review' %}badge-warning{% elif result.doc_version_stage == 'final' %}badge-success{% else %}badge-light{% endif %}">{{ result.doc_version_stage }}</span>
                             </div>
                             <span class="badge {% if result.match_type == 'sentence' %}badge-primary{% else %}badge-success{% endif %}">
                                 {{ result.match_type|title }} Match
@@ -49,12 +50,12 @@
                         
                         {% if result.sent_annot %}
                             <h5 class="card-title">Sentence Annotation:</h5>
-                            <div class="card-text">{{ result.sent_annot|safe }}</div>
+                            <div class="card-text annotation-content">{{ result.sent_annot|safe }}</div>
                         {% endif %}
                         
                         {% if result.doc_annot %}
                             <h5 class="card-title">Document Annotation:</h5>
-                            <div class="card-text">{{ result.doc_annot|safe }}</div>
+                            <div class="card-text annotation-content">{{ result.doc_annot|safe }}</div>
                         {% endif %}
                         
                         <div class="mt-2">
@@ -82,6 +83,17 @@
 .search-results {
     max-height: 100%;
     overflow-y: auto;
+}
+.annotation-content {
+    white-space: pre-wrap;
+    font-family: monospace;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+.annotation-content pre {
+    margin: 0;
 }
 </style>
 {% endblock scripts %} 

@@ -1080,6 +1080,7 @@ def search():
                         'doc_annot': annotation.doc_annot,
                         'doc_id': doc_version.doc_id,
                         'doc_version_id': annotation.doc_version_id,
+                        'doc_version_stage': doc_version.stage,
                         'sent_id': sent.id,
                         'user_id': doc_version.user_id,
                         'match_type': 'sentence'
@@ -1146,6 +1147,7 @@ def search():
                     'doc_annot': annotation.doc_annot,
                     'doc_id': doc_version.doc_id,
                     'doc_version_id': annotation.doc_version_id,
+                    'doc_version_stage': doc_version.stage,
                     'sent_id': sent.id,
                     'user_id': doc_version.user_id,
                     'match_type': 'annotation'
