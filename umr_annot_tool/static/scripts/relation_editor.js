@@ -1230,15 +1230,31 @@ function deleteBranch(relationSpan) {
             branchEnd += lines[i].length + 1;
         }
         
-        // Create updated text by removing the branch
-        const updatedText = textContent.substring(0, branchStart) + textContent.substring(branchEnd);
+        // Create updated text by removing the branch and any trailing empty lines
+        let updatedText = textContent.substring(0, branchStart) + textContent.substring(branchEnd);
+        
+        // Remove any awkward spaces or empty lines that might be left after deletion
+        // Split into lines, clean them, and rejoin
+        let cleanedLines = updatedText.split('\n');
+        
+        // Remove any consecutive empty lines, keeping at most one
+        for (let i = 0; i < cleanedLines.length - 1; i++) {
+            if (cleanedLines[i].trim() === '' && cleanedLines[i+1].trim() === '') {
+                cleanedLines.splice(i, 1);
+                i--; // Adjust index after removal
+            }
+        }
+        
+        // Rejoin the cleaned lines
+        updatedText = cleanedLines.join('\n');
         
         // Update the annotation element
         annotationElement.textContent = updatedText;
         
-        // Make elements clickable again
+        // Make elements clickable again - order is important
         makeRelationsClickable(annotationElement);
         makeValuesClickable(annotationElement);
+        makeVariablesClickable(annotationElement); // Ensure variables are clickable
         addBranchOperations(annotationElement);
         
         // Save the updated annotation
@@ -1277,12 +1293,27 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
         }
         return response.json();
     })
     .then(data => {
         console.log('Update successful:', data);
+        
+        // Ensure all elements are properly clickable after successful update
+        const annotationElement = document.querySelector('#amr pre');
+        if (annotationElement) {
+            console.log('Refreshing clickable elements after successful branch deletion');
+            makeRelationsClickable(annotationElement);
+            makeValuesClickable(annotationElement);
+            
+            // Make sure variables are clickable - this is critical
+            const varCount = makeVariablesClickable(annotationElement);
+            console.log(`Made ${varCount} variables clickable after branch deletion`);
+            
+            // Re-add branch operations
+            addBranchOperations(annotationElement);
+        }
     })
     .catch(error => {
         console.error('Error updating annotation:', error);
@@ -1294,6 +1325,11 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
 function makeVariablesClickable(annotationElement) {
     console.log('Making variables clickable for branch addition');
     
+    if (!annotationElement) {
+        console.error('makeVariablesClickable: annotationElement is null or undefined');
+        return;
+    }
+    
     // First, get the raw text without any span wrappers
     let text = annotationElement.innerHTML;
     
@@ -1301,7 +1337,8 @@ function makeVariablesClickable(annotationElement) {
     text = text.replace(/<span class="variable-span"[^>]*>(.*?)<\/span>/g, '$1');
     
     // This pattern matches variables like s1, s2a, s10b, etc.
-    const variableRegex = /(\b)(s[0-9]+[a-z]*[0-9]*)\b(?![^<]*>)/g;
+    // Updated regex to more accurately capture variable patterns
+    const variableRegex = /(\s|\(|\b)(s[0-9]+[a-z]*[0-9]*)\b(?![^<]*>)/g;
     
     let html = text.replace(variableRegex, function(match, prefix, variable) {
         // Don't replace if it's already inside a span
@@ -1331,7 +1368,13 @@ function makeVariablesClickable(annotationElement) {
                 showVariableContextMenu(newSpan, event.clientX, event.clientY);
             }
         });
+        
+        // Add a data attribute to help track variables
+        newSpan.setAttribute('data-variable', newSpan.textContent);
     });
+    
+    // Also ensure relations and values are properly clickable after updating the HTML
+    return variableSpans.length; // Return the count for diagnostic purposes
 }
 
 // Function to show context menu for variables
