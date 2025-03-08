@@ -906,21 +906,21 @@ function saveValueUpdate(updatedAnnotation, relationName, oldValue, newValue) {
     });
 }
 
-// Function to get CSRF token from cookies
+// Helper function to get CSRF token
 function getCsrfToken() {
-    const name = 'csrftoken';
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
+    const csrfTokenElem = document.querySelector('meta[name="csrf-token"]');
+    if (csrfTokenElem) {
+        return csrfTokenElem.getAttribute('content');
     }
-    return cookieValue;
+    
+    // Try to get from cookie as fallback
+    const csrfCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrf_token='));
+    if (csrfCookie) {
+        return csrfCookie.split('=')[1];
+    }
+    
+    console.warn('CSRF token not found. Server requests may fail.');
+    return '';
 }
 
 // Function to show notification
@@ -1759,14 +1759,54 @@ function extractSentenceTokens() {
     
     // Extract all tokens (words) from the sentence
     const text = currentSentence.textContent;
-    const tokens = text.split(/\s+/).filter(token => 
-        token.length > 0 && 
-        !token.match(/^[.,;:!?()[\]{}]$/) // Filter out solo punctuation
-    );
+    console.log('Current sentence text:', text);
     
-    // Store in global for reuse
-    sentenceTokens = [...new Set(tokens)]; // Remove duplicates
-    return sentenceTokens;
+    // Regular expression to match tokens with potential indices (like '1nation')
+    // We want to extract just the text part
+    const tokenPattern = /([0-9]+)([a-zA-Z0-9_\-'".]+)/g;
+    const tokens = [];
+    
+    // Create a global mapping of tokens to their indices
+    window.tokenIndices = {}; 
+    
+    // Match token pattern
+    let match;
+    while ((match = tokenPattern.exec(text)) !== null) {
+        const index = match[1];
+        const token = match[2];
+        tokens.push(token);
+        window.tokenIndices[token] = index; // Save token to index mapping
+        console.log(`Mapped token: ${token} → index: ${index}`);
+    }
+    
+    // If the pattern matching didn't find tokens, fall back to simple splitting
+    if (tokens.length === 0) {
+        console.log('Falling back to simple token splitting');
+        const simpleTokens = text.split(/\s+/).filter(token => 
+            token.trim().length > 0
+        );
+        
+        // Check if these tokens have number prefixes we can extract
+        simpleTokens.forEach(token => {
+            const simpleMatch = token.match(/^([0-9]+)(.+)$/);
+            if (simpleMatch) {
+                const index = simpleMatch[1];
+                const cleanToken = simpleMatch[2];
+                tokens.push(cleanToken);
+                window.tokenIndices[cleanToken] = index;
+                console.log(`Mapped token (simple): ${cleanToken} → index: ${index}`);
+            } else {
+                tokens.push(token);
+            }
+        });
+    }
+    
+    console.log('Extracted tokens:', tokens);
+    console.log('Token indices mapping:', window.tokenIndices);
+    
+    // Store unique tokens in global/window for later use
+    window.sentenceTokens = [...new Set(tokens)];
+    return window.sentenceTokens;
 }
 
 // Function to get all available concepts
@@ -2207,18 +2247,90 @@ async function showAddBranchDialog(parentVariableSpan) {
                     }
                 });
                 
-                // Handle token selection - simplified without lemmatization
+                // Handle token selection - support for multiple selection
                 const tokenItems = document.querySelectorAll('.token-item');
+                
+                // Track the selected tokens in an ordered array
+                window.selectedTokens = [];
                 
                 tokenItems.forEach(item => {
                     item.addEventListener('click', () => {
-                        // Reset active state for all items
-                        tokenItems.forEach(el => el.style.backgroundColor = '#f0f8ff');
+                        const token = item.getAttribute('data-token');
                         
-                        // Highlight the selected item
-                        item.style.backgroundColor = '#d1e7ff';
+                        // Toggle selection
+                        if (item.style.backgroundColor === 'rgb(209, 231, 255)') {
+                            // Deselect if already selected
+                            item.style.backgroundColor = '#f0f8ff';
+                            
+                            // Remove from selected tokens array
+                            const index = window.selectedTokens.indexOf(token);
+                            if (index > -1) {
+                                window.selectedTokens.splice(index, 1);
+                            }
+                        } else {
+                            // Select if not already selected
+                            item.style.backgroundColor = '#d1e7ff';
+                            
+                            // Add to selected tokens array if not already there
+                            if (!window.selectedTokens.includes(token)) {
+                                window.selectedTokens.push(token);
+                            }
+                        }
+                        
+                        // Update info about selected tokens
+                        const selectedTokensDisplay = document.createElement('div');
+                        selectedTokensDisplay.style.marginTop = '10px';
+                        selectedTokensDisplay.style.padding = '8px';
+                        selectedTokensDisplay.style.backgroundColor = '#f8f9fa';
+                        selectedTokensDisplay.style.borderRadius = '4px';
+                        
+                        if (window.selectedTokens.length > 0) {
+                            selectedTokensDisplay.innerHTML = `
+                                <strong>Selected tokens:</strong> ${window.selectedTokens.join(', ')}
+                                <div style="margin-top: 5px;">
+                                    <small>Concept will be: ${window.selectedTokens.join('-')}</small>
+                                </div>
+                            `;
+                        } else {
+                            selectedTokensDisplay.innerHTML = '<em>No tokens selected</em>';
+                        }
+                        
+                        // Replace previous info if exists
+                        const existingDisplay = document.getElementById('selected-tokens-display');
+                        if (existingDisplay) {
+                            existingDisplay.remove();
+                        }
+                        
+                        // Add the display element
+                        selectedTokensDisplay.id = 'selected-tokens-display';
+                        const tokensContainer = document.getElementById('tokens-container');
+                        tokensContainer.appendChild(selectedTokensDisplay);
                     });
                 });
+                
+                // Add a button to clear all token selections
+                const clearSelectionsButton = document.createElement('button');
+                clearSelectionsButton.className = 'btn btn-sm btn-outline-secondary';
+                clearSelectionsButton.textContent = 'Clear Selections';
+                clearSelectionsButton.style.marginTop = '10px';
+                clearSelectionsButton.style.marginLeft = '10px';
+                clearSelectionsButton.onclick = () => {
+                    // Reset all selections
+                    tokenItems.forEach(item => item.style.backgroundColor = '#f0f8ff');
+                    window.selectedTokens = [];
+                    
+                    // Update the display
+                    const existingDisplay = document.getElementById('selected-tokens-display');
+                    if (existingDisplay) {
+                        existingDisplay.innerHTML = '<em>No tokens selected</em>';
+                    }
+                };
+                
+                // Add the clear button to the token container
+                const tokenContainerHeader = tokenContainer.querySelector('label');
+                if (tokenContainerHeader) {
+                    tokenContainerHeader.parentNode.insertBefore(clearSelectionsButton, tokenContainerHeader.nextSibling);
+                }
                 
                 // Set up named entity selection to show name tokens
                 const neTypeSelect = document.getElementById('ne-type');
@@ -2300,6 +2412,8 @@ async function showAddBranchDialog(parentVariableSpan) {
             // Initialize variables for the branch
             let childNode = '';
             let subBranches = '';
+            let newVariable = ''; // Store the new variable for alignments
+            let selectedTokenForAlignment = ''; // Store the selected token for alignments
             
             // Handle different types of relations and child nodes
             const predefinedValues = relationsWithValues[selectedRelation];
@@ -2322,23 +2436,27 @@ async function showAddBranchDialog(parentVariableSpan) {
                 }
                 
                 if (childNodeType === 'token') {
-                    // For token selection
-                    const selectedTokenItem = document.querySelector('.token-item[style*="background-color: rgb(209, 231, 255)"]');
-                    if (!selectedTokenItem) {
-                        showNotification('Please select a token', 'error');
+                    // For token selection (now with multi-selection support)
+                    if (!window.selectedTokens || window.selectedTokens.length === 0) {
+                        showNotification('Please select at least one token', 'error');
                         return;
                     }
                     
-                    const selectedToken = selectedTokenItem.getAttribute('data-token');
+                    // Join selected tokens with hyphens for the concept
+                    const joinedTokens = window.selectedTokens.join('-');
                     
-                    // Check if it's a number
-                    if (!isNaN(selectedToken)) {
+                    // Save the first token for alignment (will be updated to handle all tokens later)
+                    selectedTokenForAlignment = window.selectedTokens.join('-');
+                    
+                    // Check if it's a number (only relevant for single token)
+                    if (window.selectedTokens.length === 1 && !isNaN(window.selectedTokens[0])) {
                         // Numbers are used directly
-                        childNode = selectedToken;
+                        childNode = window.selectedTokens[0];
                     } else {
                         // For other tokens, generate a variable
-                        const variable = generateUniqueVariable(selectedToken, annotationText);
-                        childNode = `(${variable} / ${selectedToken})`;
+                        const variable = generateUniqueVariable(joinedTokens, annotationText);
+                        newVariable = variable; // Save the variable for alignments
+                        childNode = `(${variable} / ${joinedTokens})`;
                     }
                 } else if (childNodeType === 'discourse') {
                     // For discourse concepts
@@ -2350,6 +2468,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                     
                     // Generate variable for the concept
                     const variable = generateUniqueVariable(selectedConcept, annotationText);
+                    newVariable = variable; // Save for alignments
                     childNode = `(${variable} / ${selectedConcept})`;
                 } else if (childNodeType === 'abstract') {
                     // For abstract concepts
@@ -2361,6 +2480,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                     
                     // Generate variable for the concept
                     const variable = generateUniqueVariable(selectedConcept, annotationText);
+                    newVariable = variable; // Save for alignments
                     childNode = `(${variable} / ${selectedConcept})`;
                 } else if (childNodeType === 'ne') {
                     // For named entities
@@ -2372,6 +2492,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                     
                     // Generate variable for the NE
                     const variable = generateUniqueVariable(selectedNeType, annotationText);
+                    newVariable = variable; // Save for alignments
                     
                     // Check if name tokens are selected
                     const selectedNameTokens = Array.from(document.querySelectorAll('.name-token-chip.selected'))
@@ -2387,6 +2508,11 @@ async function showAddBranchDialog(parentVariableSpan) {
                         
                         // Create the sub-branch for name
                         subBranches = `:name (${nameVariable} / name ${opRelations})`;
+                        
+                        // Store the first selected token for alignment
+                        if (selectedNameTokens.length > 0) {
+                            selectedTokenForAlignment = selectedNameTokens[0];
+                        }
                     }
                     
                     // Create the main node with optional sub-branches
@@ -2401,6 +2527,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                     
                     // Generate variable for the roleset
                     const variable = generateUniqueVariable(selectedRoleset, annotationText);
+                    newVariable = variable; // Save for alignments
                     childNode = `(${variable} / ${selectedRoleset})`;
                 } else if (childNodeType === 'string') {
                     // For string values
@@ -2520,6 +2647,135 @@ async function showAddBranchDialog(parentVariableSpan) {
             
             // Save the updated annotation
             saveBranchInsertion(annotationElement.textContent, newBranch);
+            
+            // Update alignments if we have a new variable and a selected token
+            if (newVariable && selectedTokenForAlignment && window.tokenIndices) {
+                // Convert the selected tokens to token indices with proper formatting
+                const tokenIndicesArray = [];
+                
+                // Process tokens joined with hyphens
+                const tokensArray = selectedTokenForAlignment.split('-');
+                
+                if (tokensArray.length > 0) {
+                    // Get the indices for each token
+                    const indexedTokens = tokensArray
+                        .map(token => ({
+                            token: token,
+                            index: window.tokenIndices[token]
+                        }))
+                        .filter(item => item.index); // Filter out tokens without indices
+                    
+                    console.log('Tokens with indices:', indexedTokens);
+                    
+                    if (indexedTokens.length > 0) {
+                        // Sort tokens by index
+                        indexedTokens.sort((a, b) => parseInt(a.index) - parseInt(b.index));
+                        
+                        // Find continuous spans
+                        let currentSpan = [indexedTokens[0]];
+                        
+                        for (let i = 1; i < indexedTokens.length; i++) {
+                            const current = indexedTokens[i];
+                            const previous = indexedTokens[i-1];
+                            
+                            // Check if current token is consecutive with previous
+                            if (parseInt(current.index) === parseInt(previous.index) + 1) {
+                                // Add to current span
+                                currentSpan.push(current);
+                            } else {
+                                // Process the completed span
+                                const spanRange = processSpan(currentSpan);
+                                if (spanRange) tokenIndicesArray.push(spanRange);
+                                
+                                // Start a new span
+                                currentSpan = [current];
+                            }
+                        }
+                        
+                        // Process the last span
+                        const spanRange = processSpan(currentSpan);
+                        if (spanRange) tokenIndicesArray.push(spanRange);
+                        
+                        // Join spans with commas for discontinuous tokens
+                        const alignmentValue = tokenIndicesArray.join(',');
+                        
+                        console.log(`Creating alignment: ${newVariable} → ${alignmentValue}`);
+                        console.log('Token indices available:', window.tokenIndices);
+                        console.log('Selected tokens:', selectedTokenForAlignment);
+                        
+                        // Try to update through the server
+                        updateAlignment(newVariable, alignmentValue);
+                        
+                        // Direct DOM manipulation fallback if no alignments display
+                        if (!document.querySelector('.alignments-display')) {
+                            // Try to add the alignment display if it's missing
+                            const sentenceContainer = document.querySelector('.sentence-container');
+                            if (sentenceContainer) {
+                                // Check if we need to create the card structure
+                                let alignmentsCard = null;
+                                // Find alignment card using standard DOM methods
+                                const cardHeaders = document.querySelectorAll('.card .card-header h5');
+                                for (const header of cardHeaders) {
+                                    if (header.textContent.trim() === 'Alignments') {
+                                        alignmentsCard = header.closest('.card');
+                                        break;
+                                    }
+                                }
+                                
+                                if (!alignmentsCard) {
+                                    // Create alignment card if it doesn't exist
+                                    alignmentsCard = document.createElement('div');
+                                    alignmentsCard.className = 'card mb-3';
+                                    alignmentsCard.innerHTML = `
+                                        <div class="card-header">
+                                            <h5 class="mb-0">Alignments</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="alignments-display"></div>
+                                        </div>
+                                    `;
+                                    
+                                    // Add it after the annotation section
+                                    const annotationContainer = document.querySelector('#annotation-container');
+                                    if (annotationContainer) {
+                                        annotationContainer.parentNode.insertBefore(alignmentsCard, annotationContainer.nextSibling);
+                                        console.log('Created alignments card');
+                                        
+                                        // Try adding alignment again
+                                        setTimeout(() => {
+                                            updateAlignment(newVariable, alignmentValue);
+                                        }, 100);
+                                    }
+                                }
+                            }
+                            
+                            // Store the alignment in memory for later use
+                            if (!window.pendingAlignments) {
+                                window.pendingAlignments = {};
+                            }
+                            if (!window.pendingAlignments[newVariable]) {
+                                window.pendingAlignments[newVariable] = [];
+                            }
+                            if (!window.pendingAlignments[newVariable].includes(alignmentValue)) {
+                                window.pendingAlignments[newVariable].push(alignmentValue);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Helper function to process a span of tokens and return range
+            function processSpan(span) {
+                if (!span || span.length === 0) return null;
+                
+                if (span.length === 1) {
+                    // For a single token, the range is just the index repeated
+                    return `${span[0].index}-${span[0].index}`;
+                } else {
+                    // For multiple consecutive tokens, use start-end
+                    return `${span[0].index}-${span[span.length-1].index}`;
+                }
+            }
             
             // Remove the dialog
             dialogContainer.remove();
@@ -2751,3 +3007,264 @@ function setupDropdownFiltering(searchInput, selectElement, optionsList) {
         }
     });
 }
+
+// Function to update alignments between variables and tokens
+function updateAlignment(variable, tokenIndex) {
+    console.log(`Attempting to add alignment: ${variable} → ${tokenIndex}`);
+    
+    // Debug: Check all card elements on the page
+    const cards = document.querySelectorAll('.card');
+    console.log('Cards found on page:', cards.length);
+    cards.forEach((card, index) => {
+        const headerText = card.querySelector('.card-header')?.textContent?.trim() || 'No header';
+        console.log(`Card ${index}: ${headerText}`);
+    });
+    
+    // Check if we have an alignment section in the DOM
+    const alignmentDisplay = document.querySelector('.alignments-display');
+    console.log('Alignment display found:', !!alignmentDisplay);
+    if (!alignmentDisplay) {
+        console.warn('Alignment display section not found in DOM, cannot update alignments');
+        return;
+    }
+    
+    // Check if the addAlignment function exists in the global scope
+    if (typeof window.addAlignment === 'function') {
+        // If the global addAlignment function exists, use it
+        console.log('Using global addAlignment function');
+        
+        // Set the values in the input fields
+        const variableInput = document.getElementById('new-variable');
+        const alignmentInput = document.getElementById('new-alignment');
+        
+        if (variableInput && alignmentInput) {
+            variableInput.value = variable;
+            alignmentInput.value = tokenIndex;
+            
+            // Call the global addAlignment function
+            window.addAlignment();
+        } else {
+            // Fallback if inputs aren't found
+            callAddAlignmentManually(variable, tokenIndex);
+        }
+    } else {
+        // If the global function doesn't exist, update alignments manually
+        callAddAlignmentManually(variable, tokenIndex);
+    }
+    
+    console.log(`Added alignment: ${variable} → ${tokenIndex}`);
+}
+
+// Fallback function to manually add alignments when the global function isn't available
+function callAddAlignmentManually(variable, tokenIndex) {
+    console.log('Using manual alignment update');
+    
+    try {
+        // Get document and sentence IDs
+        const sent_id = document.getElementById('snt_id').value;
+        const doc_version_id = document.getElementById('doc_version_id').value;
+        
+        if (!sent_id || !doc_version_id) {
+            console.error('Missing sent_id or doc_version_id');
+            return;
+        }
+        
+        // Get current alignments from the DOM or create new
+        let alignments = {};
+        
+        // Check if there are existing alignments in the DOM
+        const alignmentItems = document.querySelectorAll('.alignment-item[data-variable]');
+        if (alignmentItems.length > 0) {
+            // Extract alignments from DOM
+            alignmentItems.forEach(item => {
+                const varName = item.getAttribute('data-variable');
+                const alignmentSpans = item.querySelectorAll('.alignment');
+                
+                if (!alignments[varName]) {
+                    alignments[varName] = [];
+                }
+                
+                alignmentSpans.forEach(span => {
+                    const value = span.textContent.trim();
+                    if (value && !alignments[varName].includes(value)) {
+                        alignments[varName].push(value);
+                    }
+                });
+            });
+        }
+        
+        // Add the new alignment
+        if (!alignments[variable]) {
+            alignments[variable] = [];
+        }
+        
+        // Only add if not already present
+        if (!alignments[variable].includes(tokenIndex)) {
+            alignments[variable].push(tokenIndex);
+        }
+        
+        // Save alignments using the save_alignments endpoint
+        fetch('/save_alignments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({
+                doc_version_id: doc_version_id,
+                sent_id: sent_id,
+                alignments: alignments
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to save alignments');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Alignments saved successfully:', data);
+            
+            // Refresh the page to show the updated alignments
+            if (data.success) {
+                // Option 1: Refresh the page to show new alignments
+                // window.location.reload();
+                
+                // Option 2: Add the alignment to the DOM directly
+                addAlignmentToDOM(variable, tokenIndex);
+            }
+        })
+        .catch(error => {
+            console.error('Error saving alignments:', error);
+            showNotification('Error saving alignments: ' + error.message, 'error');
+        });
+    } catch (error) {
+        console.error('Error in manual alignment update:', error);
+        showNotification('Error updating alignments', 'error');
+    }
+}
+
+// Function to add a new alignment directly to the DOM
+function addAlignmentToDOM(variable, alignment) {
+    const alignmentDisplay = document.querySelector('.alignments-display');
+    if (!alignmentDisplay) return;
+    
+    // Check if there's an existing item for this variable
+    let variableItem = alignmentDisplay.querySelector(`.alignment-item[data-variable="${variable}"]`);
+    
+    if (!variableItem) {
+        // Create a new variable item if it doesn't exist
+        variableItem = document.createElement('div');
+        variableItem.className = 'alignment-item';
+        variableItem.setAttribute('data-variable', variable);
+        
+        variableItem.innerHTML = `
+            <div class="d-flex align-items-center mb-2">
+                <span class="variable badge bg-primary me-2">${variable}</span>
+                <div class="alignments-list d-flex flex-wrap"></div>
+            </div>
+        `;
+        
+        // Add the new variable item to the display
+        const noAlignmentsAlert = alignmentDisplay.querySelector('.alert-info');
+        if (noAlignmentsAlert) {
+            // Remove the "No alignments" alert if it exists
+            noAlignmentsAlert.remove();
+        }
+        
+        alignmentDisplay.appendChild(variableItem);
+    }
+    
+    // Find or create the alignments list
+    const alignmentsList = variableItem.querySelector('.alignments-list');
+    if (!alignmentsList) return;
+    
+    // Check if this alignment already exists
+    const existingAlignment = Array.from(alignmentsList.querySelectorAll('.alignment'))
+        .find(span => span.textContent.trim() === alignment);
+    
+    if (!existingAlignment) {
+        // Create a new alignment item
+        const alignmentItem = document.createElement('div');
+        alignmentItem.className = 'alignment-item d-flex justify-content-between align-items-center me-2 mb-1';
+        
+        alignmentItem.innerHTML = `
+            <span class="alignment badge bg-secondary me-1" onclick="makeEditable(this, '${variable}', '${alignment}')">${alignment}</span>
+            <button class="btn btn-sm btn-danger" onclick="deleteAlignmentValue('${variable}', '${alignment}')">×</button>
+        `;
+        
+        alignmentsList.appendChild(alignmentItem);
+    }
+}
+
+// Function to diagnose the alignment system
+function diagnoseAlignmentSystem() {
+    console.log('=== ALIGNMENT SYSTEM DIAGNOSIS ===');
+    
+    // Find all elements with 'alignment' in their class name
+    const alignmentElements = Array.from(document.querySelectorAll('*'))
+        .filter(elem => 
+            elem.className && 
+            typeof elem.className === 'string' && 
+            elem.className.toLowerCase().includes('align')
+        );
+    
+    console.log(`Found ${alignmentElements.length} elements with 'align' in class name`);
+    
+    alignmentElements.forEach((elem, index) => {
+        console.log(`Element ${index + 1}:`, {
+            tagName: elem.tagName,
+            className: elem.className,
+            id: elem.id,
+            parentElement: elem.parentElement ? {
+                tagName: elem.parentElement.tagName,
+                className: elem.parentElement.className,
+                id: elem.parentElement.id
+            } : null,
+            textContent: elem.textContent.substring(0, 50) + (elem.textContent.length > 50 ? '...' : '')
+        });
+    });
+    
+    // Check for the add alignment function
+    console.log('addAlignment function exists:', typeof window.addAlignment === 'function');
+    
+    // Check for alignment input fields
+    const variableInput = document.getElementById('new-variable');
+    const alignmentInput = document.getElementById('new-alignment');
+    
+    console.log('Variable input exists:', !!variableInput);
+    console.log('Alignment input exists:', !!alignmentInput);
+    
+    // Return key elements for further debugging
+    return {
+        alignmentElements,
+        variableInput,
+        alignmentInput
+    };
+}
+
+// Insert a call to diagnose after page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Add a diagnostic button to the page
+    const annotationContainer = document.querySelector('#annotation-container');
+    if (annotationContainer) {
+        const diagnoseButton = document.createElement('button');
+        diagnoseButton.className = 'btn btn-sm btn-secondary mt-2';
+        diagnoseButton.textContent = 'Diagnose Alignments';
+        diagnoseButton.onclick = () => {
+            diagnoseAlignmentSystem();
+            
+            // Try to force an alignment addition for testing
+            if (window.pendingAlignments) {
+                Object.entries(window.pendingAlignments).forEach(([variable, indices]) => {
+                    indices.forEach(index => {
+                        console.log(`Attempting to add stored alignment: ${variable} → ${index}`);
+                        updateAlignment(variable, index);
+                    });
+                });
+            }
+        };
+        
+        annotationContainer.parentNode.insertBefore(diagnoseButton, annotationContainer.nextSibling);
+    }
+});
