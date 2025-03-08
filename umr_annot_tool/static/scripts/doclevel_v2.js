@@ -46,7 +46,7 @@ function populateRelationDropdownsDirectly() {
         temporalRelations.forEach(relation => {
             const option = document.createElement('option');
             option.value = relation;
-            option.textContent = relation.replace(':', '');
+            option.textContent = relation; // Keep the colon in the displayed text
             temporalSelect.appendChild(option);
         });
         console.log("Populated temporal relation dropdown with", temporalRelations.length, "options");
@@ -66,7 +66,7 @@ function populateRelationDropdownsDirectly() {
         modalRelations.forEach(relation => {
             const option = document.createElement('option');
             option.value = relation;
-            option.textContent = relation.replace(':', '');
+            option.textContent = relation; // Keep the colon in the displayed text
             modalSelect.appendChild(option);
         });
         console.log("Populated modal relation dropdown with", modalRelations.length, "options");
@@ -82,7 +82,7 @@ function populateRelationDropdownsDirectly() {
         corefRelations.forEach(relation => {
             const option = document.createElement('option');
             option.value = relation;
-            option.textContent = relation.replace(':', '');
+            option.textContent = relation; // Keep the colon in the displayed text
             corefSelect.appendChild(option);
         });
         console.log("Populated coreference relation dropdown with", corefRelations.length, "options");
@@ -200,7 +200,7 @@ function setupTripleTypeTabs() {
                         DOC_LEVEL_RELATIONS[tripleType].forEach(relation => {
                             const option = document.createElement('option');
                             option.value = relation;
-                            option.textContent = relation.replace(':', '');
+                            option.textContent = relation; // Keep the colon prefix in the displayed text
                             relationSelect.appendChild(option);
                         });
                         console.log(`Added ${DOC_LEVEL_RELATIONS[tripleType].length} options to ${tripleType} relation dropdown`);
@@ -248,7 +248,7 @@ function populateTripleForms() {
                 DOC_LEVEL_RELATIONS[tripleType].forEach(relation => {
                     const option = document.createElement('option');
                     option.value = relation;
-                    option.textContent = relation.replace(':', '');
+                    option.textContent = relation; // Keep the colon prefix in the displayed text
                     relationSelect.appendChild(option);
                 });
                 
