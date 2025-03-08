@@ -275,7 +275,8 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Navbar */
@@ -285,9 +286,10 @@ html, body {
 
 /* Main Content */
 .main-content {
-    height: calc(100vh - 120px); /* Subtract navbar and footer height */
+    min-height: calc(100vh - 120px); /* Subtract navbar and footer height */
     padding-top: 56px; /* Reduce padding to match navbar height */
-    overflow: hidden;
+    padding-bottom: 70px; /* Add padding to bottom to avoid content being hidden by footer */
+    overflow-y: auto;
 }
 
 /* Footer */

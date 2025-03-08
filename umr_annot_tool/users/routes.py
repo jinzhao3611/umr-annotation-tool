@@ -1049,24 +1049,27 @@ def search():
                     
                 # Get all annotations for this sentence
                 annotations = Annotation.query.join(
-                    Doc, Doc.id == Annotation.doc_id
+                    DocVersion, DocVersion.id == Annotation.doc_version_id
                 ).filter(
-                    Annotation.doc_id == sent.doc_id,
+                    DocVersion.doc_id == sent.doc_id,
                     Annotation.sent_id == sent.id,
-                    Annotation.sent_annot != '',
-                    Doc.project_id == doc.project_id
+                    Annotation.sent_annot != ''
                 )
                 
                 if dummy_user_id:
-                    annotations = annotations.filter(Annotation.user_id != dummy_user_id)
+                    annotations = annotations.filter(DocVersion.user_id != dummy_user_id)
                     
                 for annotation in annotations.all():
+                    doc_version = DocVersion.query.get(annotation.doc_version_id)
+                    if not doc_version:
+                        continue
+                        
                     project = Project.query.get(doc.project_id)
                     if not project:
                         continue
                         
-                    user = User.query.get(annotation.user_id)
-                    if not user or user.username == 'dummy_user':
+                    user = User.query.get(doc_version.user_id)
+                    if not user or (user.username == 'dummy_user'):
                         continue
                     
                     results.append({
@@ -1075,10 +1078,10 @@ def search():
                         'sentence': sent.content,
                         'sent_annot': annotation.sent_annot,
                         'doc_annot': annotation.doc_annot,
-                        'doc_id': annotation.doc_id,
+                        'doc_id': doc_version.doc_id,
                         'doc_version_id': annotation.doc_version_id,
                         'sent_id': sent.id,
-                        'user_id': annotation.user_id,
+                        'user_id': doc_version.user_id,
                         'match_type': 'sentence'
                     })
         
@@ -1092,30 +1095,38 @@ def search():
                 )
             ).filter(Annotation.sent_annot != '')
             
+            # Join with DocVersion to get doc_id
+            annotation_query = annotation_query.join(
+                DocVersion, DocVersion.id == Annotation.doc_version_id
+            )
+            
             if dummy_user_id:
-                annotation_query = annotation_query.filter(Annotation.user_id != dummy_user_id)
+                annotation_query = annotation_query.filter(DocVersion.user_id != dummy_user_id)
             
             # Apply scope constraints for annotations
             if scope == 'document' and doc_id:
-                annotation_query = annotation_query.filter(Annotation.doc_id == doc_id)
+                annotation_query = annotation_query.filter(DocVersion.doc_id == doc_id)
             elif scope == 'project' and project_id:
                 project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
                 doc_ids = [doc.id for doc in project_docs]
-                annotation_query = annotation_query.filter(Annotation.doc_id.in_(doc_ids))
+                annotation_query = annotation_query.filter(DocVersion.doc_id.in_(doc_ids))
             
             # Process annotation matches
             for annotation in annotation_query.all():
+                doc_version = DocVersion.query.get(annotation.doc_version_id)
+                if not doc_version:
+                    continue
+                
                 # Skip if we already found this annotation through sentence search
-                if any(r['doc_id'] == annotation.doc_id and 
-                       r['sent_id'] == annotation.sent_id and 
-                       r['user_id'] == annotation.user_id for r in results):
+                if any(r['doc_version_id'] == annotation.doc_version_id and 
+                       r['sent_id'] == annotation.sent_id for r in results):
                     continue
                     
                 sent = Sent.query.get(annotation.sent_id)
                 if not sent:
                     continue
                     
-                doc = Doc.query.get(annotation.doc_id)
+                doc = Doc.query.get(doc_version.doc_id)
                 if not doc:
                     continue
                     
@@ -1123,7 +1134,7 @@ def search():
                 if not project:
                     continue
                     
-                user = User.query.get(annotation.user_id)
+                user = User.query.get(doc_version.user_id)
                 if not user or user.username == 'dummy_user':
                     continue
                 
@@ -1133,10 +1144,10 @@ def search():
                     'sentence': sent.content,
                     'sent_annot': annotation.sent_annot,
                     'doc_annot': annotation.doc_annot,
-                    'doc_id': annotation.doc_id,
+                    'doc_id': doc_version.doc_id,
                     'doc_version_id': annotation.doc_version_id,
                     'sent_id': sent.id,
-                    'user_id': annotation.user_id,
+                    'user_id': doc_version.user_id,
                     'match_type': 'annotation'
                 })
         

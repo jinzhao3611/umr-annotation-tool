@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="content-section">
+<div class="content-section search-content">
     <form method="GET" action="{{ url_for('users.search') }}" class="mb-4">
         <div class="form-group">
             <input type="text" class="form-control" name="query" placeholder="Search for sentences or annotations..." value="{{ query if query }}">
@@ -29,44 +29,59 @@
 
     {% if results %}
         <h2>Search Results</h2>
-        {% for result in results %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <strong>Project:</strong> {{ result.project_name }} |
-                            <strong>Annotator:</strong> {{ result.username }}
+        <div class="search-results">
+            {% for result in results %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Project:</strong> {{ result.project_name }} |
+                                <strong>Annotator:</strong> {{ result.username }}
+                            </div>
+                            <span class="badge {% if result.match_type == 'sentence' %}badge-primary{% else %}badge-success{% endif %}">
+                                {{ result.match_type|title }} Match
+                            </span>
                         </div>
-                        <span class="badge {% if result.match_type == 'sentence' %}badge-primary{% else %}badge-success{% endif %}">
-                            {{ result.match_type|title }} Match
-                        </span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Sentence:</h5>
+                        <p class="card-text">{{ result.sentence }}</p>
+                        
+                        {% if result.sent_annot %}
+                            <h5 class="card-title">Sentence Annotation:</h5>
+                            <div class="card-text">{{ result.sent_annot|safe }}</div>
+                        {% endif %}
+                        
+                        {% if result.doc_annot %}
+                            <h5 class="card-title">Document Annotation:</h5>
+                            <div class="card-text">{{ result.doc_annot|safe }}</div>
+                        {% endif %}
+                        
+                        <div class="mt-2">
+                            <a href="{{ url_for('main.sentlevel', doc_version_id=result.doc_version_id, sent_id=result.sent_id) }}" 
+                               class="btn btn-sm btn-outline-primary">
+                                View Sentence Level
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Sentence:</h5>
-                    <p class="card-text">{{ result.sentence }}</p>
-                    
-                    {% if result.sent_annot %}
-                        <h5 class="card-title">Sentence Annotation:</h5>
-                        <div class="card-text">{{ result.sent_annot|safe }}</div>
-                    {% endif %}
-                    
-                    {% if result.doc_annot %}
-                        <h5 class="card-title">Document Annotation:</h5>
-                        <div class="card-text">{{ result.doc_annot|safe }}</div>
-                    {% endif %}
-                    
-                    <div class="mt-2">
-                        <a href="{{ url_for('main.sentlevel', doc_version_id=result.doc_version_id, sent_id=result.sent_id) }}" 
-                           class="btn btn-sm btn-outline-primary">
-                            View Sentence Level
-                        </a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% elif query %}
         <div class="alert alert-info">No results found for your search.</div>
     {% endif %}
 </div>
-{% endblock content %} 
+{% endblock content %}
+
+{% block scripts %}
+<style>
+.search-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+.search-results {
+    max-height: 100%;
+    overflow-y: auto;
+}
+</style>
+{% endblock scripts %} 
