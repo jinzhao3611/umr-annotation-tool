@@ -1658,3 +1658,24 @@ def test_route():
         "success": True,
         "message": "Test route is working correctly"
     })
+
+@main.route("/download_frames", methods=['GET'])
+def download_frames():
+    """
+    Serve the frames_english.json file directly from the server.
+    This route doesn't require authentication to simplify client-side access.
+    """
+    try:
+        frames_path = os.path.join(current_app.root_path, 'resources', 'frames_english.json')
+        
+        if not os.path.exists(frames_path):
+            current_app.logger.error(f"Frames file not found at {frames_path}")
+            return jsonify({"error": "Frames file not found"}), 404
+            
+        with open(frames_path, 'r') as f:
+            frames_data = json.load(f)
+            
+        return jsonify(frames_data)
+    except Exception as e:
+        current_app.logger.error(f"Error serving frames file: {str(e)}")
+        return jsonify({"error": str(e)}), 500

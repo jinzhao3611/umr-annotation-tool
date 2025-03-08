@@ -17,8 +17,10 @@ async function loadFramesData() {
     
     try {
         console.log('Loading frames data...');
-        // Use the correct path to the resource file
-        const response = await fetch('/resources/frames_english.json');
+        
+        // Use a direct absolute path to the frames file
+        const response = await fetch('/download_frames');
+        
         if (!response.ok) {
             throw new Error(`Failed to load frames: ${response.status} ${response.statusText}`);
         }
@@ -28,8 +30,14 @@ async function loadFramesData() {
         return framesData;
     } catch (error) {
         console.error('Error loading frames data:', error);
-        showNotification('Error loading predicate frames data', 'error');
-        return {};
+        
+        // Provide a more helpful error message
+        showNotification('Error loading predicate frames data. Check server configuration.', 'error');
+        
+        // Return empty object as fallback
+        console.log('Unable to load predicate frames');
+        framesData = {};
+        return framesData;
     }
 }
 
@@ -59,23 +67,36 @@ function lemmatizeToken(token) {
 
 // Function to find frame senses for a lemma
 async function findFrameSenses(lemma) {
-    const frames = await loadFramesData();
-    
-    // Look for exact matches first
-    const exactMatches = Object.keys(frames).filter(key => 
-        key.startsWith(lemma + '-')  // Match lemma-01, lemma-02, etc.
-    );
-    
-    // If no exact matches, try to find similar keys
-    if (exactMatches.length === 0) {
-        // Check for variants or compound words
-        return Object.keys(frames).filter(key => {
-            const baseLemma = key.split('-')[0];
-            return baseLemma.includes(lemma) || lemma.includes(baseLemma);
-        });
+    try {
+        const frames = await loadFramesData();
+        
+        // If we couldn't load frames data or got an empty object
+        if (!frames || Object.keys(frames).length === 0) {
+            console.warn('No frames data available');
+            // Return empty array - no synthetic suggestions
+            return [];
+        }
+        
+        // Look for exact matches by extracting the lemma part from each sense
+        const exactMatches = Object.keys(frames).filter(sense => 
+            sense.split('-')[0] === lemma  // Match lemma-01, lemma-02, etc.
+        );
+        
+        // If no exact matches, try to find similar senses
+        if (exactMatches.length === 0) {
+            const similarMatches = Object.keys(frames).filter(sense => {
+                const senseLemma = sense.split('-')[0];
+                return senseLemma.includes(lemma) || lemma.includes(senseLemma);
+            });
+            
+            return similarMatches;
+        }
+        
+        return exactMatches;
+    } catch (error) {
+        console.error('Error in findFrameSenses:', error);
+        return []; // Return empty array on error - no synthetic suggestions
     }
-    
-    return exactMatches;
 }
 
 // DOM ready check to initialize the editor
@@ -2405,79 +2426,245 @@ async function showAddBranchDialog(parentVariableSpan) {
                     const lemma = lemmatizeToken(token);
                     console.log(`Lemmatized '${token}' to '${lemma}'`);
                     
-                    // Find senses for this lemma
-                    const senses = await findFrameSenses(lemma);
-                    console.log(`Found ${senses.length} senses for lemma '${lemma}'`, senses);
-                    
-                    // Create or update the sense selector container
-                    let senseContainer = document.getElementById('sense-selector-container');
-                    if (!senseContainer) {
-                        senseContainer = document.createElement('div');
-                        senseContainer.id = 'sense-selector-container';
-                        senseContainer.style.marginTop = '15px';
-                        senseContainer.style.padding = '10px';
-                        senseContainer.style.backgroundColor = '#f0f8ff';
-                        senseContainer.style.borderRadius = '4px';
-                        senseContainer.style.border = '1px solid #ccc';
+                    try {
+                        // Find senses for this lemma
+                        const senses = await findFrameSenses(lemma);
+                        console.log(`Found ${senses.length} senses for lemma '${lemma}'`, senses);
                         
-                        // Add container after the tokens display
-                        const tokensContainer = document.getElementById('tokens-container');
-                        tokensContainer.parentNode.insertBefore(senseContainer, tokensContainer.nextSibling);
-                    }
-                    
-                    // Create the sense selector content
-                    let senseContent = '';
-                    
-                    if (senses.length > 0) {
-                        senseContent = `
-                            <div style="margin-bottom: 8px;">
-                                <label for="sense-selector" style="font-weight: bold;">Select sense for "${token}" (lemmatized as "${lemma}"):</label>
-                                <div style="position: relative; margin-bottom: 8px;">
-                                    <input type="text" id="sense-search" 
-                                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
-                                        placeholder="Type to search senses...">
+                        // Create or update the sense selector container
+                        let senseContainer = document.getElementById('sense-selector-container');
+                        if (!senseContainer) {
+                            senseContainer = document.createElement('div');
+                            senseContainer.id = 'sense-selector-container';
+                            senseContainer.style.marginTop = '15px';
+                            senseContainer.style.padding = '10px';
+                            senseContainer.style.backgroundColor = '#f0f8ff';
+                            senseContainer.style.borderRadius = '4px';
+                            senseContainer.style.border = '1px solid #ccc';
+                            
+                            // Add container after the tokens display
+                            const tokensContainer = document.getElementById('tokens-container');
+                            tokensContainer.parentNode.insertBefore(senseContainer, tokensContainer.nextSibling);
+                        }
+                        
+                        // Create the sense selector content
+                        let senseContent = '';
+                        
+                        if (senses.length > 0) {
+                            senseContent = `
+                                <div style="margin-bottom: 8px;">
+                                    <label for="sense-selector" style="font-weight: bold;">Select sense for "${token}" (lemmatized as "${lemma}"):</label>
+                                    <div style="position: relative; margin-bottom: 8px; margin-top: 8px;">
+                                        <input type="text" id="sense-search" 
+                                            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                            placeholder="Type to search senses...">
+                                    </div>
+                                    <select id="sense-selector" size="6" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 200px;">
+                                        <option value="">Select a sense...</option>
+                                        ${senses.map(sense => `<option value="${sense}">${sense}</option>`).join('')}
+                                    </select>
                                 </div>
-                                <select id="sense-selector" size="6" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 200px;">
-                                    <option value="">Select a sense...</option>
-                                    ${senses.map(sense => `<option value="${sense}">${sense}</option>`).join('')}
-                                </select>
-                            </div>
-                            <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
-                                <em>Selecting a sense will use it as the concept instead of the token text.</em>
-                            </div>
-                        `;
-                    } else {
-                        senseContent = `
-                            <div>
-                                <p>No predicate frames found for "${token}" (lemmatized as "${lemma}").</p>
-                                <p>The token text will be used as the concept.</p>
-                            </div>
-                        `;
-                    }
-                    
-                    senseContainer.innerHTML = senseContent;
-                    
-                    // Add event listener to the sense selector
-                    const senseSelector = document.getElementById('sense-selector');
-                    if (senseSelector) {
-                        // Setup filtering for the sense dropdown
-                        setupDropdownFiltering(
-                            document.getElementById('sense-search'),
-                            senseSelector,
-                            senses
-                        );
+                                <div style="margin-top: 10px;">
+                                    <label for="manual-sense" style="font-weight: bold;">Or manually enter a sense (optional):</label>
+                                    <div style="display: flex; margin-top: 5px;">
+                                        <input type="text" id="manual-sense" 
+                                            style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" 
+                                            placeholder="e.g., ${lemma}-01">
+                                        <button id="apply-manual-sense" 
+                                            style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                                            Apply
+                                        </button>
+                                    </div>
+                                    <small style="display: block; margin-top: 5px; color: #666;">
+                                        Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the predicate frames.
+                                    </small>
+                                </div>
+                            `;
+                        } else {
+                            // If no senses found, show a clear message but still allow manual entry
+                            senseContent = `
+                                <div>
+                                    <div style="padding: 10px; background-color: #fff3cd; border-radius: 4px; margin-bottom: 15px;">
+                                        <strong>No predicate frames found for "${token}" (lemmatized as "${lemma}")</strong>
+                                        <p style="margin-top: 5px; margin-bottom: 0;">No entries matching this lemma were found in the frames data.</p>
+                                    </div>
+                                    
+                                    <div style="margin-top: 15px;">
+                                        <p>You may still manually enter a sense if you know it exists in the frames data:</p>
+                                        <div style="display: flex; margin-top: 8px;">
+                                            <input type="text" id="manual-sense" 
+                                                style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" 
+                                                placeholder="e.g., ${lemma}-01">
+                                            <button id="apply-manual-sense" 
+                                                style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                                                Apply
+                                            </button>
+                                        </div>
+                                        <small style="display: block; margin-top: 5px; color: #666;">
+                                            Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the predicate frames.
+                                        </small>
+                                    </div>
+                                    
+                                    <p style="margin-top: 15px;">Otherwise, the token text will be used as the concept.</p>
+                                </div>
+                            `;
+                        }
                         
-                        senseSelector.addEventListener('change', () => {
-                            const selectedSense = senseSelector.value;
-                            if (selectedSense) {
-                                window.selectedSense = selectedSense;
-                                console.log(`Selected sense: ${selectedSense}`);
-                                updateTokenSelectionDisplay();
-                            } else {
-                                window.selectedSense = null;
-                                updateTokenSelectionDisplay();
+                        senseContainer.innerHTML = senseContent;
+                        
+                        // Add event listeners
+                        if (senses.length > 0) {
+                            // For dropdown selection
+                            const senseSelector = document.getElementById('sense-selector');
+                            if (senseSelector) {
+                                // Setup filtering for the sense dropdown
+                                setupDropdownFiltering(
+                                    document.getElementById('sense-search'),
+                                    senseSelector,
+                                    senses
+                                );
+                                
+                                senseSelector.addEventListener('change', () => {
+                                    const selectedSense = senseSelector.value;
+                                    if (selectedSense) {
+                                        window.selectedSense = selectedSense;
+                                        console.log(`Selected sense: ${selectedSense}`);
+                                        updateTokenSelectionDisplay();
+                                    } else {
+                                        window.selectedSense = null;
+                                        updateTokenSelectionDisplay();
+                                    }
+                                });
                             }
-                        });
+                            
+                            // Also handle the manual sense entry for all cases
+                            const applyButton = document.getElementById('apply-manual-sense');
+                            const manualSenseInput = document.getElementById('manual-sense');
+                            
+                            if (applyButton && manualSenseInput) {
+                                applyButton.addEventListener('click', () => {
+                                    const manualSense = manualSenseInput.value.trim();
+                                    if (manualSense) {
+                                        window.selectedSense = manualSense;
+                                        console.log(`Manually set sense: ${manualSense}`);
+                                        
+                                        // Clear any dropdown selection to avoid confusion
+                                        if (senseSelector) {
+                                            senseSelector.value = '';
+                                        }
+                                        
+                                        updateTokenSelectionDisplay();
+                                    }
+                                });
+                                
+                                // Also allow pressing Enter in the input field
+                                manualSenseInput.addEventListener('keypress', (event) => {
+                                    if (event.key === 'Enter') {
+                                        event.preventDefault();
+                                        applyButton.click();
+                                    }
+                                });
+                            }
+                        } else {
+                            // For manual sense entry only (when no dropdown)
+                            const applyButton = document.getElementById('apply-manual-sense');
+                            const manualSenseInput = document.getElementById('manual-sense');
+                            
+                            if (applyButton && manualSenseInput) {
+                                applyButton.addEventListener('click', () => {
+                                    const manualSense = manualSenseInput.value.trim();
+                                    if (manualSense) {
+                                        window.selectedSense = manualSense;
+                                        console.log(`Manually set sense: ${manualSense}`);
+                                        updateTokenSelectionDisplay();
+                                    } else {
+                                        window.selectedSense = null;
+                                        updateTokenSelectionDisplay();
+                                    }
+                                });
+                                
+                                // Also allow pressing Enter in the input field
+                                manualSenseInput.addEventListener('keypress', (event) => {
+                                    if (event.key === 'Enter') {
+                                        event.preventDefault();
+                                        applyButton.click();
+                                    }
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error in showSenseSelector:', error);
+                        
+                        // Show a simplified UI when frames data cannot be loaded
+                        let senseContainer = document.getElementById('sense-selector-container');
+                        if (!senseContainer) {
+                            senseContainer = document.createElement('div');
+                            senseContainer.id = 'sense-selector-container';
+                            senseContainer.style.marginTop = '15px';
+                            senseContainer.style.padding = '10px';
+                            senseContainer.style.backgroundColor = '#fff0f0'; // Light red background to indicate error
+                            senseContainer.style.borderRadius = '4px';
+                            senseContainer.style.border = '1px solid #ffcccc';
+                            
+                            // Add container after the tokens display
+                            const tokensContainer = document.getElementById('tokens-container');
+                            tokensContainer.parentNode.insertBefore(senseContainer, tokensContainer.nextSibling);
+                        }
+                        
+                        // Error message with manual sense entry option
+                        senseContainer.innerHTML = `
+                            <div>
+                                <div style="padding: 10px; background-color: #ffeeee; border-radius: 4px; margin-bottom: 15px;">
+                                    <strong style="color: #cc0000;">Error loading predicate frames</strong>
+                                    <p style="margin-top: 5px; margin-bottom: 0; color: #cc0000;">${error.message}</p>
+                                    <p style="margin-top: 8px; margin-bottom: 0;">The predicate frames data could not be loaded. Please check if the frames_english.json file is accessible.</p>
+                                </div>
+                                
+                                <div style="margin-top: 15px;">
+                                    <p>You may still manually enter a sense if you know it exists in the predicate frames:</p>
+                                    <div style="display: flex; margin-top: 8px;">
+                                        <input type="text" id="manual-sense" 
+                                            style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" 
+                                            placeholder="e.g., ${lemma}-01">
+                                        <button id="apply-manual-sense" 
+                                            style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                                            Apply
+                                        </button>
+                                    </div>
+                                    <small style="display: block; margin-top: 5px; color: #666;">
+                                        Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the predicate frames.
+                                    </small>
+                                </div>
+                                
+                                <p style="margin-top: 15px;">Otherwise, the token text will be used as the concept.</p>
+                            </div>
+                        `;
+
+                        // Add event listener for manual sense entry
+                        const applyButton = document.getElementById('apply-manual-sense');
+                        const manualSenseInput = document.getElementById('manual-sense');
+                        
+                        if (applyButton && manualSenseInput) {
+                            applyButton.addEventListener('click', () => {
+                                const manualSense = manualSenseInput.value.trim();
+                                if (manualSense) {
+                                    window.selectedSense = manualSense;
+                                    console.log(`Manually set sense: ${manualSense}`);
+                                    updateTokenSelectionDisplay();
+                                } else {
+                                    window.selectedSense = null;
+                                    updateTokenSelectionDisplay();
+                                }
+                            });
+                            
+                            // Also allow pressing Enter in the input field
+                            manualSenseInput.addEventListener('keypress', (event) => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    applyButton.click();
+                                }
+                            });
+                        }
                     }
                 }
                 
