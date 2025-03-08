@@ -6,6 +6,78 @@ let umrRelationValues = {};
 // Global variable to track in-place edit mode
 let inPlaceEditMode = false;
 
+// Global variable to store frames data
+let framesData = null;
+
+// Function to load frames data
+async function loadFramesData() {
+    if (framesData !== null) {
+        return framesData; // Return cached data if already loaded
+    }
+    
+    try {
+        console.log('Loading frames data...');
+        // Use the correct path to the resource file
+        const response = await fetch('/resources/frames_english.json');
+        if (!response.ok) {
+            throw new Error(`Failed to load frames: ${response.status} ${response.statusText}`);
+        }
+        
+        framesData = await response.json();
+        console.log('Frames data loaded successfully');
+        return framesData;
+    } catch (error) {
+        console.error('Error loading frames data:', error);
+        showNotification('Error loading predicate frames data', 'error');
+        return {};
+    }
+}
+
+// Simple lemmatization function
+// This is a basic implementation - in a production environment, you might want to use a more sophisticated lemmatizer
+function lemmatizeToken(token) {
+    const lowerToken = token.toLowerCase();
+    
+    // Handle some basic English verb forms (very simplified)
+    if (lowerToken.endsWith('ing')) {
+        // gerund: running -> run
+        return lowerToken.slice(0, -3);
+    } else if (lowerToken.endsWith('ed') && lowerToken.length > 3) {
+        // simple past: walked -> walk
+        return lowerToken.slice(0, -2);
+    } else if (lowerToken.endsWith('s') && !lowerToken.endsWith('ss') && lowerToken.length > 2) {
+        // 3rd person singular present: walks -> walk
+        return lowerToken.slice(0, -1);
+    } else if (lowerToken.endsWith('ies') && lowerToken.length > 4) {
+        // plural: parties -> party
+        return lowerToken.slice(0, -3) + 'y';
+    } else {
+        // Return as is for unknown forms
+        return lowerToken;
+    }
+}
+
+// Function to find frame senses for a lemma
+async function findFrameSenses(lemma) {
+    const frames = await loadFramesData();
+    
+    // Look for exact matches first
+    const exactMatches = Object.keys(frames).filter(key => 
+        key.startsWith(lemma + '-')  // Match lemma-01, lemma-02, etc.
+    );
+    
+    // If no exact matches, try to find similar keys
+    if (exactMatches.length === 0) {
+        // Check for variants or compound words
+        return Object.keys(frames).filter(key => {
+            const baseLemma = key.split('-')[0];
+            return baseLemma.includes(lemma) || lemma.includes(baseLemma);
+        });
+    }
+    
+    return exactMatches;
+}
+
 // DOM ready check to initialize the editor
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing relation editor');
@@ -1393,8 +1465,8 @@ function deleteBranch(relationSpan) {
         return acc;
     }, []);
     
-    updatedText = cleanedLines.join('\n');
-    
+        updatedText = cleanedLines.join('\n');
+        
     // For debugging: verify the parentheses are still there
     if (updatedText.includes('(') || updatedText.includes(')')) {
         console.log('Final text contains parentheses');
@@ -1495,18 +1567,18 @@ function deleteBranch(relationSpan) {
     
     // Update the DOM with the final text
     console.log('Setting annotation element text content');
-    annotationElement.textContent = updatedText;
-    
+        annotationElement.textContent = updatedText;
+        
     // Re-initialize interactive elements
-    makeRelationsClickable(annotationElement);
-    makeValuesClickable(annotationElement);
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
     makeVariablesClickable(annotationElement);
-    addBranchOperations(annotationElement);
-    
-    // Save the updated annotation
-    saveBranchDeletion(updatedText, relationText);
-    
-    showNotification(`Deleted branch: ${relationText}`, 'success');
+        addBranchOperations(annotationElement);
+        
+        // Save the updated annotation
+        saveBranchDeletion(updatedText, relationText);
+        
+        showNotification(`Deleted branch: ${relationText}`, 'success');
 }
 
 // Helper function to check if parentheses are balanced in a string
@@ -1993,16 +2065,16 @@ async function showAddBranchDialog(parentVariableSpan) {
             'monetary-quantity', 'distance-quantity', 'temporal-quantity',
             'date-interval', 'value-interval', 'between', 'relative-position'
         ];
-        
-        // Populate relations dropdown
-        const relationSelect = document.getElementById('relation');
-        umrRelations.forEach(relation => {
-            const option = document.createElement('option');
-            option.value = relation;
-            option.textContent = relation;
-            relationSelect.appendChild(option);
-        });
-        
+    
+    // Populate relations dropdown
+    const relationSelect = document.getElementById('relation');
+    umrRelations.forEach(relation => {
+        const option = document.createElement('option');
+        option.value = relation;
+        option.textContent = relation;
+        relationSelect.appendChild(option);
+    });
+    
         // Set up search functionality for the relations dropdown
         setupDropdownFiltering(
             document.getElementById('relation-search'),
@@ -2165,8 +2237,8 @@ async function showAddBranchDialog(parentVariableSpan) {
                 const abstractContainer = document.getElementById('abstract-selection-container');
                 const neContainer = document.getElementById('ne-selection-container');
                 const nonEventContainer = document.getElementById('non-event-selection-container');
-                const stringContainer = document.getElementById('string-input-container');
-                const numberContainer = document.getElementById('number-input-container');
+    const stringContainer = document.getElementById('string-input-container');
+    const numberContainer = document.getElementById('number-input-container');
                 const nameTokensContainer = document.getElementById('name-tokens-container');
                 
                 // Set up filtering for each dropdown
@@ -2252,60 +2324,175 @@ async function showAddBranchDialog(parentVariableSpan) {
                 
                 // Track the selected tokens in an ordered array
                 window.selectedTokens = [];
+                // Track selected sense when applicable
+                window.selectedSense = null;
                 
-                tokenItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        const token = item.getAttribute('data-token');
+                // Function to handle token click
+                const handleTokenClick = async (item) => {
+                    const token = item.getAttribute('data-token');
+                    
+                    // Toggle selection
+                    if (item.style.backgroundColor === 'rgb(209, 231, 255)') {
+                        // Deselect if already selected
+                        item.style.backgroundColor = '#f0f8ff';
                         
-                        // Toggle selection
-                        if (item.style.backgroundColor === 'rgb(209, 231, 255)') {
-                            // Deselect if already selected
-                            item.style.backgroundColor = '#f0f8ff';
-                            
-                            // Remove from selected tokens array
-                            const index = window.selectedTokens.indexOf(token);
-                            if (index > -1) {
-                                window.selectedTokens.splice(index, 1);
-                            }
-                        } else {
-                            // Select if not already selected
-                            item.style.backgroundColor = '#d1e7ff';
-                            
-                            // Add to selected tokens array if not already there
-                            if (!window.selectedTokens.includes(token)) {
-                                window.selectedTokens.push(token);
-                            }
+                        // Remove from selected tokens array
+                        const index = window.selectedTokens.indexOf(token);
+                        if (index > -1) {
+                            window.selectedTokens.splice(index, 1);
                         }
+        } else {
+                        // Select if not already selected
+                        item.style.backgroundColor = '#d1e7ff';
                         
-                        // Update info about selected tokens
-                        const selectedTokensDisplay = document.createElement('div');
-                        selectedTokensDisplay.style.marginTop = '10px';
-                        selectedTokensDisplay.style.padding = '8px';
-                        selectedTokensDisplay.style.backgroundColor = '#f8f9fa';
-                        selectedTokensDisplay.style.borderRadius = '4px';
-                        
-                        if (window.selectedTokens.length > 0) {
-                            selectedTokensDisplay.innerHTML = `
-                                <strong>Selected tokens:</strong> ${window.selectedTokens.join(', ')}
-                                <div style="margin-top: 5px;">
-                                    <small>Concept will be: ${window.selectedTokens.join('-')}</small>
-                                </div>
-                            `;
-                        } else {
-                            selectedTokensDisplay.innerHTML = '<em>No tokens selected</em>';
+                        // Add to selected tokens array if not already there
+                        if (!window.selectedTokens.includes(token)) {
+                            window.selectedTokens.push(token);
                         }
+                    }
+                    
+                    // Update info about selected tokens
+                    updateTokenSelectionDisplay();
+                    
+                    // Check if we need to show sense selector
+                    if (window.selectedTokens.length === 1 && !isNumeric(window.selectedTokens[0])) {
+                        await showSenseSelector(window.selectedTokens[0]);
+                    } else {
+                        // Hide sense selector for multiple tokens or numeric tokens
+                        hideSenseSelector();
+                    }
+                };
+                
+                // Function to check if a string is numeric
+                function isNumeric(str) {
+                    return !isNaN(str) && !isNaN(parseFloat(str));
+                }
+                
+                // Function to update the token selection display
+                function updateTokenSelectionDisplay() {
+                    const selectedTokensDisplay = document.createElement('div');
+                    selectedTokensDisplay.style.marginTop = '10px';
+                    selectedTokensDisplay.style.padding = '8px';
+                    selectedTokensDisplay.style.backgroundColor = '#f8f9fa';
+                    selectedTokensDisplay.style.borderRadius = '4px';
+                    
+                    if (window.selectedTokens.length > 0) {
+                        selectedTokensDisplay.innerHTML = `
+                            <strong>Selected tokens:</strong> ${window.selectedTokens.join(', ')}
+                            <div style="margin-top: 5px;">
+                                <small>Concept will be: ${window.selectedSense || window.selectedTokens.join('-')}</small>
+                            </div>
+                        `;
+                    } else {
+                        selectedTokensDisplay.innerHTML = '<em>No tokens selected</em>';
+                    }
+                    
+                    // Replace previous info if exists
+                    const existingDisplay = document.getElementById('selected-tokens-display');
+                    if (existingDisplay) {
+                        existingDisplay.remove();
+                    }
+                    
+                    // Add the display element
+                    selectedTokensDisplay.id = 'selected-tokens-display';
+                    const tokensContainer = document.getElementById('tokens-container');
+                    tokensContainer.appendChild(selectedTokensDisplay);
+                }
+                
+                // Function to show sense selector for a token
+                async function showSenseSelector(token) {
+                    // First lemmatize the token
+                    const lemma = lemmatizeToken(token);
+                    console.log(`Lemmatized '${token}' to '${lemma}'`);
+                    
+                    // Find senses for this lemma
+                    const senses = await findFrameSenses(lemma);
+                    console.log(`Found ${senses.length} senses for lemma '${lemma}'`, senses);
+                    
+                    // Create or update the sense selector container
+                    let senseContainer = document.getElementById('sense-selector-container');
+                    if (!senseContainer) {
+                        senseContainer = document.createElement('div');
+                        senseContainer.id = 'sense-selector-container';
+                        senseContainer.style.marginTop = '15px';
+                        senseContainer.style.padding = '10px';
+                        senseContainer.style.backgroundColor = '#f0f8ff';
+                        senseContainer.style.borderRadius = '4px';
+                        senseContainer.style.border = '1px solid #ccc';
                         
-                        // Replace previous info if exists
-                        const existingDisplay = document.getElementById('selected-tokens-display');
-                        if (existingDisplay) {
-                            existingDisplay.remove();
-                        }
-                        
-                        // Add the display element
-                        selectedTokensDisplay.id = 'selected-tokens-display';
+                        // Add container after the tokens display
                         const tokensContainer = document.getElementById('tokens-container');
-                        tokensContainer.appendChild(selectedTokensDisplay);
-                    });
+                        tokensContainer.parentNode.insertBefore(senseContainer, tokensContainer.nextSibling);
+                    }
+                    
+                    // Create the sense selector content
+                    let senseContent = '';
+                    
+                    if (senses.length > 0) {
+                        senseContent = `
+                            <div style="margin-bottom: 8px;">
+                                <label for="sense-selector" style="font-weight: bold;">Select sense for "${token}" (lemmatized as "${lemma}"):</label>
+                                <div style="position: relative; margin-bottom: 8px;">
+                                    <input type="text" id="sense-search" 
+                                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                        placeholder="Type to search senses...">
+                                </div>
+                                <select id="sense-selector" size="6" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 200px;">
+                                    <option value="">Select a sense...</option>
+                                    ${senses.map(sense => `<option value="${sense}">${sense}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div style="margin-top: 5px; font-size: 0.9em; color: #666;">
+                                <em>Selecting a sense will use it as the concept instead of the token text.</em>
+                            </div>
+                        `;
+                    } else {
+                        senseContent = `
+                            <div>
+                                <p>No predicate frames found for "${token}" (lemmatized as "${lemma}").</p>
+                                <p>The token text will be used as the concept.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    senseContainer.innerHTML = senseContent;
+                    
+                    // Add event listener to the sense selector
+                    const senseSelector = document.getElementById('sense-selector');
+                    if (senseSelector) {
+                        // Setup filtering for the sense dropdown
+                        setupDropdownFiltering(
+                            document.getElementById('sense-search'),
+                            senseSelector,
+                            senses
+                        );
+                        
+                        senseSelector.addEventListener('change', () => {
+                            const selectedSense = senseSelector.value;
+                            if (selectedSense) {
+                                window.selectedSense = selectedSense;
+                                console.log(`Selected sense: ${selectedSense}`);
+                                updateTokenSelectionDisplay();
+                            } else {
+                                window.selectedSense = null;
+                                updateTokenSelectionDisplay();
+                            }
+                        });
+                    }
+                }
+                
+                // Function to hide the sense selector
+                function hideSenseSelector() {
+                    window.selectedSense = null;
+                    const senseContainer = document.getElementById('sense-selector-container');
+                    if (senseContainer) {
+                        senseContainer.remove();
+                    }
+                }
+                
+                // Add click handlers to token items
+                tokenItems.forEach(item => {
+                    item.addEventListener('click', () => handleTokenClick(item));
                 });
                 
                 // Add a button to clear all token selections
@@ -2318,12 +2505,13 @@ async function showAddBranchDialog(parentVariableSpan) {
                     // Reset all selections
                     tokenItems.forEach(item => item.style.backgroundColor = '#f0f8ff');
                     window.selectedTokens = [];
+                    window.selectedSense = null;
+                    
+                    // Hide sense selector
+                    hideSenseSelector();
                     
                     // Update the display
-                    const existingDisplay = document.getElementById('selected-tokens-display');
-                    if (existingDisplay) {
-                        existingDisplay.innerHTML = '<em>No tokens selected</em>';
-                    }
+                    updateTokenSelectionDisplay();
                 };
                 
                 // Add the clear button to the token container
@@ -2339,7 +2527,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                         // Show the name tokens selection when an NE type is selected
                         nameTokensContainer.style.display = 'block';
                         populateNameTokensSelection();
-                    } else {
+        } else {
                         nameTokensContainer.style.display = 'none';
                     }
                 });
@@ -2396,21 +2584,21 @@ async function showAddBranchDialog(parentVariableSpan) {
         
         // Set up relation change handler
         relationSelect.addEventListener('change', updateChildNodeContainer);
-        
-        // Handle form submission
-        const form = document.getElementById('add-branch-form');
+    
+    // Handle form submission
+    const form = document.getElementById('add-branch-form');
         form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            
+        event.preventDefault();
+        
             // Get the selected relation
             const selectedRelation = relationSelect.value;
             if (!selectedRelation) {
-                showNotification('Please select a relation', 'error');
-                return;
-            }
-            
+            showNotification('Please select a relation', 'error');
+            return;
+        }
+        
             // Initialize variables for the branch
-            let childNode = '';
+        let childNode = '';
             let subBranches = '';
             let newVariable = ''; // Store the new variable for alignments
             let selectedTokenForAlignment = ''; // Store the selected token for alignments
@@ -2423,18 +2611,18 @@ async function showAddBranchDialog(parentVariableSpan) {
                 const predefinedValue = document.getElementById('predefined-value').value;
                 if (!predefinedValue) {
                     showNotification('Please select a value', 'error');
-                    return;
-                }
-                
+                return;
+            }
+            
                 childNode = predefinedValue;
             } else {
                 // For relations without predefined values
                 const childNodeType = document.getElementById('child-node-type')?.value;
                 if (!childNodeType) {
                     showNotification('Please select a child node type', 'error');
-                    return;
-                }
-                
+                return;
+            }
+            
                 if (childNodeType === 'token') {
                     // For token selection (now with multi-selection support)
                     if (!window.selectedTokens || window.selectedTokens.length === 0) {
@@ -2442,30 +2630,40 @@ async function showAddBranchDialog(parentVariableSpan) {
                         return;
                     }
                     
-                    // Join selected tokens with hyphens for the concept
-                    const joinedTokens = window.selectedTokens.join('-');
-                    
-                    // Save the first token for alignment (will be updated to handle all tokens later)
-                    selectedTokenForAlignment = window.selectedTokens.join('-');
-                    
-                    // Check if it's a number (only relevant for single token)
-                    if (window.selectedTokens.length === 1 && !isNaN(window.selectedTokens[0])) {
-                        // Numbers are used directly
-                        childNode = window.selectedTokens[0];
-                    } else {
-                        // For other tokens, generate a variable
-                        const variable = generateUniqueVariable(joinedTokens, annotationText);
-                        newVariable = variable; // Save the variable for alignments
-                        childNode = `(${variable} / ${joinedTokens})`;
+                    // If we have a single token and a selected sense, use the sense
+                    if (window.selectedTokens.length === 1 && window.selectedSense) {
+                        // We have a selected sense for this token
+                        const sense = window.selectedSense;
+                        const variable = generateUniqueVariable(sense, annotationText);
+                        newVariable = variable; // Save for alignment
+                        childNode = `(${variable} / ${sense})`;
+                        selectedTokenForAlignment = window.selectedTokens[0]; // Save the token for alignment
+            } else {
+                        // Join selected tokens with hyphens for the concept
+                        const joinedTokens = window.selectedTokens.join('-');
+                        
+                        // Save for alignment
+                        selectedTokenForAlignment = window.selectedTokens.join('-');
+                        
+                        // Check if it's a number (only relevant for single token)
+                        if (window.selectedTokens.length === 1 && !isNaN(window.selectedTokens[0])) {
+                            // Numbers are used directly
+                            childNode = window.selectedTokens[0];
+                        } else {
+                            // For other tokens, generate a variable
+                            const variable = generateUniqueVariable(joinedTokens, annotationText);
+                            newVariable = variable; // Save the variable for alignments
+                            childNode = `(${variable} / ${joinedTokens})`;
+                        }
                     }
                 } else if (childNodeType === 'discourse') {
                     // For discourse concepts
                     const selectedConcept = document.getElementById('discourse-concept').value;
                     if (!selectedConcept) {
                         showNotification('Please select a discourse concept', 'error');
-                        return;
-                    }
-                    
+                return;
+            }
+            
                     // Generate variable for the concept
                     const variable = generateUniqueVariable(selectedConcept, annotationText);
                     newVariable = variable; // Save for alignments
@@ -2534,19 +2732,19 @@ async function showAddBranchDialog(parentVariableSpan) {
                     const stringValue = document.getElementById('string-value').value;
                     if (!stringValue) {
                         showNotification('Please enter a string value', 'error');
-                        return;
-                    }
-                    
-                    childNode = `"${stringValue}"`;
+                return;
+            }
+            
+            childNode = `"${stringValue}"`;
                 } else if (childNodeType === 'number') {
                     // For number values
                     const numberValue = document.getElementById('number-value').value;
-                    if (!numberValue) {
-                        showNotification('Please enter a number value', 'error');
-                        return;
-                    }
-                    
-                    childNode = numberValue;
+            if (!numberValue) {
+                showNotification('Please enter a number value', 'error');
+                return;
+            }
+            
+            childNode = numberValue;
                 }
             }
             
@@ -2633,19 +2831,19 @@ async function showAddBranchDialog(parentVariableSpan) {
                 }
                 
                 // Update the annotation element with the fallback method
-                annotationElement.textContent = updatedAnnotation;
+        annotationElement.textContent = updatedAnnotation;
             } else {
                 // Update the annotation element with our properly formatted insertion
                 annotationElement.textContent = updatedLines.join('\n');
             }
-            
-            // Reinitialize the relation editor
-            makeRelationsClickable(annotationElement);
-            makeValuesClickable(annotationElement);
+        
+        // Reinitialize the relation editor
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
             makeVariablesClickable(annotationElement);
-            addBranchOperations(annotationElement);
-            
-            // Save the updated annotation
+        addBranchOperations(annotationElement);
+        
+        // Save the updated annotation
             saveBranchInsertion(annotationElement.textContent, newBranch);
             
             // Update alignments if we have a new variable and a selected token
@@ -2779,9 +2977,9 @@ async function showAddBranchDialog(parentVariableSpan) {
             
             // Remove the dialog
             dialogContainer.remove();
-            
-            showNotification('Branch added successfully', 'success');
-        });
+        
+        showNotification('Branch added successfully', 'success');
+    });
         
         // Handle cancel button
         const cancelButton = document.getElementById('cancel-add-branch');
