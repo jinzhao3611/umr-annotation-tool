@@ -32,16 +32,16 @@
         {% block head %}{% endblock %}
 
         {% if title %}
-            <title>UMR Writer - {{ title }}</title>
+            <title>UMR Writer 3.0 - {{ title }}</title>
         {% else %}
-            <title>UMR Writer </title>
+            <title>UMR Writer 3.0 </title>
         {% endif %}
     </head>
     <body>
         <header class="site-header">
             <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
                 <div class="container">
-                    <a class="navbar-brand mr-4" href="/">UMR Writer</a>
+                    <a class="navbar-brand mr-4" href="/">UMR Writer 3.0</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                             aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -94,6 +94,7 @@
                             <a class="nav-item nav-link" href="https://github.com/umr4nlp/umr-guidelines/blob/master/guidelines.md#part-2-2-umr-relations">UMR Guidelines</a>
                             <a class="nav-item nav-link" href="https://github.com/amrisi/amr-guidelines/blob/master/amr.md#part-ii--concepts-and-relations">AMR Guidelines</a>
                             <a class="nav-item nav-link" href="{{ url_for('main.guidelines') }}">User Guide</a>
+                            <a class="nav-item nav-link" href="https://github.com/jinzhao3611/umr-annotation-tool">GitHub Repository</a>
                         </div>
                         <div class="navbar-nav">
                             <div class="navbar-nav">
@@ -106,6 +107,12 @@
                 </div>
             </div>
         </footer>
+
+        <div class="copyright-section text-center py-2">
+            <div class="container">
+                <small>&copy; {{ current_year }} Brandeis University. This project is licensed under the MIT License - see the LICENSE file for details. </small>
+            </div>
+        </div>
 
         <!-- JavaScript Dependencies -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

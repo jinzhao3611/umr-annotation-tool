@@ -104,9 +104,9 @@ h3 { font-size: 1.75rem; }
     flex: 1;
     width: 100%;
     padding-top: 20px; /* Additional padding on top of what body has */
-    padding-bottom: var(--footer-height);
+    padding-bottom: calc(var(--footer-height) + 30px); /* Account for footer + copyright */
     background-color: #f8f9fa;
-    min-height: calc(100vh - var(--navbar-height) - var(--footer-height));
+    min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - 30px);
     position: relative;
     z-index: 1; /* Lower than navbar */
 }
@@ -232,6 +232,33 @@ td {
     background-color: var(--bg-steel);
     color: white;
     z-index: 9998; /* High but below navbar */
+}
+
+/* Copyright section */
+.copyright-section {
+    background-color: #333;
+    color: white;
+    padding: 5px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 9997; /* Just below the footer */
+    font-size: 0.9rem;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+    bottom: 30px; /* Adjust bottom position to make room for copyright */
+}
+
+.copyright-section .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.copyright-section small {
+    color: #e0e0e0;
 }
 
 /* ===== Media Queries ===== */

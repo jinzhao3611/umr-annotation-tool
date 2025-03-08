@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from umr_annot_tool.config import Config
 import sys
+import datetime
 
 # extensions
 db = SQLAlchemy()
@@ -66,6 +67,11 @@ def create_app(config_class=None):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+
+    # Register context processor to make current year available in all templates
+    @app.context_processor
+    def inject_year():
+        return {'current_year': datetime.datetime.now().year}
 
     try:
         app.logger.info("Registering blueprints...")
