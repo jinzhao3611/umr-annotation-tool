@@ -1154,120 +1154,259 @@ function confirmDeleteBranch(relationSpan) {
 
 // Function to delete a branch from the annotation
 function deleteBranch(relationSpan) {
+    // Get the annotation element and its text content
     const annotationElement = document.querySelector('#amr pre');
-    const originalText = annotationElement.textContent;
-    
-    // Find the position of the relation in the original text
-    const relationText = relationSpan.textContent;
-    
-    // Instead of finding the position in the text, let's use the structured DOM
-    // Get the position relative to other relation spans
-    const relationSpans = annotationElement.querySelectorAll('.relation-span');
-    const spanIndex = Array.from(relationSpans).indexOf(relationSpan);
-    
-    if (spanIndex === -1) {
-        console.error('Could not locate the relation span in the DOM');
-        showNotification('Error: Could not locate the branch to delete', 'error');
+    if (!annotationElement) {
+        console.error('Cannot find annotation element');
         return;
     }
     
-    // Find the parent line of this relation (line that contains the relation)
-    let currentNode = relationSpan;
-    while (currentNode && currentNode.nodeName !== 'PRE') {
-        if (currentNode.nodeName === 'DIV' || currentNode.nodeName === 'P') {
-            break; // Found a line container
+    // Get the relation text to delete
+    const relationText = relationSpan.textContent;
+    console.log(`Attempting to delete branch with relation: ${relationText}`);
+    
+    // Get the full text
+    let fullText = annotationElement.textContent;
+    
+    // 1. Find the parent element of this relation span to get context
+    let parentLine = relationSpan;
+    let lineText = '';
+    
+    // Move up to find a parent that contains the entire line
+    while (parentLine && parentLine.nodeName !== 'PRE') {
+        // If we have text content with the relation in it, we may have found the line
+        if (parentLine.textContent && parentLine.textContent.includes(relationText)) {
+            lineText = parentLine.textContent.trim();
+            // If it looks like a complete line, break
+            if (lineText.length > relationText.length + 5) {
+                break;
+            }
         }
-        currentNode = currentNode.parentNode;
+        parentLine = parentLine.parentNode;
     }
     
-    // If we didn't find a proper container, try another approach
-    if (!currentNode || (currentNode.nodeName !== 'DIV' && currentNode.nodeName !== 'P')) {
-        // Find the line by text search
-        let textContent = annotationElement.textContent;
-        let lines = textContent.split('\n');
-        let targetLine = -1;
-        
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].includes(relationText)) {
-                // Make sure this is the right instance if there are multiple
-                // We need a more robust way to match the exact relation instance we're targeting
-                targetLine = i;
+    // If we couldn't find a good context, use the relation itself
+    if (!lineText) {
+        // Find where in the text this relation appears
+        const allLines = fullText.split('\n');
+        for (let i = 0; i < allLines.length; i++) {
+            if (allLines[i].includes(relationText)) {
+                lineText = allLines[i].trim();
                 break;
             }
         }
-        
-        if (targetLine === -1) {
-            console.error('Could not locate the relation in the text');
-            showNotification('Error: Could not locate the branch to delete', 'error');
-            return;
-        }
-        
-        // Now get the branch boundaries using this line
-        let branchStart = 0;
-        for (let i = 0; i < targetLine; i++) {
-            branchStart += lines[i].length + 1; // +1 for newline
-        }
-        
-        // Get indentation level
-        const indent = lines[targetLine].search(/\S/);
-        
-        // Find where this branch ends
-        let branchEnd = branchStart + lines[targetLine].length; // Default to just this line
-        for (let i = targetLine + 1; i < lines.length; i++) {
-            if (lines[i].trim() === '') {
-                // Skip empty lines
-                branchEnd += lines[i].length + 1;
-                continue;
-            }
-            
-            const lineIndent = lines[i].search(/\S/);
-            if (lineIndent <= indent) {
-                // Found a line with same or less indentation, we've reached the end
+    }
+    
+    console.log(`Found relation ${relationText} in context: "${lineText}"`);
+    
+    // Find the correct instance of this relation in the text
+    // We need to find the exact instance that was clicked
+    let allRelationSpans = annotationElement.querySelectorAll('.relation-span');
+    let matchingSpans = Array.from(allRelationSpans).filter(span => span.textContent === relationText);
+    let spanIndex = matchingSpans.indexOf(relationSpan);
+    
+    // Find all occurrences of this relation in the text
+    let relationIndices = [];
+    let searchIndex = 0;
+    while (true) {
+        let foundIndex = fullText.indexOf(relationText, searchIndex);
+        if (foundIndex === -1) break;
+        relationIndices.push(foundIndex);
+        searchIndex = foundIndex + relationText.length;
+    }
+    
+    // Make sure we have the right index
+    if (spanIndex >= relationIndices.length) {
+        spanIndex = 0; // Fallback to first occurrence if something is wrong
+    }
+    
+    // Get the index of the relation we want to delete
+    let relationIndex = relationIndices[spanIndex];
+    
+    // Check if the next non-whitespace character after the relation is an opening parenthesis
+    let afterRelationText = fullText.substring(relationIndex + relationText.length);
+    let openParenIndex = -1;
+    
+    // Find the first non-whitespace character
+    for (let i = 0; i < afterRelationText.length; i++) {
+        if (afterRelationText[i].trim()) {
+            if (afterRelationText[i] === '(') {
+                // Found opening parenthesis - this is a complex branch
+                openParenIndex = relationIndex + relationText.length + i;
+                break;
+            } else {
+                // Found some other character - this is a simple relation
                 break;
             }
-            
-            // Still part of this branch
-            branchEnd += lines[i].length + 1;
+        }
+    }
+    
+    // Handle simple and complex branches differently
+    if (openParenIndex === -1) {
+        // Simple relation with direct value (no parentheses)
+        console.log('Simple relation detected');
+        
+        // Find the end of this value (next whitespace, end of line, or next relation)
+        let endOfLine = fullText.indexOf('\n', relationIndex);
+        if (endOfLine === -1) endOfLine = fullText.length;
+        
+        let nextColon = fullText.indexOf(':', relationIndex + relationText.length);
+        if (nextColon === -1 || nextColon > endOfLine) nextColon = endOfLine;
+        
+        // Find where to cut the text
+        let cutStart = relationIndex;
+        // Find start of the relation (include any whitespace before it)
+        while (cutStart > 0 && /\s/.test(fullText[cutStart - 1])) {
+            cutStart--;
         }
         
-        // Create updated text by removing the branch and any trailing empty lines
-        let updatedText = textContent.substring(0, branchStart) + textContent.substring(branchEnd);
+        let cutEnd = nextColon;
         
-        // Remove any awkward spaces or empty lines that might be left after deletion
-        // Split into lines, clean them, and rejoin
-        let cleanedLines = updatedText.split('\n');
+        // Remove the relation and its value
+        let updatedText = fullText.substring(0, cutStart) + fullText.substring(cutEnd);
         
-        // Remove any consecutive empty lines, keeping at most one
-        for (let i = 0; i < cleanedLines.length - 1; i++) {
-            if (cleanedLines[i].trim() === '' && cleanedLines[i+1].trim() === '') {
-                cleanedLines.splice(i, 1);
-                i--; // Adjust index after removal
-            }
-        }
-        
-        // Rejoin the cleaned lines
-        updatedText = cleanedLines.join('\n');
-        
-        // Update the annotation element
+        // Update the DOM
         annotationElement.textContent = updatedText;
         
-        // Make elements clickable again - order is important
+        // Re-initialize interactive elements
         makeRelationsClickable(annotationElement);
         makeValuesClickable(annotationElement);
-        makeVariablesClickable(annotationElement); // Ensure variables are clickable
+        makeVariablesClickable(annotationElement);
         addBranchOperations(annotationElement);
         
         // Save the updated annotation
         saveBranchDeletion(updatedText, relationText);
         
-        showNotification(`Deleted branch: ${relationText}`, 'success');
+        showNotification(`Deleted simple branch: ${relationText}`, 'success');
         return;
     }
     
-    // If we get here, we found the parent line container
-    // Rest of deletion code...
-    console.error('Alternative deletion approach not yet implemented');
-    showNotification('Unable to delete branch at this time', 'error');
+    // Complex branch with parentheses
+    console.log('Complex relation with parentheses detected');
+    
+    // Find the matching closing parenthesis, considering nesting
+    let depth = 1;
+    let closeParenIndex = -1;
+    
+    for (let i = openParenIndex + 1; i < fullText.length; i++) {
+        if (fullText[i] === '(') {
+            depth++;
+        } else if (fullText[i] === ')') {
+            depth--;
+            if (depth === 0) {
+                closeParenIndex = i;
+                break;
+            }
+        }
+    }
+    
+    if (closeParenIndex === -1) {
+        console.error('Could not find matching closing parenthesis');
+        showNotification('Error: Unmatched parentheses in branch', 'error');
+        return;
+    }
+    
+    // Find the start of the entire branch - include the relation and any whitespace before it
+    let branchStart = relationIndex;
+    while (branchStart > 0 && /\s/.test(fullText[branchStart - 1])) {
+        branchStart--;
+    }
+    
+    // End of the branch is after the closing parenthesis
+    let branchEnd = closeParenIndex + 1;
+    
+    // Get the branch content for logging
+    const branchContent = fullText.substring(branchStart, branchEnd);
+    console.log(`Deleting branch from ${branchStart} to ${branchEnd}`);
+    console.log(`Branch content: "${branchContent}"`);
+    
+    // Direct string manipulation to remove the branch
+    const beforeBranch = fullText.substring(0, branchStart);
+    const afterBranch = fullText.substring(branchEnd);
+    const updatedText = beforeBranch + afterBranch;
+    
+    // Clean up formatting - remove any consecutive blank lines
+    const cleanedLines = updatedText.split('\n').reduce((acc, line) => {
+        if (acc.length === 0 || line.trim() || acc[acc.length - 1].trim()) {
+            acc.push(line);
+        }
+        return acc;
+    }, []);
+    
+    const finalText = cleanedLines.join('\n');
+    
+    // Check if anything actually changed
+    if (finalText === fullText) {
+        console.error('Text did not change after deletion attempt');
+        
+        // Fallback: try line-by-line deletion
+        const lines = fullText.split('\n');
+        let startLine = 0;
+        let charactersProcessed = 0;
+        
+        // Find which line contains our relation
+        for (let i = 0; i < lines.length; i++) {
+            charactersProcessed += lines[i].length + 1; // +1 for newline
+            if (charactersProcessed > relationIndex) {
+                startLine = i;
+                break;
+            }
+        }
+        
+        // Find the indentation level of this line
+        const indentMatch = lines[startLine].match(/^(\s*)/);
+        const indentLevel = indentMatch ? indentMatch[1].length : 0;
+        
+        // Find the end of this branch by checking indentation
+        let endLine = startLine;
+        for (let i = startLine + 1; i < lines.length; i++) {
+            const lineIndent = lines[i].match(/^(\s*)/)[0].length;
+            if (lineIndent <= indentLevel && lines[i].trim() !== '') {
+                break;
+            }
+            endLine = i;
+        }
+        
+        console.log(`Fallback: Removing lines ${startLine} to ${endLine}`);
+        
+        // Remove these lines
+        lines.splice(startLine, endLine - startLine + 1);
+        const fallbackText = lines.join('\n');
+        
+        // Update the DOM
+        annotationElement.textContent = fallbackText;
+        
+        // Re-initialize interactive elements
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
+        makeVariablesClickable(annotationElement);
+        addBranchOperations(annotationElement);
+        
+        // Save the updated annotation
+        saveBranchDeletion(fallbackText, relationText);
+        
+        showNotification(`Deleted branch using fallback method: ${relationText}`, 'success');
+        return;
+    }
+    
+    // Update the DOM
+    annotationElement.textContent = finalText;
+    
+    // Re-initialize interactive elements
+    makeRelationsClickable(annotationElement);
+    makeValuesClickable(annotationElement);
+    makeVariablesClickable(annotationElement);
+    addBranchOperations(annotationElement);
+    
+    // Save the updated annotation
+    saveBranchDeletion(finalText, relationText);
+    
+    showNotification(`Deleted branch: ${relationText}`, 'success');
+}
+
+// Helper function to escape special regex characters
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 // Function to save the branch deletion
@@ -1276,7 +1415,7 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
     const sent_id = document.getElementById('snt_id').value;
     const doc_version_id = document.getElementById('doc_version_id').value;
     
-    console.log(`Deleting branch with relation: ${deletedRelation}`);
+    console.log(`Saving deletion of branch with relation: ${deletedRelation}`);
     
     // Use fetch API to send the update to the server
     fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
@@ -1299,21 +1438,6 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
     })
     .then(data => {
         console.log('Update successful:', data);
-        
-        // Ensure all elements are properly clickable after successful update
-        const annotationElement = document.querySelector('#amr pre');
-        if (annotationElement) {
-            console.log('Refreshing clickable elements after successful branch deletion');
-            makeRelationsClickable(annotationElement);
-            makeValuesClickable(annotationElement);
-            
-            // Make sure variables are clickable - this is critical
-            const varCount = makeVariablesClickable(annotationElement);
-            console.log(`Made ${varCount} variables clickable after branch deletion`);
-            
-            // Re-add branch operations
-            addBranchOperations(annotationElement);
-        }
     })
     .catch(error => {
         console.error('Error updating annotation:', error);
