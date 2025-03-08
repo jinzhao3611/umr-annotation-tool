@@ -116,16 +116,16 @@
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Sentence:</h5>
-                        <p class="card-text">{{ result.sentence }}</p>
+                        <p class="card-text">{{ result.sentence|replace(query, '<span class="query-highlight">' + query + '</span>')|safe }}</p>
                         
                         {% if result.sent_annot %}
                             <h5 class="card-title">Sentence Annotation:</h5>
-                            <div class="card-text annotation-content">{{ result.sent_annot|safe }}</div>
+                            <div class="card-text annotation-content">{{ result.sent_annot|replace(query, '<span class="query-highlight">' + query + '</span>')|safe }}</div>
                         {% endif %}
                         
                         {% if result.doc_annot %}
                             <h5 class="card-title">Document Annotation:</h5>
-                            <div class="card-text annotation-content">{{ result.doc_annot|safe }}</div>
+                            <div class="card-text annotation-content">{{ result.doc_annot|replace(query, '<span class="query-highlight">' + query + '</span>')|safe }}</div>
                         {% endif %}
                     </div>
                 </div>
@@ -142,6 +142,7 @@
 .search-content {
     max-width: 900px;
     margin: 0 auto;
+    padding-top: 70px;
 }
 .search-results {
     max-height: 100%;
@@ -157,6 +158,12 @@
 }
 .annotation-content pre {
     margin: 0;
+}
+.query-highlight {
+    background-color: yellow;
+    font-weight: bold;
+    padding: 2px;
+    border-radius: 2px;
 }
 </style>
 {% endblock scripts %} 
