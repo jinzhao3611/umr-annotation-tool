@@ -1884,7 +1884,12 @@ async function showAddBranchDialog(parentVariableSpan) {
         <form id="add-branch-form">
             <div style="margin-bottom: 16px;">
                 <label for="relation" style="display: block; margin-bottom: 8px; font-weight: bold;">Relation:</label>
-                <select id="relation" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                <div style="position: relative; margin-bottom: 8px;">
+                    <input type="text" id="relation-search" 
+                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                        placeholder="Type to search relations...">
+                </div>
+                <select id="relation" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                     <option value="">Select a relation...</option>
                 </select>
             </div>
@@ -1958,6 +1963,13 @@ async function showAddBranchDialog(parentVariableSpan) {
             relationSelect.appendChild(option);
         });
         
+        // Set up search functionality for the relations dropdown
+        setupDropdownFiltering(
+            document.getElementById('relation-search'),
+            relationSelect,
+            umrRelations
+        );
+        
         // Function to update the child node container based on selected relation
         function updateChildNodeContainer() {
             const selectedRelation = relationSelect.value;
@@ -1980,12 +1992,22 @@ async function showAddBranchDialog(parentVariableSpan) {
                 childNodeContainer.innerHTML = `
                     <div style="margin-bottom: 16px;">
                         <label for="predefined-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Value:</label>
-                        <select id="predefined-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="predefined-value-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search values...">
+                        </div>
+                        <select id="predefined-value" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select a value...</option>
                             ${predefinedValues.map(value => `<option value="${value}">${value}</option>`).join('')}
                         </select>
                     </div>
                 `;
+                
+                // Set up filtering for predefined values dropdown
+                const searchInput = document.getElementById('predefined-value-search');
+                const selectElement = document.getElementById('predefined-value');
+                setupDropdownFiltering(searchInput, selectElement, predefinedValues);
                 
                 // Hide name tokens container as it's not needed for predefined values
                 document.getElementById('name-tokens-container').style.display = 'none';
@@ -2011,7 +2033,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                     <!-- Container for token selection -->
                     <div id="token-selection-container" style="display: none; margin-bottom: 16px;">
                         <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token:</label>
-                        <div style="max-height: 150px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="token-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search tokens...">
+                        </div>
+                        <div id="tokens-container" style="max-height: 250px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                             <div id="tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
                                 ${sentenceTokens.map(token => `
                                     <div class="token-item" data-token="${token}" style="padding: 8px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
@@ -2025,7 +2052,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                     <!-- Container for discourse concept selection -->
                     <div id="discourse-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="discourse-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select discourse concept:</label>
-                        <select id="discourse-concept" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="discourse-concept-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search discourse concepts...">
+                        </div>
+                        <select id="discourse-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select concept...</option>
                             ${discourseConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
                         </select>
@@ -2034,7 +2066,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                     <!-- Container for abstract concept selection -->
                     <div id="abstract-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="abstract-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select abstract concept:</label>
-                        <select id="abstract-concept" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="abstract-concept-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search abstract concepts...">
+                        </div>
+                        <select id="abstract-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select concept...</option>
                             ${abstractConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
                         </select>
@@ -2043,7 +2080,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                     <!-- Container for named entity selection -->
                     <div id="ne-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="ne-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Select named entity type:</label>
-                        <select id="ne-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="ne-type-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search named entity types...">
+                        </div>
+                        <select id="ne-type" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select entity type...</option>
                             ${neTypesList.map(type => `<option value="${type}">${type}</option>`).join('')}
                         </select>
@@ -2052,7 +2094,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                     <!-- Container for non-event roleset selection -->
                     <div id="non-event-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="non-event-roleset" style="display: block; margin-bottom: 8px; font-weight: bold;">Select non-event roleset:</label>
-                        <select id="non-event-roleset" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="non-event-roleset-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search non-event rolesets...">
+                        </div>
+                        <select id="non-event-roleset" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select roleset...</option>
                             ${nonEventRolesetsList.map(roleset => `<option value="${roleset}">${roleset}</option>`).join('')}
                         </select>
@@ -2081,6 +2128,49 @@ async function showAddBranchDialog(parentVariableSpan) {
                 const stringContainer = document.getElementById('string-input-container');
                 const numberContainer = document.getElementById('number-input-container');
                 const nameTokensContainer = document.getElementById('name-tokens-container');
+                
+                // Set up filtering for each dropdown
+                setupDropdownFiltering(
+                    document.getElementById('discourse-concept-search'), 
+                    document.getElementById('discourse-concept'), 
+                    discourseConceptsList
+                );
+                
+                setupDropdownFiltering(
+                    document.getElementById('abstract-concept-search'), 
+                    document.getElementById('abstract-concept'), 
+                    abstractConceptsList
+                );
+                
+                setupDropdownFiltering(
+                    document.getElementById('ne-type-search'), 
+                    document.getElementById('ne-type'), 
+                    neTypesList
+                );
+                
+                setupDropdownFiltering(
+                    document.getElementById('non-event-roleset-search'), 
+                    document.getElementById('non-event-roleset'), 
+                    nonEventRolesetsList
+                );
+                
+                // Setup token search
+                const tokenSearchInput = document.getElementById('token-search');
+                if (tokenSearchInput) {
+                    tokenSearchInput.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        const tokenItems = document.querySelectorAll('.token-item');
+                        
+                        tokenItems.forEach(item => {
+                            const tokenText = item.getAttribute('data-token').toLowerCase();
+                            if (tokenText.includes(searchTerm)) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    });
+                }
                 
                 // Handle child node type selection change
                 childNodeTypeSelect.addEventListener('change', () => {
@@ -2606,4 +2696,58 @@ function testUnmatchedParenthesesExtraction() {
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     console.log('Development environment detected, running tests...');
     setTimeout(testUnmatchedParenthesesExtraction, 2000);
+}
+
+// Helper function to set up filtering for dropdown menus
+function setupDropdownFiltering(searchInput, selectElement, optionsList) {
+    if (!searchInput || !selectElement) return;
+    
+    // Store original options (excluding the first "Select..." option)
+    const originalOptions = Array.from(selectElement.options)
+        .slice(1)
+        .map(option => ({ value: option.value, text: option.text }));
+    
+    // Add search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        
+        // Clear existing options (except first placeholder option)
+        while (selectElement.options.length > 1) {
+            selectElement.remove(1);
+        }
+        
+        // Get filtered options
+        const filteredOptions = searchTerm.length > 0 
+            ? originalOptions.filter(opt => opt.text.toLowerCase().includes(searchTerm))
+            : originalOptions;
+        
+        // Add filtered options
+        filteredOptions.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.text = opt.text;
+            selectElement.add(option);
+        });
+        
+        // If there's a perfect match or only one option, select it
+        if (filteredOptions.length === 1) {
+            selectElement.selectedIndex = 1; // First option is the placeholder
+        } else if (searchTerm.length > 0) {
+            // Try to find an exact match
+            const exactMatch = filteredOptions.findIndex(opt => 
+                opt.text.toLowerCase() === searchTerm.toLowerCase());
+            if (exactMatch !== -1) {
+                selectElement.selectedIndex = exactMatch + 1; // +1 for placeholder
+            }
+        }
+    });
+    
+    // Handle Enter key to select the first option
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && selectElement.options.length > 1) {
+            e.preventDefault();
+            selectElement.selectedIndex = 1; // Select first option after placeholder
+            selectElement.focus();
+        }
+    });
 }
