@@ -82,17 +82,40 @@ async function findFrameSenses(lemma) {
             sense.split('-')[0] === lemma  // Match lemma-01, lemma-02, etc.
         );
         
-        // If no exact matches, try to find similar senses
-        if (exactMatches.length === 0) {
-            const similarMatches = Object.keys(frames).filter(sense => {
-                const senseLemma = sense.split('-')[0];
-                return senseLemma.includes(lemma) || lemma.includes(senseLemma);
-            });
-            
-            return similarMatches;
+        // If we found exact matches, return them
+        if (exactMatches.length > 0) {
+            return exactMatches;
         }
         
-        return exactMatches;
+        // If no exact matches were found, try more cautious similar matching
+        // This should prevent mismatches like "said" matching with "aid-01"
+        const similarMatches = Object.keys(frames).filter(sense => {
+            const senseLemma = sense.split('-')[0];
+            
+            // Check if the lemma is a substring of the sense lemma, but only at the beginning
+            // This will match "eat" to "eating-01" but not "said" to "aid-01"
+            if (senseLemma.startsWith(lemma)) {
+                return true;
+            }
+            
+            // Check for common verb variations
+            // For example, "eating" and "eat", "walked" and "walk"
+            if (lemma.length > 3 && 
+                (lemma.endsWith('ing') || lemma.endsWith('ed') || lemma.endsWith('s'))) {
+                
+                // Strip suffixes to compare word stems
+                const lemmaBase = lemma
+                    .replace(/ing$/, '')
+                    .replace(/ed$/, '')
+                    .replace(/s$/, '');
+                    
+                return senseLemma === lemmaBase;
+            }
+            
+            return false;
+        });
+        
+        return similarMatches;
     } catch (error) {
         console.error('Error in findFrameSenses:', error);
         return []; // Return empty array on error - no synthetic suggestions
@@ -2451,6 +2474,27 @@ async function showAddBranchDialog(parentVariableSpan) {
                         let senseContent = '';
                         
                         if (senses.length > 0) {
+                            // Get frames data to access argument information
+                            const frames = await loadFramesData();
+                            
+                            // Create options with argument details for each sense
+                            const sensesWithArgs = senses.map(sense => {
+                                const frameArgs = frames[sense] || {};
+                                let argString = '';
+                                
+                                // Format arguments as a string
+                                Object.entries(frameArgs).forEach(([arg, desc]) => {
+                                    if (argString) argString += ', ';
+                                    argString += `${arg}: ${desc}`;
+                                });
+                                
+                                return {
+                                    sense: sense,
+                                    args: argString,
+                                    argsObj: frameArgs
+                                };
+                            });
+                            
                             senseContent = `
                                 <div style="margin-bottom: 8px;">
                                     <label for="sense-selector" style="font-weight: bold;">Select sense for "${token}" (lemmatized as "${lemma}"):</label>
@@ -2461,11 +2505,19 @@ async function showAddBranchDialog(parentVariableSpan) {
                                     </div>
                                     <select id="sense-selector" size="6" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 200px;">
                                         <option value="">Select a sense...</option>
-                                        ${senses.map(sense => `<option value="${sense}">${sense}</option>`).join('')}
+                                        ${sensesWithArgs.map(item => 
+                                            `<option value="${item.sense}" data-has-args="true">${item.sense}</option>`
+                                        ).join('')}
                                     </select>
+                                    
+                                    <!-- Arguments display -->
+                                    <div id="selected-sense-args" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; background-color: #f8f9fa; display: none;">
+                                        <strong>Sense Arguments:</strong>
+                                        <div id="args-content" style="margin-top: 5px;"></div>
+                                    </div>
                                 </div>
                                 <div style="margin-top: 10px;">
-                                    <label for="manual-sense" style="font-weight: bold;">Or manually enter a sense (optional):</label>
+                                    <label for="manual-sense" style="font-weight: bold;">Or manually enter a sense (this is the fallback if lemmatizer fails):</label>
                                     <div style="display: flex; margin-top: 5px;">
                                         <input type="text" id="manual-sense" 
                                             style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" 
@@ -2476,7 +2528,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                         </button>
                                     </div>
                                     <small style="display: block; margin-top: 5px; color: #666;">
-                                        Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the predicate frames.
+                                        Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the frame files.
                                     </small>
                                 </div>
                             `;
@@ -2516,6 +2568,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                         if (senses.length > 0) {
                             // For dropdown selection
                             const senseSelector = document.getElementById('sense-selector');
+                            const argsDisplay = document.getElementById('selected-sense-args');
+                            const argsContent = document.getElementById('args-content');
+                            
                             if (senseSelector) {
                                 // Setup filtering for the sense dropdown
                                 setupDropdownFiltering(
@@ -2524,46 +2579,126 @@ async function showAddBranchDialog(parentVariableSpan) {
                                     senses
                                 );
                                 
-                                senseSelector.addEventListener('change', () => {
+                                // Display arguments when a sense is selected
+                                senseSelector.addEventListener('change', async () => {
                                     const selectedSense = senseSelector.value;
+                                    
                                     if (selectedSense) {
+                                        // Save selected sense
                                         window.selectedSense = selectedSense;
                                         console.log(`Selected sense: ${selectedSense}`);
                                         updateTokenSelectionDisplay();
+                                        
+                                        // Fetch arguments directly from frames data
+                                        try {
+                                            const framesData = await loadFramesData();
+                                            const args = framesData[selectedSense] || {};
+                                            
+                                            let argsHtml = '';
+                                            for (const [arg, desc] of Object.entries(args)) {
+                                                argsHtml += `<div><strong>${arg}:</strong> ${desc}</div>`;
+                                            }
+                                            
+                                            if (argsHtml) {
+                                                argsContent.innerHTML = argsHtml;
+                                                argsDisplay.style.display = 'block';
+                                            } else {
+                                                argsDisplay.style.display = 'none';
+                                            }
+                                        } catch (e) {
+                                            console.error('Error fetching args:', e);
+                                            argsDisplay.style.display = 'none';
+                                        }
                                     } else {
                                         window.selectedSense = null;
                                         updateTokenSelectionDisplay();
-                                    }
-                                });
-                            }
-                            
-                            // Also handle the manual sense entry for all cases
-                            const applyButton = document.getElementById('apply-manual-sense');
-                            const manualSenseInput = document.getElementById('manual-sense');
-                            
-                            if (applyButton && manualSenseInput) {
-                                applyButton.addEventListener('click', () => {
-                                    const manualSense = manualSenseInput.value.trim();
-                                    if (manualSense) {
-                                        window.selectedSense = manualSense;
-                                        console.log(`Manually set sense: ${manualSense}`);
-                                        
-                                        // Clear any dropdown selection to avoid confusion
-                                        if (senseSelector) {
-                                            senseSelector.value = '';
-                                        }
-                                        
-                                        updateTokenSelectionDisplay();
+                                        argsDisplay.style.display = 'none';
                                     }
                                 });
                                 
-                                // Also allow pressing Enter in the input field
-                                manualSenseInput.addEventListener('keypress', (event) => {
-                                    if (event.key === 'Enter') {
-                                        event.preventDefault();
-                                        applyButton.click();
+                                // Show arguments on mouseover for options in the dropdown
+                                senseSelector.addEventListener('mouseover', async (event) => {
+                                    if (event.target.tagName === 'OPTION' && event.target.value) {
+                                        const sense = event.target.value;
+                                        
+                                        if (sense) {
+                                            try {
+                                                // Fetch args directly from frames data
+                                                const framesData = await loadFramesData();
+                                                const args = framesData[sense] || {};
+                                                
+                                                let tooltip = document.getElementById('sense-tooltip');
+                                                
+                                                // Create tooltip if it doesn't exist
+                                                if (!tooltip) {
+                                                    tooltip = document.createElement('div');
+                                                    tooltip.id = 'sense-tooltip';
+                                                    tooltip.style.position = 'absolute';
+                                                    tooltip.style.padding = '8px';
+                                                    tooltip.style.backgroundColor = '#333';
+                                                    tooltip.style.color = '#fff';
+                                                    tooltip.style.borderRadius = '4px';
+                                                    tooltip.style.zIndex = '1000';
+                                                    tooltip.style.maxWidth = '300px';
+                                                    tooltip.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+                                                    document.body.appendChild(tooltip);
+                                                }
+                                                
+                                                // Format arguments
+                                                let argsHtml = `<div style="font-weight: bold;">${sense}</div>`;
+                                                for (const [arg, desc] of Object.entries(args)) {
+                                                    argsHtml += `<div><strong>${arg}:</strong> ${desc}</div>`;
+                                                }
+                                                
+                                                tooltip.innerHTML = argsHtml;
+                                                
+                                                // Position tooltip
+                                                const rect = event.target.getBoundingClientRect();
+                                                tooltip.style.left = `${rect.right + 10}px`;
+                                                tooltip.style.top = `${rect.top}px`;
+                                                tooltip.style.display = 'block';
+                                            } catch (e) {
+                                                console.error('Error displaying tooltip:', e);
+                                            }
+                                        }
                                     }
                                 });
+                                
+                                // Hide tooltip when moving away
+                                senseSelector.addEventListener('mouseout', () => {
+                                    const tooltip = document.getElementById('sense-tooltip');
+                                    if (tooltip) {
+                                        tooltip.style.display = 'none';
+                                    }
+                                });
+                                
+                                // Add handling for manual sense entry
+                                const applyButton = document.getElementById('apply-manual-sense');
+                                const manualSenseInput = document.getElementById('manual-sense');
+                                
+                                if (applyButton && manualSenseInput) {
+                                    applyButton.addEventListener('click', () => {
+                                        const manualSense = manualSenseInput.value.trim();
+                                        if (manualSense) {
+                                            window.selectedSense = manualSense;
+                                            console.log(`Manually set sense: ${manualSense}`);
+                                            
+                                            // Clear any dropdown selection to avoid confusion
+                                            senseSelector.value = '';
+                                            argsDisplay.style.display = 'none';
+                                            
+                                            updateTokenSelectionDisplay();
+                                        }
+                                    });
+                                    
+                                    // Also allow pressing Enter in the input field
+                                    manualSenseInput.addEventListener('keypress', (event) => {
+                                        if (event.key === 'Enter') {
+                                            event.preventDefault();
+                                            applyButton.click();
+                                        }
+                                    });
+                                }
                             }
                         } else {
                             // For manual sense entry only (when no dropdown)
