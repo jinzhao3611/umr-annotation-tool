@@ -18,23 +18,23 @@
     --transition: all 0.2s ease-in-out;
     --navbar-height: 60px;
     --footer-height: 60px;
+    --copyright-height: 40px;
 }
 
 /* ===== Reset & Base Styles ===== */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: calc(var(--footer-height) + var(--copyright-height));
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5;
     color: var(--text-color);
     background: #f8f9fa;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    padding-top: var(--navbar-height); /* Space for fixed navbar */
+    padding-top: var(--navbar-height);
 }
 
 /* ===== Typography ===== */
@@ -63,7 +63,7 @@ h3 { font-size: 1.75rem; }
     top: 0;
     left: 0;
     right: 0;
-    z-index: 9999; /* Extremely high z-index to ensure it's above everything */
+    z-index: 1030;
     height: var(--navbar-height);
 }
 
@@ -101,14 +101,32 @@ h3 { font-size: 1.75rem; }
 
 /* ===== Main Content ===== */
 .main-content {
-    flex: 1;
-    width: 100%;
-    padding-top: 20px; /* Additional padding on top of what body has */
-    padding-bottom: calc(var(--footer-height) + 30px); /* Account for footer + copyright */
-    background-color: #f8f9fa;
-    min-height: calc(100vh - var(--navbar-height) - var(--footer-height) - 30px);
-    position: relative;
-    z-index: 1; /* Lower than navbar */
+    padding: 20px 0;
+    margin-top: 20px; /* Extra space below navbar */
+}
+
+/* Flash messages container */
+.flash-messages-container {
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.alert {
+    border: none;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
 /* ===== Content Sections ===== */
@@ -178,24 +196,6 @@ h3 { font-size: 1.75rem; }
     border-color: #6c757d;
 }
 
-/* ===== Alerts ===== */
-.alert {
-    border: none;
-    border-radius: 4px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-
-.alert-success {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-}
-
 /* ===== Tables ===== */
 table {
     width: 100%;
@@ -225,30 +225,26 @@ td {
 
 /* ===== Footer ===== */
 .footer {
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    bottom: var(--copyright-height);
+    left: 0;
     width: 100%;
     height: var(--footer-height);
     background-color: var(--bg-steel);
-    color: white;
-    z-index: 9998; /* High but below navbar */
 }
 
 /* Copyright section */
 .copyright-section {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--copyright-height);
     background-color: #333;
     color: white;
-    padding: 5px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 9997; /* Just below the footer */
-    font-size: 0.9rem;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.footer {
-    bottom: 30px; /* Adjust bottom position to make room for copyright */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .copyright-section .container {
@@ -265,6 +261,7 @@ td {
 @media (max-width: 768px) {
     body {
         padding-top: 56px;
+        margin-bottom: 150px; /* More space for footer on mobile */
     }
     
     h1 { font-size: 2rem; }

@@ -71,20 +71,23 @@
         <main role="main" class="main-content">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+                    <div class="flash-messages-container">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% endif %}
             {% endwith %}
             {% block content %}{% endblock %}
         </main>
 
+        <!-- Footer -->
         <footer class="footer">
             <div class="navbar navbar-expand-md navbar-dark bg-steel">
                 <div class="container">
-                    <a class="navbar-brand mr-4" href="/">Quick links</a>
+                    <a class="navbar-brand mr-4" href="/">UMR Writer 3.0 Links</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle2"
                             aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -108,9 +111,10 @@
             </div>
         </footer>
 
-        <div class="copyright-section text-center py-2">
+        <!-- Copyright -->
+        <div class="copyright-section">
             <div class="container">
-                <small>&copy; {{ current_year }} Brandeis University. This project is licensed under the MIT License - see the LICENSE file for details. </small>
+                <small>&copy; {{ current_year }} Brandeis University. This project is licensed under the MIT License - see the LICENSE file for details.</small>
             </div>
         </div>
 

@@ -4,12 +4,24 @@
 
 /* Three-panel layout */
 .doc-level-container {
-    height: calc(100vh - 80px); /* Subtract header height */
-    margin: 0;
+    height: calc(100vh - 160px); /* Further increased to prevent footer overlap */
+    margin: 0 0 60px 0; /* Add bottom margin to create space before footer */
     padding: 0;
     display: flex;
     position: relative;
     overflow: hidden; /* Prevent scrolling at container level */
+}
+
+/* Force the page to have space at the bottom and proper scrolling */
+body {
+    min-height: 100vh;
+    padding-bottom: 60px;
+    position: relative;
+}
+
+/* Ensure content doesn't get hidden behind footer */
+.container-fluid {
+    padding-bottom: 60px;
 }
 
 .panel {
@@ -31,6 +43,7 @@
 
 .left-panel, .middle-panel, .right-panel {
     min-width: 250px;
+    height: 100%;
 }
 
 /* Make middle panel a little wider and fill height */
@@ -58,6 +71,34 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+/* Split.js gutter styling */
+.gutter {
+    background-color: #ddd !important;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: relative;
+    z-index: 1000 !important;
+    width: 10px !important;
+    height: 100% !important;
+}
+
+.gutter:hover {
+    background-color: #bbb !important;
+}
+
+.gutter.gutter-horizontal {
+    cursor: col-resize !important;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+}
+
+/* Override any other styles that might be affecting the gutter */
+body .gutter {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 .left-panel .card {
