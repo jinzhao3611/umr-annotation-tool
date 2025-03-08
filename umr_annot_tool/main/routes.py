@@ -1248,12 +1248,18 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
         # Prepare data for the template
         doc1_data = {
             'filename': doc1.filename,
-            'username': user1.username
+            'username': user1.username,
+            'is_qc': doc_version_1.version_number > 1 or doc_version_1.stage == 'qc',  # Either version > 1 or stage is 'qc'
+            'version': doc_version_1.version_number,
+            'stage': doc_version_1.stage
         }
         
         doc2_data = {
             'filename': doc2.filename,
-            'username': user2.username
+            'username': user2.username,
+            'is_qc': doc_version_2.version_number > 1 or doc_version_2.stage == 'qc',  # Either version > 1 or stage is 'qc'
+            'version': doc_version_2.version_number,
+            'stage': doc_version_2.stage
         }
         
         # Get the sentence-level and document-level annotations

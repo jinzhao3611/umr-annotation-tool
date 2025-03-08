@@ -32,6 +32,10 @@
     background-color: #ffffff;
     margin: 0 5px;
     box-shadow: var(--shadow-sm);
+    /* Ensure smooth scrolling behavior */
+    scroll-behavior: smooth;
+    /* Ensure columns have the same height for better synchronization */
+    height: 100%;
 }
 
 /* Document header with info */
@@ -63,6 +67,15 @@
     margin-bottom: 15px;
     position: relative;
     z-index: 20;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px; /* Provide minimum height for consistency */
+}
+
+/* Document level annotation section - optionally target specific sections */
+.annotation-section:last-child {
+    flex: 2; /* Give more space to document level annotations */
+    min-height: 250px;
 }
 
 /* Annotation header */
@@ -84,11 +97,20 @@
     border-top: none;
     border-radius: 0 0 5px 5px;
     padding: 15px;
-    max-height: 400px;
     overflow: auto;
     position: relative;
     background-color: white;
     z-index: 22;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.annotation-content pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+    flex: 1;
 }
 
 /* Navigation bar */

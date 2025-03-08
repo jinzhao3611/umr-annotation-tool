@@ -4,6 +4,15 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Debug information for document types
+    console.log('Document state:', window.state);
+    
+    // Check document owner elements
+    const doc1Owner = document.querySelector('#doc1-column .doc-owner');
+    const doc2Owner = document.querySelector('#doc2-column .doc-owner');
+    console.log('Doc1 owner text:', doc1Owner ? doc1Owner.textContent.trim() : 'Not found');
+    console.log('Doc2 owner text:', doc2Owner ? doc2Owner.textContent.trim() : 'Not found');
+    
     // Initialize Split.js for resizable panels
     Split(['#doc1-column', '#doc2-column'], {
         sizes: [50, 50],

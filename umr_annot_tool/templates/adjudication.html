@@ -21,6 +21,70 @@
     <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/adjudication.js') }}"></script>
     
+    <!-- Synchronize scrolling between the two columns -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Debug information for QC status
+            console.log("Doc1 Info:", {
+                filename: "{{ doc1.filename }}",
+                username: "{{ doc1.username }}",
+                is_qc: {{ doc1.is_qc|tojson }},
+                version: {{ doc1.version|tojson }},
+                stage: "{{ doc1.stage }}"
+            });
+            
+            console.log("Doc2 Info:", {
+                filename: "{{ doc2.filename }}",
+                username: "{{ doc2.username }}",
+                is_qc: {{ doc2.is_qc|tojson }},
+                version: {{ doc2.version|tojson }},
+                stage: "{{ doc2.stage }}"
+            });
+            
+            // Get references to both column elements
+            const doc1Column = document.getElementById('doc1-column');
+            const doc2Column = document.getElementById('doc2-column');
+            
+            let isScrolling = false;
+            
+            // Calculate the relative scroll position as a percentage
+            function syncScroll(source, target) {
+                if (!isScrolling) {
+                    isScrolling = true;
+                    
+                    // Calculate scroll position as a percentage of scrollable area
+                    const scrollPercentage = source.scrollTop / (source.scrollHeight - source.clientHeight);
+                    
+                    // Apply the same percentage to the target
+                    target.scrollTop = scrollPercentage * (target.scrollHeight - target.clientHeight);
+                    
+                    // Reset the flag after a short delay to prevent infinite loops
+                    setTimeout(function() {
+                        isScrolling = false;
+                    }, 10);
+                }
+            }
+            
+            // Synchronize doc1 -> doc2 scroll
+            doc1Column.addEventListener('scroll', function() {
+                syncScroll(doc1Column, doc2Column);
+            });
+            
+            // Synchronize doc2 -> doc1 scroll
+            doc2Column.addEventListener('scroll', function() {
+                syncScroll(doc2Column, doc1Column);
+            });
+            
+            // Additional handling for window resize
+            window.addEventListener('resize', function() {
+                // Re-sync on resize with a small delay
+                setTimeout(function() {
+                    syncScroll(doc1Column, doc2Column);
+                }, 200);
+            });
+        });
+    </script>
+    
     <style>
         .adjudication-container {
             display: flex;
@@ -192,7 +256,15 @@
             <div class="doc-column" id="doc1-column">
                 <div class="doc-info">
                     <div class="doc-name">{{ doc1.filename }}</div>
-                    <div class="doc-owner">QC by: {{ doc1.username }}</div>
+                    <div class="doc-owner">
+                        {% if (doc1.is_qc is defined and doc1.is_qc) or 
+                              (doc1.version is defined and doc1.version > 1) or 
+                              (doc1.stage is defined and doc1.stage == 'qc') %}
+                            QC by: {{ doc1.username }} {% if doc1.version is defined %}(v{{ doc1.version }}){% endif %}
+                        {% else %}
+                            Initial document
+                        {% endif %}
+                    </div>
                 </div>
                 
                 <!-- Sentence level annotation -->
@@ -220,7 +292,15 @@
             <div class="doc-column" id="doc2-column">
                 <div class="doc-info">
                     <div class="doc-name">{{ doc2.filename }}</div>
-                    <div class="doc-owner">QC by: {{ doc2.username }}</div>
+                    <div class="doc-owner">
+                        {% if (doc2.is_qc is defined and doc2.is_qc) or 
+                              (doc2.version is defined and doc2.version > 1) or 
+                              (doc2.stage is defined and doc2.stage == 'qc') %}
+                            QC by: {{ doc2.username }} {% if doc2.version is defined %}(v{{ doc2.version }}){% endif %}
+                        {% else %}
+                            Initial document
+                        {% endif %}
+                    </div>
                 </div>
                 
                 <!-- Sentence level annotation -->
