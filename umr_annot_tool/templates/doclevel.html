@@ -73,14 +73,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- Current sentence indicator -->
-                    <div class="current-sentence-indicator mb-3">
-                        <div class="d-flex align-items-center">
-                            <span class="badge bg-primary me-2">Currently Editing:</span>
-                            <span class="current-sentence-text">{{ info2display.sents[snt_id-1] }}</span>
-                        </div>
-                    </div>
-                    
                     <!-- Document-level annotation for current sentence -->
                     <div id="doc-annotation" class="annotation-preview">
                         {% if curr_doc_annot_string %}

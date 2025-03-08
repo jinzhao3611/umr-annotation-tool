@@ -348,27 +348,7 @@ body .gutter {
     overflow-y: auto;
 }
 
-/* Current Sentence Indicator */
-.current-sentence-indicator {
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    border-left: 3px solid #007bff;
-    flex-shrink: 0; /* Prevent from shrinking */
-}
-
-.current-sentence-text {
-    font-style: italic;
-    color: #495057;
-    max-width: 100%;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Annotation Navigation */
+/* Styles for annotation navigation elements */
 .annotation-navigation {
     display: flex;
     align-items: center;
