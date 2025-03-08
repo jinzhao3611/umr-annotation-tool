@@ -24,6 +24,36 @@
     <!-- Load temporary branch storage script -->
     <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
     
+    <!-- Copy annotation functionality -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButton = document.getElementById('copy-annotation-btn');
+            if (copyButton) {
+                copyButton.addEventListener('click', function() {
+                    const annotationText = document.querySelector('#amr pre').textContent;
+                    navigator.clipboard.writeText(annotationText)
+                        .then(() => {
+                            // Visual feedback for successful copy
+                            const originalText = copyButton.innerHTML;
+                            copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                            copyButton.classList.remove('btn-outline-secondary');
+                            copyButton.classList.add('btn-success');
+                            
+                            setTimeout(() => {
+                                copyButton.innerHTML = originalText;
+                                copyButton.classList.remove('btn-success');
+                                copyButton.classList.add('btn-outline-secondary');
+                            }, 2000);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy text: ', err);
+                            alert('Failed to copy text to clipboard');
+                        });
+                });
+            }
+        });
+    </script>
+    
     <style>
         /* Custom styles for relation editing */
         .relation-span {
@@ -116,7 +146,14 @@
             <!-- Annotation Preview -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Sentence-Level UMRAnnotation Preview</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Sentence-Level UMR Annotation Preview</h5>
+                        {% if curr_annotation_string %}
+                        <button id="copy-annotation-btn" class="btn btn-sm btn-outline-secondary" title="Copy to clipboard">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="card-body">
                     <div id="amr" class="annotation-preview">
