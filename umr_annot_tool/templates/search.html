@@ -7,13 +7,28 @@
             <input type="text" class="form-control" name="query" placeholder="Search for sentences or annotations..." value="{{ query if query }}">
         </div>
         
-        <div class="form-group">
-            <label for="search_type">Search in:</label>
-            <select class="form-control" id="search_type" name="search_type">
-                <option value="both" {% if search_type == 'both' %}selected{% endif %}>Both Sentences and Annotations</option>
-                <option value="sentence" {% if search_type == 'sentence' %}selected{% endif %}>Sentences Only</option>
-                <option value="annotation" {% if search_type == 'annotation' %}selected{% endif %}>Annotations Only</option>
-            </select>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="search_type">Search in:</label>
+                    <select class="form-control" id="search_type" name="search_type">
+                        <option value="both" {% if search_type == 'both' %}selected{% endif %}>Both Sentences and Annotations</option>
+                        <option value="sentence" {% if search_type == 'sentence' %}selected{% endif %}>Sentences Only</option>
+                        <option value="annotation" {% if search_type == 'annotation' %}selected{% endif %}>Annotations Only</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="stage_filter">Filter by Stage:</label>
+                    <select class="form-control" id="stage_filter" name="stage_filter">
+                        <option value="all" {% if stage_filter == 'all' %}selected{% endif %}>All Stages</option>
+                        <option value="initial" {% if stage_filter == 'initial' %}selected{% endif %}>Initial</option>
+                        <option value="checkout" {% if stage_filter == 'checkout' %}selected{% endif %}>Checkout</option>
+                        <option value="qc" {% if stage_filter == 'qc' %}selected{% endif %}>QC</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         {% if doc_id %}
@@ -37,7 +52,7 @@
                             <div>
                                 <strong>Project:</strong> {{ result.project_name }} |
                                 <strong>Annotator:</strong> {{ result.username }} |
-                                <strong>Stage:</strong> <span class="badge {% if result.doc_version_stage == 'initial' %}badge-secondary{% elif result.doc_version_stage == 'checkout' %}badge-info{% elif result.doc_version_stage == 'review' %}badge-warning{% elif result.doc_version_stage == 'final' %}badge-success{% else %}badge-light{% endif %}">{{ result.doc_version_stage }}</span>
+                                <strong>Stage:</strong> <span class="badge {% if result.doc_version_stage == 'initial' %}badge-secondary{% elif result.doc_version_stage == 'checkout' %}badge-info{% elif result.doc_version_stage == 'qc' %}badge-success{% else %}badge-light{% endif %}">{{ result.doc_version_stage }}</span>
                             </div>
                             <span class="badge {% if result.match_type == 'sentence' %}badge-primary{% else %}badge-success{% endif %}">
                                 {{ result.match_type|title }} Match

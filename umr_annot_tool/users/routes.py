@@ -1015,12 +1015,14 @@ def search():
     doc_id = request.args.get('doc_id')
     project_id = request.args.get('project_id')
     search_type = request.args.get('search_type', 'both')  # Options: 'sentence', 'annotation', 'both'
+    stage_filter = request.args.get('stage_filter', 'all')  # Options: 'all', 'initial', 'checkout', 'qc'
     
     if not query:
         return render_template('search.html', 
                              title='Search Annotations',
                              doc_id=doc_id,
-                             project_id=project_id)
+                             project_id=project_id,
+                             stage_filter=stage_filter)
         
     try:
         # Get dummy user id
@@ -1055,6 +1057,10 @@ def search():
                     Annotation.sent_id == sent.id,
                     Annotation.sent_annot != ''
                 )
+                
+                # Apply stage filter if specified
+                if stage_filter != 'all':
+                    annotations = annotations.filter(DocVersion.stage == stage_filter)
                 
                 if dummy_user_id:
                     annotations = annotations.filter(DocVersion.user_id != dummy_user_id)
@@ -1100,6 +1106,10 @@ def search():
             annotation_query = annotation_query.join(
                 DocVersion, DocVersion.id == Annotation.doc_version_id
             )
+            
+            # Apply stage filter if specified
+            if stage_filter != 'all':
+                annotation_query = annotation_query.filter(DocVersion.stage == stage_filter)
             
             if dummy_user_id:
                 annotation_query = annotation_query.filter(DocVersion.user_id != dummy_user_id)
@@ -1159,7 +1169,8 @@ def search():
                              query=query,
                              doc_id=doc_id,
                              project_id=project_id,
-                             search_type=search_type)
+                             search_type=search_type,
+                             stage_filter=stage_filter)
                              
     except Exception as e:
         current_app.logger.error(f"Search error: {str(e)}")
@@ -1167,4 +1178,5 @@ def search():
         return render_template('search.html', 
                              title='Search Annotations',
                              doc_id=doc_id,
-                             project_id=project_id)
+                             project_id=project_id,
+                             stage_filter='all')
