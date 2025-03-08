@@ -982,7 +982,7 @@ pre {
     margin-bottom: 0;
 }
 
-/* Compact spacing for document annotation */
+/* Compact spacing for document annotation with improved formatting */
 #doc-annotation-content {
     display: block;
     margin: 0;
@@ -991,8 +991,8 @@ pre {
     border: 1px solid #e9ecef;
     border-radius: 4px;
     font-family: "Courier New", monospace;
-    font-size: 0.9rem;
-    line-height: 1.4;
+    font-size: 14px;
+    line-height: 1.6;
     white-space: pre !important;
     tab-size: 4;
     -moz-tab-size: 4;
@@ -1014,6 +1014,8 @@ pre {
 #doc-annotation-content .branch-name {
     color: #4caf50; /* Green */
     font-weight: bold;
+    display: inline-block;
+    margin-left: 8px;
 }
 
 #doc-annotation-content .node {
@@ -1026,6 +1028,7 @@ pre {
 
 #doc-annotation-content .parenthesis {
     color: #607d8b; /* Blue-gray */
+    vertical-align: baseline;
 }
 
 /* Ensure proper indentation and spacing for document annotation */
@@ -1076,9 +1079,11 @@ pre {
 /* Triple hover and delete styling */
 .triple-container {
     position: relative;
-    padding: 2px;
-    border-radius: 3px;
-    margin: 1px 0;
+    padding-left: 16px;
+    margin: 2px 0;
+    white-space: pre !important;
+    line-height: 1.6;
+    display: block;
 }
 
 .triple-container:hover {
@@ -1238,19 +1243,27 @@ pre {
 
 /* Context menu styling */
 .context-menu {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 8px 0;
+    z-index: 1000;
+    min-width: 150px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
-    border: 1px solid rgba(0,0,0,0.1);
-    animation: fadeIn 0.15s ease-out;
 }
 
 .context-menu-item {
-    transition: all 0.2s;
-    user-select: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .context-menu-item:hover {
-    background-color: #f8f9fa;
+    background-color: #f5f5f5;
 }
 
 .context-menu-item i {
@@ -1258,7 +1271,35 @@ pre {
     color: #dc3545;
 }
 
+/* Subtle highlight effect for triples */
+.triple-container:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 3px;
+}
+
+/* Improved positioning for delete icons */
+.triple-container .delete-triple-icon {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Show delete icon on hover */
+.triple-container:hover .delete-triple-icon {
+    opacity: 1;
+}
+
 /* Make triples indicate they're right-clickable */
 .triple-container {
     cursor: context-menu;
+}
+
+/* Styling for delete icon */
+.triple-container .delete-triple-icon i {
+    color: #dc3545;
+    font-size: 14px;
 } 
