@@ -678,6 +678,7 @@ def update_annotation(doc_version_id, sent_id):
     
     # Get the request data
     data = request.get_json()
+    current_app.logger.info(f"update_annotation called with doc_version_id={doc_version_id}, sent_id={sent_id}, data={data}")
     
     # Check if the required fields are present
     if not all(k in data for k in ['annotation']):
@@ -691,21 +692,54 @@ def update_annotation(doc_version_id, sent_id):
         if not has_permission_for_doc(current_user, doc_version.doc_id):
             return jsonify({'success': False, 'message': 'User does not have permission to modify this document'}), 403
         
-        # Get the annotation object
-        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
+        # Get the document
+        doc = Doc.query.get(doc_version.doc_id)
+        if not doc:
+            current_app.logger.error(f"Doc with id={doc_version.doc_id} not found")
+            return jsonify({"error": f"Document not found"}), 404
+        
+        # First get all sentences for this document, in order
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            current_app.logger.error(f"No sentences found for document {doc.id}")
+            return jsonify({"error": "No sentences found for this document"}), 404
+        
+        # Now get the current sentence by index (1-based)
+        if sent_id < 1 or sent_id > len(sentences):
+            current_app.logger.error(f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}")
+            return jsonify({"error": f"Invalid sentence index: {sent_id}. Valid range is 1-{len(sentences)}"}), 400
+        
+        current_sent = sentences[sent_id - 1]
+        current_app.logger.info(f"Found current sentence: {current_sent}")
+        
+        # Get annotation for this sentence using the actual sentence ID
+        current_app.logger.info(f"Looking up Annotation with doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=current_sent.id).first()
         
         if not annotation:
-            return jsonify({'success': False, 'message': 'Annotation not found'}), 404
-        
-        # Update the annotation
-        annotation.annotation = data['annotation']
+            current_app.logger.warning(f"Annotation not found for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+            
+            # Create a new annotation
+            annotation = Annotation(
+                doc_version_id=doc_version_id,
+                sent_id=current_sent.id,
+                sent_annot=data['annotation'],
+                doc_annot="",
+                actions={},
+                alignment={}
+            )
+            db.session.add(annotation)
+            current_app.logger.info(f"Created new annotation for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+        else:
+            # Update the annotation
+            annotation.sent_annot = data['annotation']
+            current_app.logger.info(f"Updated existing annotation for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
         
         # Handle specific operations
         if 'operation' in data:
             if data['operation'] == 'delete_branch':
-                if 'deleted_relation' in data:
-                    deleted_relation = data['deleted_relation']
-                    current_app.logger.info(f"Branch deletion: User {current_user.username} deleted branch '{deleted_relation}' from sentence {sent_id} in document version {doc_version_id}")
+                deleted_relation = data.get('deleted_relation', '(unknown)')
+                current_app.logger.info(f"Branch deletion: User {current_user.username} deleted branch '{deleted_relation}' from sentence {sent_id} in document version {doc_version_id}")
             
             elif data['operation'] == 'move_branch':
                 if all(k in data for k in ['source_relation', 'target_node']):
@@ -727,7 +761,8 @@ def update_annotation(doc_version_id, sent_id):
         return jsonify({'success': True, 'message': 'Annotation updated successfully'})
     
     except Exception as e:
-        current_app.logger.error(f"Error updating annotation: {str(e)}")
+        current_app.logger.error(f"Error updating annotation: {str(e)}", exc_info=True)
+        db.session.rollback()
         return jsonify({'success': False, 'message': str(e)}), 500
 
 @main.route("/save_umr", methods=['POST'])

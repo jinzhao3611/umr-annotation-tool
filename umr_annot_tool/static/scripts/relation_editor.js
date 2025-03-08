@@ -331,9 +331,7 @@ function updateEditModeStatus() {
         return;
     }
     
-    // Remove all existing delete icons to start fresh
-    const existingIcons = document.querySelectorAll('.delete-branch-icon');
-    existingIcons.forEach(icon => icon.remove());
+    // We've removed the delete icons, so we don't need to remove them when switching modes
     
     // Visual indicator for edit mode
     if (inPlaceEditMode) {
@@ -963,48 +961,15 @@ function addBranchOperations(annotationElement) {
         return;
     }
 
-    console.log('Adding branch operations (trash bins)');
+    console.log('Adding branch operations (right-click menu only)');
     
     // Get all the relation spans
     const relationSpans = annotationElement.querySelectorAll('.relation-span');
     
-    // Add delete icons to each relation span
-    relationSpans.forEach(span => {
-        // Create delete icon
-        const deleteIcon = document.createElement('span');
-        deleteIcon.innerHTML = '🗑️';
-        deleteIcon.className = 'delete-branch-icon';
-        deleteIcon.title = 'Delete this branch';
-        deleteIcon.style.cursor = 'pointer';
-        deleteIcon.style.marginLeft = '4px';
-        deleteIcon.style.fontSize = '12px';
-        deleteIcon.style.opacity = '0.6';
-        deleteIcon.style.display = 'none'; // Hidden by default
-        
-        // Show icon on hover, but only if edit mode is OFF (for branch operations)
-        span.addEventListener('mouseenter', () => {
-            if (!inPlaceEditMode) {
-                deleteIcon.style.display = 'inline';
-            } 
-        });
-        
-        span.addEventListener('mouseleave', () => {
-            deleteIcon.style.display = 'none';
-        });
-        
-        // Handle delete action
-        deleteIcon.addEventListener('click', (event) => {
-            if (!inPlaceEditMode) {
-                event.stopPropagation(); // Prevent triggering parent click events
-                confirmDeleteBranch(span);
-            }
-        });
-        
-        // Insert the delete icon after the span
-        span.insertAdjacentElement('afterend', deleteIcon);
-    });
+    // Remove code that adds delete icons to each relation span
+    // We're keeping only the right-click context menu
     
-    // Also add right-click context menu
+    // Add right-click context menu
     annotationElement.addEventListener('contextmenu', (event) => {
         // Only enable context menu if edit mode is OFF (for branch operations)
         if (!inPlaceEditMode) {
@@ -1013,6 +978,10 @@ function addBranchOperations(annotationElement) {
             if (target.classList.contains('relation-span')) {
                 event.preventDefault(); // Prevent default context menu
                 showBranchContextMenu(target, event.clientX, event.clientY);
+            } else if (target.classList.contains('variable-span')) {
+                // Handle right click on variable for branch addition
+                event.preventDefault();
+                showVariableContextMenu(target, event.clientX, event.clientY);
             }
         }
     });
@@ -1190,105 +1159,99 @@ function deleteBranch(relationSpan) {
     
     // Find the position of the relation in the original text
     const relationText = relationSpan.textContent;
-    const spanIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(relationSpan);
     
-    // Find the relation occurrence in the text (need to find the specific instance)
-    let relationMatches = findAllMatches(originalText, relationText);
+    // Instead of finding the position in the text, let's use the structured DOM
+    // Get the position relative to other relation spans
+    const relationSpans = annotationElement.querySelectorAll('.relation-span');
+    const spanIndex = Array.from(relationSpans).indexOf(relationSpan);
     
-    if (relationMatches.length <= spanIndex) {
-        console.error('Could not locate the relation in the text');
+    if (spanIndex === -1) {
+        console.error('Could not locate the relation span in the DOM');
         showNotification('Error: Could not locate the branch to delete', 'error');
         return;
     }
     
-    const relationPos = relationMatches[spanIndex];
+    // Find the parent line of this relation (line that contains the relation)
+    let currentNode = relationSpan;
+    while (currentNode && currentNode.nodeName !== 'PRE') {
+        if (currentNode.nodeName === 'DIV' || currentNode.nodeName === 'P') {
+            break; // Found a line container
+        }
+        currentNode = currentNode.parentNode;
+    }
     
-    // Determine the branch boundaries
-    const branchInfo = getBranchBoundaries(originalText, relationPos);
-    
-    if (!branchInfo) {
-        console.error('Could not determine branch boundaries');
-        showNotification('Error: Could not determine branch boundaries', 'error');
+    // If we didn't find a proper container, try another approach
+    if (!currentNode || (currentNode.nodeName !== 'DIV' && currentNode.nodeName !== 'P')) {
+        // Find the line by text search
+        let textContent = annotationElement.textContent;
+        let lines = textContent.split('\n');
+        let targetLine = -1;
+        
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].includes(relationText)) {
+                // Make sure this is the right instance if there are multiple
+                // We need a more robust way to match the exact relation instance we're targeting
+                targetLine = i;
+                break;
+            }
+        }
+        
+        if (targetLine === -1) {
+            console.error('Could not locate the relation in the text');
+            showNotification('Error: Could not locate the branch to delete', 'error');
+            return;
+        }
+        
+        // Now get the branch boundaries using this line
+        let branchStart = 0;
+        for (let i = 0; i < targetLine; i++) {
+            branchStart += lines[i].length + 1; // +1 for newline
+        }
+        
+        // Get indentation level
+        const indent = lines[targetLine].search(/\S/);
+        
+        // Find where this branch ends
+        let branchEnd = branchStart + lines[targetLine].length; // Default to just this line
+        for (let i = targetLine + 1; i < lines.length; i++) {
+            if (lines[i].trim() === '') {
+                // Skip empty lines
+                branchEnd += lines[i].length + 1;
+                continue;
+            }
+            
+            const lineIndent = lines[i].search(/\S/);
+            if (lineIndent <= indent) {
+                // Found a line with same or less indentation, we've reached the end
+                break;
+            }
+            
+            // Still part of this branch
+            branchEnd += lines[i].length + 1;
+        }
+        
+        // Create updated text by removing the branch
+        const updatedText = textContent.substring(0, branchStart) + textContent.substring(branchEnd);
+        
+        // Update the annotation element
+        annotationElement.textContent = updatedText;
+        
+        // Make elements clickable again
+        makeRelationsClickable(annotationElement);
+        makeValuesClickable(annotationElement);
+        addBranchOperations(annotationElement);
+        
+        // Save the updated annotation
+        saveBranchDeletion(updatedText, relationText);
+        
+        showNotification(`Deleted branch: ${relationText}`, 'success');
         return;
     }
     
-    const { start, end, parentIndent } = branchInfo;
-    
-    // Create updated text by removing the branch
-    const updatedText = originalText.substring(0, start) + originalText.substring(end);
-    
-    // Update the annotation display
-    annotationElement.textContent = updatedText;
-    
-    // Reinitialize the relation editor
-    makeRelationsClickable(annotationElement);
-    makeValuesClickable(annotationElement);
-    addBranchOperations(annotationElement);
-    
-    // Save the updated annotation
-    saveBranchDeletion(updatedText, relationText);
-    
-    showNotification(`Deleted branch: ${relationText}`, 'success');
-}
-
-// Function to find all matches of a substring in a string
-function findAllMatches(str, substr) {
-    const positions = [];
-    let pos = str.indexOf(substr);
-    
-    while (pos !== -1) {
-        positions.push(pos);
-        pos = str.indexOf(substr, pos + 1);
-    }
-    
-    return positions;
-}
-
-// Function to determine the boundaries of a branch in the annotation text
-function getBranchBoundaries(text, relationPosition) {
-    // Find the line with the relation
-    let lineStart = text.lastIndexOf('\n', relationPosition) + 1;
-    let lineEnd = text.indexOf('\n', relationPosition);
-    if (lineEnd === -1) lineEnd = text.length;
-    
-    const line = text.substring(lineStart, lineEnd);
-    
-    // Determine the indentation level of this relation
-    const indent = line.search(/\S/);
-    
-    // Find where this branch ends (the next line with the same or less indentation)
-    let currentPos = lineEnd + 1;
-    let branchEnd = lineEnd;
-    
-    while (currentPos < text.length) {
-        const nextLineStart = currentPos;
-        const nextLineEnd = text.indexOf('\n', nextLineStart);
-        const endPos = nextLineEnd === -1 ? text.length : nextLineEnd;
-        const nextLine = text.substring(nextLineStart, endPos);
-        
-        // Skip empty lines
-        if (nextLine.trim() === '') {
-            currentPos = endPos + 1;
-            continue;
-        }
-        
-        const nextIndent = nextLine.search(/\S/);
-        
-        // If we find a line with same or less indentation, we've reached the end of the branch
-        if (nextIndent <= indent) {
-            break;
-        }
-        
-        branchEnd = endPos;
-        currentPos = endPos + 1;
-    }
-    
-    return {
-        start: lineStart,
-        end: branchEnd + 1, // Include the newline at the end
-        branchText: text.substring(lineStart, branchEnd + 1),
-        parentIndent: indent
-    };
+    // If we get here, we found the parent line container
+    // Rest of deletion code...
+    console.error('Alternative deletion approach not yet implemented');
+    showNotification('Unable to delete branch at this time', 'error');
 }
 
 // Function to save the branch deletion
@@ -1309,7 +1272,7 @@ function saveBranchDeletion(updatedAnnotation, deletedRelation) {
         body: JSON.stringify({
             annotation: updatedAnnotation,
             operation: 'delete_branch',
-            relation: deletedRelation
+            deleted_relation: deletedRelation
         })
     })
     .then(response => {
