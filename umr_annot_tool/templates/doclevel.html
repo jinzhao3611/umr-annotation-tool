@@ -250,7 +250,7 @@
                         <button class="btn btn-primary" onclick="saveDocAnnotation()">Save Document Annotation</button>
                     </div>
                     <div class="btn-group w-100 mb-2">
-                        <button id="export-annotation-btn" class="btn btn-outline-success" title="Export annotation to file">
+                        <button id="export-annotation-btn" class="btn btn-outline-success" title="Export annotation to file" onclick="exportAnnotation(); return false;">
                             <i class="fas fa-file-export"></i> Export Annotation
                         </button>
                     </div>
@@ -266,6 +266,203 @@
 </div>
 
 <script>
+    // Export annotation functionality - define globally
+    function exportAnnotation() {
+        console.log('Starting annotation export process');
+        
+        // Show a loading spinner
+        const exportButton = document.getElementById('export-annotation-btn');
+        const originalButtonHtml = exportButton.innerHTML;
+        exportButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Exporting...';
+        exportButton.disabled = true;
+        
+        // Get the document version ID
+        const docVersionId = document.getElementById('doc_version_id').value;
+        console.log(`Exporting annotations for document version ID: ${docVersionId}`);
+        
+        // Show status notification
+        showExportNotification('Fetching annotation data...', 'info');
+        
+        // Fetch all the annotation data for the document
+        fetch(`/export_annotation/${docVersionId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log('Server response status:', response.status);
+            if (!response.ok) {
+                console.error('Server responded with error status:', response.status);
+                throw new Error(`Server error: ${response.status}`);
+            }
+            return response.json().catch(err => {
+                console.error('Error parsing JSON response:', err);
+                throw new Error('Invalid JSON response from server');
+            });
+        })
+        .then(data => {
+            console.log('Received data from server:', data);
+            
+            if (data.success) {
+                showExportNotification('Formatting annotation data...', 'info');
+                
+                // Format the data into UMR format
+                const formattedData = formatUMRData(data);
+                console.log('Data formatted successfully, preparing download');
+                
+                // Download the formatted data as a file
+                downloadUMRFile(formattedData, data.filename);
+                console.log('File download initiated');
+                
+                // Show success message
+                showExportNotification('Annotation exported successfully!', 'success');
+            } else {
+                console.error('Server reported failure:', data.message);
+                throw new Error(data.message || 'Failed to export annotation');
+            }
+        })
+        .catch(error => {
+            console.error('Error exporting annotation:', error);
+            showExportNotification('Error: ' + error.message, 'error');
+        })
+        .finally(() => {
+            // Restore button state
+            console.log('Export process completed');
+            exportButton.innerHTML = originalButtonHtml;
+            exportButton.disabled = false;
+        });
+    }
+    
+    // Helper functions for exportAnnotation
+    function formatUMRData(data) {
+        let umrContent = '';
+        
+        console.log('Formatting UMR data:', data);
+        
+        if (!data.sentences || !Array.isArray(data.sentences)) {
+            console.error('Invalid data format: sentences array is missing');
+            return '# Error: Invalid data format received from server';
+        }
+        
+        // Loop through each sentence in the document
+        data.sentences.forEach((sentence, index) => {
+            const sentId = index + 1;
+            
+            try {
+                // Add sentence meta-info
+                umrContent += `# meta-info :: sent_id = ${data.filename || 'unknown'}-s${sentId}\n`;
+                
+                // Add sentence text with index numbers
+                umrContent += `# :: snt${sentId}\t${sentence.text || ''}\n`;
+                
+                // Add word indices if available
+                if (sentence.words && Array.isArray(sentence.words) && sentence.words.length > 0) {
+                    umrContent += 'Index: ' + sentence.words.map((_, i) => i + 1).join('\t') + '\n';
+                    umrContent += 'Words: ' + sentence.words.join(' ') + '\n\n';
+                } else {
+                    umrContent += '\n';
+                }
+                
+                // Add sentence level annotation
+                umrContent += '# sentence level graph:\n';
+                if (sentence.annotation && typeof sentence.annotation === 'string' && sentence.annotation.trim()) {
+                    umrContent += sentence.annotation + '\n\n\n';
+                } else {
+                    umrContent += '()\n\n\n';
+                }
+                
+                // Add alignment information
+                umrContent += '# alignment:\n';
+                if (sentence.alignments && typeof sentence.alignments === 'object' && Object.keys(sentence.alignments).length > 0) {
+                    for (const [variable, alignments] of Object.entries(sentence.alignments)) {
+                        if (Array.isArray(alignments)) {
+                            for (const alignment of alignments) {
+                                umrContent += `${variable}: ${alignment}\n`;
+                            }
+                        }
+                    }
+                    umrContent += '\n\n';
+                } else {
+                    umrContent += '\n\n';
+                }
+                
+                // Add document level annotation for this sentence
+                umrContent += '# document level annotation:\n';
+                if (sentence.doc_annotation && typeof sentence.doc_annotation === 'string' && sentence.doc_annotation.trim()) {
+                    umrContent += sentence.doc_annotation + '\n\n\n';
+                } else {
+                    umrContent += '\n\n\n';
+                }
+                
+                // Add separator between sentences
+                umrContent += '################################################################################\n';
+            } catch (error) {
+                console.error('Error formatting sentence data:', error);
+                umrContent += '# Error: Failed to format sentence data\n\n';
+            }
+        });
+        
+        return umrContent;
+    }
+    
+    function downloadUMRFile(content, filename) {
+        // Create a blob with the content
+        const blob = new Blob([content], { type: 'text/plain' });
+        
+        // Create a download link
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = filename + '.umr';
+        
+        // Append the link to the body
+        document.body.appendChild(downloadLink);
+        
+        // Click the link to trigger the download
+        downloadLink.click();
+        
+        // Clean up
+        document.body.removeChild(downloadLink);
+        URL.revokeObjectURL(downloadLink.href);
+    }
+    
+    function showExportNotification(message, type) {
+        // Remove any existing notifications
+        const existingNotifications = document.querySelectorAll('.export-notification');
+        existingNotifications.forEach(notification => {
+            if (document.body.contains(notification)) {
+                document.body.removeChild(notification);
+            }
+        });
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `alert alert-${type === 'error' ? 'danger' : (type === 'info' ? 'info' : 'success')} export-notification`;
+        notification.style.position = 'fixed';
+        notification.style.top = '20px';
+        notification.style.left = '50%';
+        notification.style.transform = 'translateX(-50%)';
+        notification.style.padding = '10px 20px';
+        notification.style.borderRadius = '5px';
+        notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+        notification.style.zIndex = '9999';
+        notification.innerHTML = message;
+        notification.id = 'export-notification-' + Date.now();
+        
+        // Add notification to the document
+        document.body.appendChild(notification);
+        
+        // For success or error messages, remove after a delay
+        if (type === 'success' || type === 'error') {
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        }
+        // Info messages stay until the next message or success/error
+    }
+    
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize split panels for the 3-column layout
         Split(['.left-panel', '.middle-panel', '.right-panel'], {
@@ -452,271 +649,104 @@
             formatDocLevelAnnotation();
         }
 
-        // Run on DOMContentLoaded
-        document.addEventListener('DOMContentLoaded', function() {
-            ensureFormatting();
-            ensureTripleFormsPopulated();
-            
-            // Add export button listener
-            const exportButton = document.getElementById('export-annotation-btn');
-            if (exportButton) {
-                exportButton.addEventListener('click', function() {
-                    exportAnnotation();
-                });
-            }
-        });
+        // Call these functions when page loads
+        ensureFormatting();
+        ensureTripleFormsPopulated();
         
-        // Export annotation functionality
-        function exportAnnotation() {
-            console.log('Starting annotation export process');
-            
-            // Show a loading spinner
-            const exportButton = document.getElementById('export-annotation-btn');
-            const originalButtonHtml = exportButton.innerHTML;
-            exportButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Exporting...';
-            exportButton.disabled = true;
-            
-            // Get the document version ID
-            const docVersionId = document.getElementById('doc_version_id').value;
-            console.log(`Exporting annotations for document version ID: ${docVersionId}`);
-            
-            // Show status notification
-            showExportNotification('Fetching annotation data...', 'info');
-            
-            // Fetch all the annotation data for the document
-            fetch(`/export_annotation/${docVersionId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                console.log('Server response status:', response.status);
-                if (!response.ok) {
-                    console.error('Server responded with error status:', response.status);
-                    throw new Error(`Server error: ${response.status}`);
-                }
-                return response.json().catch(err => {
-                    console.error('Error parsing JSON response:', err);
-                    throw new Error('Invalid JSON response from server');
-                });
-            })
-            .then(data => {
-                console.log('Received data from server:', data);
+        function prevSentence() {
+            const sntId = parseInt("{{ snt_id }}");
+            if (sntId > 1) {
+                // Ask if the user wants to save before navigating
+                const shouldSave = confirm("Do you want to save your current changes before navigating to the previous sentence?");
                 
-                if (data.success) {
-                    showExportNotification('Formatting annotation data...', 'info');
-                    
-                    // Format the data into UMR format
-                    const formattedData = formatUMRData(data);
-                    console.log('Data formatted successfully, preparing download');
-                    
-                    // Download the formatted data as a file
-                    downloadUMRFile(formattedData, data.filename);
-                    console.log('File download initiated');
-                    
-                    // Show success message
-                    showExportNotification('Annotation exported successfully!', 'success');
+                const targetId = sntId - 1;
+                if (shouldSave) {
+                    // Save current annotation first, then navigate
+                    saveDocAnnotation().then(() => {
+                        window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
+                    });
                 } else {
-                    console.error('Server reported failure:', data.message);
-                    throw new Error(data.message || 'Failed to export annotation');
+                    // Navigate without saving
+                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
                 }
-            })
-            .catch(error => {
-                console.error('Error exporting annotation:', error);
-                showExportNotification('Error: ' + error.message, 'error');
-            })
-            .finally(() => {
-                // Restore button state
-                console.log('Export process completed');
-                exportButton.innerHTML = originalButtonHtml;
-                exportButton.disabled = false;
-            });
-        }
-        
-        function formatUMRData(data) {
-            let umrContent = '';
-            
-            console.log('Formatting UMR data:', data);
-            
-            if (!data.sentences || !Array.isArray(data.sentences)) {
-                console.error('Invalid data format: sentences array is missing');
-                return '# Error: Invalid data format received from server';
             }
-            
-            // Loop through each sentence in the document
-            data.sentences.forEach((sentence, index) => {
-                const sentId = index + 1;
+        }
+
+        function nextSentence() {
+            const sntId = parseInt("{{ snt_id }}");
+            const maxId = parseInt("{{ info2display.sents|length }}");
+            if (sntId < maxId) {
+                // Ask if the user wants to save before navigating
+                const shouldSave = confirm("Do you want to save your current changes before navigating to the next sentence?");
                 
-                try {
-                    // Add sentence meta-info
-                    umrContent += `# meta-info :: sent_id = ${data.filename || 'unknown'}-s${sentId}\n`;
-                    
-                    // Add sentence text with index numbers
-                    umrContent += `# :: snt${sentId}\t${sentence.text || ''}\n`;
-                    
-                    // Add word indices if available
-                    if (sentence.words && Array.isArray(sentence.words) && sentence.words.length > 0) {
-                        umrContent += 'Index: ' + sentence.words.map((_, i) => i + 1).join('\t') + '\n';
-                        umrContent += 'Words: ' + sentence.words.join(' ') + '\n\n';
-                    } else {
-                        umrContent += '\n';
-                    }
-                    
-                    // Add sentence level annotation
-                    umrContent += '# sentence level graph:\n';
-                    if (sentence.annotation && typeof sentence.annotation === 'string' && sentence.annotation.trim()) {
-                        umrContent += sentence.annotation + '\n\n\n';
-                    } else {
-                        umrContent += '()\n\n\n';
-                    }
-                    
-                    // Add alignment information
-                    umrContent += '# alignment:\n';
-                    if (sentence.alignments && typeof sentence.alignments === 'object' && Object.keys(sentence.alignments).length > 0) {
-                        for (const [variable, alignments] of Object.entries(sentence.alignments)) {
-                            if (Array.isArray(alignments)) {
-                                for (const alignment of alignments) {
-                                    umrContent += `${variable}: ${alignment}\n`;
-                                }
-                            }
-                        }
-                        umrContent += '\n\n';
-                    } else {
-                        umrContent += '\n\n';
-                    }
-                    
-                    // Add document level annotation for this sentence
-                    umrContent += '# document level annotation:\n';
-                    if (sentence.doc_annotation && typeof sentence.doc_annotation === 'string' && sentence.doc_annotation.trim()) {
-                        umrContent += sentence.doc_annotation + '\n\n\n';
-                    } else {
-                        umrContent += '\n\n\n';
-                    }
-                    
-                    // Add separator between sentences
-                    umrContent += '################################################################################\n';
-                } catch (error) {
-                    console.error('Error formatting sentence data:', error);
-                    umrContent += '# Error: Failed to format sentence data\n\n';
+                const targetId = sntId + 1;
+                if (shouldSave) {
+                    // Save current annotation first, then navigate
+                    saveDocAnnotation().then(() => {
+                        window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
+                    });
+                } else {
+                    // Navigate without saving
+                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
                 }
-            });
-            
-            return umrContent;
-        }
-        
-        function downloadUMRFile(content, filename) {
-            // Create a blob with the content
-            const blob = new Blob([content], { type: 'text/plain' });
-            
-            // Create a download link
-            const downloadLink = document.createElement('a');
-            downloadLink.href = URL.createObjectURL(blob);
-            downloadLink.download = filename + '.umr';
-            
-            // Append the link to the body
-            document.body.appendChild(downloadLink);
-            
-            // Click the link to trigger the download
-            downloadLink.click();
-            
-            // Clean up
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(downloadLink.href);
-        }
-        
-        function showExportNotification(message, type) {
-            // Remove any existing notifications
-            const existingNotifications = document.querySelectorAll('.export-notification');
-            existingNotifications.forEach(notification => {
-                document.body.removeChild(notification);
-            });
-            
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.className = `alert alert-${type === 'error' ? 'danger' : (type === 'info' ? 'info' : 'success')} export-notification`;
-            notification.style.position = 'fixed';
-            notification.style.top = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.padding = '10px 20px';
-            notification.style.borderRadius = '5px';
-            notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-            notification.style.zIndex = '9999';
-            notification.innerHTML = message;
-            notification.id = 'export-notification-' + Date.now();
-            
-            // Add notification to the document
-            document.body.appendChild(notification);
-            
-            // For success or error messages, remove after a delay
-            if (type === 'success' || type === 'error') {
-                setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
-                    }
-                }, 3000);
             }
-            // Info messages stay until the next message or success/error
+        }
+
+        function jumpToSentence(sentId) {
+            if (sentId) {
+                // Ask if the user wants to save before navigating
+                const shouldSave = confirm("Do you want to save your current changes before navigating to another sentence?");
+                
+                if (shouldSave) {
+                    // Save current annotation first, then navigate
+                    saveDocAnnotation().then(() => {
+                        // Properly generate the URL with Flask's url_for
+                        window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + sentId);
+                    });
+                } else {
+                    // Navigate without saving - properly generate URL
+                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + sentId);
+                }
+            }
         }
     });
 
-    function prevSentence() {
-        const sntId = parseInt("{{ snt_id }}");
-        if (sntId > 1) {
-            // Ask if the user wants to save before navigating
-            const shouldSave = confirm("Do you want to save your current changes before navigating to the previous sentence?");
-            
-            const targetId = sntId - 1;
-            if (shouldSave) {
-                // Save current annotation first, then navigate
-                saveDocAnnotation().then(() => {
-                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-                });
-            } else {
-                // Navigate without saving
-                window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-            }
+    function ensureFormatting() {
+        console.log("Ensuring document annotation formatting");
+        
+        // Try formatting immediately
+        if (typeof formatDocLevelAnnotation === 'function') {
+            formatDocLevelAnnotation();
         }
-    }
-
-    function nextSentence() {
-        const sntId = parseInt("{{ snt_id }}");
-        const maxId = parseInt("{{ info2display.sents|length }}");
-        if (sntId < maxId) {
-            // Ask if the user wants to save before navigating
-            const shouldSave = confirm("Do you want to save your current changes before navigating to the next sentence?");
-            
-            const targetId = sntId + 1;
-            if (shouldSave) {
-                // Save current annotation first, then navigate
-                saveDocAnnotation().then(() => {
-                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
-                });
-            } else {
-                // Navigate without saving
-                window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + targetId);
+        
+        // Also schedule it for after a short delay to ensure DOM is ready
+        setTimeout(function() {
+            if (typeof formatDocLevelAnnotation === 'function') {
+                formatDocLevelAnnotation();
             }
-        }
+        }, 100);
     }
-
-    function jumpToSentence(sentId) {
-        if (sentId) {
-            // Ask if the user wants to save before navigating
-            const shouldSave = confirm("Do you want to save your current changes before navigating to another sentence?");
-            
-            if (shouldSave) {
-                // Save current annotation first, then navigate
-                saveDocAnnotation().then(() => {
-                    // Properly generate the URL with Flask's url_for
-                    window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + sentId);
-                });
-            } else {
-                // Navigate without saving - properly generate URL
-                window.location.href = "{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=0) }}".replace('/0', '/' + sentId);
+    
+    function ensureTripleFormsPopulated() {
+        console.log("Ensuring triple forms are populated");
+        
+        // First try immediately
+        if (typeof populateTripleForms === 'function') {
+            populateTripleForms();
+        }
+        
+        // Also try after a delay to ensure DOM is fully ready
+        setTimeout(function() {
+            if (typeof populateTripleForms === 'function') {
+                console.log("Delayed call to populate triple forms");
+                populateTripleForms();
             }
-        }
+        }, 500);
     }
+    
+    // Run directly (in case DOM is already loaded)
+    ensureFormatting();
+    ensureTripleFormsPopulated();
 </script>
 {% endblock content %}
 
@@ -757,13 +787,7 @@
         }, 500);
     }
     
-    // Run on DOMContentLoaded
-    document.addEventListener('DOMContentLoaded', function() {
-        ensureFormatting();
-        ensureTripleFormsPopulated();
-    });
-    
-    // Also run directly (in case DOM is already loaded)
+    // Run directly (in case DOM is already loaded)
     ensureFormatting();
     ensureTripleFormsPopulated();
 </script>
