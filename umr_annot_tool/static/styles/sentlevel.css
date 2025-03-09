@@ -331,10 +331,21 @@ html, body {
     gap: 0.5rem;
 }
 
+.alignments-display {
+    margin-top: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
 .alignment-item {
     background-color: white;
-    border-radius: 4px;
-    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
 .alignment-item:last-child {
@@ -343,6 +354,9 @@ html, body {
 
 .alignments-list {
     margin-left: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .alignment-item .btn {
@@ -355,6 +369,15 @@ html, body {
     background-color: #dc3545;
     border-color: #dc3545;
     color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0;
 }
 
 .alignment-item .btn-danger:hover {
@@ -368,24 +391,45 @@ html, body {
 
 .variable.badge {
     font-size: 0.9rem;
-    padding: 0.35rem 0.65rem;
+    padding: 0.4rem 0.6rem;
+    margin-right: 0.75rem;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s;
+    color: white !important;
+    background-color: #0d6efd !important;
+    border: none;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
 .variable.badge:hover {
-    background-color: #0056b3;
+    background-color: #0a58ca !important;
+}
+
+.alignment-entry {
+    background-color: transparent;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
 }
 
 .alignment.badge {
-    font-size: 0.8rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.35rem 0.65rem;
     cursor: pointer;
+    background-color: #f1f3f5 !important;
+    color: #495057 !important;
+    font-size: 0.85rem;
+    border-radius: 6px;
     transition: background-color 0.2s;
+    border: 1px solid #dee2e6;
+    font-weight: 500;
 }
 
 .alignment.badge:hover {
-    background-color: #5a6268;
+    background-color: #e9ecef !important;
+    color: #212529 !important;
 }
 
 /* Editable input styles */

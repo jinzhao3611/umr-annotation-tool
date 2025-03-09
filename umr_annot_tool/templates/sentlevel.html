@@ -1629,12 +1629,12 @@
                         {% if curr_alignment %}
                             {% for variable, alignments in curr_alignment.items() %}
                             <div class="alignment-item" data-variable="{{ variable }}">
-                                <div class="d-flex align-items-center mb-2">
-                                    <span class="variable badge bg-primary me-2">{{ variable }}</span>
-                                    <div class="alignments-list d-flex flex-wrap">
+                                <div class="d-flex align-items-center">
+                                    <span class="variable badge bg-primary">{{ variable }}</span>
+                                    <div class="alignments-list">
                                         {% for alignment in alignments %}
-                                        <div class="alignment-item d-flex justify-content-between align-items-center me-2 mb-1">
-                                            <span class="alignment badge bg-secondary me-1" onclick="makeEditable(this, '{{ variable }}', '{{ alignment }}')">{{ alignment }}</span>
+                                        <div class="alignment-entry d-flex align-items-center">
+                                            <span class="alignment badge bg-secondary" onclick="makeEditable(this, '{{ variable }}', '{{ alignment }}')">{{ alignment }}</span>
                                             <button class="btn btn-sm btn-danger" onclick="deleteAlignmentValue('{{ variable }}', '{{ alignment }}')">×</button>
                                         </div>
                                         {% endfor %}
