@@ -330,6 +330,17 @@
                             <div>
                                 <form method="POST" action="{{ url_for('main.adjudication_select') }}" class="adjudication-inline-form">
                                     <!-- Hidden inputs for selected documents will be added via JavaScript -->
+                                    <!-- Comparison level options -->
+                                    <div class="comparison-level-options mb-3 text-right">
+                                        <label class="mr-3">
+                                            <input type="radio" name="comparison_level" value="sentence" checked> 
+                                            Sentence-level comparison
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="comparison_level" value="document"> 
+                                            Document-level comparison
+                                        </label>
+                                    </div>
                                     <button type="submit" class="btn btn-primary btn-lg inline-compare-btn" disabled>
                                         <i class="fas fa-columns"></i> Compare Documents
                                     </button>

@@ -97,20 +97,24 @@
     border-top: none;
     border-radius: 0 0 5px 5px;
     padding: 15px;
+    max-height: 600px; /* Increased to show more content */
     overflow: auto;
     position: relative;
     background-color: white;
     z-index: 22;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    font-family: monospace;
 }
 
 .annotation-content pre {
     margin: 0;
-    white-space: pre-wrap;
-    word-break: break-word;
-    flex: 1;
+    padding: 0;
+    white-space: pre;
+    word-break: keep-all;
+    background-color: transparent;
+    border: none;
+    font-size: 13px;
+    line-height: 1.5;
+    font-family: monospace;
 }
 
 /* Navigation bar */
@@ -169,27 +173,110 @@
     margin: 1px 0;
 }
 
-/* Legend for highlighting */
+/* Git-style diff line styling */
+.diff-line {
+    padding: 2px 10px;
+    white-space: pre;
+    font-family: monospace;
+    line-height: 1.5;
+    border-radius: 0;
+    margin: 0;
+    position: relative;
+    overflow: visible;
+    display: block;
+    box-sizing: border-box;
+}
+
+/* Remove border-left on diff lines with indentation to avoid double indentation */
+.diff-line .umr-indentation + * {
+    border-left: none;
+}
+
+/* UMR colors */
+.diff-line.added {
+    background-color: #e6ffed;
+    color: #24292e;
+    border-left: 4px solid #2cbe4e;
+}
+
+.diff-line.removed {
+    background-color: #ffeef0;
+    color: #24292e;
+    border-left: 4px solid #cb2431;
+}
+
+.diff-line.changed {
+    background-color: #fffbdd;
+    color: #24292e;
+    border-left: 4px solid #f9c513;
+}
+
+/* Enhanced legend styling */
 .highlight-legend {
     display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-left: auto;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-size: 0.85rem;
+    gap: 8px;
 }
 
 .legend-color {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
     border-radius: 3px;
-    border: 1px solid #dee2e6;
+}
+
+.legend-color.add {
+    background-color: #e6ffed;
+    border-left: 4px solid #2cbe4e;
+}
+
+.legend-color.remove {
+    background-color: #ffeef0;
+    border-left: 4px solid #cb2431;
+}
+
+.legend-color.change {
+    background-color: #fffbdd;
+    border-left: 4px solid #f9c513;
+}
+
+/* Comparison level indicator styling */
+.comparison-info {
+    margin-bottom: 10px;
+}
+
+.comparison-level-indicator {
+    display: flex;
+    align-items: center;
+}
+
+/* Comparison level selection styling in project page */
+.comparison-level-options {
+    margin-bottom: 10px;
+    padding: 5px 0;
+}
+
+.comparison-level-options label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.comparison-level-options input[type="radio"] {
+    margin-right: 5px;
 }
 
 /* Split.js gutter styling */
@@ -406,4 +493,15 @@
     transform: scale(2);
     opacity: 0;
     transition: 0s;
+}
+
+/* UMR-specific styling */
+.umr-indentation {
+    display: inline-block;
+    white-space: pre;
+    min-width: 4px;
+    font-family: monospace;
+    line-height: 1.4;
+    opacity: 1 !important;
+    visibility: visible !important;
 } 

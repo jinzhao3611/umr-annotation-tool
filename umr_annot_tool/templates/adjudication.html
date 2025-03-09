@@ -13,7 +13,8 @@
             docVersion2Id: {{ doc_version_2_id }},
             currentSentId: {{ sent_id }},
             maxSentId: {{ max_sent_id }},
-            language: "{{ lang }}"
+            language: "{{ lang }}",
+            comparisonLevel: "{{ comparison_level }}"
         };
     </script>
     
@@ -225,103 +226,121 @@
 {% block content %}
 <div class="container-fluid">
     <div class="adjudication-container">
-        <!-- Navigation bar with sentence navigation and info -->
+        <!-- Navigation bar with sentence text and navigation buttons -->
         <div class="navigation-bar">
-            <div class="nav-buttons">
-                <button id="prev-btn" class="btn btn-outline-primary" {% if sent_id == 1 %}disabled{% endif %}>
-                    <i class="fas fa-chevron-left"></i> Previous
-                </button>
-                <button id="next-btn" class="btn btn-outline-primary" {% if sent_id == max_sent_id %}disabled{% endif %}>
-                    Next <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-            <div class="sent-counter">
-                Sentence {{ sent_id }} of {{ max_sent_id }}
-            </div>
-            <div class="back-button">
-                <a href="{{ url_for('users.project', project_id=project_id) }}" class="btn btn-outline-secondary">
-                    <i class="fas fa-arrow-left"></i> Back to Project
-                </a>
-            </div>
-        </div>
-        
-        <!-- Current sentence text -->
-        <div class="sent-text">
-            {{ sent_text }}
-        </div>
-        
-        <!-- Side-by-side comparison container -->
-        <div class="comparison-container" id="split-container">
-            <!-- Left column - First document -->
-            <div class="doc-column" id="doc1-column">
-                <div class="doc-info">
-                    <div class="doc-name">{{ doc1.filename }}</div>
-                    <div class="doc-owner">
-                        {% if (doc1.is_qc is defined and doc1.is_qc) or 
-                              (doc1.version is defined and doc1.version > 1) or 
-                              (doc1.stage is defined and doc1.stage == 'qc') %}
-                            QC by: {{ doc1.username }} {% if doc1.version is defined %}(v{{ doc1.version }}){% endif %}
-                        {% else %}
-                            Initial document
-                        {% endif %}
-                    </div>
-                </div>
-                
-                <!-- Sentence level annotation -->
-                <div class="annotation-section">
-                    <div class="annotation-header">
-                        <span>Sentence-Level Annotation</span>
-                    </div>
-                    <div class="annotation-content" id="doc1-sent-annotation">
-                        <pre>{{ doc1_sent_annotation }}</pre>
-                    </div>
-                </div>
-                
-                <!-- Document level annotation -->
-                <div class="annotation-section">
-                    <div class="annotation-header">
-                        <span>Document-Level Annotation</span>
-                    </div>
-                    <div class="annotation-content" id="doc1-doc-annotation">
-                        <pre>{{ doc1_doc_annotation }}</pre>
-                    </div>
+            <div class="comparison-info d-flex align-items-center">
+                <span class="badge badge-pill badge-primary mr-3">
+                    {{ sent_id }} of {{ max_sent_id }}
+                </span>
+                <div class="comparison-level-indicator">
+                    <span class="badge badge-info">{{ comparison_level|capitalize }} Level Comparison</span>
+                    <a href="{{ url_for('main.adjudication', doc_version_1_id=doc_version_1_id, doc_version_2_id=doc_version_2_id, sent_id=sent_id, comparison_level='sentence' if comparison_level == 'document' else 'document') }}" 
+                       class="btn btn-sm btn-outline-secondary ml-2">
+                        Switch to {{ 'Document' if comparison_level == 'sentence' else 'Sentence' }} Level
+                    </a>
                 </div>
             </div>
             
-            <!-- Right column - Second document -->
-            <div class="doc-column" id="doc2-column">
+            <div class="sent-text">{{ sent_text }}</div>
+            
+            <div class="nav-buttons">
+                <button id="prev-btn" class="btn btn-outline-primary" {% if sent_id == 1 %}disabled{% endif %}>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button id="next-btn" class="btn btn-outline-primary" {% if sent_id == max_sent_id %}disabled{% endif %}>
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main comparison container with columns -->
+        <div class="comparison-container">
+            <!-- Left column - first document -->
+            <div id="doc1-column" class="doc-column">
+                <div class="doc-info">
+                    <div class="doc-name">{{ doc1.filename }}</div>
+                    <div class="doc-owner">
+                        <span class="owner-label">Owner:</span> 
+                        <span class="owner-name">{{ doc1.username }}</span>
+                        {% if doc1.is_qc %}
+                            <span class="badge badge-warning">QC</span>
+                        {% endif %}
+                        <span class="badge badge-secondary">v{{ doc1.version }}</span>
+                    </div>
+                </div>
+                
+                <!-- Only show the relevant annotation type based on comparison level -->
+                {% if comparison_level == 'sentence' %}
+                <div id="doc1-sent-annotation" class="annotation-section">
+                    <div class="annotation-header">
+                        <h5>Sentence-level Annotation</h5>
+                    </div>
+                    <div class="annotation-content">
+                        <pre>{{ doc1_sent_annotation }}</pre>
+                    </div>
+                </div>
+                {% else %}
+                <div id="doc1-doc-annotation" class="annotation-section">
+                    <div class="annotation-header">
+                        <h5>Document-level Annotation</h5>
+                    </div>
+                    <div class="annotation-content">
+                        <pre>{{ doc1_doc_annotation }}</pre>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- Right column - second document -->
+            <div id="doc2-column" class="doc-column">
                 <div class="doc-info">
                     <div class="doc-name">{{ doc2.filename }}</div>
                     <div class="doc-owner">
-                        {% if (doc2.is_qc is defined and doc2.is_qc) or 
-                              (doc2.version is defined and doc2.version > 1) or 
-                              (doc2.stage is defined and doc2.stage == 'qc') %}
-                            QC by: {{ doc2.username }} {% if doc2.version is defined %}(v{{ doc2.version }}){% endif %}
-                        {% else %}
-                            Initial document
+                        <span class="owner-label">Owner:</span> 
+                        <span class="owner-name">{{ doc2.username }}</span>
+                        {% if doc2.is_qc %}
+                            <span class="badge badge-warning">QC</span>
                         {% endif %}
+                        <span class="badge badge-secondary">v{{ doc2.version }}</span>
                     </div>
                 </div>
                 
-                <!-- Sentence level annotation -->
-                <div class="annotation-section">
+                <!-- Only show the relevant annotation type based on comparison level -->
+                {% if comparison_level == 'sentence' %}
+                <div id="doc2-sent-annotation" class="annotation-section">
                     <div class="annotation-header">
-                        <span>Sentence-Level Annotation</span>
+                        <h5>Sentence-level Annotation</h5>
                     </div>
-                    <div class="annotation-content" id="doc2-sent-annotation">
+                    <div class="annotation-content">
                         <pre>{{ doc2_sent_annotation }}</pre>
                     </div>
                 </div>
-                
-                <!-- Document level annotation -->
-                <div class="annotation-section">
+                {% else %}
+                <div id="doc2-doc-annotation" class="annotation-section">
                     <div class="annotation-header">
-                        <span>Document-Level Annotation</span>
+                        <h5>Document-level Annotation</h5>
                     </div>
-                    <div class="annotation-content" id="doc2-doc-annotation">
+                    <div class="annotation-content">
                         <pre>{{ doc2_doc_annotation }}</pre>
                     </div>
                 </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Difference legend -->
+        <div class="highlight-legend">
+            <div class="legend-item">
+                <div class="legend-color add"></div>
+                <span>Addition</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color remove"></div>
+                <span>Removal</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color change"></div>
+                <span>Change</span>
             </div>
         </div>
     </div>

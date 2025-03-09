@@ -1461,6 +1461,7 @@ def view_combined(doc_version_id, sent_id):
 def adjudication_select():
     """Process the selection of two documents for adjudication and redirect to the adjudication view."""
     selected_docs = request.form.getlist('selected_docs')
+    comparison_level = request.form.get('comparison_level', 'sentence')  # Default to sentence level if not specified
     
     # Validate selection
     if len(selected_docs) != 2:
@@ -1475,13 +1476,17 @@ def adjudication_select():
     return redirect(url_for('main.adjudication', 
                            doc_version_1_id=doc_version_1_id,
                            doc_version_2_id=doc_version_2_id,
-                           sent_id=1))
+                           sent_id=1,
+                           comparison_level=comparison_level))
 
 @main.route("/adjudication/<int:doc_version_1_id>/<int:doc_version_2_id>/<int:sent_id>", methods=['GET'])
 @login_required
 def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
     """Display the adjudication view comparing two document versions side by side."""
     try:
+        # Get comparison level from query parameter, default to sentence
+        comparison_level = request.args.get('comparison_level', 'sentence')
+        
         # Get document versions
         doc_version_1 = DocVersion.query.get_or_404(doc_version_1_id)
         doc_version_2 = DocVersion.query.get_or_404(doc_version_2_id)
@@ -1573,6 +1578,7 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
                               doc1_doc_annotation=doc1_doc_annotation,
                               doc2_sent_annotation=doc2_sent_annotation,
                               doc2_doc_annotation=doc2_doc_annotation,
+                              comparison_level=comparison_level,
                               lang=project.language)
     
     except Exception as e:
