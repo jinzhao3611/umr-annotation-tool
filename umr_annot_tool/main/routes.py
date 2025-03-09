@@ -54,11 +54,11 @@ lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 @main.route("/")
 def home():
     """Handle requests to the root URL."""
-    logger.info("Root URL accessed, redirecting to home or login")
+    logger.info("Root URL accessed, rendering user guide or redirecting to account")
     if current_user.is_authenticated:
         return redirect(url_for('users.account'))
     else:
-        return redirect(url_for('users.login'))
+        return render_template('user_guide.html', title='Welcome to UMR Writer 3.0')
 
 @main.route("/new_project", methods=['GET', 'POST'])
 def new_project():

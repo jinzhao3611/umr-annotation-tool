@@ -1,135 +1,389 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>Guides</h2>
+<div class="container user-guide">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- Navigation Sidebar -->
+            <div class="sticky-top" style="top: 80px;">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h4>UMR Writer Guide</h4>
+                    </div>
+                    <div class="card-body">
+                        <nav id="guide-nav" class="nav flex-column">
+                            <a class="nav-link" href="#getting-started">Getting Started</a>
+                            <a class="nav-link" href="#project-workflow">Project Workflow</a>
+                            <a class="nav-link" href="#account-page">Account Page</a>
+                            <a class="nav-link" href="#project-page">Project Page</a>
+                            <a class="nav-link" href="#sentence-annotation">Sentence-Level Annotation</a>
+                            <a class="nav-link" href="#document-annotation">Document-Level Annotation</a>
+                            <a class="nav-link" href="#search">Search Functionality</a>
+                            <a class="nav-link" href="#updates">Updates & Announcements</a>
+                            <a class="nav-link" href="#sample-files">Sample Files</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <!-- Welcome Section -->
+            <div class="jumbotron">
+                <h1 class="display-4">Welcome to UMR Writer 3.0</h1>
+                <p class="lead">A web application for UMR (Uniform Meaning Representation) annotation.</p>
+                <hr class="my-4">
+                <p>This guide will help you navigate through the features and functionalities of the UMR Writer 3.0.</p>
+                
+                <div class="mt-4 p-3 bg-light border rounded">
+                    <h5><i class="fas fa-bug"></i> Feedback & Support</h5>
+                    <p>I welcome bug reports and feature requests. I will respond within 24 hours. You can:</p>
+                    <ul>
+                        <li><strong>Raise an issue</strong> on the <a href="https://github.com/jinzhao3611/umr-annotation-tool" target="_blank">UMR GitHub page</a></li>
+                        <li><strong>Send an email</strong> to <a href="mailto:jinzhao@brandeis.edu">jinzhao@brandeis.edu</a></li>
+                    </ul>
+                    <p class="mb-0">Thank you for your support in improving UMR Writer.</p>
+                </div>
+            </div>
+            
+            <!-- Getting Started Section -->
+            <section id="getting-started" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Getting Started</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>Register and Login</h4>
+                        <p>To begin using UMR Writer, you'll need to:</p>
+                        <ol>
+                            <li>Click on the <strong>Register</strong> link in the top navigation bar</li>
+                            <li>Fill in your information to create an account</li>
+                            <li>Once registered, use the <strong>Login</strong> link to access your account</li>
+                        </ol>
+                        <p>All annotation work requires you to be logged in to your account.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Project Workflow Section -->
+            <section id="project-workflow" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Project Workflow</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>UMR Writer organizes annotation work into projects. Here's the typical workflow:</p>
+                        <ol>
+                            <li>Create or join a project</li>
+                            <li>Check out documents for annotation</li>
+                            <li>Complete sentence-level annotations</li>
+                            <li>Complete document-level annotations</li>
+                            <li>Submit your work for quality control</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Account Page Section -->
+            <section id="account-page" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Account Page</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Your account page serves as your dashboard and displays:</p>
+                        <ul>
+                            <li>All projects you are a member of</li>
+                            <li>Quick access to your projects by clicking on their names</li>
+                            <li>Preview of documents within your account</li>
+                            <li>Association between documents and projects</li>
+                        </ul>
+                        <p>This is your starting point for all annotation activities after logging in.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Project Page Section -->
+            <section id="project-page" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Project Page</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>Creating a New Project</h4>
+                        <ul>
+                            <li>Each project supports files in a single language only</li>
+                            <li>Language-specific framefiles are automatically installed upon project creation</li>
+                        </ul>
+                        
+                        <h4>Project Navigation</h4>
+                        <p>Navigate through project features using tabs on the left panel:</p>
+                        
+                        <div class="accordion" id="projectFeaturesAccordion">
+                            <!-- Documents Tab -->
+                            <div class="card">
+                                <div class="card-header" id="headingDocuments">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDocuments" aria-expanded="true" aria-controls="collapseDocuments">
+                                            Documents Tab
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseDocuments" class="collapse show" aria-labelledby="headingDocuments" data-parent="#projectFeaturesAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li>Preview initial documents available for annotation</li>
+                                            <li>Check out documents for annotation</li>
+                                            <li>View which annotator has checked out specific documents</li>
+                                            <li>Admins can delete initial documents (this also removes related annotations and quality control documents)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- My Checked-out Documents Tab -->
+                            <div class="card">
+                                <div class="card-header" id="headingCheckedOut">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseCheckedOut" aria-expanded="false" aria-controls="collapseCheckedOut">
+                                            My Checked-out Documents Tab
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseCheckedOut" class="collapse" aria-labelledby="headingCheckedOut" data-parent="#projectFeaturesAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li>Access your annotations here</li>
+                                            <li>Override existing annotations by uploading a document with an identical name and format using the "Override Document" button</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Administrative Functions -->
+                            <div class="card">
+                                <div class="card-header" id="headingAdmin">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
+                                            Administrative Functions
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseAdmin" class="collapse" aria-labelledby="headingAdmin" data-parent="#projectFeaturesAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><strong>Upload Documents:</strong> Admins upload initial annotation documents here</li>
+                                            <li><strong>Update Lexicon:</strong> Feature pending for UMR Writer 3.0</li>
+                                            <li><strong>Add and Delete Members:</strong> Only admins manage project membership</li>
+                                            <li><strong>Check Statistics:</strong> View annotation progress by members</li>
+                                            <li><strong>Change Settings:</strong> Modify document names and other project settings</li>
+                                            <li><strong>Change Lattice Settings:</strong> Customize annotation dropdown menus based on language needs</li>
+                                            <li><strong>Change Privacy Settings:</strong> Feature pending for future version</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Quality Control -->
+                            <div class="card">
+                                <div class="card-header" id="headingQC">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseQC" aria-expanded="false" aria-controls="collapseQC">
+                                            Quality Control Features
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseQC" class="collapse" aria-labelledby="headingQC" data-parent="#projectFeaturesAccordion">
+                                    <div class="card-body">
+                                        <ul>
+                                            <li><strong>Submit to Quality Control:</strong> Annotators submit finished annotations for review</li>
+                                            <li><strong>Adjudicate:</strong> Compare two annotation files using AnCast integration and review evaluation metrics</li>
+                                            <li><strong>Add New Frames and Rolesets:</strong> Feature pending for UMR Writer 3.0</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sentence-Level Annotation Section -->
+            <section id="sentence-annotation" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Sentence-Level Annotation</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>Interface Overview</h4>
+                        <p>The sentence-level annotation interface features a two-column display:</p>
+                        <ul>
+                            <li><strong>Left panel:</strong> Navigate between sentences and view interactive annotations</li>
+                            <li><strong>Right panel:</strong> Document info, quick actions, temporary branch storage, and alignments</li>
+                        </ul>
+                        
+                        <h4>Key Features</h4>
+                        <ul>
+                            <li><strong>Sentence Navigation:</strong> Click sentences directly or use previous/next buttons (`<-`/`->`)</li>
+                            <li><strong>In-Place Editing:</strong> Enable edit mode to directly modify relations (highlighted blue) and attribute values (highlighted green)</li>
+                            <li><strong>Branch Management:</strong> Delete, move, or add branches via right-click context menu (with edit mode OFF)</li>
+                            <li><strong>Annotation Types:</strong> Annotate root nodes, abstract concepts, discourse concepts, reification roles, lexicalized concepts, MWEs, named entities, quoted strings, numbers, and reentrancies</li>
+                            <li><strong>Temporary Branch Storage:</strong> Store branches temporarily to reuse across sentences, viewable in the right panel</li>
+                            <li><strong>Alignment Handling:</strong> Alignments auto-generated with edits. Manual alignment required when using temporary branches or numeric abstract concepts</li>
+                            <li><strong>Export Annotations:</strong> Save all annotations of this documentlocally</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Document-Level Annotation Section -->
+            <section id="document-annotation" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Document-Level Annotation</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>Interface Overview</h4>
+                        <p>The document-level annotation interface features a three-column display:</p>
+                        <ul>
+                            <li><strong>Left column:</strong> Sentence-level annotations</li>
+                            <li><strong>Middle column:</strong> Current document-level annotation</li>
+                            <li><strong>Right column:</strong> Document info, navigation, and annotation menu</li>
+                        </ul>
+                        
+                        <h4>Working with Triples</h4>
+                        <ul>
+                            <li><strong>Add Triples:</strong> Add temporal, modal, or coreference triples via the annotation menu in the right column</li>
+                            <li><strong>Delete Triples:</strong> Delete triples directly from the middle column via right-click</li>
+                            <li><strong>Save Work:</strong> Remember to save annotations frequently to prevent data loss</li>
+                            <li><strong>Export Annotations:</strong> Save all annotations of this document locally</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Search Functionality Section -->
+            <section id="search" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Search Functionality</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>UMR Writer offers powerful search capabilities:</p>
+                        <ul>
+                            <li>Search tokens, concepts, or relations at sentence or document levels</li>
+                            <li>View comprehensive statistics on search results</li>
+                            <li>Filter search results by various criteria</li>
+                        </ul>
+                        <p>This functionality is particularly useful for finding patterns across annotations or locating specific examples.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Updates & Announcements Section -->
+            <section id="updates" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Updates & Announcements</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Check the Posts section for:</p>
+                        <ul>
+                            <li>Latest updates about UMR Writer 3.0</li>
+                            <li>Feature announcements</li>
+                            <li>Important changes to the application</li>
+                            <li>Community announcements</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Sample Files Section -->
+            <section id="sample-files" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>File Formats Accepted by UMR Writer 3.0</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>UMR Writer only supports the format in UMR 2.0 data release.</p>
+                        <p>Both uploaded and exported files are in UMR 2.0 format.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
 
-    <h5>LREC Demo Examples</h5>
-    <ul>
-        <li>plain_text example file: <a href="{{ url_for('main.download', filename="news-text-2-lorelei.txt") }}">news-text-2-lorelei.txt</a></li>
-        <li>exported plain_text example file: <a href="{{ url_for('main.download', filename="exported_news-text-2-lorelei.txt") }}">exported_news-text-2-lorelei.txt</a></li>
-    </ul>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Highlight active section in sidebar as user scrolls
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('#guide-nav a');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('#guide-nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    });
+</script>
 
-    <h5>Below are sample file formats that the tool accepts:</h5>
-    <ul>
-        <li>plain_text example file: <a href="{{ url_for('main.download', filename="news-text-2-lorelei.txt") }}">news-text-2-lorelei.txt</a></li>
-        <li>exported plain_text example file: <a href="{{ url_for('main.download', filename="exported_news-text-2-lorelei.txt") }}">exported_news-text-2-lorelei.txt</a></li>
-        <li>flex1 example file: <a href="{{ url_for('main.download', filename="Original_Verifiable_generic_Paragraphs.xml") }}" >Original_Verifiable_generic_Paragraphs.xml</a></li>
-        <li>flex2 example file: <a href="{{ url_for('main.download', filename="Original_Verifiable_generic.xml") }}" >Original_Verifiable_generic.xml</a></li>
-        <li>flex3 example file: <a href="{{ url_for('main.download', filename="Original_XLingPaper_align_morphemes.xml") }}" >Original_XLingPaper_align_morphemes.xml</a></li>
-        <li>toolbox1 example file: <a href="{{ url_for('main.download', filename="arapahoe.xml") }}" >arapahoe.xml</a></li>
-        <li>toolbox2 example file: <a href="{{ url_for('main.download', filename="04NOV2006-3.xml") }}" >04NOV2006-3.xml</a></li>
-        <li>toolbox3 example file: <a href="{{ url_for('main.download', filename="04NOV2006-3.txt") }}" >04NOV2006-3.txt</a></li>
-        <li>toolbox4 example file: <a href="{{ url_for('main.download', filename="kuk1999oct01-umr2.txt") }}" >kuk1999oct01-umr2.txt</a></li>
-    </ul>
-
-{#    <iframe width="420" height="315"#}
-{#    src="https://www.youtube.com/embed/dMcnbXEOBkc&t=6s">#}
-{#    </iframe>#}
-
-{#    <p>Below is an example showing how to annotate an English sentence.</p>#}
-{#    <p>First you should register an account, you should always annotate after logging in.</p>#}
-{#    <p>On home page, click on login.</p>#}
-{#    <img src="../static/guidelines_pics/homepage.png" alt="homepage" width="750" height="450">#}
-{#    <p>This is the login page, type in your Email and password. </p>#}
-{#    <img src="../static/guidelines_pics/login.png" alt="login" width="750" height="450">#}
-{#    <p>After logging in, click annotate on Nav bar:</p>#}
-{#    <img src="../static/guidelines_pics/homepage_after_login.png" alt="homepage_after_login" width="750" height="450">#}
-{#    <p>Choose a txt file, flex format xml or tool box format xml, choose a language, then click on Annotate button</p>#}
-{#    <img src="../static/guidelines_pics/upload.png" alt="upload" width="750" height="450">#}
-{##}
-{#    <p>At the following annotation page, you can select "tasted" in the sentence by double clicking or click and drag.#}
-{#        Then there is a button appears after Lexicalized Concept on the right: click the "tasted" button. </p>#}
-{#    <img src="../static/guidelines_pics/select.png" alt="select" width="750" height="450">#}
-{##}
-{#    <p>In the submenu, hover over find lemma, and click on tasted-01 in the subsubmenu: </p>#}
-{#    <img src="../static/guidelines_pics/predicate.png" alt="predicate" width="750" height="450">#}
-{##}
-{#    <p>Then the first line of annotation (t / taste-01) appears under UMR Penman Annotation, alignments section is updated, and tasted is colored, s1t is colored because it's current head:</p>#}
-{#    <img src="../static/guidelines_pics/annot_1.png" alt="annot_1" width="750" height="450">#}
-{##}
-{#    <p> Add attribute: click on Attribute box on the right, choose :Aspect, then an Attribute values box will appear#}
-{#        right below the Attribute box, and then choose Performance </p>#}
-{#    <img src="../static/guidelines_pics/attribute_1.png" alt="attribute_1" width="750" height="450">#}
-{##}
-{#    <p>Click on Add attribute button, UMR Penman Annotation and Alignments on the left will be updated accordingly </p>#}
-{#    <img src="../static/guidelines_pics/attribute_2.png" alt="attribute_2" width="750" height="450">#}
-{##}
-{#    <p>Add named entity: Choose :ARG0 in Roles(English) box, choose person in Named Entity Types box</p>#}
-{#    <img src="../static/guidelines_pics/addNe_1.png" alt="addNe_1" width="750" height="450">#}
-{##}
-{#    <p>Select Edmund Pope on the left, click on Edmund Pop in lexicalized Concept on the right: </p>#}
-{#    <img src="../static/guidelines_pics/addNe_2.png" alt="addNe_2" width="750" height="450">#}
-{##}
-{#    <p>new amr is generated on the left</p>#}
-{#    <img src="../static/guidelines_pics/addNe_3.png" alt="addNe_3" width="750" height="450">#}
-{##}
-{#    <p>Add a concept, choose :ARG1 on the right</p>#}
-{#    <img src="../static/guidelines_pics/addConcept_1.png" alt="addConcept_1" width="750" height="450">#}
-{##}
-{#    <p>Choose the correct sense of freedom on the right</p>#}
-{#    <img src="../static/guidelines_pics/addConcept_2.png" alt="addConcept_2" width="750" height="450">#}
-{##}
-{#    <p>Annotation is generated, but we want sense free-04 instead of freedom, we can change it manually </p>#}
-{#    <img src="../static/guidelines_pics/addConcept_3.png" alt="addConcept_3" width="750" height="450">#}
-{##}
-{#    <p>Rlick on the replace button on the right. </p>#}
-{#    <img src="../static/guidelines_pics/replace_1.png" alt="replace_1" width="750" height="450">#}
-{##}
-{#    <p>Replace in place by editing in the blue box. </p>#}
-{#    <img src="../static/guidelines_pics/replace_2.png" alt="replace_2" width="750" height="450">#}
-{##}
-{#    <p>Concept is replaced </p>#}
-{#    <img src="../static/guidelines_pics/replace_3.png" alt="replace_3" width="750" height="450">#}
-{##}
-{#    <p>To add a concept that alreay existed in the tree, choose the variable in the tree</p>#}
-{#    <img src="../static/guidelines_pics/addCoref_1.png" alt="addCoref_1" width="750" height="450">#}
-{##}
-{#    <p>the variable will be added in place. </p>#}
-{#    <img src="../static/guidelines_pics/addCoref_2.png" alt="addCoref_2" width="750" height="450">#}
-{##}
-{#    <p>Add abstract concept as following </p>#}
-{#    <img src="../static/guidelines_pics/addAbstractConcept_1.png" alt="addAbstractConcept_1" width="750" height="450">#}
-{#    <img src="../static/guidelines_pics/addAbstractConcept_2.png" alt="addAbstractConcept_1" width="750" height="450">#}
-{##}
-{#    <p>Change the head as following:</p>#}
-{#    <img src="../static/guidelines_pics/setHead_1.png" alt="setHead_1" width="750" height="450">#}
-{#    <img src="../static/guidelines_pics/setHead_2.png" alt="setHead_2" width="750" height="450">#}
-{##}
-{#    <p>Add number as following:</p>#}
-{#    <img src="../static/guidelines_pics/addNum.png" alt="addNum" width="750" height="450">#}
-{##}
-{#    <p>Add multiple words as following</p>#}
-{#    <img src="../static/guidelines_pics/addMultiWords_1.png" alt="addMultiWords_1" width="750" height="450">#}
-{#    <img src="../static/guidelines_pics/addMultiWords_2.png" alt="addMultiWords_2" width="750" height="450">#}
-{##}
-{#    <p>Move to the next sentence by clicking next button, finish the annotation, click on save2db button, then move on to document level annotation by clicking on the doc-level-annot button</p>#}
-{#    <img src="../static/guidelines_pics/doc_annot.png" alt="doc_annot" width="750" height="450">#}
-{##}
-{##}
-{#    <p>To annotate the first sentence, make sure the current sentence box is showing 1, if not, change it to 1, and click save&go, choose the relation, and type in the arguments in Enter Args box. Click on save2db button after you finish</p>#}
-{#    <img src="../static/guidelines_pics/docTemporal.png" alt="docTemporal" width="750" height="450">#}
-{##}
-{#    <p>This is another example:</p>#}
-{#    <img src="../static/guidelines_pics/docModal.png" alt="docModal" width="750" height="450">#}
-{##}
-{#    <p>During or after the process of annotating, you can click on export button to save a txt file on your local computer </p>#}
-{#    <img src="../static/guidelines_pics/export.png" alt="export" width="750" height="450">#}
-{#    <img src="../static/guidelines_pics/exportedFile.png" alt="exportedFile" width="750" height="450">#}
-{##}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<style>
+    .user-guide .card-header.bg-steel {
+        background-color: #5f788a;
+    }
+    
+    .user-guide .nav-link.active {
+        background-color: #5f788a;
+        color: white;
+    }
+    
+    .user-guide section {
+        scroll-margin-top: 100px;
+    }
+    
+    .user-guide .accordion .btn-link {
+        color: #5f788a;
+        text-decoration: none;
+        width: 100%;
+        text-align: left;
+    }
+    
+    .user-guide .accordion .btn-link:hover,
+    .user-guide .accordion .btn-link:focus {
+        text-decoration: none;
+    }
+    
+    .user-guide .jumbotron {
+        background-color: #f8f9fa;
+        border-left: 5px solid #5f788a;
+    }
+</style>
 {% endblock content %}
+
+{% block scripts %}
+<!-- Additional JavaScript for the user guide page can be added here -->
+{% endblock scripts %}
