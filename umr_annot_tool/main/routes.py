@@ -1873,3 +1873,109 @@ def get_frames():
         current_app.logger.error(f"Error looking up frames for '{word}': {str(e)}")
         current_app.logger.exception(e)  # This logs the full stack trace
         return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 500
+
+@main.route("/export_annotation/<int:doc_version_id>", methods=['GET'])
+@login_required
+def export_annotation(doc_version_id):
+    """
+    Export all annotation data for a document in UMR format
+    
+    Args:
+        doc_version_id: The ID of the document version to export
+        
+    Returns:
+        JSON response with the annotation data or an error message
+    """
+    logger.info(f"Export annotation request for document version {doc_version_id}")
+    
+    try:
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        
+        # Check if the user has permission to access this document
+        project_user = Projectuser.query.filter_by(
+            user_id=current_user.id, 
+            project_id=doc_version.doc.project_id
+        ).first()
+        
+        if not project_user and not current_user.is_admin:
+            logger.warning(f"User {current_user.id} tried to access document version {doc_version_id} without permission")
+            return jsonify({"success": False, "message": "You don't have permission to access this document"}), 403
+        
+        # Get the document filename
+        filename = doc_version.doc.filename.split('.')[0]  # Remove extension if present
+        
+        # Get all sentences for this document version
+        sents = Sent.query.filter_by(doc_id=doc_version.doc_id).order_by(Sent.id).all()
+        
+        # Detailed debug logging
+        logger.info(f"Found {len(sents)} sentences for document version {doc_version_id}")
+        
+        # Prepare the response data
+        sentences_data = []
+        
+        for sent in sents:
+            # Get the annotation for this sentence
+            annotation = Annotation.query.filter_by(
+                doc_version_id=doc_version_id,
+                sent_id=sent.id
+            ).first()
+            
+            # Detailed debug logging
+            logger.info(f"Processing sentence {sent.id}:")
+            logger.info(f"  - content: {sent.content[:50]}...")
+            logger.info(f"  - annotation: {annotation.id if annotation else 'None'}")
+            
+            # Get alignments
+            alignments = {}
+            if annotation and annotation.alignment:
+                alignments = annotation.alignment
+                logger.info(f"  - alignments: {alignments}")
+            
+            # Get words and create indices
+            try:
+                words = sent.content.split()
+                logger.info(f"  - words: {words[:5]}...")
+            except Exception as e:
+                logger.error(f"Error splitting content: {e}")
+                words = []
+            
+            # Add sentence data to the list
+            sentence_data = {
+                "text": sent.content if hasattr(sent, 'content') else "",
+                "words": words,
+                "annotation": annotation.sent_annot if annotation else "",
+                "alignments": alignments,
+                "doc_annotation": annotation.doc_annot if annotation else ""
+            }
+            
+            sentences_data.append(sentence_data)
+        
+        # Log the complete structure
+        logger.info(f"Prepared data for {len(sentences_data)} sentences")
+        
+        # Create the response
+        response_data = {
+            "success": True,
+            "filename": filename,
+            "sentences": sentences_data
+        }
+        
+        logger.info(f"Successfully exported annotation data for document version {doc_version_id}")
+        return jsonify(response_data)
+        
+    except Exception as e:
+        import traceback
+        error_traceback = traceback.format_exc()
+        logger.error(f"Error exporting annotation data for document version {doc_version_id}: {str(e)}")
+        logger.error(f"Traceback: {error_traceback}")
+        
+        # Return a more detailed error message in development mode
+        if current_app.debug:
+            return jsonify({
+                "success": False, 
+                "message": str(e),
+                "traceback": error_traceback
+            }), 500
+        else:
+            return jsonify({"success": False, "message": str(e)}), 500
