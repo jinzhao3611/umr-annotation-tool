@@ -784,7 +784,8 @@ function addBranchToNode(variable, branchContent) {
     lines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
     
     // Update the annotation display
-    annotationElement.textContent = lines.join('\n');
+    const updatedText = lines.join('\n');
+    annotationElement.textContent = updatedText;
     
     // Completely reinitialize the editor
     reinitializeEditor(annotationElement);
@@ -806,6 +807,108 @@ function addBranchToNode(variable, branchContent) {
             8000 // Show for 8 seconds
         );
     }, 1500); // Delay to show after the success message
+    
+    // Use the standard form submission to save changes
+    setTimeout(() => {
+        // Try to find and call the appropriate save function
+        if (typeof finalizeUmrString === 'function') {
+            // This function from relation_editor.js prepares the UMR string for saving
+            console.log('Finalizing UMR string...');
+            finalizeUmrString();
+        }
+        
+        // Find the save button or form submit button
+        // Use standard DOM selectors only (no jQuery-style selectors)
+        const saveSelectors = [
+            '#save-btn', 
+            '#save_button',
+            '#save',
+            '#submit-btn',
+            '#submit_button',
+            '#submit',
+            'button[type="submit"]', 
+            'input[type="submit"]'
+        ];
+        
+        let saveButtonFound = false;
+        
+        // Try each selector
+        for (const selector of saveSelectors) {
+            const saveButton = document.querySelector(selector);
+            if (saveButton) {
+                console.log(`Found save button with selector: ${selector}`);
+                saveButton.click();
+                saveButtonFound = true;
+                showNotification('Changes saved', 'success');
+                break;
+            }
+        }
+        
+        // If no save button found, try to find buttons with "save" or "submit" text
+        if (!saveButtonFound) {
+            const allButtons = document.querySelectorAll('button');
+            for (const button of allButtons) {
+                const buttonText = button.textContent.toLowerCase();
+                if (buttonText.includes('save') || buttonText.includes('submit')) {
+                    console.log('Found button with save/submit text:', buttonText);
+                    button.click();
+                    saveButtonFound = true;
+                    showNotification('Changes saved', 'success');
+                    break;
+                }
+            }
+        }
+        
+        // If no save button found, try the form submission approach
+        if (!saveButtonFound) {
+            // Look for forms with an action URL that might be for saving
+            const forms = document.querySelectorAll('form');
+            let formFound = false;
+            
+            for (const form of forms) {
+                // Check if this looks like a save form
+                if (form.action && form.action.toLowerCase().includes('save')) {
+                    console.log('Found form with save action:', form.action);
+                    formFound = true;
+                    try {
+                        // Update the hidden annotation field if it exists
+                        const annotField = form.querySelector('textarea[name="annotation"], input[name="annotation"]');
+                        if (annotField) {
+                            annotField.value = updatedText;
+                        }
+                        
+                        // Submit the form
+                        form.submit();
+                        showNotification('Changes saved through form submission', 'success');
+                        break;
+                    } catch (e) {
+                        console.error('Error submitting form:', e);
+                    }
+                }
+            }
+            
+            // If no appropriate forms found either
+            if (!formFound) {
+                console.warn('Could not find a save button or appropriate form to submit');
+                showNotification('Please save your changes manually', 'info', 6000);
+                
+                // As a last resort, try to trigger the standard save keyboard shortcut (Ctrl+S)
+                try {
+                    const saveEvent = new KeyboardEvent('keydown', {
+                        key: 's',
+                        code: 'KeyS',
+                        ctrlKey: true,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    document.dispatchEvent(saveEvent);
+                    console.log('Tried to trigger Ctrl+S save shortcut');
+                } catch (e) {
+                    console.error('Error triggering save shortcut:', e);
+                }
+            }
+        }
+    }, 2500); // Give time for the editor to reinitialize before saving
 }
 
 // Extract variables from text for display in the reminder
