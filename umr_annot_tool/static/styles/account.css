@@ -247,3 +247,22 @@ input:checked + .slider:before {
         margin-bottom: 1rem;
     }
 }
+
+/* Badge styles for better readability */
+.badge.bg-secondary {
+    background-color: #e9ecef !important;
+    color: #495057 !important;
+    font-weight: 600;
+    border: 1px solid #ced4da;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: 4px;
+    letter-spacing: 0.01em;
+}
+
+/* For badges that need to stand out more */
+.badge.bg-primary {
+    color: white !important;
+    font-weight: 600;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}

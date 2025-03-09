@@ -217,10 +217,38 @@ td {
 
 /* ===== Badges ===== */
 .badge {
-    padding: 0.4em 0.6em;
-    font-size: 75%;
-    font-weight: 700;
-    border-radius: 0.25rem;
+    font-weight: 600;
+    padding: 0.35rem 0.65rem;
+    border-radius: 4px;
+    letter-spacing: 0.01em;
+    font-size: 0.85rem;
+}
+
+.badge.bg-secondary {
+    background-color: #e9ecef !important;
+    color: #495057 !important;
+    border: 1px solid #ced4da;
+}
+
+.badge.bg-primary {
+    color: white !important;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.badge.bg-info {
+    color: #0c5460 !important;
+    background-color: #d1ecf1 !important;
+    border: 1px solid #bee5eb;
+}
+
+.badge.bg-success {
+    color: white !important;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+.badge.bg-danger {
+    color: white !important;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
 /* ===== Footer ===== */

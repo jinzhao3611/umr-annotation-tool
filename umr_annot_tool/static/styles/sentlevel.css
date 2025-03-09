@@ -476,4 +476,22 @@ html, body {
 /* Context Menu Additions */
 .branch-context-menu .store-temp-option {
     color: #0066cc;
+}
+
+/* Global badge styling improvements */
+.badge.bg-secondary {
+    background-color: #e9ecef !important;
+    color: #495057 !important;
+    font-weight: 600;
+    border: 1px solid #ced4da;
+    font-size: 0.85rem;
+}
+
+/* Ensure proper styling for badges in account page */
+.project-card .badge.bg-secondary,
+.document-card .badge.bg-secondary {
+    padding: 0.35rem 0.65rem;
+    margin-left: 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 0.01em;
 } 
