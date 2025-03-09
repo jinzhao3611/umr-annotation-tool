@@ -1679,3 +1679,172 @@ def download_frames():
     except Exception as e:
         current_app.logger.error(f"Error serving frames file: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
+@main.route("/lemmatize", methods=['GET'])
+def lemmatize():
+    """
+    Endpoint for lemmatizing a word.
+    Usage: /lemmatize?word=running
+    Returns: JSON with lemma ('run' in this example)
+    """
+    word = request.args.get('word', '')
+    if not word:
+        current_app.logger.warning("No word provided in lemmatize request")
+        return jsonify({'success': False, 'message': 'No word provided'}), 400
+    
+    try:
+        current_app.logger.info(f"Lemmatizing word: '{word}'")
+        
+        # Special case for 'missing' since we know it's causing issues
+        if word == 'missing':
+            lemma = 'miss'
+            current_app.logger.info(f"Special case for 'missing': setting lemma to '{lemma}'")
+            return jsonify({'success': True, 'lemma': lemma, 'original': word})
+        
+        # Import nltk for better lemmatization (if available)
+        try:
+            from nltk.stem import WordNetLemmatizer
+            from nltk.corpus import wordnet
+            
+            # Initialize lemmatizer
+            lemmatizer = WordNetLemmatizer()
+            
+            # Try to lemmatize for different parts of speech
+            lemma_verb = lemmatizer.lemmatize(word, wordnet.VERB)
+            lemma_noun = lemmatizer.lemmatize(word, wordnet.NOUN)
+            
+            # Choose the shortest result as it's likely the correct lemma
+            if len(lemma_verb) <= len(lemma_noun):
+                lemma = lemma_verb
+            else:
+                lemma = lemma_noun
+                
+            current_app.logger.info(f"NLTK lemmatization: '{word}' -> '{lemma}'")
+        except ImportError:
+            # Fallback to basic rules if NLTK is not available
+            current_app.logger.warning("NLTK not available, using fallback rules for lemmatization")
+            
+            # Simple fallback rules
+            if word.endswith('ing'):
+                lemma = word[:-3]
+            elif word.endswith('ed') and len(word) > 3:
+                lemma = word[:-2]
+            elif word.endswith('s') and not word.endswith('ss') and len(word) > 2:
+                lemma = word[:-1]
+            elif word.endswith('es') and len(word) > 3:
+                lemma = word[:-2]
+            else:
+                lemma = word
+                
+            current_app.logger.info(f"Fallback lemmatization: '{word}' -> '{lemma}'")
+        
+        # Special adjustment for "missing" -> "miss"
+        if word == 'missing' and lemma == 'miss':
+            current_app.logger.info("Confirmed lemmatization of 'missing' to 'miss'")
+        
+        return jsonify({'success': True, 'lemma': lemma, 'original': word})
+    except Exception as e:
+        current_app.logger.error(f"Error lemmatizing '{word}': {str(e)}")
+        current_app.logger.exception(e)  # This logs the full stack trace
+        return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 500
+
+@main.route("/get_frames", methods=['GET'])
+def get_frames():
+    """
+    Endpoint for looking up frames for a lemma.
+    Usage: /get_frames?word=run
+    Returns: JSON with list of frames
+    """
+    word = request.args.get('word', '')
+    if not word:
+        current_app.logger.warning("No word provided in get_frames request")
+        return jsonify({'success': False, 'message': 'No word provided'}), 400
+    
+    try:
+        # Try several potential paths for the frames file
+        frames_file = FRAME_FILE_ENGLISH
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        frames_file_alt = os.path.join(base_dir, 'resources', 'frames_english.json')
+        
+        # Try the pre-defined path first
+        if os.path.exists(frames_file):
+            current_app.logger.info(f"Found frames file at pre-defined path: {frames_file}")
+        # If that doesn't work, try the alternate path
+        elif os.path.exists(frames_file_alt):
+            frames_file = frames_file_alt
+            current_app.logger.info(f"Found frames file at alternate path: {frames_file}")
+        else:
+            # Log all the paths we tried
+            current_app.logger.error(f"Frames file not found at any of these paths:")
+            current_app.logger.error(f"1. {frames_file}")
+            current_app.logger.error(f"2. {frames_file_alt}")
+            current_app.logger.error(f"3. {os.path.abspath(frames_file)}")
+            
+            # Try to list files in the directories
+            try:
+                resources_dir = os.path.join(base_dir, 'resources')
+                if os.path.exists(resources_dir):
+                    files = os.listdir(resources_dir)
+                    current_app.logger.info(f"Files in resources dir: {files}")
+            except Exception as e:
+                current_app.logger.error(f"Error listing files: {e}")
+                
+            return jsonify({'success': False, 'frames': [], 'message': 'Frames file not found'}), 404
+            
+        # Load frames from JSON file
+        try:
+            with open(frames_file, 'r') as f:
+                frames_data = json.load(f)
+            current_app.logger.info(f"Successfully loaded frames file with {len(frames_data)} entries")
+        except Exception as e:
+            current_app.logger.error(f"Error loading frames file: {e}")
+            return jsonify({'success': False, 'frames': [], 'message': f'Error loading frames file: {str(e)}'}), 500
+            
+        current_app.logger.info(f"Looking up frames for word: '{word}'")
+        
+        # Special handling for "miss" lemma
+        if word == 'miss':
+            miss_frames = [k for k in frames_data.keys() if k.startswith('miss-')]
+            if miss_frames:
+                current_app.logger.info(f"Found {len(miss_frames)} frames for 'miss': {miss_frames}")
+                return jsonify({'success': True, 'frames': miss_frames, 'word': word})
+            else:
+                # If we couldn't find any miss- frames, log a warning
+                current_app.logger.warning("No 'miss-' frames found in the frames file")
+                # List a few entries from frames_data to debug
+                sample_keys = list(frames_data.keys())[:5]
+                current_app.logger.info(f"Sample frames keys: {sample_keys}")
+        
+        # Look up frames for the word
+        frames = []
+        
+        # Check for numbered frames with exact prefix match
+        matching_frames = [k for k in frames_data.keys() if k.startswith(f"{word}-")]
+        
+        # Also check for compound frames like "miss-out-03" when looking for "miss"
+        compound_frames = [k for k in frames_data.keys() if k.startswith(f"{word}-") and "-" in k[len(word)+1:]]
+        
+        # Add all found frames to the result
+        frames.extend(matching_frames)
+        
+        # Debug information
+        current_app.logger.info(f"Found {len(matching_frames)} basic frame matches: {matching_frames}")
+        if compound_frames:
+            current_app.logger.info(f"Found {len(compound_frames)} compound frame matches: {compound_frames}")
+        
+        # If the plain lemma itself is in the frames, add it too
+        if word in frames_data:
+            frames.append(word)
+            current_app.logger.info(f"Found exact match for '{word}'")
+        
+        # Print out the actual frames found
+        if frames:
+            current_app.logger.info(f"Returning frames for '{word}': {frames}")
+        else:
+            current_app.logger.warning(f"No frames found for '{word}'")
+            
+        return jsonify({'success': True, 'frames': frames, 'word': word})
+    except Exception as e:
+        current_app.logger.error(f"Error looking up frames for '{word}': {str(e)}")
+        current_app.logger.exception(e)  # This logs the full stack trace
+        return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 500

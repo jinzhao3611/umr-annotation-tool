@@ -23,6 +23,10 @@
     <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
     <!-- Load temporary branch storage script -->
     <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
+    <!-- Load Underscore.js before lemmatizer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
+    <!-- Load lemmatizer library -->
+    <script src="{{ url_for('static', filename='scripts/javascript-lemmatizer/js/lemmatizer.js') }}"></script>
     
     <!-- Copy annotation functionality -->
     <script>
@@ -50,6 +54,1212 @@
                             alert('Failed to copy text to clipboard');
                         });
                 });
+            }
+            
+            // Delete annotation functionality
+            const deleteButton = document.getElementById('delete-annotation-btn');
+            if (deleteButton) {
+                deleteButton.addEventListener('click', function() {
+                    // Show confirmation dialog
+                    if (confirm('Are you sure you want to delete the entire annotation? This action cannot be undone.')) {
+                        const docVersionId = document.getElementById('doc_version_id').value;
+                        const sentId = document.getElementById('snt_id').value;
+                        
+                        // Call API to update the annotation with an empty string
+                        fetch(`/update_annotation/${docVersionId}/${sentId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                annotation: '',
+                                operation: 'delete_all'
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Provide visual feedback
+                                const originalText = deleteButton.innerHTML;
+                                deleteButton.innerHTML = '<i class="fas fa-check"></i> Deleted!';
+                                deleteButton.classList.remove('btn-outline-danger');
+                                deleteButton.classList.add('btn-success');
+                                
+                                setTimeout(() => {
+                                    // Reload the page to reflect the changes
+                                    window.location.reload();
+                                }, 1000);
+                            } else {
+                                alert('Failed to delete annotation: ' + data.message);
+                            }
+                        })
+                        .catch(err => {
+                            console.error('Failed to delete annotation: ', err);
+                            alert('Failed to delete annotation: ' + err.message);
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <!-- Add Top functionality -->
+    <script>
+        // Initialize global variables
+        window.selectedFrameConcept = null;
+        window.selectedTokens = []; // Track selected tokens
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find the Add Top button
+            const addTopButton = document.getElementById('add-top-btn');
+            
+            // If button exists, add click event listener
+            if (addTopButton) {
+                console.log('Add Top button found and event listener attached');
+                addTopButton.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent any default action
+                    console.log('Add Top button clicked');
+                    showAddTopDialog();
+                });
+            } else {
+                console.log('Add Top button not found in the DOM');
+            }
+            
+            // Function to show dialog for adding the top node
+            async function showAddTopDialog() {
+                // Get sentence tokens for display
+                const sentenceTokens = extractSentenceTokens();
+                console.log('Sentence tokens for Add Top:', sentenceTokens);
+                
+                // Create dialog container
+                const dialogContainer = document.createElement('div');
+                dialogContainer.className = 'add-top-dialog-container';
+                dialogContainer.style.position = 'fixed';
+                dialogContainer.style.top = '0';
+                dialogContainer.style.left = '0';
+                dialogContainer.style.width = '100%';
+                dialogContainer.style.height = '100%';
+                dialogContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                dialogContainer.style.display = 'flex';
+                dialogContainer.style.justifyContent = 'center';
+                dialogContainer.style.alignItems = 'center';
+                dialogContainer.style.zIndex = '2000';
+                
+                // Create dialog
+                const dialog = document.createElement('div');
+                dialog.className = 'add-top-dialog';
+                dialog.style.width = '700px';
+                dialog.style.maxWidth = '90vw';
+                dialog.style.maxHeight = '90vh';
+                dialog.style.overflow = 'auto';
+                dialog.style.backgroundColor = 'white';
+                dialog.style.borderRadius = '8px';
+                dialog.style.padding = '20px';
+                dialog.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                
+                // Dialog header and basic content
+                dialog.innerHTML = `
+                    <h3 style="margin-top: 0; margin-bottom: 20px;">Create Top Node</h3>
+                    <form id="add-top-form">
+                        <!-- Node type selection -->
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Concept Type:</label>
+                            <select id="concept-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                <option value="">Select type...</option>
+                                <option value="token">Sentence Token</option>
+                                <option value="discourse">Discourse Concept</option>
+                                <option value="abstract">Abstract Concept</option>
+                                <option value="ne">Named Entity</option>
+                                <option value="non-event">Reification Roleset</option>
+                                <option value="string">String Value</option>
+                                <option value="custom">Custom Concept</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Container for token selection -->
+                        <div id="token-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="token-search" 
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                    placeholder="Type to search tokens...">
+                            </div>
+                            <div class="alert alert-secondary mb-2" style="font-size: 0.9rem; padding: 8px;">
+                                <p class="mb-1"><strong>Multi-selection:</strong> Use these keys to select multiple tokens:</p>
+                                <ul class="mb-0" style="padding-left: 20px;">
+                                    <li><strong>Ctrl/Cmd+Click</strong>: Select/deselect multiple individual tokens</li>
+                                    <li><strong>Shift+Click</strong>: Select a range of tokens</li>
+                                </ul>
+                                <p class="mb-0 mt-1"><small>Multi-selected tokens will be joined with hyphens, e.g., "token1-token2"</small></p>
+                            </div>
+                            <div id="tokens-container" style="max-height: 250px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div id="tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                                    ${sentenceTokens.map(token => `
+                                        <div class="token-item" 
+                                             data-token="${token.text}" 
+                                             data-token-index="${token.index}"
+                                             data-full-text="${token.fullText}"
+                                             style="padding: 8px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                            ${token.text}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <!-- Frame lookup results (added) -->
+                            <div id="frame-lookup-container" style="margin-top: 16px; display: none;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: bold;">
+                                    Available frames for <span id="selected-token-text" style="font-style: italic;"></span>:
+                                </label>
+                                <div style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; padding: 12px; max-height: 250px; overflow-y: auto;">
+                                    <div id="lemma-container" style="margin-bottom: 8px;">
+                                        <label style="font-weight: bold; margin-bottom: 4px; display: block;">Lemma:</label>
+                                        <div id="lemma-value" style="padding: 4px 8px; background-color: #e9ecef; border-radius: 4px; display: inline-block;"></div>
+                                    </div>
+                                    
+                                    <div id="frames-container" style="margin-top: 8px;">
+                                        <label style="font-weight: bold; margin-bottom: 4px; display: block;">Frames:</label>
+                                        <div id="frames-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px;">
+                                            <!-- Frames will be populated here -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <button type="button" id="use-token-as-is" class="btn btn-sm btn-secondary">
+                                            Use token as is
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Container for discourse concept selection -->
+                        <div id="discourse-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="discourse-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select discourse concept:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="discourse-concept-search" 
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                    placeholder="Type to search discourse concepts...">
+                            </div>
+                            <select id="discourse-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select concept...</option>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                        </div>
+                        
+                        <!-- Container for abstract concept selection -->
+                        <div id="abstract-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="abstract-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select abstract concept:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="abstract-concept-search" 
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                    placeholder="Type to search abstract concepts...">
+                            </div>
+                            <select id="abstract-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select concept...</option>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                        </div>
+                        
+                        <!-- Container for named entity selection -->
+                        <div id="ne-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="ne-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Select named entity type:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="ne-type-search" 
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                    placeholder="Type to search entity types...">
+                            </div>
+                            <select id="ne-type" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select entity type...</option>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                            
+                            <!-- Name tokens selection (added for NE types) -->
+                            <div id="name-tokens-container" style="display: none; margin-top: 16px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select name tokens:</label>
+                                <div style="background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px; padding: 12px; max-height: 250px; overflow-y: auto;">
+                                    <div id="name-tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                                        <!-- Will be populated with tokens dynamically -->
+                                    </div>
+                                    <div id="selected-name-tokens" class="alert alert-info mt-3" style="display: none;">
+                                        <p class="mb-1"><strong>Selected name tokens:</strong></p>
+                                        <p id="selected-name-tokens-list" class="mb-0"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Container for non-event roleset selection -->
+                        <div id="non-event-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="non-event-roleset" style="display: block; margin-bottom: 8px; font-weight: bold;">Select reification roleset:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="non-event-roleset-search" 
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                    placeholder="Type to search rolesets...">
+                            </div>
+                            <select id="non-event-roleset" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select roleset...</option>
+                                <!-- Will be populated dynamically -->
+                            </select>
+                        </div>
+                        
+                        <!-- Container for string value input -->
+                        <div id="string-value-container" style="display: none; margin-bottom: 16px;">
+                            <label for="string-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter string value:</label>
+                            <input type="text" id="string-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter string value...">
+                        </div>
+                        
+                        <!-- Container for custom concept input -->
+                        <div id="custom-concept-container" style="display: none; margin-bottom: 16px;">
+                            <label for="custom-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter custom concept:</label>
+                            <input type="text" id="custom-concept" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter concept...">
+                        </div>
+                        
+                        <!-- Variable input -->
+                        <div style="margin-bottom: 16px;">
+                            <label for="variable-input" style="display: block; margin-bottom: 8px; font-weight: bold;">Variable (optional):</label>
+                            <div class="input-group" style="display: flex;">
+                                <input type="text" id="variable-input" style="flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" placeholder="Auto-generated if left empty">
+                                <button type="button" id="generate-variable-btn" style="padding: 8px 16px; background-color: #f5f5f5; border: 1px solid #ccc; border-left: none; border-radius: 0 4px 4px 0; cursor: pointer;">Auto-generate</button>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: right; margin-top: 20px;">
+                            <button type="button" id="cancel-add-top" style="padding: 8px 16px; margin-right: 10px; border: 1px solid #ccc; background-color: #f5f5f5; border-radius: 4px; cursor: pointer;">Cancel</button>
+                            <button type="submit" id="confirm-add-top" style="padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Create Node</button>
+                        </div>
+                    </form>
+                `;
+                
+                dialogContainer.appendChild(dialog);
+                document.body.appendChild(dialogContainer);
+                
+                // Fetch required data from the server
+                try {
+                    // Get concept data from the server
+                    const conceptsResponse = await fetch('/get_concepts');
+                    const conceptsData = await conceptsResponse.json();
+                    
+                    console.log('Concepts data:', conceptsData);
+                    
+                    // Extract needed concept categories
+                    const discourseConceptsList = conceptsData.discourse_concepts || [];
+                    const neTypesList = conceptsData.ne_types || [];
+                    const nonEventRolesetsList = conceptsData.non_event_rolesets || [];
+                    
+                    // Define abstract concepts list (simplified subset)
+                    const abstractConceptsList = [
+                        'person', 'individual-person', 'place', 'event', 'name', 'umr-choice',
+                        'manner', 'umr-unknown', 'umr-unintelligible', 'umr-empty',
+                        'date-entity', 'string-entity', 'ordinal-entity', 'url-entity',
+                        'monetary-quantity', 'distance-quantity', 'temporal-quantity',
+                        'date-interval', 'value-interval', 'between', 'relative-position'
+                    ];
+                    
+                    // Populate the dropdowns with data
+                    populateDropdown('discourse-concept', discourseConceptsList);
+                    populateDropdown('abstract-concept', abstractConceptsList);
+                    populateDropdown('ne-type', neTypesList);
+                    populateDropdown('non-event-roleset', nonEventRolesetsList);
+                    
+                    // Setup filtering for dropdowns
+                    setupFiltering('discourse-concept-search', 'discourse-concept', discourseConceptsList);
+                    setupFiltering('abstract-concept-search', 'abstract-concept', abstractConceptsList);
+                    setupFiltering('ne-type-search', 'ne-type', neTypesList);
+                    setupFiltering('non-event-roleset-search', 'non-event-roleset', nonEventRolesetsList);
+                    setupTokensFiltering('token-search', 'tokens-grid');
+                    
+                    // Show/hide appropriate containers based on concept type selection
+                    const conceptTypeSelect = document.getElementById('concept-type');
+                    conceptTypeSelect.addEventListener('change', function() {
+                        // Reset name tokens if changing from NE type
+                        if (this.value !== 'ne') {
+                            resetNameTokens();
+                        }
+                        
+                        // Hide all containers first
+                        document.getElementById('token-selection-container').style.display = 'none';
+                        document.getElementById('discourse-selection-container').style.display = 'none';
+                        document.getElementById('abstract-selection-container').style.display = 'none';
+                        document.getElementById('ne-selection-container').style.display = 'none';
+                        document.getElementById('non-event-selection-container').style.display = 'none';
+                        document.getElementById('string-value-container').style.display = 'none';
+                        document.getElementById('custom-concept-container').style.display = 'none';
+                        
+                        // Show the selected container
+                        const selectedType = this.value;
+                        if (selectedType === 'token') {
+                            document.getElementById('token-selection-container').style.display = 'block';
+                        } else if (selectedType === 'discourse') {
+                            document.getElementById('discourse-selection-container').style.display = 'block';
+                        } else if (selectedType === 'abstract') {
+                            document.getElementById('abstract-selection-container').style.display = 'block';
+                        } else if (selectedType === 'ne') {
+                            document.getElementById('ne-selection-container').style.display = 'block';
+                        } else if (selectedType === 'non-event') {
+                            document.getElementById('non-event-selection-container').style.display = 'block';
+                        } else if (selectedType === 'string') {
+                            document.getElementById('string-value-container').style.display = 'block';
+                        } else if (selectedType === 'custom') {
+                            document.getElementById('custom-concept-container').style.display = 'block';
+                        }
+                    });
+                    
+                    // Function to reset name tokens selection
+                    function resetNameTokens() {
+                        // Clear the selected name tokens array
+                        window.selectedNameTokens = [];
+                        
+                        // Hide the name tokens container
+                        const nameTokensContainer = document.getElementById('name-tokens-container');
+                        if (nameTokensContainer) {
+                            nameTokensContainer.style.display = 'none';
+                        }
+                        
+                        // Reset the display
+                        updateSelectedNameTokensDisplay();
+                    }
+                    
+                    // Set up named entity selection to show name tokens
+                    const neTypeSelect = document.getElementById('ne-type');
+                    const nameTokensContainer = document.getElementById('name-tokens-container');
+                    
+                    // Track selected name tokens
+                    window.selectedNameTokens = [];
+                    
+                    // Add event listener for NE type selection
+                    neTypeSelect.addEventListener('change', function() {
+                        if (this.value) {
+                            // Show the name tokens selection when an NE type is selected
+                            nameTokensContainer.style.display = 'block';
+                            populateNameTokensSelection();
+                        } else {
+                            nameTokensContainer.style.display = 'none';
+                        }
+                    });
+                    
+                    // Function to populate name tokens selection from sentence tokens
+                    function populateNameTokensSelection() {
+                        const nameTokensGrid = document.getElementById('name-tokens-grid');
+                        nameTokensGrid.innerHTML = ''; // Clear existing content
+                        
+                        // Use the same sentence tokens as the token selection
+                        const sentenceTokens = extractSentenceTokens();
+                        
+                        sentenceTokens.forEach(token => {
+                            const tokenDiv = document.createElement('div');
+                            tokenDiv.className = 'name-token-item';
+                            tokenDiv.setAttribute('data-token', token.text);
+                            tokenDiv.setAttribute('data-token-index', token.index);
+                            tokenDiv.style.padding = '8px';
+                            tokenDiv.style.backgroundColor = '#f0f8ff';
+                            tokenDiv.style.borderRadius = '4px';
+                            tokenDiv.style.cursor = 'pointer';
+                            tokenDiv.style.textAlign = 'center';
+                            tokenDiv.textContent = token.text;
+                            
+                            // Add click event to toggle selection
+                            tokenDiv.addEventListener('click', function() {
+                                const tokenText = this.getAttribute('data-token');
+                                const tokenIndex = this.getAttribute('data-token-index');
+                                
+                                // Check if already selected
+                                const isSelected = this.hasAttribute('data-selected');
+                                
+                                if (isSelected) {
+                                    // Deselect
+                                    this.removeAttribute('data-selected');
+                                    this.style.backgroundColor = '#f0f8ff';
+                                    
+                                    // Remove from selectedNameTokens
+                                    const index = window.selectedNameTokens.findIndex(t => 
+                                        t.text === tokenText && t.index === tokenIndex);
+                                    if (index !== -1) {
+                                        window.selectedNameTokens.splice(index, 1);
+                                    }
+                                } else {
+                                    // Select
+                                    this.setAttribute('data-selected', 'true');
+                                    this.style.backgroundColor = '#b3d9ff';
+                                    
+                                    // Add to selectedNameTokens
+                                    window.selectedNameTokens.push({
+                                        text: tokenText,
+                                        index: tokenIndex
+                                    });
+                                }
+                                
+                                // Sort selected tokens based on their position in the sentence
+                                window.selectedNameTokens.sort((a, b) => parseInt(a.index) - parseInt(b.index));
+                                
+                                // Update selected tokens display
+                                updateSelectedNameTokensDisplay();
+                            });
+                            
+                            nameTokensGrid.appendChild(tokenDiv);
+                        });
+                    }
+                    
+                    // Function to update the display of selected name tokens
+                    function updateSelectedNameTokensDisplay() {
+                        const selectedNameTokensContainer = document.getElementById('selected-name-tokens');
+                        const selectedNameTokensList = document.getElementById('selected-name-tokens-list');
+                        
+                        if (window.selectedNameTokens.length > 0) {
+                            selectedNameTokensContainer.style.display = 'block';
+                            selectedNameTokensList.textContent = window.selectedNameTokens.map(t => t.text).join(' ');
+                        } else {
+                            selectedNameTokensContainer.style.display = 'none';
+                        }
+                    }
+                    
+                    // Set up click events for token items
+                    document.querySelectorAll('.token-item').forEach(item => {
+                        item.addEventListener('click', function(event) {
+                            const tokenText = this.getAttribute('data-token').toLowerCase();
+                            const tokenIndex = this.getAttribute('data-token-index');
+                            
+                            // Check if ctrl/cmd key is pressed for multi-select
+                            const isMultiSelectMode = event.ctrlKey || event.metaKey;
+                            
+                            // If multi-select mode is not active and no shift key, clear previous selections
+                            if (!isMultiSelectMode && !event.shiftKey) {
+                                // Clear all selections if not in multi-select mode
+                                window.selectedTokens = [];
+                                document.querySelectorAll('.token-item').forEach(el => {
+                                    el.style.backgroundColor = '#f0f8ff';
+                                    el.removeAttribute('data-selected');
+                                });
+                            }
+                            
+                            // Check if this token is already selected (for toggle)
+                            const alreadySelected = this.hasAttribute('data-selected');
+                            
+                            if (alreadySelected) {
+                                // If already selected, toggle off in multi-select mode
+                                if (isMultiSelectMode) {
+                                    this.style.backgroundColor = '#f0f8ff';
+                                    this.removeAttribute('data-selected');
+                                    
+                                    // Remove from selectedTokens array
+                                    const index = window.selectedTokens.findIndex(t => 
+                                        t.text === tokenText && t.index === tokenIndex);
+                                    if (index !== -1) {
+                                        window.selectedTokens.splice(index, 1);
+                                    }
+                                } else {
+                                    // In single select mode, just reselect this token
+                                    this.style.backgroundColor = '#b3d9ff';
+                                    this.setAttribute('data-selected', 'true');
+                                    window.selectedTokens = [{
+                                        text: tokenText,
+                                        index: tokenIndex
+                                    }];
+                                }
+                            } else {
+                                // If shift key is pressed, select range
+                                if (event.shiftKey && window.selectedTokens.length > 0) {
+                                    // Get all token items
+                                    const allTokens = Array.from(document.querySelectorAll('.token-item'));
+                                    const currentIndex = allTokens.indexOf(this);
+                                    
+                                    // Find the last selected token's index
+                                    const lastSelectedElement = document.querySelector('.token-item[data-selected="true"]');
+                                    const lastSelectedIndex = lastSelectedElement ? allTokens.indexOf(lastSelectedElement) : -1;
+                                    
+                                    if (lastSelectedIndex !== -1) {
+                                        // Determine the range
+                                        const startIdx = Math.min(currentIndex, lastSelectedIndex);
+                                        const endIdx = Math.max(currentIndex, lastSelectedIndex);
+                                        
+                                        // Select all tokens in the range
+                                        for (let i = startIdx; i <= endIdx; i++) {
+                                            const token = allTokens[i];
+                                            token.style.backgroundColor = '#b3d9ff';
+                                            token.setAttribute('data-selected', 'true');
+                                            
+                                            const tText = token.getAttribute('data-token').toLowerCase();
+                                            const tIndex = token.getAttribute('data-token-index');
+                                            
+                                            // Add to selectedTokens if not already there
+                                            if (!window.selectedTokens.some(t => t.text === tText && t.index === tIndex)) {
+                                                window.selectedTokens.push({
+                                                    text: tText,
+                                                    index: tIndex
+                                                });
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    // Normal selection of a single token
+                                    this.style.backgroundColor = '#b3d9ff';
+                                    this.setAttribute('data-selected', 'true');
+                                    
+                                    // Add to selectedTokens array
+                                    window.selectedTokens.push({
+                                        text: tokenText,
+                                        index: tokenIndex
+                                    });
+                                }
+                            }
+                            
+                            // Sort selected tokens based on their position in the sentence
+                            window.selectedTokens.sort((a, b) => parseInt(a.index) - parseInt(b.index));
+                            
+                            // Log selections
+                            console.log('Selected tokens:', window.selectedTokens);
+                            
+                            // Show multi-selection instructions if multiple tokens selected
+                            const multiSelectInstructions = document.getElementById('multi-select-instructions');
+                            if (window.selectedTokens.length > 1) {
+                                if (!multiSelectInstructions) {
+                                    const instructionsDiv = document.createElement('div');
+                                    instructionsDiv.id = 'multi-select-instructions';
+                                    instructionsDiv.className = 'alert alert-info mt-2';
+                                    instructionsDiv.innerHTML = `
+                                        <p class="mb-1"><strong>${window.selectedTokens.length} tokens selected</strong></p>
+                                        <p class="mb-0">These tokens will be joined with hyphens: <strong>${window.selectedTokens.map(t => t.text).join('-')}</strong></p>
+                                    `;
+                                    document.getElementById('tokens-container').appendChild(instructionsDiv);
+                                } else {
+                                    multiSelectInstructions.innerHTML = `
+                                        <p class="mb-1"><strong>${window.selectedTokens.length} tokens selected</strong></p>
+                                        <p class="mb-0">These tokens will be joined with hyphens: <strong>${window.selectedTokens.map(t => t.text).join('-')}</strong></p>
+                                    `;
+                                }
+                            } else if (multiSelectInstructions) {
+                                multiSelectInstructions.remove();
+                            }
+                            
+                            // Show and populate frame lookup container if only one token is selected
+                            const frameLookupContainer = document.getElementById('frame-lookup-container');
+                            if (frameLookupContainer) {
+                                if (window.selectedTokens.length === 1) {
+                                    // For single token, show frame lookup
+                                    document.getElementById('selected-token-text').textContent = tokenText;
+                                    lemmatizeAndLookupFrames(tokenText);
+                                    frameLookupContainer.style.display = 'block';
+                                } else if (window.selectedTokens.length > 1) {
+                                    // For multiple tokens, hide frame lookup
+                                    frameLookupContainer.style.display = 'none';
+                                } else {
+                                    // No tokens selected
+                                    frameLookupContainer.style.display = 'none';
+                                }
+                            }
+                        });
+                    });
+                    
+                    // Add lemmatization and frame lookup functions
+                    async function lemmatizeAndLookupFrames(tokenText) {
+                        try {
+                            // Show loading indicator in the frame lookup container
+                            document.getElementById('lemma-value').textContent = 'Loading...';
+                            document.getElementById('frames-list').innerHTML = '<div class="text-muted">Loading frames...</div>';
+                            
+                            let lemma = tokenText;
+                            
+                            try {
+                                // Try to use the server-side lemmatization - ensure relative URL is used
+                                // For Flask Blueprints, we need to use the full path - this matches the route in main
+                                const lemmaUrl = new URL('/lemmatize', window.location.origin);
+                                lemmaUrl.searchParams.append('word', tokenText);
+                                console.log('Fetching lemma from:', lemmaUrl.toString());
+                                
+                                const lemmaResponse = await fetch(lemmaUrl);
+                                console.log('Lemmatization response status:', lemmaResponse.status);
+                                
+                                // If we get a non-OK response, log the error message
+                                if (!lemmaResponse.ok) {
+                                    const errorText = await lemmaResponse.text();
+                                    console.error(`Lemmatization error (${lemmaResponse.status}):`, errorText);
+                                    throw new Error(`Server returned ${lemmaResponse.status}: ${errorText}`);
+                                }
+                                
+                                const lemmaData = await lemmaResponse.json();
+                                console.log('Lemma data received:', lemmaData);
+                                
+                                if (lemmaData.success && lemmaData.lemma) {
+                                    lemma = lemmaData.lemma;
+                                    console.log(`Server lemmatized "${tokenText}" to "${lemma}"`);
+                                }
+                            } catch (error) {
+                                console.warn('Server-side lemmatization failed, falling back to client-side:', error);
+                            }
+                            
+                            // If server-side lemmatization failed, fall back to client-side
+                            if (lemma === tokenText) {
+                                lemma = getLemma(tokenText);
+                            }
+                            
+                            // Display the lemma
+                            document.getElementById('lemma-value').textContent = lemma || tokenText;
+                            
+                            // Look up frames using the lemma
+                            await lookupFrames(lemma || tokenText, tokenText);
+                        } catch (error) {
+                            console.error('Error in lemmatization or frame lookup:', error);
+                            document.getElementById('lemma-value').textContent = tokenText;
+                            document.getElementById('frames-list').innerHTML = '<div class="text-danger">Error looking up frames.</div>';
+                            
+                            // Set up "Use token as is" button
+                            setupUseAsIsButton(tokenText);
+                        }
+                    }
+                    
+                    // Function to look up frames for a lemma
+                    async function lookupFrames(lemma, originalToken) {
+                        try {
+                            let frames = [];
+                            
+                            try {
+                                // Try to get frames from the server - ensure relative URL is used
+                                // For Flask Blueprints, we need to use the full path - this matches the route in main
+                                const framesUrl = new URL('/get_frames', window.location.origin);
+                                framesUrl.searchParams.append('word', lemma);
+                                console.log('Fetching frames from:', framesUrl.toString());
+                                
+                                const framesResponse = await fetch(framesUrl);
+                                console.log('Frame lookup response status:', framesResponse.status);
+                                
+                                // If we get a non-OK response, log the error message
+                                if (!framesResponse.ok) {
+                                    const errorText = await framesResponse.text();
+                                    console.error(`Error response (${framesResponse.status}):`, errorText);
+                                    throw new Error(`Server returned ${framesResponse.status}: ${errorText}`);
+                                }
+                                
+                                const framesData = await framesResponse.json();
+                                console.log('Frames data received:', framesData);
+                                
+                                if (framesData.frames && Array.isArray(framesData.frames)) {
+                                    frames = framesData.frames;
+                                    console.log(`Found ${frames.length} frames for "${lemma}":`, frames);
+                                }
+                            } catch (error) {
+                                console.warn('Server-side frame lookup failed:', error);
+                            }
+                            
+                            // Populate frames list
+                            const framesList = document.getElementById('frames-list');
+                            framesList.innerHTML = ''; // Clear existing content
+                            
+                            if (frames.length > 0) {
+                                // Create a grid for the frames
+                                const framesGrid = document.createElement('div');
+                                framesGrid.style.display = 'grid';
+                                framesGrid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(180px, 1fr))';
+                                framesGrid.style.gap = '8px';
+                                
+                                // Add frames to the grid
+                                frames.forEach(frame => {
+                                    const frameButton = document.createElement('button');
+                                    frameButton.className = 'btn btn-outline-primary btn-sm';
+                                    frameButton.style.textAlign = 'left';
+                                    frameButton.style.whiteSpace = 'nowrap';
+                                    frameButton.style.overflow = 'hidden';
+                                    frameButton.style.textOverflow = 'ellipsis';
+                                    frameButton.style.marginBottom = '5px';
+                                    frameButton.textContent = frame;
+                                    frameButton.setAttribute('data-frame', frame);
+                                    frameButton.title = `Click to select ${frame}`; // Better tooltip
+                                    
+                                    frameButton.addEventListener('click', function() {
+                                        // Remove active class from all frame buttons
+                                        document.querySelectorAll('#frames-list button').forEach(btn => {
+                                            btn.classList.remove('active');
+                                        });
+                                        
+                                        // Add active class to clicked button
+                                        this.classList.add('active');
+                                        
+                                        // Set concept value without showing the custom concept container
+                                        window.selectedFrameConcept = this.getAttribute('data-frame');
+                                        console.log('Selected frame concept:', window.selectedFrameConcept);
+                                        
+                                        // Show a confirmation message
+                                        const confirmMessage = document.createElement('div');
+                                        confirmMessage.className = 'alert alert-success mt-3';
+                                        confirmMessage.style.fontSize = '0.9rem';
+                                        confirmMessage.innerHTML = `
+                                            <strong>Selected frame:</strong> ${frame}
+                                            <p class="mb-0 mt-1">Click "Create Node" to use this frame.</p>
+                                        `;
+                                        
+                                        // Find or create the frame confirmation container
+                                        let confirmContainer = document.getElementById('frame-selection-confirm');
+                                        if (!confirmContainer) {
+                                            confirmContainer = document.createElement('div');
+                                            confirmContainer.id = 'frame-selection-confirm';
+                                            document.getElementById('frames-container').appendChild(confirmContainer);
+                                        }
+                                        
+                                        // Update the confirmation message
+                                        confirmContainer.innerHTML = '';
+                                        confirmContainer.appendChild(confirmMessage);
+                                    });
+                                    
+                                    framesGrid.appendChild(frameButton);
+                                });
+                                
+                                // Add a helpful message
+                                const helpMessage = document.createElement('div');
+                                helpMessage.className = 'text-muted mt-3';
+                                helpMessage.style.fontSize = '0.9rem';
+                                helpMessage.innerHTML = `
+                                    <p>Found ${frames.length} frame(s) for "${lemma}". Click a frame to select it.</p>
+                                `;
+                                framesGrid.appendChild(helpMessage);
+                                
+                                framesList.appendChild(framesGrid);
+                            } else {
+                                // No frames found, display a message
+                                framesList.innerHTML = `
+                                    <div class="alert alert-info">
+                                        <p>No frames found for "${lemma}".</p>
+                                        <p class="mb-0">You can use the token as is or enter a custom concept.</p>
+                                    </div>
+                                `;
+                            }
+                            
+                            // Set up "Use token as is" button
+                            setupUseAsIsButton(originalToken);
+                            
+                        } catch (error) {
+                            console.error('Error looking up frames:', error);
+                            document.getElementById('frames-list').innerHTML = `
+                                <div class="alert alert-warning">
+                                    <p>Error looking up frames.</p>
+                                    <p class="mb-0">The server endpoint may not be set up. You can use the token as is.</p>
+                                </div>
+                            `;
+                            
+                            // Set up "Use token as is" button
+                            setupUseAsIsButton(originalToken);
+                        }
+                    }
+                    
+                    // Function to set up the "Use token as is" button
+                    function setupUseAsIsButton(tokenText) {
+                        const useAsIsButton = document.getElementById('use-token-as-is');
+                        
+                        // Remove any existing event listeners (to avoid duplicates)
+                        const newUseAsIsButton = useAsIsButton.cloneNode(true);
+                        useAsIsButton.parentNode.replaceChild(newUseAsIsButton, useAsIsButton);
+                        
+                        // Add the event listener to the new button
+                        newUseAsIsButton.addEventListener('click', function() {
+                            // Remove active class from all frame buttons
+                            document.querySelectorAll('#frames-list button').forEach(btn => {
+                                btn.classList.remove('active');
+                            });
+                            
+                            // Store the original token as the selected concept
+                            window.selectedFrameConcept = tokenText;
+                            console.log('Using token as is:', window.selectedFrameConcept);
+                        });
+                    }
+                    
+                    // Helper function for lemmatization
+                    function getLemma(word) {
+                        try {
+                            // Try using the lemmatizer library if available
+                            if (typeof Lemmatizer !== 'undefined' && typeof _ !== 'undefined') {
+                                try {
+                                    const lemmatizer = new Lemmatizer();
+                                    const lemmas = lemmatizer.lemmas(word);
+                                    if (lemmas && lemmas.length > 0) {
+                                        console.log(`Lemmatized "${word}" to "${lemmas[0][0]}" using JavaScript lemmatizer`);
+                                        return lemmas[0][0]; // Return the first lemma
+                                    }
+                                } catch (lemmaError) {
+                                    console.warn('JavaScript lemmatizer error:', lemmaError);
+                                    // Continue to fallback rules
+                                }
+                            } else {
+                                console.warn('Lemmatizer library or Underscore.js not available, using fallback rules');
+                            }
+                            
+                            // Fallback to simple rules for English
+                            let lemma = word;
+                            if (word.endsWith('ing')) {
+                                lemma = word.slice(0, -3);
+                                if (lemma.length < 2) lemma = word; // Avoid too short lemmas
+                            } else if (word.endsWith('ed') && word.length > 3) {
+                                lemma = word.slice(0, -2);
+                                if (lemma.length < 2) lemma = word; // Avoid too short lemmas
+                            } else if (word.endsWith('s') && !word.endsWith('ss') && word.length > 2) {
+                                lemma = word.slice(0, -1);
+                            } else if (word.endsWith('es') && word.length > 3) {
+                                lemma = word.slice(0, -2);
+                            }
+                            
+                            if (lemma !== word) {
+                                console.log(`Applied fallback rules to get lemma "${lemma}" from "${word}"`);
+                            } else {
+                                console.log(`No matching lemmatization rule for "${word}", using as is`);
+                            }
+                            
+                            return lemma;
+                            
+                        } catch (error) {
+                            console.error('Critical error during lemmatization:', error);
+                            return word; // Return original word on critical error
+                        }
+                    }
+                    
+                    // Set up auto-generate variable button
+                    document.getElementById('generate-variable-btn').addEventListener('click', function() {
+                        let concept = '';
+                        const conceptType = conceptTypeSelect.value;
+                        
+                        if (conceptType === 'token') {
+                            const selectedToken = document.querySelector('.token-item[style*="background-color: rgb(179, 217, 255)"]');
+                            if (selectedToken) {
+                                concept = selectedToken.getAttribute('data-token').toLowerCase();
+                            }
+                        } else if (conceptType === 'discourse') {
+                            concept = document.getElementById('discourse-concept').value;
+                        } else if (conceptType === 'abstract') {
+                            concept = document.getElementById('abstract-concept').value;
+                        } else if (conceptType === 'ne') {
+                            concept = document.getElementById('ne-type').value;
+                        } else if (conceptType === 'non-event') {
+                            concept = document.getElementById('non-event-roleset').value;
+                        } else if (conceptType === 'string') {
+                            concept = document.getElementById('string-value').value;
+                        } else if (conceptType === 'custom') {
+                            concept = document.getElementById('custom-concept').value;
+                        }
+                        
+                        if (concept) {
+                            document.getElementById('variable-input').value = generateVariable(concept);
+                        } else {
+                            alert('Please select or enter a concept first');
+                        }
+                    });
+                    
+                    // Set up form submission
+                    document.getElementById('add-top-form').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        
+                        // Get the selected/entered concept
+                        let concept = '';
+                        let tokenIndices = [];
+                        const conceptType = conceptTypeSelect.value;
+                        
+                        if (!conceptType) {
+                            alert('Please select a concept type');
+                            return;
+                        }
+                        
+                        if (conceptType === 'token') {
+                            // Check if any tokens are selected
+                            if (window.selectedTokens.length === 0) {
+                                alert('Please select at least one token');
+                                return;
+                            }
+                            
+                            if (window.selectedTokens.length === 1) {
+                                // Single token selection
+                                // Use the selectedFrameConcept if available
+                                if (window.selectedFrameConcept) {
+                                    concept = window.selectedFrameConcept;
+                                    console.log(`Using selected frame/lemma as concept: "${concept}"`);
+                                } else {
+                                    // Otherwise use the token text
+                                    concept = window.selectedTokens[0].text;
+                                    console.log(`No frame selected, using token text: "${concept}"`);
+                                }
+                                tokenIndices = [window.selectedTokens[0].index];
+                            } else {
+                                // Multiple tokens selected - join with hyphens
+                                concept = window.selectedTokens.map(token => token.text).join('-');
+                                tokenIndices = window.selectedTokens.map(token => token.index);
+                                console.log(`Using multi-token concept: "${concept}" with indices: [${tokenIndices.join(', ')}]`);
+                            }
+                        } else if (conceptType === 'discourse') {
+                            concept = document.getElementById('discourse-concept').value;
+                            if (!concept) {
+                                alert('Please select a discourse concept');
+                                return;
+                            }
+                        } else if (conceptType === 'abstract') {
+                            concept = document.getElementById('abstract-concept').value;
+                            if (!concept) {
+                                alert('Please select an abstract concept');
+                                return;
+                            }
+                        } else if (conceptType === 'ne') {
+                            concept = document.getElementById('ne-type').value;
+                            if (!concept) {
+                                alert('Please select a named entity type');
+                                return;
+                            }
+                            
+                            // For named entities, use the selected name tokens for alignment
+                            if (window.selectedNameTokens.length > 0) {
+                                tokenIndices = window.selectedNameTokens.map(token => token.index);
+                                console.log(`Named entity "${concept}" with name tokens: [${window.selectedNameTokens.map(t => t.text).join(', ')}]`);
+                                console.log(`Using name token indices for alignment: [${tokenIndices.join(', ')}]`);
+                            } else {
+                                console.log(`Named entity "${concept}" without name tokens`);
+                            }
+                        } else if (conceptType === 'non-event') {
+                            concept = document.getElementById('non-event-roleset').value;
+                            if (!concept) {
+                                alert('Please select a reification roleset');
+                                return;
+                            }
+                        } else if (conceptType === 'string') {
+                            concept = document.getElementById('string-value').value;
+                            if (!concept) {
+                                alert('Please enter a string value');
+                                return;
+                            }
+                        } else if (conceptType === 'custom') {
+                            concept = document.getElementById('custom-concept').value;
+                            if (!concept) {
+                                alert('Please enter a custom concept');
+                                return;
+                            }
+                        }
+                        
+                        // Get variable (or generate one if empty)
+                        let variable = document.getElementById('variable-input').value.trim();
+                        if (!variable) {
+                            variable = generateVariable(concept);
+                        }
+                        
+                        // Reset the global variables
+                        window.selectedFrameConcept = null;
+                        window.selectedTokens = [];
+                        window.selectedNameTokens = [];
+                        
+                        // Create top node with alignment if applicable
+                        createTopNode(variable, concept, tokenIndices);
+                    });
+                    
+                    // Set up cancel button
+                    document.getElementById('cancel-add-top').addEventListener('click', function() {
+                        // Reset selections before closing
+                        window.selectedFrameConcept = null;
+                        window.selectedTokens = [];
+                        resetNameTokens();
+                        
+                        document.body.removeChild(dialogContainer);
+                    });
+                    
+                } catch (error) {
+                    console.error('Error setting up Add Top dialog:', error);
+                    alert('Error setting up dialog: ' + error.message);
+                    document.body.removeChild(dialogContainer);
+                }
+                
+                // Helper function to populate dropdown with options
+                function populateDropdown(selectId, options) {
+                    const select = document.getElementById(selectId);
+                    options.forEach(option => {
+                        const optionElement = document.createElement('option');
+                        optionElement.value = option;
+                        optionElement.textContent = option;
+                        select.appendChild(optionElement);
+                    });
+                }
+                
+                // Helper function to setup filtering for dropdowns
+                function setupFiltering(searchId, selectId, options) {
+                    const searchInput = document.getElementById(searchId);
+                    const select = document.getElementById(selectId);
+                    
+                    searchInput.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        const filteredOptions = options.filter(option => 
+                            option.toLowerCase().includes(searchTerm)
+                        );
+                        
+                        // Clear existing options
+                        while (select.options.length > 1) {
+                            select.remove(1);
+                        }
+                        
+                        // Add filtered options
+                        filteredOptions.forEach(option => {
+                            const optionElement = document.createElement('option');
+                            optionElement.value = option;
+                            optionElement.textContent = option;
+                            select.appendChild(optionElement);
+                        });
+                    });
+                }
+                
+                // Helper function to setup filtering for tokens
+                function setupTokensFiltering(searchId, gridId) {
+                    const searchInput = document.getElementById(searchId);
+                    const grid = document.getElementById(gridId);
+                    const tokenItems = grid.querySelectorAll('.token-item');
+                    
+                    searchInput.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        
+                        tokenItems.forEach(item => {
+                            const tokenText = item.getAttribute('data-token').toLowerCase();
+                            // Also search in the full original text for more flexibility
+                            const fullText = item.getAttribute('data-full-text')?.toLowerCase() || '';
+                            
+                            if (tokenText.includes(searchTerm) || fullText.includes(searchTerm)) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    });
+                }
+                
+                // Helper function to close the dialog
+                function closeDialog() {
+                    document.body.removeChild(dialogContainer);
+                }
+                
+                // Helper function to extract tokens from the current sentence
+                function extractSentenceTokens() {
+                    try {
+                        const currentSentenceElement = document.querySelector('.current-sentence');
+                        if (!currentSentenceElement) return [];
+                        
+                        // Try to find word elements
+                        const wordElements = currentSentenceElement.querySelectorAll('.word');
+                        if (wordElements && wordElements.length > 0) {
+                            // Return array of objects with token text and index
+                            return Array.from(wordElements).map((el, i) => {
+                                const fullText = el.textContent.trim();
+                                
+                                // Extract index from the element's data attribute if available
+                                let index = el.getAttribute('data-index') || (i + 1);
+                                
+                                // If the text starts with a number followed by non-numeric content,
+                                // assume the number is the index and extract the actual token text
+                                const match = fullText.match(/^(\d+)(.+)$/);
+                                let text = fullText;
+                                
+                                if (match) {
+                                    // Use the number as the index and the rest as the text
+                                    index = match[1];
+                                    text = match[2];
+                                }
+                                
+                                return {
+                                    text: text,
+                                    fullText: fullText, // Keep the original text for reference
+                                    index: index
+                                };
+                            });
+                        }
+                        
+                        // Fallback: just split the text by spaces (without indices)
+                        const sentenceText = currentSentenceElement.textContent.trim();
+                        return sentenceText.split(/\s+/).map((text, index) => {
+                            // Check if text starts with a number
+                            const match = text.match(/^(\d+)(.+)$/);
+                            if (match) {
+                                return {
+                                    text: match[2],
+                                    fullText: text,
+                                    index: match[1]
+                                };
+                            }
+                            
+                            return {
+                                text: text,
+                                fullText: text,
+                                index: index + 1
+                            };
+                        });
+                    } catch (error) {
+                        console.error('Error extracting sentence tokens:', error);
+                        return [];
+                    }
+                }
+                
+                // Helper function to generate a variable from a concept
+                function generateVariable(concept) {
+                    if (!concept) return 's' + window.state.currentId + 'x1';
+                    
+                    // Remove numbers and special characters to get the concept's initial letter
+                    const cleanConcept = concept.replace(/[^a-zA-Z\-]/g, '');
+                    
+                    // Take the first character, or 'x' if empty
+                    let firstChar = cleanConcept.charAt(0).toLowerCase();
+                    if (!firstChar) firstChar = 'x';
+                    
+                    // Initialize the concept counters if they don't exist
+                    if (!window.conceptCounters) {
+                        window.conceptCounters = {};
+                    }
+                    
+                    // Get the sentence ID from the window state
+                    const sentenceId = window.state.currentId;
+                    
+                    // Create a key for tracking this letter in this sentence
+                    const counterKey = `s${sentenceId}${firstChar}`;
+                    
+                    // Increment or initialize the counter for this letter
+                    if (!window.conceptCounters[counterKey]) {
+                        window.conceptCounters[counterKey] = 1;
+                    } else {
+                        window.conceptCounters[counterKey]++;
+                    }
+                    
+                    // Format: s[sentence_number][initial_letter][counter]
+                    return `s${sentenceId}${firstChar}${window.conceptCounters[counterKey]}`;
+                }
+                
+                // Function to create the top node
+                function createTopNode(variable, concept, tokenIndices) {
+                    // Create UMR string for top node
+                    const umrString = `(${variable} / ${concept})`;
+                    
+                    // Update the annotation
+                    const docVersionId = document.getElementById('doc_version_id').value;
+                    const sentId = document.getElementById('snt_id').value;
+                    
+                    // Create request data with alignment if token indices exist
+                    const requestData = {
+                        annotation: umrString,
+                        operation: 'add_top'
+                    };
+                    
+                    // Add alignment information if token indices exist
+                    if (tokenIndices && tokenIndices.length > 0) {
+                        requestData.alignment = {
+                            [variable]: tokenIndices
+                        };
+                    }
+                    
+                    fetch(`/update_annotation/${docVersionId}/${sentId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log('Top node created successfully');
+                            // Close the dialog
+                            closeDialog();
+                            // Reload the page to reflect the changes
+                            window.location.reload();
+                        } else {
+                            alert('Failed to create top node: ' + data.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Failed to create top node:', err);
+                        alert('Failed to create top node: ' + err.message);
+                    });
+                }
             }
         });
     </script>
@@ -148,11 +1358,20 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Sentence-Level UMR Annotation Preview</h5>
-                        {% if curr_annotation_string %}
-                        <button id="copy-annotation-btn" class="btn btn-sm btn-outline-secondary" title="Copy to clipboard">
-                            <i class="fas fa-copy"></i> Copy
-                        </button>
-                        {% endif %}
+                        <div class="btn-group">
+                            {% if curr_annotation_string %}
+                            <button id="delete-annotation-btn" class="btn btn-sm btn-outline-danger me-2" title="Delete entire annotation">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                            <button id="copy-annotation-btn" class="btn btn-sm btn-outline-secondary" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            {% else %}
+                            <button id="add-top-btn" class="btn btn-sm btn-primary" title="Create the first node">
+                                <i class="fas fa-plus"></i> Add Top
+                            </button>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -160,11 +1379,13 @@
                         {% if curr_annotation_string %}
                             <pre class="mb-0">{{ curr_annotation_string }}</pre>
                         {% else %}
-                            <div class="alert alert-info mb-0">
+                            <div class="alert alert-info mb-0 text-center">
                                 {% if not curr_sent_umr %}
-                                    No annotation has been created for this sentence yet. Use the annotation tools on the right to create one.
+                                    <p class="mb-0">No annotation has been created for this sentence yet.</p>
+                                    <p class="mb-0">Click the "Add Top" button to create your first node, or use the annotation tools on the right.</p>
                                 {% else %}
-                                    The annotation exists but is empty. Use the annotation tools on the right to add content.
+                                    <p class="mb-0">The annotation exists but is empty.</p>
+                                    <p class="mb-0">Click the "Add Top" button to create your first node, or use the annotation tools on the right.</p>
                                 {% endif %}
                             </div>
                         {% endif %}
