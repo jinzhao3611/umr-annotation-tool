@@ -426,10 +426,10 @@ def project(project_id):
         ).first()
         
         # Find if anyone has checked out this document
-        checkout_version = DocVersion.query.filter_by(
+        checkout_versions = DocVersion.query.filter_by(
             doc_id=doc.id,
             stage='checkout'
-        ).first()
+        ).all()
         
         if initial_version:
             project_docs.append({
@@ -437,9 +437,10 @@ def project(project_id):
                 'filename': doc.filename,
                 'doc_version_id': initial_version.id
             })
-            # Use checkout version's user if it exists, otherwise None
-            if checkout_version:
-                checked_out_by.append(User.query.get(checkout_version.user_id).username)
+            # Store all users who have checked out this document
+            if checkout_versions:
+                users = [User.query.get(version.user_id).username for version in checkout_versions]
+                checked_out_by.append(users)
             else:
                 checked_out_by.append(None)
     

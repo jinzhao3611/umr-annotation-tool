@@ -170,7 +170,10 @@
                         <span>{{projectDoc.filename}}</span>
                         <span class="document-meta">
                             {% if checked_out_by[loop.index0] %}
-                                Checked out by: {{ checked_out_by[loop.index0] }}
+                                Checked out by: 
+                                {% for username in checked_out_by[loop.index0] %}
+                                    {{ username }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
                             {% else %}
                                 Available for checkout
                             {% endif %}
