@@ -733,6 +733,22 @@ def update_annotation(doc_version_id, sent_id):
             annotation.sent_annot = data['annotation']
             current_app.logger.info(f"Updated existing annotation for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
         
+        # If alignment data is provided, update it
+        if 'alignment' in data and isinstance(data['alignment'], dict):
+            # Check if we need to merge with existing alignment or replace it
+            if annotation.alignment and data.get('operation') == 'add_top':
+                # For add_top operation, merge with existing alignments
+                current_app.logger.info(f"Merging new alignment {data['alignment']} with existing {annotation.alignment}")
+                existing_alignment = annotation.alignment
+                for var, indices in data['alignment'].items():
+                    existing_alignment[var] = indices
+                annotation.alignment = existing_alignment
+                current_app.logger.info(f"Updated alignment data: {annotation.alignment}")
+            else:
+                # Otherwise, replace alignment
+                annotation.alignment = data['alignment']
+                current_app.logger.info(f"Set alignment data: {annotation.alignment}")
+        
         # Handle specific operations
         if 'operation' in data:
             if data['operation'] == 'delete_branch':

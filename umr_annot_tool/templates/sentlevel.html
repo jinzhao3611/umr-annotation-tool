@@ -171,7 +171,6 @@
                                 <option value="abstract">Abstract Concept</option>
                                 <option value="ne">Named Entity</option>
                                 <option value="non-event">Reification Roleset</option>
-                                <option value="string">String Value</option>
                                 <option value="custom">Custom Concept</option>
                             </select>
                         </div>
@@ -179,6 +178,10 @@
                         <!-- Container for token selection -->
                         <div id="token-selection-container" style="display: none; margin-bottom: 16px;">
                             <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token:</label>
+                            <div class="alert alert-info mb-2" style="font-size: 0.9rem; padding: 8px;">
+                                <p class="mb-1"><strong>Note:</strong> Selected tokens will be automatically aligned to the created concept.</p>
+                                <p class="mb-0">Alignments will appear in the right panel after creation.</p>
+                            </div>
                             <div style="position: relative; margin-bottom: 8px;">
                                 <input type="text" id="token-search" 
                                     style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
@@ -303,12 +306,6 @@
                             </select>
                         </div>
                         
-                        <!-- Container for string value input -->
-                        <div id="string-value-container" style="display: none; margin-bottom: 16px;">
-                            <label for="string-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter string value:</label>
-                            <input type="text" id="string-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter string value...">
-                        </div>
-                        
                         <!-- Container for custom concept input -->
                         <div id="custom-concept-container" style="display: none; margin-bottom: 16px;">
                             <label for="custom-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter custom concept:</label>
@@ -383,7 +380,6 @@
                         document.getElementById('abstract-selection-container').style.display = 'none';
                         document.getElementById('ne-selection-container').style.display = 'none';
                         document.getElementById('non-event-selection-container').style.display = 'none';
-                        document.getElementById('string-value-container').style.display = 'none';
                         document.getElementById('custom-concept-container').style.display = 'none';
                         
                         // Show the selected container
@@ -398,8 +394,6 @@
                             document.getElementById('ne-selection-container').style.display = 'block';
                         } else if (selectedType === 'non-event') {
                             document.getElementById('non-event-selection-container').style.display = 'block';
-                        } else if (selectedType === 'string') {
-                            document.getElementById('string-value-container').style.display = 'block';
                         } else if (selectedType === 'custom') {
                             document.getElementById('custom-concept-container').style.display = 'block';
                         }
@@ -541,6 +535,12 @@
                                     this.style.backgroundColor = '#f0f8ff';
                                     this.removeAttribute('data-selected');
                                     
+                                    // Remove alignment indicator if present
+                                    const alignmentBadge = this.querySelector('.alignment-indicator');
+                                    if (alignmentBadge) {
+                                        this.removeChild(alignmentBadge);
+                                    }
+                                    
                                     // Remove from selectedTokens array
                                     const index = window.selectedTokens.findIndex(t => 
                                         t.text === tokenText && t.index === tokenIndex);
@@ -578,6 +578,28 @@
                                             token.style.backgroundColor = '#b3d9ff';
                                             token.setAttribute('data-selected', 'true');
                                             
+                                            // Add alignment indicator if not already present
+                                            if (!token.querySelector('.alignment-indicator')) {
+                                                const badge = document.createElement('span');
+                                                badge.className = 'alignment-indicator';
+                                                badge.style.position = 'absolute';
+                                                badge.style.top = '0';
+                                                badge.style.right = '0';
+                                                badge.style.backgroundColor = '#198754';
+                                                badge.style.color = 'white';
+                                                badge.style.borderRadius = '50%';
+                                                badge.style.width = '16px';
+                                                badge.style.height = '16px';
+                                                badge.style.fontSize = '10px';
+                                                badge.style.display = 'flex';
+                                                badge.style.justifyContent = 'center';
+                                                badge.style.alignItems = 'center';
+                                                badge.innerHTML = '<i class="fas fa-link" style="font-size: 8px;"></i>';
+                                                badge.title = "This token will be aligned";
+                                                token.style.position = 'relative';
+                                                token.appendChild(badge);
+                                            }
+                                            
                                             const tText = token.getAttribute('data-token').toLowerCase();
                                             const tIndex = token.getAttribute('data-token-index');
                                             
@@ -594,6 +616,28 @@
                                     // Normal selection of a single token
                                     this.style.backgroundColor = '#b3d9ff';
                                     this.setAttribute('data-selected', 'true');
+                                    
+                                    // Add alignment indicator if not already present
+                                    if (!this.querySelector('.alignment-indicator')) {
+                                        const badge = document.createElement('span');
+                                        badge.className = 'alignment-indicator';
+                                        badge.style.position = 'absolute';
+                                        badge.style.top = '0';
+                                        badge.style.right = '0';
+                                        badge.style.backgroundColor = '#198754';
+                                        badge.style.color = 'white';
+                                        badge.style.borderRadius = '50%';
+                                        badge.style.width = '16px';
+                                        badge.style.height = '16px';
+                                        badge.style.fontSize = '10px';
+                                        badge.style.display = 'flex';
+                                        badge.style.justifyContent = 'center';
+                                        badge.style.alignItems = 'center';
+                                        badge.innerHTML = '<i class="fas fa-link" style="font-size: 8px;"></i>';
+                                        badge.title = "This token will be aligned";
+                                        this.style.position = 'relative';
+                                        this.appendChild(badge);
+                                    }
                                     
                                     // Add to selectedTokens array
                                     window.selectedTokens.push({
@@ -926,8 +970,6 @@
                             concept = document.getElementById('ne-type').value;
                         } else if (conceptType === 'non-event') {
                             concept = document.getElementById('non-event-roleset').value;
-                        } else if (conceptType === 'string') {
-                            concept = document.getElementById('string-value').value;
                         } else if (conceptType === 'custom') {
                             concept = document.getElementById('custom-concept').value;
                         }
@@ -972,11 +1014,13 @@
                                     console.log(`No frame selected, using token text: "${concept}"`);
                                 }
                                 tokenIndices = [window.selectedTokens[0].index];
+                                console.log(`Adding alignment for token: ${window.selectedTokens[0].text} (index: ${window.selectedTokens[0].index})`);
                             } else {
                                 // Multiple tokens selected - join with hyphens
                                 concept = window.selectedTokens.map(token => token.text).join('-');
                                 tokenIndices = window.selectedTokens.map(token => token.index);
                                 console.log(`Using multi-token concept: "${concept}" with indices: [${tokenIndices.join(', ')}]`);
+                                console.log(`Alignment will be created for all selected tokens: ${window.selectedTokens.map(t => t.text).join(', ')}`);
                             }
                         } else if (conceptType === 'discourse') {
                             concept = document.getElementById('discourse-concept').value;
@@ -1011,12 +1055,6 @@
                                 alert('Please select a reification roleset');
                                 return;
                             }
-                        } else if (conceptType === 'string') {
-                            concept = document.getElementById('string-value').value;
-                            if (!concept) {
-                                alert('Please enter a string value');
-                                return;
-                            }
                         } else if (conceptType === 'custom') {
                             concept = document.getElementById('custom-concept').value;
                             if (!concept) {
@@ -1037,6 +1075,21 @@
                         window.selectedNameTokens = [];
                         
                         // Create top node with alignment if applicable
+                        const submitButton = document.getElementById('confirm-add-top');
+                        const originalButtonText = submitButton.innerHTML;
+                        
+                        // Show processing state
+                        submitButton.disabled = true;
+                        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Creating...';
+                        
+                        // Add a status message if we're creating alignments
+                        if (tokenIndices && tokenIndices.length > 0) {
+                            const statusMsg = document.createElement('div');
+                            statusMsg.className = 'alert alert-info mt-2';
+                            statusMsg.innerHTML = `Processing alignment for "${concept}" with ${tokenIndices.length} token(s)...`;
+                            document.getElementById('add-top-form').appendChild(statusMsg);
+                        }
+                        
                         createTopNode(variable, concept, tokenIndices);
                     });
                     
@@ -1231,10 +1284,18 @@
                     
                     // Add alignment information if token indices exist
                     if (tokenIndices && tokenIndices.length > 0) {
+                        // Format token indices as ranges (e.g. "5-5" for single token or "5-6-7" for multiple tokens)
+                        const formattedIndices = tokenIndices.map(index => `${index}-${index}`);
+                        
                         requestData.alignment = {
-                            [variable]: tokenIndices
+                            [variable]: formattedIndices
                         };
+                        console.log(`Adding alignment for ${variable} with formatted ranges: ${formattedIndices.join(', ')}`);
+                    } else {
+                        console.log(`No alignment information for ${variable}`);
                     }
+                    
+                    console.log('Request data for creating top node:', requestData);
                     
                     fetch(`/update_annotation/${docVersionId}/${sentId}`, {
                         method: 'POST',
@@ -1246,11 +1307,43 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
-                            console.log('Top node created successfully');
-                            // Close the dialog
-                            closeDialog();
-                            // Reload the page to reflect the changes
-                            window.location.reload();
+                            const hasAlignment = tokenIndices && tokenIndices.length > 0;
+                            const successMessage = hasAlignment 
+                                ? `Top node created successfully with alignment: ${variable}:[${tokenIndices.join('-')}]` 
+                                : 'Top node created successfully';
+                            
+                            console.log(successMessage);
+                            
+                            // Create and show a temporary success notification
+                            const notification = document.createElement('div');
+                            notification.className = 'alert alert-success';
+                            notification.style.position = 'fixed';
+                            notification.style.top = '20px';
+                            notification.style.left = '50%';
+                            notification.style.transform = 'translateX(-50%)';
+                            notification.style.padding = '10px 20px';
+                            notification.style.borderRadius = '5px';
+                            notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                            notification.style.zIndex = '9999';
+                            notification.style.maxWidth = '80%';
+                            notification.innerHTML = `
+                                <strong>Success!</strong> ${successMessage}
+                                ${hasAlignment ? `<div><small>Alignment "${variable}:[${tokenIndices.map(idx => idx+'-'+idx).join(', ')}]" has been added to the database.</small></div>` : ''}
+                                ${hasAlignment ? '<div><small>Alignment information will be displayed in the right panel after reload.</small></div>' : ''}
+                            `;
+                            
+                            document.body.appendChild(notification);
+                            
+                            // Remove the notification after a delay
+                            setTimeout(() => {
+                                document.body.removeChild(notification);
+                                
+                                // Close the dialog
+                                closeDialog();
+                                
+                                // Reload the page to reflect the changes
+                                window.location.reload();
+                            }, 2000);
                         } else {
                             alert('Failed to create top node: ' + data.message);
                         }

@@ -59,11 +59,17 @@ function addAlignment() {
     const alignmentInput = document.getElementById('new-alignment');
     
     const variable = variableInput.value.trim();
-    const alignment = alignmentInput.value.trim();
+    let alignment = alignmentInput.value.trim();
     
     if (!variable || !alignment) {
         alert('Both variable and alignment are required');
         return;
+    }
+    
+    // Format alignment as range if it's a single number
+    if (/^\d+$/.test(alignment)) {
+        alignment = `${alignment}-${alignment}`;
+        console.log(`Formatted alignment as range: ${alignment}`);
     }
     
     if (!currentAlignments[variable]) {
@@ -74,6 +80,19 @@ function addAlignment() {
         currentAlignments[variable].push(alignment);
         saveAlignments();
         renderAlignments();
+        
+        // Show a success message
+        const successMsg = document.createElement('div');
+        successMsg.className = 'alert alert-success mt-2';
+        successMsg.innerHTML = `Alignment added: ${variable} ↔ ${alignment}`;
+        document.querySelector('.add-alignment').appendChild(successMsg);
+        
+        // Remove the message after 2 seconds
+        setTimeout(() => {
+            if (successMsg.parentNode) {
+                successMsg.parentNode.removeChild(successMsg);
+            }
+        }, 2000);
     }
     
     // Clear inputs
