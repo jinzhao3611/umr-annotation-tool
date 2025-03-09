@@ -1500,10 +1500,10 @@
                             <div class="alert alert-info mb-0 text-center">
                                 {% if not curr_sent_umr %}
                                     <p class="mb-0">No annotation has been created for this sentence yet.</p>
-                                    <p class="mb-0">Click the "Add Top" button to create your first node, or use the annotation tools on the right.</p>
+                                    <p class="mb-0">Click the "Add Top" button to create your first node.</p>
                                 {% else %}
                                     <p class="mb-0">The annotation exists but is empty.</p>
-                                    <p class="mb-0">Click the "Add Top" button to create your first node, or use the annotation tools on the right.</p>
+                                    <p class="mb-0">Click the "Add Top" button to create your first node.</p>
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -1567,20 +1567,15 @@
                 </div>
                 <div class="card-body">
                     <div class="btn-group w-100">
-                        <button class="btn btn-primary" onclick="UMR2db()">Save</button>
-                        <button class="btn btn-outline-primary" onclick="reset()">Reset</button>
-                        <button class="btn btn-outline-primary" onclick="undo(-1)">Undo</button>
-                        <button class="btn btn-outline-primary" onclick="undo(1)">Redo</button>
-                    </div>
-                    <div class="btn-group w-100 mt-2">
                         <a class="btn btn-outline-secondary" href="{{ url_for('main.doclevel', doc_version_id=doc_version_id, sent_id=snt_id) }}">
                             Document-Level Annotation
                         </a>
                     </div>
                     <div class="btn-group w-100 mt-2">
-                        <a class="btn btn-outline-secondary" href="{{ url_for('users.project', project_id=project_id) }}" onclick="UMR2db()">
-                            Back
+                        <a class="btn btn-outline-secondary" href="{{ url_for('users.project', project_id=project_id) }}">
+                            Back to Project
                         </a>
+                    </div>
                 </div>
             </div>
 

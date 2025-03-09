@@ -71,7 +71,7 @@ function setupEventListeners() {
         button.addEventListener('click', handleAnnotationTool);
     });
 
-    // Quick actions
+    // Quick actions (Note: Most quick action buttons have been removed from the UI)
     document.querySelectorAll('.quick-actions button').forEach(button => {
         button.addEventListener('click', handleQuickAction);
     });
@@ -132,23 +132,17 @@ function handleAnnotationTool(event) {
     }
 }
 
-// Quick action handlers
+// Quick action handlers (simplified as most quick actions were removed)
 function handleQuickAction(event) {
     const action = event.target.getAttribute('data-action');
     switch (action) {
         case 'save':
             saveAnnotation();
             break;
-        case 'reset':
-            resetAnnotation();
+        // Other cases have been removed as they are no longer needed
+        default:
+            console.log('Action not implemented:', action);
             break;
-        case 'undo':
-            undo();
-            break;
-        case 'redo':
-            redo();
-            break;
-        // Add more cases as needed
     }
 }
 
@@ -158,87 +152,7 @@ function saveAnnotation() {
     console.log('Saving annotation...');
 }
 
-function resetAnnotation() {
-    // TODO: Implement reset functionality
-    console.log('Resetting annotation...');
-}
-
-function undo() {
-    // TODO: Implement undo functionality
-    console.log('Undoing last action...');
-}
-
-function redo() {
-    // TODO: Implement redo functionality
-    console.log('Redoing last action...');
-}
-
-// Save UMR annotation to database
-function UMR2db() {
-    try {
-        console.log('Saving UMR to database...');
-        
-        // Get the annotation element and extract the UMR string
-        const annotationElement = document.querySelector('#amr pre');
-        if (!annotationElement) {
-            console.error('Annotation element not found');
-            showNotification('Error: Annotation element not found', 'error');
-            return;
-        }
-        
-        const umrString = annotationElement.textContent.trim();
-        if (!umrString) {
-            console.error('Empty UMR annotation');
-            showNotification('Error: Empty UMR annotation', 'error');
-            return;
-        }
-        
-        // Get document and sentence IDs
-        const docVersionId = document.getElementById('doc_version_id').value;
-        const sentId = document.getElementById('snt_id').value;
-        
-        // Get CSRF token if available
-        const csrfToken = getCsrfTokenFromDocument();
-        
-        // Make the API call to save the UMR
-        fetch('/save_umr', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken || ''
-            },
-            body: JSON.stringify({
-                doc_version_id: docVersionId,
-                sent_id: sentId,
-                umr_string: umrString
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Server returned ${response.status}: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                console.log('UMR saved successfully');
-                showNotification('UMR saved successfully', 'success');
-            } else {
-                console.error('Error saving UMR:', data.error);
-                showNotification(`Error: ${data.error}`, 'error');
-            }
-        })
-        .catch(error => {
-            console.error('Error saving UMR:', error);
-            showNotification(`Error saving UMR: ${error.message}`, 'error');
-        });
-    } catch (error) {
-        console.error('Exception in UMR2db:', error);
-        showNotification(`Error: ${error.message}`, 'error');
-    }
-}
-
-// Helper function to show notifications
+// Show a notification to the user
 function showNotification(message, type, duration = 3000) {
     // Check if notification container exists, create if not
     let notificationContainer = document.getElementById('notification-container');
@@ -302,8 +216,4 @@ window.initialize = initialize;
 window.prevSentence = prevSentence;
 window.nextSentence = nextSentence;
 window.saveAnnotation = saveAnnotation;
-window.resetAnnotation = resetAnnotation;
-window.undo = undo;
-window.redo = redo;
-window.UMR2db = UMR2db;
 window.showNotification = showNotification;
