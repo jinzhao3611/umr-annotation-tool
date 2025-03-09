@@ -1369,18 +1369,6 @@ function moveBranchToNode(branchInfo, targetVariable) {
     // Show success message
     showNotification(`Branch moved to ${targetVariable}`, 'success');
     
-    // Show alignment reminder
-    const newVariables = extractNewVariables(normalizedBranch);
-    if (newVariables.length > 0) {
-        setTimeout(() => {
-            showNotification(
-                `⚠️ You may need to adjust alignments for variables ${newVariables.join(', ')}`, 
-                'info', 
-                6000
-            );
-        }, 1500);
-    }
-    
     // Automatically save changes to the database
     setTimeout(() => {
         // Try to find and call the appropriate save function
