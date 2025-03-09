@@ -1,5 +1,5 @@
 import sqlalchemy.exc
-from flask import url_for, redirect, flash, make_response, jsonify, send_file, render_template, request, abort, send_from_directory, current_app
+from flask import url_for, redirect, flash, make_response, jsonify, send_file, render_template, request, abort, send_from_directory, current_app, Response
 from werkzeug.utils import secure_filename
 from typing import List, Tuple, Optional, Dict
 import json
@@ -16,6 +16,13 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Pr
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from umr_annot_tool.resources.rolesets import known_relations
+import tempfile
+import subprocess
+import time
+import re
+import secrets
+from urllib.parse import quote
+import uuid
 
 # Create logs directory if it doesn't exist
 os.makedirs('logs', exist_ok=True)
@@ -1564,6 +1571,10 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
         doc2_sent_annotation = annotation2.sent_annot if annotation2 else "No annotation available"
         doc2_doc_annotation = annotation2.doc_annot if annotation2 else "No annotation available"
         
+        # Check for Ancast availability from app configuration
+        ancast_available = current_app.config.get('ANCAST_AVAILABLE', False)
+        ancast_install_instructions = current_app.config.get('ANCAST_INSTALL_INSTRUCTIONS', '')
+        
         # Render the adjudication template
         return render_template('adjudication.html',
                               doc_version_1_id=doc_version_1_id,
@@ -1579,6 +1590,8 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
                               doc2_sent_annotation=doc2_sent_annotation,
                               doc2_doc_annotation=doc2_doc_annotation,
                               comparison_level=comparison_level,
+                              ancast_available=ancast_available,
+                              ancast_install_instructions=ancast_install_instructions,
                               lang=project.language)
     
     except Exception as e:
@@ -1985,3 +1998,317 @@ def export_annotation(doc_version_id):
             }), 500
         else:
             return jsonify({"success": False, "message": str(e)}), 500
+
+@main.route("/run_ancast_evaluation", methods=['POST'])
+def run_ancast_evaluation():
+    """Run Ancast evaluation on two UMR annotations."""
+    # Initialize these variables for cleanup in the finally block
+    gold_path = None
+    pred_path = None
+    
+    try:
+        current_app.logger.info("Run Ancast evaluation route was triggered")
+        if not request.json:
+            return jsonify({"error": "No JSON data provided"}), 400
+
+        doc1_annotation = request.json.get("doc1", "")
+        doc2_annotation = request.json.get("doc2", "")
+
+        if not doc1_annotation or not doc2_annotation:
+            return jsonify({"error": "Missing document annotations"}), 400
+
+        current_app.logger.info("Received annotations for comparison")
+        current_app.logger.debug(f"doc1 length: {len(doc1_annotation)}, doc2 length: {len(doc2_annotation)}")
+        
+        # Create temporary files for the annotations
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as gold_file:
+            # UMR format must be preserved exactly as-is
+            # Ancast expects a specific format with comments, graph, alignment, etc.
+            gold_file.write(doc1_annotation)
+            gold_path = gold_file.name
+            current_app.logger.info(f"Created temporary gold file: {gold_path}")
+            current_app.logger.debug(f"Gold file content:\n{doc1_annotation}")
+
+        with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as pred_file:
+            # Preserve the UMR format exactly as-is
+            pred_file.write(doc2_annotation)
+            pred_path = pred_file.name
+            current_app.logger.info(f"Created temporary prediction file: {pred_path}")
+            current_app.logger.debug(f"Prediction file content:\n{doc2_annotation}")
+
+        # Set up output directory for Ancast results
+        output_dir = os.path.join(tempfile.gettempdir(), f"ancast_output_{int(time.time())}")
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, "output.csv")
+        current_app.logger.info(f"Output will be stored in: {output_path}")
+
+        # Check for Ancast installation type
+        ancast_installed = False
+        ancast_dir = None
+        ancast_command = []
+
+        try:
+            # Try package installation
+            result = subprocess.run(["ancast", "--version"], capture_output=True, text=True)
+            if result.returncode == 0:
+                ancast_installed = True
+                current_app.logger.info("Ancast is installed as a package")
+            else:
+                current_app.logger.warning("Ancast package not found, checking for local installation")
+        except Exception as e:
+            current_app.logger.warning(f"Error checking Ancast package: {str(e)}")
+
+        if not ancast_installed:
+            # Check for local installation
+            ancast_dir = current_app.config.get('ANCAST_DIR', None)
+            if ancast_dir and os.path.exists(ancast_dir):
+                current_app.logger.info(f"Using local Ancast installation at {ancast_dir}")
+            else:
+                # Check custom path from environment
+                custom_path = os.environ.get('ANCAST_PATH', '')
+                if custom_path and os.path.exists(custom_path):
+                    ancast_dir = custom_path
+                    current_app.logger.info(f"Using custom Ancast path from environment: {ancast_dir}")
+                else:
+                    # Check in the root directory of the application
+                    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+                    default_ancast_path = os.path.join(root_dir, 'ancast')
+                    if os.path.exists(default_ancast_path):
+                        ancast_dir = default_ancast_path
+                        current_app.logger.info(f"Found Ancast at default location: {ancast_dir}")
+                    else:
+                        current_app.logger.error(f"Ancast not found. Checked config, environment, and {default_ancast_path}")
+                        return jsonify({"error": "Ancast is not installed or configured. Please install Ancast or set the ANCAST_DIR in config or ANCAST_PATH in environment."}), 500
+
+        # Prepare command based on installation type
+        command_options = [
+            "-g", gold_path,    # Gold file path
+            "-p", pred_path,    # Prediction file path
+            "-o", output_path,  # Output file path
+            "-s", "snt",        # Sentence-level comparison
+            "-df", "umr",       # UMR format
+            "--use-alignment",  # Use alignment information
+            "--allow-reify",    # Allow reification
+            "--debug"           # Enable debug output
+        ]
+        
+        if ancast_installed:
+            # Package installation
+            ancast_command = ["ancast", "evaluate"] + command_options
+        elif ancast_dir:
+            # Try different possible script locations in priority order
+            script_paths = [
+                os.path.join(ancast_dir, "ancast.py"),
+                os.path.join(ancast_dir, "scripts", "evaluate.py"),
+                os.path.join(ancast_dir, "evaluate.py"),
+                os.path.join(ancast_dir, "ancast", "__main__.py"),
+                os.path.join(ancast_dir, "main.py")
+            ]
+            
+            script_found = False
+            for script_path in script_paths:
+                if os.path.exists(script_path):
+                    ancast_command = ["python", script_path] + command_options
+                    current_app.logger.info(f"Using Ancast script at {script_path}")
+                    script_found = True
+                    break
+            
+            if not script_found:
+                # If we have a directory but no script found, try invoking as a module
+                if os.path.exists(os.path.join(ancast_dir, "setup.py")) or os.path.exists(os.path.join(ancast_dir, "pyproject.toml")):
+                    current_app.logger.info(f"Using Ancast as a module from {ancast_dir}")
+                    ancast_command = ["python", "-m", "ancast", "evaluate"] + command_options
+                else:
+                    # List files in the directory to help debug
+                    files_in_dir = os.listdir(ancast_dir)
+                    current_app.logger.error(f"Could not find Ancast script in {ancast_dir}. Files in directory: {files_in_dir}")
+                    return jsonify({"error": f"Could not find Ancast script in {ancast_dir}. Please check your installation."}), 500
+
+        current_app.logger.info(f"Running Ancast command: {' '.join(ancast_command)}")
+
+        # Run Ancast and capture output
+        try:
+            process = subprocess.run(ancast_command, capture_output=True, text=True, check=False, timeout=60)
+            
+            current_app.logger.info(f"Ancast process completed with return code: {process.returncode}")
+            current_app.logger.debug(f"Ancast stdout:\n{process.stdout}")
+            current_app.logger.debug(f"Ancast stderr:\n{process.stderr}")
+        except subprocess.TimeoutExpired:
+            current_app.logger.error("Ancast command timed out after 60 seconds")
+            return jsonify({"error": "Ancast command timed out. Check log for details."}), 500
+        except Exception as e:
+            current_app.logger.error(f"Error running Ancast command: {str(e)}")
+            return jsonify({"error": f"Error running Ancast command: {str(e)}"}), 500
+
+        # Check for output file
+        output_exists = os.path.exists(output_path)
+        current_app.logger.info(f"Output file exists: {output_exists}")
+        
+        output_content = ""
+        if output_exists:
+            with open(output_path, 'r') as f:
+                output_content = f.read()
+                current_app.logger.debug(f"Output file content:\n{output_content}")
+
+        # Initialize metrics
+        score = 0.0
+        precision = 0.0
+        recall = 0.0
+        f1 = 0.0
+
+        # Try to parse metrics from the output file (CSV)
+        if output_exists and output_content:
+            current_app.logger.info("Attempting to parse CSV output")
+            try:
+                import csv
+                from io import StringIO
+                
+                # Log CSV content
+                csv_rows = []
+                csv_headers = []
+                
+                with open(output_path, 'r') as f:
+                    csv_reader = csv.DictReader(f)
+                    csv_headers = csv_reader.fieldnames
+                    current_app.logger.debug(f"CSV headers: {csv_headers}")
+                    
+                    for row in csv_reader:
+                        csv_rows.append(row)
+                        current_app.logger.debug(f"CSV row: {row}")
+                
+                if csv_rows:
+                    # Take the last row for summary metrics
+                    last_row = csv_rows[-1]
+                    current_app.logger.info(f"Processing last CSV row: {last_row}")
+                    
+                    # Try different possible column names
+                    for p_key in ['Precision', 'precision', 'P', 'p']:
+                        if p_key in last_row:
+                            try:
+                                precision = float(last_row[p_key])
+                                current_app.logger.info(f"Found precision: {precision} using key: {p_key}")
+                                break
+                            except (ValueError, TypeError) as e:
+                                current_app.logger.warning(f"Error parsing precision from {p_key}: {e}")
+                    
+                    for r_key in ['Recall', 'recall', 'R', 'r']:
+                        if r_key in last_row:
+                            try:
+                                recall = float(last_row[r_key])
+                                current_app.logger.info(f"Found recall: {recall} using key: {r_key}")
+                                break
+                            except (ValueError, TypeError) as e:
+                                current_app.logger.warning(f"Error parsing recall from {r_key}: {e}")
+                    
+                    for f_key in ['F1', 'F-1', 'F_1', 'f1', 'F-score', 'f-score']:
+                        if f_key in last_row:
+                            try:
+                                f1 = float(last_row[f_key])
+                                current_app.logger.info(f"Found F1: {f1} using key: {f_key}")
+                                break
+                            except (ValueError, TypeError) as e:
+                                current_app.logger.warning(f"Error parsing F1 from {f_key}: {e}")
+                    
+                    for s_key in ['Score', 'score', 'Ancast Score', 'ancast_score', 'ancast-score']:
+                        if s_key in last_row:
+                            try:
+                                score = float(last_row[s_key])
+                                current_app.logger.info(f"Found score: {score} using key: {s_key}")
+                                break
+                            except (ValueError, TypeError) as e:
+                                current_app.logger.warning(f"Error parsing score from {s_key}: {e}")
+            
+            except Exception as e:
+                current_app.logger.error(f"Error parsing CSV: {str(e)}")
+        
+        # If we still don't have any scores, try extracting from stdout
+        if score == 0.0 and precision == 0.0 and recall == 0.0 and f1 == 0.0:
+            current_app.logger.info("CSV parsing did not yield scores, trying stdout parsing")
+            
+            # Looking for metrics in stdout with various possible formats
+            score_pattern = r'(?:score|ancast\s+score|final\s+score)[\s:=]+([0-9]*\.?[0-9]+)'
+            precision_pattern = r'(?:precision|p)[\s:=]+([0-9]*\.?[0-9]+)'
+            recall_pattern = r'(?:recall|r)[\s:=]+([0-9]*\.?[0-9]+)'
+            f1_pattern = r'(?:f1|f-1|f_1|f\s+score)[\s:=]+([0-9]*\.?[0-9]+)'
+            
+            # Score
+            score_match = re.search(score_pattern, process.stdout, re.IGNORECASE)
+            if score_match:
+                try:
+                    score = float(score_match.group(1))
+                    current_app.logger.info(f"Extracted score from stdout: {score}")
+                except (ValueError, IndexError) as e:
+                    current_app.logger.warning(f"Failed to parse score from stdout: {e}")
+            
+            # Precision
+            precision_match = re.search(precision_pattern, process.stdout, re.IGNORECASE)
+            if precision_match:
+                try:
+                    precision = float(precision_match.group(1))
+                    current_app.logger.info(f"Extracted precision from stdout: {precision}")
+                except (ValueError, IndexError) as e:
+                    current_app.logger.warning(f"Failed to parse precision from stdout: {e}")
+            
+            # Recall
+            recall_match = re.search(recall_pattern, process.stdout, re.IGNORECASE)
+            if recall_match:
+                try:
+                    recall = float(recall_match.group(1))
+                    current_app.logger.info(f"Extracted recall from stdout: {recall}")
+                except (ValueError, IndexError) as e:
+                    current_app.logger.warning(f"Failed to parse recall from stdout: {e}")
+            
+            # F1
+            f1_match = re.search(f1_pattern, process.stdout, re.IGNORECASE)
+            if f1_match:
+                try:
+                    f1 = float(f1_match.group(1))
+                    current_app.logger.info(f"Extracted F1 from stdout: {f1}")
+                except (ValueError, IndexError) as e:
+                    current_app.logger.warning(f"Failed to parse F1 from stdout: {e}")
+        
+        # If we have precision and recall but no F1, calculate it
+        if precision > 0 and recall > 0 and f1 == 0:
+            f1 = 2 * (precision * recall) / (precision + recall)
+            current_app.logger.info(f"Calculated F1 from precision and recall: {f1}")
+        
+        # Log warning if all metrics are still zero
+        if score == 0.0 and precision == 0.0 and recall == 0.0 and f1 == 0.0:
+            current_app.logger.warning("All metrics are zero - possible parsing issue with Ancast output format")
+
+        # Return the results
+        result = {
+            "score": score,
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
+            "details": output_content if output_content else process.stdout,
+            "command": " ".join(ancast_command),
+            "returncode": process.returncode,
+            "metrics_found": {
+                "score_found": score > 0,
+                "precision_found": precision > 0,
+                "recall_found": recall > 0,
+                "f1_found": f1 > 0
+            }
+        }
+        
+        current_app.logger.info(f"Returning results: {result}")
+        return jsonify(result)
+        
+    except Exception as e:
+        current_app.logger.error(f"Unhandled exception in run_ancast_evaluation: {str(e)}")
+        current_app.logger.exception(e)
+        # Ensure we always return JSON, never HTML error pages
+        return jsonify({"error": f"Unhandled exception: {str(e)}"}), 500
+        
+    finally:
+        # Clean up temporary files
+        try:
+            if gold_path and os.path.exists(gold_path):
+                os.unlink(gold_path)
+            if pred_path and os.path.exists(pred_path):
+                os.unlink(pred_path)
+            current_app.logger.info("Temporary files cleaned up")
+        except Exception as e:
+            current_app.logger.warning(f"Error cleaning up temporary files: {e}")

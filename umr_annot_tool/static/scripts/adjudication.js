@@ -3,7 +3,51 @@
  * Handles the comparison of UMR trees in adjudication view
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+// When document is ready
+$(document).ready(function() {
+    console.log("Document ready, initializing adjudication page");
+    
+    // Initialize tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+    
+    // Initialize the Ancast modal
+    const ancastModal = document.getElementById('ancastModal');
+    if (ancastModal) {
+        $('#ancastModal').modal({
+            backdrop: 'static',
+            keyboard: false,
+            show: false
+        });
+    }
+    
+    // Initialize tabs
+    $('a[data-toggle="tab"]').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+    
+    // Set up event listener for evaluate button
+    const evaluateButton = document.getElementById('evaluate-btn');
+    if (evaluateButton) {
+        evaluateButton.addEventListener('click', function(e) {
+            console.log("Evaluate button clicked via delegation");
+            e.preventDefault();
+            runAncastEvaluation();
+        });
+    }
+    
+    // Secondary event listener setup to ensure button clicks are captured
+    $(document).on('click', '#evaluate-btn', function(e) {
+        console.log("Evaluate button clicked via jQuery");
+        e.preventDefault();
+        runAncastEvaluation();
+    });
+    
+    // Download results button
+    $(document).on('click', '#download-results', function() {
+        downloadAncastResults();
+    });
+    
     // Debug information for document types
     console.log('Document state:', window.state);
     
@@ -34,6 +78,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start the comparison process
     initializeComparison();
 });
+
+// Global variable to store Ancast results
+let ancastResults = null;
 
 /**
  * Initialize the comparison of the two annotations
@@ -732,4 +779,278 @@ function escapeHtml(unsafe) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+}
+
+/**
+ * Display an error message in the Ancast modal
+ */
+function showAncastError(errorMessage) {
+    console.log("Showing Ancast error:", errorMessage);
+    
+    try {
+        // Hide loading and results, show error
+        const loadingElement = document.getElementById('ancast-loading');
+        const resultsElement = document.getElementById('ancast-results');
+        const errorElement = document.getElementById('ancast-error');
+        
+        if (loadingElement) loadingElement.style.display = 'none';
+        if (resultsElement) resultsElement.style.display = 'none';
+        
+        if (errorElement) {
+            errorElement.style.display = 'block';
+            
+            // Look for the error message element
+            const errorMessageElement = document.querySelector('#ancast-error .alert');
+            if (errorMessageElement) {
+                let formattedError = errorMessage;
+                let helpText = '';
+                
+                // If it includes HTML tags, clean it up
+                if (errorMessage.includes('<!DOCTYPE') || errorMessage.includes('<html>')) {
+                    formattedError = "Server returned HTML instead of JSON. This typically indicates a server error.";
+                }
+                
+                // If error is too long, truncate it
+                if (formattedError.length > 1000) {
+                    formattedError = formattedError.substring(0, 1000) + "...";
+                }
+                
+                // Customize help text based on error message
+                if (errorMessage.includes('Ancast is not installed') || 
+                    errorMessage.includes('ANCAST_DIR') || 
+                    errorMessage.includes('ANCAST_PATH')) {
+                    
+                    helpText = `
+                    <p class="mt-2">Ancast Installation Help:</p>
+                    <ol>
+                        <li>Make sure Ancast is installed in your environment</li>
+                        <li>Check if Ancast is available at: /umr-annotation-tool/ancast</li>
+                        <li>You can set ANCAST_PATH in your environment or ANCAST_DIR in the application config</li>
+                        <li>Restart the server after making changes</li>
+                    </ol>
+                    `;
+                } else {
+                    helpText = `
+                    <p class="mt-2">Possible causes:</p>
+                    <ul>
+                        <li>UMR format issue - Ensure annotations follow the expected format</li>
+                        <li>Ancast installation problem - Check server configuration</li>
+                        <li>Server error - Check application logs for details</li>
+                    </ul>
+                    `;
+                }
+                
+                // Set the error message
+                errorMessageElement.innerHTML = `<strong>Error:</strong> ${formattedError}${helpText}`;
+            } else {
+                console.error("Error message element not found within #ancast-error");
+            }
+        } else {
+            console.error("Error element #ancast-error not found");
+            // Fallback - create an alert
+            alert("Ancast Error: " + errorMessage);
+        }
+    } catch (e) {
+        console.error("Error in showAncastError:", e);
+        // Last resort
+        alert("Ancast Error: " + errorMessage + "\n\nAdditional error: " + e.message);
+    }
+}
+
+/**
+ * Run Ancast evaluation on the two annotations
+ */
+function runAncastEvaluation() {
+    try {
+        console.log("runAncastEvaluation function called");
+        
+        // Get the correct annotation elements based on comparison level
+        let doc1Annotation = '';
+        let doc2Annotation = '';
+        
+        if (window.state.comparisonLevel === 'sentence') {
+            // Sentence level comparison
+            const doc1Elem = document.querySelector('#doc1-sent-annotation .annotation-content pre');
+            const doc2Elem = document.querySelector('#doc2-sent-annotation .annotation-content pre');
+            
+            if (!doc1Elem || !doc2Elem) {
+                console.error("Could not find sentence level elements for annotations");
+                showAncastError("Could not find annotation elements. Please make sure there are valid annotations to compare.");
+                return;
+            }
+            
+            doc1Annotation = doc1Elem.textContent || '';
+            doc2Annotation = doc2Elem.textContent || '';
+        } else {
+            // Document level comparison
+            const doc1Elem = document.querySelector('#doc1-doc-annotation .annotation-content pre');
+            const doc2Elem = document.querySelector('#doc2-doc-annotation .annotation-content pre');
+            
+            if (!doc1Elem || !doc2Elem) {
+                console.error("Could not find document level elements for annotations");
+                showAncastError("Could not find annotation elements. Please make sure there are valid annotations to compare.");
+                return;
+            }
+            
+            doc1Annotation = doc1Elem.textContent || '';
+            doc2Annotation = doc2Elem.textContent || '';
+        }
+        
+        // Check if we have annotations
+        if (!doc1Annotation || !doc2Annotation) {
+            console.error("Missing annotations:", { doc1: doc1Annotation?.length, doc2: doc2Annotation?.length });
+            showAncastError("Missing annotations. Please make sure both documents have valid UMR annotations.");
+            return;
+        }
+        
+        console.log(`Retrieved annotations: 
+            doc1Length: ${doc1Annotation.length}, 
+            doc2Length: ${doc2Annotation.length}, 
+            comparisonLevel: '${window.state.comparisonLevel}'`
+        );
+        
+        // Show the modal and loading indicator
+        $('#ancastModal').modal('show');
+        
+        document.getElementById('ancast-loading').style.display = 'block';
+        document.getElementById('ancast-results').style.display = 'none';
+        document.getElementById('ancast-error').style.display = 'none';
+        
+        console.log("Showing modal and loading indicator");
+        
+        // Prepare data for the request
+        const data = {
+            doc1: doc1Annotation,
+            doc2: doc2Annotation
+        };
+        
+        // Send the request to the server
+        console.log("Sending request to /run_ancast_evaluation");
+        
+        fetch('/run_ancast_evaluation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            console.log("Received response:", response);
+            
+            if (response.redirected) {
+                // Handle redirects (like to login page)
+                console.warn("Response was redirected to:", response.url);
+                throw new Error("Request was redirected. You may need to log in again.");
+            }
+            
+            // Check the content type
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                console.error("Response is not JSON:", contentType);
+                return response.text().then(htmlText => {
+                    console.error("HTML response:", htmlText.substring(0, 500) + "...");
+                    throw new Error(`Expected JSON response but got ${contentType || 'unknown format'}`);
+                });
+            }
+            
+            if (!response.ok) {
+                // Handle HTTP errors
+                console.error(`HTTP Error: ${response.status} ${response.statusText}`);
+                return response.json().then(data => {
+                    throw new Error(data.error || `HTTP Error: ${response.status} ${response.statusText}`);
+                });
+            }
+            
+            return response.json();
+        })
+        .then(data => {
+            console.log("Received data:", data);
+            
+            // Check for error field in data
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            
+            // Display the results
+            displayAncastResults(data);
+        })
+        .catch(error => {
+            console.error("Error running Ancast evaluation:", error);
+            showAncastError(error.message || "Unknown error occurred while running Ancast evaluation.");
+        });
+        
+    } catch (e) {
+        console.error("Exception in runAncastEvaluation:", e);
+        showAncastError("An error occurred while preparing the Ancast evaluation: " + e.message);
+    }
+}
+
+/**
+ * Display the Ancast evaluation results in the modal
+ */
+function displayAncastResults(data) {
+    // Hide loading indicator and show results
+    document.getElementById('ancast-loading').style.display = 'none';
+    document.getElementById('ancast-results').style.display = 'block';
+    
+    // Format scores with appropriate decimal places
+    function formatScore(value) {
+        // Show more decimal places for small values
+        if (value === 0) return "0.0000";
+        if (value < 0.01) return value.toFixed(6);
+        if (value < 0.1) return value.toFixed(5);
+        return value.toFixed(4);
+    }
+    
+    // Update summary tab
+    document.getElementById('ancast-score').textContent = formatScore(data.score);
+    document.getElementById('ancast-precision').textContent = formatScore(data.precision);
+    document.getElementById('ancast-recall').textContent = formatScore(data.recall);
+    document.getElementById('ancast-f1').textContent = formatScore(data.f1);
+    
+    // Update details tab with formatted output
+    const detailsElem = document.getElementById('ancast-details');
+    if (detailsElem) {
+        // Format the details output for better readability
+        let formattedDetails = data.details;
+        
+        try {
+            // Try to detect if it's CSV output and format accordingly
+            if (data.details.includes(',') && data.details.includes('\n')) {
+                const lines = data.details.split('\n');
+                formattedDetails = lines.map(line => {
+                    // Add bold formatting to header row
+                    if (line.includes('Precision') || line.includes('Recall') || line.includes('F1') || line.includes('Score')) {
+                        return '<strong>' + line + '</strong>';
+                    }
+                    return line;
+                }).join('\n');
+            }
+        } catch (e) {
+            console.error('Error formatting details:', e);
+        }
+        
+        detailsElem.innerHTML = formattedDetails;
+    }
+}
+
+/**
+ * Download the Ancast evaluation results
+ */
+function downloadAncastResults() {
+    if (!ancastResults) {
+        showAncastError('No results available to download.');
+        return;
+    }
+    
+    // Create a downloadable JSON file
+    const dataStr = JSON.stringify(ancastResults, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+    
+    const exportFileName = `ancast_results_${window.state.docVersion1Id}_${window.state.docVersion2Id}_${window.state.currentSentId}.json`;
+    
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileName);
+    linkElement.click();
 } 

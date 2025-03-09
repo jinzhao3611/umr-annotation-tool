@@ -19,3 +19,13 @@ class Config:
     MAIL_USERNAME = 'apikey'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     MAIL_DEFAULT_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+    
+    # Ancast configuration
+    ANCAST_DIR = os.environ.get('ANCAST_PATH') or os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'ancast')
+    ANCAST_AVAILABLE = True
+    ANCAST_INSTALL_INSTRUCTIONS = """
+# Install Ancast from GitHub:
+git clone https://github.com/umr4nlp/ancast.git
+cd ancast
+pip install -e .
+"""
