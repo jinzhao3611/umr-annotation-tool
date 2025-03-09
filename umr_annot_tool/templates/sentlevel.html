@@ -61,7 +61,7 @@
             if (deleteButton) {
                 deleteButton.addEventListener('click', function() {
                     // Show confirmation dialog
-                    if (confirm('Are you sure you want to delete the entire annotation? This action cannot be undone.')) {
+                    if (confirm('Are you sure you want to delete the entire annotation and all its alignments? This action cannot be undone.')) {
                         const docVersionId = document.getElementById('doc_version_id').value;
                         const sentId = document.getElementById('snt_id').value;
                         
@@ -73,7 +73,8 @@
                             },
                             body: JSON.stringify({
                                 annotation: '',
-                                operation: 'delete_all'
+                                operation: 'delete_all',
+                                clear_alignments: true
                             })
                         })
                         .then(response => response.json())
@@ -85,7 +86,31 @@
                                 deleteButton.classList.remove('btn-outline-danger');
                                 deleteButton.classList.add('btn-success');
                                 
+                                // Clear alignments in the UI immediately
+                                if (window.currentAlignments) {
+                                    window.currentAlignments = {};
+                                    renderAlignments();
+                                }
+                                
+                                // Show a notification about deleting annotation and alignments
+                                const notification = document.createElement('div');
+                                notification.className = 'alert alert-success';
+                                notification.style.position = 'fixed';
+                                notification.style.top = '20px';
+                                notification.style.left = '50%';
+                                notification.style.transform = 'translateX(-50%)';
+                                notification.style.padding = '10px 20px';
+                                notification.style.borderRadius = '5px';
+                                notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                                notification.style.zIndex = '9999';
+                                notification.innerHTML = `
+                                    <strong>Success!</strong> Annotation and all alignments have been deleted.
+                                `;
+                                document.body.appendChild(notification);
+                                
                                 setTimeout(() => {
+                                    // Remove the notification first
+                                    document.body.removeChild(notification);
                                     // Reload the page to reflect the changes
                                     window.location.reload();
                                 }, 1000);

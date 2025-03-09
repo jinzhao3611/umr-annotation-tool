@@ -751,7 +751,16 @@ def update_annotation(doc_version_id, sent_id):
         
         # Handle specific operations
         if 'operation' in data:
-            if data['operation'] == 'delete_branch':
+            if data['operation'] == 'delete_all':
+                # If clear_alignments flag is set, also clear the alignments
+                if data.get('clear_alignments', False):
+                    # Clear the alignment data
+                    annotation.alignment = {}
+                    current_app.logger.info(f"Deleted all alignments for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
+                
+                current_app.logger.info(f"Delete all: User {current_user.username} deleted entire annotation from sentence {sent_id} in document version {doc_version_id}")
+            
+            elif data['operation'] == 'delete_branch':
                 deleted_relation = data.get('deleted_relation', '(unknown)')
                 current_app.logger.info(f"Branch deletion: User {current_user.username} deleted branch '{deleted_relation}' from sentence {sent_id} in document version {doc_version_id}")
             
