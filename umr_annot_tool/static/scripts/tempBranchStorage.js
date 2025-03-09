@@ -344,18 +344,84 @@ function storeBranchTemporarily(relationSpan) {
     
     // Find the position of the relation in the original text
     const relationText = relationSpan.textContent;
-    const spanIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(relationSpan);
+    console.log('Looking for relation text:', relationText);
     
-    // Find the relation occurrence in the text
+    // Try to find the relation text in the original text
     let relationMatches = findAllMatches(originalText, relationText);
     
-    if (relationMatches.length <= spanIndex) {
+    // If no matches found, try with trimmed text
+    if (relationMatches.length === 0) {
+        const trimmedRelationText = relationText.trim();
+        console.log('Trying with trimmed relation text:', trimmedRelationText);
+        relationMatches = findAllMatches(originalText, trimmedRelationText);
+    }
+    
+    // If still no matches, try to get parent element content
+    if (relationMatches.length === 0) {
+        console.log('No matches found for relation text, trying to get the parent branch');
+        
+        // Get the entire branch text from the DOM
+        let currentNode = relationSpan;
+        while (currentNode && currentNode.parentElement && currentNode.parentElement !== annotationElement) {
+            currentNode = currentNode.parentElement;
+        }
+        
+        if (currentNode && currentNode.textContent) {
+            // Try to find a unique line in the text that contains our relation
+            const lines = originalText.split('\n');
+            let bestLine = null;
+            let bestLineIndex = -1;
+            
+            // Find a line that contains our relation text
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].includes(relationText)) {
+                    bestLine = lines[i];
+                    bestLineIndex = i;
+                    break;
+                }
+            }
+            
+            if (bestLineIndex >= 0) {
+                // Calculate position in original text
+                const lineStartPos = originalText.indexOf(bestLine);
+                if (lineStartPos >= 0) {
+                    // Use the position of the line as our relation position
+                    const relationPos = lineStartPos + bestLine.indexOf(relationText);
+                    
+                    // Get branch boundaries from this position
+                    const branchInfo = getBranchBoundaries(originalText, relationPos);
+                    
+                    if (branchInfo) {
+                        // Extract the branch text
+                        const branchText = branchInfo.branchText;
+                        
+                        // Prompt for optional description
+                        const description = prompt('Add a description for this branch (optional):');
+                        
+                        // Add to temporary storage
+                        addTempBranch(branchText, description);
+                        return;
+                    }
+                }
+            }
+        }
+        
+        // If we still haven't found it, show error and return
         console.error('Could not locate the relation in the text');
         showNotification('Error: Could not locate the branch to store', 'error');
         return;
     }
     
-    const relationPos = relationMatches[spanIndex];
+    // Get span index if there are multiple occurrences
+    const spanIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(relationSpan);
+    
+    // Use the correct match based on span index or default to the first match
+    const relationPos = (spanIndex >= 0 && spanIndex < relationMatches.length) 
+        ? relationMatches[spanIndex] 
+        : relationMatches[0];
+    
+    // Log the position found
+    console.log('Relation position found:', relationPos);
     
     // Determine the branch boundaries
     const branchInfo = getBranchBoundaries(originalText, relationPos);
