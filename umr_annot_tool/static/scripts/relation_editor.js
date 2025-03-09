@@ -1988,8 +1988,16 @@ function generateUniqueVariable(conceptName, annotationText) {
 
 // Function to show dialog for adding a branch
 async function showAddBranchDialog(parentVariableSpan) {
-    const parentVariable = parentVariableSpan.textContent;
+    // Extract the parent variable from the span
+    const parentVariable = parentVariableSpan.textContent.trim();
+    
+    // Save the parent variable for later use
+    window.currentParentVariable = parentVariable;
+    
+    // Get the current annotation text
     const annotationElement = document.querySelector('#amr pre');
+    if (!annotationElement) return;
+    
     const annotationText = annotationElement.textContent;
     
     // Find the full node (variable / concept) of the parent
@@ -2183,6 +2191,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                             <option value="non-event">Reification Roleset</option>
                             <option value="string">String Value</option>
                             <option value="number">Number Value</option>
+                            <option value="reentrant">Re-entrancy</option>
                         </select>
                     </div>
                     
@@ -2289,6 +2298,25 @@ async function showAddBranchDialog(parentVariableSpan) {
                         <label for="number-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter number value:</label>
                         <input type="number" id="number-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter numeric value">
                     </div>
+
+                    <!-- Container for re-entrancy variable selection -->
+                    <div id="reentrant-selection-container" style="display: none; margin-bottom: 16px;">
+                        <label for="reentrant-variable" style="display: block; margin-bottom: 8px; font-weight: bold;">Select existing variable:</label>
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="reentrant-variable-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search variables...">
+                        </div>
+                        <div id="reentrant-variables-container" style="max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <div id="reentrant-variables-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px;">
+                                <!-- Variables will be populated here -->
+                            </div>
+                        </div>
+                        <div id="selected-reentrant-display" style="margin-top: 8px; padding: 6px; background-color: #f8f9fa; border-radius: 4px;">
+                            <em>No variable selected</em>
+                        </div>
+                        <input type="hidden" id="reentrant-variable-value">
+                    </div>
                 `;
                 
                 // Setup child node type selection
@@ -2298,9 +2326,104 @@ async function showAddBranchDialog(parentVariableSpan) {
                 const abstractContainer = document.getElementById('abstract-selection-container');
                 const neContainer = document.getElementById('ne-selection-container');
                 const nonEventContainer = document.getElementById('non-event-selection-container');
-    const stringContainer = document.getElementById('string-input-container');
-    const numberContainer = document.getElementById('number-input-container');
+                const stringContainer = document.getElementById('string-input-container');
+                const numberContainer = document.getElementById('number-input-container');
+                const reentrantContainer = document.getElementById('reentrant-selection-container');
                 const nameTokensContainer = document.getElementById('name-tokens-container');
+                
+                // Function to extract existing variables from the annotation
+                function extractExistingVariables(annotation) {
+                    // Regex pattern to match variables like s9n2 (s followed by numbers, then letters, then optional numbers)
+                    const variablePattern = /\b(s[0-9]+[a-z]+[0-9]*)\b/g;
+                    const matches = annotation.match(variablePattern) || [];
+                    
+                    // Return unique variables
+                    return [...new Set(matches)];
+                }
+                
+                // Function to populate the reentrant variables container
+                function populateReentrantVariables() {
+                    // Get the parent variable to exclude it from the list
+                    const parentVariable = window.currentParentVariable;
+                    
+                    // Get the current annotation text
+                    const annotationElement = document.querySelector('#amr pre');
+                    if (!annotationElement) return;
+                    
+                    const annotationText = annotationElement.textContent;
+                    
+                    // Extract existing variables
+                    const variables = extractExistingVariables(annotationText);
+                    
+                    // Filter out the parent variable to avoid self-reference
+                    const filteredVariables = variables.filter(v => v !== parentVariable);
+                    
+                    // Get the grid container
+                    const variablesGrid = document.getElementById('reentrant-variables-grid');
+                    if (!variablesGrid) return;
+                    
+                    // Populate the grid with variable items
+                    variablesGrid.innerHTML = filteredVariables.map(variable => `
+                        <div class="reentrant-variable-item" data-variable="${variable}" style="padding: 6px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                            ${variable}
+                        </div>
+                    `).join('');
+                    
+                    // Add click handlers to all variable items
+                    const variableItems = document.querySelectorAll('.reentrant-variable-item');
+                    variableItems.forEach(item => {
+                        item.addEventListener('click', () => handleReentrantVariableClick(item));
+                    });
+                    
+                    // Setup search functionality
+                    const searchInput = document.getElementById('reentrant-variable-search');
+                    if (searchInput) {
+                        searchInput.addEventListener('input', function() {
+                            const searchTerm = this.value.toLowerCase();
+                            const variableItems = document.querySelectorAll('.reentrant-variable-item');
+                            
+                            variableItems.forEach(item => {
+                                const variableText = item.getAttribute('data-variable').toLowerCase();
+                                if (variableText.includes(searchTerm)) {
+                                    item.style.display = 'block';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+                }
+                
+                // Function to handle reentrant variable selection
+                function handleReentrantVariableClick(item) {
+                    const variable = item.getAttribute('data-variable');
+                    
+                    // Reset all variable items to default style
+                    const variableItems = document.querySelectorAll('.reentrant-variable-item');
+                    variableItems.forEach(varItem => {
+                        varItem.style.backgroundColor = '#f0f8ff';
+                    });
+                    
+                    // Select the clicked variable
+                    item.style.backgroundColor = '#d1e7ff';
+                    
+                    // Update the hidden input value
+                    const reentrantVariableInput = document.getElementById('reentrant-variable-value');
+                    if (reentrantVariableInput) {
+                        reentrantVariableInput.value = variable;
+                    }
+                    
+                    // Update display
+                    const selectedDisplay = document.getElementById('selected-reentrant-display');
+                    if (selectedDisplay) {
+                        selectedDisplay.innerHTML = `
+                            <strong>Selected variable:</strong> ${variable}
+                            <div style="margin-top: 5px;">
+                                <small>Will reference: ${variable}</small>
+                            </div>
+                        `;
+                    }
+                }
                 
                 // Set up filtering for each dropdown
                 setupDropdownFiltering(
@@ -2363,48 +2486,6 @@ async function showAddBranchDialog(parentVariableSpan) {
                     });
                 }
                 
-                // Handle string token selection
-                const stringTokenItems = document.querySelectorAll('.string-token-item');
-                
-                // Track the selected string token
-                window.selectedStringToken = null;
-                
-                // Function to handle string token click
-                const handleStringTokenClick = (item) => {
-                    const token = item.getAttribute('data-token');
-                    
-                    // Reset all token items to default style
-                    stringTokenItems.forEach(tokenItem => {
-                        tokenItem.style.backgroundColor = '#f0f8ff';
-                    });
-                    
-                    // Select the clicked token
-                    item.style.backgroundColor = '#d1e7ff';
-                    window.selectedStringToken = token;
-                    
-                    // Update the hidden input value
-                    const stringValueInput = document.getElementById('string-value');
-                    if (stringValueInput) {
-                        stringValueInput.value = token;
-                    }
-                    
-                    // Update display
-                    const selectedDisplay = document.getElementById('selected-string-token-display');
-                    if (selectedDisplay) {
-                        selectedDisplay.innerHTML = `
-                            <strong>Selected token:</strong> ${token}
-                            <div style="margin-top: 5px;">
-                                <small>Will be used as: "${token}"</small>
-                            </div>
-                        `;
-                    }
-                };
-                
-                // Add click handlers to all string token items
-                stringTokenItems.forEach(item => {
-                    item.addEventListener('click', () => handleStringTokenClick(item));
-                });
-                
                 // Handle child node type selection change
                 childNodeTypeSelect.addEventListener('change', () => {
                     const selectedType = childNodeTypeSelect.value;
@@ -2417,6 +2498,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                     nonEventContainer.style.display = 'none';
                     stringContainer.style.display = 'none';
                     numberContainer.style.display = 'none';
+                    reentrantContainer.style.display = 'none';
                     nameTokensContainer.style.display = 'none';
                     
                     // Show the appropriate container based on selection
@@ -2435,8 +2517,60 @@ async function showAddBranchDialog(parentVariableSpan) {
                         nonEventContainer.style.display = 'block';
                     } else if (selectedType === 'string') {
                         stringContainer.style.display = 'block';
+                        
+                        // Add event listeners to string token items with a small delay to ensure DOM is ready
+                        setTimeout(() => {
+                            // Get all string token items
+                            const stringTokenItems = document.querySelectorAll('.string-token-item');
+                            console.log('Found string token items:', stringTokenItems.length);
+                            
+                            // Track the selected string token
+                            window.selectedStringToken = null;
+                            
+                            // Add click event to each token
+                            stringTokenItems.forEach(item => {
+                                // First, make sure we don't add duplicate listeners
+                                const newItem = item.cloneNode(true);
+                                item.parentNode.replaceChild(newItem, item);
+                                
+                                newItem.addEventListener('click', function() {
+                                    const token = this.getAttribute('data-token');
+                                    console.log('String token clicked:', token);
+                                    
+                                    // Reset all token items to default style
+                                    document.querySelectorAll('.string-token-item').forEach(tokenItem => {
+                                        tokenItem.style.backgroundColor = '#f0f8ff';
+                                    });
+                                    
+                                    // Select the clicked token
+                                    this.style.backgroundColor = '#d1e7ff';
+                                    window.selectedStringToken = token;
+                                    
+                                    // Update the hidden input value
+                                    const stringValueInput = document.getElementById('string-value');
+                                    if (stringValueInput) {
+                                        stringValueInput.value = token;
+                                    }
+                                    
+                                    // Update display
+                                    const selectedDisplay = document.getElementById('selected-string-token-display');
+                                    if (selectedDisplay) {
+                                        selectedDisplay.innerHTML = `
+                                            <strong>Selected token:</strong> ${token}
+                                            <div style="margin-top: 5px;">
+                                                <small>Will be used as: "${token}"</small>
+                                            </div>
+                                        `;
+                                    }
+                                });
+                            });
+                        }, 100); // Small delay to ensure DOM is ready
                     } else if (selectedType === 'number') {
                         numberContainer.style.display = 'block';
+                    } else if (selectedType === 'reentrant') {
+                        reentrantContainer.style.display = 'block';
+                        // Populate the reentrant variables
+                        populateReentrantVariables();
                     }
                 });
                 
@@ -3144,6 +3278,16 @@ async function showAddBranchDialog(parentVariableSpan) {
             }
             
             childNode = numberValue;
+                } else if (childNodeType === 'reentrant') {
+                    // For re-entrancy (referencing existing variables)
+                    const reentrantVariable = document.getElementById('reentrant-variable-value').value;
+                    if (!reentrantVariable) {
+                        showNotification('Please select an existing variable', 'error');
+                        return;
+                    }
+                    
+                    // Just use the variable directly
+                    childNode = reentrantVariable;
                 }
             }
             
