@@ -2180,7 +2180,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                             <option value="discourse">Discourse Concept</option>
                             <option value="abstract">Abstract Concept</option>
                             <option value="ne">Named Entity</option>
-                            <option value="non-event">Non-Event Roleset</option>
+                            <option value="non-event">Reification Roleset</option>
                             <option value="string">String Value</option>
                             <option value="number">Number Value</option>
                         </select>
@@ -2263,8 +2263,25 @@ async function showAddBranchDialog(parentVariableSpan) {
                     
                     <!-- Container for string value input -->
                     <div id="string-input-container" style="display: none; margin-bottom: 16px;">
-                        <label for="string-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter string value:</label>
-                        <input type="text" id="string-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter string value (without quotes)">
+                        <label for="string-token-selection" style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token for string value:</label>
+                        <div style="position: relative; margin-bottom: 8px;">
+                            <input type="text" id="string-token-search" 
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                                placeholder="Type to search tokens...">
+                        </div>
+                        <div id="string-tokens-container" style="max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <div id="string-tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px;">
+                                ${sentenceTokens.map(token => `
+                                <div class="string-token-item" data-token="${token}" style="padding: 6px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                    ${token}
+                                </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div id="selected-string-token-display" style="margin-top: 8px; padding: 6px; background-color: #f8f9fa; border-radius: 4px;">
+                            <em>No token selected</em>
+                        </div>
+                        <input type="hidden" id="string-value">
                     </div>
                     
                     <!-- Container for number value input -->
@@ -2327,6 +2344,66 @@ async function showAddBranchDialog(parentVariableSpan) {
                         });
                     });
                 }
+                
+                // Setup string token search
+                const stringTokenSearchInput = document.getElementById('string-token-search');
+                if (stringTokenSearchInput) {
+                    stringTokenSearchInput.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        const tokenItems = document.querySelectorAll('.string-token-item');
+                        
+                        tokenItems.forEach(item => {
+                            const tokenText = item.getAttribute('data-token').toLowerCase();
+                            if (tokenText.includes(searchTerm)) {
+                                item.style.display = 'block';
+                            } else {
+                                item.style.display = 'none';
+                            }
+                        });
+                    });
+                }
+                
+                // Handle string token selection
+                const stringTokenItems = document.querySelectorAll('.string-token-item');
+                
+                // Track the selected string token
+                window.selectedStringToken = null;
+                
+                // Function to handle string token click
+                const handleStringTokenClick = (item) => {
+                    const token = item.getAttribute('data-token');
+                    
+                    // Reset all token items to default style
+                    stringTokenItems.forEach(tokenItem => {
+                        tokenItem.style.backgroundColor = '#f0f8ff';
+                    });
+                    
+                    // Select the clicked token
+                    item.style.backgroundColor = '#d1e7ff';
+                    window.selectedStringToken = token;
+                    
+                    // Update the hidden input value
+                    const stringValueInput = document.getElementById('string-value');
+                    if (stringValueInput) {
+                        stringValueInput.value = token;
+                    }
+                    
+                    // Update display
+                    const selectedDisplay = document.getElementById('selected-string-token-display');
+                    if (selectedDisplay) {
+                        selectedDisplay.innerHTML = `
+                            <strong>Selected token:</strong> ${token}
+                            <div style="margin-top: 5px;">
+                                <small>Will be used as: "${token}"</small>
+                            </div>
+                        `;
+                    }
+                };
+                
+                // Add click handlers to all string token items
+                stringTokenItems.forEach(item => {
+                    item.addEventListener('click', () => handleStringTokenClick(item));
+                });
                 
                 // Handle child node type selection change
                 childNodeTypeSelect.addEventListener('change', () => {
@@ -3051,13 +3128,13 @@ async function showAddBranchDialog(parentVariableSpan) {
                     childNode = `(${variable} / ${selectedRoleset})`;
                 } else if (childNodeType === 'string') {
                     // For string values
-                    const stringValue = document.getElementById('string-value').value;
+                    const stringValue = window.selectedStringToken || document.getElementById('string-value').value;
                     if (!stringValue) {
-                        showNotification('Please enter a string value', 'error');
-                return;
-            }
-            
-            childNode = `"${stringValue}"`;
+                        showNotification('Please select a token for the string value', 'error');
+                        return;
+                    }
+                    
+                    childNode = `"${stringValue}"`;
                 } else if (childNodeType === 'number') {
                     // For number values
                     const numberValue = document.getElementById('number-value').value;
