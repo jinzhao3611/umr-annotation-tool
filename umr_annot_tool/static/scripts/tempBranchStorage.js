@@ -1117,3 +1117,463 @@ function addBranchToVariable(variable, branchContent) {
 function extractVariables(annotationText) {
     return extractNodes(annotationText).map(node => node.variable);
 }
+
+// Make startBranchMove function globally available
+window.startBranchMove = function(relationSpan) {
+    console.log('Starting branch move operation');
+    const annotationElement = document.querySelector('#amr pre');
+    if (!annotationElement) {
+        console.error('Annotation element not found');
+        return;
+    }
+    
+    // Find the branch content to be moved
+    const branchInfo = extractBranchFromRelation(relationSpan, annotationElement);
+    if (!branchInfo) {
+        showNotification('Could not extract branch to move', 'error');
+        return;
+    }
+    
+    console.log('Extracted branch to move:', branchInfo);
+    
+    // Show dialog to select the new parent node
+    showMoveBranchDialog(branchInfo);
+};
+
+// Extract a branch based on a relation span
+function extractBranchFromRelation(relationSpan, annotationElement) {
+    const originalText = annotationElement.textContent;
+    
+    // Get the relation text
+    const relationText = relationSpan.textContent;
+    console.log('Looking for relation text to move:', relationText);
+    
+    // Find the parent node of this relation
+    let currentNode = relationSpan;
+    let parentRelationSpan = null;
+    
+    // Navigate up to find the parent relation span (the relation directly above this one)
+    while (currentNode && currentNode !== annotationElement) {
+        // If this is a relation span and not our starting span
+        if (currentNode.classList.contains('relation-span') && currentNode !== relationSpan) {
+            parentRelationSpan = currentNode;
+            break;
+        }
+        currentNode = currentNode.parentElement;
+    }
+    
+    // Get the relation's position in the text
+    // First find all relation-spans to determine this relation's index
+    const allRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'));
+    const spanIndex = allRelationSpans.indexOf(relationSpan);
+    
+    if (spanIndex === -1) {
+        console.error('Could not determine relation span index');
+        return null;
+    }
+    
+    // Find all occurrences of the relation text in the original text
+    const relationMatches = findAllMatches(originalText, relationText);
+    
+    if (relationMatches.length <= spanIndex) {
+        console.error('Could not locate the relation in the text');
+        return null;
+    }
+    
+    // Get the position of this occurrence of the relation
+    const relationPos = relationMatches[spanIndex];
+    
+    // Get the branch boundaries
+    const branchInfo = getBranchBoundaries(originalText, relationPos);
+    
+    if (!branchInfo) {
+        console.error('Could not determine branch boundaries');
+        return null;
+    }
+    
+    // Extract parent node information if available
+    let parentNodeInfo = null;
+    if (parentRelationSpan) {
+        const parentRelationText = parentRelationSpan.textContent;
+        const parentSpanIndex = allRelationSpans.indexOf(parentRelationSpan);
+        
+        if (parentSpanIndex !== -1) {
+            const parentMatches = findAllMatches(originalText, parentRelationText);
+            if (parentMatches.length > parentSpanIndex) {
+                const parentPos = parentMatches[parentSpanIndex];
+                parentNodeInfo = {
+                    text: parentRelationText,
+                    position: parentPos
+                };
+            }
+        }
+    }
+    
+    // Return all the necessary information
+    return {
+        relationText: relationText,
+        branchText: branchInfo.branchText,
+        branchStart: branchInfo.start,
+        branchEnd: branchInfo.end,
+        parentInfo: parentNodeInfo,
+        relationSpan: relationSpan
+    };
+}
+
+// Show dialog to select where to move the branch
+function showMoveBranchDialog(branchInfo) {
+    // Create dialog container
+    const dialogContainer = document.createElement('div');
+    dialogContainer.className = 'move-branch-dialog-container';
+    dialogContainer.style.position = 'fixed';
+    dialogContainer.style.top = '0';
+    dialogContainer.style.left = '0';
+    dialogContainer.style.width = '100%';
+    dialogContainer.style.height = '100%';
+    dialogContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    dialogContainer.style.display = 'flex';
+    dialogContainer.style.justifyContent = 'center';
+    dialogContainer.style.alignItems = 'center';
+    dialogContainer.style.zIndex = '2000';
+    
+    // Create dialog
+    const dialog = document.createElement('div');
+    dialog.className = 'move-branch-dialog';
+    dialog.style.width = '500px';
+    dialog.style.backgroundColor = 'white';
+    dialog.style.borderRadius = '8px';
+    dialog.style.padding = '20px';
+    dialog.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+    
+    // Dialog header
+    dialog.innerHTML = `
+        <h3 style="margin-top: 0; margin-bottom: 20px;">Move Branch</h3>
+        <form id="move-branch-form">
+            <div style="margin-bottom: 16px;">
+                <label for="target-node-select" style="display: block; margin-bottom: 8px; font-weight: bold;">Select target node:</label>
+                <select id="target-node-select" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Select a node...</option>
+                </select>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <label for="branch-preview" style="display: block; margin-bottom: 8px; font-weight: bold;">Branch to move:</label>
+                <pre id="branch-preview" style="max-height: 200px; overflow: auto; padding: 8px; border: 1px solid #ccc; border-radius: 4px; background-color: #f8f9fa; font-size: 0.85rem;"></pre>
+            </div>
+            
+            <div style="text-align: right; margin-top: 20px;">
+                <button type="button" id="cancel-move-branch" style="padding: 8px 16px; margin-right: 10px; border: 1px solid #ccc; background-color: #f5f5f5; border-radius: 4px; cursor: pointer;">Cancel</button>
+                <button type="submit" id="confirm-move-branch" style="padding: 8px 16px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Move Branch</button>
+            </div>
+        </form>
+    `;
+    
+    dialogContainer.appendChild(dialog);
+    document.body.appendChild(dialogContainer);
+    
+    // Set branch preview
+    document.getElementById('branch-preview').textContent = branchInfo.branchText;
+    
+    // Populate nodes dropdown
+    const nodeSelect = document.getElementById('target-node-select');
+    const annotationElement = document.querySelector('#amr pre');
+    
+    // Get the annotation text
+    let annotationText = '';
+    if (annotationElement && annotationElement.textContent) {
+        annotationText = annotationElement.textContent;
+    }
+    
+    if (annotationText) {
+        // Extract nodes
+        const nodes = extractNodes(annotationText);
+        
+        // Add nodes to dropdown, excluding the current parent node
+        nodes.forEach(node => {
+            // Check if this node is in the branch being moved (to avoid creating cycles)
+            if (!branchInfo.branchText.includes(`${node.variable} /`)) {
+                const option = document.createElement('option');
+                option.value = node.variable;
+                option.textContent = `${node.variable} / ${node.concept}`;
+                nodeSelect.appendChild(option);
+            }
+        });
+    }
+    
+    // Handle cancel button
+    const cancelButton = document.getElementById('cancel-move-branch');
+    cancelButton.addEventListener('click', () => {
+        dialogContainer.remove();
+    });
+    
+    // Handle form submission
+    const form = document.getElementById('move-branch-form');
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        
+        const targetVariable = nodeSelect.value;
+        
+        if (!targetVariable) {
+            showNotification('Please select a target node', 'error');
+            return;
+        }
+        
+        // Move the branch
+        moveBranchToNode(branchInfo, targetVariable);
+        
+        // Close the dialog
+        dialogContainer.remove();
+    });
+}
+
+// Move a branch from its current location to a new node
+function moveBranchToNode(branchInfo, targetVariable) {
+    const annotationElement = document.querySelector('#amr pre');
+    if (!annotationElement) {
+        showNotification('Annotation element not found', 'error');
+        return;
+    }
+    
+    const originalText = annotationElement.textContent;
+    const lines = originalText.split('\n');
+    
+    // Step 1: Remove the branch from its current location
+    // We'll split the text at the branch boundaries and remove that section
+    const beforeBranch = originalText.substring(0, branchInfo.branchStart);
+    const afterBranch = originalText.substring(branchInfo.branchEnd);
+    
+    // Create a version of text with the branch removed
+    let textWithoutBranch = beforeBranch + afterBranch;
+    
+    // Step 2: Add the branch to the target node using our existing function
+    // First normalize the indentation of the branch
+    const normalizedBranch = normalizeIndentation(branchInfo.branchText);
+    
+    // Now add the branch to the target node
+    // We'll use a temporary element to do this operation
+    const tempElement = document.createElement('pre');
+    tempElement.textContent = textWithoutBranch;
+    
+    // Now use our existing function to add the branch to the target node
+    addBranchToNode(targetVariable, normalizedBranch, tempElement);
+    
+    // Get the updated text with the branch moved
+    const updatedText = tempElement.textContent;
+    
+    // Update the actual annotation display
+    annotationElement.textContent = updatedText;
+    
+    // Reinitialize the editor
+    reinitializeEditor(annotationElement);
+    
+    // Show success message
+    showNotification(`Branch moved to ${targetVariable}`, 'success');
+    
+    // Show alignment reminder
+    const newVariables = extractNewVariables(normalizedBranch);
+    if (newVariables.length > 0) {
+        setTimeout(() => {
+            showNotification(
+                `⚠️ You may need to adjust alignments for variables ${newVariables.join(', ')}`, 
+                'info', 
+                6000
+            );
+        }, 1500);
+    }
+    
+    // Automatically save changes to the database
+    setTimeout(() => {
+        // Try to find and call the appropriate save function
+        if (typeof finalizeUmrString === 'function') {
+            // This function from relation_editor.js prepares the UMR string for saving
+            console.log('Finalizing UMR string after branch move...');
+            finalizeUmrString();
+        }
+        
+        // Find the save button or form submit button
+        const saveSelectors = [
+            '#save-btn', 
+            '#save_button',
+            '#save',
+            '#submit-btn',
+            '#submit_button',
+            '#submit',
+            'button[type="submit"]', 
+            'input[type="submit"]'
+        ];
+        
+        let saveButtonFound = false;
+        
+        // Try each selector
+        for (const selector of saveSelectors) {
+            const saveButton = document.querySelector(selector);
+            if (saveButton) {
+                console.log(`Found save button with selector: ${selector}`);
+                saveButton.click();
+                saveButtonFound = true;
+                showNotification('Changes saved to database', 'success');
+                break;
+            }
+        }
+        
+        // If no save button found, try to find buttons with "save" or "submit" text
+        if (!saveButtonFound) {
+            const allButtons = document.querySelectorAll('button');
+            for (const button of allButtons) {
+                const buttonText = button.textContent.toLowerCase();
+                if (buttonText.includes('save') || buttonText.includes('submit')) {
+                    console.log('Found button with save/submit text:', buttonText);
+                    button.click();
+                    saveButtonFound = true;
+                    showNotification('Changes saved to database', 'success');
+                    break;
+                }
+            }
+        }
+        
+        // If no save button found, try the form submission approach
+        if (!saveButtonFound) {
+            // Look for forms with an action URL that might be for saving
+            const forms = document.querySelectorAll('form');
+            let formFound = false;
+            
+            for (const form of forms) {
+                // Check if this looks like a save form
+                if (form.action && form.action.toLowerCase().includes('save')) {
+                    console.log('Found form with save action:', form.action);
+                    formFound = true;
+                    try {
+                        // Update the hidden annotation field if it exists
+                        const annotField = form.querySelector('textarea[name="annotation"], input[name="annotation"]');
+                        if (annotField) {
+                            annotField.value = updatedText;
+                        }
+                        
+                        // Submit the form
+                        form.submit();
+                        showNotification('Changes saved through form submission', 'success');
+                        break;
+                    } catch (e) {
+                        console.error('Error submitting form:', e);
+                    }
+                }
+            }
+            
+            // If no appropriate forms found either
+            if (!formFound) {
+                console.warn('Could not find a save button or appropriate form to submit');
+                showNotification('Please save your changes manually', 'info', 6000);
+                
+                // As a last resort, try to trigger the standard save keyboard shortcut (Ctrl+S)
+                try {
+                    const saveEvent = new KeyboardEvent('keydown', {
+                        key: 's',
+                        code: 'KeyS',
+                        ctrlKey: true,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    document.dispatchEvent(saveEvent);
+                    console.log('Tried to trigger Ctrl+S save shortcut');
+                } catch (e) {
+                    console.error('Error triggering save shortcut:', e);
+                }
+            }
+        }
+    }, 2500); // Give time for the editor to reinitialize before saving
+}
+
+// Overload addBranchToNode to accept a custom element
+function addBranchToNode(variable, branchContent, customElement) {
+    const annotationElement = customElement || document.querySelector('#amr pre');
+    if (!annotationElement) return;
+    
+    const originalText = annotationElement.textContent;
+    const lines = originalText.split('\n');
+    
+    // Node pattern: variable / concept
+    const nodePattern = new RegExp(`\\b${variable}\\s*\\/\\s*[^\\s\\(\\):]+`);
+    
+    // Find the line with our target node
+    let nodeLineIndex = -1;
+    for (let i = 0; i < lines.length; i++) {
+        if (nodePattern.test(lines[i])) {
+            nodeLineIndex = i;
+            break;
+        }
+    }
+    
+    if (nodeLineIndex === -1) {
+        showNotification('Could not find the selected node', 'error');
+        return;
+    }
+    
+    // Get the node line
+    const nodeLine = lines[nodeLineIndex];
+    
+    // Determine the indentation level of the node
+    const nodeIndent = nodeLine.match(/^\s*/)[0].length;
+    
+    // Calculate the standard child indentation
+    let childIndentSize = 4; // Default to 4 spaces
+    
+    // Try to detect the document's child indentation pattern
+    // Look at existing child nodes in the document
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+        
+        // If this is a line with a relation
+        if (line.startsWith(':')) {
+            const lineIndent = lines[i].match(/^\s*/)[0].length;
+            // Look at the previous line
+            if (i > 0) {
+                const prevLine = lines[i-1].trim();
+                if (prevLine !== '' && !prevLine.startsWith(':')) {
+                    // Found a parent-child relationship
+                    const prevIndent = lines[i-1].match(/^\s*/)[0].length;
+                    if (lineIndent > prevIndent) {
+                        // This is the child indentation size
+                        childIndentSize = lineIndent - prevIndent;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Parse the branch content to handle indentation properly
+    const branchLines = branchContent.trim().split('\n');
+    
+    if (branchLines.length === 0 || branchLines[0].trim() === '') {
+        return; // Silently return for internal operations
+    }
+    
+    // Parse the branch structure to determine nesting levels
+    const parsedBranch = parseBranchStructure(branchLines);
+    
+    // Format the branch with proper indentation
+    const formattedBranch = [];
+    
+    // Add the first line (relation and concept) with proper indentation
+    formattedBranch.push(' '.repeat(nodeIndent + childIndentSize) + parsedBranch.lines[0].content);
+    
+    // Add all child nodes with consistent indentation based on their level
+    for (let i = 1; i < parsedBranch.lines.length; i++) {
+        const line = parsedBranch.lines[i];
+        const indent = nodeIndent + childIndentSize + (line.level * childIndentSize);
+        formattedBranch.push(' '.repeat(indent) + line.content);
+    }
+    
+    // Insert the formatted branch after the node line
+    lines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
+    
+    // Update the annotation display
+    const updatedText = lines.join('\n');
+    annotationElement.textContent = updatedText;
+    
+    // No need to reinitialize if this is an internal operation on a temp element
+    if (!customElement) {
+        reinitializeEditor(annotationElement);
+    }
+}
