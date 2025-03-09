@@ -206,6 +206,11 @@ function setupEditor(annotationElement) {
     try {
         console.log('Setting up editor with inPlaceEditMode =', inPlaceEditMode);
         
+        // Make the annotation element content globally accessible for debugging
+        window.umrAnnotationText = annotationElement.textContent;
+        console.log('UMR annotation text set globally for debugging');
+        console.log('UMR annotation text sample:', annotationElement.textContent.substring(0, 100));
+        
         // Create and add the in-place edit toggle button
         addInPlaceEditToggle();
         

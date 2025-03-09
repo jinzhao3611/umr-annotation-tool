@@ -337,8 +337,8 @@ function setupTempStorageContextMenu(annotationElement) {
 
 }
 
-// Store a branch temporarily
-function storeBranchTemporarily(relationSpan) {
+// Make sure the storeBranchTemporarily function is available globally
+window.storeBranchTemporarily = function(relationSpan) {
     const annotationElement = document.querySelector('#amr pre');
     const originalText = annotationElement.textContent;
     
@@ -393,7 +393,10 @@ function storeBranchTemporarily(relationSpan) {
                     
                     if (branchInfo) {
                         // Extract the branch text
-                        const branchText = branchInfo.branchText;
+                        let branchText = branchInfo.branchText;
+                        
+                        // Normalize the indentation before storage
+                        branchText = normalizeIndentation(branchText);
                         
                         // Prompt for optional description
                         const description = prompt('Add a description for this branch (optional):');
@@ -433,17 +436,68 @@ function storeBranchTemporarily(relationSpan) {
     }
     
     // Extract the branch text
-    const branchText = branchInfo.branchText;
+    let branchText = branchInfo.branchText;
+    
+    // Normalize the indentation before storage
+    branchText = normalizeIndentation(branchText);
     
     // Prompt for optional description
     const description = prompt('Add a description for this branch (optional):');
     
     // Add to temporary storage
     addTempBranch(branchText, description);
+};
+
+// Function to normalize indentation in a branch
+function normalizeIndentation(branchText) {
+    // Split into lines
+    const lines = branchText.split('\n');
+    if (lines.length <= 1) return branchText;
+    
+    // Skip empty lines
+    const nonEmptyLines = lines.filter(line => line.trim() !== '');
+    if (nonEmptyLines.length === 0) return branchText;
+    
+    // Determine the structure
+    const firstLine = nonEmptyLines[0].trim();
+    const result = [];
+    
+    // First, let's understand if this is a relation with child nodes
+    const isRelation = firstLine.startsWith(':');
+    
+    // If this isn't a relation branch, return as is
+    if (!isRelation) return branchText;
+    
+    // Add the first line without indentation (this is the root of our branch)
+    result.push(firstLine);
+    
+    // Handle all other lines with consistent indentation
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') {
+            result.push('');
+            continue;
+        }
+        
+        // Check if this is a relation line like :ARG1, :mod, etc.
+        const isChildRelation = line.startsWith(':');
+        
+        // All child relations get consistent indentation (4 spaces)
+        if (isChildRelation) {
+            result.push('    ' + line);
+        } else {
+            // Non-relation lines maintain their trimmed content
+            result.push(line);
+        }
+    }
+    
+    return result.join('\n');
 }
 
 // Show dialog to add a temporary branch to the annotation
 function showAddTempBranchDialog(branchContent) {
+    console.log('Showing add temp branch dialog');
+    
     // Create dialog container
     const dialogContainer = document.createElement('div');
     dialogContainer.className = 'add-temp-branch-dialog-container';
@@ -472,9 +526,9 @@ function showAddTempBranchDialog(branchContent) {
         <h3 style="margin-top: 0; margin-bottom: 20px;">Add Temporary Branch</h3>
         <form id="add-temp-branch-form">
             <div style="margin-bottom: 16px;">
-                <label for="variable-select" style="display: block; margin-bottom: 8px; font-weight: bold;">Select target variable:</label>
-                <select id="variable-select" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-                    <option value="">Select a variable...</option>
+                <label for="node-select" style="display: block; margin-bottom: 8px; font-weight: bold;">Select target node:</label>
+                <select id="node-select" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                    <option value="">Select a node...</option>
                 </select>
             </div>
             
@@ -496,18 +550,73 @@ function showAddTempBranchDialog(branchContent) {
     // Set branch preview
     document.getElementById('branch-preview').textContent = branchContent;
     
-    // Populate variables dropdown
-    const variableSelect = document.getElementById('variable-select');
-    const annotationElement = document.querySelector('#amr pre');
+    // Populate nodes dropdown
+    const nodeSelect = document.getElementById('node-select');
     
-    if (annotationElement) {
-        const variables = extractVariables(annotationElement.textContent);
-        variables.forEach(variable => {
-            const option = document.createElement('option');
-            option.value = variable;
-            option.textContent = variable;
-            variableSelect.appendChild(option);
-        });
+    // Get the annotation text
+    let annotationText = '';
+    
+    // Try multiple sources to get the annotation text
+    if (window.umrAnnotationText) {
+        console.log('Using globally stored UMR annotation text');
+        annotationText = window.umrAnnotationText;
+    } else {
+        const annotationElement = document.querySelector('#amr pre');
+        if (annotationElement && annotationElement.textContent) {
+            console.log('Using #amr pre element text');
+            annotationText = annotationElement.textContent;
+        } else {
+            // Try alternative selectors
+            const alternatives = [
+                document.querySelector('pre'),
+                document.querySelector('.umr-text'),
+                document.querySelector('.annotation-text'),
+                document.querySelector('[data-annotation]')
+            ];
+            
+            for (const el of alternatives) {
+                if (el && el.textContent && el.textContent.includes('/')) {
+                    console.log('Found UMR text in alternative element');
+                    annotationText = el.textContent;
+                    break;
+                }
+            }
+        }
+    }
+    
+    if (annotationText) {
+        console.log('Annotation text length:', annotationText.length);
+        console.log('Annotation text sample:', annotationText.substring(0, 100));
+        
+        // Extract nodes
+        const nodes = extractNodes(annotationText);
+        
+        if (nodes.length === 0) {
+            // If still no nodes found, try a very simple pattern match
+            console.log('Trying direct regex match for node patterns');
+            const matches = annotationText.match(/s\d+\w*\s*\/\s*\w+(-\d+)?/g) || [];
+            console.log('Direct matches found:', matches.length);
+            
+            matches.forEach(match => {
+                const parts = match.split('/').map(part => part.trim());
+                if (parts.length === 2) {
+                    const option = document.createElement('option');
+                    option.value = parts[0];
+                    option.textContent = `${parts[0]} / ${parts[1]}`;
+                    nodeSelect.appendChild(option);
+                }
+            });
+        } else {
+            // Add found nodes to dropdown
+            nodes.forEach(node => {
+                const option = document.createElement('option');
+                option.value = node.variable;
+                option.textContent = `${node.variable} / ${node.concept}`;
+                nodeSelect.appendChild(option);
+            });
+        }
+    } else {
+        console.error('Could not find UMR annotation text from any source');
     }
     
     // Handle cancel button
@@ -521,92 +630,358 @@ function showAddTempBranchDialog(branchContent) {
     form.addEventListener('submit', (event) => {
         event.preventDefault();
         
-        const targetVariable = variableSelect.value;
+        const targetVariable = nodeSelect.value;
         
         if (!targetVariable) {
-            showNotification('Please select a target variable', 'error');
+            showNotification('Please select a target node', 'error');
             return;
         }
         
-        // Add the branch to the selected variable
-        addBranchToVariable(targetVariable, branchContent);
+        // Add the branch to the selected node
+        addBranchToNode(targetVariable, branchContent);
         
         // Close the dialog
         dialogContainer.remove();
     });
 }
 
-// Extract variables from the annotation
-function extractVariables(annotationText) {
-    const variables = [];
-    const variableRegex = /\b(s[0-9]+[a-z]*[0-9]*)\b/g;
-    let match;
+// Extract nodes from the annotation
+function extractNodes(annotationText) {
+    console.log('Extracting nodes from annotation text');
+    const nodes = [];
+    const lines = annotationText.split('\n');
     
-    while ((match = variableRegex.exec(annotationText)) !== null) {
-        if (!variables.includes(match[1])) {
-            variables.push(match[1]);
+    // Multiple node patterns to try - from strict to permissive
+    const patterns = [
+        /^(\s*)(s\d+\w*)\s*\/\s*(\w+(?:-\d+)?)/,  // Standard format with indentation
+        /(s\d+\w*)\s*\/\s*(\w+(?:-\d+)?)/         // More permissive format
+    ];
+    
+    console.log('Total lines to check:', lines.length);
+    
+    // Try each pattern in order
+    for (const pattern of patterns) {
+        for (const line of lines) {
+            const match = line.match(pattern);
+            if (match) {
+                // Adapt based on which pattern matched (with or without indentation group)
+                const node = {
+                    variable: match[patterns.indexOf(pattern) === 0 ? 2 : 1],
+                    concept: match[patterns.indexOf(pattern) === 0 ? 3 : 2],
+                    line: line,
+                    indentation: match[1] && patterns.indexOf(pattern) === 0 ? match[1].length : line.indexOf(match[0])
+                };
+                console.log('Found node:', node.variable, '/', node.concept);
+                
+                // Check if this node is already in our list (avoid duplicates)
+                const isDuplicate = nodes.some(existing => existing.variable === node.variable);
+                if (!isDuplicate) {
+                    nodes.push(node);
+                }
+            }
         }
-    }
-    
-    return variables;
-}
-
-// Add a branch to a specific variable
-function addBranchToVariable(variable, branchContent) {
-    const annotationElement = document.querySelector('#amr pre');
-    if (!annotationElement) return;
-    
-    const originalText = annotationElement.textContent;
-    
-    // Find all occurrences of the variable in the text
-    const variableRegex = new RegExp(`\\b${variable}\\b`, 'g');
-    let match;
-    let insertPosition = -1;
-    
-    while ((match = variableRegex.exec(originalText)) !== null) {
-        // Check if this is the variable definition (followed by / and concept)
-        const afterMatch = originalText.substring(match.index + match[0].length).trim();
-        if (afterMatch.startsWith('/')) {
-            insertPosition = match.index + match[0].length;
+        
+        // If we found nodes with this pattern, don't try more permissive patterns
+        if (nodes.length > 0) {
+            console.log(`Found ${nodes.length} nodes with pattern index ${patterns.indexOf(pattern)}`);
             break;
         }
     }
     
-    if (insertPosition === -1) {
-        showNotification('Could not find a suitable position to add the branch', 'error');
+    console.log('Total nodes extracted:', nodes.length);
+    return nodes;
+}
+
+// Add a branch to a specific node
+function addBranchToNode(variable, branchContent) {
+    const annotationElement = document.querySelector('#amr pre');
+    if (!annotationElement) return;
+    
+    const originalText = annotationElement.textContent;
+    const lines = originalText.split('\n');
+    
+    // Node pattern: variable / concept
+    const nodePattern = new RegExp(`\\b${variable}\\s*\\/\\s*[^\\s\\(\\):]+`);
+    
+    // Find the line with our target node
+    let nodeLineIndex = -1;
+    for (let i = 0; i < lines.length; i++) {
+        if (nodePattern.test(lines[i])) {
+            nodeLineIndex = i;
+            break;
+        }
+    }
+    
+    if (nodeLineIndex === -1) {
+        showNotification('Could not find the selected node', 'error');
         return;
     }
     
-    // Clean up branch content if needed (remove leading/trailing whitespace, etc.)
-    let cleanedBranchContent = branchContent.trim();
-    if (cleanedBranchContent.startsWith('(')) {
-        cleanedBranchContent = cleanedBranchContent.substring(1);
-    }
-    if (cleanedBranchContent.endsWith(')')) {
-        cleanedBranchContent = cleanedBranchContent.substring(0, cleanedBranchContent.length - 1);
+    // Get the node line
+    const nodeLine = lines[nodeLineIndex];
+    
+    // Determine the indentation level of the node
+    const nodeIndent = nodeLine.match(/^\s*/)[0].length;
+    
+    // Calculate the standard child indentation
+    let childIndentSize = 4; // Default to 4 spaces
+    
+    // Try to detect the document's child indentation pattern
+    // Look at existing child nodes in the document
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+        
+        // If this is a line with a relation
+        if (line.startsWith(':')) {
+            const lineIndent = lines[i].match(/^\s*/)[0].length;
+            // Look at the previous line
+            if (i > 0) {
+                const prevLine = lines[i-1].trim();
+                if (prevLine !== '' && !prevLine.startsWith(':')) {
+                    // Found a parent-child relationship
+                    const prevIndent = lines[i-1].match(/^\s*/)[0].length;
+                    if (lineIndent > prevIndent) {
+                        // This is the child indentation size
+                        childIndentSize = lineIndent - prevIndent;
+                        break;
+                    }
+                }
+            }
+        }
     }
     
-    // Insert the branch into the annotation
-    const updatedText = 
-        originalText.substring(0, insertPosition) + 
-        ' (' + cleanedBranchContent + ')' + 
-        originalText.substring(insertPosition);
+    console.log('Detected child indent size:', childIndentSize);
+    
+    // First, remap variables in the branch to avoid conflicts
+    const remappedBranchContent = remapVariables(branchContent, originalText);
+    
+    // Parse the branch content to handle indentation properly
+    const branchLines = remappedBranchContent.trim().split('\n');
+    
+    if (branchLines.length === 0 || branchLines[0].trim() === '') {
+        showNotification('No content to add', 'error');
+        return;
+    }
+    
+    // Parse the branch structure to determine nesting levels
+    const parsedBranch = parseBranchStructure(branchLines);
+    
+    // Format the branch with proper indentation
+    const formattedBranch = [];
+    
+    // Add the first line (relation and concept) with proper indentation
+    formattedBranch.push(' '.repeat(nodeIndent + childIndentSize) + parsedBranch.lines[0].content);
+    
+    // Add all child nodes with consistent indentation based on their level
+    for (let i = 1; i < parsedBranch.lines.length; i++) {
+        const line = parsedBranch.lines[i];
+        const indent = nodeIndent + childIndentSize + (line.level * childIndentSize);
+        formattedBranch.push(' '.repeat(indent) + line.content);
+    }
+    
+    // Insert the formatted branch after the node line
+    lines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
     
     // Update the annotation display
-    annotationElement.textContent = updatedText;
+    annotationElement.textContent = lines.join('\n');
     
-    // Reinitialize the relation editor
-    if (typeof makeRelationsClickable === 'function') {
-        makeRelationsClickable(annotationElement);
-    }
-    
-    if (typeof makeValuesClickable === 'function') {
-        makeValuesClickable(annotationElement);
-    }
-    
-    if (typeof addBranchOperations === 'function') {
-        addBranchOperations(annotationElement);
-    }
+    // Completely reinitialize the editor
+    reinitializeEditor(annotationElement);
     
     showNotification(`Branch added to ${variable}`, 'success');
+}
+
+// Function to remap variables in a branch to avoid conflicts
+function remapVariables(branchContent, destinationText) {
+    // Extract all variables from the branch content
+    const variableRegex = /\b(s\d+[a-z]+\d*)\b/g;
+    const branchVariables = new Set();
+    let match;
+    
+    // Create a copy of branch content that we'll modify
+    let remappedContent = branchContent;
+    
+    // First pass: identify all variables in the branch
+    while ((match = variableRegex.exec(branchContent)) !== null) {
+        branchVariables.add(match[1]);
+    }
+    
+    console.log('Branch variables found:', Array.from(branchVariables));
+    
+    // Extract all variables from the destination text to avoid conflicts
+    const existingVariables = new Set();
+    while ((match = variableRegex.exec(destinationText)) !== null) {
+        existingVariables.add(match[1]);
+    }
+    
+    console.log('Existing variables found:', Array.from(existingVariables));
+    
+    // Determine the target sentence number from the destination text
+    // Looking for any variable pattern like s5xxx to get the sentence number
+    const sentenceMatch = destinationText.match(/\b(s(\d+))[a-z]+\d*\b/);
+    let targetSentenceNum = 1; // Default
+    
+    if (sentenceMatch && sentenceMatch[2]) {
+        targetSentenceNum = parseInt(sentenceMatch[2], 10);
+        console.log(`Target sentence number: ${targetSentenceNum}`);
+    }
+    
+    // Create a mapping from old variables to new variable names based on UMR convention
+    const variableMap = {};
+    
+    // First, find all concept-to-variable mappings in the branch
+    const conceptVariableMap = {};
+    const conceptRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
+    
+    while ((match = conceptRegex.exec(branchContent)) !== null) {
+        const variable = match[1];
+        const concept = match[2];
+        conceptVariableMap[variable] = concept;
+    }
+    
+    console.log('Concept-variable mappings:', conceptVariableMap);
+    
+    // Now remap each variable based on its concept
+    for (const oldVar of branchVariables) {
+        // Extract the variable format: s + sentence number + concept initial + optional counter
+        const varMatch = oldVar.match(/^s(\d+)([a-z]+)(\d*)$/);
+        if (!varMatch) continue;
+        
+        const oldSentenceNum = varMatch[1];
+        const conceptInitial = varMatch[2];
+        const counter = varMatch[3] || '';
+        
+        // Create the new variable with the target sentence number
+        const newVarBase = `s${targetSentenceNum}${conceptInitial}`;
+        
+        // Start with the same counter (or empty if none)
+        let newVar = newVarBase + counter;
+        let counterNum = counter === '' ? 1 : parseInt(counter, 10);
+        
+        // Ensure the new variable is unique
+        while (existingVariables.has(newVar)) {
+            counterNum++;
+            newVar = newVarBase + counterNum;
+        }
+        
+        // Add to our mapping
+        variableMap[oldVar] = newVar;
+        console.log(`Remapping ${oldVar} to ${newVar}`);
+    }
+    
+    // Now replace all occurrences of old variables with new ones
+    for (const [oldVar, newVar] of Object.entries(variableMap)) {
+        // Use a regex with word boundaries to replace only whole variables
+        const replaceRegex = new RegExp(`\\b${oldVar}\\b`, 'g');
+        remappedContent = remappedContent.replace(replaceRegex, newVar);
+    }
+    
+    return remappedContent;
+}
+
+// Function to properly reinitialize all editor components
+function reinitializeEditor(annotationElement) {
+    console.log('Reinitializing editor components...');
+    
+    // Make relations clickable
+    if (typeof makeRelationsClickable === 'function') {
+        console.log('- Reinitializing relations');
+        makeRelationsClickable(annotationElement);
+    } else {
+        console.warn('makeRelationsClickable function not available');
+    }
+    
+    // Make values clickable
+    if (typeof makeValuesClickable === 'function') {
+        console.log('- Reinitializing values');
+        makeValuesClickable(annotationElement);
+    } else {
+        console.warn('makeValuesClickable function not available');
+    }
+    
+    // Make variables clickable
+    if (typeof makeVariablesClickable === 'function') {
+        console.log('- Reinitializing variables');
+        makeVariablesClickable(annotationElement);
+    } else {
+        console.warn('makeVariablesClickable function not available');
+    }
+    
+    // Add branch operations
+    if (typeof addBranchOperations === 'function') {
+        console.log('- Reinitializing branch operations');
+        addBranchOperations(annotationElement);
+    } else {
+        console.warn('addBranchOperations function not available');
+    }
+    
+    // Don't reinitialize the entire editor as it causes duplicate UI elements
+    // Instead, manually update alignment if needed
+    if (typeof updateAlignment === 'function') {
+        console.log('- Updating alignments');
+        // Find all variables in the annotation
+        const variableRegex = /\bs\d+[a-z]*\d*\b/g;
+        const text = annotationElement.textContent;
+        let match;
+        while ((match = variableRegex.exec(text)) !== null) {
+            const variable = match[0];
+            // Try to update alignment for this variable
+            updateAlignment(variable);
+        }
+    }
+    
+    console.log('Editor reinitialization complete');
+}
+
+// Parse a branch to determine the hierarchical structure
+function parseBranchStructure(lines) {
+    const result = {
+        lines: []
+    };
+    
+    // Skip empty lines at the beginning
+    let startIndex = 0;
+    while (startIndex < lines.length && lines[startIndex].trim() === '') {
+        startIndex++;
+    }
+    
+    if (startIndex >= lines.length) {
+        return result;
+    }
+    
+    // Get the indentation of the first line as our base
+    const baseIndent = lines[startIndex].match(/^\s*/)[0].length;
+    
+    // Process each line
+    for (let i = startIndex; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trim();
+        if (trimmed === '') continue;
+        
+        // Calculate the indentation level
+        const indentSize = line.match(/^\s*/)[0].length;
+        const relativeIndent = indentSize - baseIndent;
+        
+        // Determine the hierarchical level
+        // Level 0 is the root relation, e.g. ":ARG2 (s6f2 / farmland"
+        // Level 1 is direct child like ":mod (s6l / lush)"
+        const level = relativeIndent <= 0 ? 0 : Math.round(relativeIndent / 4);
+        
+        result.lines.push({
+            content: trimmed,
+            level: level
+        });
+    }
+    
+    return result;
+}
+
+// For backward compatibility
+function addBranchToVariable(variable, branchContent) {
+    return addBranchToNode(variable, branchContent);
+}
+
+function extractVariables(annotationText) {
+    return extractNodes(annotationText).map(node => node.variable);
 }
