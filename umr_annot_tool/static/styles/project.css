@@ -208,7 +208,7 @@
 }
 
 .document-actions .btn-danger {
-    padding: 0.375rem 0.75rem;
+    padding: 0;
 }
 
 /* Members List */
@@ -290,4 +290,43 @@
     color: #e74c3c;
     font-size: 0.875rem;
     margin-top: 0.25rem;
+}
+
+/* Unified Delete Button Styles */
+.btn-danger {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-danger:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+}
+
+.btn-danger:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
+}
+
+.btn-danger i {
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+    margin-right: 0; /* Override any margin */
+}
+
+.btn-danger.btn-sm {
+    width: 32px;
+    height: 32px;
 } 

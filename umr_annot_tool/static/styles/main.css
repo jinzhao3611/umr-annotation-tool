@@ -303,4 +303,94 @@ td {
     .navbar {
         padding: 0.25rem 0.5rem;
     }
+}
+
+/* Unified Delete Button Styles */
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-icon i {
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-icon.btn-danger,
+.btn-danger.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+    border: none;
+    color: white;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-icon.btn-danger:hover,
+.btn-danger.btn-icon:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+}
+
+.btn-icon.btn-danger:active,
+.btn-danger.btn-icon:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
+}
+
+.btn-icon.btn-danger .delete-icon,
+.btn-danger.btn-icon .delete-icon {
+    position: absolute;
+    font-size: 24px;
+    line-height: 1;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.btn-icon.btn-danger .fa-trash,
+.btn-icon.btn-danger .fa-trash-alt,
+.btn-icon.btn-danger .fa-user-minus,
+.btn-danger.btn-icon .fa-trash,
+.btn-danger.btn-icon .fa-trash-alt,
+.btn-danger.btn-icon .fa-user-minus {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-icon.btn-danger:hover .delete-icon,
+.btn-danger.btn-icon:hover .delete-icon {
+    opacity: 0;
+}
+
+.btn-icon.btn-danger:hover .fa-trash,
+.btn-icon.btn-danger:hover .fa-trash-alt,
+.btn-icon.btn-danger:hover .fa-user-minus,
+.btn-danger.btn-icon:hover .fa-trash,
+.btn-danger.btn-icon:hover .fa-trash-alt,
+.btn-danger.btn-icon:hover .fa-user-minus {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.btn-danger.btn-sm.btn-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-danger.btn-sm.btn-icon .delete-icon {
+    font-size: 20px;
 } 
