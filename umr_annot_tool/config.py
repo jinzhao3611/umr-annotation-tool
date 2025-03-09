@@ -4,6 +4,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+    ANCAST_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'ancast/ancast/'))
 
     # this is using my own email as the sender
     # MAIL_SERVER = 'smtp.googlemail.com'

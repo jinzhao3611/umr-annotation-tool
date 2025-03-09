@@ -864,7 +864,46 @@ function runAncastEvaluation() {
     try {
         console.log("runAncastEvaluation function called");
         
-        // Get the correct annotation elements based on comparison level
+        // Get document version IDs from the page - more robust error handling
+        let doc1VersionId = null;
+        let doc2VersionId = null;
+        let currentSentenceId = null;
+        
+        const doc1Input = document.getElementById('doc1-version-id');
+        const doc2Input = document.getElementById('doc2-version-id');
+        const sentIdInput = document.getElementById('current-sentence-id');
+        
+        if (doc1Input && doc1Input.value) {
+            doc1VersionId = parseInt(doc1Input.value) || null;
+        }
+        
+        if (doc2Input && doc2Input.value) {
+            doc2VersionId = parseInt(doc2Input.value) || null;
+        }
+        
+        if (sentIdInput && sentIdInput.value) {
+            currentSentenceId = parseInt(sentIdInput.value) || null;
+        }
+        
+        // Fallback to using values from window.state if available
+        if (!doc1VersionId && window.state && window.state.docVersion1Id) {
+            doc1VersionId = window.state.docVersion1Id;
+        }
+        
+        if (!doc2VersionId && window.state && window.state.docVersion2Id) {
+            doc2VersionId = window.state.docVersion2Id;
+        }
+        
+        if (!currentSentenceId && window.state && window.state.currentSentId) {
+            currentSentenceId = window.state.currentSentId;
+        }
+
+        // Get the list of sentences to compare - make sure it's a valid array
+        const sentencesToCompare = currentSentenceId ? [currentSentenceId] : [];
+        
+        console.log(`Using document version IDs: doc1=${doc1VersionId}, doc2=${doc2VersionId}, sentences=${sentencesToCompare}`);
+        
+        // As a fallback, also get the raw annotations from the DOM
         let doc1Annotation = '';
         let doc2Annotation = '';
         
@@ -873,41 +912,28 @@ function runAncastEvaluation() {
             const doc1Elem = document.querySelector('#doc1-sent-annotation .annotation-content pre');
             const doc2Elem = document.querySelector('#doc2-sent-annotation .annotation-content pre');
             
-            if (!doc1Elem || !doc2Elem) {
-                console.error("Could not find sentence level elements for annotations");
-                showAncastError("Could not find annotation elements. Please make sure there are valid annotations to compare.");
-                return;
+            if (doc1Elem && doc2Elem) {
+                doc1Annotation = doc1Elem.textContent || '';
+                doc2Annotation = doc2Elem.textContent || '';
             }
-            
-            doc1Annotation = doc1Elem.textContent || '';
-            doc2Annotation = doc2Elem.textContent || '';
         } else {
             // Document level comparison
             const doc1Elem = document.querySelector('#doc1-doc-annotation .annotation-content pre');
             const doc2Elem = document.querySelector('#doc2-doc-annotation .annotation-content pre');
             
-            if (!doc1Elem || !doc2Elem) {
-                console.error("Could not find document level elements for annotations");
-                showAncastError("Could not find annotation elements. Please make sure there are valid annotations to compare.");
-                return;
+            if (doc1Elem && doc2Elem) {
+                doc1Annotation = doc1Elem.textContent || '';
+                doc2Annotation = doc2Elem.textContent || '';
             }
-            
-            doc1Annotation = doc1Elem.textContent || '';
-            doc2Annotation = doc2Elem.textContent || '';
         }
         
-        // Check if we have annotations
-        if (!doc1Annotation || !doc2Annotation) {
-            console.error("Missing annotations:", { doc1: doc1Annotation?.length, doc2: doc2Annotation?.length });
-            showAncastError("Missing annotations. Please make sure both documents have valid UMR annotations.");
+        // Check if we have enough information to proceed
+        if ((!doc1VersionId || !doc2VersionId || !sentencesToCompare.length) && 
+            (!doc1Annotation || !doc2Annotation)) {
+            console.error("Missing required data for evaluation");
+            showAncastError("Missing required data. Please make sure both documents have valid annotations or version IDs.");
             return;
         }
-        
-        console.log(`Retrieved annotations: 
-            doc1Length: ${doc1Annotation.length}, 
-            doc2Length: ${doc2Annotation.length}, 
-            comparisonLevel: '${window.state.comparisonLevel}'`
-        );
         
         // Show the modal and loading indicator
         $('#ancastModal').modal('show');
@@ -920,9 +946,17 @@ function runAncastEvaluation() {
         
         // Prepare data for the request
         const data = {
+            // Primary data source - document version IDs and sentence IDs
+            doc1_version_id: doc1VersionId || null,
+            doc2_version_id: doc2VersionId || null,
+            sentences: sentencesToCompare,
+            
+            // Fallback data - raw annotation text
             doc1: doc1Annotation,
             doc2: doc2Annotation
         };
+        
+        console.log("Request data:", data);
         
         // Send the request to the server
         console.log("Sending request to /run_ancast_evaluation");
@@ -1000,6 +1034,25 @@ function displayAncastResults(data) {
         if (value < 0.01) return value.toFixed(6);
         if (value < 0.1) return value.toFixed(5);
         return value.toFixed(4);
+    }
+    
+    // Check if we have an error message (when metrics are zero)
+    if (data.error_message && data.score === 0 && data.precision === 0 && data.recall === 0 && data.f1 === 0) {
+        // Display warning message at the top of results
+        const warningElement = document.createElement('div');
+        warningElement.className = 'alert alert-warning';
+        warningElement.innerHTML = `
+            <strong>Warning:</strong> ${data.error_message}
+            <p class="mt-2 mb-0">Ancast was unable to process your UMR annotations. The evaluation results show all zeros, which indicates a formatting issue.</p>
+        `;
+        
+        // Insert the warning at the top of the results container
+        const resultsContainer = document.getElementById('ancast-results');
+        if (resultsContainer.firstChild) {
+            resultsContainer.insertBefore(warningElement, resultsContainer.firstChild);
+        } else {
+            resultsContainer.appendChild(warningElement);
+        }
     }
     
     // Update summary tab
