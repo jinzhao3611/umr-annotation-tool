@@ -789,7 +789,36 @@ function addBranchToNode(variable, branchContent) {
     // Completely reinitialize the editor
     reinitializeEditor(annotationElement);
     
+    // Find the new variables we've added to show in the reminder
+    const newBranchText = formattedBranch.join('\n');
+    const newVariables = extractNewVariables(newBranchText);
+    const variableList = newVariables.length > 0 ? 
+          ` (${newVariables.join(', ')})` : '';
+    
+    // Show success message
     showNotification(`Branch added to ${variable}`, 'success');
+    
+    // Show alignment reminder after a short delay
+    setTimeout(() => {
+        showNotification(
+            `⚠️ Remember to manually edit alignments for the new variables${variableList}`, 
+            'info', 
+            8000 // Show for 8 seconds
+        );
+    }, 1500); // Delay to show after the success message
+}
+
+// Extract variables from text for display in the reminder
+function extractNewVariables(text) {
+    const variableRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
+    const variables = [];
+    let match;
+    
+    while ((match = variableRegex.exec(text)) !== null) {
+        variables.push(match[1]);
+    }
+    
+    return variables;
 }
 
 // Function to remap variables in a branch to avoid conflicts
