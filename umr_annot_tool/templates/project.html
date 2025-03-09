@@ -274,8 +274,8 @@
                         <div class="document-actions">
                             {% if permission in ['admin'] %}
                             <form method="POST" action="" class="d-inline">
-                                <input type="hidden" name="rm_qc_doc_id" value={{ doc.id }}>
-                                <input type="hidden" name="rm_qc_user_id" value={{ doc.user_id }}>
+                                <input type="hidden" name="rm_qc_doc_id" value="{{ doc.id }}">
+                                <input type="hidden" name="rm_qc_user_id" value="{{ doc.user_id }}">
                                 <button type="submit" class="btn btn-sm btn-danger" 
                                         onclick="return confirm('Are you sure you want to remove this QC document?')">
                                     <i class="fas fa-trash"></i>

@@ -397,10 +397,12 @@ def project(project_id):
             else:
                 msg_list.append(f"Document (id={doc_id}) not found in your checked out documents.")
 
-        if rm_qc_doc_id.isdigit() and int(rm_qc_doc_id) != 0:
+        if rm_qc_doc_id.isdigit() and int(rm_qc_doc_id) != 0 and rm_qc_user_id.isdigit() and int(rm_qc_user_id) != 0:
             doc_id = int(rm_qc_doc_id)
+            user_id = int(rm_qc_user_id)
             qc_version = DocVersion.query.filter_by(
                 doc_id=doc_id,
+                user_id=user_id,
                 stage='qc'
             ).first()
             if qc_version:
