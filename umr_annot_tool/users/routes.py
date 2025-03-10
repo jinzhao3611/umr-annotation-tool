@@ -1275,13 +1275,21 @@ def override_document(project_id, doc_id):
                 print(f"Parsed data:")
                 print(f"Number of sentences: {len(sentences)}")
                 print(f"Number of sentence annotations: {len(sent_annots)}")
+                print(f"Doc annotation type: {type(doc_annot)}")
                 print(f"Doc annotation length: {len(doc_annot) if doc_annot else 'None'}")
+                # Print the first few characters of the document annotation for debugging
+                if doc_annot:
+                    if isinstance(doc_annot, list):
+                        print(f"Doc annotation first item (first 50 chars): {doc_annot[0][:50] if doc_annot[0] else 'Empty'}")
+                    else:
+                        print(f"Doc annotation (first 50 chars): {doc_annot[:50] if doc_annot else 'Empty'}")
                 print(f"Alignment type: {type(alignment)}")
                 print(f"Alignment length: {len(alignment) if alignment else 'None'}")
                 
-                # Check if parsing returned empty results
-                if not sentences or not sent_annots:
-                    flash('Failed to parse file: No sentences or annotations found.', 'danger')
+                # Check if parsing returned empty results - only check sentences
+                # Allow empty annotations (sent_annots can be empty strings)
+                if not sentences:
+                    flash('Failed to parse file: No sentences found.', 'danger')
                     return redirect(request.url)
                 
             except Exception as parse_error:
@@ -1322,10 +1330,36 @@ def override_document(project_id, doc_id):
                 print(f"  sent_annot old length: {len(ann.sent_annot) if ann.sent_annot else 'Empty'}")
                 print(f"  sent_annot new length: {len(sent_annot) if sent_annot else 'Empty'}")
                 
+                # Update sentence-level annotation
                 ann.sent_annot = sent_annot
-                # Only update doc_annot for the first sentence
+                
+                # Process document-level annotation
+                # For UMR format, document level annotation is typically 
+                # only associated with the first sentence in the document
                 if i == 0:
-                    ann.doc_annot = doc_annot
+                    # Debug document annotation structure
+                    print(f"Doc annotation type: {type(doc_annot)}")
+                    print(f"Doc annotation content: {doc_annot}")
+                    
+                    # Process and update the document annotation
+                    # Handle the case where it only contains the root element
+                    if isinstance(doc_annot, list):
+                        # If it's a list, use the first item if available
+                        if doc_annot and i < len(doc_annot):
+                            ann.doc_annot = doc_annot[i]
+                        else:
+                            # Empty string if no document annotation for this sentence
+                            ann.doc_annot = ""
+                    else:
+                        # If it's not a list (string), use it directly
+                        # This handles the case of a single document annotation
+                        # that might contain just the root element
+                        ann.doc_annot = doc_annot
+                        
+                    # Log the new document annotation that will be saved
+                    print(f"  doc_annot new content preview: {ann.doc_annot[:50] if ann.doc_annot else 'Empty'}")
+                
+                # Update alignment for all sentences
                 ann.alignment = alignment_data
                 
                 # Mark the annotation as modified
@@ -1343,6 +1377,7 @@ def override_document(project_id, doc_id):
                 print(f"Updated annotation {i}:")
                 print(f"  sent_annot length: {len(ann.sent_annot) if ann.sent_annot else 'Empty'}")
                 print(f"  doc_annot length: {len(ann.doc_annot) if ann.doc_annot else 'Empty'}")
+                print(f"  doc_annot content: {'[content present]' if ann.doc_annot else '[empty]'}")
                 print(f"  alignment keys: {list(ann.alignment.keys()) if ann.alignment else 'None'}")
             
             flash(f'Document "{doc.filename}" has been successfully overridden.', 'success')

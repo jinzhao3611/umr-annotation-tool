@@ -5,7 +5,7 @@ Index: 1   2    3 4     5      6       7  8           9         10
 Words: 200 dead , 1,500 feared missing in Philippines landslide . 
 
 # sentence level graph:
-(s1p / publication-91
+(s1p / override-91
     :ARG1 (s1l / landslide-01
         :ARG3 (s1a / and
             :op1 (s1d / die-01
@@ -22,7 +22,7 @@ Words: 200 dead , 1,500 feared missing in Philippines landslide .
 
 
 # alignment:
-s1p: 0-0
+s1p: 1-1
 s1l: 9-9
 s1a: 0-0
 s1d: 2-2
@@ -36,7 +36,7 @@ s1n: 0-0
 
 # document level annotation:
 (s1s0 / sentence
-    :temporal  ((document-creation-time :before s1l)
+    :temporal  ((override :before s1l)
             (s1l :overlap s1d)
             (document-creation-time :overlap s1f)
             (s1l :overlap s1m))
