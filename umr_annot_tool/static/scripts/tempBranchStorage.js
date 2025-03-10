@@ -1481,3 +1481,104 @@ function tryFallbackSave(updatedAnnotation) {
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
+
+// Extract variables from text for display in the reminder
+function extractNewVariables(text) {
+    const variableRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
+    const variables = [];
+    let match;
+    
+    while ((match = variableRegex.exec(text)) !== null) {
+        variables.push(match[1]);
+    }
+    
+    return variables;
+}
+
+// Function to remap variables in a branch to avoid conflicts
+function remapVariables(branchContent, destinationText) {
+    // Extract all variables from the branch content
+    const variableRegex = /\b(s\d+[a-z]+\d*)\b/g;
+    const branchVariables = new Set();
+    let match;
+    
+    // Create a copy of branch content that we'll modify
+    let remappedContent = branchContent;
+    
+    // First pass: identify all variables in the branch
+    while ((match = variableRegex.exec(branchContent)) !== null) {
+        branchVariables.add(match[1]);
+    }
+    
+    console.log('Branch variables found:', Array.from(branchVariables));
+    
+    // Extract all variables from the destination text to avoid conflicts
+    const existingVariables = new Set();
+    while ((match = variableRegex.exec(destinationText)) !== null) {
+        existingVariables.add(match[1]);
+    }
+    
+    console.log('Existing variables found:', Array.from(existingVariables));
+    
+    // Determine the target sentence number from the destination text
+    // Looking for any variable pattern like s5xxx to get the sentence number
+    const sentenceMatch = destinationText.match(/\b(s(\d+))[a-z]+\d*\b/);
+    let targetSentenceNum = 1; // Default
+    
+    if (sentenceMatch && sentenceMatch[2]) {
+        targetSentenceNum = parseInt(sentenceMatch[2], 10);
+        console.log(`Target sentence number: ${targetSentenceNum}`);
+    }
+    
+    // Create a mapping from old variables to new variable names based on UMR convention
+    const variableMap = {};
+    
+    // First, find all concept-to-variable mappings in the branch
+    const conceptVariableMap = {};
+    const conceptRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
+    
+    while ((match = conceptRegex.exec(branchContent)) !== null) {
+        const variable = match[1];
+        const concept = match[2];
+        conceptVariableMap[variable] = concept;
+    }
+    
+    console.log('Concept-variable mappings:', conceptVariableMap);
+    
+    // Now remap each variable based on its concept
+    for (const oldVar of branchVariables) {
+        // Extract the variable format: s + sentence number + concept initial + optional counter
+        const varMatch = oldVar.match(/^s(\d+)([a-z]+)(\d*)$/);
+        if (!varMatch) continue;
+        
+        const oldSentenceNum = varMatch[1];
+        const conceptInitial = varMatch[2];
+        const counter = varMatch[3] || '';
+        
+        // Create the new variable with the target sentence number
+        const newVarBase = `s${targetSentenceNum}${conceptInitial}`;
+        
+        // Start with the same counter (or empty if none)
+        let newVar = newVarBase + counter;
+        let counterNum = counter === '' ? 1 : parseInt(counter, 10);
+        
+        // Ensure the new variable is unique
+        while (existingVariables.has(newVar)) {
+            counterNum++;
+            newVar = newVarBase + counterNum;
+        }
+        
+        // Add to our mapping
+        variableMap[oldVar] = newVar;
+        console.log(`Remapping ${oldVar} to ${newVar}`);
+    }
+    
+    // Now replace all occurrences of old variables with new ones
+    for (const [oldVar, newVar] of Object.entries(variableMap)) {
+        // Use a regex with word boundaries to replace only whole variables
+        const replaceRegex = new RegExp(`\\b${oldVar}\\b`, 'g');
+        remappedContent = remappedContent.replace(replaceRegex, newVar);
+    }
+    
+    return remappedContent;
+}
