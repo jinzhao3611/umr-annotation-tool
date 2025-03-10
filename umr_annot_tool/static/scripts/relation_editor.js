@@ -1429,13 +1429,76 @@ function deleteBranch(relationSpan) {
     let depth = 1;
     let closeParenIndex = -1;
     
+    // Find the indentation level of the current line
+    let currentLineStart = relationIndex;
+    while (currentLineStart > 0 && fullText[currentLineStart - 1] !== '\n') {
+        currentLineStart--;
+    }
+    
+    // Count the indentation spaces
+    let currentIndentation = 0;
+    while (currentLineStart < relationIndex && /\s/.test(fullText[currentLineStart])) {
+        currentIndentation++;
+        currentLineStart++;
+    }
+    
+    console.log(`Current line indentation: ${currentIndentation} spaces`);
+    
+    // Track line indentation and check for sibling relations
+    let newLineFound = false;
+    let inSiblingRelation = false;
+    let siblingPosition = -1; // Store position where sibling relation was found
+    
     for (let i = openParenIndex + 1; i < fullText.length; i++) {
+        // Check for new lines to track indentation
+        if (fullText[i] === '\n') {
+            newLineFound = true;
+            continue;
+        }
+        
+        // If we found a new line, check indentation of the next non-whitespace character
+        if (newLineFound) {
+            // Count spaces at the beginning of this line
+            let spaceCount = 0;
+            let j = i;
+            while (j < fullText.length && /\s/.test(fullText[j])) {
+                spaceCount++;
+                j++;
+            }
+            
+            // If we have a non-whitespace character at the same indentation as our relation 
+            // and it's a colon (indicating a new relation at the same level)
+            if (spaceCount === currentIndentation && j < fullText.length && fullText[j] === ':') {
+                // We've found a sibling relation - this means we need to stop our search
+                // for the closing parenthesis before this point
+                inSiblingRelation = true;
+                siblingPosition = j; // Store the position where we found the sibling
+                console.log(`Found sibling relation at position ${j}`);
+                break;
+            }
+            
+            newLineFound = false;
+        }
+        
         if (fullText[i] === '(') {
             depth++;
         } else if (fullText[i] === ')') {
             depth--;
             if (depth === 0) {
                 closeParenIndex = i;
+                break;
+            }
+        }
+    }
+    
+    // If we found a sibling relation but not a closing parenthesis yet,
+    // we need to search backward from the sibling to find the last closing parenthesis
+    // that belongs to our branch
+    if (inSiblingRelation && closeParenIndex === -1) {
+        console.log('Searching backward from sibling relation to find closing parenthesis');
+        for (let k = siblingPosition - 1; k > openParenIndex; k--) {
+            if (fullText[k] === ')') {
+                closeParenIndex = k;
                 break;
             }
         }
