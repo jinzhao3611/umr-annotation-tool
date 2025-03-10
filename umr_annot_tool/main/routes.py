@@ -463,7 +463,6 @@ def sentlevel(doc_version_id, sent_id):
                             owner=User.query.get_or_404(doc_version.user_id),
                             filename=doc.filename,
                             lang=project.language,
-                            project_name=project.project_name,
                             project_id=project.id,
                             admin=User.query.get_or_404(project.created_by_user_id),
                             info2display=info2display,
@@ -1732,11 +1731,33 @@ def test_route():
 @main.route("/download_frames", methods=['GET'])
 def download_frames():
     """
-    Serve the frames_english.json file directly from the server.
+    Serve the appropriate frames file based on project language.
     This route doesn't require authentication to simplify client-side access.
     """
     try:
-        frames_path = os.path.join(current_app.root_path, 'resources', 'frames_english.json')
+        # Get project ID from the query parameter or referrer
+        project_id = request.args.get('project_id')
+        if not project_id and request.referrer:
+            # Try to extract project_id from the referrer URL if not provided directly
+            match = re.search(r'/project/(\d+)', request.referrer)
+            if match:
+                project_id = match.group(1)
+        
+        # Default to English frames if we can't determine the project
+        frames_filename = 'frames_english.json'
+        
+        if project_id:
+            # Look up the project language
+            project = Project.query.get(project_id)
+            if project and project.language.lower() == 'chinese':
+                frames_filename = 'frames_chinese.json'
+            # For other languages, fall back to English or don't serve frames at all
+            elif project and project.language.lower() != 'english':
+                # For languages other than English or Chinese, don't serve frames
+                current_app.logger.info(f"No frames file available for language: {project.language}")
+                return jsonify({}), 200
+        
+        frames_path = os.path.join(current_app.root_path, 'resources', frames_filename)
         
         if not os.path.exists(frames_path):
             current_app.logger.error(f"Frames file not found at {frames_path}")
@@ -1822,7 +1843,7 @@ def lemmatize():
 def get_frames():
     """
     Endpoint for looking up frames for a lemma.
-    Usage: /get_frames?word=run
+    Usage: /get_frames?word=run&project_id=1
     Returns: JSON with list of frames
     """
     word = request.args.get('word', '')
@@ -1830,36 +1851,47 @@ def get_frames():
         current_app.logger.warning("No word provided in get_frames request")
         return jsonify({'success': False, 'message': 'No word provided'}), 400
     
+    # Get project ID to determine language
+    project_id = request.args.get('project_id')
+    
     try:
-        # Try several potential paths for the frames file
+        # Default to English frames
         frames_file = FRAME_FILE_ENGLISH
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        frames_file_alt = os.path.join(base_dir, 'resources', 'frames_english.json')
+        
+        # If project ID is provided, check the language
+        if project_id:
+            project = Project.query.get(project_id)
+            if project:
+                if project.language.lower() == 'chinese':
+                    frames_file = FRAME_FILE_CHINESE
+                    current_app.logger.info(f"Using Chinese frames file for project {project_id}")
+                elif project.language.lower() != 'english':
+                    # For languages other than English or Chinese, return empty frames
+                    current_app.logger.info(f"No frames available for language: {project.language}")
+                    return jsonify({'success': True, 'frames': [], 'word': word})
+        
+        # Alternative paths for the frames file
+        frames_file_alt = None
+        if frames_file == FRAME_FILE_ENGLISH:
+            frames_file_alt = os.path.join(base_dir, 'resources', 'frames_english.json')
+        elif frames_file == FRAME_FILE_CHINESE:
+            frames_file_alt = os.path.join(base_dir, 'resources', 'frames_chinese.json')
         
         # Try the pre-defined path first
         if os.path.exists(frames_file):
             current_app.logger.info(f"Found frames file at pre-defined path: {frames_file}")
         # If that doesn't work, try the alternate path
-        elif os.path.exists(frames_file_alt):
+        elif frames_file_alt and os.path.exists(frames_file_alt):
             frames_file = frames_file_alt
             current_app.logger.info(f"Found frames file at alternate path: {frames_file}")
         else:
             # Log all the paths we tried
             current_app.logger.error(f"Frames file not found at any of these paths:")
             current_app.logger.error(f"1. {frames_file}")
-            current_app.logger.error(f"2. {frames_file_alt}")
+            if frames_file_alt:
+                current_app.logger.error(f"2. {frames_file_alt}")
             current_app.logger.error(f"3. {os.path.abspath(frames_file)}")
-            
-            # Try to list files in the directories
-            try:
-                resources_dir = os.path.join(base_dir, 'resources')
-                if os.path.exists(resources_dir):
-                    files = os.listdir(resources_dir)
-                    current_app.logger.info(f"Files in resources dir: {files}")
-            except Exception as e:
-                current_app.logger.error(f"Error listing files: {e}")
-                
-            return jsonify({'success': False, 'frames': [], 'message': 'Frames file not found'}), 404
             
         # Load frames from JSON file
         try:

@@ -10,7 +10,8 @@
             currentId: {{ snt_id }},
             docVersionId: {{ doc_version_id }},
             maxSentId: {{ info2display.sents|length }},
-            language: "{{ lang }}"
+            language: "{{ lang }}",
+            projectId: {{ project_id }}
         };
     </script>
     <!-- Load utilities first -->
@@ -941,6 +942,36 @@
                                 // For Flask Blueprints, we need to use the full path - this matches the route in main
                                 const framesUrl = new URL('/get_frames', window.location.origin);
                                 framesUrl.searchParams.append('word', lemma);
+                                
+                                // Add project ID parameter to use the correct language frames
+                                // First try to get project ID from URL parameters
+                                let projectId = null;
+                                const urlParams = new URLSearchParams(window.location.search);
+                                
+                                // Extract from state if available
+                                if (window.state && window.state.projectId) {
+                                    projectId = window.state.projectId;
+                                }
+                                
+                                // If state doesn't have it, check for project_id global variable
+                                if (!projectId && typeof project_id !== 'undefined') {
+                                    projectId = project_id;
+                                }
+                                
+                                // If still not found, try to extract from path
+                                if (!projectId) {
+                                    // Try to find project ID in path
+                                    const pathMatch = window.location.pathname.match(/\/project\/(\d+)/);
+                                    if (pathMatch) {
+                                        projectId = pathMatch[1];
+                                    }
+                                }
+                                
+                                if (projectId) {
+                                    framesUrl.searchParams.append('project_id', projectId);
+                                    console.log('Adding project ID to frames request:', projectId);
+                                }
+                                
                                 console.log('Fetching frames from:', framesUrl.toString());
                                 
                                 const framesResponse = await fetch(framesUrl);

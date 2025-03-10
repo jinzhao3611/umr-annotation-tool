@@ -25,8 +25,33 @@ async function loadFramesData() {
     try {
         console.log('Loading frames data...');
         
-        // Use a direct absolute path to the frames file
-        const response = await fetch('/download_frames');
+        // Get project ID from URL path or window.state
+        let projectId = null;
+        
+        // Try to extract from URL (like /project/123/...)
+        const projectMatch = window.location.pathname.match(/\/project\/(\d+)/);
+        if (projectMatch) {
+            projectId = projectMatch[1];
+        }
+        
+        // If not found in URL, check if it's defined as a global variable
+        if (!projectId && typeof project_id !== 'undefined') {
+            projectId = project_id;
+        }
+        
+        // If still not found, try from window.state (may be set in some pages)
+        if (!projectId && window.state && window.state.projectId) {
+            projectId = window.state.projectId;
+        }
+        
+        console.log('Using project ID for frames:', projectId);
+        
+        // Use a URL with project_id parameter if available
+        const url = projectId 
+            ? `/download_frames?project_id=${projectId}` 
+            : '/download_frames';
+            
+        const response = await fetch(url);
         
         if (!response.ok) {
             throw new Error(`Failed to load frames: ${response.status} ${response.statusText}`);
@@ -1973,9 +1998,9 @@ function extractSentenceTokens() {
     const text = currentSentence.textContent;
     console.log('Current sentence text:', text);
     
-    // Regular expression to match tokens with potential indices (like '1nation')
-    // We want to extract just the text part
-    const tokenPattern = /([0-9]+)([a-zA-Z0-9_\-'".]+)/g;
+    // Regular expression to match tokens with potential indices (like '1nation' or '1中国')
+    // Updated to include Unicode characters for multi-language support (including Chinese, Japanese, Korean)
+    const tokenPattern = /([0-9]+)([\p{L}\p{N}_\-'".]+)/gu;
     const tokens = [];
     
     // Create a global mapping of tokens to their indices
