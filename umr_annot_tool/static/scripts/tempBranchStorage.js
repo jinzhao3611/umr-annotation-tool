@@ -1350,106 +1350,131 @@ function moveBranchToNode(branchInfo, targetVariable) {
     // Show success message
     showNotification(`Branch moved to ${targetVariable}`, 'success');
     
-    // Automatically save changes to the database
-    setTimeout(() => {
-        // Try to find and call the appropriate save function
-        if (typeof finalizeUmrString === 'function') {
-            // This function from relation_editor.js prepares the UMR string for saving
-            console.log('Finalizing UMR string after branch move...');
-            finalizeUmrString();
+    // Directly save changes to the database
+    saveBranchMove(updatedText, branchInfo.relationText, targetVariable);
+}
+
+// Function to directly save branch move to the database
+function saveBranchMove(updatedAnnotation, movedRelation, targetVariable) {
+    // Get sentence ID and document ID from the hidden fields
+    const sent_id = document.getElementById('snt_id').value;
+    const doc_version_id = document.getElementById('doc_version_id').value;
+    
+    if (!sent_id || !doc_version_id) {
+        console.error('Missing sentence ID or document version ID for saving');
+        showNotification('Error: Could not find sentence ID or document ID', 'error');
+        return;
+    }
+    
+    console.log(`Saving branch move: ${movedRelation} to ${targetVariable}`);
+    
+    // Use fetch API to send the update to the server
+    fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            annotation: updatedAnnotation,
+            operation: 'move_branch',
+            moved_relation: movedRelation,
+            target_variable: targetVariable
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
         }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Branch move saved successfully:', data);
+        showNotification('Branch move saved to database', 'success');
+    })
+    .catch(error => {
+        console.error('Error saving branch move:', error);
+        showNotification('Error saving changes: ' + error.message, 'error');
         
-        // Find the save button or form submit button
-        const saveSelectors = [
-            '#save-btn', 
-            '#save_button',
-            '#save',
-            '#submit-btn',
-            '#submit_button',
-            '#submit',
-            'button[type="submit"]', 
-            'input[type="submit"]'
-        ];
-        
-        let saveButtonFound = false;
-        
-        // Try each selector
-        for (const selector of saveSelectors) {
-            const saveButton = document.querySelector(selector);
-            if (saveButton) {
-                console.log(`Found save button with selector: ${selector}`);
-                saveButton.click();
+        // Fallback to the old approach if direct save fails
+        tryFallbackSave(updatedAnnotation);
+    });
+}
+
+// Helper function to get CSRF token for API requests
+function getCsrfToken() {
+    // Try to get the token from a meta tag
+    const metaToken = document.querySelector('meta[name="csrf-token"]');
+    if (metaToken) {
+        return metaToken.getAttribute('content');
+    }
+    
+    // Try to get it from a hidden input (common in Django)
+    const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"], input[name="_csrf_token"], input[name="csrf_token"]');
+    if (csrfInput) {
+        return csrfInput.value;
+    }
+    
+    // Return empty string if not found
+    console.warn('CSRF token not found');
+    return '';
+}
+
+// Fallback save method using UI buttons
+function tryFallbackSave(updatedAnnotation) {
+    console.log('Attempting fallback save method...');
+    
+    // Try to update any hidden fields with the annotation content
+    const annotationFields = document.querySelectorAll('input[name="annotation"], textarea[name="annotation"]');
+    annotationFields.forEach(field => {
+        field.value = updatedAnnotation;
+    });
+    
+    // Try to find and click a save button
+    const saveSelectors = [
+        '#save-btn', 
+        '#save_button',
+        '#save',
+        '#submit-btn',
+        '#submit_button',
+        '#submit',
+        'button[type="submit"]', 
+        'input[type="submit"]'
+    ];
+    
+    let saveButtonFound = false;
+    
+    // Try each selector
+    for (const selector of saveSelectors) {
+        const saveButton = document.querySelector(selector);
+        if (saveButton) {
+            console.log(`Found save button with selector: ${selector}`);
+            saveButton.click();
+            saveButtonFound = true;
+            showNotification('Changes saved via button click', 'success');
+            break;
+        }
+    }
+    
+    // If no save button found, try to find buttons with "save" or "submit" text
+    if (!saveButtonFound) {
+        const allButtons = document.querySelectorAll('button');
+        for (const button of allButtons) {
+            const buttonText = button.textContent.toLowerCase();
+            if (buttonText.includes('save') || buttonText.includes('submit')) {
+                console.log('Found button with save/submit text:', buttonText);
+                button.click();
                 saveButtonFound = true;
-                showNotification('Changes saved to database', 'success');
+                showNotification('Changes saved via text-matched button', 'success');
                 break;
             }
         }
-        
-        // If no save button found, try to find buttons with "save" or "submit" text
-        if (!saveButtonFound) {
-            const allButtons = document.querySelectorAll('button');
-            for (const button of allButtons) {
-                const buttonText = button.textContent.toLowerCase();
-                if (buttonText.includes('save') || buttonText.includes('submit')) {
-                    console.log('Found button with save/submit text:', buttonText);
-                    button.click();
-                    saveButtonFound = true;
-                    showNotification('Changes saved to database', 'success');
-                    break;
-                }
-            }
-        }
-        
-        // If no save button found, try the form submission approach
-        if (!saveButtonFound) {
-            // Look for forms with an action URL that might be for saving
-            const forms = document.querySelectorAll('form');
-            let formFound = false;
-            
-            for (const form of forms) {
-                // Check if this looks like a save form
-                if (form.action && form.action.toLowerCase().includes('save')) {
-                    console.log('Found form with save action:', form.action);
-                    formFound = true;
-                    try {
-                        // Update the hidden annotation field if it exists
-                        const annotField = form.querySelector('textarea[name="annotation"], input[name="annotation"]');
-                        if (annotField) {
-                            annotField.value = updatedText;
-                        }
-                        
-                        // Submit the form
-                        form.submit();
-                        showNotification('Changes saved through form submission', 'success');
-                        break;
-                    } catch (e) {
-                        console.error('Error submitting form:', e);
-                    }
-                }
-            }
-            
-            // If no appropriate forms found either
-            if (!formFound) {
-                console.warn('Could not find a save button or appropriate form to submit');
-                showNotification('Please save your changes manually', 'info', 6000);
-                
-                // As a last resort, try to trigger the standard save keyboard shortcut (Ctrl+S)
-                try {
-                    const saveEvent = new KeyboardEvent('keydown', {
-                        key: 's',
-                        code: 'KeyS',
-                        ctrlKey: true,
-                        bubbles: true,
-                        cancelable: true
-                    });
-                    document.dispatchEvent(saveEvent);
-                    console.log('Tried to trigger Ctrl+S save shortcut');
-                } catch (e) {
-                    console.error('Error triggering save shortcut:', e);
-                }
-            }
-        }
-    }, 2500); // Give time for the editor to reinitialize before saving
+    }
+    
+    if (!saveButtonFound) {
+        console.warn('No save button found');
+        showNotification('Please save your changes manually', 'warning', 8000);
+    }
 }
 
 // Function to escape special characters in a regular expression
