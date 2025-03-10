@@ -1048,21 +1048,8 @@ function reinitializeEditor(annotationElement) {
         console.warn('addBranchOperations function not available');
     }
     
-    // Don't reinitialize the entire editor as it causes duplicate UI elements
-    // Instead, manually update alignment if needed
-    if (typeof updateAlignment === 'function') {
-        console.log('- Updating alignments');
-        // Find all variables in the annotation
-        const variableRegex = /\bs\d+[a-z]*\d*\b/g;
-        const text = annotationElement.textContent;
-        let match;
-        while ((match = variableRegex.exec(text)) !== null) {
-            const variable = match[0];
-            // Try to update alignment for this variable
-            updateAlignment(variable);
-        }
-    }
-    
+    // The skipAlignmentUpdate parameter is used to skip alignment updates when needed
+    // (e.g., when moving branches where alignments should be preserved)
     console.log('Editor reinitialization complete');
 }
 
@@ -1363,8 +1350,20 @@ function moveBranchToNode(branchInfo, targetVariable) {
     // Update the actual annotation display
     annotationElement.textContent = updatedText;
     
-    // Reinitialize the editor
-    reinitializeEditor(annotationElement);
+    // Reinitialize the clickable elements of the editor
+    // We need to make sure that all interactive elements work after the move
+    if (typeof makeRelationsClickable === 'function') {
+        makeRelationsClickable(annotationElement);
+    }
+    if (typeof makeValuesClickable === 'function') {
+        makeValuesClickable(annotationElement);
+    }
+    if (typeof makeVariablesClickable === 'function') {
+        makeVariablesClickable(annotationElement);
+    }
+    if (typeof addBranchOperations === 'function') {
+        addBranchOperations(annotationElement);
+    }
     
     // Show success message
     showNotification(`Branch moved to ${targetVariable}`, 'success');
