@@ -57,6 +57,14 @@ def home():
     logger.info("Root URL accessed, rendering user guide")
     return render_template('user_guide.html', title='Welcome to UMR Writer 3.0')
 
+@main.route("/posts")
+@main.route("/posts/<int:page>")
+def display_post(page=1):
+    """Display all posts with pagination."""
+    logger.info(f"Displaying posts page {page}")
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    return render_template('display_post.html', posts=posts, title='All Posts')
+
 @main.route("/new_project", methods=['GET', 'POST'])
 def new_project():
     if not current_user.is_authenticated:
