@@ -645,6 +645,53 @@ function showAddTempBranchDialog(branchContent) {
     });
 }
 
+// Save to database after adding a temporary branch
+function saveTemporaryBranchToDatabase(annotationText, branchContent, targetVariable) {
+    // Get sentence ID and document ID from the hidden fields
+    const sent_id = document.getElementById('snt_id').value;
+    const doc_version_id = document.getElementById('doc_version_id').value;
+    
+    if (!sent_id || !doc_version_id) {
+        console.error('Missing sentence ID or document version ID for saving');
+        showNotification('Error: Could not find sentence ID or document ID', 'error');
+        return;
+    }
+    
+    console.log(`Saving temporary branch addition to ${targetVariable}`);
+    
+    // Use fetch API to send the update to the server
+    fetch(`/update_annotation/${doc_version_id}/${sent_id}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({
+            annotation: annotationText,
+            operation: 'add_branch',
+            relation: branchContent,
+            target_variable: targetVariable
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Temporary branch addition saved successfully:', data);
+        showNotification('Branch addition saved to database', 'success');
+    })
+    .catch(error => {
+        console.error('Error saving branch addition:', error);
+        showNotification('Error saving changes: ' + error.message, 'error');
+        
+        // Fallback to the old approach if direct save fails
+        tryFallbackSave(annotationText);
+    });
+}
+
 // Extract nodes from the annotation
 function extractNodes(annotationText) {
     console.log('Extracting nodes from annotation text');
@@ -843,6 +890,9 @@ function addBranchToNode(variable, branchContent, customElement) {
         // Show success message
         showNotification(`Branch added to ${variable}`, 'success');
         
+        // Save the changes to the database
+        saveTemporaryBranchToDatabase(updatedText, processedBranchContent, variable);
+        
         // Show alignment reminder after a short delay
         setTimeout(() => {
             showNotification(
@@ -851,45 +901,6 @@ function addBranchToNode(variable, branchContent, customElement) {
                 8000 // Show for 8 seconds
             );
         }, 1500); // Delay to show after the success message
-        
-        // Use the standard form submission to save changes
-        setTimeout(() => {
-            // Try to find and call the appropriate save function
-            if (typeof finalizeUmrString === 'function') {
-                // This function from relation_editor.js prepares the UMR string for saving
-                console.log('Finalizing UMR string...');
-                finalizeUmrString();
-            }
-            
-            // Find the save button or form submit button
-            // Use standard DOM selectors only (no jQuery-style selectors)
-            const saveSelectors = [
-                '#save-btn', 
-                '#save_button',
-                '#save',
-                '#submit-btn',
-                '#submit_button',
-                '#submit',
-                'button[type="submit"]', 
-                'input[type="submit"]'
-            ];
-            
-            let saveButtonFound = false;
-            
-            // Try each selector
-            for (const selector of saveSelectors) {
-                const saveButton = document.querySelector(selector);
-                if (saveButton) {
-                    console.log(`Found save button with selector: ${selector}`);
-                    saveButton.click();
-                    saveButtonFound = true;
-                    showNotification('Changes saved', 'success');
-                    break;
-                }
-            }
-            
-            // ... rest of the save logic ...
-        }, 2500); // Give time for the editor to reinitialize before saving
     }
 }
 
