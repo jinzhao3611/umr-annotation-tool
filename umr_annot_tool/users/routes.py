@@ -105,17 +105,37 @@ def account():
                 # Remove project users
                 Projectuser.query.filter(Projectuser.project_id == to_delete_project_id).delete()
                 print("Projectuser removed")
+                
+                # Remove associated documents and their contents
+                to_delete_docs = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
+                for to_delete_doc in to_delete_docs:
+                    # First get all document versions
+                    doc_versions = DocVersion.query.filter(DocVersion.doc_id == to_delete_doc.id).all()
+                    
+                    # For each document version, delete related annotations
+                    for doc_version in doc_versions:
+                        Annotation.query.filter(Annotation.doc_version_id == doc_version.id).delete()
+                        print(f"Annotations for DocVersion {doc_version.id} removed")
+                    
+                    # Now delete all document versions
+                    DocVersion.query.filter(DocVersion.doc_id == to_delete_doc.id).delete()
+                    print(f"DocVersions for Doc {to_delete_doc.id} removed")
+                    
+                    # Delete sentences
+                    Sent.query.filter(Sent.doc_id == to_delete_doc.id).delete()
+                    print(f"Sentences for Doc {to_delete_doc.id} removed")
+                    
+                    # Finally delete the document
+                    Doc.query.filter(Doc.id == to_delete_doc.id).delete()
+                    print(f"Doc {to_delete_doc.id} removed")
+                
                 # Remove project
                 Project.query.filter(Project.id==to_delete_project_id).delete()
                 print("Project removed")
-                # Remove associated documents and their contents
-                to_delete_doc_ids = Doc.query.filter(Doc.project_id == to_delete_project_id).all()
-                for to_delete_doc in to_delete_doc_ids:
-                    Annotation.query.filter(Annotation.doc_id == to_delete_doc.id).delete()
-                    Sent.query.filter(Sent.doc_id == to_delete_doc.id).delete()
-                    Doc.query.filter(Doc.id == to_delete_doc.id).delete()
+                
             db.session.commit()
         except Exception as e:
+            db.session.rollback()  # Rollback changes on error
             flash("deleting doc from database failed", 'info')
             print(e)
             print("deleting doc from database failed")
