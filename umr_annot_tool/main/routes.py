@@ -1932,6 +1932,27 @@ def export_annotation(doc_version_id):
         # Prepare the response data
         sentences_data = []
         
+        # Check if any sentence's document annotation is very large compared to others
+        # which might indicate it incorrectly contains document-wide annotations
+        doc_annot_lengths = []
+        
+        # First pass to gather statistics
+        for sent in sents:
+            annotation = Annotation.query.filter_by(
+                doc_version_id=doc_version_id,
+                sent_id=sent.id
+            ).first()
+            
+            if annotation and annotation.doc_annot:
+                doc_annot_lengths.append(len(annotation.doc_annot))
+        
+        # Calculate average and standard deviation
+        if doc_annot_lengths:
+            avg_length = sum(doc_annot_lengths) / len(doc_annot_lengths)
+            std_dev = (sum((x - avg_length) ** 2 for x in doc_annot_lengths) / len(doc_annot_lengths)) ** 0.5
+            logger.info(f"Document annotation statistics: avg={avg_length:.2f}, std_dev={std_dev:.2f}")
+        
+        # Second pass to prepare the data
         for sent in sents:
             # Get the annotation for this sentence
             annotation = Annotation.query.filter_by(
@@ -1966,6 +1987,30 @@ def export_annotation(doc_version_id):
                 "alignments": alignments,
                 "doc_annotation": annotation.doc_annot if annotation else ""
             }
+            
+            # Add additional logging to debug the document annotation issue
+            logger.info(f"  - doc_annotation for sentence {sent.id}: {sentence_data['doc_annotation'][:50] if sentence_data['doc_annotation'] else 'None'}")
+            logger.info(f"  - Sentence ID: {sent.id}, Doc Version ID: {doc_version_id}")
+            
+            # Ensure each doc_annotation is specific to the sentence
+            # This is critical as the client expects each sentence to have its own document annotation
+            if annotation and annotation.doc_annot:
+                logger.info(f"  - doc_annotation length: {len(annotation.doc_annot)}")
+                if sent.id == sents[0].id:  # First sentence
+                    logger.info(f"FIRST SENTENCE DOC ANNOTATION: {annotation.doc_annot[:100]}...")
+                    
+                    # Check if first sentence has unusually large doc annotation
+                    if doc_annot_lengths and len(doc_annot_lengths) > 1:
+                        first_length = len(annotation.doc_annot)
+                        if first_length > avg_length + 2 * std_dev:
+                            logger.warning(f"WARNING: First sentence doc annotation is unusually large: {first_length} chars vs avg {avg_length:.2f}")
+                            logger.warning("This may indicate the entire document's annotation was incorrectly stored with the first sentence")
+                            
+                            # Add a warning to the sentence data
+                            sentence_data["doc_annotation_warning"] = "Warning: This document-level annotation may contain document-wide information that should be distributed across sentences."
+                else:
+                    # Log a preview of other sentences' doc annotations
+                    logger.info(f"OTHER SENTENCE DOC ANNOTATION: {annotation.doc_annot[:100]}...")
             
             sentences_data.append(sentence_data)
         
