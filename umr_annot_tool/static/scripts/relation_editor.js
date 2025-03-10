@@ -1,5 +1,12 @@
 console.log('relation_editor.js loaded');
 
+// Check if branch operation functions are available
+document.addEventListener('DOMContentLoaded', function() {
+    console.info('Checking for required branch operation functions:');
+    console.info('startBranchMove function available:', typeof window.startBranchMove === 'function');
+    console.info('storeBranchTemporarily function available:', typeof window.storeBranchTemporarily === 'function');
+});
+
 // Global variables to store UMR relations and their values
 let umrRelations = [];
 let umrRelationValues = {};
@@ -507,10 +514,12 @@ function makeRelationsClickable(annotationElement) {
     
     console.log('Making relations clickable...');
     const text = annotationElement.textContent;
-    const relationRegex = /(\s+)(:[A-Za-z0-9\-]+)/g;
     
-    let html = text.replace(relationRegex, function(match, space, relation) {
-        return `${space}<span class="relation-span" style="cursor:pointer; color:#0066cc;">${relation}</span>`;
+    // More robust regex to detect relations in various contexts (e.g., at start of line, after parentheses)
+    const relationRegex = /(^|\s|\()(:[A-Za-z0-9\-]+)/g;
+    
+    let html = text.replace(relationRegex, function(match, prefix, relation) {
+        return `${prefix}<span class="relation-span" style="cursor:pointer; color:#0066cc;">${relation}</span>`;
     });
     
     annotationElement.innerHTML = html;
@@ -1133,77 +1142,95 @@ function showBranchContextMenu(relationSpan, x, y) {
     menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
     menu.style.padding = '5px 0';
     menu.style.zIndex = '1000';
+    menu.style.minWidth = '180px'; // Ensure menu has minimum width
+    
+    // Helper function to create menu items
+    function createMenuItem(text, actionType, color = '') {
+        const item = document.createElement('div');
+        item.textContent = text;
+        item.dataset.action = actionType;
+        item.className = 'context-menu-item';
+        item.style.padding = '8px 12px';
+        item.style.cursor = 'pointer';
+        item.style.display = 'block';
+        item.style.width = '100%';
+        item.style.boxSizing = 'border-box';
+        item.style.textAlign = 'left';
+        item.style.border = 'none';
+        item.style.borderBottom = '1px solid #eee'; // Add separator between items
+        item.style.background = 'none';
+        if (color) {
+            item.style.color = color;
+        }
+        
+        item.addEventListener('mouseover', () => {
+            item.style.backgroundColor = '#f0f0f0';
+        });
+        
+        item.addEventListener('mouseout', () => {
+            item.style.backgroundColor = '';
+        });
+        
+        return item;
+    }
     
     // Add menu items
-    const deleteItem = document.createElement('div');
-    deleteItem.textContent = '🗑️ Delete Branch';
-    deleteItem.style.padding = '8px 12px';
-    deleteItem.style.cursor = 'pointer';
-    deleteItem.style.hover = 'background-color: #f0f0f0';
+    const deleteItem = createMenuItem('🗑️ Delete Branch', 'delete');
+    const moveItem = createMenuItem('🔄 Move Branch', 'move');
+    const storeItem = createMenuItem('📦 Store Temporarily', 'store', '#0066cc');
     
-    deleteItem.addEventListener('mouseover', () => {
-        deleteItem.style.backgroundColor = '#f0f0f0';
-    });
-    
-    deleteItem.addEventListener('mouseout', () => {
-        deleteItem.style.backgroundColor = '';
-    });
-    
-    deleteItem.addEventListener('click', () => {
-        menu.remove();
-        confirmDeleteBranch(relationSpan);
-    });
-    
+    // Append all items to menu
     menu.appendChild(deleteItem);
-    
-    // Add "Move Branch" item
-    const moveItem = document.createElement('div');
-    moveItem.textContent = '🔄 Move Branch';
-    moveItem.style.padding = '8px 12px';
-    moveItem.style.cursor = 'pointer';
-    
-    moveItem.addEventListener('mouseover', () => {
-        moveItem.style.backgroundColor = '#f0f0f0';
-    });
-    
-    moveItem.addEventListener('mouseout', () => {
-        moveItem.style.backgroundColor = '';
-    });
-    
-    moveItem.addEventListener('click', () => {
-        menu.remove();
-        startBranchMove(relationSpan);
-    });
-    
     menu.appendChild(moveItem);
-
-    // Add "Store Temporarily" item
-    const storeItem = document.createElement('div');
-    storeItem.textContent = '📦 Store Temporarily';
-    storeItem.className = 'store-temp-option';
-    storeItem.style.padding = '8px 12px';
-    storeItem.style.cursor = 'pointer';
-    storeItem.style.color = '#0066cc';
+    menu.appendChild(storeItem);
     
-    storeItem.addEventListener('mouseover', () => {
-        storeItem.style.backgroundColor = '#f0f0f0';
-    });
-    
-    storeItem.addEventListener('mouseout', () => {
-        storeItem.style.backgroundColor = '';
-    });
-    
-    storeItem.addEventListener('click', () => {
+    // Add single event handler for all menu items
+    menu.addEventListener('click', (event) => {
+        // Find the closest menu item that was clicked
+        const menuItem = event.target.closest('.context-menu-item');
+        if (!menuItem) return;
+        
+        // Log which element was actually clicked
+        console.log('Clicked element:', event.target);
+        console.log('Menu item found:', menuItem);
+        console.log('Action:', menuItem.dataset.action);
+        
+        // Stop event propagation and prevent default
+        event.stopPropagation();
+        event.preventDefault();
+        
+        // Get the action type from data attribute
+        const action = menuItem.dataset.action;
+        
+        // Close the menu
         menu.remove();
-        // Call the storeBranchTemporarily function from tempBranchStorage.js
-        if (typeof storeBranchTemporarily === 'function') {
-            storeBranchTemporarily(relationSpan);
-        } else {
-            console.error('storeBranchTemporarily function not found');
+        
+        // Execute the appropriate action based on the menu item clicked
+        if (action === 'delete') {
+            console.log('Delete branch action triggered');
+            confirmDeleteBranch(relationSpan);
+        } 
+        else if (action === 'move') {
+            console.log('Move branch action triggered');
+            if (typeof window.startBranchMove === 'function') {
+                console.log('startBranchMove function exists, calling it');
+                window.startBranchMove(relationSpan);
+            } else {
+                console.error('startBranchMove function not found');
+                showNotification('Error: Branch move operation not available', 'error');
+            }
+        } 
+        else if (action === 'store') {
+            console.log('Store temporarily action triggered');
+            if (typeof window.storeBranchTemporarily === 'function') {
+                console.log('storeBranchTemporarily function exists, calling it');
+                window.storeBranchTemporarily(relationSpan);
+            } else {
+                console.error('storeBranchTemporarily function not found');
+                showNotification('Error: Store temporarily operation not available', 'error');
+            }
         }
     });
-    
-    menu.appendChild(storeItem);
     
     // Add the menu to the document
     document.body.appendChild(menu);
@@ -1901,6 +1928,7 @@ function showVariableContextMenu(variableSpan, x, y) {
     menu.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
     menu.style.padding = '5px 0';
     menu.style.zIndex = '1000';
+    menu.style.minWidth = '180px'; // Ensure menu has minimum width
     
     // Add "Add Branch" item
     const addItem = document.createElement('div');

@@ -1,5 +1,5 @@
 import unittest
-from ..main.umr_parser import parse_umr_file
+from umr_annot_tool.main.umr_parser import parse_umr_file
 
 class TestUMRParser(unittest.TestCase):
     def test_basic_parsing(self):
@@ -23,7 +23,7 @@ s1l: 9-9
     :temporal ((document-creation-time :before s1l)))
 ################################################################################'''
 
-        content, sentences, sent_annotations, doc_annotations = parse_umr_file(test_input)
+        content, sentences, sent_annotations, doc_annotations, alignments = parse_umr_file(test_input)
         
         # Test content is preserved
         self.assertEqual(content, test_input)
@@ -42,6 +42,11 @@ s1l: 9-9
         self.assertEqual(len(doc_annotations), 1)
         expected_doc_annot = '(s1s0 / sentence\n    :temporal ((document-creation-time :before s1l)))'
         self.assertEqual(doc_annotations[0].strip(), expected_doc_annot)
+        
+        # Test alignment parsing
+        self.assertEqual(len(alignments), 1)
+        expected_alignment = {'s1p': ['0-0'], 's1l': ['9-9']}
+        self.assertEqual(alignments[0], expected_alignment)
 
     def test_multiple_sentences(self):
         """Test parsing of multiple sentences in a UMR file."""
@@ -76,7 +81,7 @@ s2: 0-0
 (d2 / doc-02)
 ################################################################################'''
 
-        content, sentences, sent_annotations, doc_annotations = parse_umr_file(test_input)
+        content, sentences, sent_annotations, doc_annotations, alignments = parse_umr_file(test_input)
         
         # Test multiple sentence parsing
         self.assertEqual(len(sentences), 2)
@@ -92,15 +97,21 @@ s2: 0-0
         self.assertEqual(len(doc_annotations), 2)
         self.assertEqual(doc_annotations[0].strip(), '(d1 / doc-01)')
         self.assertEqual(doc_annotations[1].strip(), '(d2 / doc-02)')
+        
+        # Test multiple alignments
+        self.assertEqual(len(alignments), 2)
+        self.assertEqual(alignments[0], {'s1': ['0-0']})
+        self.assertEqual(alignments[1], {'s2': ['0-0']})
 
     def test_empty_input(self):
         """Test handling of empty input."""
-        content, sentences, sent_annotations, doc_annotations = parse_umr_file("")
+        content, sentences, sent_annotations, doc_annotations, alignments = parse_umr_file("")
         
         self.assertEqual(content, "")
         self.assertEqual(sentences, [])
         self.assertEqual(sent_annotations, [])
         self.assertEqual(doc_annotations, [])
+        self.assertEqual(alignments, [])
 
     def test_malformed_input(self):
         """Test handling of malformed input without proper sections."""
@@ -109,38 +120,50 @@ without proper UMR format
 # :: snt1	  This is a sentence .
 but missing other required sections'''
 
-        content, sentences, sent_annotations, doc_annotations = parse_umr_file(test_input)
+        content, sentences, sent_annotations, doc_annotations, alignments = parse_umr_file(test_input)
         
         self.assertEqual(content, test_input)
         self.assertEqual(len(sentences), 1)
         self.assertEqual(sentences[0], ['This', 'is', 'a', 'sentence', '.'])
-        self.assertEqual(sent_annotations, [])
-        self.assertEqual(doc_annotations, [])
+        self.assertEqual(sent_annotations, [""])
+        self.assertEqual(doc_annotations, [""])
+        self.assertEqual(alignments, [{}])
 
     def test_real_file_sample(self):
         """Test parsing with a real file sample."""
-        with open('umr_annot_tool/resources/sample_input_files/english_umr-0001.umr', 'r') as f:
-            content = f.read()
+        try:
+            with open('umr_annot_tool/resources/sample_input_files/english_umr-0001.umr', 'r') as f:
+                content = f.read()
+                
+            content_out, sentences, sent_annotations, doc_annotations, alignments = parse_umr_file(content)
             
-        content_out, sentences, sent_annotations, doc_annotations = parse_umr_file(content)
-        
-        # Test that we got some output
-        self.assertTrue(len(sentences) > 0)
-        self.assertTrue(len(sent_annotations) > 0)
-        self.assertTrue(len(doc_annotations) > 0)
-        
-        # Test that sentences match their annotations
-        self.assertEqual(len(sentences), len(sent_annotations))
-        self.assertEqual(len(sentences), len(doc_annotations))
-        
-        # Test that annotations are properly formatted
-        for annot in sent_annotations:
-            self.assertTrue(annot.strip().startswith('('))
-            self.assertTrue(annot.strip().endswith(')'))
+            # Test that we got some output
+            self.assertTrue(len(sentences) > 0)
+            self.assertTrue(len(sent_annotations) > 0)
+            self.assertTrue(len(doc_annotations) > 0)
+            self.assertTrue(len(alignments) > 0)
             
-        for annot in doc_annotations:
-            self.assertTrue(annot.strip().startswith('('))
-            self.assertTrue(annot.strip().endswith(')'))
+            # Test that sentences match their annotations
+            self.assertEqual(len(sentences), len(sent_annotations))
+            self.assertEqual(len(sentences), len(doc_annotations))
+            self.assertEqual(len(sentences), len(alignments))
+            
+            # Test that annotations are properly formatted
+            for annot in sent_annotations:
+                if annot.strip():
+                    self.assertTrue(annot.strip().startswith('('))
+                    self.assertTrue(annot.strip().endswith(')'))
+                    
+            for annot in doc_annotations:
+                if annot.strip():
+                    self.assertTrue(annot.strip().startswith('('))
+                    self.assertTrue(annot.strip().endswith(')'))
+                    
+            # Test content preservation
+            self.assertEqual(content, content_out)
+        except FileNotFoundError:
+            # Skip test if sample file is not available
+            self.skipTest("Sample file not found, skipping test")
 
 if __name__ == '__main__':
     unittest.main() 

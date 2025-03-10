@@ -47,18 +47,67 @@ function findAllMatches(str, substr) {
 }
 
 function getBranchBoundaries(text, relationPosition) {
+    console.log('getBranchBoundaries called for relation at position:', relationPosition);
+    
+    // Bail out if the position is invalid
+    if (relationPosition < 0 || relationPosition >= text.length) {
+        console.error('Invalid relation position:', relationPosition);
+        return null;
+    }
+    
     // Find the line with the relation
     let lineStart = text.lastIndexOf('\n', relationPosition) + 1;
     let lineEnd = text.indexOf('\n', relationPosition);
     if (lineEnd === -1) lineEnd = text.length;
     
     const line = text.substring(lineStart, lineEnd);
+    console.log('Line with relation:', line);
     
     // Determine the indentation level of this relation
     const indent = line.search(/\S/);
+    console.log('Detected indent level:', indent);
+    
+    // Check if the line actually contains a relation (should start with a colon after some spaces)
+    const relationMatch = line.match(/\s+:[A-Za-z0-9\-]+/);
+    if (!relationMatch) {
+        console.error('Line does not contain a valid relation pattern');
+        return null;
+    }
+    
+    // Find the parent node start (the line before this with less indentation)
+    let parentStart = lineStart;
+    let currentPos = lineStart - 1;
+    
+    while (currentPos > 0) {
+        const prevLineEnd = currentPos;
+        const prevLineStart = text.lastIndexOf('\n', prevLineEnd - 1) + 1;
+        
+        if (prevLineStart >= prevLineEnd) {
+            // Special case for the first line
+            prevLineStart = 0;
+        }
+        
+        const prevLine = text.substring(prevLineStart, prevLineEnd);
+        
+        // Skip empty lines
+        if (prevLine.trim() === '') {
+            currentPos = prevLineStart - 1;
+            continue;
+        }
+        
+        const prevIndent = prevLine.search(/\S/);
+        
+        // If we find a line with less indentation, we've found the parent
+        if (prevIndent < indent) {
+            parentStart = prevLineStart;
+            break;
+        }
+        
+        currentPos = prevLineStart - 1;
+    }
     
     // Find where this branch ends (the next line with the same or less indentation)
-    let currentPos = lineEnd + 1;
+    currentPos = lineEnd + 1;
     let branchEnd = lineEnd;
     
     while (currentPos < text.length) {
@@ -70,6 +119,7 @@ function getBranchBoundaries(text, relationPosition) {
         // Skip empty lines
         if (nextLine.trim() === '') {
             currentPos = endPos + 1;
+            branchEnd = endPos; // Update branch end to include empty lines
             continue;
         }
         
@@ -84,11 +134,22 @@ function getBranchBoundaries(text, relationPosition) {
         currentPos = endPos + 1;
     }
     
+    // Extract the branch text - we want the branch to start at the relation line, not before it
+    const branchText = text.substring(lineStart, branchEnd + 1);
+    console.log('Extracted branch text:', branchText);
+    
+    // Make sure the branch text actually contains the relation
+    if (!branchText.includes(text.substring(relationPosition, relationPosition + 10))) {
+        console.error('Extracted branch does not contain the relation');
+        return null;
+    }
+    
     return {
         start: lineStart,
         end: branchEnd + 1, // Include the newline at the end
-        branchText: text.substring(lineStart, branchEnd + 1),
-        parentIndent: indent
+        branchText: branchText,
+        parentIndent: indent,
+        parentStart: parentStart
     };
 }
 
@@ -1109,11 +1170,21 @@ window.startBranchMove = function(relationSpan) {
 
 // Extract a branch based on a relation span
 function extractBranchFromRelation(relationSpan, annotationElement) {
+    console.log('Starting extractBranchFromRelation with relation:', relationSpan.textContent);
+    
     const originalText = annotationElement.textContent;
+    console.log('Annotation content length:', originalText.length);
     
     // Get the relation text
     const relationText = relationSpan.textContent;
     console.log('Looking for relation text to move:', relationText);
+    
+    // Check if relation text is valid
+    if (!relationText.startsWith(':')) {
+        console.error('Invalid relation format, must start with ":"');
+        showNotification('Error: Invalid relation format. Relations must start with ":"', 'error');
+        return null;
+    }
     
     // Find the parent node of this relation
     let currentNode = relationSpan;
@@ -1129,115 +1200,124 @@ function extractBranchFromRelation(relationSpan, annotationElement) {
         currentNode = currentNode.parentElement;
     }
     
+    console.log('Parent relation span found:', parentRelationSpan ? parentRelationSpan.textContent : 'None');
+    
     // Get all relation spans with the same text
     const sameTextRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
                                   .filter(span => span.textContent === relationText);
+    
+    console.log(`Found ${sameTextRelationSpans.length} relation spans with text "${relationText}"`);
     
     // Find the index of our span among those with the same text
     const relativeSpanIndex = sameTextRelationSpans.indexOf(relationSpan);
     
     if (relativeSpanIndex === -1) {
         console.error('Could not determine relation span index');
+        showNotification('Error: Could not identify this relation. Please try again.', 'error');
         return null;
     }
     
     console.log(`This is occurrence ${relativeSpanIndex} of relation "${relationText}"`);
     
-    // Using escapeRegExp to safely handle special characters in the relation text
-    const escapedRelationText = escapeRegExp(relationText);
-    const relationRegex = new RegExp(escapedRelationText, 'g');
-    const relationMatches = [];
+    // Split the annotation text into lines for line-based extraction
+    const lines = originalText.split('\n');
     
-    let match;
-    while ((match = relationRegex.exec(originalText)) !== null) {
-        relationMatches.push(match.index);
+    // Find all lines containing this relation
+    const relationLines = [];
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].includes(relationText)) {
+            relationLines.push({
+                lineIndex: i,
+                indent: lines[i].match(/^\s*/)[0].length
+            });
+        }
     }
     
-    console.log(`Found ${relationMatches.length} occurrences of ${relationText} in the text`);
+    console.log(`Found ${relationLines.length} lines containing relation "${relationText}"`);
     
-    if (relationMatches.length <= relativeSpanIndex) {
-        console.log(`Could not locate occurrence ${relativeSpanIndex} of relation "${relationText}" in the text. Found ${relationMatches.length} occurrences.`);
-        
-        // Fallback: Find the line containing the relation instead
-        console.log('Attempting fallback method to locate relation');
-        
-        // Split the text into lines
-        const lines = originalText.split('\n');
-        
-        // Find all lines containing this relation
-        const matchingLines = [];
-        for (let i = 0; i < lines.length; i++) {
-            if (lines[i].includes(relationText)) {
-                matchingLines.push(i);
-            }
-        }
-        
-        if (matchingLines.length === 0) {
-            console.error('Fallback failed: Could not find line containing relation');
+    if (relationLines.length === 0) {
+        console.error('No lines found containing relation');
+        showNotification('Error: Could not find relation in text. Please try again.', 'error');
         return null;
-        }
-        
-        // Get the appropriate line based on relativeSpanIndex
-        const lineIndex = relativeSpanIndex < matchingLines.length ? 
-                        matchingLines[relativeSpanIndex] : 
-                        matchingLines[matchingLines.length - 1];
-        
-        // Calculate the position of this relation in the text
-        let relationPos = 0;
-        for (let i = 0; i < lineIndex; i++) {
-            relationPos += lines[i].length + 1; // +1 for newline
-        }
-        
-        // Find the position of the relation within the line
-        relationPos += lines[lineIndex].indexOf(relationText);
-                    
-                    // Get branch boundaries from this position
-                    const branchInfo = getBranchBoundaries(originalText, relationPos);
-                    
-                    if (branchInfo) {
-                        // Extract the branch text
-                        let branchText = branchInfo.branchText;
-                        
-                        // Normalize the indentation before storage
-                        branchText = normalizeIndentation(branchText);
-                        
-                        // Prompt for optional description
-                        const description = prompt('Add a description for this branch (optional):');
-                        
-                        // Add to temporary storage
-                        addTempBranch(branchText, description);
-                        return;
-        } else {
-            console.error('Fallback failed: Could not determine branch boundaries');
-            showNotification('Error: Could not determine branch boundaries', 'error');
-            return;
-        }
     }
     
-    // Get the position of this occurrence of the relation
-    const relationPos = relationMatches[relativeSpanIndex];
+    // Get the specific relation line based on index
+    const targetLineInfo = relativeSpanIndex < relationLines.length ? 
+                           relationLines[relativeSpanIndex] : 
+                           relationLines[0];
     
-    // Determine the branch boundaries
-    const branchInfo = getBranchBoundaries(originalText, relationPos);
+    console.log('Target line info:', targetLineInfo);
     
-    if (!branchInfo) {
-        console.error('Could not determine branch boundaries');
-        showNotification('Error: Could not determine branch boundaries', 'error');
-        return;
+    const relationLineIndex = targetLineInfo.lineIndex;
+    const relationIndent = targetLineInfo.indent;
+    
+    // Find the end of this branch (the next line with same or less indentation)
+    let branchEndLineIndex = relationLineIndex;
+    
+    for (let i = relationLineIndex + 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') {
+            // Skip empty lines
+            continue;
+        }
+        
+        const lineIndent = lines[i].match(/^\s*/)[0].length;
+        if (lineIndent <= relationIndent) {
+            // Found a line with same or less indentation, we've reached the end
+            break;
+        }
+        
+        branchEndLineIndex = i;
     }
+    
+    console.log(`Branch spans from line ${relationLineIndex} to ${branchEndLineIndex}`);
+    
+    // Calculate text positions for the branch
+    let branchStart = 0;
+    for (let i = 0; i < relationLineIndex; i++) {
+        branchStart += lines[i].length + 1; // +1 for newline
+    }
+    
+    let branchEnd = branchStart;
+    for (let i = relationLineIndex; i <= branchEndLineIndex; i++) {
+        branchEnd += lines[i].length + 1; // +1 for newline
+    }
+    
+    // Adjust branchEnd to not include the trailing newline
+    branchEnd -= 1;
+    
+    console.log('Text positions - start:', branchStart, 'end:', branchEnd);
     
     // Extract the branch text
-    let branchText = branchInfo.branchText;
+    const branchText = originalText.substring(branchStart, branchEnd);
+    console.log('Extracted branch text:', branchText);
     
-    // Normalize the indentation before storage
-    branchText = normalizeIndentation(branchText);
+    // Ensure the branch text includes the relation
+    if (!branchText.includes(relationText)) {
+        console.error('Branch text does not contain the relation text');
+        showNotification('Error: Branch extraction failed. Please try again.', 'error');
+        return null;
+    }
     
-    // Prompt for optional description
-    const description = prompt('Add a description for this branch (optional):');
+    // Use our utility function to ensure parentheses are balanced
+    const balancedResult = balanceParentheses(branchText);
     
-    // Add to temporary storage
-    addTempBranch(branchText, description);
-};
+    // Adjust branch end position if the text was modified
+    const adjustedBranchEnd = branchStart + balancedResult.text.length;
+    
+    console.log('Parenthesis balancing result:', balancedResult);
+    console.log('Adjusted branch text:', balancedResult.text);
+    
+    return {
+        branchText: balancedResult.text,
+        relationText: relationText,
+        parentIndent: relationIndent,
+        branchStart: branchStart,
+        branchEnd: adjustedBranchEnd,
+        extraClosingParens: balancedResult.extraClosing,
+        balancedParentheses: balancedResult.balanced
+    };
+}
 
 // Show dialog to select where to move the branch
 function showMoveBranchDialog(branchInfo) {
@@ -1345,8 +1425,52 @@ function showMoveBranchDialog(branchInfo) {
     });
 }
 
+// Function to consolidate lines with only closing parentheses by moving them to the end of the previous line
+function consolidateClosingParentheses(lines) {
+    if (!lines || lines.length <= 1) return lines;
+    
+    const result = [];
+    let i = 0;
+    
+    while (i < lines.length) {
+        const currentLine = lines[i];
+        
+        // Add the current line to our result
+        result.push(currentLine);
+        
+        // Check if the next line exists and contains only closing parentheses
+        if (i + 1 < lines.length) {
+            const nextLine = lines[i + 1];
+            const trimmedNextLine = nextLine.trim();
+            
+            // If the next line contains only closing parentheses (possibly with whitespace)
+            if (trimmedNextLine.match(/^\)+$/)) {
+                // Remove the line we just added so we can modify it
+                result.pop();
+                
+                // Append the closing parentheses to the end of the current line (without any whitespace in between)
+                result.push(currentLine.trimEnd() + trimmedNextLine);
+                
+                // Skip the next line since we've incorporated it
+                i += 2;
+            } else {
+                // Normal line, just move to the next one
+                i += 1;
+            }
+        } else {
+            // No more lines
+            i += 1;
+        }
+    }
+    
+    return result;
+}
+
 // Move a branch from its current location to a new node
 function moveBranchToNode(branchInfo, targetVariable) {
+    console.log('Moving branch to node:', targetVariable);
+    console.log('Branch info:', branchInfo);
+    
     const annotationElement = document.querySelector('#amr pre');
     if (!annotationElement) {
         showNotification('Annotation element not found', 'error');
@@ -1354,30 +1478,219 @@ function moveBranchToNode(branchInfo, targetVariable) {
     }
     
     const originalText = annotationElement.textContent;
-    const lines = originalText.split('\n');
+    console.log('Original text length:', originalText.length);
     
-    // Step 1: Remove the branch from its current location
-    // We'll split the text at the branch boundaries and remove that section
-    const beforeBranch = originalText.substring(0, branchInfo.branchStart);
-    const afterBranch = originalText.substring(branchInfo.branchEnd);
+    // Check that branch boundaries are defined
+    if (branchInfo.branchStart === undefined || branchInfo.branchEnd === undefined) {
+        console.error('Branch boundaries not defined:', branchInfo);
+        showNotification('Error: Branch boundaries not defined', 'error');
+        return;
+    }
     
-    // Create a version of text with the branch removed
-    let textWithoutBranch = beforeBranch + afterBranch;
+    console.log('Branch boundaries - start:', branchInfo.branchStart, 'end:', branchInfo.branchEnd);
     
-    // Step 2: Add the branch to the target node using our existing function
     // First normalize the indentation of the branch
     const normalizedBranch = normalizeIndentation(branchInfo.branchText);
+    console.log('Normalized branch to add:', normalizedBranch);
     
-    // Now add the branch to the target node
-    // We'll use a temporary element to do this operation
-    const tempElement = document.createElement('pre');
-    tempElement.textContent = textWithoutBranch;
+    // Step 1: Find the target node position
+    const lines = originalText.split('\n');
     
-    // Now use our existing function to add the branch to the target node
-    addBranchToNode(targetVariable, normalizedBranch, tempElement);
+    // Node pattern: variable / concept
+    const nodePattern = new RegExp(`\\b${targetVariable}\\s*\\/\\s*[^\\s\\(\\):]+`);
     
-    // Get the updated text with the branch moved
-    const updatedText = tempElement.textContent;
+    // Find the line with our target node
+    let targetNodeLineIndex = -1;
+    for (let i = 0; i < lines.length; i++) {
+        if (nodePattern.test(lines[i])) {
+            targetNodeLineIndex = i;
+            break;
+        }
+    }
+    
+    if (targetNodeLineIndex === -1) {
+        showNotification('Could not find the target node', 'error');
+        return;
+    }
+    
+    // Get the target node line
+    const nodeLine = lines[targetNodeLineIndex];
+    console.log('Target node line:', nodeLine);
+    
+    // Determine the indentation level of the node
+    const nodeIndent = nodeLine.match(/^\s*/)[0].length;
+    
+    // Calculate the standard child indentation
+    let childIndentSize = 4; // Default to 4 spaces
+    
+    // Try to detect the document's child indentation pattern
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+        
+        // If this is a line with a relation
+        if (line.startsWith(':')) {
+            const lineIndent = lines[i].match(/^\s*/)[0].length;
+            // Look at the previous line
+            if (i > 0) {
+                const prevLine = lines[i-1].trim();
+                if (prevLine !== '' && !prevLine.startsWith(':')) {
+                    // Found a parent-child relationship
+                    const prevIndent = lines[i-1].match(/^\s*/)[0].length;
+                    if (lineIndent > prevIndent) {
+                        // This is the child indentation size
+                        childIndentSize = lineIndent - prevIndent;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    
+    console.log('Using child indent size:', childIndentSize);
+    
+    // Parse the branch content to handle indentation properly
+    const branchLines = normalizedBranch.trim().split('\n');
+    
+    if (branchLines.length === 0 || branchLines[0].trim() === '') {
+        showNotification('No content to add', 'error');
+        return;
+    }
+    
+    // Format the branch with proper indentation
+    const formattedBranch = [];
+    
+    // Add the first line (relation and concept) with proper indentation
+    formattedBranch.push(' '.repeat(nodeIndent + childIndentSize) + branchLines[0].trim());
+    
+    // Add all child nodes with consistent indentation based on their level
+    for (let i = 1; i < branchLines.length; i++) {
+        const line = branchLines[i];
+        // Calculate the proper indent for this line - we need to preserve the relative indentation from the first line
+        const lineIndent = line.match(/^\s*/)[0].length;
+        const baseIndent = branchLines[0].match(/^\s*/)[0].length;
+        const relativeIndent = Math.max(0, lineIndent - baseIndent);
+        const newIndent = nodeIndent + childIndentSize + relativeIndent;
+        
+        formattedBranch.push(' '.repeat(newIndent) + line.trim());
+    }
+    
+    console.log('Formatted branch to add:', formattedBranch);
+    
+    // Step 2: Mark the original branch lines for removal
+    const branchStartLineIndex = originalText.substring(0, branchInfo.branchStart).split('\n').length - 1;
+    const branchEndLineIndex = originalText.substring(0, branchInfo.branchEnd).split('\n').length - 1;
+    
+    console.log('Branch line indices - start:', branchStartLineIndex, 'end:', branchEndLineIndex);
+    
+    // Step 3: Create new lines array, skipping the branch lines but preserving structure
+    let updatedLines = [];
+    
+    // Determine if we need to add closing parentheses after removing the branch
+    const extraClosingParens = branchInfo.extraClosingParens || 0;
+    const needToAddClosingParens = extraClosingParens > 0;
+    
+    if (needToAddClosingParens) {
+        console.log(`Need to add ${extraClosingParens} closing parentheses after removing branch`);
+    }
+    
+    // Find the line containing the original branch that we're moving
+    const branchParentLine = lines[branchStartLineIndex];
+    const branchParentLineContent = branchParentLine.trim();
+    
+    // First, process all lines before the branch
+    for (let i = 0; i < branchStartLineIndex; i++) {
+        updatedLines.push(lines[i]);
+    }
+    
+    // Then, handle the parent line and any needed parentheses
+    if (needToAddClosingParens) {
+        // Check if this is the line that needs extra closing parentheses
+        if (branchParentLineContent.includes(branchInfo.relationText)) {
+            // This is the parent line with the relation
+            // We need to find where to add the closing parentheses
+            let parentLineWithoutBranch = branchParentLine;
+            
+            // If this line has just a reference to the branch, leave out the branch part
+            const branchStartInLine = branchParentLine.indexOf(branchInfo.relationText);
+            if (branchStartInLine > -1) {
+                // Keep the part before the branch reference
+                parentLineWithoutBranch = branchParentLine.substring(0, branchStartInLine).trimEnd();
+                
+                // Add the extra closing parentheses, ensuring no whitespace before them
+                parentLineWithoutBranch += ')'.repeat(extraClosingParens);
+                
+                // Add the processed parent line
+                updatedLines.push(parentLineWithoutBranch);
+            } else {
+                // If relation is not directly found (unusual), add parent line as is
+                updatedLines.push(branchParentLine);
+                // Add the extra parentheses on a new line without indentation
+                updatedLines.push(')'.repeat(extraClosingParens));
+            }
+        } else {
+            // This line doesn't contain the relation, but is still part of the parent structure
+            updatedLines.push(branchParentLine);
+            // Add closing parentheses at the same indentation as the branch parent
+            const parentIndent = branchParentLine.match(/^\s*/)[0];
+            updatedLines.push(parentIndent + ')'.repeat(extraClosingParens));
+        }
+    } else {
+        // No extra parentheses needed, just add the parent line
+        updatedLines.push(branchParentLine);
+    }
+    
+    // Skip the branch lines (already handled)
+    
+    // Process all lines after the branch, skipping the branch lines
+    for (let i = branchEndLineIndex + 1; i < lines.length; i++) {
+        // If we already handled the extra parentheses, just add the remaining lines
+        updatedLines.push(lines[i]);
+    }
+    
+    // Step 4: Determine where to insert the branch in the target node
+    // Find the current index of the target node in our updated lines
+    const updatedTargetIndex = updatedLines.findIndex(line => nodePattern.test(line));
+    
+    if (updatedTargetIndex === -1) {
+        showNotification('Error: Lost target node during editing', 'error');
+        return;
+    }
+    
+    const targetLine = updatedLines[updatedTargetIndex];
+    
+    // Check if the target node line has a closing parenthesis
+    const hasClosingParen = targetLine.includes(')');
+    
+    if (hasClosingParen) {
+        // Get the content of the node before the closing parenthesis
+        const lastClosingParenPos = targetLine.lastIndexOf(')');
+        const nodeContent = targetLine.substring(0, lastClosingParenPos);
+        // Get any content after the last closing parenthesis
+        const remainingContent = targetLine.substring(lastClosingParenPos);
+        
+        // Update the target node line
+        updatedLines[updatedTargetIndex] = nodeContent;
+        
+        // Insert the formatted branch after the target node
+        updatedLines.splice(updatedTargetIndex + 1, 0, ...formattedBranch);
+        
+        // Add the closing parenthesis back to the last branch line
+        const lastInsertedIndex = updatedTargetIndex + formattedBranch.length;
+        updatedLines[lastInsertedIndex] = updatedLines[lastInsertedIndex] + remainingContent;
+    } else {
+        // If no closing parenthesis, simply insert after the node line
+        updatedLines.splice(updatedTargetIndex + 1, 0, ...formattedBranch);
+    }
+    
+    // Consolidate lines with only closing parentheses
+    updatedLines = consolidateClosingParentheses(updatedLines);
+    
+    // Create the updated text
+    const updatedText = updatedLines.join('\n');
+    
+    // Log the result for validation
+    console.log('Final text length:', updatedText.length);
     
     // Update the actual annotation display
     annotationElement.textContent = updatedText;
@@ -1631,4 +1944,135 @@ function remapVariables(branchContent, destinationText) {
     }
     
     return remappedContent;
+}
+
+// Function to ensure we extract only matched parentheses in a branch
+function balanceParentheses(text) {
+    // Count opening and closing parentheses
+    const openCount = (text.match(/\(/g) || []).length;
+    const closeCount = (text.match(/\)/g) || []).length;
+    
+    console.log(`Initial parenthesis balance - open: ${openCount}, close: ${closeCount}`);
+    
+    // If balanced, return original text
+    if (openCount === closeCount) {
+        return { 
+            text: text, 
+            balanced: true,
+            extraClosing: 0
+        };
+    }
+    
+    // Case 1: Too many closing parentheses - common when extracting a branch
+    if (closeCount > openCount) {
+        let excess = closeCount - openCount;
+        
+        // First, try to identify where the extra closing parentheses are
+        const lines = text.split('\n');
+        let updatedLines = [];
+        let hasProcessed = false;
+        
+        // Check if the last line has just closing parentheses
+        if (lines.length > 0 && lines[lines.length - 1].trim().match(/^\)+$/)) {
+            const lastLine = lines[lines.length - 1];
+            const closingCount = (lastLine.match(/\)/g) || []).length;
+            
+            if (closingCount <= excess) {
+                // We can just remove this entire line
+                updatedLines = lines.slice(0, -1);
+                excess -= closingCount;
+                hasProcessed = true;
+            } else {
+                // We need to keep some of the closing parentheses
+                const keepCount = closingCount - excess;
+                const trimmedLine = lastLine.trim();
+                const indentation = lastLine.match(/^\s*/)[0];
+                updatedLines = lines.slice(0, -1);
+                
+                // Add the remaining closing parentheses to the end of the previous line
+                if (updatedLines.length > 0) {
+                    const lastUpdatedLine = updatedLines[updatedLines.length - 1];
+                    updatedLines[updatedLines.length - 1] = lastUpdatedLine.trimEnd() + trimmedLine.substring(0, keepCount);
+                } else {
+                    // If there's no previous line, keep them as is
+                    updatedLines.push(indentation + trimmedLine.substring(0, keepCount));
+                }
+                
+                excess = 0;
+                hasProcessed = true;
+            }
+        }
+        
+        // If we still have excess closing parentheses, look at the content more carefully
+        if (!hasProcessed || excess > 0) {
+            // Handle excess by finding trailing parentheses in each line
+            updatedLines = [];
+            
+            for (let i = 0; i < lines.length && excess > 0; i++) {
+                let line = lines[i];
+                
+                // If line ends with closing parentheses, check if they are excess
+                if (line.trimRight().endsWith(')')) {
+                    const trimmed = line.trimRight();
+                    const trailingParens = trimmed.match(/\)+$/);
+                    
+                    if (trailingParens) {
+                        const trailingCount = trailingParens[0].length;
+                        const removeCount = Math.min(excess, trailingCount);
+                        
+                        if (removeCount > 0 && removeCount === trailingCount && trailingCount === trimmed.length) {
+                            // The entire line is just closing parentheses, skip it
+                            excess -= removeCount;
+                            continue;
+                        } else if (removeCount > 0) {
+                            // Remove some closing parentheses from the end
+                            line = line.substring(0, line.lastIndexOf(')') - (removeCount - 1));
+                            excess -= removeCount;
+                        }
+                    }
+                }
+                
+                updatedLines.push(line);
+            }
+            
+            // Add any remaining lines
+            if (updatedLines.length < lines.length) {
+                updatedLines = updatedLines.concat(lines.slice(updatedLines.length));
+            }
+        }
+        
+        // Do one final pass to consolidate any lines with only closing parentheses
+        updatedLines = consolidateClosingParentheses(updatedLines);
+        
+        const result = updatedLines.join('\n');
+        
+        // Final check - ensure we've removed the right number of closing parentheses
+        const newCloseCount = (result.match(/\)/g) || []).length;
+        console.log(`After balancing: open=${openCount}, close=${newCloseCount}`);
+        
+        return { 
+            text: result, 
+            balanced: true,
+            extraClosing: closeCount - openCount
+        };
+    }
+    
+    // Case 2: Too many opening parentheses - rare but possible
+    if (openCount > closeCount) {
+        // This is a rare case and would require us to find matching closing parentheses
+        // from the rest of the document, which is complex. For now, we leave it unbalanced.
+        console.warn('Extracted branch has more opening parentheses than closing ones.');
+        return { 
+            text: text, 
+            balanced: false,
+            extraClosing: 0
+        };
+    }
+    
+    // Should never reach here, but just in case
+    return { 
+        text: text, 
+        balanced: false,
+        extraClosing: 0
+    };
 }

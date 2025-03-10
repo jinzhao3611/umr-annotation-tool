@@ -197,7 +197,7 @@ def handle_file_upload(form_file, current_project_id):
         
         # Parse file content
         try:
-            sents, sent_annots, doc_annots, aligns = parse_umr_file(content)
+            _, sents, sent_annots, doc_annots, aligns = parse_umr_file(content)
             logger.info(f"File parsed successfully:")
             logger.info(f"Number of sentences: {len(sents)}")
             logger.info(f"Number of sent_annots: {len(sent_annots) if sent_annots else 0}")
@@ -212,7 +212,7 @@ def handle_file_upload(form_file, current_project_id):
             logger.error("Full traceback:")
             logger.error(traceback.format_exc())
             flash('Error parsing file content', 'danger')
-            return redirect(request.url)
+            return None, None, None  # Return None values instead of redirect
         
         # Create document in database
         logger.info("Starting to create document in database")
@@ -231,7 +231,7 @@ def handle_file_upload(form_file, current_project_id):
     except Exception as e:
         logger.error(f"Error reading file: {str(e)}")
         flash('Error reading file', 'danger')
-        return redirect(request.url)
+        return None, None, None  # Return None values instead of redirect
 
 
 @main.route("/upload_document/<int:current_project_id>", methods=['GET', 'POST'])
@@ -267,6 +267,13 @@ def upload_document(current_project_id):
                 
             logger.info("About to call handle_file_upload")
             sent_annots, doc_annots, doc_id = handle_file_upload(form_file, current_project_id)
+            logger.info("handle_file_upload returned")
+            
+            # Check if handle_file_upload failed
+            if sent_annots is None or doc_id is None:
+                logger.error("File upload processing failed")
+                return redirect(request.url)
+                
             logger.info("handle_file_upload succeeded")
             flash('Your file has been uploaded!', 'success')
             return redirect(url_for('users.project', project_id=current_project_id))

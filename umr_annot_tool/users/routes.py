@@ -1250,7 +1250,7 @@ def override_document(project_id, doc_id):
             
             # Then, parse the content
             try:
-                sentences, sent_annots, doc_annot, alignment = parse_umr_file(file_content)
+                _, sentences, sent_annots, doc_annot, alignment = parse_umr_file(file_content)
                 
                 print(f"Parsed data:")
                 print(f"Number of sentences: {len(sentences)}")

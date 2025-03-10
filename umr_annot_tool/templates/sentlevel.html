@@ -19,10 +19,10 @@
     <script src="{{ url_for('static', filename='scripts/sentLevel.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/penmanString2umrDict.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/umrDict2penmanString.js') }}"></script>
-    <!-- Load relation editor script after main application scripts -->
-    <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
-    <!-- Load temporary branch storage script -->
+    <!-- Load temporary branch storage script first -->
     <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
+    <!-- Load relation editor script after branch storage script -->
+    <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
     <!-- Load Underscore.js before lemmatizer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
     <!-- Load lemmatizer library -->
