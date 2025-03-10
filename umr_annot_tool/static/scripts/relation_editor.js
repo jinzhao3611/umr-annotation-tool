@@ -1740,12 +1740,12 @@ function extractUnmatchedParentheses(text) {
     // Log the unmatched parentheses for debugging
     if (unmatchedOpen.length > 0) {
         let openPositions = unmatchedOpen.map(pos => pos).join(', ');
-        console.log(`Found ${unmatchedOpen.length} unmatched opening parentheses at positions: ${openPositions}`);
+        console.log(`Found ${unmatchedOpen.length} unmatched opening parentheses at positions: ${openPositions} (will not preserve these)`);
     }
     
     if (unmatchedClose.length > 0) {
         let closePositions = unmatchedClose.map(pos => pos).join(', ');
-        console.log(`Found ${unmatchedClose.length} unmatched closing parentheses at positions: ${closePositions}`);
+        console.log(`Found ${unmatchedClose.length} unmatched closing parentheses at positions: ${closePositions} (will preserve these)`);
     }
     
     // Special handling for cases with multiple unmatched closing parentheses in a row
@@ -1763,11 +1763,11 @@ function extractUnmatchedParentheses(text) {
         }
     }
     
-    // Build a string with just the unmatched parentheses in their original order
-    if (unmatchedOpen.length > 0 || unmatchedClose.length > 0) {
-        // Create an array marking all positions that have unmatched parentheses
+    // Build a string with just the unmatched CLOSING parentheses in their original order
+    if (unmatchedClose.length > 0) {
+        // Create an array marking positions that have unmatched closing parentheses
         let positions = new Array(text.length).fill(false);
-        unmatchedOpen.forEach(i => positions[i] = true);
+        // Only mark the closing parentheses, not the opening ones
         unmatchedClose.forEach(i => positions[i] = true);
         
         // Extract just those characters
@@ -1777,7 +1777,7 @@ function extractUnmatchedParentheses(text) {
             }
         }
         
-        console.log(`Preserving unmatched parentheses: '${result}'`);
+        console.log(`Preserving unmatched closing parentheses: '${result}'`);
     }
     
     return result;
