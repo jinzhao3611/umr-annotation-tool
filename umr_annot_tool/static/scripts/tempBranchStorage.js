@@ -344,90 +344,137 @@ window.storeBranchTemporarily = function(relationSpan) {
     
     // Find the position of the relation in the original text
     const relationText = relationSpan.textContent;
-    console.log('Looking for relation text:', relationText);
+    console.log('Looking for relation text to save temporarily:', relationText);
+
+    // Get ALL relation spans in the document
+    const allRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'));
     
-    // Try to find the relation text in the original text
-    let relationMatches = findAllMatches(originalText, relationText);
+    // Find the exact index of the clicked span among all relation spans
+    const spanIndex = allRelationSpans.indexOf(relationSpan);
     
-    // If no matches found, try with trimmed text
-    if (relationMatches.length === 0) {
-        const trimmedRelationText = relationText.trim();
-        console.log('Trying with trimmed relation text:', trimmedRelationText);
-        relationMatches = findAllMatches(originalText, trimmedRelationText);
-    }
-    
-    // If still no matches, try to get parent element content
-    if (relationMatches.length === 0) {
-        console.log('No matches found for relation text, trying to get the parent branch');
-        
-        // Get the entire branch text from the DOM
-        let currentNode = relationSpan;
-        while (currentNode && currentNode.parentElement && currentNode.parentElement !== annotationElement) {
-            currentNode = currentNode.parentElement;
-        }
-        
-        if (currentNode && currentNode.textContent) {
-            // Try to find a unique line in the text that contains our relation
-            const lines = originalText.split('\n');
-            let bestLine = null;
-            let bestLineIndex = -1;
-            
-            // Find a line that contains our relation text
-            for (let i = 0; i < lines.length; i++) {
-                if (lines[i].includes(relationText)) {
-                    bestLine = lines[i];
-                    bestLineIndex = i;
-                    break;
-                }
-            }
-            
-            if (bestLineIndex >= 0) {
-                // Calculate position in original text
-                const lineStartPos = originalText.indexOf(bestLine);
-                if (lineStartPos >= 0) {
-                    // Use the position of the line as our relation position
-                    const relationPos = lineStartPos + bestLine.indexOf(relationText);
-                    
-                    // Get branch boundaries from this position
-                    const branchInfo = getBranchBoundaries(originalText, relationPos);
-                    
-                    if (branchInfo) {
-                        // Extract the branch text
-                        let branchText = branchInfo.branchText;
-                        
-                        // Normalize the indentation before storage
-                        branchText = normalizeIndentation(branchText);
-                        
-                        // Prompt for optional description
-                        const description = prompt('Add a description for this branch (optional):');
-                        
-                        // Add to temporary storage
-                        addTempBranch(branchText, description);
-                        return;
-                    }
-                }
-            }
-        }
-        
-        // If we still haven't found it, show error and return
-        console.error('Could not locate the relation in the text');
-        showNotification('Error: Could not locate the branch to store', 'error');
+    if (spanIndex === -1) {
+        console.error('Could not determine relation span index among all spans');
+        showNotification('Error: Could not identify the relation to save', 'error');
         return;
     }
     
-    // Get span index if there are multiple occurrences
-    const spanIndex = Array.from(annotationElement.querySelectorAll('.relation-span')).indexOf(relationSpan);
+    // Now count how many identical relations appear before this one in the DOM
+    // This gives us the "occurrence index" of this specific relation span
+    let occurrenceIndex = 0;
+    for (let i = 0; i < spanIndex; i++) {
+        if (allRelationSpans[i].textContent === relationText) {
+            occurrenceIndex++;
+        }
+    }
     
-    // Use the correct match based on span index or default to the first match
-    const relationPos = (spanIndex >= 0 && spanIndex < relationMatches.length) 
-        ? relationMatches[spanIndex] 
-        : relationMatches[0];
+    console.log(`This is span #${spanIndex} overall, and occurrence #${occurrenceIndex} of relation "${relationText}"`);
     
-    // Log the position found
-    console.log('Relation position found:', relationPos);
+    // Get parent element to determine context
+    let parentElement = relationSpan.parentElement;
+    let context = parentElement ? parentElement.textContent.trim() : '';
+    console.log(`Context for this span: "${context.substring(0, 50)}..."`);
     
-    // Determine the branch boundaries
-    const branchInfo = getBranchBoundaries(originalText, relationPos);
+    // Count total occurrences of this relation in the DOM
+    const totalOccurrences = allRelationSpans.filter(span => span.textContent === relationText).length;
+    console.log(`Total occurrences of "${relationText}" in the DOM: ${totalOccurrences}`);
+    
+    // Check if this relation is unique in the tree
+    const isUnique = totalOccurrences === 1;
+    console.log(`Is "${relationText}" unique in the tree? ${isUnique}`);
+    
+    // Split the text into lines for a more reliable approach
+    const lines = originalText.split('\n');
+    
+    // Find all occurrences of this relation text in the original text
+    const occurrences = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const matchIndex = line.indexOf(relationText);
+        
+        if (matchIndex !== -1) {
+            // Calculate position in the full text
+            const position = calculatePositionInText(lines, i, relationText);
+            
+            // Get indentation and some context
+            const indent = line.search(/\S/);
+            const lineContext = line.trim();
+            
+            occurrences.push({
+                lineNum: i,
+                position: position,
+                indent: indent,
+                context: lineContext
+            });
+            
+            console.log(`Found occurrence on line ${i}: "${lineContext.substring(0, 50)}..."`);
+        }
+    }
+    
+    // Determine which occurrence to use based on the specific case
+    let selectedIndex;
+    
+    if (isUnique) {
+        // If the relation is unique, just use the first (and only) occurrence
+        selectedIndex = 0;
+        console.log(`Relation is unique, using occurrence at line ${occurrences[0].lineNum}`);
+    } else {
+        // For non-unique relations, we need to be more careful
+        
+        // If we have exactly the right number of occurrences
+        if (occurrences.length === totalOccurrences) {
+            // Use the occurrence index we calculated from DOM position
+            selectedIndex = occurrenceIndex;
+            console.log(`Using DOM-based occurrence index: ${occurrenceIndex}`);
+        } 
+        // If we have more text occurrences than DOM occurrences, use a DOM-based approach
+        else if (occurrences.length > totalOccurrences) {
+            // Try to match based on context
+            let bestMatch = -1;
+            let bestScore = -1;
+            
+            for (let i = 0; i < occurrences.length; i++) {
+                // Calculate how well this occurrence's context matches our span's context
+                const occurrenceContext = occurrences[i].context;
+                const matchScore = calculateContextMatch(context, occurrenceContext);
+                
+                console.log(`Occurrence ${i} context match score: ${matchScore}`);
+                
+                if (matchScore > bestScore) {
+                    bestScore = matchScore;
+                    bestMatch = i;
+                }
+            }
+            
+            if (bestMatch !== -1) {
+                selectedIndex = bestMatch;
+                console.log(`Using best context match: occurrence ${bestMatch} (score: ${bestScore})`);
+            } else {
+                // If all else fails, use the occurrence index, but ensure it's in bounds
+                selectedIndex = Math.min(occurrenceIndex, occurrences.length - 1);
+                console.log(`Using bounded occurrence index: ${selectedIndex}`);
+            }
+        } 
+        // Otherwise use occurrence index, bounded by available occurrences
+        else {
+            selectedIndex = Math.min(occurrenceIndex, occurrences.length - 1);
+            console.log(`Using bounded occurrence index: ${selectedIndex}`);
+        }
+    }
+    
+    // Ensure the selected index is valid
+    if (selectedIndex < 0 || selectedIndex >= occurrences.length) {
+        console.error(`Invalid occurrence index: ${selectedIndex} (out of ${occurrences.length})`);
+        showNotification('Error: Could not determine which branch to save', 'error');
+        return;
+    }
+    
+    // Get the selected occurrence
+    const selectedOccurrence = occurrences[selectedIndex];
+    console.log(`Selected occurrence at line ${selectedOccurrence.lineNum}: "${selectedOccurrence.context.substring(0, 30)}..."`);
+    
+    // Get branch boundaries from this position
+    const branchInfo = getBranchBoundaries(originalText, selectedOccurrence.position);
     
     if (!branchInfo) {
         console.error('Could not determine branch boundaries');
@@ -438,6 +485,11 @@ window.storeBranchTemporarily = function(relationSpan) {
     // Extract the branch text
     let branchText = branchInfo.branchText;
     
+    // Debug: Show what we're about to save
+    console.log(`Branch to save: 
+${branchText}
+------`);
+    
     // Normalize the indentation before storage
     branchText = normalizeIndentation(branchText);
     
@@ -447,6 +499,42 @@ window.storeBranchTemporarily = function(relationSpan) {
     // Add to temporary storage
     addTempBranch(branchText, description);
 };
+
+// Helper function to calculate how well two context strings match
+function calculateContextMatch(contextA, contextB) {
+    if (!contextA || !contextB) return 0;
+    
+    // Split into words and filter out short words
+    const wordsA = contextA.split(/\s+/).filter(w => w.length > 2);
+    const wordsB = contextB.split(/\s+/).filter(w => w.length > 2);
+    
+    // Count matching words
+    let matchCount = 0;
+    for (const wordA of wordsA) {
+        if (wordsB.some(wordB => wordB.includes(wordA) || wordA.includes(wordB))) {
+            matchCount++;
+        }
+    }
+    
+    // Calculate a normalized score (0-100)
+    const maxPossibleMatches = Math.min(wordsA.length, wordsB.length);
+    return maxPossibleMatches > 0 ? (matchCount / maxPossibleMatches) * 100 : 0;
+}
+
+// Helper function to calculate position of text in a specific line
+function calculatePositionInText(lines, lineIndex, textToFind) {
+    let position = 0;
+    
+    // Add up lengths of all previous lines
+    for (let i = 0; i < lineIndex; i++) {
+        position += lines[i].length + 1; // +1 for newline
+    }
+    
+    // Add position within the line
+    position += lines[lineIndex].indexOf(textToFind);
+    
+    return position;
+}
 
 // Function to normalize indentation in a branch
 function normalizeIndentation(branchText) {
@@ -803,7 +891,7 @@ function addBranchToNode(variable, branchContent, customElement) {
     // Only remap variables if this is not an internal operation
     let processedBranchContent = branchContent;
     if (!customElement) {
-        // First, remap variables in the branch to avoid conflicts
+    // First, remap variables in the branch to avoid conflicts
         processedBranchContent = remapVariables(branchContent, originalText);
     }
     
@@ -812,7 +900,7 @@ function addBranchToNode(variable, branchContent, customElement) {
     
     if (branchLines.length === 0 || branchLines[0].trim() === '') {
         if (!customElement) {
-            showNotification('No content to add', 'error');
+        showNotification('No content to add', 'error');
         }
         return; // Silently return for internal operations
     }
@@ -878,29 +966,29 @@ function addBranchToNode(variable, branchContent, customElement) {
     
     // Only perform additional operations if this is not an internal operation
     if (!customElement) {
-        // Completely reinitialize the editor
-        reinitializeEditor(annotationElement);
-        
-        // Find the new variables we've added to show in the reminder
-        const newBranchText = formattedBranch.join('\n');
-        const newVariables = extractNewVariables(newBranchText);
-        const variableList = newVariables.length > 0 ? 
-              ` (${newVariables.join(', ')})` : '';
-        
-        // Show success message
-        showNotification(`Branch added to ${variable}`, 'success');
+    // Completely reinitialize the editor
+    reinitializeEditor(annotationElement);
+    
+    // Find the new variables we've added to show in the reminder
+    const newBranchText = formattedBranch.join('\n');
+    const newVariables = extractNewVariables(newBranchText);
+    const variableList = newVariables.length > 0 ? 
+          ` (${newVariables.join(', ')})` : '';
+    
+    // Show success message
+    showNotification(`Branch added to ${variable}`, 'success');
         
         // Save the changes to the database
         saveTemporaryBranchToDatabase(updatedText, processedBranchContent, variable);
-        
-        // Show alignment reminder after a short delay
-        setTimeout(() => {
-            showNotification(
-                `⚠️ Remember to manually edit alignments for the new variables${variableList}`, 
-                'info', 
-                8000 // Show for 8 seconds
-            );
-        }, 1500); // Delay to show after the success message
+    
+    // Show alignment reminder after a short delay
+    setTimeout(() => {
+        showNotification(
+            `⚠️ Remember to manually edit alignments for the new variables${variableList}`, 
+            'info', 
+            8000 // Show for 8 seconds
+        );
+    }, 1500); // Delay to show after the success message
     }
 }
 
@@ -1086,7 +1174,7 @@ function extractBranchFromRelation(relationSpan, annotationElement) {
         
         if (matchingLines.length === 0) {
             console.error('Fallback failed: Could not find line containing relation');
-            return null;
+        return null;
         }
         
         // Get the appropriate line based on relativeSpanIndex
@@ -1102,103 +1190,54 @@ function extractBranchFromRelation(relationSpan, annotationElement) {
         
         // Find the position of the relation within the line
         relationPos += lines[lineIndex].indexOf(relationText);
-        
-        // Get the branch boundaries
-        const branchInfo = getBranchBoundaries(originalText, relationPos);
-        
-        if (!branchInfo) {
-            console.error('Could not determine branch boundaries');
-            return null;
+                    
+                    // Get branch boundaries from this position
+                    const branchInfo = getBranchBoundaries(originalText, relationPos);
+                    
+                    if (branchInfo) {
+                        // Extract the branch text
+                        let branchText = branchInfo.branchText;
+                        
+                        // Normalize the indentation before storage
+                        branchText = normalizeIndentation(branchText);
+                        
+                        // Prompt for optional description
+                        const description = prompt('Add a description for this branch (optional):');
+                        
+                        // Add to temporary storage
+                        addTempBranch(branchText, description);
+                        return;
+        } else {
+            console.error('Fallback failed: Could not determine branch boundaries');
+            showNotification('Error: Could not determine branch boundaries', 'error');
+            return;
         }
-        
-        // Extract parent node information if available
-        let parentNodeInfo = null;
-        if (parentRelationSpan) {
-            const parentRelationText = parentRelationSpan.textContent;
-            const parentRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
-                                       .filter(span => span.textContent === parentRelationText);
-            const parentRelativeIndex = parentRelationSpans.indexOf(parentRelationSpan);
-            
-            if (parentRelativeIndex !== -1) {
-                // Try to find the parent relation position
-                const parentRegex = new RegExp(escapeRegExp(parentRelationText), 'g');
-                const parentMatches = [];
-                
-                let parentMatch;
-                while ((parentMatch = parentRegex.exec(originalText)) !== null) {
-                    parentMatches.push(parentMatch.index);
-                }
-                
-                if (parentMatches.length > parentRelativeIndex) {
-                    const parentPos = parentMatches[parentRelativeIndex];
-                    parentNodeInfo = {
-                        text: parentRelationText,
-                        position: parentPos
-                    };
-                }
-            }
-        }
-        
-        // Return all the necessary information
-        return {
-            relationText: relationText,
-            branchText: branchInfo.branchText,
-            branchStart: branchInfo.start,
-            branchEnd: branchInfo.end,
-            parentInfo: parentNodeInfo,
-            relationSpan: relationSpan
-        };
     }
     
     // Get the position of this occurrence of the relation
     const relationPos = relationMatches[relativeSpanIndex];
     
-    // Get the branch boundaries
+    // Determine the branch boundaries
     const branchInfo = getBranchBoundaries(originalText, relationPos);
     
     if (!branchInfo) {
         console.error('Could not determine branch boundaries');
-        return null;
+        showNotification('Error: Could not determine branch boundaries', 'error');
+        return;
     }
     
-    // Extract parent node information if available
-    let parentNodeInfo = null;
-    if (parentRelationSpan) {
-        const parentRelationText = parentRelationSpan.textContent;
-        const parentRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
-                                   .filter(span => span.textContent === parentRelationText);
-        const parentRelativeIndex = parentRelationSpans.indexOf(parentRelationSpan);
-        
-        if (parentRelativeIndex !== -1) {
-            // Try to find the parent relation position
-            const parentRegex = new RegExp(escapeRegExp(parentRelationText), 'g');
-            const parentMatches = [];
-            
-            let parentMatch;
-            while ((parentMatch = parentRegex.exec(originalText)) !== null) {
-                parentMatches.push(parentMatch.index);
-            }
-            
-            if (parentMatches.length > parentRelativeIndex) {
-                const parentPos = parentMatches[parentRelativeIndex];
-                parentNodeInfo = {
-                    text: parentRelationText,
-                    position: parentPos
-                };
-            }
-        }
-    }
+    // Extract the branch text
+    let branchText = branchInfo.branchText;
     
-    // Return all the necessary information
-    return {
-        relationText: relationText,
-        branchText: branchInfo.branchText,
-        branchStart: branchInfo.start,
-        branchEnd: branchInfo.end,
-        parentInfo: parentNodeInfo,
-        relationSpan: relationSpan
-    };
-}
+    // Normalize the indentation before storage
+    branchText = normalizeIndentation(branchText);
+    
+    // Prompt for optional description
+    const description = prompt('Add a description for this branch (optional):');
+    
+    // Add to temporary storage
+    addTempBranch(branchText, description);
+};
 
 // Show dialog to select where to move the branch
 function showMoveBranchDialog(branchInfo) {
@@ -1442,47 +1481,47 @@ function tryFallbackSave(updatedAnnotation) {
     });
     
     // Try to find and click a save button
-    const saveSelectors = [
-        '#save-btn', 
-        '#save_button',
-        '#save',
-        '#submit-btn',
-        '#submit_button',
-        '#submit',
-        'button[type="submit"]', 
-        'input[type="submit"]'
-    ];
-    
-    let saveButtonFound = false;
-    
-    // Try each selector
-    for (const selector of saveSelectors) {
-        const saveButton = document.querySelector(selector);
-        if (saveButton) {
-            console.log(`Found save button with selector: ${selector}`);
-            saveButton.click();
-            saveButtonFound = true;
-            showNotification('Changes saved via button click', 'success');
-            break;
-        }
-    }
-    
-    // If no save button found, try to find buttons with "save" or "submit" text
-    if (!saveButtonFound) {
-        const allButtons = document.querySelectorAll('button');
-        for (const button of allButtons) {
-            const buttonText = button.textContent.toLowerCase();
-            if (buttonText.includes('save') || buttonText.includes('submit')) {
-                console.log('Found button with save/submit text:', buttonText);
-                button.click();
+        const saveSelectors = [
+            '#save-btn', 
+            '#save_button',
+            '#save',
+            '#submit-btn',
+            '#submit_button',
+            '#submit',
+            'button[type="submit"]', 
+            'input[type="submit"]'
+        ];
+        
+        let saveButtonFound = false;
+        
+        // Try each selector
+        for (const selector of saveSelectors) {
+            const saveButton = document.querySelector(selector);
+            if (saveButton) {
+                console.log(`Found save button with selector: ${selector}`);
+                saveButton.click();
                 saveButtonFound = true;
-                showNotification('Changes saved via text-matched button', 'success');
+            showNotification('Changes saved via button click', 'success');
                 break;
             }
         }
-    }
-    
-    if (!saveButtonFound) {
+        
+        // If no save button found, try to find buttons with "save" or "submit" text
+        if (!saveButtonFound) {
+            const allButtons = document.querySelectorAll('button');
+            for (const button of allButtons) {
+                const buttonText = button.textContent.toLowerCase();
+                if (buttonText.includes('save') || buttonText.includes('submit')) {
+                    console.log('Found button with save/submit text:', buttonText);
+                    button.click();
+                    saveButtonFound = true;
+                showNotification('Changes saved via text-matched button', 'success');
+                    break;
+                }
+            }
+        }
+        
+        if (!saveButtonFound) {
         console.warn('No save button found');
         showNotification('Please save your changes manually', 'warning', 8000);
     }
