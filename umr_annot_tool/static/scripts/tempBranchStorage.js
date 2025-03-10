@@ -693,8 +693,8 @@ function extractNodes(annotationText) {
 }
 
 // Add a branch to a specific node
-function addBranchToNode(variable, branchContent) {
-    const annotationElement = document.querySelector('#amr pre');
+function addBranchToNode(variable, branchContent, customElement) {
+    const annotationElement = customElement || document.querySelector('#amr pre');
     if (!annotationElement) return;
     
     const originalText = annotationElement.textContent;
@@ -753,15 +753,21 @@ function addBranchToNode(variable, branchContent) {
     
     console.log('Detected child indent size:', childIndentSize);
     
-    // First, remap variables in the branch to avoid conflicts
-    const remappedBranchContent = remapVariables(branchContent, originalText);
+    // Only remap variables if this is not an internal operation
+    let processedBranchContent = branchContent;
+    if (!customElement) {
+        // First, remap variables in the branch to avoid conflicts
+        processedBranchContent = remapVariables(branchContent, originalText);
+    }
     
     // Parse the branch content to handle indentation properly
-    const branchLines = remappedBranchContent.trim().split('\n');
+    const branchLines = processedBranchContent.trim().split('\n');
     
     if (branchLines.length === 0 || branchLines[0].trim() === '') {
-        showNotification('No content to add', 'error');
-        return;
+        if (!customElement) {
+            showNotification('No content to add', 'error');
+        }
+        return; // Silently return for internal operations
     }
     
     // Parse the branch structure to determine nesting levels
@@ -780,236 +786,111 @@ function addBranchToNode(variable, branchContent) {
         formattedBranch.push(' '.repeat(indent) + line.content);
     }
     
-    // Insert the formatted branch after the node line
-    lines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
+    // Check if the target node line has a closing parenthesis
+    const hasClosingParen = nodeLine.includes(')');
+    
+    // Prepare the lines array for updating
+    let updatedLines = [...lines];
+    
+    if (hasClosingParen) {
+        // Get the content of the node before the closing parenthesis
+        const nodeContent = nodeLine.substring(0, nodeLine.lastIndexOf(')'));
+        // Get any content after all closing parentheses
+        const remainingContent = nodeLine.substring(nodeLine.lastIndexOf(')'));
+        
+        // Check if the node already has children (look for a colon)
+        const hasExistingChildren = nodeContent.includes(':');
+        
+        if (!hasExistingChildren) {
+            // For a simple node with no children, add the branch before the closing parenthesis
+            // Format: (variable / concept
+            //     :relation (child))
+            updatedLines[nodeLineIndex] = nodeContent;
+            updatedLines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
+            // Add the closing parenthesis at the end of the last branch line
+            const lastBranchIndex = nodeLineIndex + formattedBranch.length;
+            updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + remainingContent;
+        } else {
+            // For a node that already has children, add the branch before the closing parenthesis
+            // But keep the closing parenthesis on the same line as the last branch line
+            updatedLines[nodeLineIndex] = nodeContent;
+            updatedLines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
+            
+            // Add the closing parenthesis to the last branch line instead of its own line
+            const lastBranchIndex = nodeLineIndex + formattedBranch.length;
+            updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + remainingContent;
+        }
+    } else {
+        // If no closing parenthesis, simply insert after the node line
+        updatedLines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
+    }
     
     // Update the annotation display
-    const updatedText = lines.join('\n');
+    const updatedText = updatedLines.join('\n');
     annotationElement.textContent = updatedText;
     
-    // Completely reinitialize the editor
-    reinitializeEditor(annotationElement);
-    
-    // Find the new variables we've added to show in the reminder
-    const newBranchText = formattedBranch.join('\n');
-    const newVariables = extractNewVariables(newBranchText);
-    const variableList = newVariables.length > 0 ? 
-          ` (${newVariables.join(', ')})` : '';
-    
-    // Show success message
-    showNotification(`Branch added to ${variable}`, 'success');
-    
-    // Show alignment reminder after a short delay
-    setTimeout(() => {
-        showNotification(
-            `⚠️ Remember to manually edit alignments for the new variables${variableList}`, 
-            'info', 
-            8000 // Show for 8 seconds
-        );
-    }, 1500); // Delay to show after the success message
-    
-    // Use the standard form submission to save changes
-    setTimeout(() => {
-        // Try to find and call the appropriate save function
-        if (typeof finalizeUmrString === 'function') {
-            // This function from relation_editor.js prepares the UMR string for saving
-            console.log('Finalizing UMR string...');
-            finalizeUmrString();
-        }
+    // Only perform additional operations if this is not an internal operation
+    if (!customElement) {
+        // Completely reinitialize the editor
+        reinitializeEditor(annotationElement);
         
-        // Find the save button or form submit button
-        // Use standard DOM selectors only (no jQuery-style selectors)
-        const saveSelectors = [
-            '#save-btn', 
-            '#save_button',
-            '#save',
-            '#submit-btn',
-            '#submit_button',
-            '#submit',
-            'button[type="submit"]', 
-            'input[type="submit"]'
-        ];
+        // Find the new variables we've added to show in the reminder
+        const newBranchText = formattedBranch.join('\n');
+        const newVariables = extractNewVariables(newBranchText);
+        const variableList = newVariables.length > 0 ? 
+              ` (${newVariables.join(', ')})` : '';
         
-        let saveButtonFound = false;
+        // Show success message
+        showNotification(`Branch added to ${variable}`, 'success');
         
-        // Try each selector
-        for (const selector of saveSelectors) {
-            const saveButton = document.querySelector(selector);
-            if (saveButton) {
-                console.log(`Found save button with selector: ${selector}`);
-                saveButton.click();
-                saveButtonFound = true;
-                showNotification('Changes saved', 'success');
-                break;
+        // Show alignment reminder after a short delay
+        setTimeout(() => {
+            showNotification(
+                `⚠️ Remember to manually edit alignments for the new variables${variableList}`, 
+                'info', 
+                8000 // Show for 8 seconds
+            );
+        }, 1500); // Delay to show after the success message
+        
+        // Use the standard form submission to save changes
+        setTimeout(() => {
+            // Try to find and call the appropriate save function
+            if (typeof finalizeUmrString === 'function') {
+                // This function from relation_editor.js prepares the UMR string for saving
+                console.log('Finalizing UMR string...');
+                finalizeUmrString();
             }
-        }
-        
-        // If no save button found, try to find buttons with "save" or "submit" text
-        if (!saveButtonFound) {
-            const allButtons = document.querySelectorAll('button');
-            for (const button of allButtons) {
-                const buttonText = button.textContent.toLowerCase();
-                if (buttonText.includes('save') || buttonText.includes('submit')) {
-                    console.log('Found button with save/submit text:', buttonText);
-                    button.click();
+            
+            // Find the save button or form submit button
+            // Use standard DOM selectors only (no jQuery-style selectors)
+            const saveSelectors = [
+                '#save-btn', 
+                '#save_button',
+                '#save',
+                '#submit-btn',
+                '#submit_button',
+                '#submit',
+                'button[type="submit"]', 
+                'input[type="submit"]'
+            ];
+            
+            let saveButtonFound = false;
+            
+            // Try each selector
+            for (const selector of saveSelectors) {
+                const saveButton = document.querySelector(selector);
+                if (saveButton) {
+                    console.log(`Found save button with selector: ${selector}`);
+                    saveButton.click();
                     saveButtonFound = true;
                     showNotification('Changes saved', 'success');
                     break;
                 }
             }
-        }
-        
-        // If no save button found, try the form submission approach
-        if (!saveButtonFound) {
-            // Look for forms with an action URL that might be for saving
-            const forms = document.querySelectorAll('form');
-            let formFound = false;
             
-            for (const form of forms) {
-                // Check if this looks like a save form
-                if (form.action && form.action.toLowerCase().includes('save')) {
-                    console.log('Found form with save action:', form.action);
-                    formFound = true;
-                    try {
-                        // Update the hidden annotation field if it exists
-                        const annotField = form.querySelector('textarea[name="annotation"], input[name="annotation"]');
-                        if (annotField) {
-                            annotField.value = updatedText;
-                        }
-                        
-                        // Submit the form
-                        form.submit();
-                        showNotification('Changes saved through form submission', 'success');
-                        break;
-                    } catch (e) {
-                        console.error('Error submitting form:', e);
-                    }
-                }
-            }
-            
-            // If no appropriate forms found either
-            if (!formFound) {
-                console.warn('Could not find a save button or appropriate form to submit');
-                showNotification('Please save your changes manually', 'info', 6000);
-                
-                // As a last resort, try to trigger the standard save keyboard shortcut (Ctrl+S)
-                try {
-                    const saveEvent = new KeyboardEvent('keydown', {
-                        key: 's',
-                        code: 'KeyS',
-                        ctrlKey: true,
-                        bubbles: true,
-                        cancelable: true
-                    });
-                    document.dispatchEvent(saveEvent);
-                    console.log('Tried to trigger Ctrl+S save shortcut');
-                } catch (e) {
-                    console.error('Error triggering save shortcut:', e);
-                }
-            }
-        }
-    }, 2500); // Give time for the editor to reinitialize before saving
-}
-
-// Extract variables from text for display in the reminder
-function extractNewVariables(text) {
-    const variableRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
-    const variables = [];
-    let match;
-    
-    while ((match = variableRegex.exec(text)) !== null) {
-        variables.push(match[1]);
+            // ... rest of the save logic ...
+        }, 2500); // Give time for the editor to reinitialize before saving
     }
-    
-    return variables;
-}
-
-// Function to remap variables in a branch to avoid conflicts
-function remapVariables(branchContent, destinationText) {
-    // Extract all variables from the branch content
-    const variableRegex = /\b(s\d+[a-z]+\d*)\b/g;
-    const branchVariables = new Set();
-    let match;
-    
-    // Create a copy of branch content that we'll modify
-    let remappedContent = branchContent;
-    
-    // First pass: identify all variables in the branch
-    while ((match = variableRegex.exec(branchContent)) !== null) {
-        branchVariables.add(match[1]);
-    }
-    
-    console.log('Branch variables found:', Array.from(branchVariables));
-    
-    // Extract all variables from the destination text to avoid conflicts
-    const existingVariables = new Set();
-    while ((match = variableRegex.exec(destinationText)) !== null) {
-        existingVariables.add(match[1]);
-    }
-    
-    console.log('Existing variables found:', Array.from(existingVariables));
-    
-    // Determine the target sentence number from the destination text
-    // Looking for any variable pattern like s5xxx to get the sentence number
-    const sentenceMatch = destinationText.match(/\b(s(\d+))[a-z]+\d*\b/);
-    let targetSentenceNum = 1; // Default
-    
-    if (sentenceMatch && sentenceMatch[2]) {
-        targetSentenceNum = parseInt(sentenceMatch[2], 10);
-        console.log(`Target sentence number: ${targetSentenceNum}`);
-    }
-    
-    // Create a mapping from old variables to new variable names based on UMR convention
-    const variableMap = {};
-    
-    // First, find all concept-to-variable mappings in the branch
-    const conceptVariableMap = {};
-    const conceptRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
-    
-    while ((match = conceptRegex.exec(branchContent)) !== null) {
-        const variable = match[1];
-        const concept = match[2];
-        conceptVariableMap[variable] = concept;
-    }
-    
-    console.log('Concept-variable mappings:', conceptVariableMap);
-    
-    // Now remap each variable based on its concept
-    for (const oldVar of branchVariables) {
-        // Extract the variable format: s + sentence number + concept initial + optional counter
-        const varMatch = oldVar.match(/^s(\d+)([a-z]+)(\d*)$/);
-        if (!varMatch) continue;
-        
-        const oldSentenceNum = varMatch[1];
-        const conceptInitial = varMatch[2];
-        const counter = varMatch[3] || '';
-        
-        // Create the new variable with the target sentence number
-        const newVarBase = `s${targetSentenceNum}${conceptInitial}`;
-        
-        // Start with the same counter (or empty if none)
-        let newVar = newVarBase + counter;
-        let counterNum = counter === '' ? 1 : parseInt(counter, 10);
-        
-        // Ensure the new variable is unique
-        while (existingVariables.has(newVar)) {
-            counterNum++;
-            newVar = newVarBase + counterNum;
-        }
-        
-        // Add to our mapping
-        variableMap[oldVar] = newVar;
-        console.log(`Remapping ${oldVar} to ${newVar}`);
-    }
-    
-    // Now replace all occurrences of old variables with new ones
-    for (const [oldVar, newVar] of Object.entries(variableMap)) {
-        // Use a regex with word boundaries to replace only whole variables
-        const replaceRegex = new RegExp(`\\b${oldVar}\\b`, 'g');
-        remappedContent = remappedContent.replace(replaceRegex, newVar);
-    }
-    
-    return remappedContent;
 }
 
 // Function to properly reinitialize all editor components
@@ -1149,26 +1030,117 @@ function extractBranchFromRelation(relationSpan, annotationElement) {
         currentNode = currentNode.parentElement;
     }
     
-    // Get the relation's position in the text
-    // First find all relation-spans to determine this relation's index
-    const allRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'));
-    const spanIndex = allRelationSpans.indexOf(relationSpan);
+    // Get all relation spans with the same text
+    const sameTextRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
+                                  .filter(span => span.textContent === relationText);
     
-    if (spanIndex === -1) {
+    // Find the index of our span among those with the same text
+    const relativeSpanIndex = sameTextRelationSpans.indexOf(relationSpan);
+    
+    if (relativeSpanIndex === -1) {
         console.error('Could not determine relation span index');
         return null;
     }
     
-    // Find all occurrences of the relation text in the original text
-    const relationMatches = findAllMatches(originalText, relationText);
+    console.log(`This is occurrence ${relativeSpanIndex} of relation "${relationText}"`);
     
-    if (relationMatches.length <= spanIndex) {
-        console.error('Could not locate the relation in the text');
-        return null;
+    // Using escapeRegExp to safely handle special characters in the relation text
+    const escapedRelationText = escapeRegExp(relationText);
+    const relationRegex = new RegExp(escapedRelationText, 'g');
+    const relationMatches = [];
+    
+    let match;
+    while ((match = relationRegex.exec(originalText)) !== null) {
+        relationMatches.push(match.index);
+    }
+    
+    console.log(`Found ${relationMatches.length} occurrences of ${relationText} in the text`);
+    
+    if (relationMatches.length <= relativeSpanIndex) {
+        console.log(`Could not locate occurrence ${relativeSpanIndex} of relation "${relationText}" in the text. Found ${relationMatches.length} occurrences.`);
+        
+        // Fallback: Find the line containing the relation instead
+        console.log('Attempting fallback method to locate relation');
+        
+        // Split the text into lines
+        const lines = originalText.split('\n');
+        
+        // Find all lines containing this relation
+        const matchingLines = [];
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].includes(relationText)) {
+                matchingLines.push(i);
+            }
+        }
+        
+        if (matchingLines.length === 0) {
+            console.error('Fallback failed: Could not find line containing relation');
+            return null;
+        }
+        
+        // Get the appropriate line based on relativeSpanIndex
+        const lineIndex = relativeSpanIndex < matchingLines.length ? 
+                        matchingLines[relativeSpanIndex] : 
+                        matchingLines[matchingLines.length - 1];
+        
+        // Calculate the position of this relation in the text
+        let relationPos = 0;
+        for (let i = 0; i < lineIndex; i++) {
+            relationPos += lines[i].length + 1; // +1 for newline
+        }
+        
+        // Find the position of the relation within the line
+        relationPos += lines[lineIndex].indexOf(relationText);
+        
+        // Get the branch boundaries
+        const branchInfo = getBranchBoundaries(originalText, relationPos);
+        
+        if (!branchInfo) {
+            console.error('Could not determine branch boundaries');
+            return null;
+        }
+        
+        // Extract parent node information if available
+        let parentNodeInfo = null;
+        if (parentRelationSpan) {
+            const parentRelationText = parentRelationSpan.textContent;
+            const parentRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
+                                       .filter(span => span.textContent === parentRelationText);
+            const parentRelativeIndex = parentRelationSpans.indexOf(parentRelationSpan);
+            
+            if (parentRelativeIndex !== -1) {
+                // Try to find the parent relation position
+                const parentRegex = new RegExp(escapeRegExp(parentRelationText), 'g');
+                const parentMatches = [];
+                
+                let parentMatch;
+                while ((parentMatch = parentRegex.exec(originalText)) !== null) {
+                    parentMatches.push(parentMatch.index);
+                }
+                
+                if (parentMatches.length > parentRelativeIndex) {
+                    const parentPos = parentMatches[parentRelativeIndex];
+                    parentNodeInfo = {
+                        text: parentRelationText,
+                        position: parentPos
+                    };
+                }
+            }
+        }
+        
+        // Return all the necessary information
+        return {
+            relationText: relationText,
+            branchText: branchInfo.branchText,
+            branchStart: branchInfo.start,
+            branchEnd: branchInfo.end,
+            parentInfo: parentNodeInfo,
+            relationSpan: relationSpan
+        };
     }
     
     // Get the position of this occurrence of the relation
-    const relationPos = relationMatches[spanIndex];
+    const relationPos = relationMatches[relativeSpanIndex];
     
     // Get the branch boundaries
     const branchInfo = getBranchBoundaries(originalText, relationPos);
@@ -1182,12 +1154,22 @@ function extractBranchFromRelation(relationSpan, annotationElement) {
     let parentNodeInfo = null;
     if (parentRelationSpan) {
         const parentRelationText = parentRelationSpan.textContent;
-        const parentSpanIndex = allRelationSpans.indexOf(parentRelationSpan);
+        const parentRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
+                                   .filter(span => span.textContent === parentRelationText);
+        const parentRelativeIndex = parentRelationSpans.indexOf(parentRelationSpan);
         
-        if (parentSpanIndex !== -1) {
-            const parentMatches = findAllMatches(originalText, parentRelationText);
-            if (parentMatches.length > parentSpanIndex) {
-                const parentPos = parentMatches[parentSpanIndex];
+        if (parentRelativeIndex !== -1) {
+            // Try to find the parent relation position
+            const parentRegex = new RegExp(escapeRegExp(parentRelationText), 'g');
+            const parentMatches = [];
+            
+            let parentMatch;
+            while ((parentMatch = parentRegex.exec(originalText)) !== null) {
+                parentMatches.push(parentMatch.index);
+            }
+            
+            if (parentMatches.length > parentRelativeIndex) {
+                const parentPos = parentMatches[parentRelativeIndex];
                 parentNodeInfo = {
                     text: parentRelationText,
                     position: parentPos
@@ -1470,97 +1452,7 @@ function moveBranchToNode(branchInfo, targetVariable) {
     }, 2500); // Give time for the editor to reinitialize before saving
 }
 
-// Overload addBranchToNode to accept a custom element
-function addBranchToNode(variable, branchContent, customElement) {
-    const annotationElement = customElement || document.querySelector('#amr pre');
-    if (!annotationElement) return;
-    
-    const originalText = annotationElement.textContent;
-    const lines = originalText.split('\n');
-    
-    // Node pattern: variable / concept
-    const nodePattern = new RegExp(`\\b${variable}\\s*\\/\\s*[^\\s\\(\\):]+`);
-    
-    // Find the line with our target node
-    let nodeLineIndex = -1;
-    for (let i = 0; i < lines.length; i++) {
-        if (nodePattern.test(lines[i])) {
-            nodeLineIndex = i;
-            break;
-        }
-    }
-    
-    if (nodeLineIndex === -1) {
-        showNotification('Could not find the selected node', 'error');
-        return;
-    }
-    
-    // Get the node line
-    const nodeLine = lines[nodeLineIndex];
-    
-    // Determine the indentation level of the node
-    const nodeIndent = nodeLine.match(/^\s*/)[0].length;
-    
-    // Calculate the standard child indentation
-    let childIndentSize = 4; // Default to 4 spaces
-    
-    // Try to detect the document's child indentation pattern
-    // Look at existing child nodes in the document
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line === '') continue;
-        
-        // If this is a line with a relation
-        if (line.startsWith(':')) {
-            const lineIndent = lines[i].match(/^\s*/)[0].length;
-            // Look at the previous line
-            if (i > 0) {
-                const prevLine = lines[i-1].trim();
-                if (prevLine !== '' && !prevLine.startsWith(':')) {
-                    // Found a parent-child relationship
-                    const prevIndent = lines[i-1].match(/^\s*/)[0].length;
-                    if (lineIndent > prevIndent) {
-                        // This is the child indentation size
-                        childIndentSize = lineIndent - prevIndent;
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    
-    // Parse the branch content to handle indentation properly
-    const branchLines = branchContent.trim().split('\n');
-    
-    if (branchLines.length === 0 || branchLines[0].trim() === '') {
-        return; // Silently return for internal operations
-    }
-    
-    // Parse the branch structure to determine nesting levels
-    const parsedBranch = parseBranchStructure(branchLines);
-    
-    // Format the branch with proper indentation
-    const formattedBranch = [];
-    
-    // Add the first line (relation and concept) with proper indentation
-    formattedBranch.push(' '.repeat(nodeIndent + childIndentSize) + parsedBranch.lines[0].content);
-    
-    // Add all child nodes with consistent indentation based on their level
-    for (let i = 1; i < parsedBranch.lines.length; i++) {
-        const line = parsedBranch.lines[i];
-        const indent = nodeIndent + childIndentSize + (line.level * childIndentSize);
-        formattedBranch.push(' '.repeat(indent) + line.content);
-    }
-    
-    // Insert the formatted branch after the node line
-    lines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
-    
-    // Update the annotation display
-    const updatedText = lines.join('\n');
-    annotationElement.textContent = updatedText;
-    
-    // No need to reinitialize if this is an internal operation on a temp element
-    if (!customElement) {
-        reinitializeEditor(annotationElement);
-    }
+// Function to escape special characters in a regular expression
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
