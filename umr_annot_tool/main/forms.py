@@ -92,3 +92,8 @@ class CreateProjectForm(FlaskForm):
         if project or projectuser:
             raise ValidationError(f'Name "{projectname.data}" already exists, choose another one.')
 
+
+class OverrideDocumentForm(FlaskForm):
+    file = FileField('UMR File Upload', validators=[DataRequired()])
+    submit = SubmitField('Override Document')
+

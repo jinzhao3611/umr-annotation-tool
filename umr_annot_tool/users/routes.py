@@ -1,5 +1,5 @@
 from pathlib import Path
-from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response
+from flask import render_template, url_for, flash, redirect, request, Blueprint, Response, current_app, session, jsonify, make_response, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UpdateProjectForm
@@ -8,11 +8,14 @@ from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
 import json
-from umr_annot_tool.main.forms import UploadFormSimpleVersion
+from umr_annot_tool.main.forms import UploadFormSimpleVersion, OverrideDocumentForm
 from werkzeug.utils import secure_filename
 from lemminflect import getLemma
-from sqlalchemy import or_
-from datetime import datetime
+from sqlalchemy import or_, and_
+from datetime import datetime, timedelta
+import re
+import os
+from umr_annot_tool.main.umr_parser import parse_umr_file
 
 
 users = Blueprint('users', __name__)
@@ -658,6 +661,7 @@ def discourse(project_id):
             lattice_setting.data['discourse'] = discourse_setting
             flag_modified(lattice_setting, 'data')
             db.session.commit()
+            
             msg = 'Discourse settings are applied successfully.'
             msg_category = 'success'
             print("ROUTE DEBUG: Settings saved successfully")
@@ -1169,3 +1173,171 @@ def statistics(project_id):
                           project_id=project_id,
                           statistics=statistics,
                           now=lambda: current_datetime)
+
+@users.route('/override_document/<int:project_id>/<int:doc_id>', methods=['GET', 'POST'])
+@login_required
+def override_document(project_id, doc_id):
+    """Show form and handle override for a checked-out document with a new file."""
+    # Check if user is a member of the project
+    membership = Projectuser.query.filter_by(
+        project_id=project_id,
+        user_id=current_user.id
+    ).first()
+    
+    if not membership or membership.permission not in ['admin', 'edit', 'annotate']:
+        flash('You do not have permission to perform this action.', 'danger')
+        return redirect(url_for('users.project', project_id=project_id))
+    
+    # Check if the document exists and is checked out by the current user
+    doc = Doc.query.filter_by(id=doc_id).first()
+    checkout_version = DocVersion.query.filter_by(
+        doc_id=doc_id,
+        user_id=current_user.id,
+        stage='checkout'
+    ).first()
+    
+    if not doc or not checkout_version:
+        flash('Document not found or not checked out by you.', 'danger')
+        return redirect(url_for('users.project', project_id=project_id))
+    
+    # Check if the document belongs to the project
+    if doc.project_id != project_id:
+        flash('Document does not belong to this project.', 'danger')
+        return redirect(url_for('users.project', project_id=project_id))
+    
+    # Create form
+    form = OverrideDocumentForm()
+    
+    if form.validate_on_submit():
+        # Check if a file was uploaded
+        if not form.file.data:
+            flash('No file selected.', 'danger')
+            return redirect(request.url)
+        
+        file = form.file.data
+        
+        if file.filename == '':
+            flash('No file selected.', 'danger')
+            return redirect(request.url)
+        
+        # Check if the file is allowed
+        if not file.filename.lower().endswith('.umr'):
+            flash('Only .umr files are allowed.', 'danger')
+            return redirect(request.url)
+        
+        # Check if the filename matches the original document name
+        # Extract the base filename without the extension
+        uploaded_filename = os.path.splitext(file.filename)[0]
+        original_filename = os.path.splitext(doc.filename)[0]
+        
+        print(f"Uploaded filename: {uploaded_filename}")
+        print(f"Original filename: {original_filename}")
+        
+        if uploaded_filename != original_filename:
+            flash(f'Filename mismatch. The uploaded file must have the same name as the original document: "{original_filename}.umr"', 'danger')
+            return redirect(request.url)
+        
+        try:
+            # First, get the file content once
+            file_content = file.read().decode('utf-8')
+            print(f"File content length: {len(file_content)}")
+            print(f"First 100 chars: {file_content[:100]}")
+            
+            # Check if file content is empty
+            if not file_content or file_content.strip() == "":
+                flash('Uploaded file is empty. Please upload a file with content.', 'danger')
+                return redirect(request.url)
+            
+            # Then, parse the content
+            try:
+                sentences, sent_annots, doc_annot, alignment = parse_umr_file(file_content)
+                
+                print(f"Parsed data:")
+                print(f"Number of sentences: {len(sentences)}")
+                print(f"Number of sentence annotations: {len(sent_annots)}")
+                print(f"Doc annotation length: {len(doc_annot) if doc_annot else 'None'}")
+                print(f"Alignment type: {type(alignment)}")
+                print(f"Alignment length: {len(alignment) if alignment else 'None'}")
+                
+                # Check if parsing returned empty results
+                if not sentences or not sent_annots:
+                    flash('Failed to parse file: No sentences or annotations found.', 'danger')
+                    return redirect(request.url)
+                
+            except Exception as parse_error:
+                print(f"Error parsing file: {str(parse_error)}")
+                flash(f'Error parsing file: {str(parse_error)}', 'danger')
+                return redirect(request.url)
+            
+            # Fetch all existing annotations for this document version
+            existing_annotations = Annotation.query.filter_by(
+                doc_version_id=checkout_version.id
+            ).order_by(Annotation.sent_id).all()
+            
+            print(f"Found {len(existing_annotations)} existing annotations for document version {checkout_version.id}")
+            
+            # Get all existing sentences to maintain their mapping
+            existing_sentences = Sent.query.filter_by(doc_id=doc_id).order_by(Sent.id).all()
+            print(f"Found {len(existing_sentences)} existing sentences for document {doc_id}")
+            
+            # Check if we have enough sentences
+            if len(sentences) > len(existing_sentences):
+                flash(f'The uploaded file has {len(sentences)} sentences, but the document only has {len(existing_sentences)} sentences. Cannot override.', 'danger')
+                return redirect(request.url)
+            
+            # Update content in existing annotations
+            for i, sent_annot in enumerate(sent_annots):
+                if i >= len(existing_annotations):
+                    # Not enough existing annotations, break
+                    print(f"Not enough existing annotations. Stopping at index {i}")
+                    break
+                
+                ann = existing_annotations[i]
+                
+                # Get alignment for this sentence
+                alignment_data = alignment[i] if isinstance(alignment, list) and i < len(alignment) else {}
+                
+                # Update the annotation
+                print(f"Updating annotation {i+1} (sent_id={ann.sent_id}):")
+                print(f"  sent_annot old length: {len(ann.sent_annot) if ann.sent_annot else 'Empty'}")
+                print(f"  sent_annot new length: {len(sent_annot) if sent_annot else 'Empty'}")
+                
+                ann.sent_annot = sent_annot
+                # Only update doc_annot for the first sentence
+                if i == 0:
+                    ann.doc_annot = doc_annot
+                ann.alignment = alignment_data
+                
+                # Mark the annotation as modified
+                flag_modified(ann, 'sent_annot')
+                if i == 0:
+                    flag_modified(ann, 'doc_annot')
+                flag_modified(ann, 'alignment')
+            
+            db.session.commit()
+            
+            # Verify the data was updated correctly
+            updated_annotations = Annotation.query.filter(Annotation.doc_version_id == checkout_version.id).all()
+            print(f"Updated {len(updated_annotations)} annotations in the database")
+            for i, ann in enumerate(updated_annotations, 1):
+                print(f"Updated annotation {i}:")
+                print(f"  sent_annot length: {len(ann.sent_annot) if ann.sent_annot else 'Empty'}")
+                print(f"  doc_annot length: {len(ann.doc_annot) if ann.doc_annot else 'Empty'}")
+                print(f"  alignment keys: {list(ann.alignment.keys()) if ann.alignment else 'None'}")
+            
+            flash(f'Document "{doc.filename}" has been successfully overridden.', 'success')
+            return redirect(url_for('users.project', project_id=project_id))
+        
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error overriding document: {str(e)}', 'danger')
+            print(f"Error overriding document: {str(e)}")
+            return redirect(request.url)
+    
+    # Render form for GET request or failed validation
+    return render_template('override_document.html', 
+                          title='Override Document', 
+                          form=form, 
+                          project_id=project_id,
+                          doc_id=doc_id,
+                          filename=doc.filename)
