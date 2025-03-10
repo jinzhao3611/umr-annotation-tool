@@ -3372,39 +3372,116 @@ async function showAddBranchDialog(parentVariableSpan) {
             // This pattern matches: (variable / concept, where variable is the exact variable
             const nodePattern = new RegExp(`\\(\\s*${parentVariable}\\s*/\\s*[^\\s\\(\\):]+`);
             
-            for (let i = 0; i < lines.length; i++) {
-                if (nodePattern.test(lines[i])) {
-                    // Found the line containing our node
-                    let currentLine = lines[i];
+            // Pattern to match exactly the variable definition line, e.g. "s1p / publication-91"
+            // Fixed to properly handle nested parentheses
+            const variableDefinitionPattern = new RegExp(`^(\\s*)\\((${parentVariable})\\s*/\\s*([^\\s\\(\\):]+)`, 'm');
+            
+            // First try to match the exact variable definition line
+            const definitionMatch = annotationText.match(variableDefinitionPattern);
+            
+            if (definitionMatch) {
+                // Found the exact variable definition line
+                console.log('Found exact variable definition line:', definitionMatch[0]);
+                
+                // Calculate line number in the annotation
+                const textBeforeMatch = annotationText.substring(0, definitionMatch.index);
+                const lineNumber = textBeforeMatch.split('\n').length - 1;
+                
+                // Get the indentation from capture group 1
+                const currentIndent = definitionMatch[1] || '';
+                const nextIndent = currentIndent + '    '; // Add one level of indentation (4 spaces)
+                
+                // Get the full line to check for existing content
+                const matchedLine = lines[lineNumber];
+                
+                // If the line contains a closing parenthesis, we need to insert before it
+                if (matchedLine.includes(')')) {
+                    // Find position of the first closing parenthesis after the variable definition
+                    const partialLine = matchedLine.substring(definitionMatch[0].length);
+                    let closingParenPos = -1;
+                    let depth = 1; // We're already inside one level of parentheses
                     
-                    // Find the indentation of the current line
-                    const indentMatch = currentLine.match(/^(\s*)/);
-                    const currentIndent = indentMatch ? indentMatch[1] : '';
-                    const nextIndent = currentIndent + '    '; // Add one level of indentation (4 spaces)
+                    for (let i = 0; i < partialLine.length; i++) {
+                        if (partialLine[i] === '(') {
+                            depth++;
+                        } else if (partialLine[i] === ')') {
+                            depth--;
+                            if (depth === 0) {
+                                closingParenPos = i;
+                                break;
+                            }
+                        }
+                    }
                     
-                    // Check if the line already has other relations
-                    if (currentLine.includes(')')) {
-                        // This line has a closing parenthesis, we need to insert before it
-                        const closingParenIndex = currentLine.lastIndexOf(')');
-                        if (closingParenIndex !== -1) {
-                            // Insert the branch before the closing parenthesis
-                            const beforeParen = currentLine.substring(0, closingParenIndex).trimRight();
-                            const afterParen = currentLine.substring(closingParenIndex);
-                            
-                            // Update the current line and add a new line for our branch
-                            updatedLines[i] = beforeParen;
+                    if (closingParenPos !== -1) {
+                        // Split the line at the closing parenthesis
+                        const beforeParen = matchedLine.substring(0, definitionMatch[0].length + closingParenPos).trimRight();
+                        const afterParen = matchedLine.substring(definitionMatch[0].length + closingParenPos);
+                        
+                        // Check if there are any branches already (by looking for colons)
+                        const hasBranches = matchedLine.includes(':');
+                        
+                        if (!hasBranches && afterParen === ')') {
+                            // This is a case where we're adding the first branch to a node like (s1i1 / individual-person)
+                            // We want to format it as:
+                            // (s1i1 / individual-person
+                            //     :actor (s1f / fear-01))
+                            updatedLines[lineNumber] = beforeParen;
+                            updatedLines.splice(lineNumber + 1, 0, `${nextIndent}${newBranch})`);
+                        } else {
+                            // There are already branches or other content before the closing parenthesis
+                            // Update the lines array
+                            updatedLines[lineNumber] = beforeParen;
+                            updatedLines.splice(lineNumber + 1, 0, `${nextIndent}${newBranch}`);
+                            updatedLines.splice(lineNumber + 2, 0, afterParen);
+                        }
+                    } else {
+                        // If we can't find the matching closing parenthesis, just add after the line
+                        updatedLines.splice(lineNumber + 1, 0, `${nextIndent}${newBranch}`);
+                    }
+                } else {
+                    // No closing parenthesis on this line, simply add the branch on the next line
+                    updatedLines.splice(lineNumber + 1, 0, `${nextIndent}${newBranch}`);
+                }
+                
+                nodeFound = true;
+            } else {
+                // Fallback to the previous method if exact match not found
+                console.log('Could not find exact variable definition line, falling back to alternative method');
+                for (let i = 0; i < lines.length; i++) {
+                    if (nodePattern.test(lines[i])) {
+                        // Found the line containing our node
+                        let currentLine = lines[i];
+                        
+                        // Find the indentation of the current line
+                        const indentMatch = currentLine.match(/^(\s*)/);
+                        const currentIndent = indentMatch ? indentMatch[1] : '';
+                        const nextIndent = currentIndent + '    '; // Add one level of indentation (4 spaces)
+                        
+                        // Check if the line already has other relations
+                        if (currentLine.includes(')')) {
+                            // This line has a closing parenthesis, we need to insert before it
+                            const closingParenIndex = currentLine.lastIndexOf(')');
+                            if (closingParenIndex !== -1) {
+                                // Insert the branch before the closing parenthesis
+                                const beforeParen = currentLine.substring(0, closingParenIndex).trimRight();
+                                const afterParen = currentLine.substring(closingParenIndex);
+                                
+                                // Update the current line and add a new line for our branch
+                                updatedLines[i] = beforeParen;
+                                updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
+                                updatedLines.splice(i+2, 0, afterParen);
+                                
+                                nodeFound = true;
+                                break;
+                            }
+                        } else {
+                            // This line doesn't have a closing parenthesis, simpler case
+                            // Add our branch on the next line with proper indentation
                             updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
-                            updatedLines.splice(i+2, 0, afterParen);
-                            
                             nodeFound = true;
                             break;
                         }
-                    } else {
-                        // This line doesn't have a closing parenthesis, simpler case
-                        // Add our branch on the next line with proper indentation
-                        updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
-                        nodeFound = true;
-                        break;
                     }
                 }
             }
