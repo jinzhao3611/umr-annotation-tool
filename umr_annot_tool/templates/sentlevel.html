@@ -30,7 +30,162 @@
     
     <!-- Copy annotation functionality -->
     <script>
+        // Helper function to get CSRF token for API requests
+        function getCsrfToken() {
+            // Try to get the token from a meta tag
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            if (metaToken) {
+                return metaToken.getAttribute('content');
+            }
+            
+            // Try to get it from a hidden input (common in Django/Flask)
+            const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"], input[name="_csrf_token"], input[name="csrf_token"]');
+            if (csrfInput) {
+                return csrfInput.value;
+            }
+            
+            // Return empty string if not found
+            console.warn('CSRF token not found');
+            return '';
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
+            // Save annotation and alignments functionality
+            const saveButton = document.getElementById('save-annotation-btn');
+            if (saveButton) {
+                saveButton.addEventListener('click', function() {
+                    // Get the current annotation text
+                    const annotationText = document.querySelector('#amr pre').textContent;
+                    const docVersionId = document.getElementById('doc_version_id').value;
+                    const sentId = document.getElementById('snt_id').value;
+                    
+                    // Show a spinner in the button while saving
+                    const originalText = saveButton.innerHTML;
+                    saveButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+                    saveButton.disabled = true;
+                    
+                    // Call API to save the annotation
+                    fetch(`/update_annotation/${docVersionId}/${sentId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCsrfToken() // Use the same token function from other features
+                        },
+                        body: JSON.stringify({
+                            annotation: annotationText,
+                            operation: 'manual_save'
+                        })
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Save successful:', data);
+                        
+                        // Also save alignments if they exist
+                        if (window.currentAlignments) {
+                            // Create a structured object with alignment data
+                            const alignmentsToSave = {};
+                            
+                            // Convert the alignment data to the format expected by the server
+                            Object.keys(window.currentAlignments).forEach(variable => {
+                                alignmentsToSave[variable] = window.currentAlignments[variable];
+                            });
+                            
+                            // Call the alignment save endpoint
+                            return fetch('/save_alignments', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRFToken': getCsrfToken()
+                                },
+                                body: JSON.stringify({
+                                    doc_version_id: docVersionId,
+                                    sent_id: sentId,
+                                    alignments: alignmentsToSave
+                                })
+                            });
+                        }
+                        
+                        // If no alignments, just return a resolved promise
+                        return Promise.resolve({ ok: true });
+                    })
+                    .then(response => {
+                        if (response.ok === false) {
+                            throw new Error('Failed to save alignments');
+                        }
+                        
+                        // Show success message
+                        saveButton.innerHTML = '<i class="fas fa-check"></i> Saved!';
+                        saveButton.classList.remove('btn-outline-primary');
+                        saveButton.classList.add('btn-success');
+                        
+                        // Create a notification
+                        const notification = document.createElement('div');
+                        notification.className = 'alert alert-success';
+                        notification.style.position = 'fixed';
+                        notification.style.top = '20px';
+                        notification.style.left = '50%';
+                        notification.style.transform = 'translateX(-50%)';
+                        notification.style.zIndex = '9999';
+                        notification.style.padding = '10px 20px';
+                        notification.style.borderRadius = '4px';
+                        notification.textContent = 'Annotation and alignments saved successfully!';
+                        
+                        // Add to document and remove after a delay
+                        document.body.appendChild(notification);
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 3000);
+                        
+                        // Reset button after a delay
+                        setTimeout(() => {
+                            saveButton.innerHTML = originalText;
+                            saveButton.classList.remove('btn-success');
+                            saveButton.classList.add('btn-outline-primary');
+                            saveButton.disabled = false;
+                        }, 2000);
+                    })
+                    .catch(error => {
+                        console.error('Error saving:', error);
+                        
+                        // Show error in button
+                        saveButton.innerHTML = '<i class="fas fa-times"></i> Error!';
+                        saveButton.classList.remove('btn-outline-primary');
+                        saveButton.classList.add('btn-danger');
+                        
+                        // Create an error notification
+                        const notification = document.createElement('div');
+                        notification.className = 'alert alert-danger';
+                        notification.style.position = 'fixed';
+                        notification.style.top = '20px';
+                        notification.style.left = '50%';
+                        notification.style.transform = 'translateX(-50%)';
+                        notification.style.zIndex = '9999';
+                        notification.style.padding = '10px 20px';
+                        notification.style.borderRadius = '4px';
+                        notification.textContent = 'Error saving: ' + error.message;
+                        
+                        // Add to document and remove after a delay
+                        document.body.appendChild(notification);
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 5000);
+                        
+                        // Reset button after a delay
+                        setTimeout(() => {
+                            saveButton.innerHTML = originalText;
+                            saveButton.classList.remove('btn-danger');
+                            saveButton.classList.add('btn-outline-primary');
+                            saveButton.disabled = false;
+                        }, 2000);
+                    });
+                });
+            }
+            
             const copyButton = document.getElementById('copy-annotation-btn');
             if (copyButton) {
                 copyButton.addEventListener('click', function() {
@@ -1478,6 +1633,9 @@
                         <h5 class="mb-0">Sentence-Level UMR Annotation Preview</h5>
                         <div class="btn-group">
                             {% if curr_annotation_string %}
+                            <button id="save-annotation-btn" class="btn btn-sm btn-outline-primary me-2" title="Save annotation and alignments">
+                                <i class="fas fa-save"></i> Save
+                            </button>
                             <button id="delete-annotation-btn" class="btn btn-sm btn-outline-danger me-2" title="Delete entire annotation">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
