@@ -2063,10 +2063,16 @@ function generateUniqueVariable(conceptName, annotationText) {
     const urlParts = window.location.pathname.split('/');
     const sentId = parseInt(urlParts[urlParts.length - 1]) || 1;
     
-    // Get the first letter of the concept (or 'x' if not available)
-    const conceptInitial = conceptName && conceptName.length > 0 
-        ? conceptName[0].toLowerCase()
-        : 'x';
+    // Check if the concept has a first character and if it's alphabetical
+    let conceptInitial = 'x'; // Default to 'x' for non-alphabetical or empty concepts
+    
+    if (conceptName && conceptName.length > 0) {
+        // Check if the first character is alphabetical (a-z or A-Z)
+        if (/^[a-zA-Z]/.test(conceptName)) {
+            conceptInitial = conceptName[0].toLowerCase();
+        }
+        // If not alphabetical (e.g., Chinese characters), keep using 'x'
+    }
     
     // Generate candidate variable name
     let baseVariable = `s${sentId}${conceptInitial}`;
