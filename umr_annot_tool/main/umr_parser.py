@@ -104,24 +104,25 @@ def parse_umr_file(content_string: str) -> Tuple[
             section_count += 1
             
             # Process collected annotations before moving to next section
-            if current_sentence:
-                # Always add sentence annotation, even if empty
+            if current_sent_annot:
                 annot = '\n'.join(current_sent_annot).rstrip()
-                sent_annotations.append(annot)  # This can be an empty string
+                if annot:
+                    sent_annotations.append(annot)
                 current_sent_annot = []
                 
-                # Always add document annotation, even if empty
+            if current_doc_annot:
                 annot = '\n'.join(current_doc_annot).rstrip()
-                doc_annotations.append(annot)  # This can be an empty string
+                if annot:
+                    doc_annotations.append(annot)
                 current_doc_annot = []
-                
-                # Always add alignment, even if empty
+            
+            if current_alignment:
                 align = '\n'.join(current_alignment).rstrip()
                 if align:
                     align_dict = parse_alignment_string(align)
                     alignments.append(align_dict)
                 else:
-                    alignments.append({})  # Add empty dict if no alignment
+                    alignments.append({})
                 current_alignment = []
             
             # Reset state for next section
@@ -241,22 +242,23 @@ def parse_umr_file(content_string: str) -> Tuple[
         i += 1
     
     # Process any remaining annotations at the end of the file
-    if current_sentence:
-        # Always add sentence annotation, even if empty
+    if current_sent_annot:
         annot = '\n'.join(current_sent_annot).rstrip()
-        sent_annotations.append(annot)  # This can be an empty string
-        
-        # Always add document annotation, even if empty
+        if annot:
+            sent_annotations.append(annot)
+    
+    if current_doc_annot:
         annot = '\n'.join(current_doc_annot).rstrip()
-        doc_annotations.append(annot)  # This can be an empty string
-        
-        # Always add alignment, even if empty
+        if annot:
+            doc_annotations.append(annot)
+    
+    if current_alignment:
         align = '\n'.join(current_alignment).rstrip()
         if align:
             align_dict = parse_alignment_string(align)
             alignments.append(align_dict)
         else:
-            alignments.append({})  # Add empty dict if no alignment
+            alignments.append({})
     
     # Ensure all lists have matching lengths
     max_length = max(len(sentences), len(sent_annotations), len(doc_annotations), len(alignments))

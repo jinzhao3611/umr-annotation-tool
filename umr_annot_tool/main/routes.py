@@ -16,6 +16,7 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Pr
 from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
     InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
 from umr_annot_tool.resources.rolesets import known_relations
+from umr_annot_tool.resources.utility_modules import get_merged_rolesets
 import tempfile
 import subprocess
 import time
@@ -56,14 +57,6 @@ def home():
     """Handle requests to the root URL."""
     logger.info("Root URL accessed, rendering user guide")
     return render_template('user_guide.html', title='Welcome to UMR Writer 3.0')
-
-@main.route("/posts")
-@main.route("/posts/<int:page>")
-def display_post(page=1):
-    """Display all posts with pagination."""
-    logger.info(f"Displaying posts page {page}")
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template('display_post.html', posts=posts, title='All Posts')
 
 @main.route("/new_project", methods=['GET', 'POST'])
 def new_project():
@@ -453,11 +446,14 @@ def sentlevel(doc_version_id, sent_id):
         frame_dict = json.loads(json.dumps(frame_dict))
         partial_graphs_json = json.dumps(partial_graphs)
         
-        # Get the list of known relations from rolesets for the relation editor
-        relations_list = list(known_relations.keys())
+        # Get the merged rolesets (default + temporary) for this project
+        merged_rolesets = get_merged_rolesets(project.id)
+        
+        # Get the list of relations for the relation editor
+        relations_list = list(merged_rolesets.keys())
         
         # Also pass the full relations data for value editing
-        relations_data = {k: v for k, v in known_relations.items() if 'values' in v}
+        relations_data = {k: v for k, v in merged_rolesets.items() if 'values' in v}
         
         logger.info("Rendering sentlevel template")
         return render_template('sentlevel.html',
@@ -1114,6 +1110,10 @@ def doclevel(doc_version_id, sent_id):
             return redirect(url_for('users.account'))
         
         logger.info("Rendering doclevel template")
+        
+        # Get the merged rolesets (default + temporary) for this project
+        merged_rolesets = get_merged_rolesets(project.id)
+        
         return render_template('doclevel.html',
                             doc_id=doc.id,
                             doc_version_id=doc_version_id,
@@ -1127,7 +1127,9 @@ def doclevel(doc_version_id, sent_id):
                             info2display=info2display,
                             curr_sent_annot_string=curr_sent_annot_string,
                             curr_doc_annot_string=curr_doc_annot_string,
-                            all_sent_annotations=all_sent_annotations)
+                            all_sent_annotations=all_sent_annotations,
+                            relations_list=list(merged_rolesets.keys()),
+                            relations_data={k: v for k, v in merged_rolesets.items() if 'values' in v})
                             
     except Exception as e:
         logger.error(f"Unexpected error in doclevel: {str(e)}", exc_info=True)
@@ -1465,6 +1467,9 @@ def view_combined(doc_version_id, sent_id):
     # Get max sentence ID for navigation
     max_sent_id = Sent.query.filter_by(doc_id=doc.id).count()
     
+    # Get the merged rolesets (default + temporary) for this project
+    merged_rolesets = get_merged_rolesets(project.id)
+    
     return render_template('view_combined.html',
                           project_id=doc.project_id,
                           doc_version_id=doc_version_id,
@@ -1475,7 +1480,9 @@ def view_combined(doc_version_id, sent_id):
                           doc=doc,
                           annotator=annotator,
                           lang=lang,
-                          max_sent_id=max_sent_id)
+                          max_sent_id=max_sent_id,
+                          relations_list=list(merged_rolesets.keys()),
+                          relations_data={k: v for k, v in merged_rolesets.items() if 'values' in v})
 
 @main.route("/adjudication_select", methods=['POST'])
 @login_required
@@ -1589,6 +1596,9 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
         ancast_available = current_app.config.get('ANCAST_AVAILABLE', False)
         ancast_install_instructions = current_app.config.get('ANCAST_INSTALL_INSTRUCTIONS', '')
         
+        # Get the merged rolesets (default + temporary) for this project
+        merged_rolesets = get_merged_rolesets(doc1.project_id)
+        
         # Render the adjudication template
         return render_template('adjudication.html',
                               doc_version_1_id=doc_version_1_id,
@@ -1606,7 +1616,9 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
                               comparison_level=comparison_level,
                               ancast_available=ancast_available,
                               ancast_install_instructions=ancast_install_instructions,
-                              lang=project.language)
+                              lang=project.language,
+                              relations_list=list(merged_rolesets.keys()),
+                              relations_data={k: v for k, v in merged_rolesets.items() if 'values' in v})
     
     except Exception as e:
         logger.error(f"Error in adjudication: {str(e)}")

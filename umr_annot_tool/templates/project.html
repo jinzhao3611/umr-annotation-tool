@@ -89,6 +89,16 @@
                             <i class="fas fa-cog"></i> Settings
                         </a>
                     </li>
+                    <li>
+                        <a href="#" class="nav-link" data-section="temporary-rolesets">
+                            <i class="fas fa-list-alt"></i> Temporary Rolesets
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link" data-section="temporary-relations">
+                            <i class="fas fa-link"></i> Temporary Relations
+                        </a>
+                    </li>
                 </ul>
             </div>
 
@@ -422,6 +432,262 @@
                         <i class="fas fa-save"></i> Save Changes
                     </button>
                 </form>
+            </div>
+        </section>
+
+        <!-- Temporary Rolesets Section -->
+        <section id="temporary-rolesets" class="content-section">
+            <div class="section-header">
+                <h2>Temporary Rolesets</h2>
+                {% if permission in ['admin'] %}
+                <div class="section-actions">
+                    <button class="btn btn-primary" id="add-roleset-btn">
+                        <i class="fas fa-plus"></i> Add New Roleset
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+            <div class="temp-rolesets-container">
+                <p>
+                    Temporary rolesets are custom relations or concepts specific to this project. 
+                    They will be available in the annotation menu alongside the standard rolesets.
+                </p>
+                
+                <!-- Notification area for roleset operations -->
+                <div id="roleset-notifications" class="mb-3">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                
+                {% if permission in ['admin'] %}
+                <!-- Form for adding new temporary roleset -->
+                <div id="new-roleset-form" class="card mb-4" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title">Add New Roleset</h5>
+                        <form method="POST" action="" id="roleset-form">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                <label for="roleset-name">Roleset Name:</label>
+                                <input type="text" class="form-control" id="roleset-name" name="roleset_name" placeholder="e.g., 'custom' or 'custom-relation'" required>
+                                <small class="form-text text-muted">Use lowercase letters and numbers (hyphens optional)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="roleset-type">Type:</label>
+                                <select class="form-control" id="roleset-type" name="roleset_type" required>
+                                    <option value="participant">participant</option>
+                                    <option value="modifier">modifier</option>
+                                    <option value="attribute">attribute</option>
+                                    <option value="quantities">quantities</option>
+                                    <option value="math">math</option>
+                                    <option value="special">special</option>
+                                    <option value="other">other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="sub-roles-type">Sub-roles Type:</label>
+                                <select class="form-control" id="sub-roles-type" name="sub_roles_type" required>
+                                    <option value="none">None</option>
+                                    <option value="fixed">Fixed List</option>
+                                    <option value="opN">:opN (numbered operands)</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="fixed-subroles-container" style="display: none;">
+                                <label for="sub-roles">Sub-roles (comma-separated):</label>
+                                <input type="text" class="form-control" id="sub-roles" name="sub_roles" placeholder="e.g., ':op1, :op2, :type'">
+                                <small class="form-text text-muted">Enter comma-separated list of sub-roles</small>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="allow-repeat" name="allow_repeat">
+                                <label class="form-check-label" for="allow-repeat">Allow Repeat (can occur multiple times)</label>
+                            </div>
+                            <input type="hidden" name="add_temp_roleset" value="1">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Roleset</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-roleset-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Table of existing temporary rolesets -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="temp-rolesets-table">
+                        <thead>
+                            <tr>
+                                <th>Roleset Name</th>
+                                <th>Type</th>
+                                <th>Sub-roles</th>
+                                {% if permission in ['admin'] %}
+                                <th>Actions</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if temp_rolesets %}
+                                {% for name, details in temp_rolesets.items() %}
+                                <tr>
+                                    <td>{{ name }}</td>
+                                    <td>{{ details.type }}</td>
+                                    <td>
+                                        {% if details.sub_roles is string %}
+                                            {{ details.sub_roles }}
+                                        {% elif details.sub_roles %}
+                                            {{ details.sub_roles|join(', ') }}
+                                        {% else %}
+                                            None
+                                        {% endif %}
+                                    </td>
+                                    {% if permission in ['admin'] %}
+                                    <td>
+                                        <form method="POST" action="" class="d-inline">
+                                            <input type="hidden" name="delete_temp_roleset" value="{{ name }}">
+                                            <button type="submit" class="btn btn-sm btn-danger" 
+                                                    onclick="return confirm('Are you sure you want to delete this roleset?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="{% if permission in ['admin'] %}4{% else %}3{% endif %}" class="text-center">
+                                        No temporary rolesets defined for this project yet.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Temporary Relations Section -->
+        <section id="temporary-relations" class="content-section">
+            <div class="section-header">
+                <h2>Temporary Relations</h2>
+                {% if permission in ['admin'] %}
+                <div class="section-actions">
+                    <button class="btn btn-primary" id="add-relation-btn">
+                        <i class="fas fa-plus"></i> Add New Relation
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+            <div class="temp-relations-container">
+                <p>
+                    Temporary relations are custom relationship markers (e.g., ":custom-rel") specific to this project. 
+                    They will be available in the annotation menu alongside the standard relations.
+                </p>
+                
+                <!-- Notification area for relation operations -->
+                <div id="relation-notifications" class="mb-3">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                
+                {% if permission in ['admin'] %}
+                <!-- Form for adding new temporary relation -->
+                <div id="new-relation-form" class="card mb-4" style="display: none;">
+                    <div class="card-body">
+                        <h5 class="card-title">Add New Relation</h5>
+                        <form method="POST" action="" id="relation-form">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group">
+                                <label for="relation-name">Relation Name:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">:</span>
+                                    </div>
+                                    <input type="text" class="form-control" id="relation-name" name="relation_name" placeholder="e.g., 'custom-rel'" required>
+                                </div>
+                                <small class="form-text text-muted">Use lowercase letters and numbers (hyphens optional)</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="relation-type">Type:</label>
+                                <select class="form-control" id="relation-type" name="relation_type" required>
+                                    <option value="participant">participant</option>
+                                    <option value="modifier">modifier</option>
+                                    <option value="attribute">attribute</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="allow-relation-repeat" name="allow_relation_repeat">
+                                <label class="form-check-label" for="allow-relation-repeat">Allow Repeat (can occur multiple times)</label>
+                            </div>
+                            <input type="hidden" name="add_temp_relation" value="1">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Relation</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-relation-btn">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Table of existing temporary relations -->
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover" id="temp-relations-table">
+                        <thead>
+                            <tr>
+                                <th>Relation Name</th>
+                                <th>Type</th>
+                                {% if permission in ['admin'] %}
+                                <th>Actions</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if temp_relations %}
+                                {% for name, details in temp_relations.items() %}
+                                <tr>
+                                    <td>{{ name }}</td>
+                                    <td>{{ details.type }}</td>
+                                    {% if permission in ['admin'] %}
+                                    <td>
+                                        <form method="POST" action="" class="d-inline">
+                                            <input type="hidden" name="delete_temp_relation" value="{{ name }}">
+                                            <button type="submit" class="btn btn-sm btn-danger" 
+                                                    onclick="return confirm('Are you sure you want to delete this relation?')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="{% if permission in ['admin'] %}3{% else %}2{% endif %}" class="text-center">
+                                        No temporary relations defined for this project yet.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
 
@@ -1103,6 +1369,148 @@
                 }
             });
         });
+        
+        // Temporary Rolesets handling
+        const addRolesetBtn = document.getElementById('add-roleset-btn');
+        const cancelRolesetBtn = document.getElementById('cancel-roleset-btn');
+        const newRolesetForm = document.getElementById('new-roleset-form');
+        const subRolesTypeSelect = document.getElementById('sub-roles-type');
+        const fixedSubrolesContainer = document.getElementById('fixed-subroles-container');
+        const rolesetForm = document.getElementById('roleset-form');
+        
+        // Toggle the form visibility
+        if (addRolesetBtn) {
+            addRolesetBtn.addEventListener('click', function() {
+                newRolesetForm.style.display = 'block';
+                addRolesetBtn.style.display = 'none';
+            });
+        }
+        
+        if (cancelRolesetBtn) {
+            cancelRolesetBtn.addEventListener('click', function() {
+                newRolesetForm.style.display = 'none';
+                addRolesetBtn.style.display = 'inline-block';
+                // Reset form fields
+                if (rolesetForm) {
+                    rolesetForm.reset();
+                }
+            });
+        }
+        
+        // Show/hide the sub-roles input based on selection
+        if (subRolesTypeSelect) {
+            subRolesTypeSelect.addEventListener('change', function() {
+                if (this.value === 'fixed') {
+                    fixedSubrolesContainer.style.display = 'block';
+                } else {
+                    fixedSubrolesContainer.style.display = 'none';
+                }
+            });
+        }
+        
+        // Form validation
+        if (rolesetForm) {
+            rolesetForm.addEventListener('submit', function(e) {
+                const rolesetName = document.getElementById('roleset-name').value;
+                
+                // Validate roleset name format (lowercase with hyphens)
+                const namePattern = /^[a-z0-9]+(-[a-z0-9-]*)?$/;
+                if (!namePattern.test(rolesetName)) {
+                    e.preventDefault();
+                    alert('Roleset name must be lowercase (e.g., "custom" or "custom-relation")');
+                    return false;
+                }
+                
+                // Validate sub-roles if applicable
+                if (subRolesTypeSelect.value === 'fixed') {
+                    const subRoles = document.getElementById('sub-roles').value;
+                    const subRolesItems = subRoles.split(',').map(item => item.trim());
+                    
+                    // Check if each sub-role starts with a colon
+                    const invalidSubRoles = subRolesItems.filter(role => role && !role.startsWith(':'));
+                    if (invalidSubRoles.length > 0) {
+                        e.preventDefault();
+                        alert('Sub-roles must start with a colon (e.g., ":op1")');
+                        return false;
+                    }
+                }
+                
+                console.log('Roleset form validation passed, submitting...');
+                // Hide the form after successful validation (form will submit)
+                setTimeout(function() {
+                    // Use a timeout to allow the form to submit before resetting
+                    rolesetForm.reset();
+                    
+                    // Reset sub-roles container visibility
+                    if (fixedSubrolesContainer) {
+                        fixedSubrolesContainer.style.display = 'none';
+                    }
+                    
+                    // Hide form and show add button again
+                    if (newRolesetForm && addRolesetBtn) {
+                        newRolesetForm.style.display = 'none';
+                        addRolesetBtn.style.display = 'inline-block';
+                    }
+                }, 100);
+                
+                return true;
+            });
+        }
+        
+        // Temporary Relations handling
+        const addRelationBtn = document.getElementById('add-relation-btn');
+        const cancelRelationBtn = document.getElementById('cancel-relation-btn');
+        const newRelationForm = document.getElementById('new-relation-form');
+        const relationForm = document.getElementById('relation-form');
+        
+        // Toggle the form visibility
+        if (addRelationBtn) {
+            addRelationBtn.addEventListener('click', function() {
+                newRelationForm.style.display = 'block';
+                addRelationBtn.style.display = 'none';
+            });
+        }
+        
+        if (cancelRelationBtn) {
+            cancelRelationBtn.addEventListener('click', function() {
+                newRelationForm.style.display = 'none';
+                addRelationBtn.style.display = 'inline-block';
+                // Reset form fields
+                if (relationForm) {
+                    relationForm.reset();
+                }
+            });
+        }
+        
+        // Form validation
+        if (relationForm) {
+            relationForm.addEventListener('submit', function(e) {
+                const relationName = document.getElementById('relation-name').value;
+                
+                // Validate relation name format (lowercase with optional hyphens)
+                const namePattern = /^[a-z0-9]+(-[a-z0-9-]*)?$/;
+                if (!namePattern.test(relationName)) {
+                    e.preventDefault();
+                    alert('Relation name must be lowercase (e.g., "custom" or "custom-rel")');
+                    return false;
+                }
+                
+                console.log('Relation form validation passed, submitting...');
+                // Hide the form after successful validation (form will submit)
+                setTimeout(function() {
+                    // Use a timeout to allow the form to submit before resetting
+                    relationForm.reset();
+                    
+                    // Hide form and show add button again
+                    if (newRelationForm && addRelationBtn) {
+                        newRelationForm.style.display = 'none';
+                        addRelationBtn.style.display = 'inline-block';
+                    }
+                }, 100);
+                
+                return true;
+            });
+        }
         
         // Global adjudication document selection
         const allCheckboxes = document.querySelectorAll('.adjudication-checkbox');

@@ -218,6 +218,17 @@ def project(project_id):
         if lattice_setting.data and 'number' in lattice_setting.data:
             number_setting = lattice_setting.data['number']
     
+    # Get temporary rolesets
+    temp_rolesets = {}
+    partialgraph = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+    if partialgraph and partialgraph.partial_umr and 'temp_rolesets' in partialgraph.partial_umr:
+        temp_rolesets = partialgraph.partial_umr['temp_rolesets']
+    
+    # Get temporary relations
+    temp_relations = {}
+    if partialgraph and partialgraph.partial_umr and 'temp_relations' in partialgraph.partial_umr:
+        temp_relations = partialgraph.partial_umr['temp_relations']
+    
     # 2. Handle POST requests
     if request.method == 'POST':
         msg_list = []
@@ -287,10 +298,10 @@ def project(project_id):
                 DocVersion.query.filter_by(doc_id=doc_id).delete(synchronize_session='fetch')
                 
                 # Delete all sentences
-                Sent.query.filter_by(doc_id=doc_id).delete(synchronize_session='fetch')
+                Sent.query.filter(Sent.doc_id == doc_id).delete(synchronize_session='fetch')
                 
                 # Finally delete the document itself
-                Doc.query.filter_by(id=doc_id).delete(synchronize_session='fetch')
+                Doc.query.filter(Doc.id == doc_id).delete(synchronize_session='fetch')
                 
                 db.session.commit()
                 msg_list.append(f"Document and all related data successfully deleted.")
@@ -370,6 +381,147 @@ def project(project_id):
         add_qc_doc_id = request.form.get('add_qc_doc_id', '0')
         rm_qc_doc_id = request.form.get('rm_qc_doc_id', '0')
         rm_qc_user_id = request.form.get('rm_qc_user_id', '0')
+        
+        # 2.5 Temporary Rolesets management
+        add_temp_roleset = request.form.get('add_temp_roleset', '0')
+        delete_temp_roleset = request.form.get('delete_temp_roleset', '')
+        
+        if add_temp_roleset == '1' and membership.permission == 'admin':
+            roleset_name = request.form.get('roleset_name', '').strip()
+            roleset_type = request.form.get('roleset_type', '').strip()
+            sub_roles_type = request.form.get('sub_roles_type', 'none')
+            sub_roles = request.form.get('sub_roles', '')
+            allow_repeat = 'allow_repeat' in request.form
+            
+            if roleset_name and roleset_type:
+                # Initialize partialgraph if not exists
+                partialgraph = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+                if not partialgraph:
+                    partialgraph = Partialgraph(project_id=project_id, partial_umr={})
+                    db.session.add(partialgraph)
+                
+                # Initialize temp_rolesets if not exists
+                if not partialgraph.partial_umr:
+                    partialgraph.partial_umr = {}
+                
+                if 'temp_rolesets' not in partialgraph.partial_umr:
+                    partialgraph.partial_umr['temp_rolesets'] = {}
+                
+                # Create roleset entry
+                roleset_entry = {
+                    'type': roleset_type,
+                    'repeat': allow_repeat
+                }
+                
+                # Add sub_roles based on type
+                if sub_roles_type == 'fixed' and sub_roles:
+                    # Process sub_roles into list
+                    sub_roles_list = [role.strip() for role in sub_roles.split(',') if role.strip()]
+                    roleset_entry['sub-roles'] = sub_roles_list
+                elif sub_roles_type == 'opN':
+                    roleset_entry['sub-roles'] = ':opN'
+                
+                # Add the new roleset
+                partialgraph.partial_umr['temp_rolesets'][roleset_name] = roleset_entry
+                
+                # Mark as modified for SQLAlchemy
+                flag_modified(partialgraph, 'partial_umr')
+                
+                db.session.commit()
+                msg_list.append(f"Added temporary roleset: {roleset_name}")
+                flash(f"Successfully added temporary roleset: {roleset_name}", "success")
+                
+                # Update temp_rolesets for rendering
+                temp_rolesets = partialgraph.partial_umr['temp_rolesets']
+            else:
+                msg_list.append("Roleset name and type are required.")
+        
+        if delete_temp_roleset and membership.permission == 'admin':
+            partialgraph = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+            
+            if partialgraph and partialgraph.partial_umr and 'temp_rolesets' in partialgraph.partial_umr:
+                if delete_temp_roleset in partialgraph.partial_umr['temp_rolesets']:
+                    # Remove the roleset
+                    del partialgraph.partial_umr['temp_rolesets'][delete_temp_roleset]
+                    
+                    # Mark as modified for SQLAlchemy
+                    flag_modified(partialgraph, 'partial_umr')
+                    
+                    db.session.commit()
+                    msg_list.append(f"Removed temporary roleset: {delete_temp_roleset}")
+                    flash(f"Successfully removed temporary roleset: {delete_temp_roleset}", "success")
+                    
+                    # Update temp_rolesets for rendering
+                    temp_rolesets = partialgraph.partial_umr['temp_rolesets']
+                else:
+                    msg_list.append(f"Roleset {delete_temp_roleset} not found.")
+        
+        # 2.6 Temporary Relations management
+        add_temp_relation = request.form.get('add_temp_relation', '0')
+        delete_temp_relation = request.form.get('delete_temp_relation', '')
+        
+        if add_temp_relation == '1' and membership.permission == 'admin':
+            relation_name = request.form.get('relation_name', '').strip()
+            relation_type = request.form.get('relation_type', '').strip()
+            allow_relation_repeat = 'allow_relation_repeat' in request.form
+            
+            if relation_name and relation_type:
+                # Initialize partialgraph if not exists
+                partialgraph = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+                if not partialgraph:
+                    partialgraph = Partialgraph(project_id=project_id, partial_umr={})
+                    db.session.add(partialgraph)
+                
+                # Initialize temp_relations if not exists
+                if not partialgraph.partial_umr:
+                    partialgraph.partial_umr = {}
+                
+                if 'temp_relations' not in partialgraph.partial_umr:
+                    partialgraph.partial_umr['temp_relations'] = {}
+                
+                # Format the relation name with a colon prefix
+                formatted_relation_name = f":{relation_name}"
+                
+                # Create relation entry
+                relation_entry = {
+                    'type': relation_type,
+                    'repeat': allow_relation_repeat
+                }
+                
+                # Add the new relation
+                partialgraph.partial_umr['temp_relations'][formatted_relation_name] = relation_entry
+                
+                # Mark as modified for SQLAlchemy
+                flag_modified(partialgraph, 'partial_umr')
+                
+                db.session.commit()
+                msg_list.append(f"Added temporary relation: {formatted_relation_name}")
+                flash(f"Successfully added temporary relation: {formatted_relation_name}", "success")
+                
+                # Update temp_relations for rendering
+                temp_relations = partialgraph.partial_umr['temp_relations']
+            else:
+                msg_list.append("Relation name and type are required.")
+        
+        if delete_temp_relation and membership.permission == 'admin':
+            partialgraph = Partialgraph.query.filter(Partialgraph.project_id == project_id).first()
+            
+            if partialgraph and partialgraph.partial_umr and 'temp_relations' in partialgraph.partial_umr:
+                if delete_temp_relation in partialgraph.partial_umr['temp_relations']:
+                    # Remove the relation
+                    del partialgraph.partial_umr['temp_relations'][delete_temp_relation]
+                    
+                    # Mark as modified for SQLAlchemy
+                    flag_modified(partialgraph, 'partial_umr')
+                    
+                    db.session.commit()
+                    msg_list.append(f"Removed temporary relation: {delete_temp_relation}")
+                    flash(f"Successfully removed temporary relation: {delete_temp_relation}", "success")
+                    
+                    # Update temp_relations for rendering
+                    temp_relations = partialgraph.partial_umr['temp_relations']
+                else:
+                    msg_list.append(f"Relation {delete_temp_relation} not found.")
         
         if add_qc_doc_id.isdigit() and int(add_qc_doc_id) != 0:
             doc_id = int(add_qc_doc_id)
@@ -511,26 +663,26 @@ def project(project_id):
     # 4. Render template
     return render_template(
         "project.html",
-        form=form,
-        project_id=project.id,
+        title='Project',
+        project_id=project_id,
         project_name=project.project_name,
-        permission=membership.permission,
+        form=form,
         projectDocs=project_docs,
-        docversion_users=docversion_users,
-        checked_out_by=checked_out_by,
         checked_out_docs=checked_out_docs,
         qc_docs=qc_docs,
+        checked_out_by=checked_out_by,
+        permission=membership.permission,
         members=memberships,
         member_names=member_names,
-        zipped_pairs=zipped_pairs,
-        current_user=current_user,
-        current_year=datetime.today().date().strftime("%Y-%m-%d"),
+        zipped_pairs=zip(memberships, member_names),
         person_setting=json.dumps(person_setting),
         aspect_setting=json.dumps(aspect_setting),
         discourse_setting=json.dumps(discourse_setting),
         modal_setting=json.dumps(modal_setting),
         modification_setting=json.dumps(modification_setting),
-        number_setting=json.dumps(number_setting)
+        number_setting=json.dumps(number_setting),
+        temp_rolesets=temp_rolesets,
+        temp_relations=temp_relations
     )
 
 
@@ -1275,21 +1427,13 @@ def override_document(project_id, doc_id):
                 print(f"Parsed data:")
                 print(f"Number of sentences: {len(sentences)}")
                 print(f"Number of sentence annotations: {len(sent_annots)}")
-                print(f"Doc annotation type: {type(doc_annot)}")
                 print(f"Doc annotation length: {len(doc_annot) if doc_annot else 'None'}")
-                # Print the first few characters of the document annotation for debugging
-                if doc_annot:
-                    if isinstance(doc_annot, list):
-                        print(f"Doc annotation first item (first 50 chars): {doc_annot[0][:50] if doc_annot[0] else 'Empty'}")
-                    else:
-                        print(f"Doc annotation (first 50 chars): {doc_annot[:50] if doc_annot else 'Empty'}")
                 print(f"Alignment type: {type(alignment)}")
                 print(f"Alignment length: {len(alignment) if alignment else 'None'}")
                 
-                # Check if parsing returned empty results - only check sentences
-                # Allow empty annotations (sent_annots can be empty strings)
-                if not sentences:
-                    flash('Failed to parse file: No sentences found.', 'danger')
+                # Check if parsing returned empty results
+                if not sentences or not sent_annots:
+                    flash('Failed to parse file: No sentences or annotations found.', 'danger')
                     return redirect(request.url)
                 
             except Exception as parse_error:
@@ -1330,36 +1474,10 @@ def override_document(project_id, doc_id):
                 print(f"  sent_annot old length: {len(ann.sent_annot) if ann.sent_annot else 'Empty'}")
                 print(f"  sent_annot new length: {len(sent_annot) if sent_annot else 'Empty'}")
                 
-                # Update sentence-level annotation
                 ann.sent_annot = sent_annot
-                
-                # Process document-level annotation
-                # For UMR format, document level annotation is typically 
-                # only associated with the first sentence in the document
+                # Only update doc_annot for the first sentence
                 if i == 0:
-                    # Debug document annotation structure
-                    print(f"Doc annotation type: {type(doc_annot)}")
-                    print(f"Doc annotation content: {doc_annot}")
-                    
-                    # Process and update the document annotation
-                    # Handle the case where it only contains the root element
-                    if isinstance(doc_annot, list):
-                        # If it's a list, use the first item if available
-                        if doc_annot and i < len(doc_annot):
-                            ann.doc_annot = doc_annot[i]
-                        else:
-                            # Empty string if no document annotation for this sentence
-                            ann.doc_annot = ""
-                    else:
-                        # If it's not a list (string), use it directly
-                        # This handles the case of a single document annotation
-                        # that might contain just the root element
-                        ann.doc_annot = doc_annot
-                        
-                    # Log the new document annotation that will be saved
-                    print(f"  doc_annot new content preview: {ann.doc_annot[:50] if ann.doc_annot else 'Empty'}")
-                
-                # Update alignment for all sentences
+                    ann.doc_annot = doc_annot
                 ann.alignment = alignment_data
                 
                 # Mark the annotation as modified
@@ -1377,7 +1495,6 @@ def override_document(project_id, doc_id):
                 print(f"Updated annotation {i}:")
                 print(f"  sent_annot length: {len(ann.sent_annot) if ann.sent_annot else 'Empty'}")
                 print(f"  doc_annot length: {len(ann.doc_annot) if ann.doc_annot else 'Empty'}")
-                print(f"  doc_annot content: {'[content present]' if ann.doc_annot else '[empty]'}")
                 print(f"  alignment keys: {list(ann.alignment.keys()) if ann.alignment else 'None'}")
             
             flash(f'Document "{doc.filename}" has been successfully overridden.', 'success')
