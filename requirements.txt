@@ -49,3 +49,4 @@ editdistance==0.5.3
 # pip install -e .
 # ancast>=0.1.0
 
+Pillow
