@@ -620,27 +620,106 @@ function normalizeIndentation(branchText) {
     // Add the first line without indentation (this is the root of our branch)
     result.push(firstLine);
     
-    // Handle all other lines with consistent indentation
-    for (let i = 1; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line === '') {
+    // Parse the branch to determine hierarchy levels
+    const parsedBranch = parseBranchHierarchy(lines.slice(1));
+    
+    // Apply consistent indentation based on hierarchy level
+    for (const line of parsedBranch) {
+        if (line.content === '') {
             result.push('');
             continue;
         }
         
-        // Check if this is a relation line like :ARG1, :mod, etc.
-        const isChildRelation = line.startsWith(':');
-        
-        // All child relations get consistent indentation (4 spaces)
-        if (isChildRelation) {
-            result.push('    ' + line);
-        } else {
-            // Non-relation lines maintain their trimmed content
-            result.push(line);
-        }
+        // Add indentation based on nesting level (4 spaces per level)
+        const indent = '    '.repeat(line.level);
+        result.push(indent + line.content);
     }
     
     return result.join('\n');
+}
+
+// Helper function to determine the hierarchical structure of a branch
+function parseBranchHierarchy(lines) {
+    const result = [];
+    const stack = [];
+    let currentLevel = 1; // Start at level 1 (after the root relation)
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmedLine = line.trim();
+        
+        if (trimmedLine === '') {
+            // Preserve empty lines
+            result.push({ content: '', level: 0 });
+            continue;
+        }
+        
+        // Count opening and closing parentheses
+        const openCount = (trimmedLine.match(/\(/g) || []).length;
+        const closeCount = (trimmedLine.match(/\)/g) || []).length;
+        
+        // Determine if this line starts a new relation
+        const isRelation = trimmedLine.startsWith(':');
+        
+        if (isRelation) {
+            // Relations always indicate the start of a new nesting level
+            
+            // Update stack based on previous line's parentheses (if any)
+            if (i > 0) {
+                // If previous line had excess closing parentheses, adjust level down
+                const prevOpenCount = (lines[i-1].trim().match(/\(/g) || []).length;
+                const prevCloseCount = (lines[i-1].trim().match(/\)/g) || []).length;
+                
+                if (prevCloseCount > prevOpenCount) {
+                    // Decrease level based on net closing parentheses
+                    currentLevel = Math.max(1, currentLevel - (prevCloseCount - prevOpenCount));
+                }
+            }
+            
+            // If this is a new relation, set its level
+            result.push({ content: trimmedLine, level: currentLevel });
+            
+            // Increase level for any children that might follow
+            if (openCount > closeCount) {
+                currentLevel += (openCount - closeCount);
+            }
+        } else {
+            // Non-relation line (probably a concept or value)
+            // Try to determine its level based on context
+            if (i > 0) {
+                const prevLine = lines[i-1].trim();
+                
+                // If previous line ended with an opening parenthesis, this is likely a continuation
+                if (prevLine.endsWith('(')) {
+                    result.push({ content: trimmedLine, level: currentLevel });
+                } else {
+                    // Otherwise keep at same level as previous non-empty line
+                    let previousLevel = result.length > 0 ? result[result.length - 1].level : currentLevel;
+                    if (result[result.length - 1].content === '') {
+                        // Find the last non-empty line's level
+                        for (let j = result.length - 2; j >= 0; j--) {
+                            if (result[j].content !== '') {
+                                previousLevel = result[j].level;
+                                break;
+                            }
+                        }
+                    }
+                    result.push({ content: trimmedLine, level: previousLevel });
+                }
+            } else {
+                // First line shouldn't be a non-relation, but handle it anyway
+                result.push({ content: trimmedLine, level: currentLevel });
+            }
+        }
+        
+        // Adjust level based on parentheses imbalance
+        if (closeCount > openCount) {
+            // Decrease level for subsequent lines if we had excess closing parentheses
+            currentLevel = Math.max(1, currentLevel - (closeCount - openCount));
+        }
+    }
+    
+    return result;
 }
 
 // Show dialog to add a temporary branch to the annotation
