@@ -1078,13 +1078,23 @@ def search():
     project_id = request.args.get('project_id')
     search_type = request.args.get('search_type', 'both')  # Options: 'sentence', 'annotation', 'both'
     stage_filter = request.args.get('stage_filter', 'all')  # Options: 'all', 'initial', 'checkout', 'qc'
+    user_filter = request.args.get('user_filter', 'all')   # Options: 'all' or user_id
+    project_filter = request.args.get('project_filter', 'all')  # Options: 'all' or project_id
+    
+    # Get all users and projects for filter dropdowns
+    users = User.query.filter(User.username != 'dummy_user').order_by(User.username).all()
+    projects = Project.query.order_by(Project.project_name).all()
     
     if not query:
         return render_template('search.html', 
                              title='Search Annotations',
                              doc_id=doc_id,
                              project_id=project_id,
-                             stage_filter=stage_filter)
+                             stage_filter=stage_filter,
+                             user_filter=user_filter,
+                             project_filter=project_filter,
+                             users=users,
+                             projects=projects)
         
     try:
         # Get dummy user id
@@ -1102,6 +1112,12 @@ def search():
                 sentence_query = sentence_query.filter(Sent.doc_id == doc_id)
             elif scope == 'project' and project_id:
                 project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
+                doc_ids = [doc.id for doc in project_docs]
+                sentence_query = sentence_query.filter(Sent.doc_id.in_(doc_ids))
+            
+            # Apply project filter if specified
+            if project_filter != 'all':
+                project_docs = Doc.query.filter_by(project_id=project_filter).with_entities(Doc.id).all()
                 doc_ids = [doc.id for doc in project_docs]
                 sentence_query = sentence_query.filter(Sent.doc_id.in_(doc_ids))
             
@@ -1123,6 +1139,10 @@ def search():
                 # Apply stage filter if specified
                 if stage_filter != 'all':
                     annotations = annotations.filter(DocVersion.stage == stage_filter)
+                
+                # Apply user filter if specified
+                if user_filter != 'all':
+                    annotations = annotations.filter(DocVersion.user_id == user_filter)
                 
                 if dummy_user_id:
                     annotations = annotations.filter(DocVersion.user_id != dummy_user_id)
@@ -1173,6 +1193,10 @@ def search():
             if stage_filter != 'all':
                 annotation_query = annotation_query.filter(DocVersion.stage == stage_filter)
             
+            # Apply user filter if specified
+            if user_filter != 'all':
+                annotation_query = annotation_query.filter(DocVersion.user_id == user_filter)
+            
             if dummy_user_id:
                 annotation_query = annotation_query.filter(DocVersion.user_id != dummy_user_id)
             
@@ -1181,6 +1205,12 @@ def search():
                 annotation_query = annotation_query.filter(DocVersion.doc_id == doc_id)
             elif scope == 'project' and project_id:
                 project_docs = Doc.query.filter_by(project_id=project_id).with_entities(Doc.id).all()
+                doc_ids = [doc.id for doc in project_docs]
+                annotation_query = annotation_query.filter(DocVersion.doc_id.in_(doc_ids))
+            
+            # Apply project filter if specified
+            if project_filter != 'all':
+                project_docs = Doc.query.filter_by(project_id=project_filter).with_entities(Doc.id).all()
                 doc_ids = [doc.id for doc in project_docs]
                 annotation_query = annotation_query.filter(DocVersion.doc_id.in_(doc_ids))
             
@@ -1208,7 +1238,7 @@ def search():
                     continue
                     
                 user = User.query.get(doc_version.user_id)
-                if not user or user.username == 'dummy_user':
+                if not user or (user.username == 'dummy_user'):
                     continue
                 
                 results.append({
@@ -1224,24 +1254,38 @@ def search():
                     'user_id': doc_version.user_id,
                     'match_type': 'annotation'
                 })
-        
-        return render_template('search.html', 
+                
+        # Return filtered results
+        return render_template('search.html',
                              title='Search Results',
-                             results=results,
                              query=query,
+                             results=results,
                              doc_id=doc_id,
                              project_id=project_id,
                              search_type=search_type,
-                             stage_filter=stage_filter)
+                             stage_filter=stage_filter,
+                             user_filter=user_filter,
+                             project_filter=project_filter,
+                             users=users,
+                             projects=projects)
                              
     except Exception as e:
         current_app.logger.error(f"Search error: {str(e)}")
         flash('An error occurred while searching. Please try again.', 'danger')
+        
+        # Get all users and projects for filter dropdowns (in case of error)
+        users = User.query.filter(User.username != 'dummy_user').order_by(User.username).all()
+        projects = Project.query.order_by(Project.project_name).all()
+        
         return render_template('search.html', 
                              title='Search Annotations',
                              doc_id=doc_id,
                              project_id=project_id,
-                             stage_filter='all')
+                             stage_filter=stage_filter,
+                             user_filter=user_filter,
+                             project_filter=project_filter,
+                             users=users,
+                             projects=projects)
 
 @users.route('/statistics/<int:project_id>', methods=['GET'])
 @login_required

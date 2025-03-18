@@ -30,6 +30,31 @@
                 </div>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="user_filter">Filter by User:</label>
+                    <select class="form-control" id="user_filter" name="user_filter">
+                        <option value="all" {% if user_filter == 'all' %}selected{% endif %}>All Users</option>
+                        {% for user in users %}
+                            <option value="{{ user.id }}" {% if user_filter|string == user.id|string %}selected{% endif %}>{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="project_filter">Filter by Project:</label>
+                    <select class="form-control" id="project_filter" name="project_filter">
+                        <option value="all" {% if project_filter == 'all' %}selected{% endif %}>All Projects</option>
+                        {% for project in projects %}
+                            <option value="{{ project.id }}" {% if project_filter|string == project.id|string %}selected{% endif %}>{{ project.project_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
 
         {% if doc_id %}
             <input type="hidden" name="doc_id" value="{{ doc_id }}">
