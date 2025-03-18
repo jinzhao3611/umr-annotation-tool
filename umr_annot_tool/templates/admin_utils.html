@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Admin Utilities</h2>
+        <small class="text-muted">Secret admin page for special operations</small>
+    </div>
+    
+    <div class="border p-4 mb-4 bg-light rounded">
+        <h3 class="mb-3">User Management</h3>
+        
+        <!-- Delete any user section -->
+        <div class="card mb-4">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Delete Any User</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <p class="text-danger">
+                        <strong>Warning:</strong> This action will delete the selected user and ALL associated data, including:
+                    </p>
+                    <ul>
+                        <li>All documents created by the user</li>
+                        <li>All document versions and annotations</li>
+                        <li>Project memberships</li>
+                        <li>Projects created by the user</li>
+                        <li>All posts</li>
+                    </ul>
+                </div>
+                
+                <form method="POST" action="{{ url_for('users.admin_utils') }}" onsubmit="return confirm('Are you ABSOLUTELY SURE you want to delete this user and ALL associated data? This action CANNOT be undone!');">
+                    <div class="form-group mb-3">
+                        <label for="user_select" class="form-label"><strong>Select User to Delete:</strong></label>
+                        <select class="form-select" id="user_select" name="delete_user_id" required>
+                            <option value="">-- Select a user --</option>
+                            {% for user in users %}
+                                {% if user.username != current_user.username %}
+                                    <option value="{{ user.id }}">{{ user.username }} ({{ user.email }})</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                        <small class="form-text text-muted mt-1">You cannot delete your own account.</small>
+                    </div>
+                    <button type="submit" class="btn btn-danger" name="delete_any_user" value="true">
+                        <i class="fas fa-trash-alt mr-2"></i> Delete Selected User
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %} 

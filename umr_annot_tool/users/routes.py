@@ -1557,3 +1557,121 @@ def override_document(project_id, doc_id):
                           project_id=project_id,
                           doc_id=doc_id,
                           filename=doc.filename)
+
+@users.route("/admin_utils", methods=['GET', 'POST'])
+@login_required
+def admin_utils():
+    """Secret admin utilities page"""
+    # Only allow the current user to access this page
+    if current_user.username != "jinzhao":  # Replace with your actual username
+        abort(403)  # Forbidden
+    
+    # Get all users for the dropdown
+    users = User.query.all()
+    
+    if request.method == 'POST':
+        # Delete specific test_qc user
+        if 'delete_any_user' in request.form and request.form['delete_user_id']:
+            try:
+                user_id = int(request.form['delete_user_id'])
+                
+                # Safety check: Don't delete current user
+                if user_id == current_user.id:
+                    flash("You cannot delete your own account", "danger")
+                    return redirect(url_for('users.admin_utils'))
+                
+                # Find the user
+                user_to_delete = User.query.get(user_id)
+                if not user_to_delete:
+                    flash(f"User with ID {user_id} not found", "danger")
+                    return redirect(url_for('users.admin_utils'))
+                
+                username = user_to_delete.username
+                delete_user_and_data(user_to_delete)
+                flash(f"Successfully deleted user '{username}' and all associated data", "success")
+                
+                # Get updated user list
+                users = User.query.all()
+                
+            except Exception as e:
+                db.session.rollback()
+                flash(f"Error deleting user: {str(e)}", "danger")
+    
+    return render_template('admin_utils.html', title='Admin Utilities', users=users)
+
+def delete_user_and_data(user):
+    """Helper function to delete a user and all associated data"""
+    if not user:
+        raise ValueError("No user provided to delete")
+    
+    user_id = user.id
+    
+    # Step 1: Delete all annotations associated with the user's doc versions
+    doc_versions = DocVersion.query.filter_by(user_id=user_id).all()
+    for doc_version in doc_versions:
+        Annotation.query.filter_by(doc_version_id=doc_version.id).delete()
+    
+    # Step 2: Delete all doc versions associated with the user
+    DocVersion.query.filter_by(user_id=user_id).delete()
+    
+    # Step 3: Find all docs created by this user
+    user_docs = Doc.query.filter_by(user_id=user_id).all()
+    for doc in user_docs:
+        # Delete all sentences associated with each doc
+        Sent.query.filter_by(doc_id=doc.id).delete()
+        
+        # Delete all remaining doc versions for this doc (from other users)
+        remaining_versions = DocVersion.query.filter_by(doc_id=doc.id).all()
+        for version in remaining_versions:
+            # Delete annotations for these versions
+            Annotation.query.filter_by(doc_version_id=version.id).delete()
+        DocVersion.query.filter_by(doc_id=doc.id).delete()
+    
+    # Step 4: Delete all docs created by the user
+    Doc.query.filter_by(user_id=user_id).delete()
+    
+    # Step 5: Delete all project user associations
+    Projectuser.query.filter_by(user_id=user_id).delete()
+    
+    # Step 6: Find projects created by this user
+    user_projects = Project.query.filter_by(created_by_user_id=user_id).all()
+    for project in user_projects:
+        # Remove all members from the project
+        Projectuser.query.filter_by(project_id=project.id).delete()
+        
+        # Find and delete all docs associated with this project
+        project_docs = Doc.query.filter_by(project_id=project.id).all()
+        for doc in project_docs:
+            # Delete sentences
+            Sent.query.filter_by(doc_id=doc.id).delete()
+            
+            # Delete all doc versions and their annotations
+            doc_versions = DocVersion.query.filter_by(doc_id=doc.id).all()
+            for version in doc_versions:
+                Annotation.query.filter_by(doc_version_id=version.id).delete()
+            
+            DocVersion.query.filter_by(doc_id=doc.id).delete()
+        
+        # Delete all docs in this project
+        Doc.query.filter_by(project_id=project.id).delete()
+        
+        # Delete Lattice settings for this project
+        Lattice.query.filter_by(project_id=project.id).delete()
+        
+        # Delete Lexicon data for this project
+        Lexicon.query.filter_by(project_id=project.id).delete()
+        
+        # Delete Partialgraph data for this project
+        Partialgraph.query.filter_by(project_id=project.id).delete()
+    
+    # Step 7: Delete all projects created by the user
+    Project.query.filter_by(created_by_user_id=user_id).delete()
+    
+    # Step 8: Delete all posts by the user
+    Post.query.filter_by(user_id=user_id).delete()
+    
+    # Step 9: Finally, delete the user
+    db.session.delete(user)
+    db.session.commit()
+    
+    return True
