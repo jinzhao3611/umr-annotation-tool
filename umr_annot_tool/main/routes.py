@@ -404,7 +404,7 @@ def sentlevel(doc_version_id, sent_id):
                 'sents': [sent.content for sent in sentences],
                 'sent_htmls': [
                     ' '.join([
-                        f'<span class="token" data-index="{i}"><sup class="token-index">{i}</sup>{token}</span>'
+                        f'<span class="token" data-index="{i+1}"><sup class="token-index">{i+1}</sup>{token}</span>'
                         for i, token in enumerate(sent.content.split())
                     ])
                     for sent in sentences
@@ -1092,7 +1092,7 @@ def doclevel(doc_version_id, sent_id):
                 'sents': [sent.content for sent in sentences],
                 'sent_htmls': [
                     ' '.join([
-                        f'<span class="token" data-index="{i}"><sup class="token-index">{i}</sup>{token}</span>'
+                        f'<span class="token" data-index="{i+1}"><sup class="token-index">{i+1}</sup>{token}</span>'
                         for i, token in enumerate(sent.content.split())
                     ])
                     for sent in sentences
