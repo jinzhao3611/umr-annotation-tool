@@ -2006,20 +2006,6 @@
             return '# Error: Invalid data format received from server';
         }
         
-        // Add a comment at the top to explain document structure
-        umrContent += '# UMR Annotation Export - Important Format Notes:\n';
-        umrContent += '# ----------------------------------------------------\n';
-        umrContent += '# Each section in this file contains sentence-level and document-level annotations\n';
-        umrContent += '# for a SINGLE sentence.\n';
-        umrContent += '# \n';
-        umrContent += '# Document-level annotations are PER SENTENCE, not for the entire document.\n';
-        umrContent += '# The document-level annotation for each sentence represents that sentence\'s\n';
-        umrContent += '# contribution to the document graph.\n';
-        umrContent += '# \n';
-        umrContent += '# If you see document-wide information in the first sentence\'s document annotation,\n';
-        umrContent += '# this is likely an error in how annotations were saved.\n';
-        umrContent += '# ----------------------------------------------------\n\n';
-        
         // Loop through each sentence in the document
         data.sentences.forEach((sentence, index) => {
             const sentId = index + 1;
@@ -2028,8 +2014,8 @@
                 // Add sentence meta-info
                 umrContent += `# meta-info :: sent_id = ${data.filename || 'unknown'}-s${sentId}\n`;
                 
-                // Add sentence text with index numbers
-                umrContent += `# :: snt${sentId}\t${sentence.text || ''}\n`;
+                // Add sentence identifier without the sentence text
+                umrContent += `# :: snt${sentId}\n`;
                 
                 // Add word indices if available
                 if (sentence.words && Array.isArray(sentence.words) && sentence.words.length > 0) {

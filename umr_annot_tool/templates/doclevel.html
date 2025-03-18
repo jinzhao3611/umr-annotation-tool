@@ -353,8 +353,8 @@
                 // Add sentence meta-info
                 umrContent += `# meta-info :: sent_id = ${data.filename || 'unknown'}-s${sentId}\n`;
                 
-                // Add sentence text with index numbers
-                umrContent += `# :: snt${sentId}\t${sentence.text || ''}\n`;
+                // Add sentence identifier without the sentence text
+                umrContent += `# :: snt${sentId}\n`;
                 
                 // Add word indices if available
                 if (sentence.words && Array.isArray(sentence.words) && sentence.words.length > 0) {
