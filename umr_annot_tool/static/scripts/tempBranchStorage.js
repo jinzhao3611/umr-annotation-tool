@@ -849,8 +849,8 @@ function extractNodes(annotationText) {
     
     // Multiple node patterns to try - from strict to permissive
     const patterns = [
-        /^(\s*)(s\d+\w*)\s*\/\s*(\w+(?:-\d+)?)/,  // Standard format with indentation
-        /(s\d+\w*)\s*\/\s*(\w+(?:-\d+)?)/         // More permissive format
+        /^(\s*)(s\d+\w*)\s*\/\s*([^\s\(\):]+)/,  // Standard format with indentation - more permissive concept pattern
+        /(s\d+\w*)\s*\/\s*([^\s\(\):]+)/         // More permissive format with permissive concept pattern
     ];
     
     console.log('Total lines to check:', lines.length);
