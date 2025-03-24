@@ -80,6 +80,12 @@ class CreateProjectForm(FlaskForm):
         ('English', 'English'),
         ('Chinese', 'Chinese'),
         ('Arapaho', 'Arapaho'),
+        ('Arabic', 'Arabic'),
+        ('Sanapana', 'Sanapana'),
+        ('Kukama', 'Kukama'),
+        ('Navajo', 'Navajo'),
+        ('Latin', 'Latin'),
+        ('Czech', 'Czech'),
         ('other', 'Other (specify below)')
     ], validators=[DataRequired()])
     custom_language = StringField('Custom Language Name')
