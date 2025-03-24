@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
 from umr_annot_tool.models import User, Projectuser
@@ -80,3 +80,18 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+class LexiconSearchForm(FlaskForm):
+    search_term = StringField('Search Term', 
+                            validators=[DataRequired()],
+                            render_kw={"placeholder": "Enter lemma to search"})
+    submit = SubmitField('Search')
+
+class LexiconAddForm(FlaskForm):
+    lemma = StringField('Lemma', 
+                       validators=[DataRequired()],
+                       render_kw={"placeholder": "Enter lemma"})
+    args = TextAreaField('Arguments (JSON format)', 
+                        validators=[DataRequired()],
+                        render_kw={"placeholder": "{\n  \"ARG0\": \"agent\",\n  \"ARG1\": \"patient\"\n}"})
+    submit = SubmitField('Add Entry')

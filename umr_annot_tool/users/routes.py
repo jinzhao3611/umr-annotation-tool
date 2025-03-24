@@ -725,9 +725,6 @@ def reset_token(token):
         flash('Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
-
-@users.route('/partialgraph/<int:project_id>', methods=['GET', 'POST'])
-def partialgraph(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     project_name = Project.query.filter(Project.id == project_id).first().project_name
@@ -745,9 +742,6 @@ def partialgraph(project_id):
             print(e)
             print("delete partial graph error")
     return render_template('partial_graph.html', title='partial graphs', partialGraphs=partialGraphs, project_name=project_name, project_id=project_id)
-
-@users.route('/alllexicon/<int:project_id>', methods=['GET', 'POST'])
-def alllexicon(project_id):
     if not current_user.is_authenticated:
         return redirect(url_for('users.login'))
     project_name = Project.query.filter(Project.id == project_id).first().project_name
@@ -1675,3 +1669,114 @@ def delete_user_and_data(user):
     db.session.commit()
     
     return True
+
+@users.route("/alllexicon/<int:project_id>", methods=['GET', 'POST'])
+@login_required
+def alllexicon(project_id):
+    """
+    Handle lexicon management for a project.
+    
+    This route allows users to:
+    1. View all lexicon entries
+    2. Add new lexicon entries
+    """
+    # Check if user has permission to access this project
+    project_user = Projectuser.query.filter_by(
+        project_id=project_id,
+        user_id=current_user.id
+    ).first()
+    
+    if not project_user:
+        flash('You do not have permission to access this project', 'danger')
+        return redirect(url_for('users.account'))
+    
+    # Get project name
+    project = Project.query.get_or_404(project_id)
+    project_name = project.project_name
+    
+    # Get or create lexicon for this project
+    lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+    if not lexicon:
+        lexicon = Lexicon(project_id=project_id, data={})
+        db.session.add(lexicon)
+        db.session.commit()
+    
+    # Create form for adding entries
+    from umr_annot_tool.users.forms import LexiconAddForm
+    add_form = LexiconAddForm()
+    
+    # Handle adding new lexicon entry
+    if request.method == 'POST' and add_form.validate_on_submit():
+        try:
+            lemma = add_form.lemma.data
+            # Parse the JSON args
+            args = json.loads(add_form.args.data)
+            
+            # Update the lexicon data
+            current_data = lexicon.data
+            current_data[lemma] = args
+            
+            # Save to database
+            lexicon.data = current_data
+            flag_modified(lexicon, "data")
+            db.session.commit()
+            
+            flash(f'Lexicon entry "{lemma}" has been added successfully', 'success')
+            return redirect(url_for('users.alllexicon', project_id=project_id))
+        except json.JSONDecodeError:
+            flash('Invalid JSON format for arguments', 'danger')
+        except Exception as e:
+            flash(f'Error adding lexicon entry: {str(e)}', 'danger')
+    
+    return render_template(
+        'alllexicon.html',
+        title='Lexicon Management',
+        project_id=project_id,
+        project_name=project_name,
+        entries=lexicon.data,
+        add_form=add_form
+    )
+
+@users.route("/delete_lexicon_entry/<int:project_id>", methods=['POST'])
+@login_required
+def delete_lexicon_entry(project_id):
+    """Delete a lexicon entry."""
+    # Check if user has permission to access this project
+    project_user = Projectuser.query.filter_by(
+        project_id=project_id,
+        user_id=current_user.id
+    ).first()
+    
+    if not project_user:
+        return jsonify({"success": False, "message": "Permission denied"})
+    
+    try:
+        # Get the lemma to delete from request
+        data = request.json
+        lemma = data.get('lemma')
+        
+        if not lemma:
+            return jsonify({"success": False, "message": "No lemma provided"})
+        
+        # Get the lexicon
+        lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+        
+        if not lexicon:
+            return jsonify({"success": False, "message": "Lexicon not found"})
+        
+        # Remove the entry
+        current_data = lexicon.data
+        if lemma in current_data:
+            del current_data[lemma]
+            
+            # Save changes
+            lexicon.data = current_data
+            flag_modified(lexicon, "data")
+            db.session.commit()
+            
+            return jsonify({"success": True, "message": f"Entry '{lemma}' deleted successfully"})
+        else:
+            return jsonify({"success": False, "message": f"Entry '{lemma}' not found"})
+    
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)})

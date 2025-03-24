@@ -436,3 +436,22 @@ function action_on_enter(field, e, s_id) {
 String.prototype.repeat = function(length) {
  return Array(length + 1).join(this);
 };
+
+/**
+ * Filter lexicon entries based on search input
+ * @param {string} inputId - ID of the search input element
+ */
+function filterLexiconEntries(inputId) {
+    const searchInput = document.getElementById(inputId);
+    const searchTerm = searchInput.value.toLowerCase();
+    const entryItems = document.querySelectorAll('.entry-item');
+    
+    entryItems.forEach(item => {
+        const lemma = item.querySelector('.entry-lemma').textContent.toLowerCase();
+        if (lemma.includes(searchTerm)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}

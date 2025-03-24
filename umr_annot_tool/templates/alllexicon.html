@@ -1,52 +1,174 @@
 {% extends "layout.html" %}
 
 {% block head %}
-    <script src="../static/scripts/alllexicon.js" type="text/javascript"></script>
-    <script src="../static/scripts/penmanString2umrDict.js" type="text/javascript"></script>
-    <script src="../static/scripts/umrDict2penmanString.js" type="text/javascript"></script>
-    <script src="../static/scripts/sentLevel.js" type="text/javascript"></script>
-    <script src="../static/scripts/utils.js" type="text/javascript"></script>
-    <script src="../static/scripts/lexicon.js" type="text/javascript"></script>
-    <script src="../static/scripts/BlobBuilder.js"></script>
-    <script src="../static/scripts/FileSaver.js"></script>
+    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+    <style>
+        .lexicon-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .lexicon-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .lexicon-search, .lexicon-add {
+            flex: 1;
+            min-width: 300px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .lexicon-entries {
+            margin-top: 20px;
+        }
+        .entry-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .entry-lemma {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .entry-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .entry-args {
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+        .arg-item {
+            margin-bottom: 5px;
+        }
+        .no-entries {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
 {% endblock head %}
 
 {% block content %}
-     <a class="btn btn-info btn-sm" id="annot-button" title="click to go back to project page" href="{{ url_for('users.project', project_id=project_id) }}">back to project</a>
-     <button class="btn btn-info btn-sm" id="export-lexi" onclick="exportLexicon(`{{ lexi }}`, `{{ project_name }}`)">export lexicon</button>
-     <button class="btn btn-info btn-sm" onclick="deleteLexicon({{ project_id }})">delete whole lexicon</button>
+    <div class="content-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Lexicon Management - {{ project_name }}</h2>
+            <a class="btn btn-outline-secondary" href="{{ url_for('users.project', project_id=project_id) }}">
+                <i class="fas fa-arrow-left"></i> Back to Project
+            </a>
+        </div>
 
-     <div style="display: block">
-        <label for="all-projects"></label>
-        <input style="width:320px" list="all-project" id="all-projects" onfocus="this.value=''" onchange="this.blur();" placeholder="share this lexicon with your other projects">
-        <datalist id="all-project"></datalist>
-        <button class="btn btn-info btn-sm" onclick="shareWithProject({{ project_id }})">Share</button>
-         <span>warning: sharing lexicon with your other project will overwrite the existing lexicon of the target project</span>
-     </div>
+        <div class="lexicon-container">
+            <div class="lexicon-actions">
+                <!-- Search Form -->
+                <div class="lexicon-search">
+                    <h4>Search Lexicon</h4>
+                    <form onsubmit="event.preventDefault();">
+                        <div class="form-group">
+                            <label for="client-search">Search Term</label>
+                            <input type="text" class="form-control" id="client-search" 
+                                   placeholder="Enter lemma to search"
+                                   oninput="filterLexiconEntries('client-search')">
+                        </div>
+                    </form>
+                </div>
 
+                <!-- Add Form -->
+                <div class="lexicon-add">
+                    <h4>Add New Entry</h4>
+                    <form method="POST" action="{{ url_for('users.alllexicon', project_id=project_id) }}">
+                        {{ add_form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ add_form.lemma.label(class="form-control-label") }}
+                            {{ add_form.lemma(class="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ add_form.args.label(class="form-control-label") }}
+                            {{ add_form.args(class="form-control", rows=5) }}
+                        </div>
+                        <div class="form-group">
+                            {{ add_form.submit(class="btn btn-success") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-
-    <div id="error_msg">
-    </div>
-
-    <div class="content-section" style="overflow-y: auto; height: 900px">
-        <legend class="border-bottom mb-4">lexicon entries in {{ project_name }}</legend>
-        <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#collapseDocumentsInProject" aria-expanded="true" aria-controls="collapseDocumentsInProject">collapse</button>
-        <div class="collapse show" id="collapseDocumentsInProject">
-            <ul class="list-group" id="lexi">
-            </ul>
+            <!-- Lexicon Entries -->
+            <div class="lexicon-entries">
+                <h4>Lexicon Entries</h4>
+                {% if entries %}
+                    {% for lemma, args in entries.items() %}
+                        <div class="entry-item">
+                            <div class="entry-header">
+                                <div class="entry-lemma">{{ lemma }}</div>
+                                <div class="entry-actions">
+                                    <button class="btn btn-sm btn-outline-danger" 
+                                            onclick="deleteLexiconEntry('{{ lemma }}', {{ project_id }})">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="entry-args">
+                                {% for arg, desc in args.items() %}
+                                    <div class="arg-item">
+                                        <strong>{{ arg }}:</strong> {{ desc }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-entries">
+                        <p>No lexicon entries found. Add a new entry to get started.</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
+{% endblock content %}
 
-
-    <script type="text/javascript">
-        populateLexi(`{{ lexi | safe }}`, {{ project_id }});
-        populateAllProjects(`{{ all_projects | safe }}`);
-    </script>
-
-
-{% endblock content%}
-
-
-
-
+{% block footer_scripts %}
+<script>
+function deleteLexiconEntry(lemma, projectId) {
+    if (confirm(`Are you sure you want to delete the lexicon entry "${lemma}"?`)) {
+        // Send AJAX request to delete
+        fetch(`{{ url_for('users.delete_lexicon_entry', project_id=0) }}`.replace('0', projectId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ lemma: lemma })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Reload the page to refresh the entries
+                window.location.reload();
+            } else {
+                alert('Error deleting entry: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while trying to delete the entry.');
+        });
+    }
+}
+</script>
+{% endblock footer_scripts %} 

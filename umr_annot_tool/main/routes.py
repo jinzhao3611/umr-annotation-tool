@@ -4,7 +4,6 @@ from werkzeug.utils import secure_filename
 from typing import List, Tuple, Optional, Dict
 import json
 from umr_annot_tool.main.umr_parser import parse_umr_file
-from umr_annot_tool.resources.utility_modules.parse_lexicon_file import parse_lexicon_xml, FrameDict
 from flask_login import current_user, login_required
 import os
 import logging
@@ -13,8 +12,7 @@ from bs4 import BeautifulSoup
 from flask import Blueprint
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph, DocVersion
-from umr_annot_tool.main.forms import UploadForm, UploadLexiconForm, LexiconItemForm, LookUpLexiconItemForm, \
-    InflectedForm, SenseForm, CreateProjectForm, LexiconAddForm
+from umr_annot_tool.main.forms import UploadForm, CreateProjectForm
 from umr_annot_tool.resources.rolesets import known_relations
 from umr_annot_tool.resources.utility_modules import get_merged_rolesets
 import tempfile
