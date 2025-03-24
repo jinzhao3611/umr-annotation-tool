@@ -253,35 +253,47 @@ def upload_document(current_project_id):
     if form.validate_on_submit():
         logger.info("Form validated")
         if form.files.data:
-            form_file = form.files.data[0]  # Get the first file
-            logger.info(f"Got file: {form_file.filename}")
+            uploaded_files = form.files.data
+            logger.info(f"Got {len(uploaded_files)} files")
             
-            if form_file.filename == '':
-                logger.error("Empty filename")
-                flash('No file selected', 'danger')
-                return redirect(request.url)
-                
-            if not form_file.filename.endswith('.umr'):
-                logger.error("Invalid file extension")
-                flash('Only .umr files are allowed', 'danger')
-                return redirect(request.url)
-                
-            logger.info("About to call handle_file_upload")
-            sent_annots, doc_annots, doc_id = handle_file_upload(form_file, current_project_id)
-            logger.info("handle_file_upload returned")
+            # Track the IDs of successfully uploaded documents
+            uploaded_doc_ids = []
             
-            # Check if handle_file_upload failed
-            if sent_annots is None or doc_id is None:
-                logger.error("File upload processing failed")
-                return redirect(request.url)
+            for form_file in uploaded_files:
+                logger.info(f"Processing file: {form_file.filename}")
                 
-            logger.info("handle_file_upload succeeded")
-            flash('Your file has been uploaded!', 'success')
-            return redirect(url_for('users.project', project_id=current_project_id))
+                if form_file.filename == '':
+                    logger.error("Empty filename")
+                    continue
+                    
+                if not form_file.filename.endswith('.umr'):
+                    logger.error("Invalid file extension")
+                    flash(f'Skipped {form_file.filename}: Only .umr files are allowed', 'warning')
+                    continue
+                    
+                logger.info(f"Handling file upload for {form_file.filename}")
+                sent_annots, doc_annots, doc_id = handle_file_upload(form_file, current_project_id)
+                
+                # Check if handle_file_upload failed
+                if sent_annots is None or doc_id is None:
+                    logger.error(f"File upload processing failed for {form_file.filename}")
+                    flash(f'Failed to upload {form_file.filename}', 'danger')
+                    continue
+                
+                logger.info(f"Succeeded uploading {form_file.filename}")
+                flash(f'File {form_file.filename} has been uploaded!', 'success')
+                uploaded_doc_ids.append(doc_id)
+            
+            if uploaded_doc_ids:
+                # If at least one file was uploaded successfully, redirect to the project page
+                return redirect(url_for('users.project', project_id=current_project_id))
+            else:
+                # If no files were uploaded successfully, stay on the upload page
+                return redirect(request.url)
 
         else:
-            logger.error("No file in form.files.data")
-            flash('No file selected', 'danger')
+            logger.error("No files in form.files.data")
+            flash('No files selected', 'danger')
             return redirect(request.url)
             
     elif request.method == 'POST':
