@@ -43,10 +43,6 @@ WTForms==2.3.3
 editdistance==0.5.3
 
 # For UMR evaluation
-# Ancast needs to be installed locally from GitHub:
-# git clone https://github.com/umr4nlp/ancast.git
-# cd ancast
-# pip install -e .
-# ancast>=0.1.0
+ancast>=0.1.0
 
 Pillow

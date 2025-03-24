@@ -423,15 +423,50 @@
                 <!-- Error display section -->
                 <div id="ancast-error" style="display: none;">
                     <div class="alert alert-danger">
-                        An error occurred during Ancast evaluation.
+                        <h5 class="alert-heading">Evaluation Error</h5>
+                        <p id="error-message">An error occurred during Ancast evaluation.</p>
                     </div>
                     <div class="mt-3">
+                        <p><strong>Error Details:</strong></p>
+                        <pre id="error-details" class="bg-light p-3"></pre>
+                        
                         <p><strong>Troubleshooting:</strong></p>
                         <ul>
-                            <li>Check the UMR annotations for proper formatting</li>
-                            <li>Verify that Ancast is properly installed</li>
+                            <li>Check for multiple root nodes in the UMR graphs</li>
+                            <li>Verify the UMR annotations follow the correct format</li>
+                            <li>Make sure all required fields are present (sentence ID, content, graph, alignment)</li>
                             <li>Check server logs for detailed error information</li>
                         </ul>
+                        
+                        <div id="umr-debug" class="mt-4" style="display: none;">
+                            <p><strong>Debug Information:</strong></p>
+                            <div class="accordion" id="umrAccordion">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#testUMR">
+                                            Test UMR Content
+                                        </button>
+                                    </div>
+                                    <div id="testUMR" class="collapse" data-parent="#umrAccordion">
+                                        <div class="card-body">
+                                            <pre id="test-umr-content"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#goldUMR">
+                                            Gold UMR Content
+                                        </button>
+                                    </div>
+                                    <div id="goldUMR" class="collapse" data-parent="#umrAccordion">
+                                        <div class="card-body">
+                                            <pre id="gold-umr-content"></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -477,4 +512,97 @@ pip install -e .
 <input type="hidden" id="doc1-version-id" value="{{ doc_version_1_id }}">
 <input type="hidden" id="doc2-version-id" value="{{ doc_version_2_id }}">
 <input type="hidden" id="current-sentence-id" value="{{ sent_id }}">
+
+{% block scripts %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#evaluate-btn').click(function() {
+        // Show the modal and loading indicator
+        $('#ancastModal').modal('show');
+        $('#ancast-loading').show();
+        $('#ancast-results').hide();
+        $('#ancast-error').hide();
+        $('#umr-debug').hide();
+
+        // Make API call to evaluate UMR using the new endpoint
+        $.ajax({
+            url: `/evaluate_umr/${window.state.docVersion1Id}/${window.state.docVersion2Id}/${window.state.currentSentId}`,
+            method: 'POST',
+            success: function(response) {
+                $('#ancast-loading').hide();
+                
+                if (response.error) {
+                    // Show error message
+                    $('#error-message').text(response.error);
+                    $('#error-details').text(response.details || 'No additional details available');
+                    
+                    // If UMR content is available, show it for debugging
+                    if (response.test_umr || response.gold_umr) {
+                        $('#test-umr-content').text(response.test_umr || 'Not available');
+                        $('#gold-umr-content').text(response.gold_umr || 'Not available');
+                        $('#umr-debug').show();
+                    }
+                    
+                    $('#ancast-error').show();
+                    return;
+                }
+
+                // Update summary scores
+                $('#ancast-score').text(response.summary.ancast_score);
+                $('#ancast-precision').text(response.summary.precision);
+                $('#ancast-recall').text(response.summary.recall);
+                $('#ancast-f1').text(response.summary.f1);
+
+                // Update detailed results
+                $('#ancast-details').text(JSON.stringify(response.details, null, 2));
+                
+                // Show results
+                $('#ancast-results').show();
+            },
+            error: function(xhr, status, error) {
+                $('#ancast-loading').hide();
+                
+                // Try to parse error response
+                let errorMessage = 'An unexpected error occurred';
+                let errorDetails = error;
+                
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    errorMessage = response.error || errorMessage;
+                    errorDetails = response.details || errorDetails;
+                    
+                    // If UMR content is available, show it for debugging
+                    if (response.test_umr || response.gold_umr) {
+                        $('#test-umr-content').text(response.test_umr || 'Not available');
+                        $('#gold-umr-content').text(response.gold_umr || 'Not available');
+                        $('#umr-debug').show();
+                    }
+                } catch (e) {
+                    console.error('Error parsing error response:', e);
+                }
+                
+                $('#error-message').text(errorMessage);
+                $('#error-details').text(errorDetails);
+                $('#ancast-error').show();
+            }
+        });
+    });
+
+    // Handle download results
+    $('#download-results').click(function() {
+        const results = $('#ancast-details').text();
+        const blob = new Blob([results], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ancast_results.json';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+    });
+});
+</script>
+{% endblock %}
+
 {% endblock content %} 

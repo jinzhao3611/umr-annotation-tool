@@ -1635,1727 +1635,402 @@ def adjudication(doc_version_1_id, doc_version_2_id, sent_id):
         flash('An error occurred while preparing the adjudication view.', 'danger')
         return redirect(url_for('users.projects'))
 
-@main.route("/debug_update_relation/<int:doc_version_id>/<int:sent_id>", methods=['POST'])
-def debug_update_relation(doc_version_id, sent_id):
-    """Debug route for relation updates."""
-    if not current_user.is_authenticated:
-        return jsonify({"error": "Not authenticated"}), 401
+def format_alignment_string(alignment_dict):
+    """Format alignment dictionary into string format expected by Ancast."""
+    if not alignment_dict:
+        return ""
     
-    try:
-        # Log all request data for debugging
-        current_app.logger.info(f"Debug update_relation called with doc_version_id={doc_version_id}, sent_id={sent_id}")
-        current_app.logger.info(f"Request data: {request.get_json()}")
-        
-        # Get annotation for this sentence to check if it exists
-        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
-        annotation_exists = annotation is not None
-        
-        return jsonify({
-            "success": True,
-            "message": "Debug relation update endpoint called successfully",
-            "doc_version_id": doc_version_id,
-            "sent_id": sent_id,
-            "annotation_exists": annotation_exists,
-            "request_data": request.get_json()
-        })
-        
-    except Exception as e:
-        current_app.logger.error(f"Error in debug_update_relation: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-
-@main.route("/update_relation_query", methods=['POST'])
-def update_relation_query():
-    """Update a relation in an annotation using query parameters."""
-    if not current_user.is_authenticated:
-        return jsonify({"error": "Not authenticated"}), 401
-    
-    try:
-        # Get parameters from query string
-        doc_version_id = request.args.get('doc_version_id', type=int)
-        sent_id = request.args.get('sent_id', type=int)
-        
-        if not doc_version_id or not sent_id:
-            return jsonify({"error": "Missing doc_version_id or sent_id parameters"}), 400
-        
-        # Get data from request body
-        data = request.get_json()
-        updated_annotation = data.get('annotation')
-        old_relation = data.get('old_relation')
-        new_relation = data.get('new_relation')
-        
-        # Validate inputs
-        if not updated_annotation or not old_relation or not new_relation:
-            return jsonify({"error": "Missing required fields in request body"}), 400
-        
-        if not new_relation.startswith(':'):
-            return jsonify({"error": "Invalid relation format"}), 400
-        
-        # Get the document version
-        doc_version = DocVersion.query.get_or_404(doc_version_id)
-        
-        # Check if the user has permission to modify this document
-        if not has_permission_for_doc(current_user, doc_version.doc_id):
-            return jsonify({"error": "Not authorized to modify this document"}), 403
-        
-        # Get annotation for this sentence
-        annotation = Annotation.query.filter_by(doc_version_id=doc_version_id, sent_id=sent_id).first()
-        
-        if not annotation:
-            return jsonify({"error": "Annotation not found"}), 404
-        
-        # Save the updated annotation
-        annotation.sent_annot = updated_annotation
-        db.session.commit()
-        
-        # Log the change
-        current_app.logger.info(f"User {current_user.username} updated relation from {old_relation} to {new_relation} in doc_version {doc_version_id}, sentence {sent_id}")
-        
-        return jsonify({
-            "success": True,
-            "message": f"Updated relation from {old_relation} to {new_relation}",
-            "doc_version_id": doc_version_id,
-            "sent_id": sent_id
-        }), 200
-        
-    except Exception as e:
-        current_app.logger.error(f"Error updating relation: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-
-@main.route("/test_param_route/<int:param1>/<int:param2>", methods=['GET'])
-def test_param_route(param1, param2):
-    """Test route with parameters to verify routing pattern works."""
-    return jsonify({
-        "success": True,
-        "message": "Test parameter route is working correctly",
-        "param1": param1,
-        "param2": param2
-    })
-
-@main.route("/test_route", methods=['GET'])
-def test_route():
-    """Test route to verify routing is working."""
-    return jsonify({
-        "success": True,
-        "message": "Test route is working correctly"
-    })
-
-@main.route("/download_frames", methods=['GET'])
-def download_frames():
-    """
-    Serve the appropriate frames file based on project language.
-    This route doesn't require authentication to simplify client-side access.
-    """
-    try:
-        # Get project ID from the query parameter or referrer
-        project_id = request.args.get('project_id')
-        if not project_id and request.referrer:
-            # Try to extract project_id from the referrer URL if not provided directly
-            match = re.search(r'/project/(\d+)', request.referrer)
-            if match:
-                project_id = match.group(1)
-        
-        # Default to English frames if we can't determine the project
-        frames_filename = 'frames_english.json'
-        
-        if project_id:
-            # Look up the project language
-            project = Project.query.get(project_id)
-            if project and project.language.lower() == 'chinese':
-                frames_filename = 'frames_chinese.json'
-            # For other languages, fall back to English or don't serve frames at all
-            elif project and project.language.lower() != 'english':
-                # For languages other than English or Chinese, don't serve frames
-                current_app.logger.info(f"No frames file available for language: {project.language}")
-                return jsonify({}), 200
-        
-        frames_path = os.path.join(current_app.root_path, 'resources', frames_filename)
-        
-        if not os.path.exists(frames_path):
-            current_app.logger.error(f"Frames file not found at {frames_path}")
-            return jsonify({"error": "Frames file not found"}), 404
-            
-        with open(frames_path, 'r') as f:
-            frames_data = json.load(f)
-            
-        return jsonify(frames_data)
-    except Exception as e:
-        current_app.logger.error(f"Error serving frames file: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-
-@main.route("/lemmatize", methods=['GET'])
-def lemmatize():
-    """
-    Endpoint for lemmatizing a word.
-    Usage: /lemmatize?word=running
-    Returns: JSON with lemma ('run' in this example)
-    """
-    word = request.args.get('word', '')
-    if not word:
-        current_app.logger.warning("No word provided in lemmatize request")
-        return jsonify({'success': False, 'message': 'No word provided'}), 400
-    
-    try:
-        current_app.logger.info(f"Lemmatizing word: '{word}'")
-        
-        # Special case for 'missing' since we know it's causing issues
-        if word == 'missing':
-            lemma = 'miss'
-            current_app.logger.info(f"Special case for 'missing': setting lemma to '{lemma}'")
-            return jsonify({'success': True, 'lemma': lemma, 'original': word})
-        
-        # Import nltk for better lemmatization (if available)
-        try:
-            from nltk.stem import WordNetLemmatizer
-            from nltk.corpus import wordnet
-            
-            # Initialize lemmatizer
-            lemmatizer = WordNetLemmatizer()
-            
-            # Try to lemmatize for different parts of speech
-            lemma_verb = lemmatizer.lemmatize(word, wordnet.VERB)
-            lemma_noun = lemmatizer.lemmatize(word, wordnet.NOUN)
-            
-            # Choose the shortest result as it's likely the correct lemma
-            if len(lemma_verb) <= len(lemma_noun):
-                lemma = lemma_verb
-            else:
-                lemma = lemma_noun
-                
-            current_app.logger.info(f"NLTK lemmatization: '{word}' -> '{lemma}'")
-        except ImportError:
-            # Fallback to basic rules if NLTK is not available
-            current_app.logger.warning("NLTK not available, using fallback rules for lemmatization")
-            
-            # Simple fallback rules
-            if word.endswith('ing'):
-                lemma = word[:-3]
-            elif word.endswith('ed') and len(word) > 3:
-                lemma = word[:-2]
-            elif word.endswith('s') and not word.endswith('ss') and len(word) > 2:
-                lemma = word[:-1]
-            elif word.endswith('es') and len(word) > 3:
-                lemma = word[:-2]
-            else:
-                lemma = word
-                
-            current_app.logger.info(f"Fallback lemmatization: '{word}' -> '{lemma}'")
-        
-        # Special adjustment for "missing" -> "miss"
-        if word == 'missing' and lemma == 'miss':
-            current_app.logger.info("Confirmed lemmatization of 'missing' to 'miss'")
-        
-        return jsonify({'success': True, 'lemma': lemma, 'original': word})
-    except Exception as e:
-        current_app.logger.error(f"Error lemmatizing '{word}': {str(e)}")
-        current_app.logger.exception(e)  # This logs the full stack trace
-        return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 500
-
-@main.route("/get_frames", methods=['GET'])
-def get_frames():
-    """
-    Endpoint for looking up frames for a lemma.
-    Usage: /get_frames?word=run&project_id=1
-    Returns: JSON with list of frames
-    """
-    word = request.args.get('word', '')
-    if not word:
-        current_app.logger.warning("No word provided in get_frames request")
-        return jsonify({'success': False, 'message': 'No word provided'}), 400
-    
-    # Get project ID to determine language
-    project_id = request.args.get('project_id')
-    
-    try:
-        # Default to English frames
-        frames_file = FRAME_FILE_ENGLISH
-        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        
-        # If project ID is provided, check the language
-        if project_id:
-            project = Project.query.get(project_id)
-            if project:
-                if project.language.lower() == 'chinese':
-                    frames_file = FRAME_FILE_CHINESE
-                    current_app.logger.info(f"Using Chinese frames file for project {project_id}")
-                elif project.language.lower() != 'english':
-                    # For languages other than English or Chinese, return empty frames
-                    current_app.logger.info(f"No frames available for language: {project.language}")
-                    return jsonify({'success': True, 'frames': [], 'word': word})
-        
-        # Alternative paths for the frames file
-        frames_file_alt = None
-        if frames_file == FRAME_FILE_ENGLISH:
-            frames_file_alt = os.path.join(base_dir, 'resources', 'frames_english.json')
-        elif frames_file == FRAME_FILE_CHINESE:
-            frames_file_alt = os.path.join(base_dir, 'resources', 'frames_chinese.json')
-        
-        # Try the pre-defined path first
-        if os.path.exists(frames_file):
-            current_app.logger.info(f"Found frames file at pre-defined path: {frames_file}")
-        # If that doesn't work, try the alternate path
-        elif frames_file_alt and os.path.exists(frames_file_alt):
-            frames_file = frames_file_alt
-            current_app.logger.info(f"Found frames file at alternate path: {frames_file}")
-        else:
-            # Log all the paths we tried
-            current_app.logger.error(f"Frames file not found at any of these paths:")
-            current_app.logger.error(f"1. {frames_file}")
-            if frames_file_alt:
-                current_app.logger.error(f"2. {frames_file_alt}")
-            current_app.logger.error(f"3. {os.path.abspath(frames_file)}")
-            
-        # Load frames from JSON file
-        try:
-            with open(frames_file, 'r') as f:
-                frames_data = json.load(f)
-            current_app.logger.info(f"Successfully loaded frames file with {len(frames_data)} entries")
-        except Exception as e:
-            current_app.logger.error(f"Error loading frames file: {e}")
-            return jsonify({'success': False, 'frames': [], 'message': f'Error loading frames file: {str(e)}'}), 500
-            
-        current_app.logger.info(f"Looking up frames for word: '{word}'")
-        
-        # Special handling for "miss" lemma
-        if word == 'miss':
-            miss_frames = [k for k in frames_data.keys() if k.startswith('miss-')]
-            if miss_frames:
-                current_app.logger.info(f"Found {len(miss_frames)} frames for 'miss': {miss_frames}")
-                return jsonify({'success': True, 'frames': miss_frames, 'word': word})
-            else:
-                # If we couldn't find any miss- frames, log a warning
-                current_app.logger.warning("No 'miss-' frames found in the frames file")
-                # List a few entries from frames_data to debug
-                sample_keys = list(frames_data.keys())[:5]
-                current_app.logger.info(f"Sample frames keys: {sample_keys}")
-        
-        # Look up frames for the word
-        frames = []
-        
-        # Check for numbered frames with exact prefix match
-        matching_frames = [k for k in frames_data.keys() if k.startswith(f"{word}-")]
-        
-        # Also check for compound frames like "miss-out-03" when looking for "miss"
-        compound_frames = [k for k in frames_data.keys() if k.startswith(f"{word}-") and "-" in k[len(word)+1:]]
-        
-        # Add all found frames to the result
-        frames.extend(matching_frames)
-        
-        # Debug information
-        current_app.logger.info(f"Found {len(matching_frames)} basic frame matches: {matching_frames}")
-        if compound_frames:
-            current_app.logger.info(f"Found {len(compound_frames)} compound frame matches: {compound_frames}")
-        
-        # If the plain lemma itself is in the frames, add it too
-        if word in frames_data:
-            frames.append(word)
-            current_app.logger.info(f"Found exact match for '{word}'")
-        
-        # Print out the actual frames found
-        if frames:
-            current_app.logger.info(f"Returning frames for '{word}': {frames}")
-        else:
-            current_app.logger.warning(f"No frames found for '{word}'")
-            
-        return jsonify({'success': True, 'frames': frames, 'word': word})
-    except Exception as e:
-        current_app.logger.error(f"Error looking up frames for '{word}': {str(e)}")
-        current_app.logger.exception(e)  # This logs the full stack trace
-        return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 500
-
-@main.route("/export_annotation/<int:doc_version_id>", methods=['GET'])
-@login_required
-def export_annotation(doc_version_id):
-    """
-    Export all annotation data for a document in UMR format
-    
-    Args:
-        doc_version_id: The ID of the document version to export
-        
-    Returns:
-        JSON response with the annotation data or an error message
-    """
-    logger.info(f"Export annotation request for document version {doc_version_id}")
-    
-    try:
-        # Get the document version
-        doc_version = DocVersion.query.get_or_404(doc_version_id)
-        
-        # Check if the user has permission to access this document
-        project_user = Projectuser.query.filter_by(
-            user_id=current_user.id, 
-            project_id=doc_version.doc.project_id
-        ).first()
-        
-        if not project_user and not current_user.is_admin:
-            logger.warning(f"User {current_user.id} tried to access document version {doc_version_id} without permission")
-            return jsonify({"success": False, "message": "You don't have permission to access this document"}), 403
-        
-        # Get the document filename
-        filename = doc_version.doc.filename.split('.')[0]  # Remove extension if present
-        
-        # Get all sentences for this document version
-        sents = Sent.query.filter_by(doc_id=doc_version.doc_id).order_by(Sent.id).all()
-        
-        # Detailed debug logging
-        logger.info(f"Found {len(sents)} sentences for document version {doc_version_id}")
-        
-        # Prepare the response data
-        sentences_data = []
-        
-        # Check if any sentence's document annotation is very large compared to others
-        # which might indicate it incorrectly contains document-wide annotations
-        doc_annot_lengths = []
-        
-        # First pass to gather statistics
-        for sent in sents:
-            annotation = Annotation.query.filter_by(
-                doc_version_id=doc_version_id,
-                sent_id=sent.id
-            ).first()
-            
-            if annotation and annotation.doc_annot:
-                doc_annot_lengths.append(len(annotation.doc_annot))
-        
-        # Calculate average and standard deviation
-        if doc_annot_lengths:
-            avg_length = sum(doc_annot_lengths) / len(doc_annot_lengths)
-            std_dev = (sum((x - avg_length) ** 2 for x in doc_annot_lengths) / len(doc_annot_lengths)) ** 0.5
-            logger.info(f"Document annotation statistics: avg={avg_length:.2f}, std_dev={std_dev:.2f}")
-        
-        # Second pass to prepare the data
-        for sent in sents:
-            # Get the annotation for this sentence
-            annotation = Annotation.query.filter_by(
-                doc_version_id=doc_version_id,
-                sent_id=sent.id
-            ).first()
-            
-            # Detailed debug logging
-            logger.info(f"Processing sentence {sent.id}:")
-            logger.info(f"  - content: {sent.content[:50]}...")
-            logger.info(f"  - annotation: {annotation.id if annotation else 'None'}")
-            
-            # Get alignments
-            alignments = {}
-            if annotation and annotation.alignment:
-                alignments = annotation.alignment
-                logger.info(f"  - alignments: {alignments}")
-            
-            # Get words and create indices
-            try:
-                words = sent.content.split()
-                logger.info(f"  - words: {words[:5]}...")
-            except Exception as e:
-                logger.error(f"Error splitting content: {e}")
-                words = []
-            
-            # Add sentence data to the list
-            sentence_data = {
-                "text": sent.content if hasattr(sent, 'content') else "",
-                "words": words,
-                "annotation": annotation.sent_annot if annotation else "",
-                "alignments": alignments,
-                "doc_annotation": annotation.doc_annot if annotation else ""
-            }
-            
-            # Add additional logging to debug the document annotation issue
-            logger.info(f"  - doc_annotation for sentence {sent.id}: {sentence_data['doc_annotation'][:50] if sentence_data['doc_annotation'] else 'None'}")
-            logger.info(f"  - Sentence ID: {sent.id}, Doc Version ID: {doc_version_id}")
-            
-            # Ensure each doc_annotation is specific to the sentence
-            # This is critical as the client expects each sentence to have its own document annotation
-            if annotation and annotation.doc_annot:
-                logger.info(f"  - doc_annotation length: {len(annotation.doc_annot)}")
-                if sent.id == sents[0].id:  # First sentence
-                    logger.info(f"FIRST SENTENCE DOC ANNOTATION: {annotation.doc_annot[:100]}...")
-                    
-                    # Check if first sentence has unusually large doc annotation
-                    if doc_annot_lengths and len(doc_annot_lengths) > 1:
-                        first_length = len(annotation.doc_annot)
-                        if first_length > avg_length + 2 * std_dev:
-                            logger.warning(f"WARNING: First sentence doc annotation is unusually large: {first_length} chars vs avg {avg_length:.2f}")
-                            logger.warning("This may indicate the entire document's annotation was incorrectly stored with the first sentence")
-                            
-                            # Add a warning to the sentence data
-                            sentence_data["doc_annotation_warning"] = "Warning: This document-level annotation may contain document-wide information that should be distributed across sentences."
-                else:
-                    # Log a preview of other sentences' doc annotations
-                    logger.info(f"OTHER SENTENCE DOC ANNOTATION: {annotation.doc_annot[:100]}...")
-            
-            sentences_data.append(sentence_data)
-        
-        # Log the complete structure
-        logger.info(f"Prepared data for {len(sentences_data)} sentences")
-        
-        # Create the response
-        response_data = {
-            "success": True,
-            "filename": filename,
-            "sentences": sentences_data
-        }
-        
-        logger.info(f"Successfully exported annotation data for document version {doc_version_id}")
-        return jsonify(response_data)
-        
-    except Exception as e:
-        import traceback
-        error_traceback = traceback.format_exc()
-        logger.error(f"Error exporting annotation data for document version {doc_version_id}: {str(e)}")
-        logger.error(f"Traceback: {error_traceback}")
-        
-        # Return a more detailed error message in development mode
-        if current_app.debug:
-            return jsonify({
-                "success": False, 
-                "message": str(e),
-                "traceback": error_traceback
-            }), 500
-        else:
-            return jsonify({"success": False, "message": str(e)}), 500
-
-def format_umr_for_ancast(umr_text):
-    """Format UMR text to match Ancast's expected format.
-    
-    This function ensures that UMR annotations conform to the exact format Ancast expects:
-    - Proper spacing in sentence IDs (# :: snt)
-    - Consistent section headers
-    - Proper block separation
-    - Complete structure with all required sections
-    - Balanced parentheses in graph structures
-    - Proper variable naming conventions
-    """
-    import logging
-    import re
-    
-    logger = logging.getLogger(__name__)
-    
-    # Skip empty text
-    if not umr_text or not umr_text.strip():
-        logger.warning("Empty UMR text received")
-        return umr_text
-    
-    logger.info("Starting UMR formatting")
-    logger.debug(f"Original UMR text length: {len(umr_text)}")
-    
-    # Log a sample of the input text for debugging
-    sample = umr_text[:500] + "..." if len(umr_text) > 500 else umr_text
-    logger.debug(f"Input text sample: {sample}")
-    
-    # Normalize whitespace and newlines
-    umr_text = umr_text.replace('\r\n', '\n').replace('\r', '\n')
-    
-    # Handle different section header formats consistently
-    umr_text = re.sub(r'#\s*::\s*snt', '# :: snt', umr_text)
-    umr_text = re.sub(r'#\s*(sentence\s*level\s*graph)\s*:?', '# sentence level graph:', umr_text, flags=re.IGNORECASE)
-    umr_text = re.sub(r'#\s*(alignment)\s*:?', '# alignment:', umr_text, flags=re.IGNORECASE)
-    umr_text = re.sub(r'#\s*(document\s*level\s*annotation)\s*:?', '# document level annotation:', umr_text, flags=re.IGNORECASE)
-    
-    # Split into sentence blocks - a blank line followed by a sentence ID line marks a new block
-    raw_blocks = re.split(r'\n\s*\n\s*#\s*::\s*snt', umr_text)
-    
-    # For the first block, it might not have the preceding blank line
-    if not raw_blocks[0].strip().startswith('# :: snt'):
-        # Check if there's a sentence ID line without the preceding blank line
-        match = re.search(r'(#\s*::\s*snt[^\n]*)', raw_blocks[0])
-        if match:
-            # Extract everything before the sentence ID line
-            prefix = raw_blocks[0][:match.start()].strip()
-            if prefix:
-                # Keep any content before the first sentence ID as a separate block
-                blocks_to_process = [prefix] + [match.group(1) + raw_blocks[0][match.end():]] + raw_blocks[1:]
-            else:
-                blocks_to_process = [match.group(1) + raw_blocks[0][match.end():]] + raw_blocks[1:]
-        else:
-            blocks_to_process = raw_blocks
-    else:
-        blocks_to_process = raw_blocks
-    
-    # Prepend the sentence ID marker to all blocks except the first one (it was removed by the split)
-    formatted_blocks = [blocks_to_process[0]]
-    for block in blocks_to_process[1:]:
-        formatted_blocks.append('# :: snt' + block)
-    
-    logger.debug(f"Split into {len(formatted_blocks)} raw blocks")
-    
-    # Process each block to ensure proper structure
-    final_blocks = []
-    for i, block in enumerate(formatted_blocks):
-        formatted_block = process_umr_block(block, i + 1)
-        if formatted_block:
-            # Make sure there's no extra whitespace at the beginning or end
-            formatted_block = formatted_block.strip()
-            final_blocks.append(formatted_block)
-    
-    logger.debug(f"Processed into {len(final_blocks)} final blocks")
-    
-    # Join blocks with blank lines in between - Ancast expects exactly two newlines between blocks
-    result = '\n\n'.join(final_blocks)
-    
-    # Ensure the file ends with a newline
-    if not result.endswith('\n'):
-        result += '\n'
-    
-    # Ensure parentheses are balanced in the entire document
-    open_count = result.count('(')
-    close_count = result.count(')')
-    if open_count != close_count:
-        logger.warning(f"Unbalanced parentheses in full document: {open_count} opening vs {close_count} closing")
-    
-    # Log a sample of the output text for debugging
-    output_sample = result[:500] + "..." if len(result) > 500 else result
-    logger.debug(f"Formatted output sample: {output_sample}")
-    
-    logger.info(f"UMR formatting complete, result length: {len(result)}")
-    return result
+    alignment_lines = []
+    for node_id, span in alignment_dict.items():
+        if isinstance(span, list) and len(span) == 2:
+            alignment_lines.append(f"{node_id}: {span[0]}-{span[1]}")
+    return "\n".join(alignment_lines)
 
 def process_umr_block(block_text, default_sent_num=1):
-    """Process a UMR block to ensure it has all required sections in the correct format.
-    
-    Args:
-        block_text: The text content of a UMR block
-        default_sent_num: The default sentence number to use if not found in the block
-        
-    Returns:
-        A properly formatted UMR block with all required sections
-    """
-    import logging
-    import re
-    
-    logger = logging.getLogger(__name__)
-    
-    # Skip empty blocks
+    """Process a UMR block to ensure it contains all required sections in the correct format."""
     if not block_text or not block_text.strip():
-        logger.debug("Skipping empty block")
         return None
+        
+    # Extract sentence number using regex
+    sent_match = re.search(r'# :: snt(\d+)', block_text)
+    sent_num = int(sent_match.group(1)) if sent_match else default_sent_num
     
-    # Extract the sentence number
-    sent_id_match = re.search(r'#\s*::\s*snt(\d+)', block_text)
-    sent_num = int(sent_id_match.group(1)) if sent_id_match else default_sent_num
-    
-    # Generate standard variable prefixes for this sentence
+    # Generate standard variable prefix
     var_prefix = f"s{sent_num}"
     
-    # Extract the sentence text
+    # Extract sentence text
     sent_text = ""
-    if sent_id_match:
-        sent_line = re.search(r'#\s*::\s*snt\d+\s*(.*)', block_text)
-        if sent_line:
-            sent_text = sent_line.group(1).strip()
+    sent_line = re.search(r'# :: snt\d+\t(.+)', block_text)
+    if sent_line:
+        sent_text = sent_line.group(1)
     
-    # Split the block into sections
+    # Split block into sections
     sections = {
-        'graph': [],
-        'alignment': [],
-        'doc_annotation': []
+        'graph': '',
+        'alignment': '',
+        'doc_annot': ''
     }
     
     current_section = None
     lines = block_text.split('\n')
     
     for line in lines:
-        line = line.strip()
-        if not line:
-            continue
-            
-        # Check for section headers
-        if re.match(r'#\s*sentence\s*level\s*graph', line, re.IGNORECASE):
+        if '# sentence level graph:' in line:
             current_section = 'graph'
-            continue
-        elif re.match(r'#\s*alignment', line, re.IGNORECASE):
+        elif '# alignment:' in line:
             current_section = 'alignment'
-            continue
-        elif re.match(r'#\s*document\s*level\s*annotation', line, re.IGNORECASE):
-            current_section = 'doc_annotation'
-            continue
-        elif re.match(r'#\s*::\s*snt', line):
-            # Skip the sentence ID line as we handle it separately
-            continue
-        
-        # Add content to the current section if we're in one
-        if current_section and not line.startswith('#'):
-            sections[current_section].append(line)
+        elif '# document level annotation:' in line:
+            current_section = 'doc_annot'
+        elif current_section and line.strip():
+            sections[current_section] += line + '\n'
     
-    # Check if we extracted any content for each section
-    has_graph = len(sections['graph']) > 0
-    has_alignment = len(sections['alignment']) > 0 
-    has_doc_annotation = len(sections['doc_annotation']) > 0
+    # Check if we have content in each section
+    if not sections['graph'].strip():
+        sections['graph'] = f"({var_prefix}x0 / thing)\n"
     
-    logger.debug(f"Block for sentence {sent_num} - has_graph: {has_graph}, has_alignment: {has_alignment}, has_doc_annotation: {has_doc_annotation}")
+    if not sections['alignment'].strip():
+        sections['alignment'] = f"{var_prefix}x0: 0-0\n"
     
-    # Process each section to ensure it's properly formatted
+    if not sections['doc_annot'].strip():
+        sections['doc_annot'] = f"""({var_prefix}s0 / sentence
+    :modal ((author :full-affirmative {var_prefix}x0))
+    :temporal ((document-creation-time :before {var_prefix}x0)))\n"""
     
-    # Process graph section - ensure balanced parentheses and proper structure
-    graph_text = '\n'.join(sections['graph'])
-    if graph_text:
-        # Normalize variable names in the graph to use sNxM format
-        # Example: x0 -> s1x0, a1 -> s1a1
-        var_pattern = r'(?<!\S)([a-zA-Z][0-9]+)\s+/'
-        if not re.search(rf'(?<!\S){var_prefix}[a-zA-Z][0-9]+\s+/', graph_text):
-            # If we don't find variables with the proper prefix, try to fix them
-            graph_text = re.sub(var_pattern, f"{var_prefix}\\1 /", graph_text)
-            sections['graph'] = graph_text.split('\n')
-            logger.info(f"Fixed variable names in graph for sentence {sent_num}")
-        
-        # Normalize references to variables
-        ref_pattern = r'(?<!\S)([a-zA-Z][0-9]+)(?=[\s,\)])'
-        if not re.search(rf'(?<!\S){var_prefix}[a-zA-Z][0-9]+(?=[\s,\)])', graph_text):
-            # If we don't find references with the proper prefix, try to fix them
-            graph_text = re.sub(ref_pattern, f"{var_prefix}\\1", graph_text)
-            sections['graph'] = graph_text.split('\n')
-            logger.info(f"Fixed variable references in graph for sentence {sent_num}")
-        
-        # Count opening and closing parentheses
-        open_count = graph_text.count('(')
-        close_count = graph_text.count(')')
-        
-        # Fix unbalanced parentheses
-        if open_count > close_count:
-            sections['graph'].append(')' * (open_count - close_count))
-            logger.warning(f"Added {open_count - close_count} closing parentheses to graph in sentence {sent_num}")
-        elif close_count > open_count:
-            sections['graph'].insert(0, '(' * (close_count - open_count))
-            logger.warning(f"Added {close_count - open_count} opening parentheses to graph in sentence {sent_num}")
-        
-        # Check for root node with variable naming convention
-        root_var_pattern = rf'{var_prefix}[a-zA-Z][0-9]*\s+/'
-        if not re.search(root_var_pattern, graph_text):
-            # Try to fix the variable naming convention
-            if re.search(r'([a-zA-Z][0-9]*)\s+/', graph_text):
-                # There's a root node but with wrong naming convention
-                graph_text = re.sub(r'([a-zA-Z][0-9]*)\s+/', f'{var_prefix}\\1 /', graph_text)
-                sections['graph'] = graph_text.split('\n')
-                logger.warning(f"Fixed root node variable naming in sentence {sent_num}")
-    else:
-        # Create a minimal valid graph if none exists
-        sections['graph'] = [f"({var_prefix}x0 / unknown)"]
-        logger.warning(f"Created placeholder graph for sentence {sent_num}")
-    
-    # Process alignment section - make sure variable names match the graph
-    if has_alignment:
-        # Normalize alignment entries to use the same variable prefix
-        new_alignments = []
-        for align_line in sections['alignment']:
-            if ':' in align_line:
-                var_part, pos_part = align_line.split(':', 1)
-                var_part = var_part.strip()
-                pos_part = pos_part.strip()
-                
-                # Check if the variable has the correct prefix
-                if not var_part.startswith(var_prefix):
-                    # Try to fix variable names in alignments
-                    var_match = re.match(r'([a-zA-Z][0-9]+)', var_part)
-                    if var_match:
-                        var_part = f"{var_prefix}{var_match.group(1)}"
-                
-                new_alignments.append(f"{var_part}: {pos_part}")
-            else:
-                new_alignments.append(align_line)
-        
-        sections['alignment'] = new_alignments
-    else:
-        # Create minimal alignment if none exists
-        sections['alignment'] = [f"{var_prefix}x0: 0-0"]
-        logger.warning(f"Created placeholder alignment for sentence {sent_num}")
-    
-    # Process document-level annotation - normalize variable names
-    if has_doc_annotation:
-        doc_annot_text = '\n'.join(sections['doc_annotation'])
-        
-        # Normalize sentence variable names (s0, s1 -> s1s0, s1s1)
-        sent_var_pattern = r'(?<!\S)([sS][0-9]+)\s+/'
-        if not re.search(rf'(?<!\S){var_prefix}[sS][0-9]+\s+/', doc_annot_text):
-            # If we don't find variables with the proper prefix, try to fix them
-            doc_annot_text = re.sub(sent_var_pattern, f"{var_prefix}\\1 /", doc_annot_text)
-            sections['doc_annotation'] = doc_annot_text.split('\n')
-            logger.info(f"Fixed sentence variables in doc annotation for sentence {sent_num}")
-        
-        # Count opening and closing parentheses
-        open_count = doc_annot_text.count('(')
-        close_count = doc_annot_text.count(')')
-        
-        # Fix unbalanced parentheses
-        if open_count > close_count:
-            sections['doc_annotation'].append(')' * (open_count - close_count))
-            logger.warning(f"Added {open_count - close_count} closing parentheses to doc annotation in sentence {sent_num}")
-        elif close_count > open_count:
-            sections['doc_annotation'].insert(0, '(' * (close_count - open_count))
-            logger.warning(f"Added {close_count - open_count} opening parentheses to doc annotation in sentence {sent_num}")
-    else:
-        # Create minimal document annotation if none exists
-        sections['doc_annotation'] = [f"({var_prefix}s0 / sentence)"]
-        logger.warning(f"Created placeholder document annotation for sentence {sent_num}")
-    
-    # Build the complete block with all required sections
-    result = []
-    
-    # Add sentence ID line
-    if sent_id_match:
-        result.append(f"# :: snt{sent_num}\t{sent_text}")
-    else:
-        result.append(f"# :: snt{sent_num}\tUnknown sentence")
-    
-    # Add graph section
-    result.append("")
-    result.append("# sentence level graph:")
-    result.extend(sections['graph'])
-    
-    # Add alignment section
-    result.append("")
-    result.append("# alignment:")
-    result.extend(sections['alignment'])
-    
-    # Add document-level annotation section
-    result.append("")
-    result.append("# document level annotation:")
-    result.extend(sections['doc_annotation'])
-    
-    final_text = '\n'.join(result)
-    return final_text
+    # Reconstruct block with all sections
+    result = f"""# :: snt{sent_num}\t{sent_text}
 
-@main.route("/run_ancast_evaluation", methods=['POST'])
-def run_ancast_evaluation():
-    """Run Ancast evaluation on two document versions and return the scores."""
-    # Import sys module for stdout/stderr redirection
-    import sys
-    
-    # Initialize variables for cleanup
-    gold_path = None
-    pred_path = None
-    debug_files = []
-    debug_dir = None
-    
-    try:
-        # Get data from request
-        data = request.json or {}
-        try:
-            # Use try-except around each logging call to prevent errors
-            try:
-                current_app.logger.info("Received Ancast evaluation request")
-            except Exception as log_err:
-                pass  # Silently continue if logging fails
-                
-            try:
-                current_app.logger.debug(f"Request data: {data}")
-            except Exception:
-                pass
-        except Exception:
-            # Continue even if logging fails completely
-            pass
-            
-        # Extract data from request with proper validation
-        doc1_version_id = data.get('doc1_version_id')
-        doc2_version_id = data.get('doc2_version_id')
-        
-        # Ensure sentences is a list
-        sentences = data.get('sentences', [])
-        if not isinstance(sentences, list):
-            try:
-                sentences = [int(sentences)]  # Try to convert to int if it's a string
-            except (ValueError, TypeError):
-                sentences = []  # Default to empty list if conversion fails
-        
-        # Validate sentence IDs - make sure they're integers 
-        sentence_numbers = []  # These are the logical position numbers (1, 2, 3...)
-        for sid in sentences:
-            try:
-                sentence_numbers.append(int(sid))
-            except (ValueError, TypeError):
-                continue  # Skip invalid sentence IDs
-                
-        try:
-            current_app.logger.info(f"Evaluating: gold={doc1_version_id}, pred={doc2_version_id}, sentences={sentence_numbers}")
-        except Exception:
-            pass
-        
-        # Create a unique debug directory
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        try:
-            debug_dir_base = current_app.config.get('ANCAST_DEBUG_DIR', '/tmp/ancast_debug')
-            if not os.path.exists(debug_dir_base):
-                os.makedirs(debug_dir_base, exist_ok=True)
-            debug_dir = os.path.join(debug_dir_base, f"run_{timestamp}")
-            os.makedirs(debug_dir, exist_ok=True)
-            try:
-                current_app.logger.info(f"Created debug directory: {debug_dir}")
-            except Exception:
-                pass
-        except Exception as e:
-            # If we can't create debug directory, use a fallback
-            debug_dir = tempfile.mkdtemp(prefix="ancast_debug_")
-          
-        # Get all annotations to map between sentence numbers and database IDs
-        gold_annotations = []
-        pred_annotations = []
-        
-        try:
-            if doc1_version_id:
-                gold_annotations = Annotation.query.filter_by(doc_version_id=doc1_version_id).all()
-                current_app.logger.info(f"Found {len(gold_annotations)} gold annotations")
-                
-            if doc2_version_id:
-                pred_annotations = Annotation.query.filter_by(doc_version_id=doc2_version_id).all()
-                current_app.logger.info(f"Found {len(pred_annotations)} pred annotations")
-        except Exception as e:
-            current_app.logger.error(f"Error retrieving annotations: {str(e)}")
-            
-        # Map sentence IDs from database to sequential numbers (1-indexed)
-        gold_sent_mapping = {}   # DB ID -> sequence number
-        pred_sent_mapping = {}   # DB ID -> sequence number
-        gold_reverse_mapping = {}  # sequence number -> DB ID  
-        pred_reverse_mapping = {}  # sequence number -> DB ID
-        
-        # Get unique sentence IDs from annotations
-        gold_sent_ids = sorted(list(set(ann.sent_id for ann in gold_annotations)))
-        pred_sent_ids = sorted(list(set(ann.sent_id for ann in pred_annotations)))
-        
-        # Create mappings for gold annotations
-        for i, sent_id in enumerate(gold_sent_ids):
-            gold_sent_mapping[sent_id] = i + 1  # 1-indexed position
-            gold_reverse_mapping[i + 1] = sent_id
-            
-        # Create mappings for pred annotations
-        for i, sent_id in enumerate(pred_sent_ids):
-            pred_sent_mapping[sent_id] = i + 1  # 1-indexed position
-            pred_reverse_mapping[i + 1] = sent_id
-            
-        try:
-            current_app.logger.info(f"Gold mapping: {gold_reverse_mapping}")
-            current_app.logger.info(f"Pred mapping: {pred_reverse_mapping}")
-        except Exception:
-            pass
-        
-        # Convert logical sentence numbers to database IDs
-        gold_db_ids = []
-        pred_db_ids = []
-        
-        # If we have specific sentence numbers from the UI, try to map them
-        if sentence_numbers:
-            for num in sentence_numbers:
-                # Check if this position exists in the mappings
-                if num in gold_reverse_mapping:
-                    gold_db_ids.append(gold_reverse_mapping[num])
-                if num in pred_reverse_mapping:
-                    pred_db_ids.append(pred_reverse_mapping[num])
-                    
-            # If we couldn't map any sentences directly, try to find corresponding sentences
-            if (not gold_db_ids or not pred_db_ids) and sentence_numbers:
-                # Get sentences from both documents
-                current_app.logger.info(f"Couldn't map directly, trying to find corresponding sentences")
-                
-                # Get the content of the sentences we're looking for
-                found_sentences = []
-                for num in sentence_numbers:
-                    # Try to find original sentence content
-                    if num in gold_reverse_mapping:
-                        sent_id = gold_reverse_mapping[num]
-                        sent = Sent.query.get(sent_id)
-                        if sent:
-                            found_sentences.append(sent.content)
-                    elif num in pred_reverse_mapping:
-                        sent_id = pred_reverse_mapping[num]
-                        sent = Sent.query.get(sent_id)
-                        if sent:
-                            found_sentences.append(sent.content)
-                
-                # If we found any sentences, use their content to find corresponding sentences in both documents
-                if found_sentences:
-                    for content in found_sentences:
-                        # Find sentences with matching content in both documents
-                        gold_matches = []
-                        pred_matches = []
-                        
-                        for sent_id in gold_sent_ids:
-                            sent = Sent.query.get(sent_id)
-                            if sent and sent.content == content:
-                                gold_matches.append(sent_id)
-                                
-                        for sent_id in pred_sent_ids:
-                            sent = Sent.query.get(sent_id)
-                            if sent and sent.content == content:
-                                pred_matches.append(sent_id)
-                        
-                        # Add unique matches to our DB IDs
-                        for sent_id in gold_matches:
-                            if sent_id not in gold_db_ids:
-                                gold_db_ids.append(sent_id)
-                                
-                        for sent_id in pred_matches:
-                            if sent_id not in pred_db_ids:
-                                pred_db_ids.append(sent_id)
-                
-                # If we still don't have matches, try a fallback where we take the first sentence from each
-                if not gold_db_ids and gold_sent_ids:
-                    gold_db_ids = [gold_sent_ids[0]]
-                if not pred_db_ids and pred_sent_ids:
-                    pred_db_ids = [pred_sent_ids[0]]
-        # If no specific sentence numbers were provided, use all sentences from both documents
-        else:
-            gold_db_ids = gold_sent_ids
-            pred_db_ids = pred_sent_ids
-                
-        try:
-            current_app.logger.info(f"Converted sentence numbers {sentence_numbers} to DB IDs: gold={gold_db_ids}, pred={pred_db_ids}")
-        except Exception:
-            pass
-            
-        # Fall back to request JSON if no valid sentence IDs were found
-        if ((not gold_db_ids or not pred_db_ids) and 
-            data.get('doc1') and data.get('doc2')):
-            # Use the provided raw UMR text instead of extracting from DB
-            gold_text = data.get('doc1', '')
-            pred_text = data.get('doc2', '')
-            
-            try:
-                current_app.logger.info("Using raw UMR text from request")
-            except Exception:
-                pass
-        else:
-            # Generate UMR text for Ancast from the database
-            try:
-                gold_text = exact_ancast_format(doc1_version_id, gold_db_ids)
-                try:
-                    current_app.logger.info(f"Gold text size: {len(gold_text)} characters")
-                except Exception:
-                    pass
-            except Exception as e:
-                gold_text = data.get('doc1', '')  # Fallback to provided text if extraction fails
-                try:
-                    current_app.logger.warning(f"Failed to extract gold text: {str(e)}, using fallback")
-                except Exception:
-                    pass
-            
-            try:
-                pred_text = exact_ancast_format(doc2_version_id, pred_db_ids)
-                try:
-                    current_app.logger.info(f"Pred text size: {len(pred_text)} characters")
-                except Exception:
-                    pass
-            except Exception as e:
-                pred_text = data.get('doc2', '')  # Fallback to provided text if extraction fails
-                try:
-                    current_app.logger.warning(f"Failed to extract pred text: {str(e)}, using fallback")
-                except Exception:
-                    pass
-        
-        # Ensure we have non-empty texts
-        if not gold_text.strip():
-            gold_text = "(dummy / root)"  # Provide minimal valid UMR
-        
-        if not pred_text.strip():
-            pred_text = "(dummy / root)"  # Provide minimal valid UMR
-            
-        # Create temporary files for the annotations
-        gold_path = os.path.join(debug_dir, "formatted_gold.txt")
-        pred_path = os.path.join(debug_dir, "formatted_pred.txt")
-        
-        with open(gold_path, 'w', encoding='utf-8') as f:
-            f.write(gold_text)
-        
-        with open(pred_path, 'w', encoding='utf-8') as f:
-            f.write(pred_text)
-            
-        debug_files.extend([gold_path, pred_path])
-        
-        # Check file sizes to confirm writing worked
-        gold_size = os.path.getsize(gold_path)
-        pred_size = os.path.getsize(pred_path)
-        
-        try:
-            current_app.logger.info(f"Gold file size: {gold_size} bytes")
-            current_app.logger.info(f"Pred file size: {pred_size} bytes")
-        except Exception:
-            pass
-            
-        # Set up Ancast
-        ancast_path = current_app.config.get('ANCAST_PATH', '../ancast/ancast')
-        
-        try:
-            current_app.logger.info(f"Using Ancast path: {ancast_path}")
-        except Exception:
-            pass
-            
-        # Add Ancast to Python path
-        ancast_dir = os.path.dirname(ancast_path)
-        if ancast_dir:
-            sys.path.insert(0, ancast_dir)
-            try:
-                current_app.logger.info(f"Added {ancast_dir} to Python path")
-            except Exception:
-                pass
-                
-        # Import Ancast
-        try:
-            current_app.logger.info("Importing ancast evaluate function")
-        except Exception:
-            pass
-            
-        try:
-            from ancast.evaluate import evaluate
-            
-            try:
-                current_app.logger.info(f"Calling evaluate with gold={gold_path}, pred={pred_path}")
-            except Exception:
-                pass
-                
-            # Capture output
-            stdout_file = os.path.join(debug_dir, "ancast_stdout.txt")
-            stderr_file = os.path.join(debug_dir, "ancast_stderr.txt")
-            debug_files.extend([stdout_file, stderr_file])
-            
-            # Redirect stdout/stderr to capture output
-            original_stdout = sys.stdout
-            original_stderr = sys.stderr
-            
-            try:
-                with open(stdout_file, 'w') as stdout_capture, open(stderr_file, 'w') as stderr_capture:
-                    sys.stdout = stdout_capture
-                    sys.stderr = stderr_capture
-                    
-                    # Call Ancast evaluate
-                    result = evaluate(gold_path, pred_path)
-                    
-                    # Restore stdout/stderr
-                    sys.stdout = original_stdout
-                    sys.stderr = original_stderr
-            except Exception as e:
-                # Ensure stdout/stderr are restored even if evaluate fails
-                sys.stdout = original_stdout
-                sys.stderr = original_stderr
-                raise e
-                
-            try:
-                current_app.logger.info(f"Evaluate function returned: {result}")
-            except Exception:
-                pass
-                
-            # Check stdout/stderr capture
-            stdout_size = os.path.getsize(stdout_file)
-            stderr_size = os.path.getsize(stderr_file)
-            
-            try:
-                current_app.logger.info(f"Stdout captured ({stdout_size} chars)")
-                current_app.logger.info(f"Stderr captured ({stderr_size} chars)")
-            except Exception:
-                pass
-                
-            # Check stderr for issues
-            stderr_content = ""
-            try:
-                with open(stderr_file, 'r') as f:
-                    stderr_content = f.read()
-                    
-                try:
-                    current_app.logger.debug(f"Ancast stderr content:\n{stderr_content}")
-                except Exception:
-                    pass
-            except Exception:
-                pass
-                
-            # Check debug files for issues
-            issues = check_ancast_debug_files(debug_dir)
-                
-            # Package result
-            response = {
-                'score': result.get('comp', 0),
-                'details': {
-                    'sentence': result.get('sent', 0),
-                    'modality': result.get('modal', 0),
-                    'temporal': result.get('temporal', 0),
-                    'coreference': result.get('coref', 0),
-                },
-                'command': f"ancast.evaluate.evaluate({gold_path}, {pred_path})",
-                'debug_dir': debug_dir,
-                'debug_files': debug_files,
-                'mappings': {
-                    'gold': gold_reverse_mapping,
-                    'pred': pred_reverse_mapping
-                }
-            }
-            
-            # Add issues to response if found
-            if issues:
-                response['issues'] = issues
-                
-            return jsonify(response)
-            
-        except ImportError:
-            # Fallback to command line if API import fails
-            try:
-                current_app.logger.warning("Failed to import Ancast evaluate function, falling back to command line")
-            except Exception:
-                pass
-                
-            # Run Ancast as command
-            cmd = [ancast_path, "evaluate", gold_path, pred_path]
-            result = subprocess.run(cmd, capture_output=True, text=True)
-            
-            stdout = result.stdout
-            stderr = result.stderr
-            
-            # Write output to debug files
-            with open(os.path.join(debug_dir, "ancast_stdout.txt"), 'w') as f:
-                f.write(stdout)
-            with open(os.path.join(debug_dir, "ancast_stderr.txt"), 'w') as f:
-                f.write(stderr)
-                
-            # Parse output to get scores
-            scores = {}
-            comp_score = 0
-            
-            for line in stdout.splitlines():
-                if "Comprehensive Score:" in line:
-                    match = re.search(r"Comprehensive Score:\s+([\d.]+)%", line)
-                    if match:
-                        comp_score = float(match.group(1)) / 100
-                elif "Precision:" in line and "Recall:" in line and "Fscore:" in line:
-                    parts = line.strip().split('\t')
-                    if len(parts) >= 2:
-                        category = parts[0].strip().lower().rstrip(':')
-                        fscore_part = parts[-1]
-                        fscore_match = re.search(r"Fscore: ([\d.]+)%", fscore_part)
-                        if fscore_match:
-                            scores[category] = float(fscore_match.group(1)) / 100
-                            
-            # Package result
-            response = {
-                'score': comp_score,
-                'details': scores,
-                'command': ' '.join(cmd),
-                'stdout': stdout,
-                'stderr': stderr,
-                'debug_dir': debug_dir,
-                'debug_files': debug_files,
-                'mappings': {
-                    'gold': gold_reverse_mapping,
-                    'pred': pred_reverse_mapping
-                }
-            }
-            
-            return jsonify(response)
-            
-    except Exception as e:
-        try:
-            current_app.logger.error(f"Unexpected error in run_ancast_evaluation: {str(e)}")
-        except Exception:
-            pass
-            
-        # Return error response
-        return jsonify({
-            'error': f"Error running Ancast evaluation: {str(e)}",
-            'score': 0,
-            'details': {
-                'sentence': 0,
-                'modality': 0,
-                'temporal': 0,
-                'coreference': 0
-            },
-            'debug_dir': debug_dir or 'unknown'
-        }), 500
+# sentence level graph:
+{sections['graph'].strip()}
 
-# Add this new function to build a properly formatted UMR document from database annotations
-def build_umr_from_db(doc_version_id, sentence_ids):
-    """
-    Build UMR annotation text from database for the given document version and sentence IDs.
-    
-    Args:
-        doc_version_id: Document version ID
-        sentence_ids: List of sentence IDs to include
-        
-    Returns:
-        UMR text combining sentence and document level annotations
-    """
-    logger = logging.getLogger(__name__)
-    
-    try:
-        logger.info(f"Building UMR from database for doc_version_id {doc_version_id}, sentences {sentence_ids}")
-        
-        # Get document version
-        doc_version = DocVersion.query.get(doc_version_id)
-        if not doc_version:
-            logger.error(f"Document version {doc_version_id} not found")
-            return ""
-        
-        # Get all annotations for this document version
-        all_annotations = Annotation.query.filter_by(doc_version_id=doc_version_id).all()
-        logger.info(f"Found {len(all_annotations)} annotations for document version {doc_version_id}")
-        
-        # Filter by sentence IDs if provided
-        annotations = []
-        if sentence_ids:
-            logger.info(f"Filtering annotations by sentence IDs: {sentence_ids}")
-            annotations = [ann for ann in all_annotations if ann.sent_id in sentence_ids]
-            logger.info(f"After filtering: {len(annotations)} annotations match the provided sentence IDs")
-        else:
-            annotations = all_annotations
-            
-        if not annotations:
-            logger.warning(f"No annotations found for document version {doc_version_id} with sentence IDs {sentence_ids}")
-            return ""
-            
-        # Simplified UMR text generation
-        umr_text = ""
-        for annotation in annotations:
-            if annotation.sent_annot:
-                umr_text += annotation.sent_annot + "\n\n"
-            if annotation.doc_annot:
-                umr_text += annotation.doc_annot + "\n\n"
-                
-        return umr_text.strip()
-        
-    except Exception as e:
-        logger.error(f"Error building UMR from database: {str(e)}")
-        return ""
+# alignment:
+{sections['alignment'].strip()}
 
-@main.route("/test_ancast_db", methods=['GET'])
-@login_required
-def test_ancast_db():
-    """Test route to debug database queries for Ancast."""
-    try:
-        # Get query parameters
-        doc_version_id = request.args.get('doc_version_id')
-        sent_id = request.args.get('sent_id')
-        
-        if not doc_version_id:
-            return jsonify({"error": "Missing doc_version_id parameter"}), 400
-            
-        # Convert to integer if string
-        if isinstance(doc_version_id, str) and doc_version_id.isdigit():
-            doc_version_id = int(doc_version_id)
-            
-        # Optional sent_id filter
-        if sent_id and isinstance(sent_id, str) and sent_id.isdigit():
-            sent_id = int(sent_id)
-            
-        response = {
-            "doc_version_id": doc_version_id,
-            "sent_id": sent_id,
-            "annotations": []
-        }
-        
-        # Find document version
-        doc_version = DocVersion.query.get(doc_version_id)
-        if not doc_version:
-            return jsonify({"error": f"Document version {doc_version_id} not found"}), 404
-            
-        response["doc_version"] = {
-            "id": doc_version.id,
-            "user_id": doc_version.user_id,
-            "doc_id": doc_version.doc_id,
-            "stage": doc_version.stage,
-            "version_number": doc_version.version_number
-        }
-        
-        # Find annotations
-        query = Annotation.query.filter_by(doc_version_id=doc_version_id)
-        if sent_id:
-            query = query.filter_by(sent_id=sent_id)
-            
-        annotations = query.all()
-        
-        # Process annotations
-        for annotation in annotations:
-            ann_data = {
-                "id": annotation.id,
-                "sent_id": annotation.sent_id,
-                "has_sent_annot": bool(annotation.sent_annot),
-                "has_doc_annot": bool(annotation.doc_annot),
-                "has_alignment": bool(annotation.alignment)
-            }
-            
-            # Try to extract sentence number from variable pattern
-            if annotation.sent_annot:
-                sent_var_pattern = r's(\d+)[a-zA-Z]'
-                matches = re.findall(sent_var_pattern, annotation.sent_annot)
-                if matches:
-                    ann_data["extracted_sentence_num"] = int(matches[0])
-                    
-            response["annotations"].append(ann_data)
-            
-        # Add summary
-        response["total_annotations"] = len(annotations)
-        response["annotations_with_sentence"] = sum(1 for a in annotations if a.sent_annot)
-        response["annotations_with_document"] = sum(1 for a in annotations if a.doc_annot)
-        response["annotations_with_alignment"] = sum(1 for a in annotations if a.alignment)
-        
-        return jsonify(response)
-        
-    except Exception as e:
-        import traceback
-        tb = traceback.format_exc()
-        return jsonify({
-            "error": str(e),
-            "traceback": tb
-        }), 500
-
-def check_ancast_debug_files(debug_dir):
-    """
-    Check Ancast debug files to identify parsing issues.
-    
-    Args:
-        debug_dir: Path to the debug directory
-        
-    Returns:
-        dict: Analysis of debug files and detected issues
-    """
-    import logging
-    import os
-    import re
-    
-    logger = logging.getLogger(__name__)
-    
-    result = {
-        "issues_found": False,
-        "errors": [],
-        "warnings": [],
-        "suggestions": []
-    }
-    
-    # Check if the debug directory exists
-    if not debug_dir or not os.path.exists(debug_dir):
-        result["errors"].append(f"Debug directory not found: {debug_dir}")
-        return result
-    
-    # Look for stderr file
-    stderr_path = os.path.join(debug_dir, "ancast_stderr.txt")
-    if os.path.exists(stderr_path):
-        try:
-            with open(stderr_path, 'r') as f:
-                stderr_content = f.read()
-                
-            # Log the stderr content
-            logger.debug(f"Ancast stderr content:\n{stderr_content}")
-            
-            # Check for specific error patterns
-            if "Encountered unknown block" in stderr_content:
-                result["issues_found"] = True
-                result["errors"].append("Ancast encountered unknown block format")
-                result["suggestions"].append("Check that your UMR blocks follow Ancast's required structure")
-            
-            if "error" in stderr_content.lower():
-                result["issues_found"] = True
-                error_lines = [line for line in stderr_content.split('\n') 
-                             if "error" in line.lower() and len(line) > 10]
-                result["errors"].extend(error_lines)
-            
-            if "warning" in stderr_content.lower():
-                result["issues_found"] = True
-                warning_lines = [line for line in stderr_content.split('\n') 
-                               if "warning" in line.lower() and len(line) > 10]
-                result["warnings"].extend(warning_lines)
-                
-            # Check for specific parsing issues
-            if "skipping" in stderr_content.lower():
-                result["issues_found"] = True
-                result["errors"].append("Ancast skipped processing some blocks")
-                result["suggestions"].append("Ensure all UMR blocks are properly formatted")
-        except Exception as e:
-            logger.error(f"Error reading stderr file: {e}")
-            result["errors"].append(f"Failed to analyze stderr file: {str(e)}")
-    
-    # Compare formatted files with Ancast samples
-    formatted_gold_path = os.path.join(debug_dir, "formatted_gold.txt")
-    if os.path.exists(formatted_gold_path):
-        try:
-            with open(formatted_gold_path, 'r') as f:
-                gold_content = f.read()
-                
-            # Check for missing blank lines between sections
-            if "\n\n# sentence level graph:" not in gold_content:
-                result["issues_found"] = True
-                result["warnings"].append("Missing blank line before sentence level graph section")
-                
-            if "\n\n# alignment:" not in gold_content:
-                result["issues_found"] = True
-                result["warnings"].append("Missing blank line before alignment section")
-                
-            if "\n\n# document level annotation:" not in gold_content:
-                result["issues_found"] = True
-                result["warnings"].append("Missing blank line before document level annotation section")
-                
-            # Check if the sentence ID format is correct
-            if not re.search(r'# :: snt\d+\t', gold_content):
-                result["issues_found"] = True
-                result["warnings"].append("Sentence ID format might be incorrect")
-                result["suggestions"].append("Ensure sentence IDs follow the format '# :: sntN\\t'")
-                
-            # Check for variable naming pattern
-            if not re.search(r's\d+[a-z]\d+\s+/', gold_content):
-                result["issues_found"] = True
-                result["warnings"].append("Variable naming pattern may not match Ancast expectations")
-                result["suggestions"].append("Variables should follow 's1x0' pattern")
-        except Exception as e:
-            logger.error(f"Error analyzing formatted gold file: {e}")
+# document level annotation:
+{sections['doc_annot'].strip()}
+"""
     
     return result
 
 def exact_ancast_format(doc_version_id, sentence_ids):
-    """
-    Generate UMR text that exactly matches Ancast's expected format.
-    This is a simpler, more direct approach that closely follows the sample files.
+    """Format annotations in the exact format required by Ancast."""
+    # Get document version
+    doc_version = DocVersion.query.get_or_404(doc_version_id)
     
-    Args:
-        doc_version_id: Document version ID
-        sentence_ids: List of sentence IDs
-        
-    Returns:
-        UMR text formatted exactly like Ancast sample files
-    """
-    import logging
-    logger = logging.getLogger(__name__)
+    # Get document
+    doc = Doc.query.get_or_404(doc_version.doc_id)
     
-    # Make sure sentence_ids is a list
-    if sentence_ids is None:
-        sentence_ids = []
-    elif not isinstance(sentence_ids, list):
-        sentence_ids = [sentence_ids]
+    # Get all sentences for this document
+    sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
     
-    logger.info(f"Generating exact Ancast format for doc_version_id={doc_version_id}, sentences={sentence_ids}")
+    # Create a mapping of sentence IDs to their positions (1-based)
+    sent_positions = {sent.id: i+1 for i, sent in enumerate(sentences)}
     
-    # Create debug output string to store extraction details
-    debug_output = "=== DATABASE EXTRACTION DEBUG ===\n"
-    debug_output += f"Document Version ID: {doc_version_id}\n"
-    debug_output += f"Sentence IDs: {sentence_ids}\n\n"
+    # Get annotations for the specified sentences
+    annotations = []
+    for sent_id in sentence_ids:
+        annotation = Annotation.query.filter_by(
+            doc_version_id=doc_version_id,
+            sent_id=sent_id
+        ).first()
+        
+        if annotation:
+            sent = Sent.query.get(sent_id)
+            if sent:
+                sent_num = sent_positions[sent_id]
+                annotations.append({
+                    'sent_num': sent_num,
+                    'sent_text': sent.content,
+                    'sent_annot': annotation.sent_annot,
+                    'doc_annot': annotation.doc_annot,
+                    'alignment': annotation.alignment
+                })
     
-    try:
-        # Get document version
-        doc_version = DocVersion.query.get(doc_version_id)
-        if not doc_version:
-            logger.error(f"Document version {doc_version_id} not found")
-            debug_output += f"ERROR: Document version {doc_version_id} not found\n"
-            print(debug_output)
-            return generate_dummy_umr()
-            
-        logger.info(f"Found document version: {doc_version}")
-        debug_output += f"Document Version: {doc_version}\n"
-            
-        # Get all annotations for this document version
-        annotations_query = Annotation.query.filter_by(doc_version_id=doc_version_id)
-        logger.debug(f"Annotation query: {annotations_query}")
-        
-        annotations = annotations_query.all()
-        logger.info(f"Found {len(annotations)} annotations for document version {doc_version_id}")
-        debug_output += f"Found {len(annotations)} annotations for document version {doc_version_id}\n"
-        
-        # Log the first annotation for debugging if available
-        if annotations:
-            first_ann = annotations[0]
-            logger.info(f"First annotation: id={first_ann.id}, sent_id={first_ann.sent_id}")
-            logger.info(f"First annotation has sent_annot: {bool(first_ann.sent_annot)}, doc_annot: {bool(first_ann.doc_annot)}, alignment: {bool(hasattr(first_ann, 'alignment') and first_ann.alignment)}")
-            
-            debug_output += "\n=== SAMPLE ANNOTATION ===\n"
-            debug_output += f"ID: {first_ann.id}, Sentence ID: {first_ann.sent_id}\n"
-            debug_output += f"Has sentence annotation: {bool(first_ann.sent_annot)}\n"
-            debug_output += f"Has document annotation: {bool(first_ann.doc_annot)}\n"
-            debug_output += f"Has alignment: {bool(hasattr(first_ann, 'alignment') and first_ann.alignment)}\n\n"
-            
-            # Print the actual content
-            debug_output += "=== SENTENCE ANNOTATION CONTENT ===\n"
-            debug_output += (first_ann.sent_annot or "EMPTY") + "\n\n"
-            
-            debug_output += "=== DOCUMENT ANNOTATION CONTENT ===\n"
-            debug_output += (first_ann.doc_annot or "EMPTY") + "\n\n"
-            
-            if hasattr(first_ann, 'alignment') and first_ann.alignment:
-                debug_output += "=== ALIGNMENT CONTENT ===\n"
-                debug_output += str(first_ann.alignment) + "\n\n"
-            else:
-                debug_output += "=== ALIGNMENT CONTENT ===\nNot available\n\n"
-        
-        # Filter by sentence IDs if provided
-        if sentence_ids:
-            # Log the sentence IDs we're filtering by
-            logger.info(f"Filtering annotations by sentence IDs: {sentence_ids}")
-            original_count = len(annotations)
-            annotations = [ann for ann in annotations if ann.sent_id in sentence_ids]
-            logger.info(f"After filtering: {len(annotations)} of {original_count} annotations match the provided sentence IDs")
-            
-            debug_output += f"Filtering by sentence IDs: {sentence_ids}\n"
-            debug_output += f"After filtering: {len(annotations)} of {original_count} annotations remain\n\n"
-        
-        # Check if we have any annotations after filtering
-        if not annotations:
-            logger.warning(f"No annotations found after filtering for document version {doc_version_id}")
-            debug_output += "WARNING: No annotations found after filtering!\n"
-            print(debug_output)
-            return generate_dummy_umr()
-            
-        # Sort by sentence ID
-        annotations.sort(key=lambda x: x.sent_id)
-        debug_output += f"Sorted annotations by sentence ID\n"
-        
-        # Build UMR blocks
-        result_text = ""
-        debug_output += f"=== PROCESSING ANNOTATIONS ===\n"
-        
-        for i, annotation in enumerate(annotations):
-            try:
-                logger.debug(f"Processing annotation {i+1}/{len(annotations)}: id={annotation.id}, sent_id={annotation.sent_id}")
-                debug_output += f"Processing annotation {i+1}/{len(annotations)}: id={annotation.id}, sent_id={annotation.sent_id}\n"
-                
-                # Get the sentence
-                sentence = Sent.query.filter_by(id=annotation.sent_id, doc_id=doc_version.doc_id).first()
-                if not sentence:
-                    logger.warning(f"Sentence {annotation.sent_id} not found for document {doc_version.doc_id}")
-                    debug_output += f"WARNING: Sentence {annotation.sent_id} not found for document {doc_version.doc_id}\n"
-                    continue
-                    
-                logger.debug(f"Found sentence: id={sentence.id}, content='{sentence.content[:50]}...'")
-                debug_output += f"Found sentence: id={sentence.id}, content='{sentence.content[:50]}...'\n"
-                
-                # Get the UMR annotation
-                sent_annot = annotation.sent_annot
-                if not sent_annot or not sent_annot.strip():
-                    logger.warning(f"No valid sentence annotation for annotation {annotation.id}")
-                    debug_output += f"WARNING: No valid sentence annotation for annotation {annotation.id}\n"
-                    continue
-                    
-                # Create sentence header with the proper ID format expected by Ancast
-                sentence_num = i + 1
-                sentence_header = f"# :: snt{sentence_num}\t{sentence.content}"
-                result_text += sentence_header + "\n\n"
-                
-                # Add sentence level graph section
-                result_text += "# sentence level graph:\n"
-                result_text += sent_annot.strip() + "\n\n"
-                
-                # Add alignment section if available, or generate a dummy one
-                result_text += "# alignment:\n"
-                if hasattr(annotation, 'alignment') and annotation.alignment:
-                    # Use actual alignment if available
-                    alignment_text = str(annotation.alignment).strip()
-                    result_text += alignment_text + "\n\n"
-                else:
-                    # Generate dummy alignment by finding variables in the annotation
-                    variables = extract_variables_from_umr(sent_annot)
-                    dummy_alignment = generate_dummy_alignment(variables)
-                    result_text += dummy_alignment + "\n\n"
-                
-                # Add document level annotation if available, or generate a dummy one
-                result_text += "# document level annotation:\n"
-                doc_annot = annotation.doc_annot
-                if doc_annot and doc_annot.strip():
-                    result_text += doc_annot.strip() + "\n\n"
-                else:
-                    # Generate a minimal valid document annotation
-                    var_names = extract_variables_from_umr(sent_annot)
-                    sentence_var = f"s{sentence_num}s0"
-                    content_var = var_names[0] if var_names else f"s{sentence_num}x0"
-                    doc_annotation = f"({sentence_var} / sentence\n    :modal ((author :full-affirmative {content_var}))\n    :temporal ((document-creation-time :before {content_var})))\n\n"
-                    result_text += doc_annotation
-
-            except Exception as e:
-                logger.error(f"Error processing annotation {annotation.id}: {str(e)}")
-                debug_output += f"ERROR: Processing annotation {annotation.id}: {str(e)}\n"
-                continue
-        
-        # Check if we generated any content
-        if not result_text.strip():
-            logger.warning("No UMR content was generated")
-            debug_output += "WARNING: No UMR content was generated\n"
-            print(debug_output)
-            return generate_dummy_umr()
-            
-        # Log the generated content
-        logger.info(f"Generated UMR content with {result_text.count('#')} blocks")
-        return result_text
-        
-    except Exception as e:
-        logger.error(f"Error generating UMR format: {str(e)}")
-        debug_output += f"ERROR: {str(e)}\n"
-        print(debug_output)
-        return generate_dummy_umr()
-
-def extract_variables_from_umr(umr_text):
-    """Extract variable names from UMR text using regex."""
-    import re
-    # Find variable patterns like "s1x0" in "(s1x0 / leave-11"
-    var_pattern = r'\(\s*([a-z]\d+[a-z]\d+)\s*/'
-    variables = re.findall(var_pattern, umr_text)
-    return variables if variables else [f"s1x{i}" for i in range(3)]  # Fallback
-
-def generate_dummy_alignment(variables):
-    """Generate a dummy alignment section based on extracted variables."""
-    if not variables:
-        return "s1x0: 0-0"
-    alignment = []
-    for i, var in enumerate(variables):
-        alignment.append(f"{var}: {i}-{i}")
-    return "\n".join(alignment)
-
-def generate_dummy_umr():
-    """Generate a minimal valid UMR that Ancast can process without errors."""
-    return """# :: snt1\tThis is a dummy sentence.
+    # Sort annotations by sentence number
+    annotations.sort(key=lambda x: x['sent_num'])
+    
+    # Format each annotation block
+    blocks = []
+    for ann in annotations:
+        block = process_umr_block(f"""# :: snt{ann['sent_num']}\t{ann['sent_text']}
 
 # sentence level graph:
-(s1x0 / thing
-    :ARG0 (s1x1 / person)
-    :ARG1 (s1x2 / concept))
+{ann['sent_annot']}
 
 # alignment:
-s1x0: 0-0
-s1x1: 1-1
-s1x2: 3-3
+{format_alignment_string(ann['alignment'])}
 
 # document level annotation:
-(s1s0 / sentence
-    :modal ((author :full-affirmative s1x0))
-    :temporal ((document-creation-time :before s1x0)))
-"""
+{ann['doc_annot']}
+""", default_sent_num=ann['sent_num'])
+        
+        if block:
+            blocks.append(block)
+    
+    # Join blocks with double newlines
+    return "\n\n".join(blocks)
 
-@main.route("/debug_database", methods=['GET'])
-def debug_database():
-    """Endpoint to debug database connections and check model records."""
-    result = {
-        "status": "OK",
-        "models": {},
-        "counts": {},
-        "samples": {},
-        "relationships": {}
+def format_alignment_string(alignment_dict):
+    """Format alignment dictionary into string format expected by Ancast."""
+    if not alignment_dict:
+        return ""
+    
+    alignment_lines = []
+    for node_id, span in alignment_dict.items():
+        if isinstance(span, list) and len(span) == 2:
+            alignment_lines.append(f"{node_id}: {span[0]}-{span[1]}")
+    return "\n".join(alignment_lines)
+
+@main.route("/evaluate_umr/<int:doc_version_1_id>/<int:doc_version_2_id>/<int:sent_id>", methods=['GET', 'POST'])
+@login_required
+def evaluate_umr(doc_version_1_id, doc_version_2_id, sent_id):
+    """Evaluate UMR annotations for a single sentence pair using the Ancast API."""
+    try:
+        # Get document versions
+        doc_version_1 = DocVersion.query.get_or_404(doc_version_1_id)
+        doc_version_2 = DocVersion.query.get_or_404(doc_version_2_id)
+        
+        # Get document
+        doc = Doc.query.get_or_404(doc_version_1.doc_id)
+        
+        # Get sentences
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            return jsonify({"error": "No sentences found"}), 404
+            
+        # Get current sentence
+        if sent_id < 1 or sent_id > len(sentences):
+            return jsonify({"error": f"Invalid sentence ID: {sent_id}"}), 400
+            
+        current_sent = sentences[sent_id - 1]
+        
+        # Get annotations
+        annotation_1 = Annotation.query.filter_by(
+            doc_version_id=doc_version_1_id,
+            sent_id=current_sent.id
+        ).first()
+        
+        annotation_2 = Annotation.query.filter_by(
+            doc_version_id=doc_version_2_id,
+            sent_id=current_sent.id
+        ).first()
+        
+        if not annotation_1 or not annotation_2:
+            return jsonify({"error": "Missing annotations"}), 404
+            
+        # Format UMR strings for evaluation
+        umr_1 = exact_ancast_format(doc_version_1_id, [current_sent.id])
+        umr_2 = exact_ancast_format(doc_version_2_id, [current_sent.id])
+        
+        try:
+            # Import evaluate_doc from Ancast
+            from ancast.evaluate import evaluate_doc
+            
+            # Run evaluation
+            scores = evaluate_doc(umr_1, umr_2)
+            
+            # Format response to match frontend expectations
+            response = {
+                "success": True,
+                "summary": {
+                    "ancast_score": scores.get('Comprehensive Score', 0.0),
+                    "precision": scores.get('Sent Micro', {}).get('Precision', 0.0),
+                    "recall": scores.get('Sent Micro', {}).get('Recall', 0.0),
+                    "f1": scores.get('Sent Micro', {}).get('Fscore', 0.0)
+                },
+                "details": {
+                    "modality": {
+                        "precision": scores.get('Modality', {}).get('Precision', 0.0),
+                        "recall": scores.get('Modality', {}).get('Recall', 0.0),
+                        "f1": scores.get('Modality', {}).get('Fscore', 0.0)
+                    },
+                    "temporal": {
+                        "precision": scores.get('Temporal', {}).get('Precision', 0.0),
+                        "recall": scores.get('Temporal', {}).get('Recall', 0.0),
+                        "f1": scores.get('Temporal', {}).get('Fscore', 0.0)
+                    },
+                    "coref": {
+                        "precision": scores.get('Coref', {}).get('Precision', 0.0),
+                        "recall": scores.get('Coref', {}).get('Recall', 0.0),
+                        "f1": scores.get('Coref', {}).get('Fscore', 0.0)
+                    }
+                },
+                "umr_1": umr_1,
+                "umr_2": umr_2
+            }
+            
+            return jsonify(response)
+            
+        except Exception as e:
+            logger.error(f"Error during evaluation: {str(e)}", exc_info=True)
+            return jsonify({
+                "error": "Evaluation failed",
+                "details": str(e),
+                "test_umr": umr_1,
+                "gold_umr": umr_2
+            }), 500
+            
+    except Exception as e:
+        logger.error(f"Error in evaluate_umr: {str(e)}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+@main.route("/test_ancast_db", methods=['GET'])
+@login_required
+def test_ancast_db():
+    """Debug route to test database queries for Ancast."""
+    try:
+        # Get query parameters
+        doc_version_1_id = request.args.get('doc_version_1_id', type=int)
+        doc_version_2_id = request.args.get('doc_version_2_id', type=int)
+        sent_id = request.args.get('sent_id', type=int)
+        
+        if not all([doc_version_1_id, doc_version_2_id, sent_id]):
+            return jsonify({"error": "Missing required parameters"}), 400
+            
+        # Get document versions
+        doc_version_1 = DocVersion.query.get_or_404(doc_version_1_id)
+        doc_version_2 = DocVersion.query.get_or_404(doc_version_2_id)
+        
+        # Get document
+        doc = Doc.query.get_or_404(doc_version_1.doc_id)
+        
+        # Get sentences
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        if not sentences:
+            return jsonify({"error": "No sentences found"}), 404
+            
+        # Get current sentence
+        if sent_id < 1 or sent_id > len(sentences):
+            return jsonify({"error": f"Invalid sentence ID: {sent_id}"}), 400
+            
+        current_sent = sentences[sent_id - 1]
+        
+        # Get annotations
+        annotation_1 = Annotation.query.filter_by(
+            doc_version_id=doc_version_1_id,
+            sent_id=current_sent.id
+        ).first()
+        
+        annotation_2 = Annotation.query.filter_by(
+            doc_version_id=doc_version_2_id,
+            sent_id=current_sent.id
+        ).first()
+        
+        # Count annotations
+        total_annotations = Annotation.query.filter(
+            Annotation.doc_version_id.in_([doc_version_1_id, doc_version_2_id])
+        ).count()
+        
+        # Count sentence annotations
+        sentence_annotations = Annotation.query.filter(
+            Annotation.doc_version_id.in_([doc_version_1_id, doc_version_2_id]),
+            Annotation.sent_annot != ''
+        ).count()
+        
+        # Count document annotations
+        document_annotations = Annotation.query.filter(
+            Annotation.doc_version_id.in_([doc_version_1_id, doc_version_2_id]),
+            Annotation.doc_annot != ''
+        ).count()
+        
+        # Count alignments
+        alignments = Annotation.query.filter(
+            Annotation.doc_version_id.in_([doc_version_1_id, doc_version_2_id]),
+            Annotation.alignment != {}
+        ).count()
+        
+        response = {
+            "success": True,
+            "doc_version_1": {
+                "id": doc_version_1_id,
+                "doc_id": doc_version_1.doc_id,
+                "user_id": doc_version_1.user_id
+            },
+            "doc_version_2": {
+                "id": doc_version_2_id,
+                "doc_id": doc_version_2.doc_id,
+                "user_id": doc_version_2.user_id
+            },
+            "current_sentence": {
+                "id": current_sent.id,
+                "content": current_sent.content
+            },
+            "annotation_1": {
+                "exists": bool(annotation_1),
+                "sent_annot": bool(annotation_1.sent_annot if annotation_1 else False),
+                "doc_annot": bool(annotation_1.doc_annot if annotation_1 else False),
+                "alignment": bool(annotation_1.alignment if annotation_1 else False)
+            },
+            "annotation_2": {
+                "exists": bool(annotation_2),
+                "sent_annot": bool(annotation_2.sent_annot if annotation_2 else False),
+                "doc_annot": bool(annotation_2.doc_annot if annotation_2 else False),
+                "alignment": bool(annotation_2.alignment if annotation_2 else False)
+            },
+            "counts": {
+                "total_annotations": total_annotations,
+                "sentence_annotations": sentence_annotations,
+                "document_annotations": document_annotations,
+                "alignments": alignments
+            }
+        }
+        
+        return jsonify(response)
+        
+    except Exception as e:
+        logger.error(f"Error in test_ancast_db: {str(e)}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+
+def check_ancast_debug_files(debug_dir):
+    """Analyze Ancast debug files for parsing issues."""
+    issues = []
+    
+    # Check if debug directory exists
+    if not os.path.exists(debug_dir):
+        return ["Debug directory not found"]
+    
+    # Look for common debug files
+    debug_files = {
+        'stdout': os.path.join(debug_dir, "ancast_stdout.txt"),
+        'stderr': os.path.join(debug_dir, "ancast_stderr.txt"),
+        'gold': os.path.join(debug_dir, "formatted_gold.txt"),
+        'pred': os.path.join(debug_dir, "formatted_pred.txt")
     }
     
-    try:
-        # Check if DocVersion model exists and count records
-        try:
-            docversions_count = DocVersion.query.count()
-            result["models"]["docversion"] = "OK"
-            result["counts"]["docversion"] = docversions_count
-        except Exception as e:
-            result["models"]["docversion"] = f"ERROR: {str(e)}"
-        
-        # Check if Annotation model exists and count records
-        try:
-            annotations_count = Annotation.query.count()
-            result["models"]["annotation"] = "OK"
-            result["counts"]["annotation"] = annotations_count
-        except Exception as e:
-            result["models"]["annotation"] = f"ERROR: {str(e)}"
-        
-        # Check if Sent model exists and count records
-        try:
-            sentences_count = Sent.query.count()
-            result["models"]["sent"] = "OK"
-            result["counts"]["sent"] = sentences_count
-        except Exception as e:
-            result["models"]["sent"] = f"ERROR: {str(e)}"
-        
-        # Check relationships
-        try:
-            # Find a document version with annotations
-            doc_version_with_annotations = DocVersion.query.join(Annotation).first()
-            if doc_version_with_annotations:
-                annotations = Annotation.query.filter_by(doc_version_id=doc_version_with_annotations.id).all()
-                result["relationships"]["doc_version_id"] = doc_version_with_annotations.id
-                result["relationships"]["annotations_count"] = len(annotations)
-                
-                # Check sentences
-                if annotations:
-                    sent_ids = [ann.sent_id for ann in annotations]
-                    sentences = Sent.query.filter(Sent.id.in_(sent_ids)).all()
-                    result["relationships"]["sent_ids"] = sent_ids[:5]  # First 5 only
-                    result["relationships"]["matching_sentences"] = len(sentences)
-        except Exception as e:
-            result["relationships"] = f"ERROR: {str(e)}"
+    # Check each file
+    for file_type, file_path in debug_files.items():
+        if not os.path.exists(file_path):
+            issues.append(f"Missing {file_type} file")
+            continue
             
-        return jsonify(result)
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        try:
+            with open(file_path, 'r') as f:
+                content = f.read()
+                
+            # Check for common issues
+            if file_type in ['gold', 'pred']:
+                # Check for basic UMR structure
+                if not content.strip():
+                    issues.append(f"Empty {file_type} file")
+                elif '# :: snt' not in content:
+                    issues.append(f"Missing sentence ID in {file_type} file")
+                elif '# sentence level graph:' not in content:
+                    issues.append(f"Missing sentence graph in {file_type} file")
+                elif '# alignment:' not in content:
+                    issues.append(f"Missing alignment in {file_type} file")
+                elif '# document level annotation:' not in content:
+                    issues.append(f"Missing document annotation in {file_type} file")
+                    
+                # Check for balanced parentheses
+                open_count = content.count('(')
+                close_count = content.count(')')
+                if open_count != close_count:
+                    issues.append(f"Unbalanced parentheses in {file_type} file ({open_count} open, {close_count} close)")
+                    
+            elif file_type == 'stderr' and content.strip():
+                # Log any stderr content as an issue
+                issues.append(f"Errors in stderr: {content.strip()}")
+                
+        except Exception as e:
+            issues.append(f"Error reading {file_type} file: {str(e)}")
+    
+    return issues

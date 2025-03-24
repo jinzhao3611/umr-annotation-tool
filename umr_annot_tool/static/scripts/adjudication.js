@@ -864,159 +864,127 @@ function runAncastEvaluation() {
     try {
         console.log("runAncastEvaluation function called");
         
-        // Get document version IDs from the page - more robust error handling
-        let doc1VersionId = null;
-        let doc2VersionId = null;
-        let currentSentenceId = null;
-        
-        const doc1Input = document.getElementById('doc1-version-id');
-        const doc2Input = document.getElementById('doc2-version-id');
-        const sentIdInput = document.getElementById('current-sentence-id');
-        
-        if (doc1Input && doc1Input.value) {
-            doc1VersionId = parseInt(doc1Input.value) || null;
-        }
-        
-        if (doc2Input && doc2Input.value) {
-            doc2VersionId = parseInt(doc2Input.value) || null;
-        }
-        
-        if (sentIdInput && sentIdInput.value) {
-            currentSentenceId = parseInt(sentIdInput.value) || null;
-        }
-        
-        // Fallback to using values from window.state if available
-        if (!doc1VersionId && window.state && window.state.docVersion1Id) {
-            doc1VersionId = window.state.docVersion1Id;
-        }
-        
-        if (!doc2VersionId && window.state && window.state.docVersion2Id) {
-            doc2VersionId = window.state.docVersion2Id;
-        }
-        
-        if (!currentSentenceId && window.state && window.state.currentSentId) {
-            currentSentenceId = window.state.currentSentId;
-        }
-
-        // Get the list of sentences to compare - make sure it's a valid array
-        const sentencesToCompare = currentSentenceId ? [currentSentenceId] : [];
-        
-        console.log(`Using document version IDs: doc1=${doc1VersionId}, doc2=${doc2VersionId}, sentences=${sentencesToCompare}`);
-        
-        // As a fallback, also get the raw annotations from the DOM
-        let doc1Annotation = '';
-        let doc2Annotation = '';
-        
-        if (window.state.comparisonLevel === 'sentence') {
-            // Sentence level comparison
-            const doc1Elem = document.querySelector('#doc1-sent-annotation .annotation-content pre');
-            const doc2Elem = document.querySelector('#doc2-sent-annotation .annotation-content pre');
-            
-            if (doc1Elem && doc2Elem) {
-                doc1Annotation = doc1Elem.textContent || '';
-                doc2Annotation = doc2Elem.textContent || '';
-            }
-        } else {
-            // Document level comparison
-            const doc1Elem = document.querySelector('#doc1-doc-annotation .annotation-content pre');
-            const doc2Elem = document.querySelector('#doc2-doc-annotation .annotation-content pre');
-            
-            if (doc1Elem && doc2Elem) {
-                doc1Annotation = doc1Elem.textContent || '';
-                doc2Annotation = doc2Elem.textContent || '';
-            }
-        }
-        
-        // Check if we have enough information to proceed
-        if ((!doc1VersionId || !doc2VersionId || !sentencesToCompare.length) && 
-            (!doc1Annotation || !doc2Annotation)) {
-            console.error("Missing required data for evaluation");
-            showAncastError("Missing required data. Please make sure both documents have valid annotations or version IDs.");
-            return;
-        }
-        
         // Show the modal and loading indicator
         $('#ancastModal').modal('show');
-        
-        document.getElementById('ancast-loading').style.display = 'block';
-        document.getElementById('ancast-results').style.display = 'none';
-        document.getElementById('ancast-error').style.display = 'none';
-        
-        console.log("Showing modal and loading indicator");
-        
-        // Prepare data for the request
-        const data = {
-            // Primary data source - document version IDs and sentence IDs
-            doc1_version_id: doc1VersionId || null,
-            doc2_version_id: doc2VersionId || null,
-            sentences: sentencesToCompare,
-            
-            // Fallback data - raw annotation text
-            doc1: doc1Annotation,
-            doc2: doc2Annotation
-        };
-        
-        console.log("Request data:", data);
-        
-        // Send the request to the server
-        console.log("Sending request to /run_ancast_evaluation");
-        
-        fetch('/run_ancast_evaluation', {
+        $('#ancast-loading').show();
+        $('#ancast-results').hide();
+        $('#ancast-error').hide();
+        $('#umr-debug').hide();
+
+        // Make API call to evaluate UMR using the new endpoint
+        $.ajax({
+            url: `/evaluate_umr/${window.state.docVersion1Id}/${window.state.docVersion2Id}/${window.state.currentSentId}`,
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+            success: function(response) {
+                console.log("Received response:", response);
+                $('#ancast-loading').hide();
+                
+                if (response.error) {
+                    // Show error message
+                    $('#error-message').text(response.error);
+                    $('#error-details').text(response.details || 'No additional details available');
+                    
+                    // If UMR content is available, show it for debugging
+                    if (response.test_umr || response.gold_umr) {
+                        $('#test-umr-content').text(response.test_umr || 'Not available');
+                        $('#gold-umr-content').text(response.gold_umr || 'Not available');
+                        $('#umr-debug').show();
+                    }
+                    
+                    $('#ancast-error').show();
+                    return;
+                }
+
+                // Store results for potential download
+                ancastResults = response;
+
+                // Update summary scores
+                $('#ancast-score').text(formatScore(response.summary.ancast_score));
+                $('#ancast-precision').text(formatScore(response.summary.precision));
+                $('#ancast-recall').text(formatScore(response.summary.recall));
+                $('#ancast-f1').text(formatScore(response.summary.f1));
+
+                // Format detailed results
+                let detailsHtml = '<h5>Detailed Scores</h5>';
+                detailsHtml += '<table class="table table-bordered">';
+                detailsHtml += '<thead><tr><th>Category</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead>';
+                detailsHtml += '<tbody>';
+                
+                for (const [category, scores] of Object.entries(response.details)) {
+                    detailsHtml += `<tr>
+                        <td>${category.charAt(0).toUpperCase() + category.slice(1)}</td>
+                        <td>${formatScore(scores.precision)}%</td>
+                        <td>${formatScore(scores.recall)}%</td>
+                        <td>${formatScore(scores.f1)}%</td>
+                    </tr>`;
+                }
+                
+                detailsHtml += '</tbody></table>';
+                
+                // Add UMR comparison if available
+                if (response.umr_1 && response.umr_2) {
+                    detailsHtml += '<h5 class="mt-4">UMR Comparison</h5>';
+                    detailsHtml += '<div class="row">';
+                    detailsHtml += '<div class="col-6">';
+                    detailsHtml += '<h6>Document 1</h6>';
+                    detailsHtml += `<pre class="umr-text">${escapeHtml(response.umr_1)}</pre>`;
+                    detailsHtml += '</div>';
+                    detailsHtml += '<div class="col-6">';
+                    detailsHtml += '<h6>Document 2</h6>';
+                    detailsHtml += `<pre class="umr-text">${escapeHtml(response.umr_2)}</pre>`;
+                    detailsHtml += '</div>';
+                    detailsHtml += '</div>';
+                }
+                
+                $('#ancast-details').html(detailsHtml);
+                
+                // Show results
+                $('#ancast-results').show();
             },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            console.log("Received response:", response);
-            
-            if (response.redirected) {
-                // Handle redirects (like to login page)
-                console.warn("Response was redirected to:", response.url);
-                throw new Error("Request was redirected. You may need to log in again.");
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", {xhr, status, error});
+                $('#ancast-loading').hide();
+                
+                // Try to parse error response
+                let errorMessage = 'An unexpected error occurred';
+                let errorDetails = error;
+                
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    errorMessage = response.error || errorMessage;
+                    errorDetails = response.details || errorDetails;
+                    
+                    // If UMR content is available, show it for debugging
+                    if (response.test_umr || response.gold_umr) {
+                        $('#test-umr-content').text(response.test_umr || 'Not available');
+                        $('#gold-umr-content').text(response.gold_umr || 'Not available');
+                        $('#umr-debug').show();
+                    }
+                } catch (e) {
+                    console.error('Error parsing error response:', e);
+                }
+                
+                $('#error-message').text(errorMessage);
+                $('#error-details').text(errorDetails);
+                $('#ancast-error').show();
             }
-            
-            // Check the content type
-            const contentType = response.headers.get('content-type');
-            if (!contentType || !contentType.includes('application/json')) {
-                console.error("Response is not JSON:", contentType);
-                return response.text().then(htmlText => {
-                    console.error("HTML response:", htmlText.substring(0, 500) + "...");
-                    throw new Error(`Expected JSON response but got ${contentType || 'unknown format'}`);
-                });
-            }
-            
-            if (!response.ok) {
-                // Handle HTTP errors
-                console.error(`HTTP Error: ${response.status} ${response.statusText}`);
-                return response.json().then(data => {
-                    throw new Error(data.error || `HTTP Error: ${response.status} ${response.statusText}`);
-                });
-            }
-            
-            return response.json();
-        })
-        .then(data => {
-            console.log("Received data:", data);
-            
-            // Check for error field in data
-            if (data.error) {
-                throw new Error(data.error);
-            }
-            
-            // Display the results
-            displayAncastResults(data);
-        })
-        .catch(error => {
-            console.error("Error running Ancast evaluation:", error);
-            showAncastError(error.message || "Unknown error occurred while running Ancast evaluation.");
         });
-        
-    } catch (e) {
-        console.error("Exception in runAncastEvaluation:", e);
-        showAncastError("An error occurred while preparing the Ancast evaluation: " + e.message);
+    } catch (error) {
+        console.error('Error in runAncastEvaluation:', error);
+        showAncastError(error.message || 'An unexpected error occurred');
     }
+}
+
+function formatScore(value) {
+    if (value === undefined || value === null) return "N/A";
+    // Convert to number if it's a string
+    value = Number(value);
+    // Show more decimal places for small values
+    if (isNaN(value)) return "N/A";
+    if (value === 0) return "0.00";
+    if (value < 0.01) return value.toFixed(4);
+    if (value < 0.1) return value.toFixed(3);
+    return value.toFixed(2);
 }
 
 /**
