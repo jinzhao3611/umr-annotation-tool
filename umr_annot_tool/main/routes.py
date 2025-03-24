@@ -476,6 +476,7 @@ def sentlevel(doc_version_id, sent_id):
                             filename=doc.filename,
                             lang=project.language,
                             project_id=project.id,
+                            project_name=project.project_name,
                             admin=User.query.get_or_404(project.created_by_user_id),
                             info2display=info2display,
                             frame_dict=frame_dict,
