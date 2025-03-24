@@ -50,7 +50,7 @@
                     <div class="list-group list-group-flush">
                         {% for historyDoc in historyDocs %}
                             <div class="list-group-item d-flex justify-content-between align-items-center" id="docIdInDb-{{ historyDoc.id }}">
-                                <a href="{{ url_for('main.sentlevel', doc_version_id=historyDoc.doc_version_id, sent_id=1) }}" class="text-decoration-none">
+                                <a href="{{ url_for('main.view_combined', doc_version_id=historyDoc.doc_version_id, sent_id=1) }}" class="text-decoration-none">
                                     <i class="fas fa-file-alt me-2"></i>
                                     {{historyDoc.filename}}
                                     <span class="badge bg-secondary ms-2">{{ belongToProject[loop.index0]}}</span>
