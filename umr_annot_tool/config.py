@@ -1,9 +1,14 @@
 import os
+import time
+
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
+    
+    # Static file version - use timestamp to force refresh on every deployment
+    STATIC_VERSION = os.environ.get('STATIC_VERSION', str(int(time.time())))
 
     # this is using my own email as the sender
     # MAIL_SERVER = 'smtp.googlemail.com'

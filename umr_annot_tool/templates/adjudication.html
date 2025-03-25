@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/doclevel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/adjudication.css') }}">
+    <link rel="stylesheet" href="{{ versioned_static('styles/sentlevel.css') }}">
+    <link rel="stylesheet" href="{{ versioned_static('styles/doclevel.css') }}">
+    <link rel="stylesheet" href="{{ versioned_static('styles/adjudication.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
     
     <!-- Initialize state before loading any other scripts -->
@@ -19,11 +19,11 @@
     </script>
     
     <!-- Load application scripts -->
-    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+    <script src="{{ versioned_static('scripts/utils.js') }}"></script>
     <!-- Include jsdiff library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.1.0/diff.min.js"></script>
-    <script src="{{ url_for('static', filename='scripts/adjudication.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/ancast-evaluation.js') }}"></script>
+    <script src="{{ versioned_static('scripts/adjudication.js') }}"></script>
+    <script src="{{ versioned_static('scripts/ancast-evaluation.js') }}"></script>
     
     <!-- Synchronize scrolling between the two columns -->
     <script>
@@ -364,7 +364,7 @@
                 <!-- Scores will be inserted here dynamically -->
             </div>
             <div class="ancast-footer">
-                <p>These scores represent the similarity between the two UMR annotations across different dimensions. Higher scores indicate greater agreement between annotators.</p>
+                <p>These F scores represent the similarity between the two UMR annotations across different dimensions. Higher scores indicate greater agreement between annotators.</p>
             </div>
         </div>
     </div>

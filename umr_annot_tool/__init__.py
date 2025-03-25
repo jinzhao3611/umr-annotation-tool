@@ -1,7 +1,7 @@
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -75,6 +75,14 @@ def create_app(config_class=None):
     @app.context_processor
     def inject_year():
         return {'current_year': datetime.datetime.now().year}
+
+    # Add static file versioning context processor to prevent browser caching
+    @app.context_processor
+    def inject_static_url():
+        def versioned_static(filename):
+            version = app.config.get('STATIC_VERSION', '1.0.0')
+            return url_for('static', filename=filename, v=version)
+        return dict(versioned_static=versioned_static)
 
     # Check if Ancast is available
     try:
@@ -184,5 +192,34 @@ def create_app(config_class=None):
         app.logger.error(f"Unhandled exception: {str(e)}")
         app.logger.exception(e)
         return render_template('errors/500.html'), 500
+
+    # Configure static file handling
+    @app.after_request
+    def add_header(response):
+        # Set cache control for static files to improve performance
+        if 'static/' in request.path:
+            # Cache static files for 1 hour
+            response.headers['Cache-Control'] = 'public, max-age=3600'
+        return response
+        
+    # Debug route to help diagnose static file issues
+    @app.route('/debug/static-files')
+    def debug_static_files():
+        """Return information about static files for debugging"""
+        import os
+        static_dir = os.path.join(app.root_path, 'static')
+        styles_dir = os.path.join(static_dir, 'styles')
+        scripts_dir = os.path.join(static_dir, 'scripts')
+        
+        info = {
+            'static_folder': app.static_folder,
+            'static_url_path': app.static_url_path,
+            'static_dir_exists': os.path.exists(static_dir),
+            'styles_dir_exists': os.path.exists(styles_dir),
+            'scripts_dir_exists': os.path.exists(scripts_dir),
+            'styles_files': os.listdir(styles_dir) if os.path.exists(styles_dir) else [],
+            'scripts_files': os.listdir(scripts_dir) if os.path.exists(scripts_dir) else [],
+        }
+        return jsonify(info)
 
     return app
