@@ -21,6 +21,7 @@
     <!-- Load application scripts -->
     <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/adjudication.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/ancast-evaluation.js') }}"></script>
     
     <!-- Synchronize scrolling between the two columns -->
     <script>
@@ -361,7 +362,7 @@
                 <!-- Scores will be inserted here dynamically -->
             </div>
             <div class="ancast-footer">
-                <p>Scores reflect the similarity between the two annotations</p>
+                <p>These scores represent the similarity between the two UMR annotations across different dimensions. Higher scores indicate greater agreement between annotators.</p>
             </div>
         </div>
     </div>

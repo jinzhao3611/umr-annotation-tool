@@ -513,7 +513,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
-    max-width: 600px;
+    max-width: 700px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -572,30 +572,56 @@
 
 .ancast-scores {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
 }
 
-.score-item {
-    text-align: center;
-    padding: 15px;
+.score-row {
     background-color: #f8f9fa;
     border-radius: 8px;
+    padding: 12px 15px;
     border: 1px solid #dee2e6;
     transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    cursor: help;
 }
 
-.score-item:hover {
+.score-row:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.score-value {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #007bff;
-    margin-bottom: 5px;
+/* Custom tooltip styling using ::after pseudo-element */
+.score-row::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: normal;
+    white-space: nowrap;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    pointer-events: none;
+    width: max-content;
+    max-width: 300px;
+    text-align: center;
+}
+
+.score-row:hover::after {
+    opacity: 1;
+    visibility: visible;
 }
 
 .score-label {
@@ -603,13 +629,25 @@
     color: #6c757d;
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-bottom: 5px;
 }
 
-.simplified-note {
-    font-size: 0.75rem;
-    color: #856404;
-    font-style: italic;
-    margin-top: 5px;
+.score-value {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.score-value.score-high {
+    color: #28a745;
+}
+
+.score-value.score-medium {
+    color: #ffc107;
+}
+
+.score-value.score-low {
+    color: #dc3545;
 }
 
 .ancast-footer {
