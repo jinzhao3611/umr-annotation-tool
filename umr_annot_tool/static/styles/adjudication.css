@@ -203,8 +203,6 @@
     color: #24292e;
     border-radius: 2px;
     padding: 0 2px;
-    border-left: 2px solid #34d058;
-    display: inline-block;
 }
 
 .diff-removed {
@@ -212,8 +210,6 @@
     color: #24292e;
     border-radius: 2px;
     padding: 0 2px;
-    border-left: 2px solid #d73a49;
-    display: inline-block;
     text-decoration: line-through;
 }
 
