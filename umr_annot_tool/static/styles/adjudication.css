@@ -504,4 +504,124 @@
     line-height: 1.4;
     opacity: 1 !important;
     visibility: visible !important;
+}
+
+/* Ancast Evaluation Styles */
+.ancast-scores-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    z-index: 1000;
+    padding: 20px;
+    display: none;
+}
+
+.ancast-scores-container.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.ancast-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+}
+
+.ancast-overlay.active {
+    display: block;
+}
+
+.ancast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+.ancast-header h3 {
+    margin: 0;
+    color: #343a40;
+    font-size: 1.25rem;
+}
+
+.close-ancast {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s;
+}
+
+.close-ancast:hover {
+    color: #343a40;
+}
+
+.ancast-scores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.score-item {
+    text-align: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.score-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.score-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 5px;
+}
+
+.score-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.simplified-note {
+    font-size: 0.75rem;
+    color: #856404;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.ancast-footer {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 } 

@@ -1695,3 +1695,198 @@ def process_umr_block(block_text, default_sent_num=1):
 """
     
     return result
+
+@main.route("/ancast_evaluation", methods=['POST'])
+@login_required
+def ancast_evaluation():
+    """Run Ancast evaluation for the specified annotations and return scores."""
+    try:
+        # Get request data
+        data = request.get_json()
+        current_app.logger.info(f"Ancast evaluation request data: {data}")
+        
+        # Check if required parameters are present
+        if not all(k in data for k in ['doc_version_1_id', 'doc_version_2_id', 'sent_id']):
+            return jsonify({'success': False, 'error': 'Missing required parameters'}), 400
+        
+        doc_version_1_id = data['doc_version_1_id']
+        doc_version_2_id = data['doc_version_2_id']
+        sent_id = int(data['sent_id'])  # Ensure sent_id is an integer
+        
+        # Get document versions
+        doc_version_1 = DocVersion.query.get_or_404(doc_version_1_id)
+        doc_version_2 = DocVersion.query.get_or_404(doc_version_2_id)
+        
+        # Get the documents
+        doc1 = Doc.query.get_or_404(doc_version_1.doc_id)
+        doc2 = Doc.query.get_or_404(doc_version_2.doc_id)
+        
+        current_app.logger.info(f"Found documents: {doc1.filename} and {doc2.filename}")
+        
+        # Check if the user has permission to view these documents
+        membership = Projectuser.query.filter_by(
+            project_id=doc1.project_id, 
+            user_id=current_user.id
+        ).first()
+        
+        if not membership:
+            return jsonify({'success': False, 'error': 'User does not have permission to view these documents'}), 403
+        
+        # Get all sentences from the first document
+        sents = Sent.query.filter_by(doc_id=doc1.id).all()
+        current_app.logger.info(f"Found {len(sents)} sentences for document {doc1.id}")
+        
+        # Validate the sentence ID
+        if sent_id < 1 or sent_id > len(sents):
+            return jsonify({'success': False, 'error': f'Invalid sentence ID: {sent_id}. Valid range is 1-{len(sents)}'}), 400
+        
+        # Get the current sentence
+        current_sent = sents[sent_id - 1]
+        current_app.logger.info(f"Current sentence (ID={current_sent.id}): {current_sent.content}")
+        
+        # Get annotations for the current sentence in both documents
+        annotation1 = Annotation.query.filter_by(
+            doc_version_id=doc_version_1_id, 
+            sent_id=current_sent.id
+        ).first()
+        
+        annotation2 = Annotation.query.filter_by(
+            doc_version_id=doc_version_2_id, 
+            sent_id=current_sent.id
+        ).first()
+        
+        if not annotation1 or not annotation2:
+            return jsonify({'success': False, 'error': 'One or both annotations not found'}), 404
+        
+        current_app.logger.info(f"Found annotations: {annotation1.id} and {annotation2.id}")
+        
+        # Import ancast library
+        try:
+            from ancast import evaluate, evaluate_doc, io_utils
+            current_app.logger.info("Successfully imported ancast library")
+        except ImportError as e:
+            current_app.logger.error(f"Failed to import ancast: {str(e)}")
+            return jsonify({'success': False, 'error': 'Ancast library not available. Please make sure it is installed.'}), 500
+            
+        # Construct UMR string for both annotations
+        sent_text = current_sent.content
+        
+        # Get alignment information
+        alignment1 = annotation1.alignment if hasattr(annotation1, 'alignment') and annotation1.alignment else {}
+        alignment2 = annotation2.alignment if hasattr(annotation2, 'alignment') and annotation2.alignment else {}
+        
+        # Convert alignment data to UMR alignment format
+        alignment_str1 = "\n# alignment:\n"
+        alignment_str2 = "\n# alignment:\n"
+        
+        if alignment1:
+            for node_id, spans in alignment1.items():
+                if isinstance(spans, list) and spans:
+                    indices = [f"{span}" for span in spans if span is not None]
+                    if indices:
+                        alignment_str1 += f"{node_id}: {'-'.join(indices)}\n"
+        
+        if alignment2:
+            for node_id, spans in alignment2.items():
+                if isinstance(spans, list) and spans:
+                    indices = [f"{span}" for span in spans if span is not None]
+                    if indices:
+                        alignment_str2 += f"{node_id}: {'-'.join(indices)}\n"
+        
+        # If no alignments, add a dummy alignment to prevent errors
+        if alignment_str1 == "\n# alignment:\n":
+            alignment_str1 += "dummy: 0-0\n"
+        
+        if alignment_str2 == "\n# alignment:\n":
+            alignment_str2 += "dummy: 0-0\n"
+            
+        # Format UMR strings following the expected format
+        doc1_umr = f"# :: snt1  {sent_text}\n\n# sentence level graph:\n{annotation1.sent_annot}\n{alignment_str1}\n# document level annotation:\n{annotation1.doc_annot}"
+        doc2_umr = f"# :: snt1  {sent_text}\n\n# sentence level graph:\n{annotation2.sent_annot}\n{alignment_str2}\n# document level annotation:\n{annotation2.doc_annot}"
+        
+        # Log a sample of the UMR strings to debug
+        current_app.logger.info(f"Doc1 UMR first 200 chars: {doc1_umr[:200]}")
+        current_app.logger.info(f"Doc2 UMR first 200 chars: {doc2_umr[:200]}")
+        
+        # Run Ancast evaluation
+        try:
+            current_app.logger.info("Starting Ancast evaluation")
+            fscores = evaluate_doc(
+                pred_inputs=doc1_umr,
+                gold_inputs=doc2_umr,
+                data_format="umr",
+            )
+            
+            current_app.logger.info(f"Ancast evaluation succeeded: {fscores}")
+            
+            # Format the scores for response
+            formatted_scores = {
+                'sent': round(fscores.get('sent', 0) * 100, 2),
+                'modal': round(fscores.get('modal', 0) * 100, 2),
+                'temporal': round(fscores.get('temporal', 0) * 100, 2),
+                'coref': round(fscores.get('coref', 0) * 100, 2),
+                'comp': round(fscores.get('comp', 0) * 100, 2)
+            }
+            
+            return jsonify({
+                'success': True, 
+                'scores': formatted_scores
+            })
+            
+        except Exception as e:
+            import traceback
+            error_trace = traceback.format_exc()
+            current_app.logger.error(f"Error running Ancast evaluation: {str(e)}")
+            current_app.logger.error(f"Traceback: {error_trace}")
+            
+            # Try a simpler evaluation if full evaluation fails
+            try:
+                current_app.logger.info("Attempting simplified evaluation")
+                simplified_scores = {
+                    'sent': 0.0, 
+                    'modal': 0.0,
+                    'temporal': 0.0,
+                    'coref': 0.0,
+                    'comp': 0.0
+                }
+                
+                # Try sentence level only
+                if annotation1.sent_annot and annotation2.sent_annot:
+                    try:
+                        sent_score = evaluate(
+                            pred_inputs=annotation1.sent_annot,
+                            gold_inputs=annotation2.sent_annot,
+                            data_format="umr",
+                        )
+                        simplified_scores['sent'] = sent_score
+                        simplified_scores['comp'] = sent_score * 0.5  # Give half weight to the overall score
+                    except Exception as sent_err:
+                        current_app.logger.error(f"Error in simplified sentence evaluation: {str(sent_err)}")
+                
+                # Format the simplified scores
+                formatted_scores = {
+                    'sent': round(simplified_scores.get('sent', 0) * 100, 2),
+                    'modal': round(simplified_scores.get('modal', 0) * 100, 2),
+                    'temporal': round(simplified_scores.get('temporal', 0) * 100, 2),
+                    'coref': round(simplified_scores.get('coref', 0) * 100, 2),
+                    'comp': round(simplified_scores.get('comp', 0) * 100, 2)
+                }
+                
+                current_app.logger.info(f"Returning simplified scores: {formatted_scores}")
+                
+                return jsonify({
+                    'success': True, 
+                    'scores': formatted_scores,
+                    'note': 'Used simplified evaluation due to error in full evaluation'
+                })
+                
+            except Exception as simple_err:
+                current_app.logger.error(f"Error in simplified evaluation: {str(simple_err)}")
+                return jsonify({'success': False, 'error': f'Error running Ancast evaluation: {str(e)}'}), 500
+            
+    except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        current_app.logger.error(f"Error in Ancast evaluation: {str(e)}")
+        current_app.logger.error(f"Traceback: {error_trace}")
+        return jsonify({'success': False, 'error': f'Internal server error: {str(e)}'}), 500

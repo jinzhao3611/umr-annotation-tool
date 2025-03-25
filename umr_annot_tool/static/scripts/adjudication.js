@@ -708,3 +708,222 @@ function formatScore(value) {
     if (value < 0.1) return value.toFixed(3);
     return value.toFixed(2);
 }
+
+/**
+ * Initialize navigation buttons for moving between sentences
+ */
+function initializeNavigation() {
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            if (window.state.currentSentId > 1) {
+                navigateToSentence(window.state.currentSentId - 1);
+            }
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            if (window.state.currentSentId < window.state.maxSentId) {
+                navigateToSentence(window.state.currentSentId + 1);
+            }
+        });
+    }
+}
+
+/**
+ * Navigate to a specific sentence
+ */
+function navigateToSentence(sentId) {
+    // Construct the URL with the current comparison level
+    const url = `/adjudication/${window.state.docVersion1Id}/${window.state.docVersion2Id}/${sentId}?comparison_level=${window.state.comparisonLevel}`;
+    window.location.href = url;
+}
+
+/**
+ * Initialize the Ancast evaluation button
+ */
+function initializeAncastEvaluation() {
+    const evaluateBtn = document.getElementById('evaluate-btn');
+    const ancastOverlay = document.getElementById('ancast-overlay');
+    const ancastContainer = document.getElementById('ancast-scores-container');
+    const closeAncastBtn = document.getElementById('close-ancast');
+    
+    // Exit if the button doesn't exist
+    if (!evaluateBtn) return;
+    
+    evaluateBtn.addEventListener('click', async function() {
+        try {
+            // Show loading state
+            evaluateBtn.disabled = true;
+            evaluateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running Evaluation...';
+            
+            // Get the data to send
+            const data = {
+                doc_version_1_id: window.state.docVersion1Id,
+                doc_version_2_id: window.state.docVersion2Id,
+                sent_id: window.state.currentSentId
+            };
+            
+            console.log('Sending Ancast evaluation request with data:', data);
+            
+            // Make the API call
+            const response = await fetch('/ancast_evaluation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            
+            // Parse the JSON response
+            let result;
+            try {
+                result = await response.json();
+            } catch (jsonError) {
+                console.error('Error parsing JSON response:', jsonError);
+                throw new Error('Invalid response from server');
+            }
+            
+            if (!response.ok) {
+                throw new Error(result.error || `Server returned ${response.status}: ${response.statusText}`);
+            }
+            
+            if (result.success) {
+                // Check if we're displaying simplified scores
+                const isSimplified = result.note && result.note.includes('simplified');
+                
+                // Render the scores
+                renderAncastScores(result.scores, isSimplified);
+                
+                // Show the modal
+                ancastOverlay.classList.add('active');
+                ancastContainer.classList.add('active');
+                
+                // Show a note if simplified scores were used
+                if (isSimplified) {
+                    const footer = document.querySelector('.ancast-footer p');
+                    if (footer) {
+                        footer.innerHTML = 'Note: Using simplified evaluation due to an error with full evaluation';
+                        footer.style.color = '#856404';
+                    }
+                }
+            } else {
+                // Show error
+                console.error('Error from server:', result.error);
+                alert(`Error: ${result.error || 'An unknown error occurred'}`);
+            }
+        } catch (error) {
+            console.error('Error running Ancast evaluation:', error);
+            
+            // Provide a more user-friendly error message
+            let errorMessage = 'An error occurred while running the evaluation.';
+            
+            if (error.message.includes('list index out of range')) {
+                errorMessage = 'There was an issue with the alignment data. Please make sure both annotations have proper alignments.';
+            } else if (error.message.includes('not available')) {
+                errorMessage = 'The Ancast evaluation library is not available on the server. Please contact the administrator.';
+            }
+            
+            alert(`${errorMessage}\n\nDetails: ${error.message}`);
+        } finally {
+            // Reset button state
+            evaluateBtn.disabled = false;
+            evaluateBtn.innerHTML = '<i class="fas fa-chart-bar"></i> Run Ancast Evaluation';
+        }
+    });
+    
+    // Close modal when clicking the close button
+    closeAncastBtn.addEventListener('click', function() {
+        ancastOverlay.classList.remove('active');
+        ancastContainer.classList.remove('active');
+        
+        // Reset any custom message in the footer
+        const footer = document.querySelector('.ancast-footer p');
+        if (footer) {
+            footer.innerHTML = 'Scores reflect the similarity between the two annotations';
+            footer.style.color = '';
+        }
+    });
+    
+    // Close modal when clicking the overlay
+    ancastOverlay.addEventListener('click', function() {
+        ancastOverlay.classList.remove('active');
+        ancastContainer.classList.remove('active');
+        
+        // Reset any custom message in the footer
+        const footer = document.querySelector('.ancast-footer p');
+        if (footer) {
+            footer.innerHTML = 'Scores reflect the similarity between the two annotations';
+            footer.style.color = '';
+        }
+    });
+}
+
+/**
+ * Render the Ancast scores in the modal
+ */
+function renderAncastScores(scores, isSimplified = false) {
+    const scoresContainer = document.getElementById('ancast-scores');
+    
+    // Clear previous scores
+    scoresContainer.innerHTML = '';
+    
+    // Define the categories and display names
+    const categories = [
+        { key: 'sent', label: 'Sentence Level' },
+        { key: 'modal', label: 'Modal' },
+        { key: 'temporal', label: 'Temporal' },
+        { key: 'coref', label: 'Coreference' },
+        { key: 'comp', label: 'Overall' }
+    ];
+    
+    // Add each score to the container
+    categories.forEach(category => {
+        const score = scores[category.key];
+        const scoreElement = document.createElement('div');
+        scoreElement.className = 'score-item';
+        
+        // Format the score as a percentage
+        const formattedScore = `${score}%`;
+        
+        // Add a "simplified" note for simplified scores
+        const simplifiedNote = isSimplified && category.key !== 'sent' && category.key !== 'comp' ? 
+            '<div class="simplified-note">(estimated)</div>' : '';
+        
+        // Set inner HTML with the formatted score and label
+        scoreElement.innerHTML = `
+            <div class="score-value">${formattedScore}</div>
+            <div class="score-label">${category.label}</div>
+            ${simplifiedNote}
+        `;
+        
+        // Add to the container
+        scoresContainer.appendChild(scoreElement);
+    });
+}
+
+// Add initialization for Ancast evaluation
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize diff highlighting
+    initializeComparison();
+    
+    // Initialize navigation buttons
+    initializeNavigation();
+    
+    // Initialize Ancast evaluation
+    initializeAncastEvaluation();
+    
+    // Optionally initialize Split.js for resizable panels
+    if (typeof Split === 'function') {
+        Split([
+            document.getElementById('doc1-column'),
+            document.getElementById('doc2-column')
+        ], {
+            gutterSize: 10,
+            minSize: 200
+        });
+    }
+});
