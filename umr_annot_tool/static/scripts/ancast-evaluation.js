@@ -138,24 +138,24 @@ function showAncastResults(results) {
     
     // Update the results in the container
     const scoresHtml = `
-        <div class="score-row" title="Measures the similarity of basic sentence elements, including predicate-argument structure">
+        <div class="score-row" title="Measures the agreement of sentence level annotations">
             <div class="score-label">Sentence</div>
             <div class="score-value ${getScoreClass(results.sent)}">${formatScore(results.sent)}</div>
         </div>
-        <div class="score-row" title="Evaluates the agreement on temporal relations and tense/aspect features">
+        <div class="score-row" title="Evaluates the agreement on temporal relations in document level annotations">
             <div class="score-label">Temporal</div>
             <div class="score-value ${getScoreClass(results.temporal)}">${formatScore(results.temporal)}</div>
         </div>
-        <div class="score-row" title="Compares the modal operators and attitude expressions between annotations">
+        <div class="score-row" title="Measures the agreement of modal annotations in document level annotations">
             <div class="score-label">Modal</div>
             <div class="score-value ${getScoreClass(results.modal)}">${formatScore(results.modal)}</div>
         </div>
-        <div class="score-row" title="Assesses the similarity in entity coreference chains across the annotations">
+        <div class="score-row" title="Measures the agreement of coreference annotations in document level annotations">
             <div class="score-label">Coreference</div>
             <div class="score-value ${getScoreClass(results.coref)}">${formatScore(results.coref)}</div>
         </div>
-        <div class="score-row" title="Measures agreement on compositional semantic structures like coordination and scope">
-            <div class="score-label">Compositional</div>
+        <div class="score-row" title="Comprehensive F score">
+            <div class="score-label">Comprehensive</div>
             <div class="score-value ${getScoreClass(results.comp)}">${formatScore(results.comp)}</div>
         </div>
     `;
