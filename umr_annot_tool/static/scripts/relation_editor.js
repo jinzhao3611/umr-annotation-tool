@@ -3492,7 +3492,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                             // Update the lines array
                             updatedLines[lineNumber] = beforeParen;
                             updatedLines.splice(lineNumber + 1, 0, `${nextIndent}${newBranch}`);
-                            updatedLines.splice(lineNumber + 2, 0, afterParen);
+                            // Add the closing parenthesis to the last branch line instead of its own line
+                            const lastBranchIndex = lineNumber + 1;
+                            updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + afterParen;
                         }
                     } else {
                         // If we can't find the matching closing parenthesis, just add after the line
@@ -3529,7 +3531,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                                 // Update the current line and add a new line for our branch
                                 updatedLines[i] = beforeParen;
                                 updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
-                                updatedLines.splice(i+2, 0, afterParen);
+                                // Add the closing parenthesis to the last branch line instead of its own line
+                                const lastBranchIndex = i + 1;
+                                updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + afterParen;
                                 
                                 nodeFound = true;
                                 break;
