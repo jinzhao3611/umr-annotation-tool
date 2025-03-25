@@ -1983,3 +1983,40 @@ def export_annotation(doc_version_id):
     except Exception as e:
         current_app.logger.error(f"Error exporting annotation: {str(e)}", exc_info=True)
         return jsonify({'success': False, 'error': str(e)}), 500
+
+@main.route("/download_frames", methods=['GET'])
+@login_required
+def download_frames():
+    """Route to download frames data based on project language."""
+    try:
+        # Get project ID from query parameters
+        project_id = request.args.get('project_id')
+        
+        if not project_id:
+            return jsonify({'error': 'Missing project_id parameter'}), 400
+            
+        # Get the project to determine language
+        project = Project.query.get_or_404(project_id)
+        
+        # Select frame file based on project language
+        if project.language.lower() == 'english':
+            frame_file = FRAME_FILE_ENGLISH
+        elif project.language.lower() == 'chinese':
+            frame_file = FRAME_FILE_CHINESE
+        elif project.language.lower() == 'arabic':
+            frame_file = FRAME_FILE_ARABIC
+        else:
+            return jsonify({'error': f'Unsupported language: {project.language}'}), 400
+            
+        # Load and return frame data
+        try:
+            with open(frame_file, 'r') as f:
+                frame_dict = json.load(f)
+            return jsonify(frame_dict)
+        except (IOError, json.JSONDecodeError) as e:
+            logger.error(f"Error loading frame dictionary: {str(e)}")
+            return jsonify({'error': f'Error loading frames: {str(e)}'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error in download_frames: {str(e)}")
+        return jsonify({'error': str(e)}), 500
