@@ -114,6 +114,13 @@ function compareAnnotations(elem1, elem2, type) {
     console.log('UMR format detected:', isUmrFormat);
 
     try {
+        // Log sample diff output to understand the structure
+        const sampleDiff = Diff.diffWords(
+            "This is a test sentence with some words", 
+            "This is a modified test with some new words"
+        );
+        console.log('Sample diff output structure:', sampleDiff);
+        
         // For UMR format, try to work with the hierarchical structure
         if (isUmrFormat) {
             // Split content into lines for better visualization
@@ -140,40 +147,80 @@ function applyLineDiffHighlighting(elem1, elem2, lines1, lines2) {
     let html1 = '';
     let html2 = '';
     
-    // Process each line pair
-    const maxLines = Math.max(lines1.length, lines2.length);
+    // For UMR format, we need to be more careful about whitespace
+    const isUmr = lines1.some(l => l.includes(':ARG') || l.match(/\([a-z0-9]+ \/ [a-z0-9-]+/)) || 
+                 lines2.some(l => l.includes(':ARG') || l.match(/\([a-z0-9]+ \/ [a-z0-9-]+/));
     
-    for (let i = 0; i < maxLines; i++) {
-        const line1 = i < lines1.length ? lines1[i] : '';
-        const line2 = i < lines2.length ? lines2[i] : '';
-        
-        if (line1 === '' && line2 !== '') {
-            // Line only exists in the second document (added)
-            html2 += `<div class="diff-line added">${formatLineWithIndentation(line2)}</div>`;
-        } else if (line1 !== '' && line2 === '') {
-            // Line only exists in the first document (removed)
-            html1 += `<div class="diff-line removed">${formatLineWithIndentation(line1)}</div>`;
-        } else if (line1 === line2) {
-            // Lines are identical
-            html1 += `<div class="diff-line">${formatLineWithIndentation(line1)}</div>`;
-            html2 += `<div class="diff-line">${formatLineWithIndentation(line2)}</div>`;
+    // Use special options for diffing UMR lines
+    const diffOptions = isUmr ? { ignoreWhitespace: true } : {};
+    
+    // First, do a line-level diff to identify added/removed lines
+    // For UMR, compare the trimmed lines to avoid indentation differences
+    const trimmedLines1 = isUmr ? lines1.map(l => l.trim()) : lines1;
+    const trimmedLines2 = isUmr ? lines2.map(l => l.trim()) : lines2;
+    
+    const linesDiff = Diff.diffArrays(trimmedLines1, trimmedLines2);
+    console.log('Line level diff:', linesDiff);
+    
+    // Process the line-level differences
+    let firstIdx = 0;
+    let secondIdx = 0;
+    
+    linesDiff.forEach(part => {
+        if (part.removed) {
+            // Lines only in the first document
+            part.value.forEach((line, i) => {
+                // Use the original line with indentation
+                const originalLine = lines1[firstIdx];
+                html1 += `<div class="diff-line removed">${formatLineWithIndentation(originalLine)}</div>`;
+                firstIdx++;
+            });
+        } else if (part.added) {
+            // Lines only in the second document
+            part.value.forEach((line, i) => {
+                // Use the original line with indentation
+                const originalLine = lines2[secondIdx];
+                html2 += `<div class="diff-line added">${formatLineWithIndentation(originalLine)}</div>`;
+                secondIdx++;
+            });
         } else {
-            // Lines differ - use jsdiff to show the differences within the line
-            const diff = Diff.diffWords(line1, line2);
-            
-            // Format the first document line
-            let lineHtml1 = formatLineWithDiff(diff, true);
-            html1 += `<div class="diff-line">${lineHtml1}</div>`;
-            
-            // Format the second document line
-            let lineHtml2 = formatLineWithDiff(diff, false);
-            html2 += `<div class="diff-line">${lineHtml2}</div>`;
+            // Lines in both documents - check for word differences
+            part.value.forEach((line, i) => {
+                // Get the corresponding lines from both documents
+                const originalLine1 = lines1[firstIdx];
+                const originalLine2 = lines2[secondIdx];
+                
+                // When comparing UMR format, we might need to be more flexible with whitespace
+                // but still want to keep the original indentation for display
+                const areIdentical = isUmr 
+                    ? originalLine1.trim() === originalLine2.trim()
+                    : originalLine1 === originalLine2;
+                
+                if (areIdentical) {
+                    // Lines are identical (or differ only in whitespace in UMR)
+                    html1 += `<div class="diff-line">${formatLineWithIndentation(originalLine1)}</div>`;
+                    html2 += `<div class="diff-line">${formatLineWithIndentation(originalLine2)}</div>`;
+                } else {
+                    // Lines differ at word level
+                    const lineDiff = Diff.diffWords(originalLine1, originalLine2, diffOptions);
+                    
+                    html1 += `<div class="diff-line">${formatLineWithDiff(lineDiff, true)}</div>`;
+                    html2 += `<div class="diff-line">${formatLineWithDiff(lineDiff, false)}</div>`;
+                }
+                
+                firstIdx++;
+                secondIdx++;
+            });
         }
-    }
+    });
     
     // Update the content of the elements
     elem1.innerHTML = html1;
     elem2.innerHTML = html2;
+    
+    // Preserve pre formatting
+    elem1.style.whiteSpace = 'pre-wrap';
+    elem2.style.whiteSpace = 'pre-wrap';
 }
 
 /**
@@ -220,14 +267,24 @@ function formatLineWithDiff(diff, isFirstDocument) {
  * Apply word diff highlighting for the entire content
  */
 function applyWordDiffHighlighting(elem1, elem2, content1, content2) {
+    // Check if we're dealing with UMR format
+    const isUmr = content1.includes(':ARG') || content2.includes(':ARG') || 
+                  content1.match(/\([a-z0-9]+ \/ [a-z0-9-]+/) || 
+                  content2.match(/\([a-z0-9]+ \/ [a-z0-9-]+/);
+    
+    // Use special options for UMR format
+    const diffOptions = isUmr ? { ignoreWhitespace: true } : {};
+    
     // Use jsdiff to compute the differences
-    const diff = Diff.diffWords(content1, content2);
+    const diff = Diff.diffWords(content1, content2, diffOptions);
+    
+    console.log('Word diff results:', diff);
     
     // Generate HTML for the first document
     let html1 = '';
     diff.forEach(part => {
         if (part.removed) {
-            // Text was removed
+            // Text was removed from first document
             html1 += `<span class="diff-removed">${escapeHtml(part.value)}</span>`;
         } else if (!part.added) {
             // Text is unchanged
@@ -240,7 +297,7 @@ function applyWordDiffHighlighting(elem1, elem2, content1, content2) {
     let html2 = '';
     diff.forEach(part => {
         if (part.added) {
-            // Text was added
+            // Text was added to second document
             html2 += `<span class="diff-added">${escapeHtml(part.value)}</span>`;
         } else if (!part.removed) {
             // Text is unchanged
@@ -252,6 +309,10 @@ function applyWordDiffHighlighting(elem1, elem2, content1, content2) {
     // Update the content of the elements
     elem1.innerHTML = html1;
     elem2.innerHTML = html2;
+    
+    // Preserve pre formatting
+    elem1.style.whiteSpace = 'pre-wrap';
+    elem2.style.whiteSpace = 'pre-wrap';
 }
 
 /**
