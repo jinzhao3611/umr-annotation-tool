@@ -1890,3 +1890,96 @@ def ancast_evaluation():
         current_app.logger.error(f"Error in Ancast evaluation: {str(e)}")
         current_app.logger.error(f"Traceback: {error_trace}")
         return jsonify({'success': False, 'error': f'Internal server error: {str(e)}'}), 500
+
+@main.route("/export_annotation/<int:doc_version_id>", methods=['GET'])
+@login_required
+def export_annotation(doc_version_id):
+    """Export annotations for a document version in UMR format."""
+    try:
+        # Get the document version
+        doc_version = DocVersion.query.get_or_404(doc_version_id)
+        doc = Doc.query.get_or_404(doc_version.doc_id)
+        
+        # Check if the user has permission to view the document
+        if not has_permission_for_doc(current_user, doc.id):
+            return jsonify({'success': False, 'error': 'User does not have permission to view this document'}), 403
+        
+        # Get all sentences and annotations for this document version
+        sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
+        annotations = Annotation.query.filter_by(doc_version_id=doc_version_id).all()
+        
+        # Create a dictionary to map sentence IDs to annotations
+        annotation_map = {ann.sent_id: ann for ann in annotations}
+        
+        # Format the UMR content
+        umr_content = []
+        
+        # Start with the separator
+        umr_content.append("#" * 80)
+        
+        for i, sentence in enumerate(sentences, 1):
+            # Add meta-info (no empty line before meta-info)
+            umr_content.append("# meta-info")
+            # Remove empty line between meta-info and snt line
+            umr_content.append(f"# :: snt{i}")
+            
+            # Add sentence content with index and words
+            words = sentence.content.split()
+            umr_content.append("Index: " + " ".join(str(j+1) for j in range(len(words))))
+            umr_content.append("Words: " + sentence.content)
+            umr_content.append("")
+            
+            # Add sentence-level annotation
+            umr_content.append("# sentence level graph:")
+            if annotation := annotation_map.get(sentence.id):
+                if annotation.sent_annot:
+                    umr_content.append(annotation.sent_annot.strip())
+            else:
+                umr_content.append("()")
+            umr_content.append("")
+            
+            # Add alignment information
+            umr_content.append("# alignment:")
+            if annotation and annotation.alignment:
+                # Sort alignment entries for consistent output
+                sorted_alignments = sorted(annotation.alignment.items())
+                for var, align in sorted_alignments:
+                    # Handle both list and string formats
+                    if isinstance(align, list):
+                        # Join the list elements with '-'
+                        indices = [str(x) for x in align if x is not None]
+                        if indices:
+                            umr_content.append(f"{var}: {'-'.join(indices)}")
+                    else:
+                        # If it's already a string, use it directly
+                        umr_content.append(f"{var}: {align}")
+            else:
+                # Default alignment if none exists
+                umr_content.append(f"s{i}a: 0-0")
+            umr_content.append("")
+            
+            # Add document-level annotation
+            umr_content.append("# document level annotation:")
+            if annotation and annotation.doc_annot:
+                umr_content.append(annotation.doc_annot.strip())
+            else:
+                umr_content.append("()")
+            umr_content.append("")
+            
+            # Add section separator (no empty line after separator)
+            umr_content.append("#" * 80)
+        
+        # Join all lines with newlines and remove any double newlines
+        content = "\n".join(umr_content)
+        content = content.replace("\n\n\n", "\n\n")  # Replace triple newlines with double
+        content = content.replace("\n\n#" * 80, "\n" + "#" * 80)  # Remove empty line before separators
+        
+        # Create response with the file
+        response = make_response(content)
+        response.headers['Content-Type'] = 'text/plain; charset=utf-8'
+        response.headers['Content-Disposition'] = f'attachment; filename={doc.filename}'
+        return response
+        
+    except Exception as e:
+        current_app.logger.error(f"Error exporting annotation: {str(e)}", exc_info=True)
+        return jsonify({'success': False, 'error': str(e)}), 500

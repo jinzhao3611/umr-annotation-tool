@@ -1949,39 +1949,39 @@
         fetch(`/export_annotation/${docVersionId}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Accept': 'text/plain, application/json'
             }
         })
         .then(response => {
             console.log('Server response status:', response.status);
             if (!response.ok) {
-                console.error('Server responded with error status:', response.status);
-                throw new Error(`Server error: ${response.status}`);
+                // Try to parse error response as JSON
+                return response.json().then(errorData => {
+                    throw new Error(errorData.error || `Server error: ${response.status}`);
+                });
             }
-            return response.json().catch(err => {
-                console.error('Error parsing JSON response:', err);
-                throw new Error('Invalid JSON response from server');
-            });
-        })
-        .then(data => {
-            console.log('Received data from server:', data);
             
-            if (data.success) {
-                showExportNotification('Formatting annotation data...', 'info');
-                
-                // Format the data into UMR format
-                const formattedData = formatUMRData(data);
-                console.log('Data formatted successfully, preparing download');
-                
-                // Download the formatted data as a file
-                downloadUMRFile(formattedData, data.filename);
-                console.log('File download initiated');
-                
-                // Show success message
-                showExportNotification('Annotation exported successfully!', 'success');
+            // Check content type to determine if it's a file or JSON
+            const contentType = response.headers.get('Content-Type');
+            if (contentType && contentType.includes('application/json')) {
+                // Handle JSON response (error case)
+                return response.json().then(errorData => {
+                    throw new Error(errorData.error || 'Failed to export annotation');
+                });
             } else {
-                console.error('Server reported failure:', data.message);
-                throw new Error(data.message || 'Failed to export annotation');
+                // Handle file download
+                return response.blob().then(blob => {
+                    const filename = response.headers.get('Content-Disposition')?.split('filename=')[1] || 'export.umr';
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                    showExportNotification('Annotation exported successfully!', 'success');
+                });
             }
         })
         .catch(error => {
