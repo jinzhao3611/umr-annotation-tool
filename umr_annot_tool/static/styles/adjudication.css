@@ -509,12 +509,14 @@
     transform: translate(-50%, -50%);
     width: 80%;
     max-width: 700px;
+    max-height: 80vh; /* Limit height to 80% of viewport height */
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     z-index: 1000;
     padding: 20px;
     display: none;
+    overflow-y: auto; /* Add vertical scrolling */
 }
 
 .ancast-scores-container.active {
@@ -657,4 +659,23 @@
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* Check if the file exists and add the CSS for the message container */
+.ancast-message {
+    padding: 15px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    border-left: 3px solid #007bff;
+    color: #333;
+    max-height: 200px; /* Limit the height of the message box */
+    overflow-y: auto; /* Add vertical scrolling to the message box */
+}
+
+.ancast-message .message-content {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 } 

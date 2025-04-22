@@ -75,7 +75,7 @@ function runAncastEvaluation() {
     .then(data => {
         if (data.success) {
             // Use the real evaluation scores from the API
-            showAncastResults(data.scores);
+            showAncastResults(data.scores, data.message);
         } else {
             // Handle API error
             console.error('API returned error:', data.error);
@@ -96,7 +96,7 @@ function runAncastEvaluation() {
                 coref: 0.76,
                 comp: 0.81
             };
-            showAncastResults(mockResults);
+            showAncastResults(mockResults, 'Mock results used due to API call failure');
         }
     })
     .finally(() => {
@@ -120,18 +120,21 @@ function getCSRFToken() {
 /**
  * Display the Ancast evaluation results
  */
-function showAncastResults(results) {
+function showAncastResults(results, message) {
     console.log('Showing evaluation results:', results);
+    console.log('Evaluation message:', message);
     
     const container = document.getElementById('ancast-scores-container');
     const overlay = document.getElementById('ancast-overlay');
     const scoresDiv = document.getElementById('ancast-scores');
+    const messageDiv = document.getElementById('ancast-message');
     
-    if (!container || !overlay || !scoresDiv) {
-        console.error('Ancast results container, overlay, or scores div not found', {
+    if (!container || !overlay || !scoresDiv || !messageDiv) {
+        console.error('Ancast results container, overlay, scores div, or message div not found', {
             container: !!container,
             overlay: !!overlay,
-            scoresDiv: !!scoresDiv
+            scoresDiv: !!scoresDiv,
+            messageDiv: !!messageDiv
         });
         return;
     }
@@ -161,6 +164,15 @@ function showAncastResults(results) {
     `;
     
     scoresDiv.innerHTML = scoresHtml;
+    
+    // Update the message if provided
+    if (message) {
+        messageDiv.innerHTML = `<div class="message-content">${message}</div>`;
+        messageDiv.style.display = 'block';
+    } else {
+        messageDiv.innerHTML = '';
+        messageDiv.style.display = 'none';
+    }
     
     // Show the results
     container.classList.add('active');

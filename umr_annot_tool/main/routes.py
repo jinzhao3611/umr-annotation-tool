@@ -1811,13 +1811,21 @@ def ancast_evaluation():
         # Run Ancast evaluation
         try:
             current_app.logger.info("Starting Ancast evaluation")
-            fscores = evaluate_doc(
+            # For the main evaluation block
+            # Update to unpack both scores and message
+            fscores, message = evaluate(
                 pred_inputs=doc1_umr,
                 gold_inputs=doc2_umr,
                 data_format="umr",
+                output_csv_as_string=True
             )
             
             current_app.logger.info(f"Ancast evaluation succeeded: {fscores}")
+            current_app.logger.info(f"Full evaluation message: {message}")
+            
+            # Extract only the last 11 characters of the first message element
+            processed_message = message[0][-11:] if isinstance(message, list) and len(message) > 0 else "No message"
+            current_app.logger.info(f"Processed message: {processed_message}")
             
             # Format the scores for response
             formatted_scores = {
@@ -1830,7 +1838,8 @@ def ancast_evaluation():
             
             return jsonify({
                 'success': True, 
-                'scores': formatted_scores
+                'scores': formatted_scores,
+                'message': processed_message  # Send the processed message
             })
             
         except Exception as e:
@@ -1853,15 +1862,25 @@ def ancast_evaluation():
                 # Try sentence level only
                 if annotation1.sent_annot and annotation2.sent_annot:
                     try:
-                        sent_score = evaluate(
+                        # Update to unpack both scores and message for simplified evaluation
+                        sent_score, sent_message = evaluate(
                             pred_inputs=annotation1.sent_annot,
                             gold_inputs=annotation2.sent_annot,
                             data_format="umr",
+                            output_csv_as_string=True
                         )
                         simplified_scores['sent'] = sent_score
                         simplified_scores['comp'] = sent_score * 0.5  # Give half weight to the overall score
+                        current_app.logger.info(f"Full simplified evaluation message: {sent_message}")
+                        
+                        # Extract only the last 11 characters of the first message element
+                        processed_sent_message = sent_message[0][-11:] if isinstance(sent_message, list) and len(sent_message) > 0 else "No message"
+                        current_app.logger.info(f"Processed simplified message: {processed_sent_message}")
                     except Exception as sent_err:
                         current_app.logger.error(f"Error in simplified sentence evaluation: {str(sent_err)}")
+                        processed_sent_message = f"Error: {str(sent_err)[-30:]}"
+                else:
+                    processed_sent_message = "Missing sentence annotations"
                 
                 # Format the simplified scores
                 formatted_scores = {
@@ -1877,6 +1896,7 @@ def ancast_evaluation():
                 return jsonify({
                     'success': True, 
                     'scores': formatted_scores,
+                    'message': processed_sent_message,  # Send the processed message
                     'note': 'Used simplified evaluation due to error in full evaluation'
                 })
                 
