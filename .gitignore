@@ -4,6 +4,8 @@ __pycache__/
 *.pyc
 *.py[cod]
 *$py.class
+.gitignore
+config.py
 
 # C extensions
 *.so
@@ -164,3 +166,6 @@ data/
 logfile
 **/archive/
 **/profile_pics/
+umr_annot_tool/config.py
+.gitignore
+umr_annot_tool/config.py
