@@ -422,6 +422,7 @@ def sentlevel(doc_version_id, sent_id):
                 'sents_html': '<br>'.join([
                     f'<span id="sentid-{sent.id}">{i+1}. {sent.content}</span>' 
                     for i, sent in enumerate(sentences)
+                # Donde esta este variable utilizado? En el nivel del document?
                 ])
             }
             logger.info("Successfully prepared display information")
@@ -489,6 +490,34 @@ def sentlevel(doc_version_id, sent_id):
         logger.error(f"Unexpected error in sentlevel: {str(e)}", exc_info=True)
         flash(f'Error loading document: {str(e)}', 'danger')
         return redirect(url_for('users.account'))
+
+@main.route("/update_sentence", methods=["POST"])
+def update_sentence():
+    data = request.get_json()
+
+    try:
+        doc_id = int(data.get("doc_id"))
+        snt_id = int(data.get("snt_id"))  # 文档中的第几句（1-based）
+        new_content = data.get("new_content", "").strip()
+
+        if not new_content:
+            return jsonify(success=False, error="句子内容不能为空")
+
+        target_sentence = Sent.query.filter_by(doc_id=doc_id, id=snt_id).first()
+
+        if not target_sentence:
+            return jsonify(success=False, error="未找到对应的句子")
+
+        target_sentence.content = new_content
+
+        db.session.commit()
+        html_content = ' '.join([
+            f'<span class="token" data-index="{i+1}"><sup class="token-index">{i+1}</sup>{token}</span>'
+            for i, token in enumerate(target_sentence.content.split())
+        ])
+        return jsonify(success=True, sent=new_content, html_content=html_content)
+    except Exception as e:
+        return jsonify(success=False, error=str(e))
 
 @main.route("/about")
 def about():
