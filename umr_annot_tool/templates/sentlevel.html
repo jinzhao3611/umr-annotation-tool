@@ -52,6 +52,7 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             // Save annotation and alignments functionality
+                
             const saveButton = document.getElementById('save-annotation-btn');
             if (saveButton) {
                 saveButton.addEventListener('click', function() {
@@ -1590,6 +1591,7 @@
 {% block content %}
 <div class="container-fluid">
     <!-- Hidden fields for JavaScript -->
+    <input type="hidden" id="doc_id" value="{{ doc_id }}">
     <input type="hidden" id="doc_version_id" value="{{ doc_version_id }}">
     <input type="hidden" id="user_id" value="{{ owner.id }}">
     <input type="hidden" id="snt_id" value="{{ snt_id }}">
@@ -1609,7 +1611,7 @@
                     </div>
                 </div>
                 <div class="card-body p-0">
-                    <div class="list-group list-group-flush sentences-container">
+                    <div class="list-group list-group-flush sentences-container" id="sentence-container">
                         {% for sent in info2display.sents %}
                         <a href="{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=loop.index) }}" 
                            class="list-group-item list-group-item-action {% if loop.index == snt_id %}active{% endif %}">
@@ -1624,16 +1626,17 @@
             <!-- Current Sentence Details -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0">Current Sentence</h5>
+                    <h5 class="mb-0" id="editable-sentence" docId="{{ doc_id }}" sntId="{{ snt_id }}">Current Sentence</h5>
                 </div>
-                <div class="card-body">
-                    <div class="current-sentence">
+                <div class="card-body" >
+                    <div class="current-sentence" id="editable-sentence-1" docId="{{ doc_id }}" sntId="{{ snt_id }}">
                         {% if info2display.sent_htmls and snt_id > 0 and snt_id <= info2display.sent_htmls|length %}
                             {{ info2display.sent_htmls[snt_id-1]|safe }}
                         {% else %}
                             <div class="alert alert-warning">No sentence content available.</div>
                         {% endif %}
                     </div>
+                    <textarea id="editor-sentence" style="display:none;width:100%;height:auto;min-height:40px;"></textarea>
                     <div class="sentence-details">
                         <div class="translation-box">
                             {% if info2display.gls and snt_id > 0 and snt_id <= info2display.gls|length %}
@@ -1842,6 +1845,65 @@
 </div>
 
 <script type="text/javascript">
+
+    const display = document.getElementById("editable-sentence-1");
+    const editor = document.getElementById('editor-sentence');
+
+    display.addEventListener('click', () => {
+        // Use the original sentence from info2display.sents
+        const words = window.temp_sent || {{ info2display.sents[snt_id-1]|tojson|safe }};
+
+        // 如果需要反复更改的话，info2display也要改
+
+        editor.value = words;
+        display.style.display = 'none';
+        editor.style.display = 'block';
+        editor.focus();
+    });
+
+    editor.addEventListener('blur', () => {
+        const updatedText = editor.value.trim();
+        fetch('/update_sentence', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                doc_id: parseInt(document.getElementById('doc_id').value),
+                snt_id: parseInt(document.getElementById('snt_id').value),
+                new_content: updatedText
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            // 这里的 data 不是保留字，只是 fetch 返回的 JSON 数据对象
+            if (data.success && data.html_content) {
+                display.innerHTML = data.html_content;
+                
+                window.temp_sent = data.sent;
+                // Use Jinja to generate the correct href for the current sentence
+                const sentlevelUrl = "{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=snt_id) }}";
+                const anchor = document.querySelector(`a[href="${sentlevelUrl}"]`);
+                if (anchor) {
+                    const span = anchor.querySelector('span');
+                    if (span) {
+                        span.textContent = data.sent;
+                    }
+                    // Scroll the sentence container so the current sentence is visible
+                    const container = document.getElementById('sentence-container');
+                    if (container && anchor.scrollIntoView) {
+                        anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            } else {
+                display.innerHTML = '<div class="alert alert-danger">' + data.error + '</div>';
+            }
+            editor.style.display = 'none';
+            display.style.display = 'inline-block';
+        });
+    });
+
+
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize split panels
         Split(['.left-panel', '.right-panel'], {
@@ -1901,8 +1963,8 @@
         
         // Initialize temporary branch storage
         initTempBranchStorage();
-    
     });
+
 
     function prevSentence() {
         const sntId = parseInt("{{ snt_id }}");
@@ -1926,6 +1988,17 @@
             exportButton.addEventListener('click', function() {
                 exportAnnotation();
             });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const sentlevelUrl = "{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=snt_id) }}";
+        const anchor = document.querySelector(`a[href="${sentlevelUrl}"]`);
+        if (anchor) {
+            const container = document.getElementById('sentence-container');
+            if (container && anchor.scrollIntoView) {
+                anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
         }
     });
     
