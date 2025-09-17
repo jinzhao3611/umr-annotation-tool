@@ -299,6 +299,9 @@ function addInPlaceEditToggle() {
     toggleContainer.style.backgroundColor = '#f8f9fa';
     toggleContainer.style.borderRadius = '5px';
     toggleContainer.style.border = '1px solid #ddd';
+
+    // Add tooltip
+    toggleContainer.title = 'Toggle between:\n• Branch Mode: Add, delete, or move nodes\n• Edit Mode: Edit relations and values using dropdowns';
     
     // Create the toggle switch
     const toggleSwitch = document.createElement('label');
@@ -379,10 +382,9 @@ function addInPlaceEditToggle() {
     `;
     document.head.appendChild(sliderStyle);
     
-    // Create the label text with mode icons
+    // Create the label text with mode icons - hide it to save space
     const editModeIcon = document.createElement('span');
-    editModeIcon.innerHTML = '🔽'; // Dropdown icon
-    editModeIcon.style.marginRight = '5px';
+    editModeIcon.style.display = 'none'; // Hide the icon completely
     
     const toggleLabel = document.createElement('span');
     toggleLabel.innerHTML = '<b>In-place Edit Mode</b>';
@@ -399,13 +401,11 @@ function addInPlaceEditToggle() {
     currentModeText.id = 'current-mode-text';
     currentModeText.style.fontWeight = 'bold';
     currentModeText.style.marginBottom = '3px';
-    currentModeText.innerHTML = '<span style="color:#28a745">Branch Operation Mode</span> active (add/delete/move)';
-    
-    // Add description text
+    currentModeText.innerHTML = '<span style="color:#28a745">Branch Mode</span>';
+
+    // Add description text - hide it since we'll use tooltip
     const descriptionText = document.createElement('div');
-    descriptionText.style.fontSize = '0.85em';
-    descriptionText.style.color = '#666';
-    descriptionText.innerHTML = 'Toggle to switch between dropdown editing and branch operations';
+    descriptionText.style.display = 'none';
     
     // Build the toggle switch
     toggleSwitch.appendChild(toggleInput);
@@ -415,11 +415,25 @@ function addInPlaceEditToggle() {
     modeDescriptionContainer.appendChild(currentModeText);
     modeDescriptionContainer.appendChild(descriptionText);
     
-    // Add the toggle and label to the container
+    // Simplified layout - just show "Branch" [switch] "Edit"
+    const branchLabel = document.createElement('span');
+    branchLabel.id = 'branch-label';
+    branchLabel.style.fontSize = '0.85rem';
+    branchLabel.style.color = '#28a745';
+    branchLabel.style.fontWeight = '700';
+    branchLabel.textContent = 'Branch';
+
+    const editLabel = document.createElement('span');
+    editLabel.style.fontSize = '0.85rem';
+    editLabel.style.color = '#999';
+    editLabel.style.fontWeight = '600';
+    editLabel.textContent = 'Edit';
+    editLabel.id = 'edit-label';
+
+    // Add elements in a clean horizontal layout
+    toggleContainer.appendChild(branchLabel);
     toggleContainer.appendChild(toggleSwitch);
-    toggleContainer.appendChild(editModeIcon);
-    toggleContainer.appendChild(toggleLabel);
-    toggleContainer.appendChild(modeDescriptionContainer);
+    toggleContainer.appendChild(editLabel);
     
     // Add the toggle container before the annotation
     container.insertBefore(toggleContainer, container.firstChild);
@@ -461,15 +475,31 @@ function addInPlaceEditToggle() {
 
 // Function to update toggle button appearance
 function updateToggleAppearance(isChecked, iconElement, modeTextElement, statusElement) {
+    // Get the branch and edit labels
+    const branchLabel = document.getElementById('branch-label');
+    const editLabel = document.getElementById('edit-label');
+
     if (isChecked) {
-        // ON state - Dropdown Edit Mode
-        iconElement.innerHTML = '🔽'; // Dropdown icon
-        modeTextElement.innerHTML = '<span style="color:#2196F3">Dropdown Edit Mode</span> active (edit relations/values)';
+        // ON state - Edit Mode active
+        if (branchLabel) {
+            branchLabel.style.color = '#999';
+            branchLabel.style.fontWeight = '600';
+        }
+        if (editLabel) {
+            editLabel.style.color = '#2196F3';
+            editLabel.style.fontWeight = '700';
+        }
         statusElement.textContent = 'ON';
     } else {
-        // OFF state - Branch Operation Mode
-        iconElement.innerHTML = '🌿'; // Branch icon
-        modeTextElement.innerHTML = '<span style="color:#28a745">Branch Operation Mode</span> active (add/delete/move)';
+        // OFF state - Branch Mode active
+        if (branchLabel) {
+            branchLabel.style.color = '#28a745';
+            branchLabel.style.fontWeight = '700';
+        }
+        if (editLabel) {
+            editLabel.style.color = '#999';
+            editLabel.style.fontWeight = '600';
+        }
         statusElement.textContent = 'OFF';
     }
 }
