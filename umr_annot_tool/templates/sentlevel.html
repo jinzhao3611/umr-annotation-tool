@@ -75,6 +75,660 @@
     <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
     <!-- Load relation editor script after branch storage script -->
     <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
+    <!-- Clean branch operations implementation -->
+    <script src="{{ url_for('static', filename='scripts/branch_operations.js') }}"></script>
+    <!-- Load undo/redo manager for graph editing history -->
+    <script src="{{ url_for('static', filename='scripts/undo_redo_manager.js') }}"></script>
+    <!-- Inline parenthesis checker with modal -->
+    <script>
+        // Simple inline parenthesis checker
+        let parenCheckerActive = false;
+
+        function toggleParenChecker() {
+            parenCheckerActive = !parenCheckerActive;
+            const btn = document.getElementById('paren-check-btn');
+            const amrPre = document.querySelector('#amr pre');
+
+            if (parenCheckerActive) {
+                btn.classList.remove('btn-outline-info');
+                btn.classList.add('btn-warning');
+                btn.innerHTML = '<i class="fas fa-times-circle"></i> Exit Checker';
+
+                // Create a modal overlay with a copy of the graph
+                createParenCheckerModal(amrPre.textContent);
+            } else {
+                btn.classList.remove('btn-warning');
+                btn.classList.add('btn-outline-info');
+                btn.innerHTML = '<i class="fas fa-check-circle"></i> Parens';
+
+                // Remove the modal
+                const modal = document.getElementById('paren-checker-modal');
+                if (modal) {
+                    modal.remove();
+                }
+            }
+        }
+
+        function createParenCheckerModal(graphText) {
+            // Remove existing modal if any
+            const existingModal = document.getElementById('paren-checker-modal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Create modal overlay
+            const modal = document.createElement('div');
+            modal.id = 'paren-checker-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                max-width: 90%;
+                max-height: 90%;
+                overflow: auto;
+                position: relative;
+            `;
+
+            // Create header
+            const header = document.createElement('div');
+            header.style.cssText = `
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #ccc;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            `;
+            header.innerHTML = `
+                <h4 style="margin: 0;">Parenthesis Checker - Click any ( or ) to highlight its match</h4>
+                <button onclick="toggleParenChecker()" style="
+                    background: #f44336;
+                    color: white;
+                    border: none;
+                    padding: 5px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                ">Close</button>
+            `;
+
+            // Create container for line numbers and content
+            const codeContainer = document.createElement('div');
+            codeContainer.style.cssText = `
+                display: flex;
+                background: #f5f5f5;
+                border-radius: 5px;
+                overflow: auto;
+                font-family: monospace;
+                font-size: 14px;
+                line-height: 1.5;
+            `;
+
+            // Create line numbers
+            const lineNumbers = document.createElement('div');
+            lineNumbers.style.cssText = `
+                padding: 10px 5px;
+                background: #e0e0e0;
+                border-right: 1px solid #ccc;
+                text-align: right;
+                user-select: none;
+                color: #666;
+                min-width: 30px;
+            `;
+
+            // Count lines and create line numbers
+            const lines = graphText.split('\n');
+            for (let i = 1; i <= lines.length; i++) {
+                lineNumbers.innerHTML += `${i}<br>`;
+            }
+
+            // Create the pre element with the graph
+            const pre = document.createElement('pre');
+            pre.style.cssText = `
+                margin: 0;
+                padding: 10px;
+                cursor: pointer;
+                white-space: pre;
+                flex: 1;
+                overflow-x: auto;
+            `;
+
+            // Process the text to make parentheses clickable
+            pre.innerHTML = highlightParentheses(graphText);
+
+            codeContainer.appendChild(lineNumbers);
+            codeContainer.appendChild(pre);
+
+            modalContent.appendChild(header);
+            modalContent.appendChild(codeContainer);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    toggleParenChecker();
+                }
+            });
+        }
+
+        function highlightParentheses(text) {
+            let html = '';
+            for (let i = 0; i < text.length; i++) {
+                if (text[i] === '(' || text[i] === ')') {
+                    html += `<span class="paren-char" data-pos="${i}" style="cursor: pointer;" onclick="highlightMatch(${i})">${escapeHtml(text[i])}</span>`;
+                } else {
+                    html += escapeHtml(text[i]);
+                }
+            }
+            return html;
+        }
+
+        function highlightMatch(position) {
+            const modal = document.getElementById('paren-checker-modal');
+            if (!modal) return;
+
+            const pre = modal.querySelector('pre');
+            const text = pre.textContent;
+            const matchPos = findMatchingParen(text, position);
+
+            // Reset all highlights
+            const spans = pre.querySelectorAll('.paren-char');
+            spans.forEach(span => {
+                span.style.background = 'transparent';
+                span.style.color = 'inherit';
+                span.style.fontWeight = 'normal';
+            });
+
+            // Highlight the clicked paren
+            const clickedSpan = pre.querySelector(`[data-pos="${position}"]`);
+            if (clickedSpan) {
+                clickedSpan.style.background = 'yellow';
+                clickedSpan.style.color = 'black';
+                clickedSpan.style.fontWeight = 'bold';
+            }
+
+            // Highlight the matching paren
+            if (matchPos !== -1) {
+                const matchSpan = pre.querySelector(`[data-pos="${matchPos}"]`);
+                if (matchSpan) {
+                    matchSpan.style.background = 'lime';
+                    matchSpan.style.color = 'black';
+                    matchSpan.style.fontWeight = 'bold';
+
+                    // Scroll to match if needed
+                    matchSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            } else {
+                // No match found - highlight in red
+                if (clickedSpan) {
+                    clickedSpan.style.background = 'red';
+                    clickedSpan.style.color = 'white';
+                }
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+
+        function findMatchingParen(text, position) {
+            const char = text[position];
+            if (char !== '(' && char !== ')') return -1;
+
+            const isOpen = char === '(';
+
+            if (isOpen) {
+                let depth = 1;
+                for (let i = position + 1; i < text.length; i++) {
+                    if (text[i] === '(') depth++;
+                    else if (text[i] === ')') {
+                        depth--;
+                        if (depth === 0) return i;
+                    }
+                }
+            } else {
+                let depth = 1;
+                for (let i = position - 1; i >= 0; i--) {
+                    if (text[i] === ')') depth++;
+                    else if (text[i] === '(') {
+                        depth--;
+                        if (depth === 0) return i;
+                    }
+                }
+            }
+            return -1;
+        }
+    </script>
+
+    <!-- Diff Viewer for comparing before/after changes -->
+    <script>
+        let diffViewerActive = false;
+        let lastSavedState = null;
+
+        // Initialize last saved state when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const amrElement = document.querySelector('#amr pre');
+            if (amrElement) {
+                lastSavedState = amrElement.textContent;
+            }
+        });
+
+        function toggleDiffView() {
+            diffViewerActive = !diffViewerActive;
+            const btn = document.getElementById('diff-view-btn');
+
+            if (diffViewerActive) {
+                btn.classList.remove('btn-outline-success');
+                btn.classList.add('btn-success');
+                btn.innerHTML = '<i class="fas fa-times"></i> Hide Diff';
+
+                // Get current state
+                const amrElement = document.querySelector('#amr pre');
+                const currentState = amrElement ? amrElement.textContent : '';
+
+                // Get the comparison state (either from undo/redo manager or last saved)
+                let previousState = lastSavedState || '';
+
+                // Check if undo/redo manager has a previous state
+                if (window.undoRedoManager && window.undoRedoManager.history.length > 0) {
+                    // Get the first state in history (original state)
+                    previousState = window.undoRedoManager.history[0];
+                }
+
+                // Create diff view modal
+                createDiffViewModal(previousState, currentState);
+            } else {
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-outline-success');
+                btn.innerHTML = '<i class="fas fa-exchange-alt"></i> Show Diff';
+
+                // Remove modal
+                const modal = document.getElementById('diff-viewer-modal');
+                if (modal) {
+                    modal.remove();
+                }
+            }
+        }
+
+        function createDiffViewModal(beforeText, afterText) {
+            // Remove existing modal if any
+            const existingModal = document.getElementById('diff-viewer-modal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Create modal
+            const modal = document.createElement('div');
+            modal.id = 'diff-viewer-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            `;
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white;
+                border-radius: 10px;
+                padding: 20px;
+                width: 90%;
+                max-width: 1400px;
+                height: 80%;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            `;
+
+            // Create header
+            const header = document.createElement('div');
+            header.style.cssText = `
+                margin-bottom: 15px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #ccc;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            `;
+            header.innerHTML = `
+                <h4 style="margin: 0;">Graph Comparison View</h4>
+                <div>
+                    <button onclick="updateLastSavedState()" style="
+                        background: #28a745;
+                        color: white;
+                        border: none;
+                        padding: 5px 15px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-right: 10px;
+                    ">Mark as Saved</button>
+                    <button onclick="toggleDiffView()" style="
+                        background: #f44336;
+                        color: white;
+                        border: none;
+                        padding: 5px 15px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    ">Close</button>
+                </div>
+            `;
+
+            // Create comparison container
+            const comparisonContainer = document.createElement('div');
+            comparisonContainer.style.cssText = `
+                display: flex;
+                flex: 1;
+                gap: 20px;
+                overflow: hidden;
+            `;
+
+            // Create before panel
+            const beforePanel = createDiffPanel('Before', beforeText, '#ffebee');
+
+            // Create after panel
+            const afterPanel = createDiffPanel('After (Current)', afterText, '#e8f5e9');
+
+            // Highlight differences
+            highlightDifferences(beforePanel.querySelector('pre'), afterPanel.querySelector('pre'), beforeText, afterText);
+
+            comparisonContainer.appendChild(beforePanel);
+            comparisonContainer.appendChild(afterPanel);
+
+            modalContent.appendChild(header);
+            modalContent.appendChild(comparisonContainer);
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+
+            // Close on click outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    toggleDiffView();
+                }
+            });
+        }
+
+        function createDiffPanel(title, text, bgColor) {
+            const panel = document.createElement('div');
+            panel.style.cssText = `
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                overflow: hidden;
+            `;
+
+            const panelHeader = document.createElement('div');
+            panelHeader.style.cssText = `
+                padding: 10px;
+                background: ${bgColor};
+                font-weight: bold;
+                border-bottom: 1px solid #ddd;
+            `;
+            panelHeader.textContent = title;
+
+            const contentContainer = document.createElement('div');
+            contentContainer.style.cssText = `
+                flex: 1;
+                overflow: auto;
+                display: flex;
+                background: #f5f5f5;
+            `;
+
+            // Add line numbers column
+            const lineNumbers = document.createElement('div');
+            lineNumbers.style.cssText = `
+                padding: 10px 5px;
+                background: #e0e0e0;
+                border-right: 1px solid #ccc;
+                text-align: right;
+                user-select: none;
+                color: #666;
+                min-width: 50px;
+                font-family: monospace;
+                font-size: 14px;
+                line-height: 1.5;
+                flex-shrink: 0;
+                position: sticky;
+                left: 0;
+                z-index: 10;
+            `;
+
+            const lines = text.split('\n');
+            for (let i = 1; i <= lines.length; i++) {
+                lineNumbers.innerHTML += `${i}<br>`;
+            }
+
+            // Create pre element for content
+            const pre = document.createElement('pre');
+            pre.style.cssText = `
+                margin: 0;
+                padding: 10px;
+                font-family: monospace;
+                font-size: 14px;
+                line-height: 1.5;
+                white-space: pre;
+                overflow: visible;
+                flex: 0 1 auto;
+            `;
+            pre.textContent = text;
+
+            contentContainer.appendChild(lineNumbers);
+            contentContainer.appendChild(pre);
+            panel.appendChild(panelHeader);
+            panel.appendChild(contentContainer);
+
+            return panel;
+        }
+
+        function highlightDifferences(beforePre, afterPre, beforeText, afterText) {
+            const beforeLines = beforeText.split('\n');
+            const afterLines = afterText.split('\n');
+
+            // Create a map of line content to track moves
+            const beforeLineMap = new Map();
+            const afterLineMap = new Map();
+
+            // Build maps of lines and their positions
+            beforeLines.forEach((line, idx) => {
+                const trimmed = line.trim();
+                if (!beforeLineMap.has(trimmed)) {
+                    beforeLineMap.set(trimmed, []);
+                }
+                beforeLineMap.get(trimmed).push(idx);
+            });
+
+            afterLines.forEach((line, idx) => {
+                const trimmed = line.trim();
+                if (!afterLineMap.has(trimmed)) {
+                    afterLineMap.set(trimmed, []);
+                }
+                afterLineMap.get(trimmed).push(idx);
+            });
+
+            // Use a simple LCS-based approach to detect actual changes
+            // First pass: identify exact matches at same position
+            const unchangedLines = new Set();
+            const deletedLines = new Set();
+            const addedLines = new Set();
+            const movedLines = new Map();
+
+            // Mark unchanged lines (same content, same position)
+            const minLength = Math.min(beforeLines.length, afterLines.length);
+            for (let i = 0; i < minLength; i++) {
+                if (beforeLines[i] === afterLines[i]) {
+                    unchangedLines.add(i);
+                }
+            }
+
+            // Find truly deleted lines (not in after at all)
+            beforeLines.forEach((line, idx) => {
+                const trimmed = line.trim();
+                if (trimmed && !afterText.includes(trimmed)) {
+                    deletedLines.add(idx);
+                }
+            });
+
+            // Find truly added lines (not in before at all)
+            afterLines.forEach((line, idx) => {
+                const trimmed = line.trim();
+                if (trimmed && !beforeText.includes(trimmed)) {
+                    addedLines.add(idx);
+                }
+            });
+
+            // Detect moves: lines that exist in both but at different positions
+            // and haven't been marked as unchanged
+            beforeLines.forEach((line, beforeIdx) => {
+                if (unchangedLines.has(beforeIdx) || deletedLines.has(beforeIdx)) {
+                    return; // Skip unchanged or deleted lines
+                }
+
+                const trimmed = line.trim();
+                if (trimmed) {
+                    // Look for this line in a different position in after
+                    afterLines.forEach((afterLine, afterIdx) => {
+                        if (afterLine.trim() === trimmed && afterIdx !== beforeIdx && !unchangedLines.has(afterIdx)) {
+                            // Only mark as moved if positions differ significantly
+                            if (Math.abs(afterIdx - beforeIdx) > 0) {
+                                movedLines.set(beforeIdx, afterIdx);
+                                return;
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Build HTML with highlighting
+            let beforeHtml = '';
+            let afterHtml = '';
+
+            // Process before lines
+            beforeLines.forEach((line, idx) => {
+                if (deletedLines.has(idx)) {
+                    // Line was deleted
+                    beforeHtml += `<span style="background: #ffcdd2;" title="Deleted">${escapeHtml(line)}</span>\n`;
+                } else if (movedLines.has(idx)) {
+                    const newPos = movedLines.get(idx);
+                    // Line was moved
+                    beforeHtml += `<span style="background: #e3f2fd; border-left: 3px solid #2196F3;" title="Moved to line ${newPos + 1}">${escapeHtml(line)}</span>\n`;
+                } else if (unchangedLines.has(idx)) {
+                    // Line unchanged
+                    beforeHtml += escapeHtml(line) + '\n';
+                } else if (idx >= afterLines.length) {
+                    // Line deleted (past end of after)
+                    beforeHtml += `<span style="background: #ffcdd2;" title="Deleted">${escapeHtml(line)}</span>\n`;
+                } else {
+                    // Normal line or whitespace-only change
+                    beforeHtml += escapeHtml(line) + '\n';
+                }
+            });
+
+            // Process after lines
+            afterLines.forEach((line, idx) => {
+                if (addedLines.has(idx)) {
+                    // Line was added
+                    afterHtml += `<span style="background: #c8e6c9;" title="Added">${escapeHtml(line)}</span>\n`;
+                } else if (unchangedLines.has(idx)) {
+                    // Line unchanged
+                    afterHtml += escapeHtml(line) + '\n';
+                } else if (idx >= beforeLines.length) {
+                    // Line added (past end of before)
+                    afterHtml += `<span style="background: #c8e6c9;" title="Added">${escapeHtml(line)}</span>\n`;
+                } else {
+                    // Check if this line is the destination of a move
+                    let isMovedTo = false;
+                    let fromPos = -1;
+                    for (const [from, to] of movedLines.entries()) {
+                        if (to === idx) {
+                            isMovedTo = true;
+                            fromPos = from;
+                            break;
+                        }
+                    }
+
+                    if (isMovedTo) {
+                        // Line was moved here
+                        afterHtml += `<span style="background: #e3f2fd; border-left: 3px solid #2196F3;" title="Moved from line ${fromPos + 1}">${escapeHtml(line)}</span>\n`;
+                    } else {
+                        // Normal line
+                        afterHtml += escapeHtml(line) + '\n';
+                    }
+                }
+            });
+
+            // Add legend
+            const legend = `<div style="padding: 5px; background: #f5f5f5; border-bottom: 1px solid #ddd; font-size: 12px;">
+                <span style="background: #c8e6c9; padding: 2px 5px; margin-right: 10px;">Added</span>
+                <span style="background: #ffcdd2; padding: 2px 5px; margin-right: 10px;">Deleted</span>
+                <span style="background: #e3f2fd; border-left: 3px solid #2196F3; padding: 2px 5px;">Moved</span>
+            </div>`;
+
+            beforePre.innerHTML = beforeHtml;
+            afterPre.innerHTML = afterHtml;
+
+            // Add legend to both panels
+            const beforePanel = beforePre.parentElement.parentElement;
+            const afterPanel = afterPre.parentElement.parentElement;
+
+            // Insert legend after the panel header
+            const beforeHeader = beforePanel.querySelector('div');
+            const afterHeader = afterPanel.querySelector('div');
+
+            if (beforeHeader && !beforePanel.querySelector('.diff-legend')) {
+                const beforeLegend = document.createElement('div');
+                beforeLegend.className = 'diff-legend';
+                beforeLegend.innerHTML = legend;
+                beforeHeader.after(beforeLegend);
+            }
+
+            if (afterHeader && !afterPanel.querySelector('.diff-legend')) {
+                const afterLegend = document.createElement('div');
+                afterLegend.className = 'diff-legend';
+                afterLegend.innerHTML = legend;
+                afterHeader.after(afterLegend);
+            }
+        }
+
+        function updateLastSavedState() {
+            const amrElement = document.querySelector('#amr pre');
+            if (amrElement) {
+                lastSavedState = amrElement.textContent;
+                showNotification('Current state marked as saved', 'success');
+
+                // Refresh the diff view
+                if (diffViewerActive) {
+                    const currentState = amrElement.textContent;
+                    createDiffViewModal(lastSavedState, currentState);
+                }
+            }
+        }
+    </script>
     <!-- Load Underscore.js before lemmatizer -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js"></script>
     <!-- Load lemmatizer library -->
@@ -1935,8 +2589,14 @@
                             <button id="delete-annotation-btn" class="btn btn-sm btn-outline-danger me-2" title="Delete entire annotation">
                                 <i class="fas fa-trash"></i> Delete
                             </button>
-                            <button id="copy-annotation-btn" class="btn btn-sm btn-outline-secondary" title="Copy to clipboard">
+                            <button id="copy-annotation-btn" class="btn btn-sm btn-outline-secondary me-2" title="Copy to clipboard">
                                 <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button id="paren-check-btn" class="btn btn-sm btn-outline-info me-2" title="Check parenthesis matching" onclick="toggleParenChecker()">
+                                <i class="fas fa-check-circle"></i> Parens
+                            </button>
+                            <button id="diff-view-btn" class="btn btn-sm btn-outline-success" title="Show changes" onclick="toggleDiffView()">
+                                <i class="fas fa-exchange-alt"></i> Show Diff
                             </button>
                             {% else %}
                             <button id="add-top-btn" class="btn btn-sm btn-primary" title="Create the first node">

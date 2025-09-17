@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup
 from flask import Blueprint
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph, DocVersion
+from umr_annot_tool.umr_validator import validate_and_fix_annotation, process_document_annotations
 from umr_annot_tool.main.forms import UploadForm, CreateProjectForm
 from umr_annot_tool.resources.rolesets import known_relations
 from umr_annot_tool.resources.utility_modules import get_merged_rolesets
@@ -136,7 +137,7 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
             stage = 'initial',
         )
         db.session.add(doc_version_entry)
-        for sent_annot, doc_annot, align, sent in zip(sent_annots, doc_annots, aligns, sents):
+        for idx, (sent_annot, doc_annot, align, sent) in enumerate(zip(sent_annots, doc_annots, aligns, sents)):
             sent_entry = Sent(
                 content = " ".join(sent),
                 doc = doc_entry
@@ -164,6 +165,15 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
                     logger.info(f"Alignment type: {type(align)}")
                     logger.info(f"Alignment content: {align}")
                     align = {}
+            # Validate and fix the annotation before saving
+            if sent_annot:
+                fixed_sent_annot, is_valid, messages = validate_and_fix_annotation(sent_annot, auto_fix=True)
+                if not is_valid:
+                    logger.warning(f"Sentence {idx} had validation issues: {messages}")
+                if fixed_sent_annot != sent_annot:
+                    logger.info(f"Auto-fixed annotation for sentence {idx}")
+                    sent_annot = fixed_sent_annot
+
             annotation_entry = Annotation(
                 sent_annot=sent_annot,
                 doc_annot=doc_annot,
@@ -774,10 +784,15 @@ def update_annotation(doc_version_id, sent_id):
         
         if not annotation:
             # Create a new annotation
+            # Validate before saving
+            fixed_annotation, is_valid, messages = validate_and_fix_annotation(data['annotation'], auto_fix=True)
+            if not is_valid:
+                current_app.logger.warning(f"Annotation validation issues: {messages}")
+
             annotation = Annotation(
                 doc_version_id=doc_version_id,
                 sent_id=current_sent.id,
-                sent_annot=data['annotation'],
+                sent_annot=fixed_annotation,
                 doc_annot="",
                 actions={},
                 alignment={}
@@ -786,7 +801,11 @@ def update_annotation(doc_version_id, sent_id):
             current_app.logger.info(f"Created new annotation for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
         else:
             # Update the annotation
-            annotation.sent_annot = data['annotation']
+            # Validate before saving
+            fixed_annotation, is_valid, messages = validate_and_fix_annotation(data['annotation'], auto_fix=True)
+            if not is_valid:
+                current_app.logger.warning(f"Annotation validation issues: {messages}")
+            annotation.sent_annot = fixed_annotation
             current_app.logger.info(f"Updated existing annotation for doc_version_id={doc_version_id}, sent_id={current_sent.id}")
         
         # If alignment data is provided, update it
@@ -804,6 +823,10 @@ def update_annotation(doc_version_id, sent_id):
                 # Otherwise, replace alignment
                 annotation.alignment = data['alignment']
                 current_app.logger.info(f"Set alignment data: {annotation.alignment}")
+        elif 'alignments' in data and isinstance(data['alignments'], dict):
+            # Support for undo/redo which sends 'alignments' instead of 'alignment'
+            annotation.alignment = data['alignments']
+            current_app.logger.info(f"Set alignment data from undo/redo: {annotation.alignment}")
         
         # Handle specific operations
         if 'operation' in data:
@@ -834,6 +857,10 @@ def update_annotation(doc_version_id, sent_id):
                     relation = data['relation']
                     child_node = data['child_node']
                     current_app.logger.info(f"Branch addition: User {current_user.username} added branch '{relation} {child_node}' to variable '{parent_variable}' in sentence {sent_id} in document version {doc_version_id}")
+
+            elif data['operation'] == 'undo_redo':
+                # Log undo/redo operation
+                current_app.logger.info(f"Undo/Redo: User {current_user.username} performed undo/redo operation in sentence {sent_id} in document version {doc_version_id}")
         
         db.session.commit()
         

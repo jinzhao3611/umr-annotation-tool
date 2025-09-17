@@ -1656,91 +1656,42 @@ function moveBranchToNode(branchInfo, targetVariable) {
     
     console.log('Formatted branch to add:', formattedBranch);
     
-    // Step 2: Mark the original branch lines for removal
-    const branchStartLineIndex = originalText.substring(0, branchInfo.branchStart).split('\n').length - 1;
-    const branchEndLineIndex = originalText.substring(0, branchInfo.branchEnd).split('\n').length - 1;
-    
-    console.log('Branch line indices - start:', branchStartLineIndex, 'end:', branchEndLineIndex);
-    
-    // Step 3: Create new lines array, skipping the branch lines but preserving structure
-    let updatedLines = [];
-    
-    // Determine if we need to add closing parentheses after removing the branch
-    const extraClosingParens = branchInfo.extraClosingParens || 0;
-    const needToAddClosingParens = extraClosingParens > 0;
-    
-    if (needToAddClosingParens) {
-        console.log(`Need to add ${extraClosingParens} closing parentheses after removing branch`);
+    // Step 2: Remove the branch using character positions, not line indices
+    console.log('Removing branch from character positions:', branchInfo.branchStart, 'to', branchInfo.branchEnd);
+    console.log('Branch text to remove:', originalText.substring(branchInfo.branchStart, branchInfo.branchEnd));
+
+    // Remove the branch from the original text using character positions
+    let textAfterRemoval = originalText.substring(0, branchInfo.branchStart) +
+                           originalText.substring(branchInfo.branchEnd);
+
+    // Clean up any extra newlines that might be left behind
+    // If we have a newline immediately before and after the removal point, remove one
+    if (branchInfo.branchStart > 0 &&
+        textAfterRemoval[branchInfo.branchStart - 1] === '\n' &&
+        branchInfo.branchStart < textAfterRemoval.length &&
+        textAfterRemoval[branchInfo.branchStart] === '\n') {
+        // Remove the extra newline
+        textAfterRemoval = textAfterRemoval.substring(0, branchInfo.branchStart) +
+                          textAfterRemoval.substring(branchInfo.branchStart + 1);
     }
-    
-    // Find the line containing the original branch that we're moving
-    const branchParentLine = lines[branchStartLineIndex];
-    const branchParentLineContent = branchParentLine.trim();
-    
-    // First, process all lines before the branch
-    for (let i = 0; i < branchStartLineIndex; i++) {
-        updatedLines.push(lines[i]);
-    }
-    
-    // Then, handle the parent line and any needed parentheses
-    if (needToAddClosingParens) {
-        // Check if this is the line that needs extra closing parentheses
-        if (branchParentLineContent.includes(branchInfo.relationText)) {
-            // This is the parent line with the relation
-            // We need to find where to add the closing parentheses
-            let parentLineWithoutBranch = branchParentLine;
-            
-            // If this line has just a reference to the branch, leave out the branch part
-            const branchStartInLine = branchParentLine.indexOf(branchInfo.relationText);
-            if (branchStartInLine > -1) {
-                // Keep the part before the branch reference
-                parentLineWithoutBranch = branchParentLine.substring(0, branchStartInLine).trimEnd();
-                
-                // Add the extra closing parentheses, ensuring no whitespace before them
-                parentLineWithoutBranch += ')'.repeat(extraClosingParens);
-                
-                // Add the processed parent line
-                updatedLines.push(parentLineWithoutBranch);
-            } else {
-                // If relation is not directly found (unusual), add parent line as is
-                updatedLines.push(branchParentLine);
-                // Add the extra parentheses on a new line without indentation
-                updatedLines.push(')'.repeat(extraClosingParens));
-            }
-        } else {
-            // This line doesn't contain the relation, but is still part of the parent structure
-            updatedLines.push(branchParentLine);
-            // Add closing parentheses at the same indentation as the branch parent
-            const parentIndent = branchParentLine.match(/^\s*/)[0];
-            updatedLines.push(parentIndent + ')'.repeat(extraClosingParens));
-        }
-    } else {
-        // No extra parentheses needed, just add the parent line
-        updatedLines.push(branchParentLine);
-    }
-    
-    // Skip the branch lines (already handled)
-    
-    // Process all lines after the branch, skipping the branch lines
-    for (let i = branchEndLineIndex + 1; i < lines.length; i++) {
-        // If we already handled the extra parentheses, just add the remaining lines
-        updatedLines.push(lines[i]);
-    }
+
+    // Step 3: Split the updated text into lines for further processing
+    let updatedLines = textAfterRemoval.split('\n');
     
     // Step 4: Determine where to insert the branch in the target node
     // Find the current index of the target node in our updated lines
     const updatedTargetIndex = updatedLines.findIndex(line => nodePattern.test(line));
-    
+
     if (updatedTargetIndex === -1) {
         showNotification('Error: Lost target node during editing', 'error');
         return;
     }
-    
+
     const targetLine = updatedLines[updatedTargetIndex];
-    
+
     // Check if the target node line has a closing parenthesis
     const hasClosingParen = targetLine.includes(')');
-    
+
     if (hasClosingParen) {
         // Get the content of the node before the closing parenthesis
         const lastClosingParenPos = targetLine.lastIndexOf(')');
@@ -1797,7 +1748,8 @@ function moveBranchToNode(branchInfo, targetVariable) {
 }
 
 // Function to directly save branch move to the database
-function saveBranchMove(updatedAnnotation, movedRelation, targetVariable) {
+// Make it globally available for undo/redo integration
+window.saveBranchMove = function saveBranchMove(updatedAnnotation, movedRelation, targetVariable) {
     // Get sentence ID and document ID from the hidden fields
     const sent_id = document.getElementById('snt_id').value;
     const doc_version_id = document.getElementById('doc_version_id').value;

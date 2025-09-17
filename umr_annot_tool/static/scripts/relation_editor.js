@@ -1429,16 +1429,18 @@ function deleteBranch(relationSpan) {
     // Check if the next non-whitespace character after the relation is an opening parenthesis
     let afterRelationText = fullText.substring(relationIndex + relationText.length);
     let openParenIndex = -1;
-    
+
     // Find the first non-whitespace character
     for (let i = 0; i < afterRelationText.length; i++) {
         if (afterRelationText[i].trim()) {
             if (afterRelationText[i] === '(') {
                 // Found opening parenthesis - this is a complex branch
                 openParenIndex = relationIndex + relationText.length + i;
+                console.log(`Found opening parenthesis at offset ${i} after relation`);
                 break;
             } else {
                 // Found some other character - this is a simple relation
+                console.log(`First non-whitespace char after relation is: "${afterRelationText[i]}", treating as simple branch`);
                 break;
             }
         }
@@ -1506,7 +1508,13 @@ function deleteBranch(relationSpan) {
     
     // Complex branch with parentheses
     console.log('Complex relation with parentheses detected');
-    
+    console.log(`Opening parenthesis found at position ${openParenIndex}`);
+
+    // Show a snippet of text around the opening parenthesis for debugging
+    const snippetStart = Math.max(0, openParenIndex - 20);
+    const snippetEnd = Math.min(fullText.length, openParenIndex + 40);
+    console.log(`Text around opening paren: "${fullText.substring(snippetStart, snippetEnd).replace(/\n/g, '\\n')}"`);
+
     // Find the matching closing parenthesis, considering nesting
     let depth = 1;
     let closeParenIndex = -1;
@@ -1587,9 +1595,30 @@ function deleteBranch(relationSpan) {
     }
     
     if (closeParenIndex === -1) {
-        console.error('Could not find matching closing parenthesis');
-        showNotification('Error: Unmatched parentheses in branch', 'error');
-        return;
+        console.error('Could not find matching closing parenthesis using indentation method');
+
+        // Fallback: Try to find closing parenthesis by counting depth only
+        console.log('Attempting fallback parenthesis matching by depth counting');
+        depth = 1; // Reset depth
+        for (let i = openParenIndex + 1; i < fullText.length; i++) {
+            if (fullText[i] === '(') {
+                depth++;
+            } else if (fullText[i] === ')') {
+                depth--;
+                if (depth === 0) {
+                    closeParenIndex = i;
+                    console.log(`Found closing parenthesis at position ${i} using fallback method`);
+                    break;
+                }
+            }
+        }
+
+        // If still not found, this is truly an error
+        if (closeParenIndex === -1) {
+            console.error('Could not find matching closing parenthesis even with fallback');
+            showNotification('Error: Unable to find matching closing parenthesis for branch', 'error');
+            return;
+        }
     }
     
     // Find the start of the entire branch - include the relation and any whitespace before it
