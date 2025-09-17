@@ -507,24 +507,37 @@ def update_sentence():
 
     try:
         doc_id = int(data.get("doc_id"))
-        snt_id = int(data.get("snt_id"))  # 文档中的第几句（1-based）
+        snt_id = int(data.get("snt_id"))  # Sentence position in document (1-based)
         new_content = data.get("new_content", "").strip()
 
         if not new_content:
-            return jsonify(success=False, error="句子内容不能为空")
+            return jsonify(success=False, error="Sentence content cannot be empty")
 
-        target_sentence = Sent.query.filter_by(doc_id=doc_id, id=snt_id).first()
+        # Get all sentences for the document, ordered by ID
+        sentences = Sent.query.filter_by(doc_id=doc_id).order_by(Sent.id).all()
+
+        # Validate sentence position
+        if snt_id < 1 or snt_id > len(sentences):
+            return jsonify(success=False, error=f"Invalid sentence position: {snt_id}. Valid range is 1-{len(sentences)}")
+
+        # Get the target sentence by position (convert 1-based to 0-based index)
+        target_sentence = sentences[snt_id - 1]
 
         if not target_sentence:
-            return jsonify(success=False, error="未找到对应的句子")
+            return jsonify(success=False, error="Sentence not found")
 
+        # Update the sentence content
         target_sentence.content = new_content
 
         db.session.commit()
-        html_content = ' '.join([
-            f'<span class="token" data-index="{i+1}"><sup class="token-index">{i+1}</sup>{token}</span>'
-            for i, token in enumerate(target_sentence.content.split())
-        ])
+
+        # Generate HTML with token spans for display (matching the original format)
+        tokens = new_content.split()
+        token_spans = []
+        for i, token in enumerate(tokens):
+            token_spans.append(f'<span class="token-item"><sup class="token-index">{i+1}</sup><span class="token-text">{token}</span></span>')
+        html_content = ' '.join(token_spans)
+
         return jsonify(success=True, sent=new_content, html_content=html_content)
     except Exception as e:
         return jsonify(success=False, error=str(e))

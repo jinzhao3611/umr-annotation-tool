@@ -2539,16 +2539,22 @@
             <!-- Current Sentence Details -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="mb-0" id="editable-sentence" docId="{{ doc_id }}" sntId="{{ snt_id }}">Current Sentence</h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0" id="editable-sentence" docId="{{ doc_id }}" sntId="{{ snt_id }}">Current Sentence</h5>
+                        <button id="edit-sentence-btn" class="btn btn-sm btn-outline-primary" title="Edit word segmentation">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body" >
-                    <div class="current-sentence">
+                    <div class="current-sentence" id="sentence-display">
                         {% if info2display.sent_htmls and snt_id > 0 and snt_id <= info2display.sent_htmls|length %}
                             {{ info2display.sent_htmls[snt_id-1]|safe }}
                         {% else %}
                             <div class="alert alert-warning">No sentence content available.</div>
                         {% endif %}
                     </div>
+                    <textarea id="sentence-editor" class="form-control" style="display:none; font-size: 1.1rem; line-height: 2.5; min-height: 80px;"></textarea>
                     <div class="sentence-details">
                         <div class="translation-box">
                             {% if info2display.gls and snt_id > 0 and snt_id <= info2display.gls|length %}
@@ -2792,7 +2798,161 @@
 </div>
 
 <script type="text/javascript">
+    // Sentence editing functionality
+    function initializeSentenceEditor() {
+        const editBtn = document.getElementById('edit-sentence-btn');
+        const display = document.getElementById('sentence-display');
+        const editor = document.getElementById('sentence-editor');
+
+        if (!editBtn || !display || !editor) return;
+
+        // Store original HTML structure for token display
+        let originalHTML = display.innerHTML;
+
+        editBtn.addEventListener('click', function() {
+            if (editor.style.display === 'none') {
+                // Enter edit mode
+                // Extract text content from the display, preserving spaces
+                const tokens = [];
+                display.querySelectorAll('.token-item').forEach(item => {
+                    const index = item.querySelector('.token-index')?.textContent || '';
+                    const text = item.querySelector('.token-text')?.textContent || '';
+                    tokens.push(text);
+                });
+
+                // If no token structure exists, get the raw text
+                let textContent = tokens.length > 0 ? tokens.join(' ') :
+                    {{ info2display.sents[snt_id-1]|tojson|safe }} || display.textContent.trim();
+
+                editor.value = textContent;
+                display.style.display = 'none';
+                editor.style.display = 'block';
+                editor.focus();
+
+                editBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+                editBtn.classList.remove('btn-outline-primary');
+                editBtn.classList.add('btn-success');
+            } else {
+                // Save and exit edit mode
+                saveSegmentation();
+            }
+        });
+
+        // Save on Enter key (Shift+Enter for new line)
+        editor.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                saveSegmentation();
+            }
+        });
+
+        function saveSegmentation() {
+            const updatedText = editor.value.trim();
+
+            // Send update to server
+            fetch('/update_sentence', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken()
+                },
+                body: JSON.stringify({
+                    doc_id: parseInt(document.getElementById('doc_id').value),
+                    snt_id: parseInt(document.getElementById('snt_id').value),
+                    new_content: updatedText
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.html_content) {
+                    // Update the display with new HTML
+                    display.innerHTML = data.html_content;
+                    originalHTML = data.html_content;
+
+                    // Store the updated sentence for future edits
+                    window.temp_sent = data.sent;
+
+                    // Update the sentence in navigation box
+                    const sentlevelUrl = "{{ url_for('main.sentlevel', doc_version_id=doc_version_id, sent_id=snt_id) }}";
+                    const anchor = document.querySelector(`a[href="${sentlevelUrl}"]`);
+                    if (anchor) {
+                        const span = anchor.querySelector('span');
+                        if (span) {
+                            // Display the segmented sentence in navigation
+                            span.textContent = updatedText;
+                        }
+                    }
+
+                    // Show success notification
+                    showNotification('Segmentation updated successfully', 'success');
+                } else {
+                    display.innerHTML = '<div class="alert alert-danger">' + (data.error || 'Failed to update') + '</div>';
+                    showNotification('Failed to update segmentation', 'error');
+                }
+
+                // Exit edit mode
+                editor.style.display = 'none';
+                display.style.display = 'block';
+                editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+                editBtn.classList.remove('btn-success');
+                editBtn.classList.add('btn-outline-primary');
+            })
+            .catch(error => {
+                console.error('Error updating segmentation:', error);
+                showNotification('Error updating segmentation', 'error');
+
+                // Exit edit mode even on error
+                editor.style.display = 'none';
+                display.style.display = 'block';
+                editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+                editBtn.classList.remove('btn-success');
+                editBtn.classList.add('btn-outline-primary');
+            });
+        }
+
+        function showNotification(message, type) {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.segmentation-notification');
+            existingNotifications.forEach(n => n.remove());
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} segmentation-notification`;
+            notification.style.position = 'fixed';
+            notification.style.top = '70px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '9999';
+            notification.style.minWidth = '250px';
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'times' : 'check'}-circle"></i> ${message}
+            `;
+            document.body.appendChild(notification);
+
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 3000);
+        }
+
+        function getCsrfToken() {
+            const token = document.querySelector('[name=csrf_token]');
+            if (token) return token.value;
+
+            // Fallback: get from cookie
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'csrf_token') return value;
+            }
+            return '';
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+        // Initialize sentence editor
+        initializeSentenceEditor();
         // Initialize split panels
         Split(['.left-panel', '.right-panel'], {
             sizes: [70, 30],

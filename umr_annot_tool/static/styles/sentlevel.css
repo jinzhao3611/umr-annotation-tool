@@ -167,6 +167,53 @@ html, body {
     margin-bottom: 1rem;
 }
 
+/* Token display styling */
+.token-item {
+    display: inline-block;
+    margin: 0 5px;
+    position: relative;
+}
+
+.token-item .token-index {
+    display: block;
+    font-size: 0.7em;
+    color: #6c757d;
+    text-align: center;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.token-item .token-text {
+    display: block;
+    font-size: 1.1rem;
+}
+
+/* Sentence Editor */
+#sentence-editor {
+    background-color: #f8f9fa;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    padding: 15px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+#sentence-editor:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Edit button styling */
+#edit-sentence-btn {
+    transition: all 0.3s ease;
+}
+
+#edit-sentence-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 
 /* Annotation Preview */
 .annotation-preview {
@@ -325,6 +372,13 @@ html, body {
     word-wrap: break-word;
     overflow-wrap: break-word;
     margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Add hover hint for editable sentence */
+.current-sentence.editable-hint:hover {
+    background-color: #e9ecef;
+    cursor: text;
 }
 
 /* Alignment Styles */
