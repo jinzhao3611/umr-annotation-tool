@@ -152,13 +152,16 @@ def create_app(config_class=None):
         from umr_annot_tool.posts.routes import posts
         from umr_annot_tool.main.routes import main
         from umr_annot_tool.errors.handlers import errors
-        
+        from umr_annot_tool.main.validation_routes import validation
+
         app.logger.info("Registering users blueprint...")
         app.register_blueprint(users)
         app.logger.info("Registering posts blueprint...")
         app.register_blueprint(posts)
         app.logger.info("Registering main blueprint...")
         app.register_blueprint(main)
+        app.logger.info("Registering validation blueprint...")
+        app.register_blueprint(validation)
         app.logger.info("Registering errors blueprint...")
         app.register_blueprint(errors)
         app.logger.info("All blueprints registered successfully")

@@ -4,6 +4,57 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/alignments_v2.js') }}"></script>
+    <style>
+        /* Line numbers styling - using table layout */
+        .amr-wrapper {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            overflow-x: auto;
+        }
+
+        .amr-table {
+            display: table;
+            width: 100%;
+        }
+
+        .amr-line-numbers {
+            display: table-cell;
+            width: 45px;
+            padding: 0.5rem 8px;
+            background-color: #f1f3f4;
+            border-right: 1px solid #dee2e6;
+            color: #6c757d;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: right;
+            user-select: none;
+            vertical-align: top;
+            white-space: pre;
+        }
+
+        .amr-content-cell {
+            display: table-cell;
+            vertical-align: top;
+            width: 100%;
+        }
+
+        #amr {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+        }
+
+        #amr pre {
+            margin: 0;
+            padding: 0.5rem;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+    </style>
     <!-- Initialize state before loading any other scripts -->
     <script>
         window.state = {
@@ -50,9 +101,93 @@
             return '';
         }
         
+        // Function to update line numbers
+        function updateLineNumbers() {
+            const preElement = document.querySelector('#amr pre');
+            const lineNumbersDiv = document.getElementById('line-numbers');
+
+            if (!preElement || !lineNumbersDiv) return;
+
+            // Get the text content
+            const textContent = preElement.textContent || '';
+
+            // Split by newlines
+            const lines = textContent.split('\n');
+
+            // Generate line numbers
+            const lineNumbers = [];
+
+            // Add an empty first line number to account for the empty first line in the graph
+            lineNumbers.push('');
+
+            // Then add numbered lines starting from 1
+            // Use <= to include the last line
+            for (let i = 1; i <= lines.length; i++) {
+                lineNumbers.push(i);
+            }
+
+            // Update the line numbers div
+            lineNumbersDiv.textContent = lineNumbers.join('\n');
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize line numbers
+            setTimeout(updateLineNumbers, 100);
+
+            // Watch for changes
+            const observer = new MutationObserver(function() {
+                setTimeout(updateLineNumbers, 100);
+            });
+
+            const amrElement = document.querySelector('#amr');
+            if (amrElement) {
+                observer.observe(amrElement, {
+                    childList: true,
+                    subtree: true,
+                    characterData: true
+                });
+            }
+
+            // Move the edit mode toggle to the header after it's created
+            setTimeout(function() {
+                const toggleContainer = document.querySelector('.edit-toggle-container');
+                const placeholder = document.getElementById('edit-mode-toggle-placeholder');
+
+                if (toggleContainer && placeholder) {
+                    // Move the toggle to the placeholder
+                    placeholder.appendChild(toggleContainer);
+
+                    // Restyle the toggle to be more compact
+                    toggleContainer.style.margin = '0';
+                    toggleContainer.style.padding = '5px 10px';
+                    toggleContainer.style.backgroundColor = 'transparent';
+                    toggleContainer.style.border = 'none';
+                    toggleContainer.style.fontSize = '0.875rem';
+
+                    // Hide the description text for a cleaner look
+                    const descriptionText = toggleContainer.querySelector('.mode-description-text');
+                    if (descriptionText) {
+                        descriptionText.style.display = 'none';
+                    }
+
+                    // Make the label smaller
+                    const toggleLabel = toggleContainer.querySelector('b');
+                    if (toggleLabel && toggleLabel.parentElement) {
+                        toggleLabel.parentElement.style.fontSize = '0.875rem';
+                        toggleLabel.parentElement.style.marginLeft = '5px';
+                    }
+
+                    // Adjust switch size
+                    const switchElement = toggleContainer.querySelector('.switch');
+                    if (switchElement) {
+                        switchElement.style.transform = 'scale(0.8)';
+                        switchElement.style.marginRight = '8px';
+                    }
+                }
+            }, 500); // Wait for relation_editor.js to create the toggle
+
             // Save annotation and alignments functionality
-                
+
             const saveButton = document.getElementById('save-annotation-btn');
             if (saveButton) {
                 saveButton.addEventListener('click', function() {
@@ -188,6 +323,128 @@
                 });
             }
             
+            // Validation button functionality
+            const validateButton = document.getElementById('validate-annotation-btn');
+            if (validateButton) {
+                validateButton.addEventListener('click', function() {
+                    // Get the current annotation text
+                    const annotationText = document.querySelector('#amr pre').textContent;
+
+                    // Get tokens from the sentence
+                    const tokens = [];
+                    document.querySelectorAll('.token-box').forEach(tokenBox => {
+                        tokens.push(tokenBox.textContent.trim());
+                    });
+
+                    // Show loading state
+                    const originalText = validateButton.innerHTML;
+                    validateButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Validating...';
+                    validateButton.disabled = true;
+
+                    // Call validation API
+                    fetch('/api/validate/graph', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCsrfToken()
+                        },
+                        body: JSON.stringify({
+                            graph: annotationText,
+                            tokens: tokens
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Display validation results
+                        const resultsDiv = document.getElementById('validation-results');
+                        const errorsDiv = document.getElementById('validation-errors');
+                        const warningsDiv = document.getElementById('validation-warnings');
+
+                        // Clear previous results
+                        errorsDiv.innerHTML = '';
+                        warningsDiv.innerHTML = '';
+
+                        // Display errors
+                        if (data.errors && data.errors.length > 0) {
+                            errorsDiv.innerHTML = '<h6 class="text-danger"><i class="fas fa-times-circle"></i> Errors:</h6>';
+                            const errorList = document.createElement('ul');
+                            errorList.className = 'mb-0 text-danger';
+                            data.errors.forEach(error => {
+                                const li = document.createElement('li');
+                                li.textContent = error;
+                                errorList.appendChild(li);
+                            });
+                            errorsDiv.appendChild(errorList);
+                        }
+
+                        // Display warnings
+                        if (data.warnings && data.warnings.length > 0) {
+                            warningsDiv.innerHTML = '<h6 class="text-warning"><i class="fas fa-exclamation-triangle"></i> Warnings:</h6>';
+                            const warningList = document.createElement('ul');
+                            warningList.className = 'mb-0 text-warning';
+                            data.warnings.forEach(warning => {
+                                const li = document.createElement('li');
+                                li.textContent = warning;
+                                warningList.appendChild(li);
+                            });
+                            warningsDiv.appendChild(warningList);
+                        }
+
+                        // Show success if valid
+                        if (data.valid) {
+                            if (!data.warnings || data.warnings.length === 0) {
+                                errorsDiv.innerHTML = '<div class="alert alert-success mb-0"><i class="fas fa-check-circle"></i> Graph is valid!</div>';
+                            } else {
+                                errorsDiv.innerHTML = '<div class="alert alert-warning mb-0"><i class="fas fa-check-circle"></i> Graph is valid with warnings</div>';
+                            }
+                        }
+
+                        // Show results section
+                        resultsDiv.style.display = 'block';
+
+                        // Update button state
+                        if (data.valid) {
+                            validateButton.innerHTML = '<i class="fas fa-check"></i> Valid!';
+                            validateButton.classList.remove('btn-outline-warning');
+                            validateButton.classList.add('btn-success');
+                        } else {
+                            validateButton.innerHTML = '<i class="fas fa-times"></i> Invalid';
+                            validateButton.classList.remove('btn-outline-warning');
+                            validateButton.classList.add('btn-danger');
+                        }
+
+                        // Reset button after a delay
+                        setTimeout(() => {
+                            validateButton.innerHTML = originalText;
+                            validateButton.classList.remove('btn-success', 'btn-danger');
+                            validateButton.classList.add('btn-outline-warning');
+                            validateButton.disabled = false;
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        console.error('Validation error:', error);
+
+                        // Show error message
+                        const resultsDiv = document.getElementById('validation-results');
+                        const errorsDiv = document.getElementById('validation-errors');
+                        errorsDiv.innerHTML = `<div class="alert alert-danger mb-0"><i class="fas fa-times-circle"></i> Validation error: ${error.message}</div>`;
+                        resultsDiv.style.display = 'block';
+
+                        // Reset button
+                        validateButton.innerHTML = '<i class="fas fa-times"></i> Error';
+                        validateButton.classList.remove('btn-outline-warning');
+                        validateButton.classList.add('btn-danger');
+
+                        setTimeout(() => {
+                            validateButton.innerHTML = originalText;
+                            validateButton.classList.remove('btn-danger');
+                            validateButton.classList.add('btn-outline-warning');
+                            validateButton.disabled = false;
+                        }, 3000);
+                    });
+                });
+            }
+
             const copyButton = document.getElementById('copy-annotation-btn');
             if (copyButton) {
                 copyButton.addEventListener('click', function() {
@@ -1665,10 +1922,15 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Sentence-Level UMR Annotation Preview</h5>
-                        <div class="btn-group">
+                        <div class="d-flex align-items-center">
+                            <div id="edit-mode-toggle-placeholder" class="me-3"></div>
+                            <div class="btn-group">
                             {% if curr_annotation_string %}
                             <button id="save-annotation-btn" class="btn btn-sm btn-outline-primary me-2" title="Save annotation and alignments">
                                 <i class="fas fa-save"></i> Save
+                            </button>
+                            <button id="validate-annotation-btn" class="btn btn-sm btn-outline-warning me-2" title="Validate graph structure">
+                                <i class="fas fa-check-circle"></i> Validate
                             </button>
                             <button id="delete-annotation-btn" class="btn btn-sm btn-outline-danger me-2" title="Delete entire annotation">
                                 <i class="fas fa-trash"></i> Delete
@@ -1681,24 +1943,48 @@
                                 <i class="fas fa-plus"></i> Add Top
                             </button>
                             {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="amr" class="annotation-preview">
-                        {% if curr_annotation_string %}
-                            <pre class="mb-0">{{ curr_annotation_string }}</pre>
-                        {% else %}
-                            <div class="alert alert-info mb-0 text-center">
-                                {% if not curr_sent_umr %}
-                                    <p class="mb-0">No annotation has been created for this sentence yet.</p>
-                                    <p class="mb-0">Click the "Add Top" button to create your first node.</p>
-                                {% else %}
-                                    <p class="mb-0">The annotation exists but is empty.</p>
-                                    <p class="mb-0">Click the "Add Top" button to create your first node.</p>
-                                {% endif %}
+                    <div class="amr-wrapper">
+                        <div class="amr-table">
+                            <div class="amr-line-numbers" id="line-numbers"></div>
+                            <div class="amr-content-cell">
+                                <div id="amr" class="annotation-preview">
+                                    {% if curr_annotation_string %}
+                                        <pre class="mb-0">{{ curr_annotation_string }}</pre>
+                                    {% else %}
+                                        <div class="alert alert-info mb-0 text-center">
+                                            {% if not curr_sent_umr %}
+                                                <p class="mb-0">No annotation has been created for this sentence yet.</p>
+                                                <p class="mb-0">Click the "Add Top" button to create your first node.</p>
+                                            {% else %}
+                                                <p class="mb-0">The annotation exists but is empty.</p>
+                                                <p class="mb-0">Click the "Add Top" button to create your first node.</p>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </div>
-                        {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Validation Results Area -->
+                    <div id="validation-results" class="mt-3" style="display: none;">
+                        <div class="card border-0">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-check-circle"></i> Validation Results
+                                    <button type="button" class="btn-close btn-sm float-end" onclick="document.getElementById('validation-results').style.display='none'"></button>
+                                </h6>
+                            </div>
+                            <div class="card-body p-2">
+                                <div id="validation-errors" class="mb-2"></div>
+                                <div id="validation-warnings"></div>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Hidden element to store relations data for relation editor -->
