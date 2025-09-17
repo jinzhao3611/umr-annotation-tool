@@ -167,9 +167,6 @@ html, body {
     margin-bottom: 1rem;
 }
 
-.current-sentence:hover {
-    border: 2px solid gray;
-}
 
 /* Annotation Preview */
 .annotation-preview {
