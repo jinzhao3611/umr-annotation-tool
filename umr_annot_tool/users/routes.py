@@ -86,10 +86,8 @@ def account():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
             current_user.image_file = picture_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
         db.session.commit()
-        flash('Your account has been updated!', 'success')
+        flash('Your profile picture has been updated!', 'success')
         return redirect(url_for('users.account'))
     elif request.method == 'POST':
         try:
@@ -141,8 +139,7 @@ def account():
             print("deleting doc from database failed")
         return redirect(url_for('users.account'))
     elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
+        pass  # No need to populate username and email anymore
 
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     projects = Projectuser.query.filter(Projectuser.user_id == current_user.id).all()

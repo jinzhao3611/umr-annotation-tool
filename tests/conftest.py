@@ -4,7 +4,7 @@ import os
 import sys
 from playwright.sync_api import sync_playwright
 from umr_annot_tool import create_app, db, bcrypt
-from umr_annot_tool.models import User, Project, Doc, DocVersion
+from umr_annot_tool.models import User, Project, Doc, DocVersion, Projectuser
 
 
 @pytest.fixture(scope="session")
@@ -93,14 +93,32 @@ def app():
         )
         db.session.add(admin_user)
         
-        # Create test project
+        # Create test project (created by admin user)
         test_project = Project(
             project_name='Test Project',
             language='en',
-            created_by_user_id=1
+            created_by_user_id=2  # Admin user creates the project
         )
         db.session.add(test_project)
-        
+        db.session.commit()
+
+        # Create project-user association (member, not admin)
+        project_user = Projectuser(
+            project_name='Test Project',
+            user_id=1,
+            project_id=test_project.id,
+            permission='member'
+        )
+        db.session.add(project_user)
+
+        # Also add admin user to project as admin
+        admin_project_user = Projectuser(
+            project_name='Test Project',
+            user_id=2,
+            project_id=test_project.id,
+            permission='admin'
+        )
+        db.session.add(admin_project_user)
         db.session.commit()
     
     yield app
@@ -120,23 +138,49 @@ def client(app):
     return app.test_client()
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def live_server(app):
     """Start live server for Playwright tests."""
     import threading
     import time
+    import socket
     from werkzeug.serving import make_server
-    
-    server = make_server('127.0.0.1', 5000, app, threaded=True)
+
+    # Find an available port (starting from 5100 to avoid conflicts with system services)
+    port = 5100
+    max_attempts = 20
+    for attempt in range(max_attempts):
+        try:
+            # Test if port is available
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            sock.bind(('127.0.0.1', port))
+            sock.close()
+            break
+        except OSError:
+            port += 1
+            if attempt == max_attempts - 1:
+                raise RuntimeError(f"Could not find available port after {max_attempts} attempts")
+
+    server = make_server('127.0.0.1', port, app, threaded=True)
     thread = threading.Thread(target=server.serve_forever)
     thread.daemon = True
     thread.start()
-    
-    # Wait for server to start
-    time.sleep(1)
-    
-    yield 'http://127.0.0.1:5000'
-    
+
+    # Wait for server to actually start and be ready
+    import requests
+    for _ in range(10):
+        try:
+            response = requests.get(f'http://127.0.0.1:{port}/')
+            if response.status_code in [200, 302, 404]:  # Any response means server is up
+                break
+        except requests.exceptions.ConnectionError:
+            time.sleep(0.5)
+    else:
+        raise RuntimeError("Server did not start within 5 seconds")
+
+    yield f'http://127.0.0.1:{port}'
+
     server.shutdown()
 
 
@@ -145,15 +189,20 @@ def authenticated_page(page, live_server):
     """Page fixture with logged-in user."""
     # Navigate to login page
     page.goto(f"{live_server}/login")
-    
-    # Fill login form
-    page.fill('input[name="email"]', 'test@example.com')
-    page.fill('input[name="password"]', 'testpassword')
-    page.click('input[type="submit"]')
-    
-    # Wait for redirect to account page (app redirects here after login)
-    page.wait_for_url(f"{live_server}/account")
-    
+
+    # Check if we're redirected to account (already logged in)
+    if "/account" in page.url:
+        # Already logged in, no need to login again
+        pass
+    else:
+        # Fill login form
+        page.fill('input[name="email"]', 'test@example.com')
+        page.fill('input[name="password"]', 'testpassword')
+        page.click('input[type="submit"]')
+
+        # Wait for redirect to account page (app redirects here after login)
+        page.wait_for_url(f"{live_server}/account")
+
     yield page
 
 
@@ -162,15 +211,22 @@ def admin_page(page, live_server):
     """Page fixture with logged-in admin user."""
     # Navigate to login page
     page.goto(f"{live_server}/login")
-    
-    # Fill login form with admin credentials
-    page.fill('input[name="email"]', 'admin@example.com')
-    page.fill('input[name="password"]', 'adminpassword')
-    page.click('input[type="submit"]')
-    
-    # Wait for redirect (admin redirects to account page)
-    page.wait_for_load_state("networkidle")
-    
+
+    # Check if we're redirected to account (already logged in)
+    if "/account" in page.url:
+        # Already logged in, check if it's the admin user
+        # If not, we'd need to logout and login as admin
+        # For simplicity, assuming tests don't mix user types in same session
+        pass
+    else:
+        # Fill login form with admin credentials
+        page.fill('input[name="email"]', 'admin@example.com')
+        page.fill('input[name="password"]', 'adminpassword')
+        page.click('input[type="submit"]')
+
+        # Wait for redirect (admin redirects to account page)
+        page.wait_for_load_state("networkidle")
+
     yield page
 
 
