@@ -129,7 +129,7 @@
         if (annotationHeader) {
             const toggleBtn = document.createElement('button');
             toggleBtn.className = 'btn btn-sm btn-outline-info me-2';
-            toggleBtn.innerHTML = '<i class="fas fa-terminal"></i> Command Line';
+            toggleBtn.innerHTML = '<i class="fas fa-terminal"></i> Command';
             toggleBtn.title = 'Toggle command line interface';
             toggleBtn.onclick = toggleCommandLine;
 

@@ -549,4 +549,224 @@ html, body {
     margin-left: 0.5rem;
     border-radius: 4px;
     letter-spacing: 0.01em;
-} 
+}
+
+/* ==========================================
+   Enhanced Button Styling for Annotation Preview
+   ========================================== */
+
+/* Button group container styling */
+.card-header .btn-group {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+/* Base button styling improvements */
+.card-header .btn {
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    border-width: 1.5px !important;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Button hover effects */
+.card-header .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.card-header .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Save button (primary) */
+.card-header .btn-outline-primary {
+    color: #0066cc !important;
+    border-color: #0066cc !important;
+    background-color: transparent !important;
+}
+
+.card-header .btn-outline-primary:hover {
+    background-color: #0066cc !important;
+    color: white !important;
+    border-color: #0052a3 !important;
+}
+
+/* Validate button (warning) */
+.card-header .btn-outline-warning {
+    color: #ff9800 !important;
+    border-color: #ff9800 !important;
+    background-color: transparent !important;
+}
+
+.card-header .btn-outline-warning:hover {
+    background-color: #ff9800 !important;
+    color: white !important;
+    border-color: #f57c00 !important;
+}
+
+/* Delete button (danger) */
+.card-header .btn-outline-danger {
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    background-color: transparent !important;
+}
+
+.card-header .btn-outline-danger:hover {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #bd2130 !important;
+}
+
+/* Copy button (secondary) */
+.card-header .btn-outline-secondary {
+    color: #6c757d !important;
+    border-color: #6c757d !important;
+    background-color: transparent !important;
+}
+
+.card-header .btn-outline-secondary:hover {
+    background-color: #6c757d !important;
+    color: white !important;
+    border-color: #545b62 !important;
+}
+
+/* Command button (info) */
+.card-header .btn-outline-info {
+    color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+    background-color: transparent !important;
+}
+
+.card-header .btn-outline-info:hover {
+    background-color: #17a2b8 !important;
+    color: white !important;
+    border-color: #138496 !important;
+}
+
+/* Parens button - using info style but can be customized */
+.card-header #paren-check-btn {
+    color: #6f42c1 !important;
+    border-color: #6f42c1 !important;
+}
+
+.card-header #paren-check-btn:hover {
+    background-color: #6f42c1 !important;
+    color: white !important;
+    border-color: #5a32a3 !important;
+}
+
+/* Diff button (success) */
+.card-header .btn-outline-success {
+    color: #28a745 !important;
+    border-color: #28a745 !important;
+    background-color: transparent !important;
+}
+
+.card-header .btn-outline-success:hover {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Active/toggled button states */
+.card-header .btn-warning,
+.card-header .btn-success {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.card-header .btn-warning {
+    background-color: #ff9800 !important;
+    border-color: #ff9800 !important;
+}
+
+.card-header .btn-success {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+/* Button icons */
+.card-header .btn i {
+    margin-right: 4px;
+    font-size: 0.85rem;
+}
+
+/* Edit mode toggle specific styling */
+#edit-mode-toggle-placeholder .btn {
+    border-radius: 20px !important;
+    padding: 6px 16px !important;
+    font-weight: 600 !important;
+}
+
+/* Undo/Redo buttons styling */
+.card-header #undo-btn,
+.card-header #redo-btn {
+    min-width: 70px;
+}
+
+.card-header #undo-btn:disabled,
+.card-header #redo-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .card-header .btn {
+        padding: 5px 10px !important;
+        font-size: 0.8125rem !important;
+    }
+
+    .card-header .btn i {
+        margin-right: 2px;
+    }
+}
+
+/* Focus styles for accessibility */
+.card-header .btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Tooltip enhancement for buttons */
+.card-header .btn[title] {
+    position: relative;
+}
+
+.card-header .btn[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    margin-bottom: 5px;
+}
+
+.card-header .btn[title]:hover::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.9);
+    margin-bottom: -5px;
+    z-index: 1000;
+    pointer-events: none;
+}

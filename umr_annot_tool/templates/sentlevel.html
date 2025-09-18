@@ -360,7 +360,7 @@
             } else {
                 btn.classList.remove('btn-success');
                 btn.classList.add('btn-outline-success');
-                btn.innerHTML = '<i class="fas fa-exchange-alt"></i> Show Diff';
+                btn.innerHTML = '<i class="fas fa-exchange-alt"></i> Diff';
 
                 // Remove modal
                 const modal = document.getElementById('diff-viewer-modal');
@@ -2603,7 +2603,7 @@
                                 <i class="fas fa-check-circle"></i> Parens
                             </button>
                             <button id="diff-view-btn" class="btn btn-sm btn-outline-success" title="Show changes" onclick="toggleDiffView()">
-                                <i class="fas fa-exchange-alt"></i> Show Diff
+                                <i class="fas fa-exchange-alt"></i> Diff
                             </button>
                             {% else %}
                             <button id="add-top-btn" class="btn btn-sm btn-primary" title="Create the first node">
