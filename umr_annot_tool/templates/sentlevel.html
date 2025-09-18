@@ -27,7 +27,7 @@
             color: #6c757d;
             font-family: monospace;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 20px;  /* Fixed pixel height for consistency */
             text-align: right;
             user-select: none;
             vertical-align: top;
@@ -51,7 +51,7 @@
             padding: 0.5rem;
             font-family: monospace;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 20px;  /* Same fixed pixel height as line numbers */
             white-space: pre-wrap;
         }
     </style>
@@ -177,12 +177,12 @@
                 overflow: auto;
                 font-family: monospace;
                 font-size: 14px;
-                line-height: 1.5;
             `;
 
             // Create line numbers
-            const lineNumbers = document.createElement('div');
+            const lineNumbers = document.createElement('pre');
             lineNumbers.style.cssText = `
+                margin: 0;
                 padding: 10px 5px;
                 background: #e0e0e0;
                 border-right: 1px solid #ccc;
@@ -190,13 +190,19 @@
                 user-select: none;
                 color: #666;
                 min-width: 30px;
+                font-family: monospace;
+                font-size: 14px;
+                line-height: 20px;
+                white-space: pre;
             `;
 
             // Count lines and create line numbers
             const lines = graphText.split('\n');
+            const lineNumbersText = [];
             for (let i = 1; i <= lines.length; i++) {
-                lineNumbers.innerHTML += `${i}<br>`;
+                lineNumbersText.push(i);
             }
+            lineNumbers.textContent = lineNumbersText.join('\n');
 
             // Create the pre element with the graph
             const pre = document.createElement('pre');
@@ -207,6 +213,9 @@
                 white-space: pre;
                 flex: 1;
                 overflow-x: auto;
+                font-family: monospace;
+                font-size: 14px;
+                line-height: 20px;
             `;
 
             // Process the text to make parentheses clickable

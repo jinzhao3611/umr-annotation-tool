@@ -395,9 +395,22 @@ def sentlevel(doc_version_id, sent_id):
                     logger.info(f"Raw sent_annot type: {type(curr_annotation.sent_annot)}")
                     
                     # Handle sent_annot - don't try to parse PENMAN as JSON
-                    curr_sent_umr = curr_annotation.sent_annot if curr_annotation.sent_annot else {}
-                    curr_annotation_string = curr_annotation.sent_annot if curr_annotation.sent_annot else ''
-                    
+                    raw_annotation = curr_annotation.sent_annot if curr_annotation.sent_annot else ''
+
+                    # Validate and fix the annotation before displaying
+                    if raw_annotation:
+                        fixed_annotation, is_valid, messages = validate_and_fix_annotation(raw_annotation, auto_fix=True)
+                        if not is_valid or fixed_annotation != raw_annotation:
+                            logger.info(f"Fixed annotation display for sentence {sent_id}: {messages}")
+                            curr_annotation_string = fixed_annotation
+                            curr_sent_umr = fixed_annotation
+                        else:
+                            curr_annotation_string = raw_annotation
+                            curr_sent_umr = raw_annotation
+                    else:
+                        curr_sent_umr = {}
+                        curr_annotation_string = ''
+
                     logger.info(f"Processed curr_sent_umr: {curr_sent_umr}")
                     logger.info(f"Processed curr_annotation_string: {curr_annotation_string}")
                     

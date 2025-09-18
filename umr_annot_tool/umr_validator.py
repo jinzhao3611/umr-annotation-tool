@@ -194,16 +194,215 @@ def fix_indentation_and_parentheses_old(annotation: str) -> Tuple[str, List[str]
     return '\n'.join(fixed_lines), changes
 
 
+def fix_indentation_and_parentheses_with_removal(annotation: str) -> Tuple[str, List[str]]:
+    """
+    Fix indentation and parenthesis issues, including removing extra closing parentheses
+    that prematurely close the root node.
+
+    This version can remove parentheses that incorrectly close the root when more
+    content follows.
+    """
+    changes = []
+    lines = annotation.split('\n')
+    fixed_lines = []
+
+    # First pass: detect if we have premature root closure
+    depth = 0
+    has_premature_closure = False
+    premature_closure_line = -1
+
+    for idx, line in enumerate(lines):
+        if not line.strip() or line.strip().startswith('#'):
+            continue
+
+        content = line.strip()
+        opens = content.count('(')
+        closes = content.count(')')
+
+        depth += opens - closes
+
+        if depth == 0 and idx < len(lines) - 1:
+            # Check if there's more content after this
+            for future_idx in range(idx + 1, len(lines)):
+                future_line = lines[future_idx].strip()
+                if future_line and not future_line.startswith('#'):
+                    if future_line.startswith(':'):
+                        # Found a relation after root closure - this is wrong!
+                        has_premature_closure = True
+                        premature_closure_line = idx
+                        changes.append(f'Line {idx + 1}: DETECTED - Premature root closure with relations following')
+                    break
+
+        if has_premature_closure:
+            break
+
+    # Second pass: fix the graph
+    current_depth = 0
+    has_root = False
+    root_is_open = False
+    paren_stack = []
+
+    for line_idx, line in enumerate(lines):
+        # Preserve empty lines and comments as-is
+        if not line.strip() or line.strip().startswith('#'):
+            fixed_lines.append(line)
+            continue
+
+        content = line.strip()
+        current_indent = len(line) - len(line.lstrip())
+
+        # If this is the line with premature closure, remove one closing paren
+        if has_premature_closure and line_idx == premature_closure_line:
+            # Find the last closing paren and remove it
+            last_close_pos = content.rfind(')')
+            if last_close_pos != -1:
+                content = content[:last_close_pos] + content[last_close_pos+1:]
+                changes.append(f'Line {line_idx + 1}: Removed extra closing parenthesis that was closing root prematurely')
+
+        # Rest of the logic continues as before...
+        # Determine expected indentation BEFORE processing this line's parentheses
+        if not has_root and '(' in content and '/' in content and not content.startswith(':'):
+            # This is the root node - should have 0 indentation
+            has_root = True
+            root_is_open = True
+            expected_indent = 0
+            changes.append(f'Line {line_idx + 1}: Identified root node')
+        else:
+            # For all other lines, calculate based on depth
+            # But we need to consider if line has net closing parentheses
+
+            # If line starts with closing parens, calculate depth after those
+            if content and content[0] == ')':
+                # Count consecutive closing parens at start
+                closing_count = 0
+                for char in content:
+                    if char == ')':
+                        closing_count += 1
+                    else:
+                        break
+
+                # These closing parens affect the indentation of THIS line
+                temp_depth = max(0, current_depth - closing_count)
+
+                # But make sure we don't go to depth 0 if root is still open
+                if root_is_open and temp_depth == 0:
+                    # Check if this line closes the root
+                    # Count total parens in the annotation so far plus this line
+                    total_open = 0
+                    total_close = 0
+
+                    # Count in previous lines
+                    for prev_line in fixed_lines:
+                        if not prev_line.strip().startswith('#'):
+                            total_open += prev_line.count('(')
+                            total_close += prev_line.count(')')
+
+                    # Count in current line (modified content)
+                    total_open += content.count('(')
+                    total_close += content.count(')')
+
+                    if total_open > total_close:
+                        # Root is still open, maintain depth 1 minimum
+                        temp_depth = 1
+
+                expected_indent = temp_depth * 4
+            else:
+                # Normal line - use current depth
+                expected_indent = current_depth * 4
+
+                # Special check: if we're at depth 0 but root is open, we should be at depth 1
+                if current_depth == 0 and root_is_open:
+                    expected_indent = 4
+
+        # Apply indentation fix
+        if current_indent != expected_indent:
+            fixed_line = ' ' * expected_indent + content
+            fixed_lines.append(fixed_line)
+            changes.append(f'Line {line_idx + 1}: Fixed indentation from {current_indent} to {expected_indent} spaces')
+        else:
+            fixed_lines.append(' ' * expected_indent + content if current_indent != expected_indent else line.rstrip())
+
+        # Update depth for NEXT line based on this line's parentheses
+        for char in content:
+            if char == '(':
+                current_depth += 1
+                paren_stack.append(('open', line_idx + 1))
+            elif char == ')':
+                if paren_stack:
+                    paren_stack.pop()
+                current_depth = max(0, current_depth - 1)
+
+        # After processing this line, check the state
+        # In proper Penman format, we should only be at depth 0 at the very end
+        if has_root:
+            # Check if there are more content lines coming
+            has_more_content = False
+            next_line_is_relation = False
+            for future_idx in range(line_idx + 1, len(lines)):
+                future_line = lines[future_idx].strip()
+                if future_line and not future_line.startswith('#'):
+                    has_more_content = True
+                    if future_line.startswith(':'):
+                        next_line_is_relation = True
+                    break
+
+            if current_depth == 0:
+                if has_more_content:
+                    if next_line_is_relation:
+                        # We're at depth 0 but more relations are coming
+                        # This shouldn't happen if we removed the extra paren correctly
+                        current_depth = 1
+                    else:
+                        # Might be starting a new root (error) or end of graph
+                        if root_is_open:
+                            root_is_open = False
+                else:
+                    # No more content, we're done
+                    if root_is_open:
+                        root_is_open = False
+
+    # Check final balance
+    total_open = 0
+    total_close = 0
+    for line in fixed_lines:
+        if not line.strip().startswith('#'):
+            total_open += line.count('(')
+            total_close += line.count(')')
+
+    if total_open > total_close:
+        # Add missing closing parentheses
+        missing = total_open - total_close
+        last_content_idx = -1
+        for i in range(len(fixed_lines) - 1, -1, -1):
+            if fixed_lines[i].strip() and not fixed_lines[i].strip().startswith('#'):
+                last_content_idx = i
+                break
+
+        if last_content_idx >= 0:
+            fixed_lines[last_content_idx] += ')' * missing
+            changes.append(f'Added {missing} closing parenthesis(es) at the end')
+    elif total_close > total_open:
+        changes.append(f'ERROR: {total_close - total_open} extra closing parenthesis(es) remain - manual fix needed')
+
+    if total_open == total_close:
+        changes.append('✓ Parentheses are now balanced')
+    else:
+        changes.append(f'⚠ Warning: Parentheses still unbalanced ({total_open} open, {total_close} close)')
+
+    return '\n'.join(fixed_lines), changes
+
+
 def fix_indentation_and_parentheses(annotation: str) -> Tuple[str, List[str]]:
     """
-    Fix indentation and parenthesis issues in UMR/AMR annotations.
+    Fix indentation and parenthesis issues in UMR/AMR annotations using Penman graph format rules.
 
-    Core principle: Track depth through parenthesis counting. Each open paren
-    increases depth, each close paren decreases it. Indentation = depth * 4.
-
-    Also ensures:
-    1. Only one root node (depth 0 starting with a variable)
-    2. Relations at depth 0 are treated as children of the root (depth 1)
+    Core principle for Penman graphs:
+    - The first opening parenthesis starts the root node and should match with the very last closing parenthesis
+    - Only the root node (first line) should have 0 indentation
+    - Each opening parenthesis increases nesting depth
+    - Closing parentheses decrease depth
+    - Indentation = current_depth * 4 spaces
+    - Relations (starting with :) are properties of their parent node
 
     Args:
         annotation: The UMR/AMR annotation string
@@ -215,11 +414,15 @@ def fix_indentation_and_parentheses(annotation: str) -> Tuple[str, List[str]]:
     lines = annotation.split('\n')
     fixed_lines = []
 
-    # Track current depth (number of unclosed parentheses)
+    # Track parenthesis depth (0 = outside any node, 1 = inside root, etc.)
     current_depth = 0
+
+    # Track if we've seen the root and if it's still open
     has_root = False
-    root_variable = None
-    root_depth = 0  # Track the depth of unclosed parens from the root
+    root_is_open = False
+
+    # Stack to track which line each open paren came from
+    paren_stack = []
 
     for line_idx, line in enumerate(lines):
         # Preserve empty lines and comments as-is
@@ -227,43 +430,68 @@ def fix_indentation_and_parentheses(annotation: str) -> Tuple[str, List[str]]:
             fixed_lines.append(line)
             continue
 
-        current_indent = len(line) - len(line.lstrip())
         content = line.strip()
+        current_indent = len(line) - len(line.lstrip())
 
-        # Special handling for depth 0
-        if current_depth == 0:
-            # Check if it starts with a relation (starts with ':')
-            if content.startswith(':'):
-                if has_root:
-                    # This relation should be at depth 1 under the root
-                    current_depth = 1
-                    changes.append(f'Line {line_idx + 1}: Moving relation "{content.split()[0]}" under root {root_variable}')
-                else:
-                    # No root yet - this is an error
-                    changes.append(f'Line {line_idx + 1}: ERROR - Relation "{content.split()[0]}" found before root node')
-                    continue
+        # Determine expected indentation BEFORE processing this line's parentheses
+        if not has_root and '(' in content and '/' in content and not content.startswith(':'):
+            # This is the root node - should have 0 indentation
+            has_root = True
+            root_is_open = True
+            expected_indent = 0
+            changes.append(f'Line {line_idx + 1}: Identified root node')
+        else:
+            # For all other lines, calculate based on depth
+            # But we need to consider if line has net closing parentheses
+
+            # Count parentheses to determine if we need to dedent
+            temp_content = content
+            temp_depth = current_depth
+
+            # If line starts with closing parens, calculate depth after those
+            if content and content[0] == ')':
+                # Count consecutive closing parens at start
+                closing_count = 0
+                for char in content:
+                    if char == ')':
+                        closing_count += 1
+                    else:
+                        break
+
+                # These closing parens affect the indentation of THIS line
+                temp_depth = max(0, current_depth - closing_count)
+
+                # But make sure we don't go to depth 0 if root is still open
+                if root_is_open and temp_depth == 0:
+                    # Check if this line closes the root
+                    # Count total parens in the annotation so far plus this line
+                    total_open = 0
+                    total_close = 0
+
+                    # Count in previous lines
+                    for prev_line in fixed_lines:
+                        if not prev_line.strip().startswith('#'):
+                            total_open += prev_line.count('(')
+                            total_close += prev_line.count(')')
+
+                    # Count in current line
+                    total_open += content.count('(')
+                    total_close += content.count(')')
+
+                    if total_open > total_close:
+                        # Root is still open, maintain depth 1 minimum
+                        temp_depth = 1
+
+                expected_indent = temp_depth * 4
             else:
-                # This should be a root node
-                if has_root:
-                    # We already have a root - treat this as a child
-                    changes.append(f'Line {line_idx + 1}: ERROR - Multiple root nodes detected, treating as child of {root_variable}')
-                    current_depth = 1
-                else:
-                    # This is our root node
-                    has_root = True
-                    root_variable = content.split()[0].strip('(')
-                    changes.append(f'Line {line_idx + 1}: Identified root node: {root_variable}')
-                    # Count the opening parens in the root
-                    root_depth = content.count('(') - content.count(')')
+                # Normal line - use current depth
+                expected_indent = current_depth * 4
 
-        # Count parentheses in this line
-        open_count = content.count('(')
-        close_count = content.count(')')
+                # Special check: if we're at depth 0 but root is open, we should be at depth 1
+                if current_depth == 0 and root_is_open:
+                    expected_indent = 4
 
-        # Current line's indentation is based on current depth
-        expected_indent = current_depth * 4
-
-        # Apply the indentation fix if needed
+        # Apply indentation fix
         if current_indent != expected_indent:
             fixed_line = ' ' * expected_indent + content
             fixed_lines.append(fixed_line)
@@ -271,39 +499,74 @@ def fix_indentation_and_parentheses(annotation: str) -> Tuple[str, List[str]]:
         else:
             fixed_lines.append(line)
 
-        # Update depth for NEXT line based on parentheses in THIS line
-        # Each open paren increases depth, each close decreases it
-        current_depth += open_count - close_count
+        # Update depth for NEXT line based on this line's parentheses
+        for char in content:
+            if char == '(':
+                current_depth += 1
+                paren_stack.append(('open', line_idx + 1))
+            elif char == ')':
+                if paren_stack:
+                    paren_stack.pop()
+                current_depth = max(0, current_depth - 1)
 
-        # If depth goes back to 0 but we still have a root open, keep depth at 1
-        # This ensures relations after closing siblings stay under the root
-        if current_depth == 0 and has_root and root_depth > 0:
-            # Check if the next content line is a relation
-            next_line_idx = line_idx + 1
-            while next_line_idx < len(lines):
-                next_line = lines[next_line_idx].strip()
-                if next_line and not next_line.startswith('#'):
-                    if next_line.startswith(':'):
-                        # Next line is a relation, should be under root
-                        current_depth = 1
+        # After processing this line, check the state
+        # In proper Penman format, we should only be at depth 0 at the very end
+        if has_root:
+            # Check if there are more content lines coming
+            has_more_content = False
+            next_line_is_relation = False
+            for future_idx in range(line_idx + 1, len(lines)):
+                future_line = lines[future_idx].strip()
+                if future_line and not future_line.startswith('#'):
+                    has_more_content = True
+                    if future_line.startswith(':'):
+                        next_line_is_relation = True
                     break
-                next_line_idx += 1
 
-        current_depth = max(0, current_depth)
+            if current_depth == 0:
+                if has_more_content:
+                    if next_line_is_relation:
+                        # We're at depth 0 but more relations are coming
+                        # This is a structural issue - relations should be children of root
+                        current_depth = 1
+                        changes.append(f'Line {line_idx + 1}: WARNING - Reached depth 0 but more relations follow. Adjusting to depth 1.')
+                    else:
+                        # Might be starting a new root (error) or end of graph
+                        if root_is_open:
+                            root_is_open = False
+                            changes.append(f'Line {line_idx + 1}: Root appears to be closed')
+                else:
+                    # No more content, we're done
+                    if root_is_open:
+                        root_is_open = False
 
+    # Check final balance
+    total_open = 0
+    total_close = 0
+    for line in fixed_lines:
+        if not line.strip().startswith('#'):
+            total_open += line.count('(')
+            total_close += line.count(')')
 
-    # Add missing closing parentheses if needed
-    if current_depth > 0:
-        # Find the last non-empty, non-comment line
-        last_content_line = -1
+    if total_open > total_close:
+        # Add missing closing parentheses
+        missing = total_open - total_close
+        last_content_idx = -1
         for i in range(len(fixed_lines) - 1, -1, -1):
             if fixed_lines[i].strip() and not fixed_lines[i].strip().startswith('#'):
-                last_content_line = i
+                last_content_idx = i
                 break
 
-        if last_content_line >= 0:
-            fixed_lines[last_content_line] += ')' * current_depth
-            changes.append(f'Added {current_depth} closing parenthesis(es) at the end')
+        if last_content_idx >= 0:
+            fixed_lines[last_content_idx] += ')' * missing
+            changes.append(f'Added {missing} closing parenthesis(es) at the end')
+    elif total_close > total_open:
+        changes.append(f'ERROR: {total_close - total_open} extra closing parenthesis(es) - manual fix needed')
+
+    if total_open == total_close:
+        changes.append('✓ Parentheses are now balanced')
+    else:
+        changes.append(f'⚠ Warning: Parentheses still unbalanced ({total_open} open, {total_close} close)')
 
     return '\n'.join(fixed_lines), changes
 
@@ -467,7 +730,7 @@ def validate_and_fix_annotation(annotation: str, auto_fix: bool = True) -> Tuple
     processed = annotation
     is_valid = True
 
-    # Check parenthesis balance
+    # Check parenthesis balance first
     paren_valid, paren_issues = validate_parentheses(annotation)
 
     if not paren_valid:
@@ -475,18 +738,39 @@ def validate_and_fix_annotation(annotation: str, auto_fix: bool = True) -> Tuple
         for issue in paren_issues:
             messages.append(issue['message'])
 
+    # Always try to fix indentation and detect structural issues
     if auto_fix:
-        # Fix indentation and parentheses together
-        processed, fixes = fix_indentation_and_parentheses(annotation)
+        # Use the enhanced version that can remove extra parentheses
+        processed, fixes = fix_indentation_and_parentheses_with_removal(annotation)
         if fixes:
-            messages.extend(fixes)
+            # Separate structural warnings from fixes
+            structural_warnings = [f for f in fixes if 'WARNING' in f or 'ERROR' in f or 'Extra closing' in f]
+            indentation_fixes = [f for f in fixes if 'Fixed indentation' in f]
+            other_messages = [f for f in fixes if f not in structural_warnings and f not in indentation_fixes]
+
+            # Add messages in order of importance
+            if structural_warnings:
+                messages.append("⚠ STRUCTURAL ISSUES DETECTED:")
+                for warning in structural_warnings:
+                    messages.append(f"  {warning}")
+
+            if indentation_fixes:
+                messages.append(f"Fixed indentation on {len(indentation_fixes)} lines")
+
+            messages.extend(other_messages)
 
         # Revalidate after fix
         paren_valid_after, _ = validate_parentheses(processed)
         if not paren_valid and paren_valid_after:
             messages.append('✓ Parentheses successfully balanced after auto-fix')
         elif not paren_valid_after:
-            messages.append('⚠ Warning: Parentheses still unbalanced after auto-fix attempt')
+            # Provide more specific guidance
+            messages.append('⚠ PARENTHESIS IMBALANCE DETECTED')
+            messages.append('  The graph has mismatched parentheses that need manual correction.')
+            messages.append('  Common issues:')
+            messages.append('  - Extra closing ) after a node that shouldn\'t close yet')
+            messages.append('  - Missing closing ) at the end of branches')
+            messages.append('  - The first ( should match with the very last )')
     else:
         paren_valid_after = paren_valid
 
