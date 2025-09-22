@@ -20,7 +20,14 @@
         add: {
             description: 'Add a branch to a node',
             usage: 'add <relation> <target> to <variable>',
-            example: 'add :ARG1 person-01 to s1',
+            examples: [
+                'add :ARG0 x_1 to s1b  # Add first token as ARG0',
+                'add :ARG1 x_3 to s1b  # Add third token as ARG1',
+                'add :ARG0 individual-person to s1b  # Add abstract concept',
+                'add :polarity - to s1b  # Add predefined value',
+                'add :op1 "hello" to s1b  # Add string value',
+                'add :quant 5 to s1b  # Add numeric value'
+            ],
             execute: executeAdd
         },
         delete: {
@@ -81,22 +88,50 @@
             return;
         }
 
-        // Create command line container
+        // Check if we need to create a wrapper for side-by-side layout
+        let wrapperContainer = document.getElementById('umr-annotation-wrapper');
+
+        if (!wrapperContainer) {
+            // Create a wrapper div for the annotation and command line
+            wrapperContainer = document.createElement('div');
+            wrapperContainer.id = 'umr-annotation-wrapper';
+            wrapperContainer.className = 'row';
+
+            // Move the annotation card into the wrapper (left column)
+            const annotationCol = document.createElement('div');
+            annotationCol.id = 'umr-annotation-col';
+            annotationCol.className = 'col-lg-7 col-md-12';
+
+            // Insert wrapper where annotation card currently is
+            annotationCard.parentNode.insertBefore(wrapperContainer, annotationCard);
+
+            // Move annotation card into left column
+            annotationCol.appendChild(annotationCard);
+            wrapperContainer.appendChild(annotationCol);
+        }
+
+        // Create command line container (right column)
+        const commandLineCol = document.createElement('div');
+        commandLineCol.id = 'umr-command-line-col';
+        commandLineCol.className = 'col-lg-5 col-md-12';
+        commandLineCol.style.display = 'none';
+        commandLineCol.style.paddingTop = '80px';  // Add padding to push content down
+
         const commandLineContainer = document.createElement('div');
         commandLineContainer.id = 'umr-command-line-container';
-        commandLineContainer.className = 'card mt-3';
-        commandLineContainer.style.display = 'none';
+        commandLineContainer.className = 'card';
+        commandLineContainer.style.height = 'calc(100% - 80px)';  // Adjust height for padding
         commandLineContainer.innerHTML = `
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="mb-0">
                     <i class="fas fa-terminal"></i> Command Line Interface
                 </h6>
-                <button class="btn btn-sm btn-outline-secondary" onclick="umrCommandLine.hide()">
-                    <i class="fas fa-times"></i>
+                <button class="btn btn-sm btn-outline-danger" onclick="umrCommandLine.hide()" title="Close Command Line" style="padding: 2px 8px;">
+                    <span style="font-weight: bold; font-size: 18px; line-height: 1;">×</span>
                 </button>
             </div>
-            <div class="card-body">
-                <div class="command-output-container mb-3">
+            <div class="card-body d-flex flex-column">
+                <div class="command-output-container mb-3 flex-grow-1">
                     <div id="command-output" class="command-output"></div>
                 </div>
                 <div class="input-group">
@@ -118,8 +153,8 @@
             </div>
         `;
 
-        // Insert after the annotation card
-        annotationCard.parentNode.insertBefore(commandLineContainer, annotationCard.nextSibling);
+        commandLineCol.appendChild(commandLineContainer);
+        wrapperContainer.appendChild(commandLineCol);
 
         // Add styles
         addCommandLineStyles();
@@ -155,8 +190,21 @@
                 border: 1px solid #333;
                 border-radius: 4px;
                 padding: 10px;
-                max-height: 300px;
+                height: 400px;
+                min-height: 300px;
+                max-height: calc(100vh - 350px);
                 overflow-y: auto;
+            }
+
+            #umr-command-line-container {
+                display: flex;
+                flex-direction: column;
+                height: calc(100vh - 200px);
+                max-height: 600px;
+            }
+
+            #umr-command-line-container .card-body {
+                overflow: hidden;
             }
 
             .command-output {
@@ -271,14 +319,27 @@
 
     // Set command line visibility
     function setCommandLineVisibility(visible) {
-        const container = document.getElementById('umr-command-line-container');
-        if (container) {
-            container.style.display = visible ? 'block' : 'none';
+        const commandLineCol = document.getElementById('umr-command-line-col');
+        const annotationCol = document.getElementById('umr-annotation-col');
+
+        if (commandLineCol) {
+            commandLineCol.style.display = visible ? 'block' : 'none';
             commandState.isVisible = visible;
+
+            // Adjust the annotation column width when toggling command line
+            if (annotationCol) {
+                if (visible) {
+                    annotationCol.className = 'col-lg-7 col-md-12';
+                } else {
+                    annotationCol.className = 'col-lg-12';
+                }
+            }
 
             if (visible) {
                 const input = document.getElementById('command-input');
-                if (input) input.focus();
+                if (input) {
+                    setTimeout(() => input.focus(), 100); // Small delay to ensure DOM is ready
+                }
             }
         }
     }
@@ -391,10 +452,29 @@
             addOutput(`  ${cmd}`, 'help-command');
             addOutput(`    ${info.description}`, 'info');
             addOutput(`    Usage: ${info.usage}`, 'info');
+
+            // Handle both single example and multiple examples
             if (info.example) {
                 addOutput(`    Example: ${info.example}`, 'info');
             }
+            if (info.examples) {
+                if (info.examples.length === 1) {
+                    addOutput(`    Example: ${info.examples[0]}`, 'info');
+                } else {
+                    addOutput(`    Examples:`, 'info');
+                    info.examples.forEach(ex => {
+                        addOutput(`      ${ex}`, 'info');
+                    });
+                }
+            }
         });
+
+        // Add additional notes about the add command
+        addOutput('\nNotes for add command:', 'help-header');
+        addOutput('  • x_1, x_2, x_3... reference sentence tokens by position', 'info');
+        addOutput('  • Abstract concepts create new variables automatically', 'info');
+        addOutput('  • Use quotes for string values (e.g., "hello")', 'info');
+        addOutput('  • Numbers and predefined values are used directly', 'info');
     }
 
     function executeAdd(args) {
@@ -414,10 +494,84 @@
             return;
         }
 
-        // Create the branch content
-        const branchContent = `${relation} ${target}`;
-
         try {
+            const annotationElement = document.querySelector('#amr pre');
+            if (!annotationElement) {
+                addOutput('Error: Annotation element not found', 'error');
+                return;
+            }
+
+            const annotationText = annotationElement.textContent;
+            let branchContent = '';
+
+            // Check if target is a token reference (x_1, x_2, etc.)
+            const tokenPattern = /^x_(\d+)$/;
+            const tokenMatch = target.match(tokenPattern);
+
+            if (tokenMatch) {
+                // Handle sentence token reference
+                const tokenIndex = parseInt(tokenMatch[1]) - 1; // Convert to 0-based index
+
+                // Extract sentence tokens
+                const sentenceTokens = extractSentenceTokens();
+
+                if (tokenIndex < 0 || tokenIndex >= sentenceTokens.length) {
+                    addOutput(`Error: Token index ${tokenMatch[1]} is out of range. Available tokens: 1-${sentenceTokens.length}`, 'error');
+                    return;
+                }
+
+                const selectedToken = sentenceTokens[tokenIndex];
+
+                // Check if it's a number
+                if (!isNaN(selectedToken)) {
+                    // Numbers are used directly
+                    branchContent = `${relation} ${selectedToken}`;
+                } else {
+                    // Generate variable for the token
+                    const tokenVariable = generateUniqueVariable(selectedToken, annotationText);
+                    branchContent = `${relation} (${tokenVariable} / ${selectedToken})`;
+                }
+
+                // Trigger alignment for the new variable if needed
+                if (typeof addAlignmentIfNeeded === 'function' && tokenVariable) {
+                    addAlignmentIfNeeded(tokenVariable, selectedToken);
+                }
+            } else {
+                // Check if it's a predefined value (for relations like :polarity -, :aspect state, etc.)
+                const relationsWithValues = {
+                    ':aspect': ['habitual', 'generic', 'iterative', 'inceptive', 'imperfective', 'process', 'atelic-process', 'perfective', 'state', 'reversible-state', 'irreversible-state', 'inherent-state', 'point-state', 'activity', 'undirected-activity', 'directed-activity', 'endeavor', 'semelfactive', 'undirected-endeavor', 'directed-endeavor', 'performance', 'incremental-accomplishment', 'nonincremental-accomplishment', 'directed-achievement', 'reversible-directed-achievement', 'irreversible-directed-achievement'],
+                    ':degree': ['intensifier', 'downtoner', 'equal'],
+                    ':modal-strength': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative'],
+                    ':mode': ['imperative', 'interrogative', 'expressive'],
+                    ':polarity': ['-', 'umr-unknown', 'truth-value'],
+                    ':polite': ['+'],
+                    ':refer-number': ['singular', 'non-singular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal'],
+                    ':refer-person': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', 'excl', 'incl'],
+                    ':refer-definiteness': ['class'],
+                    ':axis-relative-polarities': ['left-handed', 'right-handed'],
+                    ':framework-type': ['absolute', 'intrinsic', 'relative'],
+                    ':anchor-framework-translation': ['rotated', 'reflected']
+                };
+
+                // Check if this relation has predefined values and the target is one of them
+                const predefinedValues = relationsWithValues[relation];
+
+                if (predefinedValues && (predefinedValues.includes(target) || target === '-' || target === '+')) {
+                    // It's a predefined value - use it directly
+                    branchContent = `${relation} ${target}`;
+                } else if (target.startsWith('"') && target.endsWith('"')) {
+                    // It's already a quoted string - use as is
+                    branchContent = `${relation} ${target}`;
+                } else if (!isNaN(target)) {
+                    // It's a number - use directly
+                    branchContent = `${relation} ${target}`;
+                } else {
+                    // It's an abstract concept - create a new variable for it
+                    const conceptVariable = generateUniqueVariable(target, annotationText);
+                    branchContent = `${relation} (${conceptVariable} / ${target})`;
+                }
+            }
+
             // Call the existing addBranchToNode function
             if (typeof addBranchToNode === 'function') {
                 addBranchToNode(variable, branchContent);
@@ -425,10 +579,7 @@
 
                 // Trigger save if needed
                 if (typeof saveBranchInsertion === 'function') {
-                    const annotationElement = document.querySelector('#amr pre');
-                    if (annotationElement) {
-                        saveBranchInsertion(annotationElement.textContent, branchContent);
-                    }
+                    saveBranchInsertion(annotationElement.textContent, branchContent);
                 }
             } else {
                 addOutput('Error: addBranchToNode function not available', 'error');
@@ -436,6 +587,86 @@
         } catch (error) {
             addOutput(`Error adding branch: ${error.message}`, 'error');
         }
+    }
+
+    // Helper function to generate unique variable names
+    function generateUniqueVariable(concept, annotationText) {
+        // Extract the sentence number from existing variables (like s1b, s2, etc.)
+        const sentenceVarPattern = /\bs(\d+)[a-z]*/g;
+        const sentenceVars = annotationText.match(sentenceVarPattern) || [];
+
+        // Find the sentence number (default to 1 if not found)
+        let sentenceNum = 1;
+        if (sentenceVars.length > 0) {
+            // Extract the number from variables like s1b, s2a, etc.
+            const numbers = sentenceVars.map(v => {
+                const match = v.match(/s(\d+)/);
+                return match ? parseInt(match[1]) : 1;
+            });
+            // Use the most common sentence number (or the first one)
+            sentenceNum = numbers[0] || 1;
+        }
+
+        // Determine the suffix based on whether the concept starts with an alphabetic character
+        let suffix;
+        const firstChar = concept[0];
+
+        if (/[a-zA-Z]/.test(firstChar)) {
+            // For alphabetic concepts, use the first letter as suffix
+            suffix = firstChar.toLowerCase();
+        } else {
+            // For non-alphabetic concepts (Chinese, numbers, etc.), use 'x'
+            suffix = 'x';
+        }
+
+        // Find all existing variables with this sentence number and suffix pattern
+        const variablePattern = new RegExp(`\\bs${sentenceNum}${suffix}\\d*\\b`, 'g');
+        const existingVars = annotationText.match(variablePattern) || [];
+
+        // Find the next available number for this pattern
+        let num = 1;
+        let newVar = `s${sentenceNum}${suffix}${num}`;
+
+        // Keep incrementing the number until we find one that's not used
+        while (existingVars.includes(newVar)) {
+            num++;
+            newVar = `s${sentenceNum}${suffix}${num}`;
+        }
+
+        // For alphabetic concepts starting with 's', avoid confusion with sentence variables
+        if (suffix === 's') {
+            // Use a different pattern to avoid conflicts
+            newVar = `s${sentenceNum}s${num}`;
+            while (existingVars.includes(newVar)) {
+                num++;
+                newVar = `s${sentenceNum}s${num}`;
+            }
+        }
+
+        return newVar;
+    }
+
+    // Helper function to extract sentence tokens
+    function extractSentenceTokens() {
+        // Try to get tokens from the sentence display
+        const sentenceElement = document.querySelector('.sentence-text') ||
+                                document.querySelector('#sentence-display') ||
+                                document.querySelector('.current-sentence');
+
+        if (sentenceElement) {
+            const text = sentenceElement.textContent || sentenceElement.innerText || '';
+            // Split by whitespace and filter out empty strings
+            return text.split(/\s+/).filter(token => token.length > 0);
+        }
+
+        // Fallback: try to extract from any visible sentence
+        const fallbackElement = document.querySelector('[class*="sentence"]');
+        if (fallbackElement) {
+            const text = fallbackElement.textContent || '';
+            return text.split(/\s+/).filter(token => token.length > 0);
+        }
+
+        return [];
     }
 
     function executeDelete(args) {
@@ -455,67 +686,95 @@
         }
 
         try {
-            // Find the relation span to delete
+            // Find the annotation element
             const annotationElement = document.querySelector('#amr pre');
             if (!annotationElement) {
                 addOutput('Error: Annotation element not found', 'error');
                 return;
             }
 
-            // Get text content and find the branch
+            // First, ensure relations are clickable
+            if (typeof makeRelationsClickable === 'function') {
+                makeRelationsClickable(annotationElement);
+            }
+
+            // Find the specific relation span under the given variable
+            let targetRelationSpan = null;
             const text = annotationElement.textContent;
             const lines = text.split('\n');
 
-            // Find the line with the variable and relation
-            let lineIndex = -1;
-            let branchFound = false;
+            // Find the variable first
+            let inVariableScope = false;
+            let variableIndent = -1;
 
             for (let i = 0; i < lines.length; i++) {
-                // Check if this line has the variable (as a node definition)
-                const varPattern = new RegExp(`\\b${variable}\\s*/`);
-                if (varPattern.test(lines[i]) || lines[i].includes(`:${variable}`)) {
-                    // Check subsequent lines for the relation
-                    for (let j = i; j < Math.min(i + 10, lines.length); j++) {
-                        if (lines[j].includes(relation)) {
-                            lineIndex = j;
-                            branchFound = true;
-                            break;
-                        }
+                const line = lines[i];
+                const currentIndent = line.search(/\S/);
+
+                // Check if this line defines the variable
+                const varPattern = new RegExp(`\\(${variable}\\s*/`);
+                if (varPattern.test(line)) {
+                    inVariableScope = true;
+                    variableIndent = currentIndent;
+                    continue;
+                }
+
+                // If we're in the variable's scope
+                if (inVariableScope) {
+                    // Check if we've left the variable's scope
+                    if (currentIndent <= variableIndent && currentIndent !== -1 && line.trim().startsWith('(')) {
+                        break; // We've moved to another variable
                     }
-                    if (branchFound) break;
+
+                    // Check if this line contains our relation
+                    if (line.includes(relation)) {
+                        // Find all relation spans in the annotation element
+                        const allRelationSpans = annotationElement.querySelectorAll('.relation-span');
+
+                        // Find the specific span that matches our relation text and is in the right context
+                        for (let span of allRelationSpans) {
+                            if (span.textContent === relation) {
+                                // Check if this span is in the right part of the document
+                                // by verifying its position relative to the variable
+                                const spanOffset = getTextOffset(annotationElement, span);
+                                const lineOffset = text.split('\n').slice(0, i).join('\n').length + i;
+
+                                // If the span is near this line position, it's our target
+                                if (Math.abs(spanOffset - lineOffset) < line.length + 10) {
+                                    targetRelationSpan = span;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (targetRelationSpan) break;
+                    }
                 }
             }
 
-            if (!branchFound) {
+            if (!targetRelationSpan) {
                 addOutput(`Branch "${relation}" not found for ${variable}`, 'warning');
                 return;
             }
 
-            // Delete the branch by removing the line
-            const updatedLines = [...lines];
-            updatedLines.splice(lineIndex, 1);
-            const updatedText = updatedLines.join('\n');
-
-            // Update the annotation
-            annotationElement.textContent = updatedText;
-
-            // Trigger the save
-            if (typeof saveBranchDeletion === 'function') {
-                saveBranchDeletion(updatedText, relation);
+            // Use the existing deleteBranch function from relation_editor.js
+            if (typeof deleteBranch === 'function') {
+                deleteBranch(targetRelationSpan);
+                addOutput(`Deleted branch "${relation}" from ${variable}`, 'success');
+            } else {
+                addOutput('Error: deleteBranch function not available', 'error');
             }
-
-            // Re-apply formatting if needed
-            if (typeof makeVariablesClickable === 'function') {
-                makeVariablesClickable(annotationElement);
-            }
-            if (typeof addBranchOperations === 'function') {
-                addBranchOperations(annotationElement);
-            }
-
-            addOutput(`Deleted branch "${relation}" from ${variable}`, 'success');
         } catch (error) {
             addOutput(`Error deleting branch: ${error.message}`, 'error');
         }
+    }
+
+    // Helper function to get text offset of a span element
+    function getTextOffset(container, element) {
+        const range = document.createRange();
+        range.selectNodeContents(container);
+        range.setEndBefore(element);
+        return range.toString().length;
     }
 
     function executeMove(args) {
@@ -538,48 +797,153 @@
         }
 
         try {
-            // Find the branch to move
             const annotationElement = document.querySelector('#amr pre');
             if (!annotationElement) {
                 addOutput('Error: Annotation element not found', 'error');
                 return;
             }
 
+            // First, ensure relations are clickable to find the right span
+            if (typeof makeRelationsClickable === 'function') {
+                makeRelationsClickable(annotationElement);
+            }
+
+            // Find the specific relation span under the source variable
+            const allRelationSpans = annotationElement.querySelectorAll('.relation-span');
+
+            // Find the relation span that belongs to the source variable
             const text = annotationElement.textContent;
             const lines = text.split('\n');
+            let targetRelationSpan = null;
 
-            // Find the branch
-            let branchInfo = null;
+            // Try two approaches: first look for inline definition, then look for separate lines
             for (let i = 0; i < lines.length; i++) {
-                if (lines[i].includes(source) && lines[i].includes(relation)) {
-                    // Extract the full branch content
-                    const match = lines[i].match(new RegExp(`(${relation}\\s+[^\\s\\)]+)`));
-                    if (match) {
-                        branchInfo = {
-                            relation: relation,
-                            content: match[0],
-                            sourceVariable: source
-                        };
-                        break;
+                const line = lines[i];
+
+                // First check: Variable definition on the same line as the relation
+                // Pattern like: :op2 (s1i3 / individual-person ... ) :ARG0-of
+                const inlinePattern = new RegExp(`\\(${source}\\s*/[^)]*\\)`);
+                if (inlinePattern.test(line) && line.includes(relation)) {
+                    // This line has both the variable definition and the relation
+                    for (let span of allRelationSpans) {
+                        if (span.textContent === relation) {
+                            const spanOffset = getTextOffset(annotationElement, span);
+                            const lineOffset = text.split('\n').slice(0, i).join('\n').length + i;
+
+                            if (Math.abs(spanOffset - lineOffset) < line.length + 10) {
+                                targetRelationSpan = span;
+                                break;
+                            }
+                        }
+                    }
+                    if (targetRelationSpan) break;
+                }
+            }
+
+            // If not found inline, try the original scope-based search
+            if (!targetRelationSpan) {
+                let inSourceScope = false;
+                let sourceIndent = -1;
+                let foundOnSameLine = false;
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    const currentIndent = line.search(/\S/);
+
+                    // Check if this line defines the source variable
+                    const varPattern = new RegExp(`\\(${source}\\s*/`);
+                    if (varPattern.test(line)) {
+                        inSourceScope = true;
+                        sourceIndent = currentIndent;
+
+                        // Also check if the relation is on the same line after the closing paren
+                        if (line.includes(relation)) {
+                            foundOnSameLine = true;
+                            // Find the relation span on this line
+                            for (let span of allRelationSpans) {
+                                if (span.textContent === relation) {
+                                    const spanOffset = getTextOffset(annotationElement, span);
+                                    const lineOffset = text.split('\n').slice(0, i).join('\n').length + i;
+
+                                    if (Math.abs(spanOffset - lineOffset) < line.length + 10) {
+                                        targetRelationSpan = span;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (targetRelationSpan) break;
+                        }
+                        continue;
+                    }
+
+                    // If we're in the source's scope and haven't found it on the same line
+                    if (inSourceScope && !foundOnSameLine) {
+                        // Check if we've left the source's scope
+                        if (currentIndent <= sourceIndent && currentIndent !== -1 && line.trim().startsWith('(')) {
+                            break; // We've moved to another variable
+                        }
+
+                        // Check if this line contains our relation
+                        if (line.includes(relation)) {
+                            // Find the relation span that corresponds to this line
+                            for (let span of allRelationSpans) {
+                                if (span.textContent === relation) {
+                                    // Verify this span is in the right context
+                                    const spanOffset = getTextOffset(annotationElement, span);
+                                    const lineOffset = text.split('\n').slice(0, i).join('\n').length + i;
+
+                                    if (Math.abs(spanOffset - lineOffset) < line.length + 10) {
+                                        targetRelationSpan = span;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (targetRelationSpan) break;
+                        }
                     }
                 }
             }
 
-            if (!branchInfo) {
+            if (!targetRelationSpan) {
                 addOutput(`Branch "${relation}" not found for ${source}`, 'warning');
                 return;
             }
 
-            if (typeof moveBranchToNode === 'function') {
-                moveBranchToNode(branchInfo, target);
-                addOutput(`Moved branch "${relation}" from ${source} to ${target}`, 'success');
+            // Use the existing extractBranchFromRelation function if available
+            if (typeof extractBranchFromRelation === 'function') {
+                const branchInfo = extractBranchFromRelation(targetRelationSpan, annotationElement);
 
-                // Trigger save if needed
-                if (typeof saveBranchMove === 'function') {
-                    saveBranchMove(annotationElement.textContent, relation, target);
+                if (!branchInfo) {
+                    addOutput('Could not extract branch content', 'error');
+                    return;
+                }
+
+                // Directly call moveBranchToNode without showing dialog
+                if (typeof moveBranchToNode === 'function') {
+                    moveBranchToNode(branchInfo, target);
+                    addOutput(`Moved branch "${relation}" from ${source} to ${target}`, 'success');
+
+                    // Trigger save if needed
+                    if (typeof saveBranchMove === 'function') {
+                        saveBranchMove(annotationElement.textContent, relation, target);
+                    }
+                } else {
+                    addOutput('Error: moveBranchToNode function not available', 'error');
                 }
             } else {
-                addOutput('Error: moveBranchToNode function not available', 'error');
+                // Fallback: create branchInfo manually
+                const branchInfo = {
+                    relation: relation,
+                    content: `${relation} ${target}`,  // Simple content
+                    sourceVariable: source
+                };
+
+                if (typeof moveBranchToNode === 'function') {
+                    moveBranchToNode(branchInfo, target);
+                    addOutput(`Moved branch "${relation}" from ${source} to ${target}`, 'success');
+                } else {
+                    addOutput('Error: moveBranchToNode function not available', 'error');
+                }
             }
         } catch (error) {
             addOutput(`Error moving branch: ${error.message}`, 'error');
