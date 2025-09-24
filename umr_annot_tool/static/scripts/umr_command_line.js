@@ -100,7 +100,7 @@
             // Move the annotation card into the wrapper (left column)
             const annotationCol = document.createElement('div');
             annotationCol.id = 'umr-annotation-col';
-            annotationCol.className = 'col-lg-7 col-md-12';
+            annotationCol.className = 'col-lg-12';  // Start with full width
 
             // Insert wrapper where annotation card currently is
             annotationCard.parentNode.insertBefore(wrapperContainer, annotationCard);
