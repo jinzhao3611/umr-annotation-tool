@@ -86,7 +86,7 @@
         // Simple inline parenthesis checker
         let parenCheckerActive = false;
 
-        function toggleParenChecker() {
+        window.toggleParenChecker = function() {
             parenCheckerActive = !parenCheckerActive;
             const btn = document.getElementById('paren-check-btn');
             const amrPre = document.querySelector('#amr pre');
@@ -111,7 +111,7 @@
             }
         }
 
-        function createParenCheckerModal(graphText) {
+        window.createParenCheckerModal = function(graphText) {
             // Remove existing modal if any
             const existingModal = document.getElementById('paren-checker-modal');
             if (existingModal) {
@@ -221,6 +221,14 @@
             // Process the text to make parentheses clickable
             pre.innerHTML = highlightParentheses(graphText);
 
+            // Add click event listener using event delegation
+            pre.addEventListener('click', function(e) {
+                if (e.target.classList.contains('paren-char')) {
+                    const position = parseInt(e.target.getAttribute('data-pos'));
+                    highlightMatch(position);
+                }
+            });
+
             codeContainer.appendChild(lineNumbers);
             codeContainer.appendChild(pre);
 
@@ -237,11 +245,11 @@
             });
         }
 
-        function highlightParentheses(text) {
+        window.highlightParentheses = function(text) {
             let html = '';
             for (let i = 0; i < text.length; i++) {
                 if (text[i] === '(' || text[i] === ')') {
-                    html += `<span class="paren-char" data-pos="${i}" style="cursor: pointer;" onclick="highlightMatch(${i})">${escapeHtml(text[i])}</span>`;
+                    html += `<span class="paren-char" data-pos="${i}" style="cursor: pointer;">${escapeHtml(text[i])}</span>`;
                 } else {
                     html += escapeHtml(text[i]);
                 }
@@ -249,11 +257,13 @@
             return html;
         }
 
-        function highlightMatch(position) {
+        window.highlightMatch = function(position) {
             const modal = document.getElementById('paren-checker-modal');
             if (!modal) return;
 
-            const pre = modal.querySelector('pre');
+            // Select the content pre, not the line numbers pre
+            const pres = modal.querySelectorAll('pre');
+            const pre = pres[pres.length - 1]; // Get the last pre element (content)
             const text = pre.textContent;
             const matchPos = findMatchingParen(text, position);
 
@@ -293,14 +303,14 @@
             }
         }
 
-        function escapeHtml(text) {
+        window.escapeHtml = function(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
         }
 
 
-        function findMatchingParen(text, position) {
+        window.findMatchingParen = function(text, position) {
             const char = text[position];
             if (char !== '(' && char !== ')') return -1;
 
