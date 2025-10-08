@@ -13,7 +13,19 @@ UMR Writer is an extension to AMR Editor that allows annotators to annotate both
 
 ### 1. Install Dependencies
 
+**Recommended**: Use a conda environment to manage dependencies:
+
 ```bash
+conda create -n umr-writer python=3.9
+conda activate umr-writer
+pip install -r requirements.txt
+```
+
+Alternatively, use a Python virtual environment:
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
