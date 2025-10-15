@@ -2300,7 +2300,7 @@ async function showAddBranchDialog(parentVariableSpan) {
             'person', 'individual-person', 'place', 'event', 'name', 'umr-choice',
             'manner', 'umr-unknown', 'umr-unintelligible', 'umr-empty',
             'date-entity', 'string-entity', 'ordinal-entity', 'url-entity',
-            'monetary-quantity', 'distance-quantity', 'temporal-quantity',
+            'monetary-quantity', 'distance-quantity', 'temporal-quantity', 'temperature-quantity',
             'date-interval', 'value-interval', 'between', 'relative-position'
         ];
     
