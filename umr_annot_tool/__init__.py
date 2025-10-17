@@ -34,36 +34,26 @@ def create_app(config_class=None):
 
     # Configure Flask app logger
     flask_handler = logging.FileHandler('logs/flask_app.log', mode='w')
-    flask_handler.setLevel(logging.DEBUG)
+    flask_handler.setLevel(logging.INFO)
     flask_formatter = logging.Formatter('%(asctime)s [FLASK] %(levelname)s: %(message)s')
     flask_handler.setFormatter(flask_formatter)
-    
-    # Configure SQLAlchemy logger
+
+    # Configure SQLAlchemy logger (file only, less verbose)
     sql_handler = logging.FileHandler('logs/sqlalchemy.log', mode='w')
-    sql_handler.setLevel(logging.INFO)
+    sql_handler.setLevel(logging.WARNING)  # Only log warnings and errors
     sql_formatter = logging.Formatter('%(asctime)s [SQL] %(levelname)s: %(message)s')
     sql_handler.setFormatter(sql_formatter)
 
-    # Configure console handler for immediate output
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.DEBUG)
-    console_formatter = logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s')
-    console_handler.setFormatter(console_formatter)
-
-    # Setup Flask logger
-    app.logger.setLevel(logging.DEBUG)
+    # Setup Flask logger - use INFO level and only file handler
+    # (Flask already has a default console handler)
+    app.logger.setLevel(logging.INFO)
     app.logger.addHandler(flask_handler)
-    app.logger.addHandler(console_handler)
-    
-    # Setup SQLAlchemy logger
-    sql_logger = logging.getLogger('sqlalchemy.engine')
-    sql_logger.setLevel(logging.INFO)
-    sql_logger.addHandler(sql_handler)
-    sql_logger.addHandler(console_handler)
 
-    # Test logging
-    app.logger.info("INITIALIZATION TEST - Flask app logger configured")
-    sql_logger.info("INITIALIZATION TEST - SQLAlchemy logger configured")
+    # Setup SQLAlchemy logger - only file handler, no console spam
+    sql_logger = logging.getLogger('sqlalchemy.engine')
+    sql_logger.setLevel(logging.WARNING)
+    sql_logger.addHandler(sql_handler)
+    sql_logger.propagate = False  # Don't propagate to root logger
 
     # Initialize extensions
     db.init_app(app)
@@ -147,26 +137,20 @@ def create_app(config_class=None):
         app.config['ANCAST_AVAILABLE'] = True
 
     try:
-        app.logger.info("Registering blueprints...")
         from umr_annot_tool.users.routes import users
         from umr_annot_tool.posts.routes import posts
         from umr_annot_tool.main.routes import main
         from umr_annot_tool.errors.handlers import errors
         from umr_annot_tool.main.validation_routes import validation
 
-        app.logger.info("Registering users blueprint...")
         app.register_blueprint(users)
-        app.logger.info("Registering posts blueprint...")
         app.register_blueprint(posts)
-        app.logger.info("Registering main blueprint...")
         app.register_blueprint(main)
-        app.logger.info("Registering validation blueprint...")
         app.register_blueprint(validation)
-        app.logger.info("Registering errors blueprint...")
         app.register_blueprint(errors)
-        app.logger.info("All blueprints registered successfully")
+        app.logger.info("Application initialized successfully")
     except Exception as e:
-        app.logger.error(f"Error registering blueprints: {str(e)}")
+        app.logger.error(f"Error during initialization: {str(e)}")
         import traceback
         app.logger.error(traceback.format_exc())
 
