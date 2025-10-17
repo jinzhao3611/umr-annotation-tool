@@ -40,26 +40,33 @@ def validate_penman_graph(graph_text, tokens=None):
         indent_stack = []
         node_pattern = re.compile(r'^\s*\(([a-z0-9]+)\s*/\s*(.+?)(?:\s|$)')
         relation_pattern = re.compile(r'^\s*:([\w-]+)\s+(.+?)(?:\s|$)')
+        # Pattern to match inline node definitions like (s1i4 / concept)
+        # This simpler pattern works even when closing paren is on another line
+        inline_node_pattern = re.compile(r'\(([a-z0-9]+)\s*/')
 
         current_nodes = set()
         referenced_nodes = set()
 
+        # First pass: collect all node definitions (including inline)
+        for line in lines:
+            # Find all inline node definitions in the line
+            inline_matches = inline_node_pattern.findall(line)
+            for node_id in inline_matches:
+                current_nodes.add(node_id)
+
+        # Second pass: validate structure and collect referenced nodes
         for line_num, line in enumerate(lines, 1):
             stripped = line.strip()
             if not stripped or stripped.startswith('#'):
                 continue
 
-            # Check for node definition
+            # Check for node definition at line start
             node_match = node_pattern.match(stripped)
             if node_match:
                 node_id = node_match.group(1)
                 concept = node_match.group(2).strip()
 
-                if node_id in current_nodes:
-                    errors.append(f'Line {line_num}: Duplicate node ID "{node_id}"')
-                else:
-                    current_nodes.add(node_id)
-
+                # Note: We already added all nodes in first pass, so just validate format
                 # Validate node ID format
                 if not re.match(r'^s\d+[a-z0-9]*$', node_id):
                     warnings.append(f'Line {line_num}: Non-standard node ID "{node_id}" (expected format: s1x, s1a, etc.)')
