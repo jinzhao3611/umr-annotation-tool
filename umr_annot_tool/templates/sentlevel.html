@@ -81,6 +81,8 @@
     <script src="{{ url_for('static', filename='scripts/undo_redo_manager.js') }}"></script>
     <!-- Load command line interface for branch operations -->
     <script src="{{ url_for('static', filename='scripts/umr_command_line.js') }}"></script>
+    <!-- Load text editor mode for direct annotation editing -->
+    <script src="{{ url_for('static', filename='scripts/text_editor_mode.js') }}"></script>
     <!-- Inline parenthesis checker with modal -->
     <script>
         // Simple inline parenthesis checker
@@ -866,8 +868,17 @@
             const saveButton = document.getElementById('save-annotation-btn');
             if (saveButton) {
                 saveButton.addEventListener('click', function() {
-                    // Get the current annotation text
-                    const annotationText = document.querySelector('#amr pre').textContent;
+                    // Get the current annotation text from either graph view or text editor
+                    let annotationText;
+                    if (window.textEditorMode && window.textEditorMode.isTextMode()) {
+                        // In text editor mode, get text from textarea
+                        annotationText = window.textEditorMode.getCurrentText();
+                        // Sync to graph view for consistency
+                        window.textEditorMode.syncToGraph();
+                    } else {
+                        // In graph mode, get text from pre element
+                        annotationText = document.querySelector('#amr pre').textContent;
+                    }
                     const docVersionId = document.getElementById('doc_version_id').value;
                     const sentId = document.getElementById('snt_id').value;
                     
@@ -2604,6 +2615,10 @@
                         <h5 class="mb-0">Sentence-Level UMR Annotation Preview</h5>
                         <div class="d-flex align-items-center">
                             <div id="edit-mode-toggle-placeholder" class="me-3"></div>
+                            <!-- Text Editor Mode Toggle -->
+                            <button type="button" id="view-mode-toggle" class="btn btn-sm btn-outline-secondary me-3" title="Switch between Graph view and Text Editor">
+                                <i class="fas fa-edit"></i> Text Editor
+                            </button>
                             <div class="btn-group">
                             {% if curr_annotation_string %}
                             <button id="save-annotation-btn" class="btn btn-sm btn-outline-primary me-2" title="Save annotation and alignments">
@@ -2634,7 +2649,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="amr-wrapper">
+                    <!-- Graph View (default) -->
+                    <div class="amr-wrapper" id="graph-view-container">
                         <div class="amr-table">
                             <div class="amr-line-numbers" id="line-numbers"></div>
                             <div class="amr-content-cell">
@@ -2655,6 +2671,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Text Editor Mode (hidden by default) -->
+                    <div id="text-editor-container" style="display: none;">
+                        <textarea id="umr-text-editor" class="form-control font-monospace" rows="20" style="resize: vertical; font-size: 14px; line-height: 1.5;">{% if curr_annotation_string %}{{ curr_annotation_string }}{% endif %}</textarea>
                     </div>
 
                     <!-- Validation Results Area -->
