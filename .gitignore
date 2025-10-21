@@ -167,3 +167,4 @@ data/
 logfile
 **/archive/
 **/profile_pics/
+.claude/
