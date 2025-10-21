@@ -32,8 +32,35 @@ sentence_id = None # The most recently read sentence id
 error_counter = {} # key: error type value: error count
 warn_on_missing_files = set() # langspec files which you should warn about in case they are missing (can be deprel, edeprel, feat_val, tokens_w_space)
 
-import spacy #for lemmatizer
-nlp = spacy.load("en_core_web_sm")
+# Lemmatization using lemminflect (lighter alternative to spacy)
+try:
+    import lemminflect
+    LEMMINFLECT_AVAILABLE = True
+except ImportError:
+    LEMMINFLECT_AVAILABLE = False
+
+def simple_lemmatize(tokens):
+    """
+    Simple lemmatization using lemminflect (no heavy model downloads needed).
+    Returns a list of lemmas for the given tokens.
+    If lemminflect is not available, returns the original tokens.
+    """
+    if not LEMMINFLECT_AVAILABLE:
+        return tokens
+
+    lemmas = []
+    for token in tokens:
+        # getAllLemmas returns a dict like {'VERB': ('run',), 'NOUN': ('run',)}
+        # We take the first lemma from any POS tag
+        all_lemmas = lemminflect.getAllLemmas(token)
+        if all_lemmas:
+            # Get the first lemma from the first POS tag
+            lemma = list(all_lemmas.values())[0][0]
+            lemmas.append(lemma)
+        else:
+            # If no lemma found, use the original token
+            lemmas.append(token.lower())
+    return lemmas
 
 def warn(msg, testclass, testlevel, testid, lineno=0, explanation=None):
     """
@@ -1514,7 +1541,7 @@ def validate_abstract_concept_NEs(sentence, node_dict, args):
         if not re.search(r'-\d+$', concept) or re.search(r'-91$|-92$', concept)
     ] # remove verb predicates
     tokens = sentence[0]['tokens']
-    token_lemmas = [token.lemma_ for token in nlp(" ".join(tokens))]
+    token_lemmas = simple_lemmatize(tokens)
     attribute_value_items = [
         value for entry in known_relations.values()
         for value in entry.get('value', [])
