@@ -167,7 +167,7 @@ def file2db(filename:str, sents:List[str], current_project_id:int, current_user_
                     align = {}
             # Validate and fix the annotation before saving
             if sent_annot:
-                fixed_sent_annot, is_valid, messages = validate_and_fix_annotation(sent_annot, auto_fix=True)
+                fixed_sent_annot, is_valid, messages = validate_and_fix_annotation(sent_annot, auto_fix=False)
                 if not is_valid:
                     logger.warning(f"Sentence {idx} had validation issues: {messages}")
                 if fixed_sent_annot != sent_annot:
@@ -399,7 +399,7 @@ def sentlevel(doc_version_id, sent_id):
 
                     # Validate and fix the annotation before displaying
                     if raw_annotation:
-                        fixed_annotation, is_valid, messages = validate_and_fix_annotation(raw_annotation, auto_fix=True)
+                        fixed_annotation, is_valid, messages = validate_and_fix_annotation(raw_annotation, auto_fix=False)
                         if not is_valid or fixed_annotation != raw_annotation:
                             logger.info(f"Fixed annotation display for sentence {sent_id}: {messages}")
                             curr_annotation_string = fixed_annotation
@@ -811,7 +811,7 @@ def update_annotation(doc_version_id, sent_id):
         if not annotation:
             # Create a new annotation
             # Validate before saving
-            fixed_annotation, is_valid, messages = validate_and_fix_annotation(data['annotation'], auto_fix=True)
+            fixed_annotation, is_valid, messages = validate_and_fix_annotation(data['annotation'], auto_fix=False)
             if not is_valid:
                 current_app.logger.warning(f"Annotation validation issues: {messages}")
 
@@ -828,7 +828,7 @@ def update_annotation(doc_version_id, sent_id):
         else:
             # Update the annotation
             # Validate before saving
-            fixed_annotation, is_valid, messages = validate_and_fix_annotation(data['annotation'], auto_fix=True)
+            fixed_annotation, is_valid, messages = validate_and_fix_annotation(data['annotation'], auto_fix=False)
             if not is_valid:
                 current_app.logger.warning(f"Annotation validation issues: {messages}")
             annotation.sent_annot = fixed_annotation
