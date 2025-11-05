@@ -715,6 +715,73 @@ def validate_umr_structure(annotation: str) -> Tuple[bool, List[Dict]]:
     return len(issues) == 0, issues
 
 
+def normalize_attribute_case(annotation: str) -> str:
+    """
+    Normalize attribute names and values to UMR-compliant forms.
+
+    Converts:
+    - :Aspect → :aspect
+    - :MODSTR → :modal-strength
+    - Performance → performance
+    - FullAff → full-affirmative
+    - etc.
+
+    Args:
+        annotation: The annotation string
+
+    Returns:
+        Normalized annotation string
+    """
+    result = annotation
+
+    # Step 1: Convert abbreviated attribute names to full forms
+    abbreviation_map = {
+        r':MODSTR\b': ':modal-strength',
+        r':modstr\b': ':modal-strength',
+        r':Aspect\b': ':aspect',
+    }
+
+    for abbrev, full_form in abbreviation_map.items():
+        result = re.sub(abbrev, full_form, result, flags=re.IGNORECASE)
+
+    # Step 2: Convert abbreviated modal strength values
+    # Process longer patterns first to avoid partial matches (e.g., FullAff before Aff)
+    modstr_values = [
+        (r'\bFullAff\b', 'full-affirmative'),
+        (r'\bNeutAff\b', 'neutral-affirmative'),
+        (r'\bNeutDisaff\b', 'neutral-negative'),
+        (r'\bFullDisaff\b', 'full-negative'),
+        (r'\bDisaff\b', 'partial-negative'),
+        (r'\bAff\b', 'partial-affirmative'),  # Process this after FullAff/NeutAff to avoid partial match
+        (r'\bNeutral\b', 'neutral-affirmative'),  # Sometimes written as just "Neutral"
+    ]
+
+    for abbrev, full_form in modstr_values:
+        result = re.sub(abbrev, full_form, result, flags=re.IGNORECASE)
+
+    # Step 3: Convert aspect values (Performance, Activity, State, etc.)
+    aspect_values = {
+        r'\bPerformance\b': 'performance',
+        r'\bActivity\b': 'activity',
+        r'\bActivities\b': 'activities',
+        r'\bState\b': 'state',
+        r'\bHabitual\b': 'habitual',
+        r'\bEndeavor\b': 'endeavor',
+        r'\bProcess\b': 'process',
+        r'\bEnactment\b': 'enactment',
+    }
+
+    for abbrev, full_form in aspect_values.items():
+        result = re.sub(abbrev, full_form, result, flags=re.IGNORECASE)
+
+    # Step 4: Other capitalized attributes (generic catch-all)
+    # :ARG0, :ARG1 are correct, but :Name, :Quant, etc. should be lowercase
+    # Be careful not to change :ARG1, :ARG2, etc.
+    result = re.sub(r':([A-Z][a-z]+)\b(?![0-9])', lambda m: f':{m.group(1).lower()}', result)
+
+    return result
+
+
 def validate_and_fix_annotation(annotation: str, auto_fix: bool = True) -> Tuple[str, bool, List[str]]:
     """
     Main function to validate and optionally fix UMR/AMR annotations.
@@ -727,11 +794,16 @@ def validate_and_fix_annotation(annotation: str, auto_fix: bool = True) -> Tuple
         Tuple of (processed_annotation, is_valid, messages)
     """
     messages = []
-    processed = annotation
+
+    # Normalize attribute case first (always applied)
+    processed = normalize_attribute_case(annotation)
+    if processed != annotation:
+        messages.append('✓ Normalized to UMR standard format (:MODSTR → :modal-strength, FullAff → full-affirmative, etc.)')
+
     is_valid = True
 
-    # Check parenthesis balance first
-    paren_valid, paren_issues = validate_parentheses(annotation)
+    # Check parenthesis balance on the normalized annotation
+    paren_valid, paren_issues = validate_parentheses(processed)
 
     if not paren_valid:
         is_valid = False
