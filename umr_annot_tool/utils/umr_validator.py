@@ -1535,6 +1535,15 @@ def validate_abstract_concept_NEs(sentence, node_dict, args):
     testlevel = 3
     testclass = 'Sentence'
     current_nodes = list(sentence[1]['nodes'])
+    # Create a mapping from concept to node to get the correct line number
+    concept_to_node = {}
+    for n in current_nodes:
+        if "concept" in node_dict[n]:
+            concept = node_dict[n].get("concept")
+            # Store the first occurrence of each concept with its node
+            if concept not in concept_to_node:
+                concept_to_node[concept] = node_dict[n]
+
     concepts = [node_dict[n].get("concept") for n in current_nodes if "concept" in node_dict[n]]
     filtered_concepts = [
         concept for concept in concepts
@@ -1553,7 +1562,10 @@ def validate_abstract_concept_NEs(sentence, node_dict, args):
         if not is_present:
             testid = 'unknown-abstract-concept-ne'
             testmessage = "Unknown abstract concept or NE: '%s'." % item
-            warn(testmessage, testclass, testlevel, testid, lineno=sentence[1]['line0'])
+            # Use the specific node's line number instead of the sentence block's line number
+            node = concept_to_node.get(item)
+            lineno = node['line0'] if node and 'line0' in node else sentence[1]['line0']
+            warn(testmessage, testclass, testlevel, testid, lineno=lineno)
 
 
 def validate_relations(sentence, node_dict, args):

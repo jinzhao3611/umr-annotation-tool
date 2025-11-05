@@ -322,18 +322,27 @@ def parse_and_validate_graph(
                     error_id = match.group(3)
                     message = match.group(4)
 
-                    # Try to extract line number from message itself (e.g., "first on line 11")
+                    # Adjust any line numbers mentioned in the message itself
+                    # For repeated-relation warnings, the message contains "first on line X"
+                    # which also needs to be adjusted
+                    adjusted_message = message
                     message_line_match = re.search(r'first on line (\d+)', message)
-                    if message_line_match and not line_number:
-                        # Use the line number from the message if we don't have one from the header
+                    if message_line_match:
                         raw_msg_line = int(message_line_match.group(1))
-                        line_number = max(1, raw_msg_line - 4)
+                        adjusted_msg_line = max(1, raw_msg_line - 4)
+                        adjusted_message = message.replace(
+                            f'first on line {raw_msg_line}',
+                            f'first on line {adjusted_msg_line}'
+                        )
+                        # If we don't have a line number from the header, use the one from message
+                        if not line_number:
+                            line_number = adjusted_msg_line
 
                     # For abstract concept warnings reported at sentence level (line 4 in converted format),
                     # try to find the actual line where the concept appears
                     if error_id == 'unknown-abstract-concept-ne' and (not line_number or line_number == 1):
                         # Extract the concept from the message: "Unknown abstract concept or NE: 'concept'"
-                        concept_match = re.search(r"'([^']+)'", message)
+                        concept_match = re.search(r"'([^']+)'", adjusted_message)
                         if concept_match:
                             concept = concept_match.group(1)
                             found_line = find_concept_in_graph(graph_text, concept)
@@ -341,9 +350,9 @@ def parse_and_validate_graph(
                                 line_number = found_line
 
                     # Build a more detailed message
-                    detailed_message = message
+                    detailed_message = adjusted_message
                     if line_number:
-                        detailed_message = f"{message} (line {line_number})"
+                        detailed_message = f"{adjusted_message} (line {line_number})"
 
                     # Add error ID for reference if it's useful
                     if error_id not in ['unknown-relation', 'unknown-concept', 'missing-attribute']:
