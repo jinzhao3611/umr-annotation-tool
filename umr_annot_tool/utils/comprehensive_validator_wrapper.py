@@ -111,13 +111,17 @@ def convert_graph_to_umr_format(graph_text: str, alignment_text: str = None) -> 
 
     # Block 1: Sentence level graph
     lines.append("# sentence level graph:")
-    lines.append(graph_text.strip())
+    # Split the graph text into individual lines so line numbers are preserved
+    for line in graph_text.strip().split('\n'):
+        lines.append(line)
     lines.append("")  # Empty line to separate blocks
 
     # Block 2: Alignment
     lines.append("# alignment:")
     if alignment_text and alignment_text.strip():
-        lines.append(alignment_text.strip())
+        # Split the alignment text into individual lines
+        for line in alignment_text.strip().split('\n'):
+            lines.append(line)
     else:
         # If no alignment provided, add a dummy one to satisfy format
         lines.append("# (no alignment provided)")
@@ -130,6 +134,27 @@ def convert_graph_to_umr_format(graph_text: str, alignment_text: str = None) -> 
     lines.append("")
 
     return "\n".join(lines)
+
+
+def find_concept_in_graph(graph_text: str, concept: str) -> int:
+    """
+    Find the line number where a concept appears in the graph.
+
+    Args:
+        graph_text: The original graph text
+        concept: The concept to search for (e.g., '事件', 'province')
+
+    Returns:
+        Line number (1-indexed) or None if not found
+    """
+    lines = graph_text.split('\n')
+    # Search for the concept in the format: "/ concept"
+    concept_pattern = re.compile(r'/\s*' + re.escape(concept) + r'(?:\s|\))')
+
+    for i, line in enumerate(lines, start=1):
+        if concept_pattern.search(line):
+            return i
+    return None
 
 
 def parse_and_validate_graph(
@@ -275,7 +300,19 @@ def parse_and_validate_graph(
 
                 # Try to extract line number from the beginning
                 line_match = re.search(r'^\[Line\s+(\d+)\]', line)
-                line_number = line_match.group(1) if line_match else None
+                raw_line_number = int(line_match.group(1)) if line_match else None
+
+                # Adjust line number to match original graph (not converted UMR format)
+                # The converted format has 4 header lines before the actual graph:
+                # Line 1: # ::id sentence-1
+                # Line 2: # ::snt Example sentence
+                # Line 3: (empty)
+                # Line 4: # sentence level graph:
+                # Line 5+: actual graph lines
+                line_number = None
+                if raw_line_number is not None:
+                    # Subtract the header offset, ensuring we get at least line 1
+                    line_number = max(1, raw_line_number - 4)
 
                 # Extract the message part after the last ]:
                 match = re.search(r'\]:\s*\[L(\d+)\s+(\S+)\s+(\S+)\]\s*(.+)', line)
@@ -284,6 +321,24 @@ def parse_and_validate_graph(
                     error_class = match.group(2)
                     error_id = match.group(3)
                     message = match.group(4)
+
+                    # Try to extract line number from message itself (e.g., "first on line 11")
+                    message_line_match = re.search(r'first on line (\d+)', message)
+                    if message_line_match and not line_number:
+                        # Use the line number from the message if we don't have one from the header
+                        raw_msg_line = int(message_line_match.group(1))
+                        line_number = max(1, raw_msg_line - 4)
+
+                    # For abstract concept warnings reported at sentence level (line 4 in converted format),
+                    # try to find the actual line where the concept appears
+                    if error_id == 'unknown-abstract-concept-ne' and (not line_number or line_number == 1):
+                        # Extract the concept from the message: "Unknown abstract concept or NE: 'concept'"
+                        concept_match = re.search(r"'([^']+)'", message)
+                        if concept_match:
+                            concept = concept_match.group(1)
+                            found_line = find_concept_in_graph(graph_text, concept)
+                            if found_line:
+                                line_number = found_line
 
                     # Build a more detailed message
                     detailed_message = message
