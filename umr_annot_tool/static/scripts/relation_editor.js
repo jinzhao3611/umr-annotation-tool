@@ -2052,83 +2052,94 @@ function extractSentenceTokens() {
     // Get the current sentence element
     const currentSentence = document.querySelector('.current-sentence');
     if (!currentSentence) return [];
-    
+
     // Extract all tokens (words) from the sentence
     const text = currentSentence.textContent;
     console.log('Current sentence text:', text);
-    
+
     // Regular expression to match tokens with potential indices (like '1nation' or '1中国')
     // Updated to include Unicode characters for multi-language support (including Chinese, Japanese, Korean)
     const tokenPattern = /([0-9]+)([\p{L}\p{N}_\-'".]+)/gu;
-    const tokens = [];
-    
-    // Create a global mapping of tokens to their indices
-    window.tokenIndices = {}; 
-    
+
+    // Store tokens as array of objects with token text and index
+    // This preserves duplicates and allows proper alignment
+    const tokenObjects = [];
+
     // Match token pattern
     let match;
     while ((match = tokenPattern.exec(text)) !== null) {
         const index = match[1];
         const token = match[2];
-        tokens.push(token);
-        window.tokenIndices[token] = index; // Save token to index mapping
+        tokenObjects.push({ token: token, index: index });
         console.log(`Mapped token: ${token} → index: ${index}`);
     }
-    
+
     // If the pattern matching didn't find tokens, fall back to simple splitting
-    if (tokens.length === 0) {
+    if (tokenObjects.length === 0) {
         console.log('Falling back to simple token splitting');
-        const simpleTokens = text.split(/\s+/).filter(token => 
+        const simpleTokens = text.split(/\s+/).filter(token =>
             token.trim().length > 0
         );
-        
+
         // Check if these tokens have number prefixes we can extract
+        let fallbackIndex = 1;
         simpleTokens.forEach(token => {
             const simpleMatch = token.match(/^([0-9]+)(.+)$/);
             if (simpleMatch) {
                 const index = simpleMatch[1];
                 const cleanToken = simpleMatch[2];
-                tokens.push(cleanToken);
-                window.tokenIndices[cleanToken] = index;
+                tokenObjects.push({ token: cleanToken, index: index });
                 console.log(`Mapped token (simple): ${cleanToken} → index: ${index}`);
             } else {
-                tokens.push(token);
+                tokenObjects.push({ token: token, index: String(fallbackIndex++) });
             }
         });
     }
-    
-    console.log('Extracted tokens:', tokens);
-    console.log('Token indices mapping:', window.tokenIndices);
-    
-    // Store unique tokens in global/window for later use
-    window.sentenceTokens = [...new Set(tokens)];
-    return window.sentenceTokens;
+
+    console.log('Extracted token objects:', tokenObjects);
+
+    // Store token objects globally for later use (preserves duplicates)
+    window.sentenceTokenObjects = tokenObjects;
+
+    // Also create a simple token-to-index mapping for backward compatibility
+    // Note: For duplicate tokens, this will only store the last occurrence's index
+    window.tokenIndices = {};
+    tokenObjects.forEach(obj => {
+        window.tokenIndices[obj.token] = obj.index;
+    });
+
+    // Return array of token objects for full information
+    // Also store simple token array for backward compatibility
+    window.sentenceTokens = tokenObjects.map(obj => obj.token);
+    return tokenObjects;
 }
 
 // Function to get all available concepts
 async function getAllConcepts() {
     // Extract tokens from the current sentence
-    const sentenceTokens = extractSentenceTokens();
-    
+    const tokenObjects = extractSentenceTokens();
+    // Get just the token strings for concept list (unique tokens are fine here)
+    const tokenStrings = [...new Set(tokenObjects.map(obj => obj.token))];
+
     try {
         // Fetch the predefined concepts from the server
         const response = await fetch('/get_concepts');
         const conceptsData = await response.json();
-        
+
         // Combine tokens with predefined concepts
         const allConcepts = [
-            ...sentenceTokens,
+            ...tokenStrings,
             ...conceptsData.discourse_concepts,
             ...conceptsData.ne_types,
             ...conceptsData.non_event_rolesets
         ];
-        
+
         // Remove duplicates and sort
         return [...new Set(allConcepts)].sort();
     } catch (error) {
         console.error('Error fetching concepts:', error);
         // If fetch fails, just return sentence tokens
-        return sentenceTokens;
+        return tokenStrings;
     }
 }
 
@@ -2391,9 +2402,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                         </div>
                         <div id="tokens-container" style="max-height: 250px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                             <div id="tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
-                                ${sentenceTokens.map(token => `
-                                    <div class="token-item" data-token="${token}" style="padding: 8px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
-                                        ${token}
+                                ${sentenceTokens.map(tokenObj => `
+                                    <div class="token-item" data-token="${tokenObj.token}" data-index="${tokenObj.index}" style="padding: 8px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        <span style="font-size: 0.7em; color: #666; vertical-align: super;">${tokenObj.index}</span>${tokenObj.token}
                                     </div>
                                 `).join('')}
                             </div>
@@ -2466,9 +2477,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                         </div>
                         <div id="string-tokens-container" style="max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
                             <div id="string-tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px;">
-                                ${sentenceTokens.map(token => `
-                                <div class="string-token-item" data-token="${token}" style="padding: 6px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
-                                    ${token}
+                                ${sentenceTokens.map(tokenObj => `
+                                <div class="string-token-item" data-token="${tokenObj.token}" data-index="${tokenObj.index}" style="padding: 6px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                    <span style="font-size: 0.7em; color: #666; vertical-align: super;">${tokenObj.index}</span>${tokenObj.token}
                                 </div>
                                 `).join('')}
                             </div>
@@ -2762,42 +2773,57 @@ async function showAddBranchDialog(parentVariableSpan) {
                 
                 // Handle token selection - support for multiple selection
                 const tokenItems = document.querySelectorAll('.token-item');
-                
-                // Track the selected tokens in an ordered array
+
+                // Track the selected tokens as objects with token text and index
+                // This allows tracking duplicate tokens separately
+                window.selectedTokenObjects = [];
+                // Keep selectedTokens for backward compatibility (array of token strings)
                 window.selectedTokens = [];
                 // Track selected sense when applicable
                 window.selectedSense = null;
-                
+
                 // Function to handle token click
                 const handleTokenClick = async (item) => {
                     const token = item.getAttribute('data-token');
-                    
+                    const tokenIndex = item.getAttribute('data-index');
+
+                    // Create a unique key for this token instance
+                    const tokenKey = `${tokenIndex}:${token}`;
+
                     // Toggle selection
                     if (item.style.backgroundColor === 'rgb(209, 231, 255)') {
                         // Deselect if already selected
                         item.style.backgroundColor = '#f0f8ff';
-                        
-                        // Remove from selected tokens array
-                        const index = window.selectedTokens.indexOf(token);
-                        if (index > -1) {
-                            window.selectedTokens.splice(index, 1);
+
+                        // Remove from selected token objects array
+                        const objIndex = window.selectedTokenObjects.findIndex(
+                            obj => obj.index === tokenIndex && obj.token === token
+                        );
+                        if (objIndex > -1) {
+                            window.selectedTokenObjects.splice(objIndex, 1);
                         }
-        } else {
+                    } else {
                         // Select if not already selected
                         item.style.backgroundColor = '#d1e7ff';
-                        
-                        // Add to selected tokens array if not already there
-                        if (!window.selectedTokens.includes(token)) {
-                            window.selectedTokens.push(token);
+
+                        // Add to selected token objects array
+                        const alreadySelected = window.selectedTokenObjects.some(
+                            obj => obj.index === tokenIndex && obj.token === token
+                        );
+                        if (!alreadySelected) {
+                            window.selectedTokenObjects.push({ token: token, index: tokenIndex });
                         }
                     }
-                    
+
+                    // Update the backward-compatible selectedTokens array
+                    window.selectedTokens = window.selectedTokenObjects.map(obj => obj.token);
+
                     // Update info about selected tokens
                     updateTokenSelectionDisplay();
-                    
+
                     // Check if we need to show sense selector
-                    if (window.selectedTokens.length === 1 && !isNumeric(window.selectedTokens[0])) {
-                        await showSenseSelector(window.selectedTokens[0]);
+                    if (window.selectedTokenObjects.length === 1 && !isNumeric(window.selectedTokenObjects[0].token)) {
+                        await showSenseSelector(window.selectedTokenObjects[0].token);
                     } else {
                         // Hide sense selector for multiple tokens or numeric tokens
                         hideSenseSelector();
@@ -3223,12 +3249,13 @@ async function showAddBranchDialog(parentVariableSpan) {
                 clearSelectionsButton.onclick = () => {
                     // Reset all selections
                     tokenItems.forEach(item => item.style.backgroundColor = '#f0f8ff');
+                    window.selectedTokenObjects = [];
                     window.selectedTokens = [];
                     window.selectedSense = null;
-                    
+
                     // Hide sense selector
                     hideSenseSelector();
-                    
+
                     // Update the display
                     updateTokenSelectionDisplay();
                 };
@@ -3257,24 +3284,29 @@ async function showAddBranchDialog(parentVariableSpan) {
         function populateNameTokensSelection() {
             const nameTokensSelection = document.getElementById('name-tokens-selection');
             const selectedTokensText = document.getElementById('selected-tokens-text');
-            
+
             // Clear any existing content
             nameTokensSelection.innerHTML = '';
             selectedTokensText.textContent = '';
-            
+
+            // Use sentenceTokenObjects to get all tokens including duplicates
+            const tokenObjects = window.sentenceTokenObjects || [];
+
             // Add tokens from the sentence
-            sentenceTokens.forEach(token => {
+            tokenObjects.forEach(tokenObj => {
                 const tokenChip = document.createElement('div');
                 tokenChip.className = 'name-token-chip';
-                tokenChip.setAttribute('data-token', token);
-                tokenChip.textContent = token;
+                tokenChip.setAttribute('data-token', tokenObj.token);
+                tokenChip.setAttribute('data-index', tokenObj.index);
+                // Display token with index superscript
+                tokenChip.innerHTML = `<span style="font-size: 0.7em; color: #666; vertical-align: super;">${tokenObj.index}</span>${tokenObj.token}`;
                 tokenChip.style.padding = '6px 12px';
                 tokenChip.style.backgroundColor = '#edf2fa';
                 tokenChip.style.borderRadius = '16px';
                 tokenChip.style.cursor = 'pointer';
                 tokenChip.style.userSelect = 'none';
                 tokenChip.style.display = 'inline-block';
-                
+
                 // Add click handler to toggle selection
                 tokenChip.addEventListener('click', () => {
                     tokenChip.classList.toggle('selected');
@@ -3283,11 +3315,11 @@ async function showAddBranchDialog(parentVariableSpan) {
                     } else {
                         tokenChip.style.backgroundColor = '#edf2fa';
                     }
-                    
+
                     // Update the selected tokens text
                     updateSelectedNameTokens();
                 });
-                
+
                 nameTokensSelection.appendChild(tokenChip);
             });
         }
@@ -3657,23 +3689,36 @@ async function showAddBranchDialog(parentVariableSpan) {
             saveBranchInsertion(annotationElement.textContent, newBranch);
             
             // Update alignments if we have a new variable and a selected token
-            if (newVariable && selectedTokenForAlignment && window.tokenIndices) {
+            if (newVariable && selectedTokenForAlignment) {
                 // Convert the selected tokens to token indices with proper formatting
                 const tokenIndicesArray = [];
-                
-                // Process tokens joined with hyphens
-                const tokensArray = selectedTokenForAlignment.split('-');
-                
-                if (tokensArray.length > 0) {
-                    // Get the indices for each token
-                    const indexedTokens = tokensArray
-                        .map(token => ({
-                            token: token,
-                            index: window.tokenIndices[token]
-                        }))
-                        .filter(item => item.index); // Filter out tokens without indices
-                    
-                    console.log('Tokens with indices:', indexedTokens);
+
+                // Use selectedTokenObjects if available (has accurate indices for duplicate tokens)
+                // Otherwise fall back to splitting and looking up in tokenIndices
+                let indexedTokens = [];
+
+                if (window.selectedTokenObjects && window.selectedTokenObjects.length > 0) {
+                    // Use the stored token objects with accurate indices
+                    indexedTokens = window.selectedTokenObjects
+                        .map(obj => ({ token: obj.token, index: obj.index }))
+                        .filter(item => item.index);
+                    console.log('Using selectedTokenObjects for alignment:', indexedTokens);
+                } else if (window.tokenIndices) {
+                    // Fallback: Process tokens joined with hyphens
+                    const tokensArray = selectedTokenForAlignment.split('-');
+
+                    if (tokensArray.length > 0) {
+                        // Get the indices for each token
+                        indexedTokens = tokensArray
+                            .map(token => ({
+                                token: token,
+                                index: window.tokenIndices[token]
+                            }))
+                            .filter(item => item.index); // Filter out tokens without indices
+                    }
+                }
+
+                console.log('Tokens with indices:', indexedTokens);
                     
                     if (indexedTokens.length > 0) {
                         // Sort tokens by index
@@ -3769,7 +3814,6 @@ async function showAddBranchDialog(parentVariableSpan) {
                             }
                         }
                     }
-                }
             }
             
             // Helper function to process a span of tokens and return range
