@@ -39,12 +39,25 @@ try:
 except ImportError:
     LEMMINFLECT_AVAILABLE = False
 
-def simple_lemmatize(tokens):
+# Uzbek lemmatization using UzbekLemmatizer
+try:
+    import UzbekLemmatizer as uzb_ltr
+    UZBEK_LEMMATIZER_AVAILABLE = True
+except ImportError:
+    UZBEK_LEMMATIZER_AVAILABLE = False
+
+def simple_lemmatize(tokens, language=None):
     """
     Simple lemmatization using lemminflect (no heavy model downloads needed).
     Returns a list of lemmas for the given tokens.
     If lemminflect is not available, returns the original tokens.
+
+    For Uzbek, uses UzbekLemmatizer if available.
     """
+    # Handle Uzbek language
+    if language and language.lower() == 'uzbek':
+        return uzbek_lemmatize(tokens)
+
     if not LEMMINFLECT_AVAILABLE:
         return tokens
 
@@ -59,6 +72,25 @@ def simple_lemmatize(tokens):
             lemmas.append(lemma)
         else:
             # If no lemma found, use the original token
+            lemmas.append(token.lower())
+    return lemmas
+
+def uzbek_lemmatize(tokens):
+    """
+    Lemmatization for Uzbek using UzbekLemmatizer.
+    Returns a list of lemmas for the given tokens.
+    If UzbekLemmatizer is not available, returns the original tokens.
+    """
+    if not UZBEK_LEMMATIZER_AVAILABLE:
+        return tokens
+
+    lemmas = []
+    for token in tokens:
+        try:
+            lemma = uzb_ltr.Lemma(token)
+            lemmas.append(lemma if lemma else token.lower())
+        except Exception:
+            # If lemmatization fails, use the original token
             lemmas.append(token.lower())
     return lemmas
 
@@ -1550,7 +1582,8 @@ def validate_abstract_concept_NEs(sentence, node_dict, args):
         if not re.search(r'-\d+$', concept) or re.search(r'-91$|-92$', concept)
     ] # remove verb predicates
     tokens = sentence[0]['tokens']
-    token_lemmas = simple_lemmatize(tokens)
+    language = getattr(args, 'lang', None)
+    token_lemmas = simple_lemmatize(tokens, language=language)
     attribute_value_items = [
         value for entry in known_relations.values()
         for value in entry.get('value', [])

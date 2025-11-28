@@ -45,6 +45,7 @@ FRAME_FILE_ENGLISH = "umr_annot_tool/resources/frames_english.json"
 FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 # FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/arabic-propbank1.json'
+FRAME_FILE_UZBEK = 'umr_annot_tool/resources/frames_uzbek.json'
 LEMMA_DICT_ARABIC = 'umr_annot_tool/resources/arabic_lemma_dict.json'
 lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 
@@ -457,10 +458,20 @@ def sentlevel(doc_version_id, sent_id):
         # Load frame dictionary based on project language
         frame_dict = {}
         try:
-            frame_file = FRAME_FILE_ENGLISH if project.language.lower() == 'english' else FRAME_FILE_CHINESE
-            with open(frame_file, 'r') as f:
-                frame_dict = json.load(f)
-            logger.info(f"Successfully loaded frame dictionary from {frame_file}")
+            lang = project.language.lower()
+            frame_files = {
+                'english': FRAME_FILE_ENGLISH,
+                'chinese': FRAME_FILE_CHINESE,
+                'arabic': FRAME_FILE_ARABIC,
+                'uzbek': FRAME_FILE_UZBEK,
+            }
+            frame_file = frame_files.get(lang)
+            if frame_file:
+                with open(frame_file, 'r') as f:
+                    frame_dict = json.load(f)
+                logger.info(f"Successfully loaded frame dictionary from {frame_file}")
+            else:
+                logger.info(f"No frame file available for language: {project.language}")
         except (IOError, json.JSONDecodeError) as e:
             logger.error(f"Error loading frame dictionary: {str(e)}")
         
@@ -2101,14 +2112,16 @@ def download_frames():
         project = Project.query.get_or_404(project_id)
         
         # Select frame file based on project language
-        if project.language.lower() == 'english':
-            frame_file = FRAME_FILE_ENGLISH
-        elif project.language.lower() == 'chinese':
-            frame_file = FRAME_FILE_CHINESE
-        elif project.language.lower() == 'arabic':
-            frame_file = FRAME_FILE_ARABIC
-        else:
-            return jsonify({'error': f'Unsupported language: {project.language}'}), 400
+        lang = project.language.lower()
+        frame_files = {
+            'english': FRAME_FILE_ENGLISH,
+            'chinese': FRAME_FILE_CHINESE,
+            'arabic': FRAME_FILE_ARABIC,
+            'uzbek': FRAME_FILE_UZBEK,
+        }
+        frame_file = frame_files.get(lang)
+        if not frame_file:
+            return jsonify({'error': f'No frame file available for language: {project.language}'}), 400
             
         # Load and return frame data
         try:
@@ -2122,3 +2135,58 @@ def download_frames():
     except Exception as e:
         logger.error(f"Error in download_frames: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+@main.route("/lemmatize", methods=['GET'])
+@login_required
+def lemmatize():
+    """Route to lemmatize a word based on project language."""
+    try:
+        word = request.args.get('word')
+        project_id = request.args.get('project_id')
+
+        if not word:
+            return jsonify({'success': False, 'error': 'Missing word parameter'}), 400
+
+        if not project_id:
+            return jsonify({'success': False, 'error': 'Missing project_id parameter'}), 400
+
+        # Get project language
+        project = Project.query.get_or_404(project_id)
+        language = project.language.lower()
+
+        lemma = word.lower()  # Default fallback
+
+        if language == 'uzbek':
+            try:
+                import UzbekLemmatizer as uzb_ltr
+                result = uzb_ltr.Lemma(word)
+                if result:
+                    lemma = result
+                else:
+                    lemma = word.lower()
+                logger.info(f"Uzbek lemmatization: '{word}' -> '{lemma}'")
+            except ImportError:
+                logger.warning("UzbekLemmatizer not installed, using original word")
+                lemma = word.lower()
+            except Exception as e:
+                logger.warning(f"Error lemmatizing Uzbek word '{word}': {e}, using lowercase")
+                lemma = word.lower()
+        elif language == 'english':
+            try:
+                import lemminflect
+                all_lemmas = lemminflect.getAllLemmas(word)
+                if all_lemmas:
+                    lemma = list(all_lemmas.values())[0][0]
+                else:
+                    lemma = word.lower()
+            except ImportError:
+                logger.warning("lemminflect not installed, using original word")
+            except Exception as e:
+                logger.error(f"Error lemmatizing English word: {e}")
+        # For other languages, just return lowercase
+
+        return jsonify({'success': True, 'lemma': lemma, 'original': word, 'language': language})
+
+    except Exception as e:
+        logger.error(f"Error in lemmatize: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500

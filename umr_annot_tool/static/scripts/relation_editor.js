@@ -73,11 +73,11 @@ async function loadFramesData() {
     }
 }
 
-// Simple lemmatization function
-// This is a basic implementation - in a production environment, you might want to use a more sophisticated lemmatizer
-function lemmatizeToken(token) {
+// Simple lemmatization function (fallback for when server is unavailable)
+// This is a basic implementation for English only
+function lemmatizeTokenFallback(token) {
     const lowerToken = token.toLowerCase();
-    
+
     // Handle some basic English verb forms (very simplified)
     if (lowerToken.endsWith('ing')) {
         // gerund: running -> run
@@ -95,6 +95,47 @@ function lemmatizeToken(token) {
         // Return as is for unknown forms
         return lowerToken;
     }
+}
+
+// Server-side lemmatization function (supports multiple languages)
+async function lemmatizeToken(token) {
+    // Get project ID
+    let projectId = null;
+    const projectMatch = window.location.pathname.match(/\/project\/(\d+)/);
+    if (projectMatch) {
+        projectId = projectMatch[1];
+    }
+    if (!projectId && typeof project_id !== 'undefined') {
+        projectId = project_id;
+    }
+    if (!projectId && window.state && window.state.projectId) {
+        projectId = window.state.projectId;
+    }
+
+    if (!projectId) {
+        console.warn('No project ID found, using fallback lemmatization');
+        return lemmatizeTokenFallback(token);
+    }
+
+    try {
+        // Add timestamp to prevent caching
+        const timestamp = Date.now();
+        const response = await fetch(`/lemmatize?word=${encodeURIComponent(token)}&project_id=${projectId}&_t=${timestamp}`);
+        if (!response.ok) {
+            throw new Error(`Server returned ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.success && data.lemma) {
+            console.log(`Server lemmatized "${token}" to "${data.lemma}" (language: ${data.language})`);
+            return data.lemma;
+        } else {
+            console.warn('Server returned unsuccessful lemmatization:', data);
+        }
+    } catch (error) {
+        console.warn('Server-side lemmatization failed, using fallback:', error);
+    }
+
+    return lemmatizeTokenFallback(token);
 }
 
 // Function to find frame senses for a lemma
@@ -2868,8 +2909,8 @@ async function showAddBranchDialog(parentVariableSpan) {
                 
                 // Function to show sense selector for a token
                 async function showSenseSelector(token) {
-                    // First lemmatize the token
-                    const lemma = lemmatizeToken(token);
+                    // First lemmatize the token (now async)
+                    const lemma = await lemmatizeToken(token);
                     console.log(`Lemmatized '${token}' to '${lemma}'`);
                     
                     try {
