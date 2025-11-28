@@ -1313,12 +1313,8 @@
                                     placeholder="Type to search tokens...">
                             </div>
                             <div class="alert alert-secondary mb-2" style="font-size: 0.9rem; padding: 8px;">
-                                <p class="mb-1"><strong>Multi-selection:</strong> Use these keys to select multiple tokens:</p>
-                                <ul class="mb-0" style="padding-left: 20px;">
-                                    <li><strong>Ctrl/Cmd+Click</strong>: Select/deselect multiple individual tokens</li>
-                                    <li><strong>Shift+Click</strong>: Select a range of tokens</li>
-                                </ul>
-                                <p class="mb-0 mt-1"><small>Multi-selected tokens will be joined with hyphens, e.g., "token1-token2"</small></p>
+                                <p class="mb-1"><strong>Multi-selection:</strong> Click tokens to select/deselect them.</p>
+                                <p class="mb-0"><small>Multi-selected tokens will be joined with hyphens, e.g., "token1-token2"</small></p>
                             </div>
                             <div id="tokens-container" style="max-height: 250px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                                 <div id="tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
@@ -1632,174 +1628,75 @@
                         }
                     }
                     
-                    // Set up click events for token items
+                    // Set up click events for token items - simple toggle like Add Branch dialog
                     document.querySelectorAll('.token-item').forEach(item => {
-                        item.addEventListener('click', function(event) {
-                            const tokenText = this.getAttribute('data-token').toLowerCase();
+                        item.addEventListener('click', async function(event) {
+                            const tokenText = this.getAttribute('data-token');
                             const tokenIndex = this.getAttribute('data-token-index');
-                            
-                            // Check if ctrl/cmd key is pressed for multi-select
-                            const isMultiSelectMode = event.ctrlKey || event.metaKey;
-                            
-                            // If multi-select mode is not active and no shift key, clear previous selections
-                            if (!isMultiSelectMode && !event.shiftKey) {
-                                // Clear all selections if not in multi-select mode
-                                window.selectedTokens = [];
-                                document.querySelectorAll('.token-item').forEach(el => {
-                                    el.style.backgroundColor = '#f0f8ff';
-                                    el.removeAttribute('data-selected');
-                                });
-                            }
-                            
-                            // Check if this token is already selected (for toggle)
+
+                            // Check if this token is already selected (toggle behavior)
                             const alreadySelected = this.hasAttribute('data-selected');
-                            
+
                             if (alreadySelected) {
-                                // If already selected, toggle off in multi-select mode
-                                if (isMultiSelectMode) {
-                                    this.style.backgroundColor = '#f0f8ff';
-                                    this.removeAttribute('data-selected');
-                                    
-                                    // Remove alignment indicator if present
-                                    const alignmentBadge = this.querySelector('.alignment-indicator');
-                                    if (alignmentBadge) {
-                                        this.removeChild(alignmentBadge);
-                                    }
-                                    
-                                    // Remove from selectedTokens array
-                                    const index = window.selectedTokens.findIndex(t => 
-                                        t.text === tokenText && t.index === tokenIndex);
-                                    if (index !== -1) {
-                                        window.selectedTokens.splice(index, 1);
-                                    }
-                                } else {
-                                    // In single select mode, just reselect this token
-                                    this.style.backgroundColor = '#b3d9ff';
-                                    this.setAttribute('data-selected', 'true');
-                                    window.selectedTokens = [{
-                                        text: tokenText,
-                                        index: tokenIndex
-                                    }];
+                                // Deselect this token
+                                this.style.backgroundColor = '#f0f8ff';
+                                this.removeAttribute('data-selected');
+
+                                // Remove alignment indicator if present
+                                const alignmentBadge = this.querySelector('.alignment-indicator');
+                                if (alignmentBadge) {
+                                    this.removeChild(alignmentBadge);
+                                }
+
+                                // Remove from selectedTokens array
+                                const index = window.selectedTokens.findIndex(t =>
+                                    t.text === tokenText && t.index === tokenIndex);
+                                if (index !== -1) {
+                                    window.selectedTokens.splice(index, 1);
                                 }
                             } else {
-                                // If shift key is pressed, select range
-                                if (event.shiftKey && window.selectedTokens.length > 0) {
-                                    // Get all token items
-                                    const allTokens = Array.from(document.querySelectorAll('.token-item'));
-                                    const currentIndex = allTokens.indexOf(this);
-                                    
-                                    // Find the last selected token's index
-                                    const lastSelectedElement = document.querySelector('.token-item[data-selected="true"]');
-                                    const lastSelectedIndex = lastSelectedElement ? allTokens.indexOf(lastSelectedElement) : -1;
-                                    
-                                    if (lastSelectedIndex !== -1) {
-                                        // Determine the range
-                                        const startIdx = Math.min(currentIndex, lastSelectedIndex);
-                                        const endIdx = Math.max(currentIndex, lastSelectedIndex);
-                                        
-                                        // Select all tokens in the range
-                                        for (let i = startIdx; i <= endIdx; i++) {
-                                            const token = allTokens[i];
-                                            token.style.backgroundColor = '#b3d9ff';
-                                            token.setAttribute('data-selected', 'true');
-                                            
-                                            // Add alignment indicator if not already present
-                                            if (!token.querySelector('.alignment-indicator')) {
-                                                const badge = document.createElement('span');
-                                                badge.className = 'alignment-indicator';
-                                                badge.style.position = 'absolute';
-                                                badge.style.top = '0';
-                                                badge.style.right = '0';
-                                                badge.style.backgroundColor = '#198754';
-                                                badge.style.color = 'white';
-                                                badge.style.borderRadius = '50%';
-                                                badge.style.width = '16px';
-                                                badge.style.height = '16px';
-                                                badge.style.fontSize = '10px';
-                                                badge.style.display = 'flex';
-                                                badge.style.justifyContent = 'center';
-                                                badge.style.alignItems = 'center';
-                                                badge.innerHTML = '<i class="fas fa-link" style="font-size: 8px;"></i>';
-                                                badge.title = "This token will be aligned";
-                                                token.style.position = 'relative';
-                                                token.appendChild(badge);
-                                            }
-                                            
-                                            const tText = token.getAttribute('data-token').toLowerCase();
-                                            const tIndex = token.getAttribute('data-token-index');
-                                            
-                                            // Add to selectedTokens if not already there
-                                            if (!window.selectedTokens.some(t => t.text === tText && t.index === tIndex)) {
-                                                window.selectedTokens.push({
-                                                    text: tText,
-                                                    index: tIndex
-                                                });
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    // Normal selection of a single token
-                                    this.style.backgroundColor = '#b3d9ff';
-                                    this.setAttribute('data-selected', 'true');
-                                    
-                                    // Add alignment indicator if not already present
-                                    if (!this.querySelector('.alignment-indicator')) {
-                                        const badge = document.createElement('span');
-                                        badge.className = 'alignment-indicator';
-                                        badge.style.position = 'absolute';
-                                        badge.style.top = '0';
-                                        badge.style.right = '0';
-                                        badge.style.backgroundColor = '#198754';
-                                        badge.style.color = 'white';
-                                        badge.style.borderRadius = '50%';
-                                        badge.style.width = '16px';
-                                        badge.style.height = '16px';
-                                        badge.style.fontSize = '10px';
-                                        badge.style.display = 'flex';
-                                        badge.style.justifyContent = 'center';
-                                        badge.style.alignItems = 'center';
-                                        badge.innerHTML = '<i class="fas fa-link" style="font-size: 8px;"></i>';
-                                        badge.title = "This token will be aligned";
-                                        this.style.position = 'relative';
-                                        this.appendChild(badge);
-                                    }
-                                    
-                                    // Add to selectedTokens array
-                                    window.selectedTokens.push({
-                                        text: tokenText,
-                                        index: tokenIndex
-                                    });
+                                // Select this token
+                                this.style.backgroundColor = '#b3d9ff';
+                                this.setAttribute('data-selected', 'true');
+
+                                // Add alignment indicator
+                                if (!this.querySelector('.alignment-indicator')) {
+                                    const badge = document.createElement('span');
+                                    badge.className = 'alignment-indicator';
+                                    badge.style.position = 'absolute';
+                                    badge.style.top = '0';
+                                    badge.style.right = '0';
+                                    badge.style.backgroundColor = '#198754';
+                                    badge.style.color = 'white';
+                                    badge.style.borderRadius = '50%';
+                                    badge.style.width = '16px';
+                                    badge.style.height = '16px';
+                                    badge.style.fontSize = '10px';
+                                    badge.style.display = 'flex';
+                                    badge.style.justifyContent = 'center';
+                                    badge.style.alignItems = 'center';
+                                    badge.innerHTML = '<i class="fas fa-link" style="font-size: 8px;"></i>';
+                                    badge.title = "This token will be aligned";
+                                    this.style.position = 'relative';
+                                    this.appendChild(badge);
                                 }
+
+                                // Add to selectedTokens array
+                                window.selectedTokens.push({
+                                    text: tokenText,
+                                    index: tokenIndex
+                                });
                             }
-                            
+
                             // Sort selected tokens based on their position in the sentence
                             window.selectedTokens.sort((a, b) => parseInt(a.index) - parseInt(b.index));
-                            
+
                             // Log selections
                             console.log('Selected tokens:', window.selectedTokens);
-                            
-                            // Show multi-selection instructions if multiple tokens selected
-                            const multiSelectInstructions = document.getElementById('multi-select-instructions');
-                            if (window.selectedTokens.length > 1) {
-                                if (!multiSelectInstructions) {
-                                    const instructionsDiv = document.createElement('div');
-                                    instructionsDiv.id = 'multi-select-instructions';
-                                    instructionsDiv.className = 'alert alert-info mt-2';
-                                    instructionsDiv.innerHTML = `
-                                        <p class="mb-1"><strong>${window.selectedTokens.length} tokens selected</strong></p>
-                                        <p class="mb-0">These tokens will be joined with hyphens: <strong>${window.selectedTokens.map(t => t.text).join('-')}</strong></p>
-                                    `;
-                                    document.getElementById('tokens-container').appendChild(instructionsDiv);
-                                } else {
-                                    multiSelectInstructions.innerHTML = `
-                                        <p class="mb-1"><strong>${window.selectedTokens.length} tokens selected</strong></p>
-                                        <p class="mb-0">These tokens will be joined with hyphens: <strong>${window.selectedTokens.map(t => t.text).join('-')}</strong></p>
-                                    `;
-                                }
-                            } else if (multiSelectInstructions) {
-                                multiSelectInstructions.remove();
-                            }
-                            
+
+                            // Update token selection display (similar to Add Branch)
+                            updateTopNodeTokenSelectionDisplay();
+
                             // Show and populate frame lookup container if only one token is selected
                             const frameLookupContainer = document.getElementById('frame-lookup-container');
                             if (frameLookupContainer) {
@@ -1808,16 +1705,43 @@
                                     document.getElementById('selected-token-text').textContent = tokenText;
                                     lemmatizeAndLookupFrames(tokenText);
                                     frameLookupContainer.style.display = 'block';
-                                } else if (window.selectedTokens.length > 1) {
-                                    // For multiple tokens, hide frame lookup
-                                    frameLookupContainer.style.display = 'none';
                                 } else {
-                                    // No tokens selected
+                                    // For multiple tokens or no tokens, hide frame lookup
                                     frameLookupContainer.style.display = 'none';
                                 }
                             }
                         });
                     });
+
+                    // Function to update the token selection display (similar to Add Branch)
+                    function updateTopNodeTokenSelectionDisplay() {
+                        // Remove existing display if present
+                        const existingDisplay = document.getElementById('selected-tokens-display');
+                        if (existingDisplay) {
+                            existingDisplay.remove();
+                        }
+
+                        if (window.selectedTokens.length > 0) {
+                            const selectedTokensDisplay = document.createElement('div');
+                            selectedTokensDisplay.id = 'selected-tokens-display';
+                            selectedTokensDisplay.style.marginTop = '10px';
+                            selectedTokensDisplay.style.padding = '8px';
+                            selectedTokensDisplay.style.backgroundColor = '#f8f9fa';
+                            selectedTokensDisplay.style.borderRadius = '4px';
+
+                            const tokenTexts = window.selectedTokens.map(t => t.text);
+                            const conceptText = window.selectedSense || tokenTexts.join('-');
+
+                            selectedTokensDisplay.innerHTML = `
+                                <strong>Selected tokens:</strong> ${tokenTexts.join(', ')}
+                                <div style="margin-top: 5px;">
+                                    <small>Concept will be: ${conceptText}</small>
+                                </div>
+                            `;
+
+                            document.getElementById('tokens-container').appendChild(selectedTokensDisplay);
+                        }
+                    }
                     
                     // Add lemmatization and frame lookup functions
                     async function lemmatizeAndLookupFrames(tokenText) {
@@ -1833,6 +1757,7 @@
                                 // For Flask Blueprints, we need to use the full path - this matches the route in main
                                 const lemmaUrl = new URL('/lemmatize', window.location.origin);
                                 lemmaUrl.searchParams.append('word', tokenText);
+                                lemmaUrl.searchParams.append('project_id', {{ project_id }});
                                 console.log('Fetching lemma from:', lemmaUrl.toString());
                                 
                                 const lemmaResponse = await fetch(lemmaUrl);
