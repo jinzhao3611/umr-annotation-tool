@@ -2371,7 +2371,476 @@ async function showAddBranchDialog(parentVariableSpan) {
             relationSelect,
             umrRelations
         );
-        
+
+        // Helper function to set up child node type handling
+        // This is used both when "Other" is selected for predefined value relations
+        // and when a relation doesn't have predefined values
+        function setupChildNodeTypeHandling(sentenceTokens, discourseConceptsList, abstractConceptsList, neTypesList, nonEventRolesetsList) {
+            const childNodeTypeSelect = document.getElementById('child-node-type');
+            if (!childNodeTypeSelect) return;
+
+            const tokenContainer = document.getElementById('token-selection-container');
+            const discourseContainer = document.getElementById('discourse-selection-container');
+            const abstractContainer = document.getElementById('abstract-selection-container');
+            const neContainer = document.getElementById('ne-selection-container');
+            const nonEventContainer = document.getElementById('non-event-selection-container');
+            const stringContainer = document.getElementById('string-input-container');
+            const numberContainer = document.getElementById('number-input-container');
+            const reentrantContainer = document.getElementById('reentrant-selection-container');
+            const nameTokensContainer = document.getElementById('name-tokens-container');
+
+            // Function to extract existing variables from the annotation
+            function extractExistingVariables(annotation) {
+                const variablePattern = /\b(s[0-9]+[a-z]+[0-9]*)\b/g;
+                const matches = annotation.match(variablePattern) || [];
+                return [...new Set(matches)];
+            }
+
+            // Function to populate the reentrant variables container
+            function populateReentrantVariables() {
+                const parentVariable = window.currentParentVariable;
+                const annotationElement = document.querySelector('#amr pre');
+                if (!annotationElement) return;
+
+                const annotationText = annotationElement.textContent;
+                const variables = extractExistingVariables(annotationText);
+                const filteredVariables = variables.filter(v => v !== parentVariable);
+
+                const variablesGrid = document.getElementById('reentrant-variables-grid');
+                if (!variablesGrid) return;
+
+                variablesGrid.innerHTML = filteredVariables.map(variable => `
+                    <div class="reentrant-variable-item" data-variable="${variable}" style="padding: 6px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                        ${variable}
+                    </div>
+                `).join('');
+
+                const variableItems = document.querySelectorAll('.reentrant-variable-item');
+                variableItems.forEach(item => {
+                    item.addEventListener('click', () => handleReentrantVariableClick(item));
+                });
+
+                const searchInput = document.getElementById('reentrant-variable-search');
+                if (searchInput) {
+                    searchInput.addEventListener('input', function() {
+                        const searchTerm = this.value.toLowerCase();
+                        const variableItems = document.querySelectorAll('.reentrant-variable-item');
+                        variableItems.forEach(item => {
+                            const variableText = item.getAttribute('data-variable').toLowerCase();
+                            item.style.display = variableText.includes(searchTerm) ? 'block' : 'none';
+                        });
+                    });
+                }
+            }
+
+            // Function to handle reentrant variable selection
+            function handleReentrantVariableClick(item) {
+                const variable = item.getAttribute('data-variable');
+
+                const variableItems = document.querySelectorAll('.reentrant-variable-item');
+                variableItems.forEach(varItem => {
+                    varItem.style.backgroundColor = '#f0f8ff';
+                });
+
+                item.style.backgroundColor = '#d1e7ff';
+
+                const reentrantVariableInput = document.getElementById('reentrant-variable-value');
+                if (reentrantVariableInput) {
+                    reentrantVariableInput.value = variable;
+                }
+
+                const selectedDisplay = document.getElementById('selected-reentrant-display');
+                if (selectedDisplay) {
+                    selectedDisplay.innerHTML = `
+                        <strong>Selected variable:</strong> ${variable}
+                        <div style="margin-top: 5px;">
+                            <small>Will reference: ${variable}</small>
+                        </div>
+                    `;
+                }
+            }
+
+            // Set up filtering for each dropdown
+            setupDropdownFiltering(
+                document.getElementById('discourse-concept-search'),
+                document.getElementById('discourse-concept'),
+                discourseConceptsList
+            );
+
+            setupDropdownFiltering(
+                document.getElementById('abstract-concept-search'),
+                document.getElementById('abstract-concept'),
+                abstractConceptsList
+            );
+
+            setupDropdownFiltering(
+                document.getElementById('ne-type-search'),
+                document.getElementById('ne-type'),
+                neTypesList
+            );
+
+            setupDropdownFiltering(
+                document.getElementById('non-event-roleset-search'),
+                document.getElementById('non-event-roleset'),
+                nonEventRolesetsList
+            );
+
+            // Setup token search
+            const tokenSearchInput = document.getElementById('token-search');
+            if (tokenSearchInput) {
+                tokenSearchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const tokenItems = document.querySelectorAll('.token-item');
+                    tokenItems.forEach(item => {
+                        const tokenText = item.getAttribute('data-token').toLowerCase();
+                        item.style.display = tokenText.includes(searchTerm) ? 'block' : 'none';
+                    });
+                });
+            }
+
+            // Setup string token search
+            const stringTokenSearchInput = document.getElementById('string-token-search');
+            if (stringTokenSearchInput) {
+                stringTokenSearchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const tokenItems = document.querySelectorAll('.string-token-item');
+                    tokenItems.forEach(item => {
+                        const tokenText = item.getAttribute('data-token').toLowerCase();
+                        item.style.display = tokenText.includes(searchTerm) ? 'block' : 'none';
+                    });
+                });
+            }
+
+            // Handle child node type selection change
+            childNodeTypeSelect.addEventListener('change', () => {
+                const selectedType = childNodeTypeSelect.value;
+
+                // Hide all containers first
+                if (tokenContainer) tokenContainer.style.display = 'none';
+                if (discourseContainer) discourseContainer.style.display = 'none';
+                if (abstractContainer) abstractContainer.style.display = 'none';
+                if (neContainer) neContainer.style.display = 'none';
+                if (nonEventContainer) nonEventContainer.style.display = 'none';
+                if (stringContainer) stringContainer.style.display = 'none';
+                if (numberContainer) numberContainer.style.display = 'none';
+                if (reentrantContainer) reentrantContainer.style.display = 'none';
+                if (nameTokensContainer) nameTokensContainer.style.display = 'none';
+
+                // Show the appropriate container based on selection
+                if (selectedType === 'token') {
+                    tokenContainer.style.display = 'block';
+                } else if (selectedType === 'discourse') {
+                    discourseContainer.style.display = 'block';
+                } else if (selectedType === 'abstract') {
+                    abstractContainer.style.display = 'block';
+                } else if (selectedType === 'ne') {
+                    neContainer.style.display = 'block';
+                    nameTokensContainer.style.display = 'block';
+                    populateNameTokensSelection();
+                } else if (selectedType === 'non-event') {
+                    nonEventContainer.style.display = 'block';
+                } else if (selectedType === 'string') {
+                    stringContainer.style.display = 'block';
+                    setupStringTokenSelection();
+                } else if (selectedType === 'number') {
+                    numberContainer.style.display = 'block';
+                } else if (selectedType === 'reentrant') {
+                    reentrantContainer.style.display = 'block';
+                    populateReentrantVariables();
+                }
+            });
+
+            // Helper function to setup string token selection
+            function setupStringTokenSelection() {
+                setTimeout(() => {
+                    const stringTokenItems = document.querySelectorAll('.string-token-item');
+                    window.selectedStringToken = null;
+
+                    stringTokenItems.forEach(item => {
+                        const newItem = item.cloneNode(true);
+                        item.parentNode.replaceChild(newItem, item);
+
+                        newItem.addEventListener('click', function() {
+                            const token = this.getAttribute('data-token');
+
+                            document.querySelectorAll('.string-token-item').forEach(tokenItem => {
+                                tokenItem.style.backgroundColor = '#f0f8ff';
+                            });
+
+                            this.style.backgroundColor = '#d1e7ff';
+                            window.selectedStringToken = token;
+
+                            const stringValueInput = document.getElementById('string-value');
+                            if (stringValueInput) {
+                                stringValueInput.value = token;
+                            }
+
+                            const selectedDisplay = document.getElementById('selected-string-token-display');
+                            if (selectedDisplay) {
+                                selectedDisplay.innerHTML = `
+                                    <strong>Selected token:</strong> ${token}
+                                    <div style="margin-top: 5px;">
+                                        <small>Will be used as: "${token}"</small>
+                                    </div>
+                                `;
+                            }
+                        });
+                    });
+                }, 100);
+            }
+
+            // Handle token selection - support for multiple selection
+            const tokenItems = document.querySelectorAll('.token-item');
+
+            window.selectedTokenObjects = [];
+            window.selectedTokens = [];
+            window.selectedSense = null;
+
+            // Function to check if a string is numeric
+            function isNumeric(str) {
+                return !isNaN(str) && !isNaN(parseFloat(str));
+            }
+
+            // Function to update the token selection display
+            function updateTokenSelectionDisplay() {
+                const selectedTokensDisplay = document.createElement('div');
+                selectedTokensDisplay.style.marginTop = '10px';
+                selectedTokensDisplay.style.padding = '8px';
+                selectedTokensDisplay.style.backgroundColor = '#f8f9fa';
+                selectedTokensDisplay.style.borderRadius = '4px';
+
+                if (window.selectedTokens.length > 0) {
+                    selectedTokensDisplay.innerHTML = `
+                        <strong>Selected tokens:</strong> ${window.selectedTokens.join(', ')}
+                        <div style="margin-top: 5px;">
+                            <small>Concept will be: ${window.selectedSense || window.selectedTokens.join('-')}</small>
+                        </div>
+                    `;
+                } else {
+                    selectedTokensDisplay.innerHTML = '<em>No tokens selected</em>';
+                }
+
+                const existingDisplay = document.getElementById('selected-tokens-display');
+                if (existingDisplay) {
+                    existingDisplay.remove();
+                }
+
+                selectedTokensDisplay.id = 'selected-tokens-display';
+                const tokensContainer = document.getElementById('tokens-container');
+                if (tokensContainer) {
+                    tokensContainer.appendChild(selectedTokensDisplay);
+                }
+            }
+
+            // Function to hide sense selector
+            function hideSenseSelector() {
+                const senseContainer = document.getElementById('sense-selector-container');
+                if (senseContainer) {
+                    senseContainer.style.display = 'none';
+                }
+            }
+
+            // Function to show sense selector for a token
+            async function showSenseSelector(token) {
+                const lemma = await lemmatizeToken(token);
+                console.log(`Lemmatized '${token}' to '${lemma}'`);
+
+                try {
+                    const senses = await findFrameSenses(lemma);
+                    console.log(`Found ${senses.length} senses for lemma '${lemma}'`, senses);
+
+                    let senseContainer = document.getElementById('sense-selector-container');
+                    if (!senseContainer) {
+                        senseContainer = document.createElement('div');
+                        senseContainer.id = 'sense-selector-container';
+                        senseContainer.style.marginTop = '15px';
+                        senseContainer.style.padding = '10px';
+                        senseContainer.style.backgroundColor = '#f0f8ff';
+                        senseContainer.style.borderRadius = '4px';
+                        senseContainer.style.border = '1px solid #ccc';
+
+                        const tokensContainer = document.getElementById('tokens-container');
+                        if (tokensContainer) {
+                            tokensContainer.parentNode.insertBefore(senseContainer, tokensContainer.nextSibling);
+                        }
+                    }
+                    senseContainer.style.display = 'block';
+
+                    let senseContent = '';
+
+                    if (senses.length > 0) {
+                        const frames = await loadFramesData();
+                        const sensesWithArgs = senses.map(sense => {
+                            const frameArgs = frames[sense] || {};
+                            let argString = '';
+                            Object.entries(frameArgs).forEach(([arg, desc]) => {
+                                if (argString) argString += ', ';
+                                argString += `${arg}: ${desc}`;
+                            });
+                            return { sense: sense, args: argString, argsObj: frameArgs };
+                        });
+
+                        senseContent = `
+                            <div style="margin-bottom: 8px;">
+                                <label for="sense-selector" style="font-weight: bold;">Select sense for "${token}" (lemmatized as "${lemma}"):</label>
+                                <div style="position: relative; margin-bottom: 8px; margin-top: 8px;">
+                                    <input type="text" id="sense-search"
+                                        style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                        placeholder="Type to search senses...">
+                                </div>
+                                <select id="sense-selector" size="6" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 200px;">
+                                    <option value="">Select a sense...</option>
+                                    ${sensesWithArgs.map(item => `<option value="${item.sense}" data-has-args="true">${item.sense}</option>`).join('')}
+                                </select>
+                                <div id="selected-sense-args" style="margin-top: 10px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; background-color: #f8f9fa; display: none;">
+                                    <strong>Sense Arguments:</strong>
+                                    <div id="args-content" style="margin-top: 5px;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <label for="manual-sense" style="font-weight: bold;">Or manually enter a sense:</label>
+                                <div style="display: flex; margin-top: 5px;">
+                                    <input type="text" id="manual-sense"
+                                        style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;"
+                                        placeholder="e.g., ${lemma}-01">
+                                    <button id="apply-manual-sense"
+                                        style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        senseContent = `
+                            <div>
+                                <div style="padding: 10px; background-color: #fff3cd; border-radius: 4px; margin-bottom: 15px;">
+                                    <strong>No predicate frames found for "${token}" (lemmatized as "${lemma}")</strong>
+                                </div>
+                                <div style="margin-top: 15px;">
+                                    <p>You may still manually enter a sense:</p>
+                                    <div style="display: flex; margin-top: 8px;">
+                                        <input type="text" id="manual-sense"
+                                            style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;"
+                                            placeholder="e.g., ${lemma}-01">
+                                        <button id="apply-manual-sense"
+                                            style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                                            Apply
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    senseContainer.innerHTML = senseContent;
+
+                    // Add event listeners for sense selection
+                    if (senses.length > 0) {
+                        const senseSelector = document.getElementById('sense-selector');
+                        const argsDisplay = document.getElementById('selected-sense-args');
+                        const argsContent = document.getElementById('args-content');
+
+                        if (senseSelector) {
+                            setupDropdownFiltering(document.getElementById('sense-search'), senseSelector, senses);
+
+                            senseSelector.addEventListener('change', async () => {
+                                const selectedSense = senseSelector.value;
+                                if (selectedSense) {
+                                    window.selectedSense = selectedSense;
+                                    updateTokenSelectionDisplay();
+
+                                    try {
+                                        const framesData = await loadFramesData();
+                                        const args = framesData[selectedSense] || {};
+                                        let argsHtml = '';
+                                        for (const [arg, desc] of Object.entries(args)) {
+                                            argsHtml += `<div><strong>${arg}:</strong> ${desc}</div>`;
+                                        }
+                                        if (argsHtml && argsDisplay && argsContent) {
+                                            argsContent.innerHTML = argsHtml;
+                                            argsDisplay.style.display = 'block';
+                                        } else if (argsDisplay) {
+                                            argsDisplay.style.display = 'none';
+                                        }
+                                    } catch (e) {
+                                        console.error('Error fetching args:', e);
+                                    }
+                                } else {
+                                    window.selectedSense = null;
+                                    updateTokenSelectionDisplay();
+                                    if (argsDisplay) argsDisplay.style.display = 'none';
+                                }
+                            });
+                        }
+                    }
+
+                    // Handle manual sense entry
+                    const applyButton = document.getElementById('apply-manual-sense');
+                    const manualSenseInput = document.getElementById('manual-sense');
+                    if (applyButton && manualSenseInput) {
+                        applyButton.addEventListener('click', () => {
+                            const manualSense = manualSenseInput.value.trim();
+                            if (manualSense) {
+                                window.selectedSense = manualSense;
+                                updateTokenSelectionDisplay();
+                            }
+                        });
+                        manualSenseInput.addEventListener('keypress', (event) => {
+                            if (event.key === 'Enter') {
+                                const manualSense = manualSenseInput.value.trim();
+                                if (manualSense) {
+                                    window.selectedSense = manualSense;
+                                    updateTokenSelectionDisplay();
+                                }
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error in showSenseSelector:', error);
+                }
+            }
+
+            // Function to handle token click
+            const handleTokenClick = async (item) => {
+                const token = item.getAttribute('data-token');
+                const tokenIndex = item.getAttribute('data-index');
+
+                if (item.style.backgroundColor === 'rgb(209, 231, 255)') {
+                    item.style.backgroundColor = '#f0f8ff';
+                    const objIndex = window.selectedTokenObjects.findIndex(
+                        obj => obj.index === tokenIndex && obj.token === token
+                    );
+                    if (objIndex > -1) {
+                        window.selectedTokenObjects.splice(objIndex, 1);
+                    }
+                } else {
+                    item.style.backgroundColor = '#d1e7ff';
+                    const alreadySelected = window.selectedTokenObjects.some(
+                        obj => obj.index === tokenIndex && obj.token === token
+                    );
+                    if (!alreadySelected) {
+                        window.selectedTokenObjects.push({ token: token, index: tokenIndex });
+                    }
+                }
+
+                window.selectedTokens = window.selectedTokenObjects.map(obj => obj.token);
+                updateTokenSelectionDisplay();
+
+                if (window.selectedTokenObjects.length === 1 && !isNumeric(window.selectedTokenObjects[0].token)) {
+                    await showSenseSelector(window.selectedTokenObjects[0].token);
+                } else {
+                    hideSenseSelector();
+                }
+            };
+
+            // Set up token item click handlers
+            tokenItems.forEach(item => {
+                item.addEventListener('click', async function() {
+                    handleTokenClick(this);
+                });
+            });
+        }
+
         // Function to update the child node container based on selected relation
         function updateChildNodeContainer() {
             const selectedRelation = relationSelect.value;
@@ -2388,31 +2857,198 @@ async function showAddBranchDialog(parentVariableSpan) {
             const predefinedValues = relationsWithValues[selectedRelation];
             
             if (predefinedValues && predefinedValues.length > 0) {
-                // Relation has predefined values - only allow selection from these values
+                // Relation has predefined values - show these values plus an "Other" option for child nodes
                 console.log(`Relation ${selectedRelation} has predefined values:`, predefinedValues);
-                
+
                 childNodeContainer.innerHTML = `
                     <div style="margin-bottom: 16px;">
                         <label for="predefined-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Value:</label>
                         <div style="position: relative; margin-bottom: 8px;">
-                            <input type="text" id="predefined-value-search" 
-                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                            <input type="text" id="predefined-value-search"
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
                                 placeholder="Type to search values...">
                         </div>
                         <select id="predefined-value" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select a value...</option>
                             ${predefinedValues.map(value => `<option value="${value}">${value}</option>`).join('')}
+                            <option value="__OTHER__" style="font-style: italic; color: #666;">── Other (select child node) ──</option>
                         </select>
                     </div>
+
+                    <!-- Container for child node type selection (shown when "Other" is selected) -->
+                    <div id="other-child-node-container" style="display: none;">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Child Node Type:</label>
+                            <select id="child-node-type" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                                <option value="">Select type...</option>
+                                <option value="token">Sentence Token</option>
+                                <option value="discourse">Discourse Concept</option>
+                                <option value="abstract">Abstract Concept</option>
+                                <option value="ne">Named Entity</option>
+                                <option value="non-event">Reification Roleset</option>
+                                <option value="string">String Value</option>
+                                <option value="number">Number Value</option>
+                                <option value="reentrant">Re-entrancy</option>
+                            </select>
+                        </div>
+
+                        <!-- Container for token selection -->
+                        <div id="token-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="token-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search tokens...">
+                            </div>
+                            <div id="tokens-container" style="max-height: 250px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div id="tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                                    ${sentenceTokens.map(tokenObj => `
+                                        <div class="token-item" data-token="${tokenObj.token}" data-index="${tokenObj.index}" style="padding: 8px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                            <span style="font-size: 0.7em; color: #666; vertical-align: super;">${tokenObj.index}</span>${tokenObj.token}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Container for discourse concept selection -->
+                        <div id="discourse-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="discourse-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select discourse concept:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="discourse-concept-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search discourse concepts...">
+                            </div>
+                            <select id="discourse-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select concept...</option>
+                                ${discourseConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <!-- Container for abstract concept selection -->
+                        <div id="abstract-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="abstract-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select abstract concept:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="abstract-concept-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search abstract concepts...">
+                            </div>
+                            <select id="abstract-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select concept...</option>
+                                ${abstractConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <!-- Container for named entity selection -->
+                        <div id="ne-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="ne-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Select named entity type:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="ne-type-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search named entity types...">
+                            </div>
+                            <select id="ne-type" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select entity type...</option>
+                                ${neTypesList.map(type => `<option value="${type}">${type}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <!-- Container for non-event roleset selection -->
+                        <div id="non-event-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="non-event-roleset" style="display: block; margin-bottom: 8px; font-weight: bold;">Select non-event roleset:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="non-event-roleset-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search non-event rolesets...">
+                            </div>
+                            <select id="non-event-roleset" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
+                                <option value="">Select roleset...</option>
+                                ${nonEventRolesetsList.map(roleset => `<option value="${roleset}">${roleset}</option>`).join('')}
+                            </select>
+                        </div>
+
+                        <!-- Container for string value input -->
+                        <div id="string-input-container" style="display: none; margin-bottom: 16px;">
+                            <label for="string-token-selection" style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token for string value:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="string-token-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search tokens...">
+                            </div>
+                            <div id="string-tokens-container" style="max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div id="string-tokens-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px;">
+                                    ${sentenceTokens.map(tokenObj => `
+                                    <div class="string-token-item" data-token="${tokenObj.token}" data-index="${tokenObj.index}" style="padding: 6px; background-color: #f0f8ff; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        <span style="font-size: 0.7em; color: #666; vertical-align: super;">${tokenObj.index}</span>${tokenObj.token}
+                                    </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div id="selected-string-token-display" style="margin-top: 8px; padding: 6px; background-color: #f8f9fa; border-radius: 4px;">
+                                <em>No token selected</em>
+                            </div>
+                            <input type="hidden" id="string-value">
+                        </div>
+
+                        <!-- Container for number value input -->
+                        <div id="number-input-container" style="display: none; margin-bottom: 16px;">
+                            <label for="number-value" style="display: block; margin-bottom: 8px; font-weight: bold;">Enter number value:</label>
+                            <input type="number" id="number-value" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" placeholder="Enter numeric value">
+                        </div>
+
+                        <!-- Container for re-entrancy variable selection -->
+                        <div id="reentrant-selection-container" style="display: none; margin-bottom: 16px;">
+                            <label for="reentrant-variable" style="display: block; margin-bottom: 8px; font-weight: bold;">Select existing variable:</label>
+                            <div style="position: relative; margin-bottom: 8px;">
+                                <input type="text" id="reentrant-variable-search"
+                                    style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
+                                    placeholder="Type to search variables...">
+                            </div>
+                            <div id="reentrant-variables-container" style="max-height: 200px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                                <div id="reentrant-variables-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px;">
+                                    <!-- Variables will be populated here -->
+                                </div>
+                            </div>
+                            <div id="selected-reentrant-display" style="margin-top: 8px; padding: 6px; background-color: #f8f9fa; border-radius: 4px;">
+                                <em>No variable selected</em>
+                            </div>
+                            <input type="hidden" id="reentrant-variable-value">
+                        </div>
+                    </div>
                 `;
-                
+
                 // Set up filtering for predefined values dropdown
                 const searchInput = document.getElementById('predefined-value-search');
                 const selectElement = document.getElementById('predefined-value');
-                setupDropdownFiltering(searchInput, selectElement, predefinedValues);
-                
+                // Add "__OTHER__" to the list for filtering purposes
+                const valuesWithOther = [...predefinedValues, '__OTHER__'];
+                setupDropdownFiltering(searchInput, selectElement, valuesWithOther);
+
                 // Hide name tokens container as it's not needed for predefined values
                 document.getElementById('name-tokens-container').style.display = 'none';
+
+                // Handle predefined value selection change to show/hide child node options
+                selectElement.addEventListener('change', function() {
+                    const selectedValue = this.value;
+                    const otherContainer = document.getElementById('other-child-node-container');
+
+                    if (selectedValue === '__OTHER__') {
+                        // Show the child node type selection
+                        otherContainer.style.display = 'block';
+
+                        // Set up the child node type handling
+                        setupChildNodeTypeHandling(
+                            sentenceTokens,
+                            discourseConceptsList,
+                            abstractConceptsList,
+                            neTypesList,
+                            nonEventRolesetsList
+                        );
+                    } else {
+                        // Hide the child node type selection
+                        otherContainer.style.display = 'none';
+                    }
+                });
             } else {
                 // Relation doesn't have predefined values - show all the different options
                 console.log(`Relation ${selectedRelation} doesn't have predefined values`);
@@ -3397,17 +4033,25 @@ async function showAddBranchDialog(parentVariableSpan) {
             
             // Handle different types of relations and child nodes
             const predefinedValues = relationsWithValues[selectedRelation];
-            
-            if (predefinedValues && predefinedValues.length > 0) {
-                // For relations with predefined values
-                const predefinedValue = document.getElementById('predefined-value').value;
-                if (!predefinedValue) {
-                    showNotification('Please select a value', 'error');
-                return;
-            }
-            
+            const predefinedValueElement = document.getElementById('predefined-value');
+            const predefinedValue = predefinedValueElement ? predefinedValueElement.value : null;
+
+            // Check if using predefined value (not "__OTHER__" which means child node selection)
+            if (predefinedValues && predefinedValues.length > 0 && predefinedValue && predefinedValue !== '__OTHER__') {
+                // For relations with predefined values (using actual predefined value, not "Other")
                 childNode = predefinedValue;
-            } else {
+            } else if (predefinedValues && predefinedValues.length > 0 && (!predefinedValue || predefinedValue === '__OTHER__')) {
+                // For relations with predefined values but user selected "Other" (or nothing yet)
+                const childNodeType = document.getElementById('child-node-type')?.value;
+                if (!childNodeType) {
+                    showNotification('Please select a value or choose "Other" and select a child node type', 'error');
+                    return;
+                }
+                // Fall through to child node type handling below
+            }
+
+            // Handle child node type selection (either from "Other" selection or regular relations)
+            if (!childNode) {
                 // For relations without predefined values
                 const childNodeType = document.getElementById('child-node-type')?.value;
                 if (!childNodeType) {
