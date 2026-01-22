@@ -1379,9 +1379,10 @@ def view_sentences(doc_version_id):
     doc_version = DocVersion.query.get_or_404(doc_version_id)
     doc = Doc.query.get_or_404(doc_version.doc_id)
     project = Project.query.get_or_404(doc.project_id)
-    
-    # Check user permission
-    if not check_user_permission(doc.project_id):
+
+    # Check user permission - any project member can view
+    membership = Projectuser.query.filter_by(project_id=doc.project_id, user_id=current_user.id).first()
+    if not membership:
         flash('You do not have permission to view this document.', 'warning')
         return redirect(url_for('main.home'))
     
@@ -1410,9 +1411,10 @@ def view_sent_annotation(doc_version_id, sent_id):
     """View sentence-level annotation in a clean, simple interface."""
     doc_version = DocVersion.query.get_or_404(doc_version_id)
     doc = Doc.query.get_or_404(doc_version.doc_id)
-    
-    # Check user permission
-    if not check_user_permission(doc.project_id):
+
+    # Check user permission - any project member can view
+    membership = Projectuser.query.filter_by(project_id=doc.project_id, user_id=current_user.id).first()
+    if not membership:
         flash('You do not have permission to view this document.', 'warning')
         return redirect(url_for('main.home'))
     
@@ -1453,9 +1455,10 @@ def view_doc_annotation(doc_version_id, sent_id):
     """View document-level annotation in a clean, simple interface."""
     doc_version = DocVersion.query.get_or_404(doc_version_id)
     doc = Doc.query.get_or_404(doc_version.doc_id)
-    
-    # Check user permission
-    if not check_user_permission(doc.project_id):
+
+    # Check user permission - any project member can view
+    membership = Projectuser.query.filter_by(project_id=doc.project_id, user_id=current_user.id).first()
+    if not membership:
         flash('You do not have permission to view this document.', 'warning')
         return redirect(url_for('main.home'))
     
@@ -1496,9 +1499,10 @@ def view_alignments(doc_version_id, sent_id):
     """View annotation alignments in a clean, simple interface."""
     doc_version = DocVersion.query.get_or_404(doc_version_id)
     doc = Doc.query.get_or_404(doc_version.doc_id)
-    
-    # Check user permission
-    if not check_user_permission(doc.project_id):
+
+    # Check user permission - any project member can view
+    membership = Projectuser.query.filter_by(project_id=doc.project_id, user_id=current_user.id).first()
+    if not membership:
         flash('You do not have permission to view this document.', 'warning')
         return redirect(url_for('main.home'))
     
@@ -1539,9 +1543,10 @@ def view_combined(doc_version_id, sent_id):
     """View all annotations in a combined format (sentences, sentence-level, document-level, and alignments)."""
     doc_version = DocVersion.query.get_or_404(doc_version_id)
     doc = Doc.query.get_or_404(doc_version.doc_id)
-    
-    # Check user permission
-    if not check_user_permission(doc.project_id):
+
+    # Check user permission - any project member can view annotations
+    membership = Projectuser.query.filter_by(project_id=doc.project_id, user_id=current_user.id).first()
+    if not membership:
         flash('You do not have permission to view this document.', 'warning')
         return redirect(url_for('main.home'))
     
