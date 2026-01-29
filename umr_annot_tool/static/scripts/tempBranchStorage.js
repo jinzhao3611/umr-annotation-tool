@@ -925,44 +925,31 @@ function extractNodes(annotationText) {
     console.log('Extracting nodes from annotation text');
     const nodes = [];
     const lines = annotationText.split('\n');
-    
-    // Multiple node patterns to try - from strict to permissive
-    const patterns = [
-        /^(\s*)(s\d+\w*)\s*\/\s*([^\s\(\):]+)/,  // Standard format with indentation - more permissive concept pattern
-        /(s\d+\w*)\s*\/\s*([^\s\(\):]+)/         // More permissive format with permissive concept pattern
-    ];
-    
+
+    // Match variable / concept anywhere on the line (handles both root and child nodes)
+    const pattern = /(s\d+\w*)\s*\/\s*([^\s\(\):]+)/;
+
     console.log('Total lines to check:', lines.length);
-    
-    // Try each pattern in order
-    for (const pattern of patterns) {
-        for (const line of lines) {
-            const match = line.match(pattern);
-            if (match) {
-                // Adapt based on which pattern matched (with or without indentation group)
-                const node = {
-                    variable: match[patterns.indexOf(pattern) === 0 ? 2 : 1],
-                    concept: match[patterns.indexOf(pattern) === 0 ? 3 : 2],
-                    line: line,
-                    indentation: match[1] && patterns.indexOf(pattern) === 0 ? match[1].length : line.indexOf(match[0])
-                };
-                console.log('Found node:', node.variable, '/', node.concept);
-                
-                // Check if this node is already in our list (avoid duplicates)
-                const isDuplicate = nodes.some(existing => existing.variable === node.variable);
-                if (!isDuplicate) {
-                    nodes.push(node);
-                }
+
+    for (const line of lines) {
+        const match = line.match(pattern);
+        if (match) {
+            const node = {
+                variable: match[1],
+                concept: match[2],
+                line: line,
+                indentation: line.indexOf(match[0])
+            };
+            console.log('Found node:', node.variable, '/', node.concept);
+
+            // Check if this node is already in our list (avoid duplicates)
+            const isDuplicate = nodes.some(existing => existing.variable === node.variable);
+            if (!isDuplicate) {
+                nodes.push(node);
             }
         }
-        
-        // If we found nodes with this pattern, don't try more permissive patterns
-        if (nodes.length > 0) {
-            console.log(`Found ${nodes.length} nodes with pattern index ${patterns.indexOf(pattern)}`);
-            break;
-        }
     }
-    
+
     console.log('Total nodes extracted:', nodes.length);
     return nodes;
 }
