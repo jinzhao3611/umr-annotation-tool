@@ -104,7 +104,6 @@ def warn(msg, testclass, testlevel, testid, lineno=0, explanation=None):
     an error of this type, the string will be appended to the main message. It
     can be used as an extended explanation of the situation.
     """
-    global curr_fname, curr_line, sentence_line, sentence_id, error_counter, args
     error_counter[testclass] = error_counter.get(testclass, 0)+1
     if args.max_err > 0 and error_counter[testclass] > args.max_err:
         if error_counter[testclass] == args.max_err + 1:
