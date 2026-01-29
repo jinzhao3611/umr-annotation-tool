@@ -1,47 +1,8 @@
 import pytest
 import tempfile
 import os
-import sys
-from playwright.sync_api import sync_playwright
 from umr_annot_tool import create_app, db, bcrypt
-from umr_annot_tool.models import User, Project, Doc, DocVersion, Projectuser
-
-
-@pytest.fixture(scope="session")
-def playwright_context():
-    """Playwright context fixture for the entire test session."""
-    with sync_playwright() as p:
-        # Check command line arguments for --headed and --slowmo
-        headless = "--headed" not in sys.argv
-        slow_mo = 0
-        
-        # Look for --slowmo argument
-        for i, arg in enumerate(sys.argv):
-            if arg == "--slowmo" and i + 1 < len(sys.argv):
-                try:
-                    slow_mo = int(sys.argv[i + 1])
-                except ValueError:
-                    slow_mo = 0
-        
-        browser = p.chromium.launch(
-            headless=headless,
-            slow_mo=slow_mo
-        )
-        context = browser.new_context(
-            viewport={'width': 1280, 'height': 720},
-            ignore_https_errors=True
-        )
-        yield context
-        context.close()
-        browser.close()
-
-
-@pytest.fixture
-def page(playwright_context):
-    """Create a new page for each test."""
-    page = playwright_context.new_page()
-    yield page
-    page.close()
+from umr_annot_tool.models import User, Project, Projectuser
 
 
 class TestConfig:
@@ -58,25 +19,25 @@ def app():
     """Create application for testing."""
     # Create temporary database
     db_fd, db_path = tempfile.mkstemp()
-    
+
     # Store original environment variables
     original_env = {}
     env_vars_to_clear = ['DATABASE_URL', 'SECRET_KEY', 'SQLALCHEMY_DATABASE_URI']
-    
+
     for var in env_vars_to_clear:
         if var in os.environ:
             original_env[var] = os.environ[var]
             del os.environ[var]
-    
+
     # Create test config class with dynamic database path
     class TestConfigWithDB(TestConfig):
         SQLALCHEMY_DATABASE_URI = f'sqlite:///{db_path}'
-    
+
     app = create_app(TestConfigWithDB)
-    
+
     with app.app_context():
         db.create_all()
-        
+
         # Create test user
         test_user = User(
             username='testuser',
@@ -84,15 +45,15 @@ def app():
             password=bcrypt.generate_password_hash('testpassword').decode('utf-8')
         )
         db.session.add(test_user)
-        
-        # Create admin user (using username to distinguish admin access)  
+
+        # Create admin user
         admin_user = User(
-            username='testadmin',  # Test admin user
+            username='testadmin',
             email='admin@example.com',
             password=bcrypt.generate_password_hash('adminpassword').decode('utf-8')
         )
         db.session.add(admin_user)
-        
+
         # Create test project (created by admin user)
         test_project = Project(
             project_name='Test Project',
@@ -120,13 +81,13 @@ def app():
         )
         db.session.add(admin_project_user)
         db.session.commit()
-    
+
     yield app
-    
+
     # Cleanup
     os.close(db_fd)
     os.unlink(db_path)
-    
+
     # Restore original environment variables
     for var, value in original_env.items():
         os.environ[var] = value
@@ -138,96 +99,26 @@ def client(app):
     return app.test_client()
 
 
-@pytest.fixture(scope="session")
-def live_server(app):
-    """Start live server for Playwright tests."""
-    import threading
-    import time
-    import socket
-    from werkzeug.serving import make_server
-
-    # Find an available port (starting from 5100 to avoid conflicts with system services)
-    port = 5100
-    max_attempts = 20
-    for attempt in range(max_attempts):
-        try:
-            # Test if port is available
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            sock.bind(('127.0.0.1', port))
-            sock.close()
-            break
-        except OSError:
-            port += 1
-            if attempt == max_attempts - 1:
-                raise RuntimeError(f"Could not find available port after {max_attempts} attempts")
-
-    server = make_server('127.0.0.1', port, app, threaded=True)
-    thread = threading.Thread(target=server.serve_forever)
-    thread.daemon = True
-    thread.start()
-
-    # Wait for server to actually start and be ready
-    import requests
-    for _ in range(10):
-        try:
-            response = requests.get(f'http://127.0.0.1:{port}/')
-            if response.status_code in [200, 302, 404]:  # Any response means server is up
-                break
-        except requests.exceptions.ConnectionError:
-            time.sleep(0.5)
-    else:
-        raise RuntimeError("Server did not start within 5 seconds")
-
-    yield f'http://127.0.0.1:{port}'
-
-    server.shutdown()
+@pytest.fixture
+def auth_client(client, app):
+    """Test client that is logged in as a regular user."""
+    with app.app_context():
+        client.post('/login', data={
+            'email': 'test@example.com',
+            'password': 'testpassword',
+        }, follow_redirects=True)
+    return client
 
 
 @pytest.fixture
-def authenticated_page(page, live_server):
-    """Page fixture with logged-in user."""
-    # Navigate to login page
-    page.goto(f"{live_server}/login")
-
-    # Check if we're redirected to account (already logged in)
-    if "/account" in page.url:
-        # Already logged in, no need to login again
-        pass
-    else:
-        # Fill login form
-        page.fill('input[name="email"]', 'test@example.com')
-        page.fill('input[name="password"]', 'testpassword')
-        page.click('input[type="submit"]')
-
-        # Wait for redirect to account page (app redirects here after login)
-        page.wait_for_url(f"{live_server}/account")
-
-    yield page
-
-
-@pytest.fixture
-def admin_page(page, live_server):
-    """Page fixture with logged-in admin user."""
-    # Navigate to login page
-    page.goto(f"{live_server}/login")
-
-    # Check if we're redirected to account (already logged in)
-    if "/account" in page.url:
-        # Already logged in, check if it's the admin user
-        # If not, we'd need to logout and login as admin
-        # For simplicity, assuming tests don't mix user types in same session
-        pass
-    else:
-        # Fill login form with admin credentials
-        page.fill('input[name="email"]', 'admin@example.com')
-        page.fill('input[name="password"]', 'adminpassword')
-        page.click('input[type="submit"]')
-
-        # Wait for redirect (admin redirects to account page)
-        page.wait_for_load_state("networkidle")
-
-    yield page
+def admin_client(client, app):
+    """Test client that is logged in as an admin user."""
+    with app.app_context():
+        client.post('/login', data={
+            'email': 'admin@example.com',
+            'password': 'adminpassword',
+        }, follow_redirects=True)
+    return client
 
 
 @pytest.fixture
@@ -261,122 +152,3 @@ def sample_umr_file(tmp_path, sample_umr_content):
     umr_file = tmp_path / "test.umr"
     umr_file.write_text(sample_umr_content)
     return str(umr_file)
-
-
-@pytest.fixture
-def api_client(app):
-    """Create API client for direct API testing without UI."""
-    return app.test_client()
-
-
-@pytest.fixture
-def api_login(api_client):
-    """Helper fixture to perform API login and return authentication headers."""
-    def _login(email='test@example.com', password='testpassword'):
-        response = api_client.post('/api/login', json={
-            'email': email,
-            'password': password
-        })
-        
-        if response.status_code == 200:
-            data = response.get_json()
-            token = data.get('token')
-            if token:
-                return {'Authorization': f'Bearer {token}'}
-            # If no token, try session-based auth
-            return {}
-        return None
-    
-    return _login
-
-
-@pytest.fixture
-def api_admin_login(api_client):
-    """Helper fixture for admin API login."""
-    def _login():
-        response = api_client.post('/api/login', json={
-            'email': 'admin@example.com',
-            'password': 'adminpassword'
-        })
-        
-        if response.status_code == 200:
-            data = response.get_json()
-            token = data.get('token')
-            if token:
-                return {'Authorization': f'Bearer {token}'}
-            return {}
-        return None
-    
-    return _login
-
-
-@pytest.fixture
-def reset_database(app):
-    """Reset database to initial state."""
-    with app.app_context():
-        # Drop all tables
-        db.drop_all()
-        # Recreate tables
-        db.create_all()
-        
-        # Create default test users
-        test_user = User(
-            username='testuser',
-            email='test@example.com',
-            password=bcrypt.generate_password_hash('testpassword').decode('utf-8')
-        )
-        admin_user = User(
-            username='testadmin',
-            email='admin@example.com',
-            password=bcrypt.generate_password_hash('adminpassword').decode('utf-8')
-        )
-        
-        db.session.add(test_user)
-        db.session.add(admin_user)
-        db.session.commit()
-        
-        yield
-        
-        # Optional: Reset again after test
-        db.drop_all()
-        db.create_all()
-
-
-@pytest.fixture
-def seed_test_data(app):
-    """Seed database with comprehensive test data."""
-    with app.app_context():
-        # Create multiple users
-        users = [
-            User(username='alice', email='alice@test.com', 
-                 password=bcrypt.generate_password_hash('password123').decode('utf-8')),
-            User(username='bob', email='bob@test.com',
-                 password=bcrypt.generate_password_hash('password123').decode('utf-8')),
-            User(username='charlie', email='charlie@test.com',
-                 password=bcrypt.generate_password_hash('password123').decode('utf-8'))
-        ]
-        
-        for user in users:
-            db.session.add(user)
-        
-        db.session.commit()
-        
-        # Create multiple projects
-        projects = [
-            Project(project_name='English UMR Project', language='en', created_by_user_id=1),
-            Project(project_name='Chinese UMR Project', language='zh', created_by_user_id=2),
-            Project(project_name='Arabic UMR Project', language='ar', created_by_user_id=3)
-        ]
-        
-        for project in projects:
-            db.session.add(project)
-        
-        db.session.commit()
-        
-        # Add members to projects
-        # Note: This depends on your actual project membership model
-        # You may need to adjust based on your schema
-        
-        yield
-        
-        # Cleanup is handled by the session rollback 

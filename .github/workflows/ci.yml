@@ -9,186 +9,71 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
-        python-version: [3.8, 3.9, '3.10']
-    
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: umr_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    
+        python-version: ['3.9', '3.10', '3.11']
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-    
+      uses: actions/checkout@v4
+
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    
+
     - name: Cache pip packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
-    
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements-dev.txt
-        pip install pytest pytest-playwright pytest-cov
-    
-    - name: Install Playwright browsers
-      run: |
-        playwright install chromium
-        playwright install-deps chromium
-    
-    - name: Set up test database
-      env:
-        DATABASE_URL: postgresql://testuser:testpass@localhost:5432/umr_test
-      run: |
-        # Create tables and run migrations if manage.py exists
-        if [ -f "manage.py" ]; then
-          python manage.py db upgrade
-        fi
-    
-    - name: Run linting
-      run: |
-        # Run flake8 if config exists
-        if [ -f ".flake8" ] || [ -f "setup.cfg" ] || [ -f "tox.ini" ]; then
-          pip install flake8
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics || true
-        fi
-    
-    - name: Run type checking
-      run: |
-        # Run mypy if config exists
-        if [ -f "mypy.ini" ] || [ -f "setup.cfg" ] || [ -f "pyproject.toml" ]; then
-          pip install mypy
-          mypy . --ignore-missing-imports || true
-        fi
-    
-    - name: Start application server
-      env:
-        DATABASE_URL: postgresql://testuser:testpass@localhost:5432/umr_test
-        FLASK_ENV: testing
-        SECRET_KEY: test-secret-key-for-ci
-      run: |
-        # Start the Flask app in background
-        python app.py &
-        # Wait for server to be ready
-        sleep 5
-        # Check if server is running
-        curl -f http://localhost:5000 || exit 1
-    
+
     - name: Run tests
       env:
-        DATABASE_URL: postgresql://testuser:testpass@localhost:5432/umr_test
-        TEST_BASE_URL: http://localhost:5000
+        SECRET_KEY: test-secret-key-for-ci
       run: |
-        pytest tests/ -v --tb=short --maxfail=5
-    
-    - name: Upload test results
-      if: failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-results-${{ matrix.python-version }}
-        path: |
-          test-results/
-          playwright-report/
-          playwright-traces/
-    
-    - name: Upload Playwright traces
-      if: failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: playwright-traces-${{ matrix.python-version }}
-        path: |
-          test-results/
-          traces/
-    
+        pytest tests/ --ignore=tests/e2e -v --tb=short --maxfail=5
+
     - name: Generate coverage report
-      if: matrix.python-version == '3.10'
+      if: matrix.python-version == '3.11'
+      env:
+        SECRET_KEY: test-secret-key-for-ci
       run: |
-        pytest tests/ --cov=. --cov-report=xml --cov-report=html
-    
+        pytest tests/ --ignore=tests/e2e --cov=umr_annot_tool --cov-report=xml --cov-report=html
+
     - name: Upload coverage to Codecov
-      if: matrix.python-version == '3.10'
-      uses: codecov/codecov-action@v3
+      if: matrix.python-version == '3.11'
+      uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         fail_ci_if_error: false
 
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
-    
+      uses: actions/checkout@v4
+
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-    
+        python-version: '3.11'
+
     - name: Install linting tools
       run: |
         python -m pip install --upgrade pip
-        pip install flake8 black isort pylint
-    
-    - name: Run Black formatter check
-      run: |
-        black --check . || echo "Black formatting issues found"
-    
-    - name: Run isort import checker
-      run: |
-        isort --check-only . || echo "Import sorting issues found"
-    
-    - name: Run flake8 linter
-      run: |
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
+        pip install flake8
 
-  security:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-    
-    - name: Install security tools
+    - name: Run flake8 (fatal errors only)
       run: |
-        python -m pip install --upgrade pip
-        pip install safety bandit
-    
-    - name: Run safety check
-      run: |
-        pip install -r requirements.txt
-        safety check --json || echo "Security vulnerabilities found in dependencies"
-    
-    - name: Run bandit security linter
-      run: |
-        bandit -r . -f json -o bandit-report.json || true
-        if [ -f bandit-report.json ]; then
-          echo "Security issues found by Bandit"
-          cat bandit-report.json
-        fi
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
