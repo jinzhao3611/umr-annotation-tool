@@ -168,3 +168,4 @@ logfile
 **/archive/
 **/profile_pics/
 .claude/
+node_modules/
