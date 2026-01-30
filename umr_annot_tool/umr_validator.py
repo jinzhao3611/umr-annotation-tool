@@ -753,7 +753,7 @@ def normalize_attribute_case(annotation: str) -> str:
         (r'\bFullDisaff\b', 'full-negative'),
         (r'\bDisaff\b', 'partial-negative'),
         (r'\bAff\b', 'partial-affirmative'),  # Process this after FullAff/NeutAff to avoid partial match
-        (r'\bNeutral\b', 'neutral-affirmative'),  # Sometimes written as just "Neutral"
+        (r'\bNeutral\b(?!-)', 'neutral-affirmative'),  # Only match standalone "Neutral", not "neutral-affirmative"
     ]
 
     for abbrev, full_form in modstr_values:
