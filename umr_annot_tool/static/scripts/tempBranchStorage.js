@@ -927,13 +927,13 @@ function extractNodes(annotationText) {
     const lines = annotationText.split('\n');
 
     // Match variable / concept anywhere on the line (handles both root and child nodes)
-    const pattern = /(s\d+\w*)\s*\/\s*([^\s\(\):]+)/;
+    // Use global flag so matchAll captures all nodes on a single line
+    const pattern = /(s\d+\w*)\s*\/\s*([^\s\(\):]+)/g;
 
     console.log('Total lines to check:', lines.length);
 
     for (const line of lines) {
-        const match = line.match(pattern);
-        if (match) {
+        for (const match of line.matchAll(pattern)) {
             const node = {
                 variable: match[1],
                 concept: match[2],
@@ -1268,50 +1268,38 @@ function extractBranchFromRelation(relationSpan, annotationElement) {
     
     console.log('Parent relation span found:', parentRelationSpan ? parentRelationSpan.textContent : 'None');
     
-    // Get all relation spans with the same text
-    const sameTextRelationSpans = Array.from(annotationElement.querySelectorAll('.relation-span'))
-                                  .filter(span => span.textContent === relationText);
-    
-    console.log(`Found ${sameTextRelationSpans.length} relation spans with text "${relationText}"`);
-    
-    // Find the index of our span among those with the same text
-    const relativeSpanIndex = sameTextRelationSpans.indexOf(relationSpan);
-    
-    if (relativeSpanIndex === -1) {
-        console.error('Could not determine relation span index');
-        showNotification('Error: Could not identify this relation. Please try again.', 'error');
-        return null;
-    }
-    
-    console.log(`This is occurrence ${relativeSpanIndex} of relation "${relationText}"`);
-    
+    // Use a Range to compute the exact text offset of the clicked relation span
+    // within the annotation element, then map that offset to a line number.
+    // This is reliable regardless of duplicate relation names or case differences.
+    const range = document.createRange();
+    range.selectNodeContents(relationSpan);
+    const preRange = document.createRange();
+    preRange.selectNodeContents(annotationElement);
+    preRange.setEnd(range.startContainer, range.startOffset);
+    const textOffsetBeforeSpan = preRange.toString().length;
+
+    console.log(`Relation span text offset in annotation: ${textOffsetBeforeSpan}`);
+
     // Split the annotation text into lines for line-based extraction
     const lines = originalText.split('\n');
-    
-    // Find all lines containing this relation
-    const relationLines = [];
+
+    // Map the text offset to a line number
+    let charCount = 0;
+    let targetLineIndex = 0;
     for (let i = 0; i < lines.length; i++) {
-        if (lines[i].includes(relationText)) {
-            relationLines.push({
-                lineIndex: i,
-                indent: lines[i].match(/^\s*/)[0].length
-            });
+        // +1 accounts for the '\n' separator
+        if (charCount + lines[i].length + 1 > textOffsetBeforeSpan) {
+            targetLineIndex = i;
+            break;
         }
+        charCount += lines[i].length + 1;
     }
-    
-    console.log(`Found ${relationLines.length} lines containing relation "${relationText}"`);
-    
-    if (relationLines.length === 0) {
-        console.error('No lines found containing relation');
-        showNotification('Error: Could not find relation in text. Please try again.', 'error');
-        return null;
-    }
-    
-    // Get the specific relation line based on index
-    const targetLineInfo = relativeSpanIndex < relationLines.length ? 
-                           relationLines[relativeSpanIndex] : 
-                           relationLines[0];
-    
+
+    const targetLineInfo = {
+        lineIndex: targetLineIndex,
+        indent: lines[targetLineIndex].match(/^\s*/)[0].length
+    };
+
     console.log('Target line info:', targetLineInfo);
     
     const relationLineIndex = targetLineInfo.lineIndex;
@@ -2089,8 +2077,13 @@ function balanceParentheses(text) {
     
     // Should never reach here, but just in case
     return { 
-        text: text, 
+        text: text,
         balanced: false,
         extraClosing: 0
     };
+}
+
+// Export for testing (Node.js / Jest)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { extractNodes, extractBranchFromRelation, balanceParentheses };
 }
