@@ -231,7 +231,7 @@ def generate_alignments_interactive(tokens, graph_text, existing_alignments):
         if var in name_vars or concept == 'name':
             result.no_match.append(var)
             continue
-        if concept in ABSTRACT_CONCEPTS:
+        if concept in ABSTRACT_CONCEPTS and var not in entity_names:
             result.no_match.append(var)
             continue
         if concept.lower() in ENTITY_TYPE_CONCEPTS and var not in entity_names:
