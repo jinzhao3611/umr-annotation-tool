@@ -5,5 +5,8 @@ from umr_annot_tool.resources.utility_modules.modal_converter import (
     strip_modal_annotations_from_penman,
     extract_existing_modal_triples,
 )
+from umr_annot_tool.resources.utility_modules.alignment_generator import (
+    generate_alignments_interactive,
+)
 
 

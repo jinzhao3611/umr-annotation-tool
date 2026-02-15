@@ -530,11 +530,20 @@
                     // Generate variable for the token
                     const tokenVariable = generateUniqueVariable(selectedToken, annotationText);
                     branchContent = `${relation} (${tokenVariable} / ${selectedToken})`;
-                }
 
-                // Trigger alignment for the new variable if needed
-                if (typeof addAlignmentIfNeeded === 'function' && tokenVariable) {
-                    addAlignmentIfNeeded(tokenVariable, selectedToken);
+                    // Auto-add alignment for the new variable
+                    const tokIdx = tokenIndex + 1; // 1-based index
+                    const alignmentValue = `${tokIdx}-${tokIdx}`;
+                    if (typeof currentAlignments !== 'undefined') {
+                        if (!currentAlignments[tokenVariable]) {
+                            currentAlignments[tokenVariable] = [];
+                        }
+                        if (!currentAlignments[tokenVariable].includes(alignmentValue)) {
+                            currentAlignments[tokenVariable].push(alignmentValue);
+                            if (typeof saveAlignments === 'function') saveAlignments();
+                            if (typeof renderAlignments === 'function') renderAlignments();
+                        }
+                    }
                 }
             } else {
                 // Check if it's a predefined value (for relations like :polarity -, :aspect state, etc.)

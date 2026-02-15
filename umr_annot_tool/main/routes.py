@@ -21,6 +21,7 @@ from umr_annot_tool.resources.utility_modules import (
     triples_to_json_list,
     strip_modal_annotations_from_penman,
     extract_existing_modal_triples,
+    generate_alignments_interactive,
 )
 import tempfile
 import subprocess
@@ -1066,6 +1067,49 @@ def save_alignments():
         current_app.logger.error(f"Error saving alignments: {str(e)}", exc_info=True)
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 500
+
+
+@main.route("/api/generate_alignments", methods=['POST'])
+@login_required
+def api_generate_alignments():
+    """Generate alignment suggestions for a sentence graph."""
+    try:
+        data = request.get_json()
+        graph_text = data.get('graph_text', '')
+        tokens = data.get('tokens', [])
+        existing_alignments = data.get('existing_alignments', {})
+
+        if not graph_text or not tokens:
+            return jsonify({'success': False, 'error': 'Missing graph_text or tokens'}), 400
+
+        result = generate_alignments_interactive(tokens, graph_text, existing_alignments)
+
+        # Build ambiguous response with concept info for UI
+        ambiguous_response = {}
+        for var, candidates in result.ambiguous.items():
+            ambiguous_response[var] = {
+                'concept': result.concepts.get(var, ''),
+                'candidates': candidates,
+            }
+
+        # Build no_match response with concept info
+        no_match_response = [
+            {'var': var, 'concept': result.concepts.get(var, '')}
+            for var in result.no_match
+        ]
+
+        return jsonify({
+            'success': True,
+            'confident': result.confident,
+            'ambiguous': ambiguous_response,
+            'no_match': no_match_response,
+            'skipped_count': len(result.skipped),
+        })
+
+    except Exception as e:
+        current_app.logger.error(f"Error generating alignments: {str(e)}", exc_info=True)
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 
 @main.route("/get_concepts", methods=['GET'])
 @login_required

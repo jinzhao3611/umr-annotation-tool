@@ -770,3 +770,15 @@ html, body {
     z-index: 1000;
     pointer-events: none;
 }
+
+/* Generate Alignments Button */
+#generate-alignments-btn {
+    font-size: 0.8rem !important;
+    padding: 4px 10px !important;
+}
+
+/* Disambiguation modal candidate tokens */
+.disambig-token[data-is-candidate="true"]:hover {
+    transform: scale(1.05);
+    transition: transform 0.1s, background 0.15s;
+}

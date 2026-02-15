@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/sentlevel.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/alignments_v2.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/alignment_generator.js') }}"></script>
     <style>
         /* Line numbers styling - using table layout */
         .amr-wrapper {
@@ -2723,8 +2724,10 @@
        
             <!-- Alignments -->
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">Alignments</h5>
+                    <button id="generate-alignments-btn" class="btn btn-sm btn-outline-success"
+                            onclick="generateAlignments()">&#9881; Generate Alignments</button>
                 </div>
                 <div class="card-body">
                     <!-- Add new alignment -->
