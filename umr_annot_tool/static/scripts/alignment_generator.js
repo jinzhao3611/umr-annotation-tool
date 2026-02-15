@@ -120,7 +120,7 @@ function generateAlignments() {
 function showDisambiguationModal(ambiguous, tokens, partialCounts) {
     const entries = Object.entries(ambiguous);
     let currentIndex = 0;
-    const selections = {}; // var -> selected token index (1-based)
+    const selections = {}; // var -> Set of selected token indices (1-based)
 
     // Create modal overlay
     const overlay = document.createElement('div');
@@ -152,14 +152,15 @@ function showDisambiguationModal(ambiguous, tokens, partialCounts) {
             + '</div>';
 
         html += '<p style="margin-bottom:8px;color:#6c757d;font-size:0.9rem;">'
-            + 'Click the correct token for this concept:</p>';
+            + 'Click the correct token(s) for this concept (click again to deselect):</p>';
 
         // Render sentence with candidates highlighted
+        const selected = selections[varName] || new Set();
         html += '<div style="line-height:2.5;padding:12px;background:#f8f9fa;border-radius:8px;margin-bottom:16px;">';
         tokens.forEach((tok, i) => {
             const tokIdx = i + 1; // 1-based
             const isCandidate = candidates.includes(tokIdx);
-            const isSelected = selections[varName] === tokIdx;
+            const isSelected = selected.has(tokIdx);
 
             let style = 'display:inline-block;margin:2px 4px;padding:4px 8px;border-radius:4px;';
             if (isSelected) {
@@ -199,19 +200,25 @@ function showDisambiguationModal(ambiguous, tokens, partialCounts) {
             if (el.dataset.isCandidate === 'true') {
                 el.addEventListener('click', function () {
                     const idx = parseInt(this.dataset.tokIdx);
-                    selections[varName] = idx;
+                    if (!selections[varName]) selections[varName] = new Set();
+                    if (selections[varName].has(idx)) {
+                        selections[varName].delete(idx);
+                    } else {
+                        selections[varName].add(idx);
+                    }
                     renderStep(); // Re-render to show selection
                 });
 
                 // Hover effect for candidates
+                const sel = selections[varName] || new Set();
                 el.addEventListener('mouseenter', function () {
-                    if (selections[varName] !== parseInt(this.dataset.tokIdx)) {
+                    if (!sel.has(parseInt(this.dataset.tokIdx))) {
                         this.style.background = '#ffdb4d';
                     }
                 });
                 el.addEventListener('mouseleave', function () {
                     const idx = parseInt(this.dataset.tokIdx);
-                    if (selections[varName] === idx) {
+                    if (sel.has(idx)) {
                         this.style.background = '#28a745';
                     } else {
                         this.style.background = '#ffc107';
@@ -223,7 +230,7 @@ function showDisambiguationModal(ambiguous, tokens, partialCounts) {
         // Button handlers
         const skipBtn = modal.querySelector('#disambig-skip');
         if (skipBtn) skipBtn.addEventListener('click', function () {
-            delete selections[varName];
+            selections[varName] = new Set();
             advance();
         });
 
@@ -252,8 +259,10 @@ function showDisambiguationModal(ambiguous, tokens, partialCounts) {
     function finalize() {
         // Apply selections to currentAlignments
         let manualCount = 0;
-        for (const [varName, tokIdx] of Object.entries(selections)) {
-            const alignment = tokIdx + '-' + tokIdx;
+        for (const [varName, idxSet] of Object.entries(selections)) {
+            if (!idxSet || idxSet.size === 0) continue;
+            const sorted = Array.from(idxSet).sort((a, b) => a - b);
+            const alignment = sorted[0] + '-' + sorted[sorted.length - 1];
             if (!currentAlignments[varName]) {
                 currentAlignments[varName] = [];
             }
