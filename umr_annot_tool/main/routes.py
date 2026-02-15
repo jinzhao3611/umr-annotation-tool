@@ -15,7 +15,13 @@ from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Pr
 from umr_annot_tool.umr_validator import validate_and_fix_annotation, process_document_annotations
 from umr_annot_tool.main.forms import UploadForm, CreateProjectForm
 from umr_annot_tool.resources.rolesets import known_relations
-from umr_annot_tool.resources.utility_modules import get_merged_rolesets
+from umr_annot_tool.resources.utility_modules import (
+    get_merged_rolesets,
+    generate_modal_triples_for_document,
+    triples_to_json_list,
+    strip_modal_annotations_from_penman,
+    extract_existing_modal_triples,
+)
 import tempfile
 import subprocess
 import time
@@ -1189,7 +1195,16 @@ def doclevel(doc_version_id, sent_id):
         except Exception as e:
             logger.error(f"Error loading all sentence annotations: {str(e)}")
             all_sent_annotations = {}
-        
+
+        # Generate auto-generated modal triples from sentence-level annotations
+        try:
+            auto_modal_triples = generate_modal_triples_for_document(all_sent_annotations)
+            auto_modal_triples_json = json.dumps(triples_to_json_list(auto_modal_triples))
+            logger.info(f"Generated {len(auto_modal_triples)} auto modal triples")
+        except Exception as e:
+            logger.error(f"Error generating auto modal triples: {str(e)}")
+            auto_modal_triples_json = '[]'
+
         # Prepare display information
         try:
             info2display = {
@@ -1232,7 +1247,8 @@ def doclevel(doc_version_id, sent_id):
                             curr_doc_annot_string=curr_doc_annot_string,
                             all_sent_annotations=all_sent_annotations,
                             relations_list=list(merged_rolesets.keys()),
-                            relations_data={k: v for k, v in merged_rolesets.items() if 'values' in v})
+                            relations_data={k: v for k, v in merged_rolesets.items() if 'values' in v},
+                            auto_modal_triples=auto_modal_triples_json)
                             
     except Exception as e:
         logger.error(f"Unexpected error in doclevel: {str(e)}", exc_info=True)
@@ -2012,50 +2028,77 @@ def ancast_evaluation():
 @main.route("/export_annotation/<int:doc_version_id>", methods=['GET'])
 @login_required
 def export_annotation(doc_version_id):
-    """Export annotations for a document version in UMR format."""
+    """Export annotations for a document version in UMR format.
+
+    Supports modal_export_mode query parameter:
+        - "both" (default): Include modal annotations at both sentence and document levels
+        - "doc_only": Strip sentence-level modal annotations, only include document-level
+    """
     try:
         # Get the document version
         doc_version = DocVersion.query.get_or_404(doc_version_id)
         doc = Doc.query.get_or_404(doc_version.doc_id)
-        
+
         # Check if the user has permission to view the document
         if not has_permission_for_doc(current_user, doc.id):
             return jsonify({'success': False, 'error': 'User does not have permission to view this document'}), 403
-        
+
+        # Get modal export mode
+        modal_export_mode = request.args.get('modal_export_mode', 'both')
+
         # Get all sentences and annotations for this document version
         sentences = Sent.query.filter_by(doc_id=doc.id).order_by(Sent.id).all()
         annotations = Annotation.query.filter_by(doc_version_id=doc_version_id).all()
-        
+
         # Create a dictionary to map sentence IDs to annotations
         annotation_map = {ann.sent_id: ann for ann in annotations}
-        
+
+        # Build all_sent_annotations for modal triple generation
+        all_sent_annotations = {}
+        for ann in annotations:
+            for idx, sent in enumerate(sentences):
+                if sent.id == ann.sent_id:
+                    all_sent_annotations[str(idx + 1)] = ann.sent_annot or ''
+                    break
+
+        # Generate auto modal triples for export
+        try:
+            auto_modal_triples = generate_modal_triples_for_document(all_sent_annotations)
+        except Exception:
+            auto_modal_triples = []
+
         # Format the UMR content
         umr_content = []
-        
+
         # Start with the separator
         umr_content.append("#" * 80)
-        
+
         for i, sentence in enumerate(sentences, 1):
             # Add meta-info (no empty line before meta-info)
             umr_content.append("# meta-info")
             # Remove empty line between meta-info and snt line
             umr_content.append(f"# :: snt{i}")
-            
+
             # Add sentence content with index and words
             words = sentence.content.split()
             umr_content.append("Index: " + " ".join(str(j+1) for j in range(len(words))))
             umr_content.append("Words: " + sentence.content)
             umr_content.append("")
-            
+
             # Add sentence-level annotation
             umr_content.append("# sentence level graph:")
             if annotation := annotation_map.get(sentence.id):
-                if annotation.sent_annot:
-                    umr_content.append(annotation.sent_annot.strip())
+                sent_annot = annotation.sent_annot or ''
+                if modal_export_mode == 'doc_only' and sent_annot:
+                    sent_annot = strip_modal_annotations_from_penman(sent_annot)
+                if sent_annot.strip():
+                    umr_content.append(sent_annot.strip())
+                else:
+                    umr_content.append("()")
             else:
                 umr_content.append("()")
             umr_content.append("")
-            
+
             # Add alignment information
             umr_content.append("# alignment:")
             if annotation and annotation.alignment:
@@ -2075,29 +2118,47 @@ def export_annotation(doc_version_id):
                 # Default alignment if none exists
                 umr_content.append(f"s{i}a: 0-0")
             umr_content.append("")
-            
+
             # Add document-level annotation
             umr_content.append("# document level annotation:")
+            doc_annot = ''
             if annotation and annotation.doc_annot:
-                umr_content.append(annotation.doc_annot.strip())
+                doc_annot = annotation.doc_annot.strip()
+
+            # Merge auto-generated modal triples into doc annotation
+            if auto_modal_triples:
+                existing_modal = extract_existing_modal_triples(doc_annot)
+                existing_keys = {(t.source, t.relation, t.target) for t in existing_modal}
+                new_triples = [t for t in auto_modal_triples
+                               if (t.source, t.relation, t.target) not in existing_keys]
+                if new_triples and not doc_annot:
+                    # Build a fresh doc annotation with auto triples
+                    modal_lines = [f'({t.source} {t.relation} {t.target})' for t in new_triples]
+                    doc_annot = (f'(s{i}s0 / sentence\n'
+                                 f'    :temporal ()\n'
+                                 f'    :modal ({" ".join(modal_lines)})\n'
+                                 f'    :coref ()\n)')
+
+            if doc_annot:
+                umr_content.append(doc_annot)
             else:
                 umr_content.append("()")
             umr_content.append("")
-            
+
             # Add section separator (no empty line after separator)
             umr_content.append("#" * 80)
-        
+
         # Join all lines with newlines and remove any double newlines
         content = "\n".join(umr_content)
         content = content.replace("\n\n\n", "\n\n")  # Replace triple newlines with double
         content = content.replace("\n\n#" * 80, "\n" + "#" * 80)  # Remove empty line before separators
-        
+
         # Create response with the file
         response = make_response(content)
         response.headers['Content-Type'] = 'text/plain; charset=utf-8'
         response.headers['Content-Disposition'] = f'attachment; filename={doc.filename}'
         return response
-        
+
     except Exception as e:
         current_app.logger.error(f"Error exporting annotation: {str(e)}", exc_info=True)
         return jsonify({'success': False, 'error': str(e)}), 500

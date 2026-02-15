@@ -25,7 +25,8 @@
     <input type="hidden" id="user_id" value="{{ owner.id }}">
     <input type="hidden" id="snt_id" value="{{ snt_id }}">
     <input type="hidden" id="maxSentId" value="{{ info2display.sents|length }}">
-    
+    <input type="hidden" id="auto_modal_triples" value='{{ auto_modal_triples | safe }}'>
+
     <div class="doc-level-container">
         <!-- Left Panel - All sentence-level annotations (read-only) -->
         <div class="panel left-panel">
@@ -249,6 +250,13 @@
                     <div class="btn-group w-100 mb-2">
                         <button class="btn btn-primary" onclick="saveDocAnnotation()">Save Document Annotation</button>
                     </div>
+                    <div class="mb-2">
+                        <label for="modal-export-mode" class="form-label small mb-1">Modal Export Mode:</label>
+                        <select class="form-select form-select-sm" id="modal-export-mode">
+                            <option value="both">Modal on both levels</option>
+                            <option value="doc_only">Modal on document level only</option>
+                        </select>
+                    </div>
                     <div class="btn-group w-100 mb-2">
                         <button id="export-annotation-btn" class="btn btn-outline-success" title="Export annotation to file" onclick="exportAnnotation(); return false;">
                             <i class="fas fa-file-export"></i> Export Annotation
@@ -283,8 +291,11 @@
         // Show status notification
         showExportNotification('Fetching annotation data...', 'info');
 
+        // Get modal export mode
+        const modalExportMode = document.getElementById('modal-export-mode')?.value || 'both';
+
         // Fetch all the annotation data for the document
-        fetch(`/export_annotation/${docVersionId}`, {
+        fetch(`/export_annotation/${docVersionId}?modal_export_mode=${modalExportMode}`, {
             method: 'GET',
             headers: {
                 'Accept': 'text/plain, application/json'
@@ -332,98 +343,6 @@
             exportButton.innerHTML = originalButtonHtml;
             exportButton.disabled = false;
         });
-    }
-    
-    // Helper functions for exportAnnotation
-    function formatUMRData(data) {
-        let umrContent = '';
-        
-        console.log('Formatting UMR data:', data);
-        
-        if (!data.sentences || !Array.isArray(data.sentences)) {
-            console.error('Invalid data format: sentences array is missing');
-            return '# Error: Invalid data format received from server';
-        }
-        
-        // Loop through each sentence in the document
-        data.sentences.forEach((sentence, index) => {
-            const sentId = index + 1;
-            
-            try {
-                // Add sentence meta-info
-                umrContent += `# meta-info :: sent_id = ${data.filename || 'unknown'}-s${sentId}\n`;
-                
-                // Add sentence identifier without the sentence text
-                umrContent += `# :: snt${sentId}\n`;
-                
-                // Add word indices if available
-                if (sentence.words && Array.isArray(sentence.words) && sentence.words.length > 0) {
-                    umrContent += 'Index: ' + sentence.words.map((_, i) => i + 1).join('\t') + '\n';
-                    umrContent += 'Words: ' + sentence.words.join(' ') + '\n\n';
-                } else {
-                    umrContent += '\n';
-                }
-                
-                // Add sentence level annotation
-                umrContent += '# sentence level graph:\n';
-                if (sentence.annotation && typeof sentence.annotation === 'string' && sentence.annotation.trim()) {
-                    umrContent += sentence.annotation + '\n\n\n';
-                } else {
-                    umrContent += '()\n\n\n';
-                }
-                
-                // Add alignment information
-                umrContent += '# alignment:\n';
-                if (sentence.alignments && typeof sentence.alignments === 'object' && Object.keys(sentence.alignments).length > 0) {
-                    for (const [variable, alignments] of Object.entries(sentence.alignments)) {
-                        if (Array.isArray(alignments)) {
-                            for (const alignment of alignments) {
-                                umrContent += `${variable}: ${alignment}\n`;
-                            }
-                        }
-                    }
-                    umrContent += '\n\n';
-                } else {
-                    umrContent += '\n\n';
-                }
-                
-                // Add document level annotation for this sentence
-                umrContent += '# document level annotation:\n';
-                if (sentence.doc_annotation && typeof sentence.doc_annotation === 'string' && sentence.doc_annotation.trim()) {
-                    umrContent += sentence.doc_annotation + '\n\n\n';
-                } else {
-                    umrContent += '\n\n\n';
-                }
-                
-                // Add separator between sentences
-                umrContent += '################################################################################\n';
-            } catch (error) {
-                console.error('Error formatting sentence data:', error);
-                umrContent += '# Error: Failed to format sentence data\n\n';
-            }
-        });
-        
-        return umrContent;
-    }
-    
-    function downloadUMRFile(content, filename) {
-        // Create a blob with the content
-        const blob = new Blob([content], { type: 'text/plain' });
-        
-        // Create a download link
-        const downloadLink = document.createElement('a');
-        downloadLink.href = URL.createObjectURL(blob);
-        downloadLink.download = filename + '.umr';
-        
-        // Append the link to the body
-        document.body.appendChild(downloadLink);
-        
-        // Click the link to trigger the download
-        downloadLink.click();
-        
-        // Clean up
-        document.body.removeChild(downloadLink);
-        URL.revokeObjectURL(downloadLink.href);
     }
     
     function showExportNotification(message, type) {
@@ -749,46 +668,3 @@
     ensureTripleFormsPopulated();
 </script>
 {% endblock content %}
-
-{% block scripts %}
-<script>
-    // Call this function to ensure format is applied as soon as possible
-    function ensureFormatting() {
-        console.log("Ensuring document annotation formatting");
-        
-        // Try formatting immediately
-        if (typeof formatDocLevelAnnotation === 'function') {
-            formatDocLevelAnnotation();
-        }
-        
-        // Also schedule it for after a short delay to ensure DOM is ready
-        setTimeout(function() {
-            if (typeof formatDocLevelAnnotation === 'function') {
-                formatDocLevelAnnotation();
-            }
-        }, 100);
-    }
-    
-    // Explicitly call populateTripleForms after a delay to ensure DOM is ready
-    function ensureTripleFormsPopulated() {
-        console.log("Ensuring triple forms are populated");
-        
-        // First try immediately
-        if (typeof populateTripleForms === 'function') {
-            populateTripleForms();
-        }
-        
-        // Also try after a delay to ensure DOM is fully ready
-        setTimeout(function() {
-            if (typeof populateTripleForms === 'function') {
-                console.log("Delayed call to populate triple forms");
-                populateTripleForms();
-            }
-        }, 500);
-    }
-    
-    // Run directly (in case DOM is already loaded)
-    ensureFormatting();
-    ensureTripleFormsPopulated();
-</script>
-{% endblock scripts %} 
