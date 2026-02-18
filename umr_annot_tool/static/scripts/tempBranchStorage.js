@@ -1853,21 +1853,21 @@ function escapeRegExp(string) {
 
 // Extract variables from text for display in the reminder
 function extractNewVariables(text) {
-    const variableRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
+    const variableRegex = /\b(s\d+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+\d*)\s*\/\s*([^\s\(\):]+)/g;
     const variables = [];
     let match;
-    
+
     while ((match = variableRegex.exec(text)) !== null) {
         variables.push(match[1]);
     }
-    
+
     return variables;
 }
 
 // Function to remap variables in a branch to avoid conflicts
 function remapVariables(branchContent, destinationText) {
     // Extract all variables from the branch content
-    const variableRegex = /\b(s\d+[a-z]+\d*)\b/g;
+    const variableRegex = /\b(s\d+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+\d*)\b/g;
     const branchVariables = new Set();
     let match;
     
@@ -1891,7 +1891,7 @@ function remapVariables(branchContent, destinationText) {
     
     // Determine the target sentence number from the destination text
     // Looking for any variable pattern like s5xxx to get the sentence number
-    const sentenceMatch = destinationText.match(/\b(s(\d+))[a-z]+\d*\b/);
+    const sentenceMatch = destinationText.match(/\b(s(\d+))[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+\d*\b/);
     let targetSentenceNum = 1; // Default
     
     if (sentenceMatch && sentenceMatch[2]) {
@@ -1904,7 +1904,7 @@ function remapVariables(branchContent, destinationText) {
     
     // First, find all concept-to-variable mappings in the branch
     const conceptVariableMap = {};
-    const conceptRegex = /\b(s\d+[a-z]+\d*)\s*\/\s*([^\s\(\):]+)/g;
+    const conceptRegex = /\b(s\d+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+\d*)\s*\/\s*([^\s\(\):]+)/g;
     
     while ((match = conceptRegex.exec(branchContent)) !== null) {
         const variable = match[1];
@@ -1917,7 +1917,7 @@ function remapVariables(branchContent, destinationText) {
     // Now remap each variable based on its concept
     for (const oldVar of branchVariables) {
         // Extract the variable format: s + sentence number + concept initial + optional counter
-        const varMatch = oldVar.match(/^s(\d+)([a-z]+)(\d*)$/);
+        const varMatch = oldVar.match(/^s(\d+)([a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+)(\d*)$/);
         if (!varMatch) continue;
         
         const oldSentenceNum = varMatch[1];

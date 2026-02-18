@@ -306,7 +306,10 @@ function listContainsCap(list) {
  * @returns {*}
  */
 function validEntryConcept(concept) {
-    return concept.match(/^(?:[a-z]+(?:-[a-z]+)*(?:-\d+)?|(?:concept\.|\!):?[a-zA-Z0-9][-._a-zA-Z0-9']*|\*(?:OR)\*)$/);
+    // Unicode-aware: allow extended Latin letters (Uzbek ö, ğ, ş, ü, ı, ç, ə, etc.)
+    var lc = 'a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259';
+    var re = new RegExp('^(?:[' + lc + ']+(?:-[' + lc + ']+)*(?:-\\d+)?|(?:concept\\.|\\!):?[a-zA-Z0-9][-._a-zA-Z0-9\']*|\\*(?:OR)\\*)$');
+    return concept.match(re);
 }
 // function validEntryConcept(concept) {
 //     return concept.match(/^(?:.+(?:-[a-z]+)*(?:-\d+)?|(?:concept\.|\!):?[a-zA-Z0-9][-._a-zA-Z0-9']*|\*(?:OR)\*)$/);

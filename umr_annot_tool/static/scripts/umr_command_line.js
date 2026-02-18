@@ -601,7 +601,7 @@
     // Helper function to generate unique variable names
     function generateUniqueVariable(concept, annotationText) {
         // Extract the sentence number from existing variables (like s1b, s2, etc.)
-        const sentenceVarPattern = /\bs(\d+)[a-z]*/g;
+        const sentenceVarPattern = /\bs(\d+)[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]*/g;
         const sentenceVars = annotationText.match(sentenceVarPattern) || [];
 
         // Find the sentence number (default to 1 if not found)
@@ -1007,7 +1007,7 @@
             const text = annotationElement.textContent;
 
             // Extract all variables (pattern: variable / concept)
-            const varPattern = /\b([a-z]\d*[a-z]?\d*)\s*\//g;
+            const varPattern = /\b([a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]?\d*)\s*\//g;
             const variables = new Set();
             let match;
 

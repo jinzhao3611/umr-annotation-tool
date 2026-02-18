@@ -1993,7 +1993,7 @@ function makeVariablesClickable(annotationElement) {
     
     // This pattern matches variables like s1, s2a, s10b, etc.
     // Updated regex to more accurately capture variable patterns
-    const variableRegex = /(\s|\(|\b)(s[0-9]+[a-z]*[0-9]*)\b(?![^<]*>)/g;
+    const variableRegex = /(\s|\(|\b)(s[0-9]+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]*[0-9]*)\b(?![^<]*>)/g;
     
     let html = text.replace(variableRegex, function(match, prefix, variable) {
         // Don't replace if it's already inside a span
@@ -2188,7 +2188,7 @@ async function getAllConcepts() {
 function generateUniqueVariable(conceptName, annotationText) {
     // Extract all existing variables from the annotation
     const existingVariables = [];
-    const variableRegex = /\bs[0-9]+[a-z]+[0-9]*\b/g;
+    const variableRegex = /\bs[0-9]+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+[0-9]*\b/g;
     let match;
     
     while ((match = variableRegex.exec(annotationText)) !== null) {
@@ -2199,15 +2199,15 @@ function generateUniqueVariable(conceptName, annotationText) {
     const urlParts = window.location.pathname.split('/');
     const sentId = parseInt(urlParts[urlParts.length - 1]) || 1;
     
-    // Check if the concept has a first character and if it's alphabetical
-    let conceptInitial = 'x'; // Default to 'x' for non-alphabetical or empty concepts
-    
+    // Check if the concept has a first character and if it's a letter
+    let conceptInitial = 'x'; // Default to 'x' for non-letter or empty concepts
+
     if (conceptName && conceptName.length > 0) {
-        // Check if the first character is alphabetical (a-z or A-Z)
-        if (/^[a-zA-Z]/.test(conceptName)) {
+        // Check if the first character is a letter (including extended Latin: ö, ğ, ş, ü, ı, ç, ə, etc.)
+        if (/^[a-zA-Z\u00C0-\u00F6\u00F8-\u024F\u0259]/.test(conceptName)) {
             conceptInitial = conceptName[0].toLowerCase();
         }
-        // If not alphabetical (e.g., Chinese characters), keep using 'x'
+        // If not a letter (e.g., Chinese characters), keep using 'x'
     }
     
     // Generate candidate variable name
@@ -2391,7 +2391,7 @@ async function showAddBranchDialog(parentVariableSpan) {
 
             // Function to extract existing variables from the annotation
             function extractExistingVariables(annotation) {
-                const variablePattern = /\b(s[0-9]+[a-z]+[0-9]*)\b/g;
+                const variablePattern = /\b(s[0-9]+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+[0-9]*)\b/g;
                 const matches = annotation.match(variablePattern) || [];
                 return [...new Set(matches)];
             }
@@ -3208,7 +3208,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                 // Function to extract existing variables from the annotation
                 function extractExistingVariables(annotation) {
                     // Regex pattern to match variables like s9n2 (s followed by numbers, then letters, then optional numbers)
-                    const variablePattern = /\b(s[0-9]+[a-z]+[0-9]*)\b/g;
+                    const variablePattern = /\b(s[0-9]+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+[0-9]*)\b/g;
                     const matches = annotation.match(variablePattern) || [];
                     
                     // Return unique variables

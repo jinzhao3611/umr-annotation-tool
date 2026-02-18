@@ -46,7 +46,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
                     new_concept = 'x-' + new_concept;
                 }
                 new_concept = new_concept.replace(/(\d)\D+$/, "$1");
-                new_concept = new_concept.replace(/([a-z])(\d)/, "$1-$2");
+                new_concept = new_concept.replace(/([a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259])(\d)/, "$1-$2");
                 umr_dict[loc + '.c'] = new_concept;
                 recordConcept(new_concept, loc);
                 variable2concept[variable] = new_concept;
@@ -59,7 +59,7 @@ function string2umr_recursive(annotText, loc, state, umr_dict) {
             } else if (variablesInUse[variable + '.conflict']) {
                 umr_dict[loc + '.v'] = variable;
                 recordVariable(variable, loc);
-            } else if (!variable.match(/^s\d*[a-z]\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
+            } else if (!variable.match(/^s\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*$/)) { // if variable doesn't match the shape of s1n1 (in the case of Chinese for example)
                 new_variable = newVar(concept);
                 umr_dict[loc + '.v'] = new_variable;
                 recordVariable(new_variable, loc);
@@ -206,7 +206,7 @@ function string2umr(annotText) {
     variables = {};
     concepts = {};
     variablesInUse = {};
-    let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
+    let uncleanedRootVariables = annotText.match(/\(\s*s\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*[ \/]/g); // match each root vars (uncleaned): ["(s1t "]
     //populate variablesInUse
     uncleanedRootVariables.forEach(function(item, index){ // traverse each root
         let variable = item.replace(/^\(\s*/, ""); // get rid of the starting parenthesis: "s1t "
@@ -272,13 +272,13 @@ function text2umr(annotText="", loaded_alignment='') {
 
         //fill in the alignment information to umr
         if(loaded_alignment){
-            let matches = loaded_alignment.match(/\((s\d*[a-z]\d*)\):\s((\d+-\d+)|undefined)/gm); //["(s1f): 4-4", "(s1t): 3-3"]
+            let matches = loaded_alignment.match(/\((s\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*)\):\s((\d+-\d+)|undefined)/gm); //["(s1f): 4-4", "(s1t): 3-3"]
             if(matches){
                 for(let i=0; i<matches.length; i++){
-                    let variable = matches[i].replace(/\((s\d*[a-z]\d*)\):\s((\d+-\d+)|undefined)/gm, '$1');
-                    let align_info = matches[i].replace(/\((s\d*[a-z]\d*)\):\s(\d+-\d+)/gm, '$2');
+                    let variable = matches[i].replace(/\((s\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*)\):\s((\d+-\d+)|undefined)/gm, '$1');
+                    let align_info = matches[i].replace(/\((s\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*)\):\s(\d+-\d+)/gm, '$2');
                     if(matches[i].includes("undefined")){
-                        align_info = matches[i].replace(/\((s\d*[a-z]\d*)\):\sundefined/gm, '-1--1');
+                        align_info = matches[i].replace(/\((s\d*[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]\d*)\):\sundefined/gm, '-1--1');
                     }
                     let loc = getLocs(variable);
                     if (loc) {

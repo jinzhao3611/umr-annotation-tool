@@ -32,7 +32,7 @@ const DOC_LEVEL_RELATIONS = {
 };
 
 // Variable format regex
-const VARIABLE_REGEX = /^s[0-9]+[a-z]+[0-9]*$/;
+const VARIABLE_REGEX = /^s[0-9]+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259]+[0-9]*$/;
 
 // Directly populate all relation dropdowns with hard-coded values as a fallback
 function populateRelationDropdownsDirectly() {
