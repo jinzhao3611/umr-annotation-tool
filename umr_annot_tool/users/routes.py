@@ -1269,7 +1269,7 @@ def statistics(project_id):
         if annotation.sent_annot and annotation.sent_annot.strip():
             sentence_level_annotations += 1
             # Count variables in sentence annotations (variables are typically in format like "p1, p2, x3, etc.")
-            variables = re.findall(r'[a-z][0-9]+', annotation.sent_annot)
+            variables = re.findall(r'[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259][0-9]+', annotation.sent_annot)
             sentence_variables += len(variables)
         
         if annotation.doc_annot and annotation.doc_annot.strip():

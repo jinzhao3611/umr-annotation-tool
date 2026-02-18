@@ -428,12 +428,17 @@ def validate_newlines(inp):
 # for concept-relation or attribute-value compatibility.
 #==============================================================================
 
-variable_re = re.compile(r"^s[0-9]+[a-z]+[0-9]*")
+# Unicode-aware lowercase letter range covering basic Latin, Latin-1 Supplement,
+# Latin Extended-A/B, and IPA Extensions (for ə). This supports languages with
+# extended Latin characters such as Uzbek (ö, ğ, ş, ü, ı, ç, ə).
+_lc = r'a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259'
+
+variable_re = re.compile(rf"^s[0-9]+[{_lc}]+[0-9]*")
 concept_re = re.compile(r"^[^\s\(\):]+")
 relation_re = re.compile(r"^:[-A-Za-z0-9]+")
 string_re = re.compile(r'^"([^"\s]+)"')
 number_re = re.compile(r"^([0-9]+(?:\.[0-9]+)?)(\s|\)|$)") # we need to recognize following closing bracket but we must not consume it
-atom_re = re.compile(r"^([-+a-z0-9]+)(\s|\)|$)") # enumerated values of some attributes, including integers (but also '3rd'), polarity values ('+', '-'), or node references ('s5p')
+atom_re = re.compile(rf"^([-+{_lc}0-9]+)(\s|\)|$)") # enumerated values of some attributes, including integers (but also '3rd'), polarity values ('+', '-'), or node references ('s5p')
 
 tokrng_re = re.compile(r"^0-0|([1-9][0-9]*)-([1-9][0-9]*)$")
 tokrngs_re = re.compile(r"^(?:0-0|([1-9][0-9]*)-([1-9][0-9]*)(,\s*[1-9][0-9]*-[1-9][0-9]*)*)$")
@@ -441,7 +446,7 @@ tokrng_neg_re = re.compile(r"^-1--1|0-0|([1-9][0-9]*)-([1-9][0-9]*)$")
 tokrngs_neg_re = re.compile(r"^(?:-1--1|0-0|([1-9][0-9]*)-([1-9][0-9]*)(,\s*[1-9][0-9]*-[1-9][0-9]*)*)$")
 
 svariable_re = re.compile(r"^s[0-9]+s0")
-dvariable_re = re.compile(r"^([a-z]+(?:-[a-z]+)*|s[0-9]+[a-z]+[0-9]*)(\s|\)|$)") # constant or concept node id; we need to recognize following closing bracket but we must not consume it
+dvariable_re = re.compile(rf"^([{_lc}]+(?:-[{_lc}]+)*|s[0-9]+[{_lc}]+[0-9]*)(\s|\)|$)") # constant or concept node id; we need to recognize following closing bracket but we must not consume it
 
 def validate_sentence_metadata(sentence, known_ids, args):
     """

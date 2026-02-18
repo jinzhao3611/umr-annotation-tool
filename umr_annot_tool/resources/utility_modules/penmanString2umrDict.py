@@ -24,7 +24,7 @@ def string2umr(penman_string):
             loc = '1.' + '.'.join([str(i) for i in path])
             umr[f"{loc}.r"] = branch[0] #role
             if isinstance(branch[1], str):
-                if re.search("^s\d+[a-z](\d+)?$", branch[1]): #match something like s1p, (case of reentrance)
+                if re.search("^s\\d+[a-z\u00e0-\u00f6\u00f8-\u00ff\u0100-\u024f\u0259](\\d+)?$", branch[1]): #match something like s1p, (case of reentrance)
                     umr[f"{loc}.s"] = ""
                     umr[f"{loc}.v"] = branch[1]
                 else:
