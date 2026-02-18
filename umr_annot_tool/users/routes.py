@@ -982,6 +982,17 @@ def modification(project_id): #there is no post here like the previous ones, bec
 def settings(project_id):
     return render_template('settings.html', project_id=project_id)
 
+@users.route("/api/project_members/<int:project_id>", methods=['GET'])
+@login_required
+def get_project_members(project_id):
+    members = db.session.query(User).join(
+        Projectuser, Projectuser.user_id == User.id
+    ).filter(
+        Projectuser.project_id == project_id,
+        User.username != 'dummy_user'
+    ).order_by(User.username).all()
+    return jsonify([{"id": u.id, "username": u.username} for u in members])
+
 @users.route("/search", methods=['GET'])
 @login_required
 def search():

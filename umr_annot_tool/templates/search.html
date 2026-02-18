@@ -163,6 +163,57 @@
 {% endblock content %}
 
 {% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var projectSelect = document.getElementById('project_filter');
+    var userSelect = document.getElementById('user_filter');
+
+    // Store all users for when "All Projects" is selected
+    var allUsers = [];
+    {% for user in users %}
+    allUsers.push({id: "{{ user.id }}", username: "{{ user.username }}"});
+    {% endfor %}
+
+    // Store the currently selected user filter value
+    var currentUserFilter = "{{ user_filter }}";
+
+    projectSelect.addEventListener('change', function() {
+        var projectId = this.value;
+        if (projectId === 'all') {
+            populateUserDropdown(allUsers, currentUserFilter);
+        } else {
+            fetch("{{ url_for('users.get_project_members', project_id=0) }}".replace('/0', '/' + projectId))
+                .then(function(response) { return response.json(); })
+                .then(function(members) {
+                    populateUserDropdown(members, currentUserFilter);
+                });
+        }
+    });
+
+    function populateUserDropdown(users, selectedValue) {
+        // Clear existing options except "All Users"
+        userSelect.innerHTML = '';
+        var allOption = document.createElement('option');
+        allOption.value = 'all';
+        allOption.textContent = 'All Users';
+        if (selectedValue === 'all') allOption.selected = true;
+        userSelect.appendChild(allOption);
+
+        users.forEach(function(user) {
+            var option = document.createElement('option');
+            option.value = user.id;
+            option.textContent = user.username;
+            if (String(selectedValue) === String(user.id)) option.selected = true;
+            userSelect.appendChild(option);
+        });
+    }
+
+    // Trigger on page load if a project is already selected
+    if (projectSelect.value !== 'all') {
+        projectSelect.dispatchEvent(new Event('change'));
+    }
+});
+</script>
 <style>
 .search-content {
     max-width: 900px;
