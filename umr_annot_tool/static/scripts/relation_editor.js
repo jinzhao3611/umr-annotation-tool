@@ -16,6 +16,9 @@ let inPlaceEditMode = false;
 // Global variable to store frames data
 let framesData = null;
 
+// Global variable to store schema descriptions
+let schemaDescriptions = null;
+
 // Function to load frames data
 async function loadFramesData() {
     if (framesData !== null) {
@@ -70,6 +73,26 @@ async function loadFramesData() {
         console.log('Unable to load predicate frames');
         framesData = {};
         return framesData;
+    }
+}
+
+// Function to load schema descriptions (relation/aspect/modal definitions)
+async function loadSchemaDescriptions() {
+    if (schemaDescriptions !== null) {
+        return schemaDescriptions;
+    }
+    try {
+        const response = await fetch('/get_schema_descriptions');
+        if (!response.ok) {
+            throw new Error(`Failed to load schema descriptions: ${response.status}`);
+        }
+        schemaDescriptions = await response.json();
+        console.log('Schema descriptions loaded successfully');
+        return schemaDescriptions;
+    } catch (error) {
+        console.error('Error loading schema descriptions:', error);
+        schemaDescriptions = { relations: {}, aspect: {}, modal_strength: {}, abstract_concepts: {} };
+        return schemaDescriptions;
     }
 }
 
@@ -704,11 +727,12 @@ function makeValuesClickable(annotationElement) {
 
 // Function to show the relation dropdown
 function showRelationDropdown(relationSpan) {
-    console.log('showRelationDropdown called with span:', relationSpan); 
-    
-    // Remove any existing dropdowns
+    console.log('showRelationDropdown called with span:', relationSpan);
+
+    // Remove any existing dropdowns and tooltips
     const existingDropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
     existingDropdowns.forEach(dropdown => dropdown.remove());
+    document.querySelectorAll('.schema-tooltip').forEach(t => t.remove());
     
     const currentRelation = relationSpan.textContent;
     console.log('Current relation:', currentRelation);
@@ -820,59 +844,86 @@ function showRelationDropdown(relationSpan) {
                 item.textContent = relation;
                 item.style.padding = '8px 16px';
                 item.style.cursor = 'pointer';
-                
+
                 // Highlight current relation
                 if (relation === currentRelation) {
                     item.style.backgroundColor = '#e6f7ff';
                     item.textContent += ' (current)';
                 }
-                
-                // Hover effect
-                item.addEventListener('mouseover', function() {
+
+                // Hover effect with tooltip
+                item.addEventListener('mouseover', function(e) {
                     if (relation !== currentRelation) {
                         this.style.backgroundColor = '#f0f0f0';
+                    }
+                    const schema = dropdown._schemaDescriptions;
+                    if (schema && schema.relations && schema.relations[relation]) {
+                        relTooltip.textContent = schema.relations[relation];
+                        const rect = this.getBoundingClientRect();
+                        const tooltipLeft = rect.right + 8;
+                        // If tooltip would go off-screen right, show on left side
+                        if (tooltipLeft + 300 > window.innerWidth) {
+                            relTooltip.style.left = Math.max(0, rect.left - 308) + 'px';
+                        } else {
+                            relTooltip.style.left = tooltipLeft + 'px';
+                        }
+                        relTooltip.style.top = rect.top + 'px';
+                        relTooltip.style.display = 'block';
                     }
                 });
                 item.addEventListener('mouseout', function() {
                     if (relation !== currentRelation) {
                         this.style.backgroundColor = '';
                     }
+                    relTooltip.style.display = 'none';
                 });
-                
+
                 // Click event
                 item.addEventListener('click', function() {
                     replaceRelation(relationSpan, relation);
                 });
-                
+
                 relationList.appendChild(item);
             });
         }
     }
     
+    // Create tooltip for relation descriptions
+    const relTooltip = document.createElement('div');
+    relTooltip.className = 'schema-tooltip';
+    relTooltip.style.cssText = 'position: fixed; padding: 8px 12px; background-color: #333; color: #fff; border-radius: 4px; z-index: 10000; max-width: 300px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: none; pointer-events: none;';
+    document.body.appendChild(relTooltip);
+
+    // Load schema descriptions for tooltips
+    loadSchemaDescriptions().then(schema => {
+        dropdown._schemaDescriptions = schema;
+    });
+
     // Initial render of all relations
     renderRelations();
-    
+
     // Add search functionality
     searchInput.addEventListener('input', function() {
         renderRelations(this.value);
     });
-    
+
     // Add dropdown to document
     document.body.appendChild(dropdown);
-    console.log('Dropdown added to the document body at position:', 
-        dropdown.style.left, dropdown.style.top, 
+    console.log('Dropdown added to the document body at position:',
+        dropdown.style.left, dropdown.style.top,
         'Size:', dropdown.offsetWidth, dropdown.offsetHeight);
-    
+
     // Focus search input
     searchInput.focus();
-    
+
     // Close dropdown when clicking outside
     setTimeout(() => {
         const closeListener = function(event) {
-            if (!dropdown.contains(event.target) && 
-                event.target !== relationSpan && 
+            if (!dropdown.contains(event.target) &&
+                event.target !== relationSpan &&
                 !relationSpan.contains(event.target)) {
                 dropdown.remove();
+                relTooltip.remove();
                 document.removeEventListener('click', closeListener);
             }
         };
@@ -882,9 +933,10 @@ function showRelationDropdown(relationSpan) {
 
 // Function to show the value dropdown
 function showValueDropdown(valueSpan, relationName) {
-    // Remove any existing dropdowns
+    // Remove any existing dropdowns and tooltips
     const existingDropdowns = document.querySelectorAll('.relation-dropdown, .value-dropdown');
     existingDropdowns.forEach(dropdown => dropdown.remove());
+    document.querySelectorAll('.schema-tooltip').forEach(t => t.remove());
     
     const currentValue = valueSpan.textContent;
     const spanRect = valueSpan.getBoundingClientRect();
@@ -912,6 +964,17 @@ function showValueDropdown(valueSpan, relationName) {
     dropdown.style.overflowY = 'auto';
     dropdown.style.minWidth = '150px';
     
+    // Create tooltip for value descriptions
+    const valTooltip = document.createElement('div');
+    valTooltip.className = 'schema-tooltip';
+    valTooltip.style.cssText = 'position: fixed; padding: 8px 12px; background-color: #333; color: #fff; border-radius: 4px; z-index: 10000; max-width: 300px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: none; pointer-events: none;';
+    document.body.appendChild(valTooltip);
+
+    // Load schema descriptions for tooltips
+    loadSchemaDescriptions().then(schema => {
+        dropdown._schemaDescriptions = schema;
+    });
+
     // Create search input
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
@@ -921,50 +984,72 @@ function showValueDropdown(valueSpan, relationName) {
     searchInput.style.boxSizing = 'border-box';
     searchInput.style.border = 'none';
     searchInput.style.borderBottom = '1px solid #eee';
-    
+
     // Add search input to dropdown
     dropdown.appendChild(searchInput);
-    
+
     // Create value list container
     const valueList = document.createElement('div');
     valueList.className = 'value-list';
     dropdown.appendChild(valueList);
-    
+
     // Function to render filtered values
     function renderValues(filter = '') {
         // Clear existing items
         valueList.innerHTML = '';
-        
+
         // Filter values based on search input
-        const filteredValues = availableValues.filter(val => 
+        const filteredValues = availableValues.filter(val =>
             val.toLowerCase().includes(filter.toLowerCase())
         );
-        
+
         // Add filtered values
         filteredValues.forEach(value => {
             const item = document.createElement('div');
             item.textContent = value;
             item.style.padding = '8px 16px';
             item.style.cursor = 'pointer';
-            
+
             // Highlight current value
             if (value === currentValue) {
                 item.style.backgroundColor = '#e6f7ff';
                 item.textContent += ' (current)';
             }
-            
-            // Hover effect
+
+            // Hover effect with tooltip
             item.addEventListener('mouseover', function() {
                 if (value !== currentValue) {
                     this.style.backgroundColor = '#f0f0f0';
+                }
+                const schema = dropdown._schemaDescriptions;
+                if (schema) {
+                    let desc = null;
+                    if (relationName === ':aspect' && schema.aspect) {
+                        desc = schema.aspect[value];
+                    } else if (relationName === ':modal-strength' && schema.modal_strength) {
+                        desc = schema.modal_strength[value];
+                    }
+                    if (desc) {
+                        valTooltip.textContent = desc;
+                        const rect = this.getBoundingClientRect();
+                        const tooltipLeft = rect.right + 8;
+                        if (tooltipLeft + 300 > window.innerWidth) {
+                            valTooltip.style.left = Math.max(0, rect.left - 308) + 'px';
+                        } else {
+                            valTooltip.style.left = tooltipLeft + 'px';
+                        }
+                        valTooltip.style.top = rect.top + 'px';
+                        valTooltip.style.display = 'block';
+                    }
                 }
             });
             item.addEventListener('mouseout', function() {
                 if (value !== currentValue) {
                     this.style.backgroundColor = '';
                 }
+                valTooltip.style.display = 'none';
             });
-            
+
             // Click event
             item.addEventListener('click', function() {
                 replaceValue(valueSpan, value);
@@ -2294,6 +2379,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                 <select id="relation" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                     <option value="">Select a relation...</option>
                 </select>
+                <div id="relation-description" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
             </div>
             
             <!-- Child node selection will be dynamically loaded here based on the relation -->
@@ -2330,12 +2416,12 @@ async function showAddBranchDialog(parentVariableSpan) {
         const relationsWithValues = {
             ':aspect': ['habitual', 'generic', 'iterative', 'inceptive', 'imperfective', 'process', 'atelic-process', 'perfective', 'state', 'reversible-state', 'irreversible-state', 'inherent-state', 'point-state', 'activity', 'undirected-activity', 'directed-activity', 'endeavor', 'semelfactive', 'undirected-endeavor', 'directed-endeavor', 'performance', 'incremental-accomplishment', 'nonincremental-accomplishment', 'directed-achievement', 'reversible-directed-achievement', 'irreversible-directed-achievement'],
             ':degree': ['intensifier', 'downtoner', 'equal'],
-            ':modal-strength': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative'],
+            ':modal-strength': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative', 'undefined'],
             ':mode': ['imperative', 'interrogative', 'expressive'],
             ':polarity': ['-', 'umr-unknown', 'truth-value'],
             ':polite': ['+'],
-            ':refer-number': ['singular', 'non-singular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal'],
-            ':refer-person': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', 'excl', 'incl'],
+            ':refer-number': ['singular', 'non-singular', 'nonsingular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal'],
+            ':refer-person': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', '1st-inclusive', '1st-exclusive', 'excl', 'incl'],
             ':refer-definiteness': ['class'],
             ':axis-relative-polarities': ['left-handed', 'right-handed'],
             ':framework-type': ['absolute', 'intrinsic', 'relative'],
@@ -2347,8 +2433,8 @@ async function showAddBranchDialog(parentVariableSpan) {
         const neTypesList = conceptsData.ne_types || [];
         const nonEventRolesetsList = conceptsData.non_event_rolesets || [];
         
-        // Define abstract concepts list (simplified subset, as the full list is quite long)
-        const abstractConceptsList = [
+        // Use full abstract concepts list from server (includes abstract-91 rolesets)
+        const abstractConceptsList = conceptsData.abstract_concepts || [
             'person', 'individual-person', 'place', 'event', 'name', 'umr-choice',
             'manner', 'umr-unknown', 'umr-unintelligible', 'umr-empty',
             'date-entity', 'string-entity', 'ordinal-entity', 'url-entity',
@@ -2371,6 +2457,40 @@ async function showAddBranchDialog(parentVariableSpan) {
             relationSelect,
             umrRelations
         );
+
+        // Helper function to wire up concept description tooltips on concept select elements
+        function wireConceptDescriptions() {
+            loadSchemaDescriptions().then(schema => {
+                if (!schema) return;
+
+                // Map of select IDs to their schema description sources
+                const conceptSelectMap = {
+                    'discourse-concept': schema.discourse_relations || {},
+                    'abstract-concept': Object.assign({}, schema.abstract_concepts || {}, schema.abstract_91_rolesets || {}),
+                    'ne-type': schema.named_entities || {},
+                    'non-event-roleset': Object.assign({}, schema.abstract_91_rolesets || {}, schema.abstract_concepts || {}),
+                };
+
+                for (const [selectId, descMap] of Object.entries(conceptSelectMap)) {
+                    const selectEl = document.getElementById(selectId);
+                    if (!selectEl) continue;
+                    // Find the description div for this select
+                    const descDiv = selectEl.parentElement.querySelector(`.concept-description[data-for="${selectId}"]`);
+                    if (!descDiv) continue;
+
+                    // Show description on selection
+                    selectEl.addEventListener('change', () => {
+                        const val = selectEl.value;
+                        if (val && descMap[val]) {
+                            descDiv.textContent = descMap[val];
+                            descDiv.style.display = 'block';
+                        } else {
+                            descDiv.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        }
 
         // Helper function to set up child node type handling
         // This is used both when "Other" is selected for predefined value relations
@@ -2484,6 +2604,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                 document.getElementById('non-event-roleset'),
                 nonEventRolesetsList
             );
+
+            // Wire up concept description tooltips
+            wireConceptDescriptions();
 
             // Setup token search
             const tokenSearchInput = document.getElementById('token-search');
@@ -2923,6 +3046,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                 <option value="">Select concept...</option>
                                 ${discourseConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
                             </select>
+                            <div class="concept-description" data-for="discourse-concept" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                         </div>
 
                         <!-- Container for abstract concept selection -->
@@ -2937,6 +3061,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                 <option value="">Select concept...</option>
                                 ${abstractConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
                             </select>
+                            <div class="concept-description" data-for="abstract-concept" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                         </div>
 
                         <!-- Container for named entity selection -->
@@ -2951,6 +3076,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                 <option value="">Select entity type...</option>
                                 ${neTypesList.map(type => `<option value="${type}">${type}</option>`).join('')}
                             </select>
+                            <div class="concept-description" data-for="ne-type" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                         </div>
 
                         <!-- Container for non-event roleset selection -->
@@ -2965,6 +3091,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                 <option value="">Select roleset...</option>
                                 ${nonEventRolesetsList.map(roleset => `<option value="${roleset}">${roleset}</option>`).join('')}
                             </select>
+                            <div class="concept-description" data-for="non-event-roleset" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                         </div>
 
                         <!-- Container for string value input -->
@@ -3100,50 +3227,54 @@ async function showAddBranchDialog(parentVariableSpan) {
                             <option value="">Select concept...</option>
                             ${discourseConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
                         </select>
+                        <div class="concept-description" data-for="discourse-concept" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                     </div>
-                    
+
                     <!-- Container for abstract concept selection -->
                     <div id="abstract-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="abstract-concept" style="display: block; margin-bottom: 8px; font-weight: bold;">Select abstract concept:</label>
                         <div style="position: relative; margin-bottom: 8px;">
-                            <input type="text" id="abstract-concept-search" 
-                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                            <input type="text" id="abstract-concept-search"
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
                                 placeholder="Type to search abstract concepts...">
                         </div>
                         <select id="abstract-concept" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select concept...</option>
                             ${abstractConceptsList.map(concept => `<option value="${concept}">${concept}</option>`).join('')}
                         </select>
+                        <div class="concept-description" data-for="abstract-concept" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                     </div>
-                    
+
                     <!-- Container for named entity selection -->
                     <div id="ne-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="ne-type" style="display: block; margin-bottom: 8px; font-weight: bold;">Select named entity type:</label>
                         <div style="position: relative; margin-bottom: 8px;">
-                            <input type="text" id="ne-type-search" 
-                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                            <input type="text" id="ne-type-search"
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
                                 placeholder="Type to search named entity types...">
                         </div>
                         <select id="ne-type" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select entity type...</option>
                             ${neTypesList.map(type => `<option value="${type}">${type}</option>`).join('')}
                         </select>
+                        <div class="concept-description" data-for="ne-type" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                     </div>
-                    
+
                     <!-- Container for non-event roleset selection -->
                     <div id="non-event-selection-container" style="display: none; margin-bottom: 16px;">
                         <label for="non-event-roleset" style="display: block; margin-bottom: 8px; font-weight: bold;">Select non-event roleset:</label>
                         <div style="position: relative; margin-bottom: 8px;">
-                            <input type="text" id="non-event-roleset-search" 
-                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" 
+                            <input type="text" id="non-event-roleset-search"
+                                style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;"
                                 placeholder="Type to search non-event rolesets...">
                         </div>
                         <select id="non-event-roleset" size="10" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; max-height: 250px;">
                             <option value="">Select roleset...</option>
                             ${nonEventRolesetsList.map(roleset => `<option value="${roleset}">${roleset}</option>`).join('')}
                         </select>
+                        <div class="concept-description" data-for="non-event-roleset" style="margin-top: 8px; padding: 8px 12px; background-color: #f0f8ff; border-left: 3px solid #0066cc; border-radius: 4px; font-size: 13px; color: #333; display: none;"></div>
                     </div>
-                    
+
                     <!-- Container for string value input -->
                     <div id="string-input-container" style="display: none; margin-bottom: 16px;">
                         <label for="string-token-selection" style="display: block; margin-bottom: 8px; font-weight: bold;">Select a token for string value:</label>
@@ -3319,11 +3450,14 @@ async function showAddBranchDialog(parentVariableSpan) {
                 );
                 
                 setupDropdownFiltering(
-                    document.getElementById('non-event-roleset-search'), 
-                    document.getElementById('non-event-roleset'), 
+                    document.getElementById('non-event-roleset-search'),
+                    document.getElementById('non-event-roleset'),
                     nonEventRolesetsList
                 );
-                
+
+                // Wire up concept description tooltips
+                wireConceptDescriptions();
+
                 // Setup token search
                 const tokenSearchInput = document.getElementById('token-search');
                 if (tokenSearchInput) {
@@ -4012,7 +4146,65 @@ async function showAddBranchDialog(parentVariableSpan) {
         
         // Set up relation change handler
         relationSelect.addEventListener('change', updateChildNodeContainer);
-    
+
+        // Show schema description when relation is selected
+        loadSchemaDescriptions().then(schema => {
+            const descDiv = document.getElementById('relation-description');
+            if (!descDiv) return;
+
+            function updateRelationDescription() {
+                const rel = relationSelect.value;
+                if (rel && schema.relations && schema.relations[rel]) {
+                    descDiv.textContent = schema.relations[rel];
+                    descDiv.style.display = 'block';
+                } else {
+                    descDiv.style.display = 'none';
+                }
+            }
+            relationSelect.addEventListener('change', updateRelationDescription);
+
+            // Also show descriptions for predefined value dropdowns (aspect, modal-strength)
+            const observer = new MutationObserver(() => {
+                const predefinedSelect = document.getElementById('predefined-value');
+                if (!predefinedSelect || predefinedSelect._schemaWired) return;
+                predefinedSelect._schemaWired = true;
+
+                // Add a description div after the predefined value select if not present
+                let valueDescDiv = document.getElementById('value-description');
+                if (!valueDescDiv) {
+                    valueDescDiv = document.createElement('div');
+                    valueDescDiv.id = 'value-description';
+                    valueDescDiv.style.cssText = 'margin-top: 8px; padding: 8px 12px; background-color: #f0fff0; border-left: 3px solid #4CAF50; border-radius: 4px; font-size: 13px; color: #333; display: none;';
+                    predefinedSelect.parentNode.appendChild(valueDescDiv);
+                }
+
+                predefinedSelect.addEventListener('change', () => {
+                    const val = predefinedSelect.value;
+                    const rel = relationSelect.value;
+                    if (!val || val === '__OTHER__') {
+                        valueDescDiv.style.display = 'none';
+                        return;
+                    }
+                    let desc = null;
+                    if (rel === ':aspect' && schema.aspect) {
+                        desc = schema.aspect[val];
+                    } else if (rel === ':modal-strength' && schema.modal_strength) {
+                        desc = schema.modal_strength[val];
+                    }
+                    if (desc) {
+                        valueDescDiv.textContent = desc;
+                        valueDescDiv.style.display = 'block';
+                    } else {
+                        valueDescDiv.style.display = 'none';
+                    }
+                });
+            });
+            const childContainer = document.getElementById('child-node-container');
+            if (childContainer) {
+                observer.observe(childContainer, { childList: true, subtree: true });
+            }
+        });
+
     // Handle form submission
     const form = document.getElementById('add-branch-form');
         form.addEventListener('submit', async (event) => {

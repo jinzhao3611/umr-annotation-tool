@@ -102,8 +102,8 @@ known_relations = {
     ':mod-of': {'type': 'modifier', 'repeat': True},
     ':modal-predicate': {'type': 'modifier', 'repeat': False}, # Note: The guidelines and the spreadsheet originally defined ':modpred' but it was changed to ':modal-predicate' in UMR 1.0 to make the annotation more human-readable.
     ':modal-predicate-of': {'type': 'modifier', 'repeat': False},
-    ':modal-strength': {'type': 'attribute', 'repeat': False, 'values': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative']}, # Note: The guidelines and the spreadsheet originally defined ':modstr' but it was changed to ':modal-strength' in UMR 1.0 to make the annotation more human-readable.
-    ':modal-strength-of': {'type': 'attribute', 'repeat': False, 'values': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative']},
+    ':modal-strength': {'type': 'attribute', 'repeat': False, 'values': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative', 'undefined']}, # Note: The guidelines and the spreadsheet originally defined ':modstr' but it was changed to ':modal-strength' in UMR 1.0 to make the annotation more human-readable.
+    ':modal-strength-of': {'type': 'attribute', 'repeat': False, 'values': ['full-affirmative', 'partial-affirmative', 'neutral-affirmative', 'neutral-negative', 'partial-negative', 'full-negative', 'undefined']},
     ':mode': {'type': 'attribute', 'repeat': False, 'values':['imperative', 'interrogative', 'expressive']},
     ':mode-of': {'type': 'attribute', 'repeat': False, 'values':['imperative', 'interrogative', 'expressive']},
     ':month': {'type': 'attribute', 'repeat': False},
@@ -162,10 +162,10 @@ known_relations = {
     ':reason-of': {'type': 'modifier', 'repeat': True},
     ':recipient': {'type': 'participant', 'repeat': False},
     ':recipient-of': {'type': 'participant', 'repeat': False},
-    ':refer-number': {'type': 'attribute', 'repeat': False, 'values': ['singular', 'non-singular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal']}, # Note: The guidelines and the spreadsheet originally defined ':ref-number' but it was changed to ':refer-number' in UMR 1.0 to make the annotation more human-readable.
-    ':refer-number-of': {'type': 'attribute', 'repeat': False, 'values': ['singular', 'non-singular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal']},
-    ':refer-person': {'type': 'attribute', 'repeat': False, 'values': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', 'excl','incl']}, # Note: The guidelines and the spreadsheet originally defined ':ref-person' but it was changed to ':refer-person' in UMR 1.0 to make the annotation more human-readable.
-    ':refer-person-of': {'type': 'attribute', 'repeat': False, 'values': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', 'excl','incl']},
+    ':refer-number': {'type': 'attribute', 'repeat': False, 'values': ['singular', 'non-singular', 'nonsingular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal']}, # Note: The guidelines and the spreadsheet originally defined ':ref-number' but it was changed to ':refer-number' in UMR 1.0 to make the annotation more human-readable.
+    ':refer-number-of': {'type': 'attribute', 'repeat': False, 'values': ['singular', 'non-singular', 'nonsingular', 'dual', 'paucal', 'plural', 'non-dual-paucal', 'greater-plural', 'trial', 'non-trial-paucal']},
+    ':refer-person': {'type': 'attribute', 'repeat': False, 'values': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', '1st-inclusive', '1st-exclusive', 'excl','incl']}, # Note: The guidelines and the spreadsheet originally defined ':ref-person' but it was changed to ':refer-person' in UMR 1.0 to make the annotation more human-readable.
+    ':refer-person-of': {'type': 'attribute', 'repeat': False, 'values': ['1st', '2nd', '3rd', '4th', 'non-3rd', 'non-1st', '1st-inclusive', '1st-exclusive', 'excl','incl']},
     ':refer-definiteness':{'type':'attribute', 'repeat': False, 'values': ['class']}, #todo: for cases pronouns that are generic. "you don't do this"
     ':refer-definiteness-of':{'type':'attribute', 'repeat': False, 'values': ['class']},
     ':scale': {'type': 'modifier', 'repeat': False},
@@ -249,7 +249,7 @@ discourse_concepts = [
     # This have :sntN children
     'multi-sentence',
     # These have :opN children:
-    'and', 'or', 'inclusive-disjunction', 'exclusive-disjunction', 'and-but', 'consecutive', 'additive', 'and-unexpected', 'and-contrast',
+    'and', 'or', 'inclusive-disjunction', 'exclusive-disjunction', 'inclusive-disj', 'exclusive-disj', 'and-but', 'consecutive', 'additive', 'and-unexpected', 'and-contrast',
     # These are rolesets and have :ARGN children:
     'but-91', 'unexpected-co-occurrence-91', 'contrast-91',
     # These are reifications, thus rolesets, and have :ARGN children:
@@ -267,6 +267,11 @@ abstract_concepts = {
     'umr-unknown': {'type': 'basic', 'sub-roles': []},  # [] means these have no suggested sub-roles
     'umr-unintelligible': {'type': 'basic', 'sub-roles': []},  # [] means these have no suggested sub-roles
     'umr-empty': {'type': 'basic', 'sub-roles': []},  # [] means these have no suggested sub-roles
+    'thing': {'type': 'basic', 'sub-roles': []},
+    'animal': {'type': 'basic', 'sub-roles': []},
+    'temporal': {'type': 'basic', 'sub-roles': []},
+    'quantity': {'type': 'basic', 'sub-roles': []},
+    'truth-value': {'type': 'basic', 'sub-roles': [':polarity-of']},
 
     'date-entity':{'type': 'entities', 'sub-roles':[':calendar', ':century', ':day', ':dayperiod', ':decade',':era',':month',':quarter', ':season',':time', ':timezone', ':weekday', ':year', ':year2']},
     'string-entity':{'type':'entities', 'sub-roles':[':value']},
@@ -552,7 +557,14 @@ ne_types = ['academic-organization',
  'work-of-art',
  'world-region',
  'worship-place',
- 'writing-script']
+ 'writing-script',
+ 'arts-movement',
+ 'cyber-attack',
+ 'individual-person',
+ 'nation',
+ 'nature-reserve',
+ 'religious-movement',
+ 'social-movement']
 
 non_event_rolesets = [
     'have-actor-91', 'have-co-actor-91', 'have-undergoer-91', 'have-theme-91', 'have-force-91', 'have-causer-91',
@@ -575,7 +587,8 @@ non_event_rolesets = [
     'hyperlink-91', 'include-91', 'infer-91', 'publication-91', 'reference-illustration-91', 'resemble-91',
     'rate-entity-91', 'score-on-scale-91', 'statistical-test-91',
     'street-address-91', 'mean-91', 'have-experience-91', 'weather-91', 'range-91', 'gesture-91',
-    'emit-sound-91', 'proverb-91', 'say-91'
+    'emit-sound-91', 'proverb-91', 'say-91',
+    'confirm-91', 'in-text-reference-91', 'request-confirmation-91', 'request-response-91'
 ]
 
 doc_level_relations = {"temporal": [':contained', ':before', ':after', ':overlap', ':depends-on'],

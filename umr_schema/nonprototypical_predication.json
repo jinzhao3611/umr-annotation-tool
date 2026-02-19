@@ -1,0 +1,64 @@
+[
+  [
+    {
+      "Semantic Category": "Possession",
+      "Roleset & Associated Role": "(h / have-possession-91\n            :ARG1 possessor\n            :ARG2 possession)\n\n        \n        :possession",
+      "Definition": "Generic reification of :poss, or for nonprototypical predications that are agnostic for presentation strategy. Use for languages in which it is difficult to determine which information is new/old.\n        The dog is mine.\n          *Note: annotation for English copular construction, where the choice has been made not to use the finer-grained possession rolesets.\n(h / have-possession-91 \n    :ARG1 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :ARG2 (d / dog)\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Semantic Category": "(t / thetic-possession-91\n\n            :ARG1 possessor\n\n            :ARG2 possession)",
+      "Roleset & Associated Role": "Thetic presentation of possession. Possessor in focus, possession is the argument turned into the predicate in some languages.\n        The teacher has a dog.\n          *Note: English would typically still use the lexeme-specific have-03 roleset for this. But if no such roleset existed, and if English were using the finer-grained possession rolesets, this annotation would reflect the 'teacher' being in focus and the 'dog' being (probably) new information. \n(t / thetic-possession-91 \n    :ARG1 (p / person\n        :ARG0 (t2 / teach-01))\n    :ARG2 (d / dog)\n    :aspect state\n    :modal-strength full-affirmative)\n\n\n        Mijiri-tin\tɨara-yara 'Miguel does have a canoe.'  (lit. 'Miguel is a canoe-owner.')\n          *Note: English would typically still use the lexeme-specific have-03 roleset for this. But if no such roleset existed, and if English were using the finer-grained possession rolesets, this annotation would reflect the 'teacher' being in focus and the 'dog' being (probably) new information. \nMijiri-tin\tɨara-yara\nMiguel-CER\tcanoe-owner\n(h / have-91\n:ARG1 (p / person\n  :name (n / name :op1 \"Mijiri\")\n      :refer-number Singular)\n:ARG2 (a / ɨarayara)  'canoe'\n:aspect state\n:modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Semantic Category": "(p / pred-possession-91\n\n            :ARG1 possession\n\n            :ARG2 possessor)",
+      "Roleset & Associated Role": "Predicative presentation of possession. Possessum in focus, possessor is the argument turned into the predicate in some languages.\n        The dog belongs to a neighbor.\n          *Note: English would typically still use the lexeme-specific belong-01 roleset for this. But if no such roleset existed, and if English were using the finer-grained possession rolesets, this annotation would reflect the 'dog' being in focus and the 'neighbor' being new information. \n(p / pred-possession-91 \n    :ARG1 (d / dog)\n    :ARG2 (p2 / person\n        :ARG1-of (h / have-rel-role-91\n            :ARG3 (n / neighbor)))\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Semantic Category": "Location",
+      "Roleset & Associated Role": "(e / exist-91\n\n            :ARG1 theme)",
+      "Definition": "Quantification of existence only, e.g., 'there is a god'. Not just introducing an entity in discourse, but actually asserting existence as if existence were in question. The consensus is that if additional arguments are presented, this roleset should not be used, but a reification roleset for the other role. For example, 'There were good seeds from good plants' would use have-source-91. \n        There is a god.\n          (e / exist-91\n    :arg1 (g / god)\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Semantic Category": "(h / have-place-91\n\n            :ARG1 theme\n\n            :ARG2 location)\n\n        \n        :place",
+      "Roleset & Associated Role": "Generic reification of :place, or for nonprototypical predications that are agnostic for presentation strategy\n        There is a knife in the drawer.\n          (h / have-place-91 \n    :ARG1 (k / knife)\n    :ARG2 (i / in\n        :op1 (d / drawer))\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Semantic Category": "(t / thetic-location-91\n\n            :ARG1 location\n\n            :ARG2 theme)",
+      "Roleset & Associated Role": "Thetic presentation of location. Location in focus, theme is new information, and theme may be the argument turned into the predicate in some languages. \n    *Note: if it is not clear which presentation strategy is being used, default to have-place-91.\n        The rock has a sigil on it.\n\n          (t / thetic-location-91\n    :ARG1 (r / rock)\n    :ARG2 (s / sigil)\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Semantic Category": "(p / pred-location-91\n\n            :ARG1 theme\n\n            :ARG2 location)",
+      "Roleset & Associated Role": "Predicative presentation of location. Theme in focus, location is (probably) new information, and location may be the argument turned into the predicate in some languages. \n        The shoes are on a rock by the creek.\n          (p / pred-location-91\n    :ARG1 (s / shoe\n        :refer-number plural)\n    :ARG2 (r / rock\n        :place (b / by\n            :op1 (c / creek)))\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Semantic Category": "Property Predication",
+      "Roleset & Associated Role": "(h / have-mod-91\n            :ARG1 theme\n            :ARG2 property)\n\n        \n        :mod",
+      "Definition": "Predication of properties. Pay close attention and make sure to annotate the overall main point of the proposition. Sometimes, predication of properties is packaged in such a way that it looks like object predication. This occurs sometimes when a copular construction is used with a noun phrase as the direct object, but the noun is not the main idea being conveyed-- it's just a carrier (already known information) for the property, which is presented as a modifier (e.g., an adjective). For example, consider the difference between \"We studied Shakespeare, Napoleon, and Muhammed. These are Great Men according to Carlyle's Great Men Theory.\", \"both of my grandfathers were great men\", and \"these men are great\". The first example is object predication because \"Great Men\" is a Named Entity, a category in and of itself. In the second, we understand that my grandfathers are men, and the main point of the sentence is that they were great even though this property is embedded inside a redundant NP-- so have-mod-91 is a better option. The general idea is that a speaker might say \"These men are great\" or \"These are great men\" to convey the same main idea, and we want the annotations to be the same because UMR is supposed to be highlighting semantics over syntax.\n        My cat Carrot is overweight.\n          (h / have-mod-91\n    :ARG1 (c / cat\n        :possessor (p / person\n            :refer-person 1st\n            :refer-number singular)\n        :ARG1-of (i / identity-91\n            :ARG2 (a / animal \n                :name (n / name :op1 \"Carrot\"))))\n    :ARG2 (o / overweight)\n    :aspect state\n    :modal-strength full-affirmative)\n\n          \n        My grandfathers were both great.\n          (h / have-mod-91\n    :ARG1 (p / person\n        :quant (b / both)\n        :ARG1-of (h2 / have-rel-role-91 \n            :ARG2 (p2 / person\n                :refer-person 1st\n                :refer-number singular)\n            :ARG3 (g / grandfather)))\n    :ARG2 (g2 / great)\n    :aspect state\n    :modal-strength full-affirmative)\n\n          \n        My grandfathers were both great men. (interpreted as property carrier here)\n          (h / have-mod-91\n    :ARG1 (p / person\n        :quant (b / both)\n        :ARG1-of (h2 / have-rel-role-91 \n            :ARG2 (p2 / person\n                :refer-person 1st\n                :refer-number singular)\n            :ARG3 (g / grandfather)))\n    :ARG2 (g2 / great\n        :mod-of (m / man\n            :refer-number plural))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Semantic Category": "Equational",
+      "Roleset & Associated Role": "(i / identity-91\n\n            :ARG1 theme\n            :ARG2 equated referent)",
+      "Definition": "Predication of equation, also used for apposition. \n        My cat carrot is overweight. (apposition)\n          (h / have-mod-91\n    :ARG1 (c / cat\n        :ARG1-of (i / identity-91\n            :ARG2 (a / animal \n                :name (n / name :op1 \"Carrot\")))\n        :possessor (p / person\n            :refer-person 1st\n            :refer-number singular))\n    :ARG2 (o / overweight)\n    :aspect state\n    :modal-strength full-affirmative)\n\n          \n        Neil Armstrong was the first person on the moon. (equivalence of two specific referents)\n          (i / identity-91\n    :ARG1 (p / person\n        :name (n / name :op1 \"Neil\" :op2 \"Armstrong\"))\n    :ARG2 (p2 / person\n        :ord (o / ordinal-entity :value 1\n            :range (p3 / person \n                :refer-number plural\n                :place (m / moon))))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Semantic Category": "Object predication.",
+      "Roleset & Associated Role": "(h / have-role-91\n            :ARG1 1st entity\n            :ARG2 (optional) 2nd entity\n            :ARG3 object category, 1st entity\n            :ARG4 (optional) object category, 2nd entity)\n\n        \n        :role (under development)",
+      "Definition": "For predication of objects, categorization, roles played. \n        Carrot is a cat.\n          (h / have-role-91\n    :ARG1 (a / animal\n        :name (n / name :op1 \"Carrot\"))\n    :ARG2 (c / cat)\n    :aspect state\n    :modal-strength full-affirmative)\n\n          \n        The gymnast broke her foot.\n          (b / break-01\n    :ARG0 (p / person\n        :ARG1-of (h / have-role-91\n            :ARG2 (g / gymnast)))\n    :ARG1 (f / foot\n        :part-of p)\n    :aspect state\n    :modal-strength full-affirmative)\n\n          \n        We studied Shakespeare, Napoleon, and Muhammed. These are Great Men according to Carlyle's Great Men Theory.\n          (h / have-role-91\n    :ARG1 (p / person\n        :refer-number plural\n        :mod (t / this))\n    :ARG2 (c / conceptualization\n        :name (n / name :op1 \"Great\" :op2 \"Men\"))\n    :ARG1-of (s / say-91 \n        :ARG0 (c2 / conceptualization\n            :name (n2 / name :op1 \"Great\" :op2 \"Men\" :op3 \"Theory\")\n            :possessor (p2 / person\n                :name (n3 / name :op1 \"Carlyle\"))))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Semantic Category": "(h / have-rel-role-92\n\n            :ARG1 1st entity\n\n            :ARG2 2nd entity (acquaintance/kin)\n\n            :ARG3 role of 1st entity relative to 2nd entity\n\n            :ARG4 role of 2nd entity relative to 1st)",
+      "Roleset & Associated Role": "For expression of kinship and other inter-personal relationships. Covers predication as well as modification and reference. \n        My grandfathers were both great.\n          (h / have-mod-91\n    :ARG1 (p / person\n        :quant (b / both)\n        :ARG1-of (h2 / have-rel-role-91 \n            :ARG2 (p2 / person\n                :refer-person 1st\n                :refer-number singular)\n            :ARG3 (g / grandfather)))\n    :ARG2 (g2 / great)\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Semantic Category": "(h / have-org-role-92\n\n            :ARG1 office holder\n\n            :ARG2 2nd entity (acquaintance/kin)\n\n            :ARG3 role of 1st entity relative to 2nd entity\n\n            :ARG4 role of 2nd entity relative to 1st\n            :ARG5 relationship basis)",
+      "Roleset & Associated Role": "For expression of organizational relationships. Covers predication as well as modification and reference. \n        I met the President of the University of New Mexico.\n          (m / meet-03\n\t:ARG0 (p / person\n\t\t:refer-person 1st\n\t\t:refer-number Singular)\n\t:ARG1 (p2 / person\n\t\t:ARG1-of (h / have-org-role-92\n\t\t\t:ARG2 (a / academic_organization \n                :wiki \"University_of_New_Mexico\"\n\t\t\t\t:name (n / name :op1 \"University :op2 \"of\" :op3 \"New\" :op4 \"Mexico\"))\n\t\t\t:ARG2 (p3 / president)))\n\t:aspect performance\n\t:modal-strength full-affirmative)",
+      "Definition": ""
+    }
+  ]
+]

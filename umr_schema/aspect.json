@@ -1,0 +1,134 @@
+[
+  [
+    {
+      "Role, Inverse, Reification": ":aspect\n\n\n        \n        (no inverse)\n\n\n        \n        have-aspect-91\n          :ARG1 event\n \n          :ARG2 aspect value",
+      "Values": "habitual",
+      "Definitions": "Occurs/occurred usually or habitually.\n        He bakes pies. \n          (b / bake-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :undergoer (p2 / pie\n        :refer-number plural)\n    :aspect habitual\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role, Inverse, Reification": "generic",
+      "Values": "The event is a hallmark characteristic of a class of entities.\n        Platypuses lay eggs. \n          (l / lay-01\n    :actor (p / platypus\n        :refer-number plural)\n    :undergoer (e / egg\n        :refer-number plural)\n    :aspect generic\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "imperfective",
+      "Values": "Ambiguous between state and atelic-process.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "state",
+      "Values": "Unspecified type of state.\n        My cat loves tuna. \n          (l / love-01\n    :actor (c / cat\n        :possessor (p / person\n            :refer-person 1st\n            :refer-number singular))\n    :undergoer (t / tuna)\n    :aspect state\n    :modal-strength full-affirmative)\n    \n        I didn't go to the store. \n          (g / go-02\n    :polarity -\n    :actor (p / person\n            :refer-person 1st\n            :refer-number singular)\n    :goal (s / store)\n    :aspect state\n    :modal-strength full-negative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "reversible-state",
+      "Values": "Acquired state that is not permanent.\n        My cat is hungry.\n          (h / hunger-01\n\t  :ARG0 (c / cat\n\t\t    :refer-number singular\n\t\t    :possessor (p / person\n\t\t\t      :refer-person 1st\n\t\t\t      :refer-number singular)))\n    :aspect reversible-state\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "irreversible-state",
+      "Values": "Acquired state that is permanent.\n        The wine glass is shattered.\n          (s / shatter-01\n\t  :ARG1 (g / glass\n\t\t    :refer-number singular\n\t\t    :purpose (w / wine))\n\t  :aspect irreversible-state\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "point-state",
+      "Values": "State that is acquired and reversed at a single point in time.\n        It is 2:30pm.\n          (h / have-temporal-91\n    :ARG1 (n / now)\n    :ARG2 (d / date-entity\n\t\t    :time 14:30)\n\t  :aspect point-state\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "inherent-state",
+      "Values": "State that is not acquired and permanent.\n        My cat is black and white.\n          (h / have-mod-91\n    :ARG1 (c / cat\n\t      :refer-number singular\n\t\t    :possessor (p / person\n\t\t        :refer-person 1st\n\t\t        :refer-number singular))\n\t  :ARG2 (a / and\n\t\t    :op1 (b / black)\n\t\t    :op2 (w / white)\n\t  :aspect inherent-state\n    :modal-strength full-affirmative))",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "process",
+      "Values": "Unspecified type of eventuality.\n        He was late because of the fire.\n          (l / late-02\n    :theme (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :cause (f / fire-05\n        aspect process\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "atelic-process",
+      "Values": "Process that does not reach a result state.\n        I heard about his travels.\n          (h / hear-01\n\t  :ARG0 (p / person\n\t\t    :ref-person 1st\n\t\t    :ref-number singular)\n\t  :ARG1 (t / travel-01\n\t\t    :ARG0 (p2 / person\n\t\t\t      :ref-person 3rd\n\t\t\t      :ref-number singular)\n\t\t    :aspect process\n\t\t    :modal-strength full-affirmative)\n\t  :aspect state\n\t  :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "activity",
+      "Values": "Process that does not end.\n        He drove west.\n          (d / drive\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :direction (t / trajectory\n        :axis-of (w / west-01))\n    :aspect activity\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "directed-activity",
+      "Values": "Processprocess that does not end and does progress linearly along a scale.\n        The soup was cooling on the counter.\n          (c / cool-01\n\t  :theme (s / soup)\n\t  :place (c2 / counter)\n\t  :aspect directed-activity\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "undirected-activity",
+      "Values": "Process that does not end and does not progress linearly along a scale.\n        The cat was meowing outside the door.\n          (m / meow-01\n\t  :actor (c / cat\n\t\t    :refer-number singular)\n\t  :place (o / outside\n\t\t    :op1 (d / door))\n\t  :aspect undirected-activity\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "iterative",
+      "Values": "Process that occurs repetitively and ongoingly.\n        He tapped his foot to the beat.\n          (t / tap-01\n\t  :actor (p / person\n\t      :refer-person 3rd\n\t\t    :refer-number singular)\n\t  :instrument (f / foot\n\t      :part-of p)\n    :manner (r / rate-entity-91\n        :ARG4 (b / beat))\n    :aspect iterative\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "perfective",
+      "Values": "Process that comes to an end.\n        He stopped singing.\n          (s / sing-01\n\t  :actor (p / person\n\t      :refer-person 3rd\n\t\t    :refer-number singular)\n    :aspect perfective\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "endeavor",
+      "Values": "Process that ends without reaching a result state.\n        He hit the stick against the fence.  \n          (h / hit-01\n\t  :actor (p / person\n\t      :refer-person 3rd\n\t\t    :refer-number singular)\n    :instrument (s / stick)\n    :goal (f / fence)\n    :aspect endeavor\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "semelfactive",
+      "Values": "Process that ends without reaching a result state and happens at a single point in time.\n        The cat blinked.\n          (b / blink-01\n\t  :actor (c / cat)\n    :aspect semelfactive\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "undirected-endeavor",
+      "Values": "Process that ends without reaching a result state and does not progress linearly along a scale.\n        The cat meowed for two hours until I woke up.\n          (m / meow-01\n\t  :actor (c / cat)\n\t  :duration (t / temporal-quantity\n\t\t    :quant 2\n\t\t    :unit (h / hour))\n    :temporal (u / until\n\t\t    :op1 (w / wake-01\n\t\t\t      :theme (p / person\n\t\t\t\t        :refer-person 1st\n\t\t\t\t        :refer-number singular)\n\t\t\t      :aspect performance\n\t\t\t      :modal-strength full-affirmative))\n    :aspect undirected-endeavor\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "directed-endeavor",
+      "Values": "Process that ends without reaching a result state and progresses linearly along a scale.\n        The soup cooled for an hour before we ate it.\n          (c / cool-01\n\t  :theme (s / soup)\n\t  :duration (t / temporal-quantity\n\t\t    :quant 1\n\t\t    :unit (h / hour))\n\t  :temporal (b / before\n\t\t    :op1 (e / eat-01\n\t\t\t      :actor (p / person\n\t\t\t\t        :refer-person 1st\n\t\t\t\t        :refer-number plural)\n\t\t\t      :undergoer s\n\t\t\t      :aspect performance\n\t\t\t      :modal-strength full-affirmative))\n    :aspect directed-activity\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "performance",
+      "Values": "Process that ends and reaches a result state.\n        The soup cooled for an hour before we ate it.\n          (c / cool-01\n\t  :theme (s / soup)\n\t  :duration (t / temporal-quantity\n\t\t    :quant 1\n\t\t    :unit (h / hour))\n\t  :temporal (b / before\n\t\t    :op1 (e / eat-01\n\t\t\t      :actor (p / person\n\t\t\t\t        :refer-person 1st\n\t\t\t\t        :refer-number plural)\n\t\t\t      :undergoer s\n\t\t\t      :aspect performance\n\t\t\t      :modal-strength full-affirmative))\n    :aspect directed-activity\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "inceptive",
+      "Values": "An activity or state starts.\n        He started singing.\n          (s / sing-01\n\t  :actor (p / person\n\t      :refer-person 3rd\n\t\t    :refer-number singular)\n    :aspect inceptive\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "incremental-accomplishment",
+      "Values": "Process that ends and reaches a result state, and progresses linearly along a scale.\n        I ate an apple pancake.\n          (e / eat-01\n\t  :actor (p / person\n\t\t    :refer-person 1st\n\t\t    :refer-number singular)\n\t  :undergoer (p2 / pancake\n\t\t    :refer-number singular\n\t\t    :mod (a / apple))\n    :aspect incremental-accomplishment\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "nonincremental-accomplishment",
+      "Values": "Process that ends and reaches a result state, and does not progress linearly along a scale.\n        Harry repaired the computer.\n          (r / repair-01\n\t  :actor (p / person\n\t\t    :name (n / name :op1 \"Harry\"))\n\t  :undergoer (c / computer\n\t\t    :refer-number singular)\n    :aspect nonincremental-accomplishment\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "directed-achievement",
+      "Values": "Process that ends and reaches a result state within a single point in time, and progresses linearly along a scale.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "reversible-directed-achievement",
+      "Values": "Process that ends and reaches a result state, which is not permanent, within a single point in time, and progresses linearly along a scale.\n        The door opened.\n          (o / open-01\n\t  :theme (d / door\n\t\t    :refer-number singular)\n    :aspect reversible-directed-achievement\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "irreversible-directed-achievement",
+      "Values": "Process that ends and reaches a result state, which is permanent, within a single point in time, and progresses linearly along a scale.\n        The window shattered.\n          (s / shatter-01\n\t  :undergoer (w / window\n\t\t    :refer-number singular)\n    :aspect irreversible-directed-achievement\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    }
+  ]
+]

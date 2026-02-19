@@ -1115,13 +1115,23 @@ def api_generate_alignments():
 @login_required
 def get_concepts():
     """Provide predefined concepts for use in the branch addition feature"""
-    from umr_annot_tool.resources.rolesets import discourse_concepts, non_event_rolesets, ne_types
-    
+    from umr_annot_tool.resources.rolesets import discourse_concepts, non_event_rolesets, ne_types, abstract_concepts
+
     try:
+        # Build the abstract concepts list: all keys from abstract_concepts dict
+        # plus abstract-91 rolesets from non_event_rolesets
+        abstract_concepts_list = list(abstract_concepts.keys())
+        abstract_91_rolesets = [r for r in non_event_rolesets
+                                if r.endswith('-91') or r.endswith('-92')]
+        for r in abstract_91_rolesets:
+            if r not in abstract_concepts_list:
+                abstract_concepts_list.append(r)
+
         return jsonify({
             'discourse_concepts': discourse_concepts,
             'ne_types': ne_types,
-            'non_event_rolesets': non_event_rolesets
+            'non_event_rolesets': non_event_rolesets,
+            'abstract_concepts': abstract_concepts_list
         })
     except Exception as e:
         current_app.logger.error(f"Error fetching concepts: {str(e)}")
@@ -2244,6 +2254,264 @@ def download_frames():
             
     except Exception as e:
         logger.error(f"Error in download_frames: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@main.route("/get_schema_descriptions", methods=['GET'])
+@login_required
+def get_schema_descriptions():
+    """Return short definitions for UMR relations, aspect values, modal strength values, and abstract concepts."""
+    try:
+        base_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'umr_schema')
+        schema_files = {
+            'roles': os.path.join(base_dir, 'roles_and_reifications.json'),
+            'abstract': os.path.join(base_dir, 'abstract_concepts.json'),
+            'aspect': os.path.join(base_dir, 'aspect.json'),
+            'modal': os.path.join(base_dir, 'modal_annotation.json'),
+            'abstract_91': os.path.join(base_dir, 'abstract_91_rolesets.json'),
+            'discourse': os.path.join(base_dir, 'discourse_relations.json'),
+            'named_entities': os.path.join(base_dir, 'named_entities.json'),
+        }
+
+        def extract_first_sentence(text):
+            """Extract the first descriptive sentence, stripping Penman examples."""
+            if not text or not text.strip():
+                return ''
+            # Split into paragraphs (double newline separated)
+            paragraphs = re.split(r'\n\s*\n', text.strip())
+            desc_parts = []
+            found_sentence = False
+            for para in paragraphs:
+                if found_sentence:
+                    break
+                lines = para.strip().split('\n')
+                for line in lines:
+                    stripped = line.strip()
+                    # Stop at Penman examples
+                    if stripped.startswith('(') or (stripped.startswith(':') and '/' in stripped):
+                        found_sentence = True
+                        break
+                    if not stripped:
+                        continue
+                    # Skip indented example sentences (8+ leading spaces)
+                    if len(line) - len(line.lstrip()) >= 8 and not stripped.endswith(':') and not stripped.endswith(';'):
+                        continue
+                    desc_parts.append(stripped)
+                    # Stop after first complete sentence (ends with period)
+                    if stripped.endswith('.') or stripped.endswith('.)'):
+                        found_sentence = True
+                        break
+                if desc_parts:
+                    break
+            result = ' '.join(desc_parts).strip()
+            # Clean up trailing colons/semicolons
+            while result and result[-1] in ':;':
+                result = result[:-1].strip()
+            return result
+
+        descriptions = {
+            'relations': {},
+            'aspect': {},
+            'modal_strength': {},
+            'abstract_concepts': {},
+            'abstract_91_rolesets': {},
+            'discourse_relations': {},
+            'named_entities': {},
+        }
+
+        # Parse roles_and_reifications.json
+        with open(schema_files['roles'], 'r') as f:
+            roles_data = json.load(f)
+        for section in roles_data:
+            for entry in section:
+                # The Role field contains the role name + example, extract just the role name
+                role_field = entry.get('Role', '')
+                if not role_field:
+                    continue
+                role_name = role_field.split('\n')[0].strip()
+                # Some entries in later sections use "Role, Inverse, Reification" key
+                if not role_name and 'Role, Inverse, Reification' in entry:
+                    role_name = entry['Role, Inverse, Reification'].split('\n')[0].strip()
+                if not role_name or not role_name.startswith(':'):
+                    continue
+                definition = entry.get('Definition', '')
+                desc = extract_first_sentence(definition)
+                if desc:
+                    descriptions['relations'][role_name] = desc
+
+        # Parse aspect.json
+        with open(schema_files['aspect'], 'r') as f:
+            aspect_data = json.load(f)
+        for section in aspect_data:
+            current_role = None
+            for entry in section:
+                role_key = entry.get('Role, Inverse, Reification', '')
+                values_field = entry.get('Values', '')
+                defs_field = entry.get('Definitions', '')
+                # The first entry has the :aspect role itself
+                if role_key.startswith(':aspect'):
+                    current_role = ':aspect'
+                    # First entry also has the first value
+                    value_name = values_field.strip() if values_field else ''
+                    definition = defs_field.strip() if defs_field else ''
+                    if not definition:
+                        definition = values_field.strip() if values_field else ''
+                    if value_name:
+                        desc = extract_first_sentence(definition)
+                        if desc:
+                            descriptions['aspect'][value_name] = desc
+                    continue
+                # Subsequent entries: role_key is the value name, Values is the description
+                value_name = role_key.strip()
+                if not value_name:
+                    continue
+                description_text = values_field.strip() if values_field else ''
+                if not description_text:
+                    description_text = defs_field.strip() if defs_field else ''
+                desc = extract_first_sentence(description_text)
+                if desc:
+                    descriptions['aspect'][value_name] = desc
+
+        # Parse modal_annotation.json
+        with open(schema_files['modal'], 'r') as f:
+            modal_data = json.load(f)
+        for section in modal_data:
+            for entry in section:
+                role_key = entry.get('Role, Inverse, Reification', '')
+                values_field = entry.get('Values', '')
+                defs_field = entry.get('Definitions', '')
+                # Skip the :modal-strength header entry itself and other role headers
+                if role_key.startswith(':'):
+                    # First entry also carries the first value
+                    value_name = values_field.strip() if values_field else ''
+                    definition = defs_field.strip() if defs_field else ''
+                    if not definition:
+                        definition = values_field.strip() if values_field else ''
+                    if value_name and not value_name.startswith(':') and not value_name.startswith('('):
+                        desc = extract_first_sentence(definition)
+                        if desc:
+                            descriptions['modal_strength'][value_name] = desc
+                    continue
+                value_name = role_key.strip()
+                if not value_name or value_name.startswith('('):
+                    continue
+                description_text = values_field.strip() if values_field else ''
+                if not description_text:
+                    description_text = defs_field.strip() if defs_field else ''
+                desc = extract_first_sentence(description_text)
+                if desc:
+                    descriptions['modal_strength'][value_name] = desc
+
+        # Parse abstract_concepts.json
+        with open(schema_files['abstract'], 'r') as f:
+            abstract_data = json.load(f)
+        for section in abstract_data:
+            for entry in section:
+                concept_field = entry.get('Concept', '')
+                if not concept_field:
+                    continue
+                # Extract concept name from "(p / person)" format or plain name
+                concept_name = concept_field.strip()
+                if concept_name.startswith('('):
+                    parts = concept_name.strip('()').split('/')
+                    if len(parts) >= 2:
+                        concept_name = parts[1].strip()
+                    else:
+                        concept_name = parts[0].strip()
+                # Skip subrole-like entries (e.g. ":century", ":day")
+                if concept_name.startswith(':'):
+                    continue
+                definition = entry.get('Definition', '')
+                desc = extract_first_sentence(definition)
+                if desc:
+                    descriptions['abstract_concepts'][concept_name] = desc
+
+        # Parse abstract_91_rolesets.json
+        with open(schema_files['abstract_91'], 'r') as f:
+            abstract_91_data = json.load(f)
+        for section in abstract_91_data:
+            for entry in section:
+                roleset_field = entry.get('Roleset', '')
+                if not roleset_field:
+                    continue
+                # Extract roleset name from first line (e.g. "byline-91\n  :ARG1 ...")
+                roleset_name = roleset_field.split('\n')[0].strip()
+                # Skip sub-concepts like "(a / armature ...)" or "(s / spatial-sequence ...)"
+                if roleset_name.startswith('('):
+                    parts = roleset_name.strip('()').split('/')
+                    if len(parts) >= 2:
+                        roleset_name = parts[1].strip().split('\n')[0].strip()
+                    else:
+                        continue
+                definition = entry.get('Definition', '')
+                desc = extract_first_sentence(definition)
+                if desc:
+                    descriptions['abstract_91_rolesets'][roleset_name] = desc
+
+        # Parse discourse_relations.json
+        with open(schema_files['discourse'], 'r') as f:
+            discourse_data = json.load(f)
+        for section in discourse_data:
+            for entry in section:
+                relation_field = entry.get('Discourse Relation', '')
+                if not relation_field:
+                    continue
+                # Extract relation name: could be "(o / or ...)" or ":cause ..."
+                relation_name = relation_field.split('\n')[0].strip()
+                reification_name = None
+                if relation_name.startswith('('):
+                    parts = relation_name.strip('()').split('/')
+                    if len(parts) >= 2:
+                        relation_name = parts[1].strip()
+                    else:
+                        relation_name = parts[0].strip()
+                elif relation_name.startswith(':'):
+                    relation_name = relation_name.split()[0].strip()
+                    # Also extract the reification roleset name from the full field
+                    # e.g. ":cause ... (h / have-cause-91 ...)"
+                    for line in relation_field.split('\n'):
+                        line = line.strip()
+                        if line.startswith('(') and '/' in line:
+                            rparts = line.strip('()').split('/')
+                            if len(rparts) >= 2:
+                                rname = rparts[1].strip().split('\n')[0].split(')')[0].strip()
+                                if rname.endswith('-91'):
+                                    reification_name = rname
+                            break
+                definition = entry.get('Definition', '')
+                desc = extract_first_sentence(definition)
+                if desc:
+                    descriptions['discourse_relations'][relation_name] = desc
+                    # Add aliases for dropdown matching
+                    if reification_name:
+                        descriptions['discourse_relations'][reification_name] = desc
+                    # Handle short/long form aliases
+                    if relation_name == 'inclusive-disj':
+                        descriptions['discourse_relations']['inclusive-disjunction'] = desc
+                    elif relation_name == 'exclusive-disj':
+                        descriptions['discourse_relations']['exclusive-disjunction'] = desc
+                    # Fix typo: JSON has "unexpected-co-occurence" but code uses "unexpected-co-occurrence"
+                    if 'occurence' in relation_name:
+                        descriptions['discourse_relations'][relation_name.replace('occurence', 'occurrence')] = desc
+                    # Fix name mismatches between JSON and rolesets.py
+                    if reification_name == 'have-substitute-91':
+                        descriptions['discourse_relations']['have-substitution-91'] = desc
+                    elif reification_name == 'have-concessive-concession-91':
+                        descriptions['discourse_relations']['have-concessive-condition-91'] = desc
+
+        # Parse named_entities.json - build hierarchy paths
+        with open(schema_files['named_entities'], 'r') as f:
+            ne_data = json.load(f)
+        def build_ne_paths(node, path=''):
+            name = node.get('name', '')
+            current_path = f"{path} > {name}" if path else name
+            descriptions['named_entities'][name] = current_path
+            for child in node.get('children', []):
+                build_ne_paths(child, current_path)
+        build_ne_paths(ne_data)
+
+        return jsonify(descriptions)
+    except Exception as e:
+        logger.error(f"Error in get_schema_descriptions: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 @main.route("/lemmatize", methods=['GET'])

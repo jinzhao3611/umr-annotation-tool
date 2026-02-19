@@ -1,0 +1,363 @@
+{
+  "name": "thing",
+  "children": [
+    {
+      "name": "person",
+      "children": [
+        { "name": "individual-person" }
+      ]
+    },
+    { "name": "animal" },
+    { "name": "plant" },
+    { "name": "language" },
+    { "name": "nationality" },
+    {
+      "name": "social-group",
+      "children": [
+        { "name": "family" },
+        { "name": "clan" },
+        { "name": "ethnic-group" },
+        { "name": "regional-group" },
+        { "name": "religious-group" },
+        { "name": "performing-group" }
+      ]
+    },
+    {
+      "name": "organization",
+      "children": [
+        { "name": "company" },
+        { "name": "association" },
+        { "name": "business" },
+        { "name": "market-sector" },
+        { "name": "government-organization" },
+        { "name": "international-organization" },
+        { "name": "political-organization" },
+        { "name": "religious-organization" },
+        { "name": "criminal-organization" },
+        { "name": "armed-organization" },
+        { "name": "academic-organization" },
+        { "name": "sports-organization" }
+      ]
+    },
+    {
+      "name": "natural-object",
+      "children": [
+        { "name": "rock" },
+        {
+          "name": "celestial-entity",
+          "children": [
+            { "name": "galaxy" },
+            { "name": "solar-system" },
+            { "name": "star" },
+            { "name": "planet" },
+            { "name": "moon" },
+            { "name": "small-celestial-body" },
+            { "name": "constellation" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "place",
+      "children": [
+        {
+          "name": "geographical-entity",
+          "children": [
+            {
+              "name": "water-entity",
+              "children": [
+                { "name": "ocean" },
+                { "name": "sea" },
+                { "name": "lake" },
+                { "name": "river" },
+                { "name": "gulf" },
+                { "name": "bay" },
+                { "name": "strait" }
+              ]
+            },
+            {
+              "name": "land-entity",
+              "children": [
+                { "name": "continent" },
+                { "name": "island" },
+                { "name": "peninsula" },
+                { "name": "mountain" },
+                { "name": "mountain-range" },
+                { "name": "pass" },
+                { "name": "volcano" },
+                { "name": "glaciological-entity" },
+                { "name": "valley" },
+                { "name": "canyon" }
+              ]
+            },
+            {
+              "name": "ecosystem",
+              "children": [
+                { "name": "desert" },
+                { "name": "forest" },
+                { "name": "wetland" },
+                { "name": "grassland" },
+                { "name": "coastland" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "region",
+          "children": [
+            { "name": "world-region" },
+            { "name": "country-region" },
+            { "name": "local-region" }
+          ]
+        },
+        {
+          "name": "geo-political-entity",
+          "children": [
+            { "name": "country" },
+            { "name": "country-partition" },
+            { "name": "nation" },
+            { "name": "human-settlement" },
+            {
+              "name": "protected-area",
+              "children": [
+                { "name": "nature-reserve" },
+                { "name": "culturally-protected-area" }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "facility",
+          "children": [
+            { "name": "animal-nest" },
+            {
+              "name": "station",
+              "children": [
+                { "name": "airport" },
+                { "name": "port" },
+                { "name": "spaceport" }
+              ]
+            },
+            {
+              "name": "thoroughfare",
+              "children": [
+                { "name": "tunnel" },
+                { "name": "bridge" },
+                { "name": "road" },
+                { "name": "railway-line" }
+              ]
+            },
+            {
+              "name": "utility-structure",
+              "children": [
+                { "name": "canal" },
+                { "name": "dam" }
+              ]
+            },
+            {
+              "name": "cultural-facility",
+              "children": [
+                { "name": "building" },
+                { "name": "room" },
+                { "name": "theater" },
+                { "name": "museum" },
+                { "name": "palace" },
+                { "name": "hotel" },
+                { "name": "worship-place" },
+                { "name": "sports-facility" },
+                { "name": "market" },
+                { "name": "park" },
+                { "name": "city-square" }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    { "name": "historical-period" },
+    {
+      "name": "event",
+      "children": [
+        { "name": "assembly" },
+        { "name": "incident" },
+        { "name": "war" },
+        { "name": "mission" },
+        {
+          "name": "natural-disaster",
+          "children": [
+            { "name": "earthquake" },
+            { "name": "cyclone" },
+            { "name": "flood" },
+            { "name": "landslide" },
+            { "name": "avalanche" },
+            { "name": "volcanic-disaster" },
+            { "name": "duststorm" },
+            { "name": "fire" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cultural-activity",
+      "children": [
+        { "name": "game" },
+        { "name": "festival" },
+        { "name": "ceremony" },
+        {
+          "name": "performance",
+          "children": [
+            { "name": "dance" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cultural-artifact",
+      "children": [
+        { "name": "product" },
+        { "name": "weapon-type" },
+        { "name": "weapon" },
+        { "name": "food-dish" },
+        { "name": "music" },
+        { "name": "work-of-art" },
+        { "name": "body-of-literature" },
+        {
+          "name": "publication",
+          "children": [
+            { "name": "book" },
+            { "name": "magazine" },
+            { "name": "journal" }
+          ]
+        },
+        { "name": "broadcast-program" },
+        { "name": "broadcast-network" },
+        { "name": "news-media" },
+        { "name": "website" },
+        {
+          "name": "cyber-entity",
+          "children": [
+            { "name": "computer-program" },
+            { "name": "social-media" },
+            { "name": "cyber-attack" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "vehicle-type",
+      "children": [
+        { "name": "vehicle" },
+        { "name": "automobile" },
+        { "name": "automobile-type" },
+        { "name": "ship" },
+        { "name": "ship-type" },
+        { "name": "aircraft" },
+        { "name": "aircraft-type" },
+        { "name": "spacecraft" },
+        { "name": "spacecraft-type" }
+      ]
+    },
+    {
+      "name": "qualification",
+      "children": [
+        { "name": "degree" },
+        { "name": "test" },
+        { "name": "honor" }
+      ]
+    },
+    {
+      "name": "government-output",
+      "children": [
+        { "name": "policy" },
+        {
+          "name": "legislation",
+          "children": [
+            { "name": "court-decision" },
+            { "name": "treaty" },
+            { "name": "tax" },
+            { "name": "social-program" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "system",
+      "children": [
+        { "name": "identification-number" },
+        {
+          "name": "notational-system",
+          "children": [
+            { "name": "color" },
+            { "name": "music-key" },
+            { "name": "musical-note" },
+            { "name": "writing-script" },
+            { "name": "variable" }
+          ]
+        },
+        { "name": "currency-system" },
+        {
+          "name": "measurement-system",
+          "children": [
+            { "name": "unit" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "biomedical-entity",
+      "children": [
+        { "name": "molecular-physical-entity" },
+        { "name": "chemical-compound" },
+        { "name": "small-molecule" },
+        { "name": "protein" },
+        { "name": "protein-family" },
+        { "name": "protein-segment" },
+        { "name": "amino-acid" },
+        { "name": "macro-molecular-complex" },
+        { "name": "enzyme" },
+        { "name": "nucleic-acid" },
+        { "name": "pathway" },
+        { "name": "gene" },
+        { "name": "dna-sequence" },
+        { "name": "cell" },
+        { "name": "cell-line" },
+        { "name": "pathogen" },
+        { "name": "disease" },
+        { "name": "medical-condition" },
+        { "name": "behavior" },
+        { "name": "medicinal-substance" },
+        { "name": "diet" },
+        { "name": "therapy" }
+      ]
+    },
+    {
+      "name": "category",
+      "children": [
+        {
+          "name": "taxon",
+          "children": [
+            { "name": "species" },
+            { "name": "breed" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "conceptualization",
+      "children": [
+        { "name": "religion" },
+        { "name": "political-ideology" }
+      ]
+    },
+    {
+      "name": "movement",
+      "children": [
+        { "name": "religious-movement" },
+        { "name": "social-movement" },
+        { "name": "arts-movement" }
+      ]
+    },
+    { "name": "financial-entity" },
+    { "name": "name" }
+  ]
+}

@@ -1,0 +1,49 @@
+[
+  [
+    {
+      "Role, Inverse, Reification": ":modal-strength\n\n\n      \n        (no inverse)\n\n\n        \n        have-modal-strength-91\n          :ARG1 proposition\n\n          :ARG2 value",
+      "Values": "full-affirmative",
+      "Definitions": "Simple assertions and facts:\n\n          The dog barked last night.\n        Certainty;\n\n        Predictive future:\n\n          Mary will go to Santa Fe."
+    },
+    {
+      "Role, Inverse, Reification": "partial-affirmative",
+      "Values": "Strong epistemic modals, adverbs and adjectives:\n\n          Mary must have gone to Santa Fe.\n\n            The dog probably barked last night.\n        Strong imperatives:\n\n          Go to Santa Fe, Mary.\n        Strong deontic modals:\n\n          Mary must go to Santa Fe.\n        Intention (intend, plan, decide);\n\n        Obligation:\n\n          Mary needs to go to Santa Fe.\n        Purpose clauses:\n\n          Mary went to Santa Fe to buy a new dog.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "neutral-affirmative",
+      "Values": "Weak epistemic modals, adverbs, and adjectives:\n\n          The dog may have barked last night.\n        Ability:\n\n          Mary can drive a car.\n        Conditional phrases:\n\n          If the dog barks, Mary will buy earplugs.\n        Hopes and fears:\n          I hope the dog doesn't bark.\n        Weak deontic modals including desire and permission:\n\n          Mary wants to go to Santa Fe.\n          Mary is allowed to go to Santa Fe.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "neutral-negative",
+      "Values": "Combination of (some) neutral-affirmative lexical items with negation.\n\n        The dog may not have barked last night.\n\n          Mary doesn't want to go to Santa Fe.\n\n          I don't hope the dog doesn't bark.\n\n          If the dog does'nt bark, Mary will buy earplugs.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "partial-negative",
+      "Values": "Negative imperatives;\n\n        Combination of (some) partial-affirmative lexical items with negation:\n        The dog probably didn't bark last night. \n\n          Mary shouldn't go to Santa Fe.\n\n          Mary is probably not going to Santa Fe.\n\n          Don't go to Santa Fe, Mary.\n\n          Mary went to Santa Fe to not get woken up in the night.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "full-negative",
+      "Values": "Negation: not, never, no;\n\n        Counterfactuals\n        The dog didn't bark last night. \n\n          Mary won't go to Santa Fe.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "undefined",
+      "Values": "when the modal strength is not specified, not inferrable.\n\n        I wonder whether Mary went to Santa Fe.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": ":modal-predicate\n\n\n      \n        (no inverse)\n\n\n      \n        (no reification)",
+      "Values": "(variable of pred)",
+      "Definitions": "Marks the complement of a modalizing predicate.\n        The dog wants to go outside. \n          (w / want-01\n    :ARG0 (d / dog)\n    :ARG1 (g / go-02\n        :ARG1 d\n        :AG4 (o / outside)\n        :aspect performance\n        :modal-strength partial-affirmative\n        :modal-predicate w)\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role, Inverse, Reification": ":quote\n\n\n        \n        (no inverse)\n\n\n        \n        (no reification)",
+      "Values": "(variable of pred)",
+      "Definitions": "Marks the utterance argument of a communication/speech predicate.\n        The dog said \"arf arf, barkity bark bark\". \n          (s / say-01\n    :ARG0 (d / dog)\n    :ARG1 (s / string-entity :value \"arf-arf-barkity-bark-bark\"\n        :quote s)\n    :aspect performance\n    :modal-strength full-affirmative)\n    \n        I says to him \"drop the ball, Kevin.\". \n          (s / say-01\n    :ARG0 (p / person \n        :refer-person 1st\n        :refer-number singular)\n    :ARG1 (d / drop-01\n        :mode imperative\n        :ARG0 a\n        :ARG1 (b / ball)\n        :vocative (a / animal \n            :name (n / name :op1 \"Kevin\"))\n        :quote s)\n    :ARG2 a\n    :aspect performance\n    :modal-strength full-affirmative)"
+    }
+  ]
+]

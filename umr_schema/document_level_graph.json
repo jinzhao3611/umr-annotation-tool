@@ -1,0 +1,90 @@
+[
+  [
+    {
+      "Relation": ":same-entity",
+      "Definition": "Two entity concepts have the same referent."
+    },
+    {
+      "Relation": ":same-event",
+      "Definition": "Two event concepts have the same referent."
+    },
+    {
+      "Relation": ":subset-of",
+      "Definition": "A set/member or part/whole relationship between two events or entities."
+    }
+  ],
+  [
+    {
+      "Relation": ":before",
+      "Constant Arg": "document-creation-time",
+      "Definition": "The argument on the right occurs before the argument on the left.\n\n          Pope was in remission from a rare form of bone cancer when he was arrested in Russia.\n            (s7h / have-mod-91\n    :ARG1 (s7p / person :wiki \"Edmond_Pope\"\n        :name (s7n / name :op1 \"Pope\"))\n    :ARG2 (s7r / remission-02\n        :ARG1 (s7d / disease :wiki -\n                :name (s7n2 / name :op1 \"bone\" :op2 \"cancer\")\n                :ARG1-of (s7r2 / rare-02))\n        :temporal (s7a / arrest-01\n                :ARG1 s7p\n                :place (s7c / country :wiki \"Russia\"\n                    :name (s7n3 / name :op1 \"Russia\")))\n        :aspect performance)\n    :aspect state)\n\n(s7s0 / sentence\n    :coref ((s6p :same-entity s7p))\n    :temporal ((s2c :before s7a)\n            (s7a :overlap s7h))\n    :modal ((author :full-affirmative s7h)\n            (author :full-affirmative s7a)))"
+    },
+    {
+      "Relation": ":after",
+      "Constant Arg": "The argument on the right occurs after the argument on the left.\n\n          Abdel-Maksoud stated the confiscation will affect the Brotherhood's financial bases.\n            (s / state-01\n    :ARG0 (p / person\n\t    :name (n / name :op1 \"Abdel-Maksoud\"))\n    :ARG1 (a / affect-01\n        :ARG0 (c / confiscate-01)\n        :ARG1 (b / base\n            :poss (o / organization\n        :name (n2 / name :op1 \"Brotherhood\"))\n            :mod (f / finance))\n\t    :aspect performance\n\t    :quot s)\n      :aspect performance)\n\n(s2/ sentence\n    :coref ((s1c :same-event s2c))\n    :temporal ((s1c :after s2s)\n  \t        (s2s :after s2a))\n    :modal ((author :full-affirmative s2s)\n  \t    (author :full-affirmative s2p)\n\t    (s2p :full-affirmative s2c)\n\t    (s2p :full-affirmative s2a)))",
+      "Definition": ""
+    },
+    {
+      "Relation": ":contained",
+      "Constant Arg": "The argument on the right occurs entirely within the duration of the argument on the left.\n\n        Arguments may be variables from the sentence (events or time-expressions), or document-creation-time.\n          Edmund Pope tasted freedom today for the first time in more than eight months.\n            (t / taste-01\n    :ARG0 (p / person\n        :name (n / name :op1 \"Edmund\" :op2 \"Pope\"))\n    :ARG1 (f / free-04\n        :ARG1 p)\n    :temporal (t2 / today)\n    :ord (o / ordinal-entity :value 1\n        :range (m / more-than\n            :op1 (t3 / temporal-quantity :quant 8\n                :unit (m2 / month))))\n    :aspect performance)\n                    \n(s0 / sentence\n    :temporal ((document-creation-time :depends-on t2)\n\t        (t2 :contained t))\n    :modal (author :full-affirmative t))",
+      "Definition": ""
+    },
+    {
+      "Relation": ":overlap",
+      "Constant Arg": "There is overlap between the time spans of the two events. This includes exact overlap, when the two events occur at the same time for the same        duration.\n\n        Arguments may be variables from the sentence (events or time-expressions), or document-creation-time.\n          Pope was in remission from a rare form of bone cancer when he was arrested in Russia.\n            (s7h / have-mod-91\n    :ARG1 (s7p / person\n        :name (s7n / name :op1 \"Pope\"))\n    :ARG2 (s7r / remission-02\n        :ARG1 (s7d / disease\n                :name (s7n2 / name :op1 \"bone\" :op2 \"cancer\")\n                :ARG1-of (s7r2 / rare-02))\n        :temporal (s7a / arrest-01\n                :ARG1 s7p\n                :place (s7c / country\n                    :name (s7n3 / name :op1 \"Russia\")))\n        :aspect performance)\n    :aspect state)\n\n(s7s0 / sentence\n    :coref (s6p :same-entity s7p)\n    :temporal ((s2c :before s7a)\n            (s7a :overlap s7h))\n    :modal ((author :full-affirmative s7h)\n            (author :full-affirmative s7a)))",
+      "Definition": ""
+    },
+    {
+      "Relation": ":depends-on",
+      "Constant Arg": "document-creation-time",
+      "Definition": "For 'now' type time-expressions.\n\n        Left argument must be document-creation-time, right argument must be a time expression variable, and the relation must be :depends-on.\n          Edmund Pope tasted freedom today for the first time in more than eight months.\n            (t / taste-01\n    :ARG0 (p / person\n        :name (n / name :op1 \"Edmund\" :op2 \"Pope\"))\n    :ARG1 (f / free-04\n        :ARG1 p)\n    :temporal (t2 / today)\n    :ord (o / ordinal-entity :value 1\n        :range (m / more-than\n            :op1 (t3 / temporal-quantity :quant 8\n                :unit (m2 / month))))\n    :aspect performance)\n                    \n(s0 / sentence\n    :temporal ((document-creation-time :depends-on t2)\n\t        (t2 :contained t))\n    :modal (author :full-affirmative t))"
+    },
+    {
+      "Relation": "past-reference",
+      "Constant Arg": "For vague time-expressions that lie in the past relative to the document-creation-time.\n\n        Left argument must be past-reference, right argument must be a time expression variable, and the relation must be :depends-on.\n          In days of yore, Pekinese were popular. \n\n            (p / popular-01\n    :ARG1 (a / animal\n        :refer-number plural\n        :mod (b / breed \n            :name (n / name :op1 \"Pekinese\")))\n    :temporal (d / day\n        :refer-number plural\n        :mod (y / yore))\n    :aspect state)\n\n(s0 / sentence\n    :temporal ((past-reference :depends-on d)\n            (d :contained p)))",
+      "Definition": ""
+    },
+    {
+      "Relation": "present-reference",
+      "Constant Arg": "For vague time-expressions that overlap the present relative to the document-creation-time.\n\n        Left argument must be present-reference, right argument must be a time expression variable, and the relation must be :depends-on.\n          Nowadays, Doodle dogs are popular. \n\n            (p / popular-01\n    :ARG1 (d / dog\n        :refer-number plural\n        :mod (b / breed \n            :name (n / name :op1 \"Doodle\")))\n    :temporal (n2 / nowadays)\n    :aspect state)\n\n(s0 / sentence\n    :temporal ((present-reference :depends-on n2)\n            (n2 :contained p)))",
+      "Definition": ""
+    },
+    {
+      "Relation": "future-reference",
+      "Constant Arg": "For vague time-expressions that lie in the future relative to the document-creation-time.\n\n        Left argument must be future-reference, right argument must be a time expression variable, and the relation must be :depends-on.\n          Someday, a new breed will be popular. \n\n            (p / popular-01\n    :ARG1 (b / breed \n        :ARG1-of (n / new-01))\n    :temporal (s / someday)\n    :aspect state)\n\n(s0 / sentence\n    :temporal ((future-reference :depends-on s)\n            (s :contained p)))",
+      "Definition": ""
+    },
+    {
+      "Relation": "root",
+      "Constant Arg": "For absolute time expressions (dates).\n\n        Left argument must be root, right argument must be a time expression variable, and the relation must be :depends-on.\n          On Dec. 15, 2024, I got an Australian Mountain Doodle puppy. \n\n            (g / get-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :ARG1 (p2 / puppy\n        :mod (b / breed \n            :name (n / name :op1 \"Australian\" :op2 \"Mountain\" :op2 \"Doodle\")))\n    :temporal (d / date-entity\n        :day 15\n        :month 12\n        :year 2024)\n    :aspect performance)\n\n(s0 / sentence\n    :temporal ((root :depends-on d)\n            (d :contained g))\n    :modal ((root :modal author)\n        (author :full-affirmative g)))",
+      "Definition": ""
+    }
+  ],
+  [
+    {
+      "Sent-Relation": ":modal-strength VALUE",
+      "Doc-Annotation": ":modal ((cognizer :VALUE event-var))",
+      "Description": ":modal-strength is a relation between a parent event and a constant value. At the sentence level, the cognizer isn't listed, so this information needs to be filled in at the document level. At the doc-level, the cognizer becomes the left argument, the modal-strength value becomes the relation (e.g. :modal-strength full-affirmative → :full-affirmative), and the right argument is the parent event's variable from the sentence.\n          I got an Australian Mountain Doodle puppy. \n\n            (g / get-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :ARG1 (p2 / puppy\n        :mod (b / breed \n            :name (n / name :op1 \"Australian\" :op2 \"Mountain\" :op2 \"Doodle\")))\n    :aspect performance\n    :modal-strength full-affirmative)\n\n(s0 / sentence\n    :temporal ((document-creation-time :before g))\n    :modal ((root :modal author)\n        (author :full-affirmative g)))\n\n        \n          Mary thought that John didn't go.\n\n            (t / think-01\n    :ARG0 (p / person\n        :name (n / name :op1 \"Mary\"))\n    :ARG1 (g / go-02\n        :ARG0 (p2 / person\n            :name (n2 / name :op2 \"John\"))\n        :aspect performance\n        :modal-strength full-negative)\n    :aspect state\n    :modal-strength full-negative)\n\n(s0 / sentence\n    :temporal ((document-creation-time :before k))\n    :modal ((root :modal author)\n        (author :unspecified t)\n            (author :full-affirmative p)\n            (p :full-negative g)))"
+    },
+    {
+      "Sent-Relation": "(m / modal-event\n            :ARG0 (c / cognizer)\n            :ARG1 (c2 / complement\n\n                :modal-predicate m)\n            :modal-strength VALUE)",
+      "Doc-Annotation": ":modal ((author :VALUE m)\n          \n            (author :full-affirmative c)\n\n              (c :entailed-modstr-from-m c2))",
+      "Description": "There is a modalizing predicate in the sentence whose complement inherits an entailed modal strength. :modal-predicate is marked on the complement argument event at the sentence level. The cognizer of this complement event can be automatically extracted from the parent verb, for which it is the :ARG0. \n\n           He denied any wrongdoing.\n            (d / deny-01 \n    :ARG0 (p /person\n        :refer-person 3rd\n        :refer-number singular)\n    :ARG1 (t / thing\n        :ARG1-of (d2 / do-02\n            :ARG0 p\n            :ARG1-of (w / wrong-02)\n        :modal-predicate d))\n    :aspect performance\n    :modal-strength full-affirmative)\n  \n(s3/ sentence\n    :coref ((s2p :same-entity s3p))\n    :temporal ((document-creation-time :before s3d)\n            (s3d :before s3d2))\n    :modal ((author :full-affirmative s3d)\n\t        (author :unspecified s3d2)\n    \t    (author :full-affirmative s3p)\n            (s3p :full-negative s3d2)))"
+    },
+    {
+      "Sent-Relation": "(s / speech-event\n            :ARG0 (c / cognizer)\n            :ARG1 (u / utterance\n              :modal-strength VALUE\n\n      :quote s))",
+      "Doc-Annotation": ":modal ((author :full-affirmative s)\n          \n            (author :full-affirmative c)\n\n        (c :VALUE u))",
+      "Description": "For quoted or attributed speech predicates. The author is the cognizer who asserts that the speech event occurred, but the actor in the speech event is the cognizer of the events relayed in the utterance.\n\n          She told me that they they're not attending.\n\n            (t / tell-01  \n\t:actor (p / person\n\t\t:refer-person 3rd\n\t\t:refer-number singular)    \n\t:theme (a / attend-01  \n        :polarity -\n\t\t:actor (p2 / person\n\t\t\t:refer-person 3rd\n\t\t\t:refer-number Plural)\n\t\t:aspect activity\n\t\t:modal-strength full-negative\n\t\t:quote t)\n    :recipient (p3 / person\n        :refer-person 1st\n        :refer-number singular)\n\t:aspect performance\n\t:modal-strength full-affirmative)\n\n(s0 / sentence\n    :modal ((author :full-affirmative t)\n            (author :full-affirmative p)\n            (p :full-negative a)))"
+    },
+    {
+      "Sent-Relation": "(e / event\n          :actor (c / cognizer)\n          :purpose (p / purpose-event\n\n            :modal-strength VALUE-1)\n    :modal-strength VALUE-2)",
+      "Doc-Annotation": ":modal ((author :VALUE-2 e)\n\n          \n            (author :full-affirmative c)\n\n        (c :partial-affirmative purpose)\n\n        (purpose :VALUE-1 p))",
+      "Description": "Purpose clauses automatically have partial modal-strength, and their cognizer is the actor of the parent event with a subordinate purpose clause. \n\n          They dropped water in order to fight the fire.\n\n            (d / drop-01\n\t:ARG0 (p / person\n\t\t:refer-person 3rd\n\t\t:refer-number Plural)\n\t:ARG1 (w / water)\n\t:purpose (f / fight-01\n\t\t:ARG0 p\n\t\t:ARG1 (f / fire)\n\t\t:aspect activity\n\t\t:modal-strength full-affirmative)\n\t:aspect performance\n\t:modal-strength full-affirmative)\n\n(s0 / sentence\n\t:temporal ((past-reference :contained s1d)\n\t\t   (s1d :after :s1f))\n\t:modal ((author :full-affirmative s1d)\n\t\t(author :full-affirmative s1p)\n\t\t(s1p :partial-affirmative purpose)\n\t\t(purpose :full-affirmative s1f)))"
+    },
+    {
+      "Sent-Relation": "(e / event\n          :condition (c2 / conditional-event\n            :modal-strength VALUE-1)\n    :modal-strength VALUE-2)",
+      "Doc-Annotation": ":modal ((author :neutral-affirmative condition)\n          \n            (condition :VALUE-1 c2)\n\n        (condition :VALUE-2 e))",
+      "Description": "The conditional discourse relationship is itself neutral-affirmative, but each of the clauses involved (the main event and the conditional event) also have individual modal strength. The author therefore has a :neutral-affirmative relationship with the have-condition concept, and that concept has modal-strength relations with the two constituent events that align with their individual modal strengths. \n\n          If she's hungry, I'll probably cook pasta.\n            (c / cook-01\n\t:ARG0 (p / person\n\t\t:refer-person 1st\n\t\t:refer-number singular)\n\t:ARG1 (p2 / pasta)\n\t:condition (h / hunger-01\n\t\t:ARG0 (p3 / person\n\t\t\t:refer-person 3rd\n\t\t\t:refer-number singular)\n\t\t:aspect state\n\t\t:modal-strength full-affirmative)\n\t:aspect performance\n\t:modal-strength partial-affirmative)\n\n(s0 / sentence\n\t:modal ((author :neutral-affirmative condition)\n\t\t(condition :full-affirmative h)\n\t\t(condition :neutral-affirmative c)))"
+    }
+  ]
+]

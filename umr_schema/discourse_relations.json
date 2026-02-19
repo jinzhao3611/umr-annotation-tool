@@ -1,0 +1,92 @@
+[
+  [
+    {
+      "Discourse Relation": "(o / or\n\n          :op1\n\n          :op2\n\n          etc.)",
+      "Definition": "Construes two (or more) events or entities as being alternatives of each other in some way.\n        I will go for a walk or play some soccer.\n          (o / or\n    :op1 (w / walk-01\n       \t:ARG0 (p / person\n            :refer-person 1st\n            :refer-number Singular)\n      \t:aspect process\n      \t:modal-strength full-affirmative)\n    :op2 (p2 / play-01\n        :ARG0 p\n        :ARG1 (s / soccer)\n        :aspect process\n        :modal-strength full-affirmative))"
+    },
+    {
+      "Discourse Relation": "(e / exclusive-disj\n\n            :op1\n\n            :op2\n\n            etc.)",
+      "Definition": "Indicates that the construed alternatives are presented as mutually exclusive options.\n        You can have coffee or tea [but not both].\n          (h / have-03\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (e / exclusive-disj\n        :op1 (c / coffee)\n        :op2 (t / tea))\n    :aspect state\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Discourse Relation": ":apprehensive\n\n\n                :apprehensive-of\n\n\n                (h / have-apprehensive-91\n\n                :ARG1 main event\n\n                :ARG2 apprehension)",
+      "Definition": "Two events are mutually exclusive alternatives, but more specifically, one event is carried out with the intention of preventing the other event from happening.\n        Grab a stick lest he attack you!\n          (g / grab-01\n    :mode imperativis\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (s / stick\n        :refer-number singular)\n    :apprehensive (a / attack-01\n        :ARG0 (p2 / person\n            :refer-person 3rd\n            :refer-number singular)\n        :ARG1 p\n        :aspect performance\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Discourse Relation": "(i / inclusive-disj\n\n              :op1\n\n              :op2\n\n              etc.)",
+      "Definition": "Indicates that either any of the construed alternatives can be chosen individually or in combination.\n        If we go down to a 'crazy place' to bash pandanus, husk and eat corn, or plant bananas, we don't sleep with women.\n          mnu'bo\t\thatai-supi'ba-ve\tkire'bo\tkro-de-supi'ba-ve\tegemo\tbre-supi'ba-ve\t\tdegi\tkiko-pi'\trmi-supamo\ta-ki'\t\ta'-vo-g-une\npandanus\tbash-PURP.1PL-NONEX\tcorn\thusk-eat-PURP.1PL-NONEX\tbanana\tplant-PURP.1PL-NONEX\tcrazy\tplace-in\n(h / have-condition-91\n    :ARG1 (a / a'vogune-00  'sleep'\n        :actor (p / person\n            :refer-person 1st\n            :refer-number plural)\n        :companion (a2 / aki')  'woman'\n        :aspect habitual\n        :modal-strength full-negative)\n    :ARG2 (r / rmisupamo-00  'go down'\n        :actor p\n        :goal (k / kikopi'  'place'\n            :mod (d / degi))  'crazy'\n        :purpose (i / inclusive-disj\n            :op1 (h2 / hataisupi'bave-00  'bash'\n                :actor p\n                :undergoer (m / mnu'bo)  'pandanus'\n                :aspect performance\n                :modal-strength full-affirmative)\n            :op2 (k2 / krodesupi'bave-00  'husk and eat'\n                :actor p\n                :undergoer (k3 / kire'bo)  'corn'\n                :aspect performance\n                :modal-strength full-affirmative)\n            :op3 (b / bresupi'bave-00 'plant'\n                :actor p\n                :undergoer (e / egemo)  'banana'\n                :aspect performance\n                :modal-strength full-affirmative))\n        :aspect performance\n        :modal-strength full-affirmative))"
+    },
+    {
+      "Discourse Relation": "(a / and-but\n\n          :op1\n\n          :op2\n\n          etc.)",
+      "Definition": "For languages that conflate addition and contrast."
+    },
+    {
+      "Discourse Relation": "(a / and\n\n                  :op1\n\n                  :op2\n\n                  etc.)",
+      "Definition": "General addition.\n        I like coffee and tea.\n          (l / like-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :ARG1 (a / and\n        :op1 (c / coffee)\n        :op2 (t / tea))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": "(c / consecutive\n\n                      :op1\n\n                      :op2\n\n                      etc.)",
+      "Definition": "Expresses two or more events as a complex figure, with additional information on their temporal and/or logical sequencing.\n        I boiled the water and poured it into my cup.\n          (a / and\n    :op1 (b / boil-01\n        :ARG0 (p / person\n            :refer-person 1st\n            :refer-number singular)\n        :ARG1 (w / water)\n        :aspect performance\n        :modal-strength full-affirmative)\n    :op2 (p2 / pour-01\n        :ARG0 p\n        :ARG1 w\n        :ARG2 (c / cup\n            :possessor p)\n        :aspect performance\n        :modal-strength full-affirmative))"
+    },
+    {
+      "Discourse Relation": ":purpose\n\n\n                        :purpose-of\n\n\n                        (h / have-purpose-91\n\n                            :ARG1 main event\n\n                            :ARG2 purpose)",
+      "Definition": "Expresses the intention on the part of the agent of one event towards bringing about another event.\n        I grabbed a stick in order to defend myself.\n          (g / grab-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :ARG1 (s / stick\n        :refer-number singular)\n    :purpose (d / defend\n        :ARG0 p\n        :ARG1 p\n        :aspect performance\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": ":manner\n\n\n                        :manner-of\n\n\n                        (h / have-manner-91\n\n                            :ARG1 main event\n\n                            :ARG2 manner)",
+      "Definition": "Expresses a relation where one event accompanies another and characterizes more specifically what happened (or didn’t happen) in another event.\n        He got into the army by lying about his age.\n          (g / get-05\n    :ARG1 (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :ARG2 (a / army)\n    :manner (l / lie-08\n        :ARG0 p\n        :ARG1 (t / thing\n            :ARG2-of (h / have-age-91\n                :ARG1 p))\n        :aspect performance\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": ":cause\n\n\n                        :cause-of\n\n\n                        (h / have-cause-91\n\n                            :ARG1 main event\n\n                            :ARG2 cause)",
+      "Definition": "Expresses a relation between a causing event and a resulting event, where the former explicitly brings about the latter.\n        Sarah moved back to California because she couldn't find a job in Washington.\n          (m / move-01\n    :ARG0 (p / person\n        :name (n / name :op1 \"Sarah))\n    :ARG2 (c / country-partition :wiki \"California\"\n        :name (n2 / name :op1 \"California))\n    :ARG1-of (b / back-17)\n    :cause (f / find-01\n        :polarity -\n        :ARG0 p\n        :ARG1 (j / job)\n        :place (c2 / country-partition :wiki \"Washington\"\n            :name (n3 / name :op1 \"Washington\"))\n        :aspect state\n        :modal-strength full-negative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": ":condition\n\n\n                        :condition-of\n\n\n                        (h / have-condition-91\n\n                          :ARG1 main event\n\n                          :ARG2 condition)",
+      "Definition": "Expresses a relation where one event is contingent upon the occurrence of another event.\n        If you touch it, it might explode.\n          (e / explode-01\n    :ARG1 (t / thing\n        :refer-number singular)\n    :condition (t2 / touch-01\n        :ARG0 (p / person)\n        :ARG1 t\n        :aspect performance\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength neutral-affirmative)"
+    },
+    {
+      "Discourse Relation": ":temporal\n\n\n                        :temporal-of\n\n\n                        (h / have-temporal-91\n\n                            :ARG1 main event\n\n                            :ARG2 temporal phrase)",
+      "Definition": "Expresses that one event takes place before, after, or at the same time as another. This can either be expressed through an adverbial construction with the earlier event in the main clause and the later event in a subordinate clause, or through iconicity of tense in coordinated clauses.\n        I fed my dog before going to the office.\n          (f / feed-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :ARG2 (d / dog\n        :possessor p\n        :refer-number singular)\n    :temporal (b / before\n        :op1 (g / go-01\n            :ARG1 p\n            :ARG4 (o / office\n                :refer-number singular)\n            :aspect performance\n            :modal-strength full-affirmative))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": "(a / additive\n\n                      :op1\n\n                      :op2\n\n                      etc.)",
+      "Definition": "Expresses the addition of one ‘figure’ (foregrounded participant or event) to another one in order to form a complex figure."
+    },
+    {
+      "Discourse Relation": ":pure-addition\n\n\n                        :pure-addition-of\n\n\n                        (h / have-pure-addition-91\n\n                          :ARG1 main event\n\n                          :ARG2 additional event)",
+      "Definition": "Expresses no temporal specification of the sequencing of events, but rather that the two events that form a complex figure cannot occur separately from each other in the context of the utterance.\n        In addition to having your hand stamped, you have to show your ticket to get into the concert.\n          (h / have-04\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (s / stamp-01\n        :ARG0 (p2 / person)\n        :ARG1 (h2 / hand\n            :part p)\n        :aspect performance\n        :modal-strength partial-affirmative)\n    :pure-addition (s2 / show-01\n        :ARG0 p\n        :ARG1 (t / ticket\n            :possessor p\n            :refer-number singular)\n        :ARG2 (p3 / person)\n        :aspect performance\n        :modal-strength partial-affirmative)\n        :purpose (g / get-05\n            :ARG0 p\n            :ARG2 (c / concert\n                :refer-number singular)\n        :aspect performance\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Discourse Relation": ":substitute\n\n\n                        :substitute-of\n\n\n                        (h / have-substitute-91\n\n                          :ARG1 main event\n\n                          :ARG2 substituted event)",
+      "Definition": "Expresses that one of the events that together form a complex figure is offered as an 'alternative' or 'replacement' for the other-- this is typically expressed through the negation of one of the two coordinands.\n        Instead of going out to eat, we barbecued chicken at home.\n          (b / barbecue-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number plural)\n    :ARG1 (c / chicken)\n    :place (h / home)\n    :substitute (g / go-out-17\n        :ARG0 p\n        :purpose (e / eat-01\n            :ARG0 p\n            :aspect endeavor\n            :modal-strength full-affirmative)\n        :aspect performance\n        :modal-strength full-negative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": "(a / and-unexpected\n\n            :op1\n\n            :op2\n\n            etc.)",
+      "Definition": "Ambiguous between unexpected-co-occurrence, :concession, and :concessive-condition."
+    },
+    {
+      "Discourse Relation": "(u / unexpected-co-occurence-91\n\n                  :ARG1 main event\n\n                  :ARG2 unexpected event)",
+      "Definition": "Juxtaposition between 2 events where the 2nd event is unexpected in the case the first occurs\n        Vanja caught a cold but went to school.\n          Vanja\tprostudilsja,\tno\tposhël\tv\tshkolu\nVanja\tcaught_cold\tCONJ\twent\tto\tschool\n(u / unexpected-co-occurrence-91\n    :ARG1 (p / prostudilsja-00   'catch a cold'\n       \t:experiencer (p2 / person\n            :name (n / name :op1 \"Vanja\"))\n       \t:aspect performance\n       \t:modal-strength full-affirmative)\n    :ARG2 (p3 / poshël-00  'go'\n       \t:actor p2\n       \t:goal (s / shkolu)  'school'\n       \t:aspect performance\n       \t:modal-strength full-affirmative))"
+    },
+    {
+      "Discourse Relation": ":concession\n\n\n                        :concession-of\n\n\n                        (h / have-concession-91\n\n                          :ARG1 main event\n\n                          :ARG2 concession)",
+      "Definition": "Expresses a relation between two events towards which the speaker has a positive epistemic stance (i.e. the speaker believes they both occurred/will occur), but specifies that this co-occurrence is unexpected.\n        Even though he was broke, he bought a new guitar.\n          (b / buy-01\n    :ARG0 (p / person\n        :refer-person-person 3rd\n        :refer-number singular)\n    :ARG1 (g / guitar\n        :mod (n / new)\n        :ref-number singular)\n    :concession (h / have-mod-91\n        :ARG1 p\n        :ARG2 (b2 / broke)\n        :aspect state\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Discourse Relation": ":concessive-condition\n\n\n                        :concessive-concession-of\n\n\n                        (h / have-concessive-concession-91\n\n                          :ARG1 main event\n\n                          :ARG2 concessive concession)",
+      "Definition": "Expresses that the state of affairs described in the apodosis will be true under the entire range of conditions described in the protasis. These are different from regular conditionals in that they imply an expectation that the event expressed in the protasis may not lead to the event expressed in the apodosis happening.\n        Even if you arrive only 5 minutes late, you will be fired.\n          (f / fire-02\n    :ARG1 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative\n  \t:concessive-condition (a / arrive-01\n        :ARG1 p\n        :temporal (l / late\n            :extent (t / temporal-quantity\n                :quant 5\n                :unit (m / minute)))\n        :aspect performance\n        :modal-strength full-affirmative))"
+    },
+    {
+      "Discourse Relation": "(a / and-contrast\n\n            :op1\n\n            :op2\n\n            etc.)",
+      "Definition": "Ambiguous between addition, contrast and subtraction."
+    },
+    {
+      "Discourse Relation": "(c / contrast-91\n\n              :ARG1 main event \n\n              :ARG2 contrastive event)",
+      "Definition": "Expresses a relation of contrast in some way between events, without an element of unexpectedness.\n        Peter is diligent, but Vanja is lazy.\n          Petja\tstaratel'nyi,\ta\tVanja\tlenivyj\nPeter\tdiligent\tCONJ\tVanja\tlazy\n(c / contrast-91\n      :ARG1 (h / have-mod-91\n         \t:ARG1 (p / person\n         \t    :name (n / name :op1 \"Peter\"))\n         \t:ARG2 (s / staratel'nyi)  'diligent'\n         \t:aspect state\n         \t:modal-strength full-affirmative)\n      :ARG2 (h2 / have-mod-91\n         \t:ARG1 (p2 / person\n         \t    :name (n2 / name :op1 \"Vanja\"))\n         \t:ARG2 (l / lenivyj 'lazy')\n         \t:aspect state\n         \t:modal-strength full-affirmative))"
+    },
+    {
+      "Discourse Relation": ":subtraction\n\n\n                        :subtraction-of\n\n\n                        (h / have-subtraction-91\n\n                          :ARG1 main event\n\n                          :ARG2 subtracted event)",
+      "Definition": "One event is additionally characterized by the absence of a second event that is normally a part of the first event.\n        People don't own tigers, except for Joe Exotic.\n          (o / own-01\n    :polarity -\n    :ARG0 (p / person\n        :refer-person plural)\n    :ARG1 (t / tiger\n        :refer-number plural)\n    :subtraction (p2 / person\n        :name (n / name :op1 \"Joe\" :op2 \"Exotic\"))\n    :aspect state\n    :modal-strength full-negative)"
+    }
+  ]
+]

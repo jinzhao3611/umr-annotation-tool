@@ -1,0 +1,597 @@
+[
+  [
+    {
+      "Concept": "(p / person)",
+      "Subroles": ":refer-person\n\n        :refer-number\n\n        :refer-definiteness",
+      "Definition": "Top-level Named Entity types can be used as head concepts for pronouns or other places where you need a simple implicit concept. The most common ones are listed here.\n        The teacher ate an apple.\n          (e / eat-01\n    :ARG0 (p / person\n        :ARG0-of (t / teach-01))\n    :ARG1 (a / apple)\n    :aspect performance\n    :modal-strength full-affirmative)\n\n          \n        It tasted mealy.\n          (t / tast-02\n    :ARG1 (t / thing\n        :refer-person 3rd\n        :refer-number singular)\n    :ARG2 (m / mealy)\n    :aspect state\n    :modal-strength full-affirmative)\n\n          \n        My dog came up to me. He said \"rwawr\".\n          (s / say-91\n    :ARG0 (a / animal\n        :refer-person 3rd\n        :refer-number singular)\n    :ARG1 (s / string-entity :value \"rwawr\"\n        :quote s)\n    :ARG2 (p / person)  *implicit argument, links to 'me'\n    :aspect performance\n    :modal-strength full-affirmative)\n\n          \n        It has no bearing on our work force today .\n          (s30s / say-91\n    :ARG0 (s30p / person)\n    :ARG1 (s30b / bear-06 \n        :polarity -\n        :ARG1 (s30e / event\n            :refer-person 3rd\n            :refer-number singular)\n        :ARG2 (s30f / force\n            :ARG0-of (s30w / work-01)\n            :possessor (s30p2 / person\n                :refer-person 1st\n                :refer-number plural))\n        :temporal (s30t / today)\n        :aspect state\n        :quote s30s))"
+    },
+    {
+      "Concept": "(t / thing)",
+      "Subroles": "",
+      "Definition": ""
+    },
+    {
+      "Concept": "(a / animal)",
+      "Subroles": "",
+      "Definition": ""
+    },
+    {
+      "Concept": "(e / event)",
+      "Subroles": "",
+      "Definition": ""
+    },
+    {
+      "Concept": "(p / place)",
+      "Subroles": ":refer-number",
+      "Definition": "Other common implicit concepts can come from the names of roles. Some common ones are listed.\n         Well it's another Sunday and I'm here at work again!\n          (s1a / and\n    :op1 (s1h3 / have-temporal-91\n        :ARG1 (s1n / now)\n        :ARG2 (s1d / date-entity\n            :weekday (s1s / sunday)\n            :mod (s1a2 / another))\n        :aspect state\n        :modal-strength full-affirmative)\n    :op2 (s1h2 / have-place-91\n        :ARG1 (s1p / person\n            :refer-person 1st\n            :refer-number singular)\n        :ARG2 (s1h / here\n            :place (s1p2 / place\n                :place-of (s1w2 / work-01\n                    :ARG0 s1p)))\n        :mod (s1a3 / again)\n        :aspect state\n        :modal-strength full-affirmative))\n\n    \n         Average maturity of the funds' investments lengthened by a day to 41 days, the longest since early August, according to Donoghue's.\n          (s4s2 / say-91\n    :ARG0 (s4c / company :wiki - \n        :name (s4n / name :op1 \"Donoghue's\"))\n    :ARG1 (s4l / lengthen-01\n        :ARG1 (s4t4 / temporal\n            :duration-of (s4m / mature-01\n                :ARG1 (s4t3 / thing\n                    :refer-number plural\n                    :ARG2-of (s4i / invest-01\n                        :ARG0 (s4f / fund)))\n                :ARG1-of (s4a2 / average-01)\n                :aspect process))\n        :ARG2 (s4t / temporal-quantity :quant 1\n            :unit (s4d / day))\n        :ARG4 (s4t2 / temporal-quantity :quant 41\n            :unit (s4d2 / day)\n            :ARG1-of (s4h / have-degree-91\n                :ARG2 (s4l2 / long-03\n                    :ARG1 s4t2)\n                :ARG3 (s4m2 / most)\n                :ARG5 (s4t5 / temporal\n                    :temporal (s4s / since\n                        :op1 (s4e2 / early-01\n                            :ARG2 (s4d4 / date-entity :month 8))))))\n        :aspect performance)\n    :aspect state)\n\n        \n         The total of 18 deaths from malignant mesothelioma, lung cancer and asbestosis was far higher than expected, the researchers said.\n          (s15s / say-01\n    :ARG0 (s15p / person\n        :ARG0-of (s15r / research-01))\n    :ARG1 (s15h2 / have-degree-91\n        :ARG1 (s15q / quantity :quant 18\n            :ARG2-of (s15h3 / have-quant-91 \n                :ARG1 (s15s2 / sum-of \n                    :op1 (s15d / die-01\n                        :cause (s15d4 / disease :wiki \"Mesothelioma\" \n                            :name (s15n / name :op1 \"malignant\" :op2 \"mesothelioma\"))\n                        :aspect performance)\n                    :op2 (s15d5 / die-01\n                        :cause (s15d2 / disease :wiki \"Lung_cancer\" \n                            :name (s15n2 / name :op1 \"lung\" :op2 \"cancer\"))\n                        :aspect performance)\n                    :op3 (s15d6 / die-01\n                        :cause (s15d3 / disease :wiki \"Asbestosis\" \n                            :name (s15n3 / name :op1 \"asbestosis\"))\n                        :aspect performance))))\n        :ARG2 (s15h / high-02)\n        :ARG3 (s15m / more\n            :degree intensifier)\n        :ARG4 (s15q2 / quantity\n            :ARG1-of (s15e / expect-01\n                :ARG0 s15p\n                :aspect state))\n        :aspect state\n        :quote s15s)\n    :aspect performance)"
+    },
+    {
+      "Concept": "(t / temporal)",
+      "Subroles": "",
+      "Definition": ""
+    },
+    {
+      "Concept": "(q / quantity)",
+      "Subroles": "",
+      "Definition": ""
+    }
+  ],
+  [
+    {
+      "Concept": "(u / umr-unknown)",
+      "Subroles": "",
+      "Definition": "Concept takes the place of the unknown argument in WH questions.\n         Who put the cookie in the cookie jar?\n          (p / put-01\n    :mode interrogative\n    :ARG0 (u / umr-unknown)\n    :ARG1 (c / cookie)\n    :ARG2 (j / jar\n        :purpose (c2 / cookie  \n            :refer-number plural))\n    :aspect performance\n    :modal-strength neutral-affirmative)"
+    },
+    {
+      "Concept": "(t / truth-value)",
+      "Subroles": ":polarity-of",
+      "Definition": "Used for 'whether' or 'if' phrases when they are used to indicate that the truth value of a proposition is not known.\n         The man doesn't know whether it's raining.\n          (k / know-01\n    :ARG0 (m / man)\n    :ARG1 (t / truth-value\n        :polarity-of (r / rain-01\n            :aspect activity\n            :modal-strength undefined))\n    :aspect state\n    :modal-strength neutral-negative)"
+    },
+    {
+      "Concept": "(u / umr-choice)",
+      "Subroles": ":op1 ... :opX",
+      "Definition": "Used for questions in which a choice is being offered. (Very similar to exclusive-disjunction, but use this for questions.)\n         Would you like coffee or tea?\n          (l / like-02\n    :mode interrogative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (u / umr-choice\n        :op1 (c / coffee)\n        :op2 (t / tea))\n    :aspect state\n    :modal-strength neutral-affirmative)"
+    },
+    {
+      "Concept": "(u / umr-empty)",
+      "Subroles": "",
+      "Definition": "Used if there is no text in a sentence presented for annotation."
+    },
+    {
+      "Concept": "(u / umr-unintelligible)",
+      "Subroles": "",
+      "Definition": "Used if there is no understandable text in a sentence, preventing annotation.\n        &&sssffsd**\n          (u / umr-unintelligible)"
+    }
+  ],
+  [
+    {
+      "Concept": "(d / date-entity)",
+      "Subroles": ":calendar",
+      "Definition": "The academic year\n          (d / date-entity\n    :calendar (y / year \n        :mod (a / academia)))"
+    },
+    {
+      "Concept": ":century",
+      "Subroles": "The 18th century\n          (d / date-entity\n    :century 18)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":day",
+      "Subroles": "June 24th\n          (d / date-entity\n    :day 24\n    :month 6)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":dayperiod",
+      "Subroles": "The morning\n          (d / date-entity\n    :dayperiod (m / morning))",
+      "Definition": ""
+    },
+    {
+      "Concept": ":decade",
+      "Subroles": "The 1950s\n          (d / date-entity\n    :decade 1950)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":era",
+      "Subroles": "24th year of Heisei era \n          (d / date-entity\n   :era (h / heisei)\n   :year 24)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":month",
+      "Subroles": "June 24th\n          (d / date-entity\n    :day 24\n    :month 6)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":quarter",
+      "Subroles": "4th quarter, 2011\n          (d / date-entity\n    :year 2011\n    :quarter 4)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":season",
+      "Subroles": "Winter 2011-2012\n          (d / date-entity\n   :year 2011\n   :year2 2012\n   :season (w / winter))",
+      "Definition": ""
+    },
+    {
+      "Concept": ":time",
+      "Subroles": "4:30 pm\n          (d / date-entity\n   :time \"16:30\")",
+      "Definition": ""
+    },
+    {
+      "Concept": ":timezone",
+      "Subroles": "4:30 pm MDT\n          (d / date-entity\n   :time \"16:30\"\n   :timezone (m / MDT))",
+      "Definition": ""
+    },
+    {
+      "Concept": ":weekday",
+      "Subroles": "Thursday\n          (d / date-entity\n    :weekday (t / thursday))",
+      "Definition": ""
+    },
+    {
+      "Concept": ":year",
+      "Subroles": "4th quarter, 2011\n          (d / date-entity\n    :year 2011\n    :quarter 4)",
+      "Definition": ""
+    },
+    {
+      "Concept": ":year2",
+      "Subroles": "Winter 2011-2012\n          (d / date-entity\n   :year 2011\n   :year2 2012\n   :season (w / winter))",
+      "Definition": ""
+    },
+    {
+      "Concept": "string-entity",
+      "Subroles": ":value",
+      "Definition": "Use for strings that represent sounds or references to text or words themselves (rather than references to the meanings of the text or words).\n        Now take the orange blocks and build a =.\n          (a / and\n    :op1 (t / take-01\n        :mode imperative\n        :ARG0 (p / person\n            :refer-person 2nd\n            :refer-number singular)\n        :ARG1 (b / block\n            :refer-number plural\n            :color (o / orange))\n        :aspect performance\n        :modal-strength partial-affirmative)\n    :op2 (b2 / build-01\n        :mode imperative\n        :ARG0 p\n        :ARG1 (t / thing\n            :configuration (s / string-entity :value \"=\"))\n        :ARG2 b\n        :aspect performance\n        :modal-strength partial-affirmative))"
+    },
+    {
+      "Concept": "ordinal-entity",
+      "Subroles": ":value\n\n        :range\n\n        :range-start\n\n        :range-trajectory",
+      "Definition": "For ordinals.\n        the last man standing \n          (m / man\n    :actor-of (s / stand-01\n        :ord (o / ordinal-entity :value \"-1\")\n        :aspect state\n        :modal-strength full-affirmative))\n        \n        the first book in the stack \n          (b / book\n    :ord (o / ordinal-entity :value \"1\")\n        :range (s / stack))\n            \n        the 3rd block from the lefthand side \n          (b / block\n    :ord (o / ordinal-entity :value \"3\")\n        :range-start (s / side\n            :ARG2-of (l / left-24)))\n            \n        the 2nd chair toward the front\n          (c / chair\n    :ord (o / ordinal-entity :value \"2\")\n        :range-trajectory (f / front-03))"
+    },
+    {
+      "Concept": "url-entity",
+      "Subroles": ":value",
+      "Definition": "For URLs.\n         https://umr4nlp.github.io/web/\n          (u / url-entity :value \"https://umr4nlp.github.io/web/\")"
+    },
+    {
+      "Concept": "percentage-entity",
+      "Subroles": ":value",
+      "Definition": "For percentages\n         40%\n          (p / percentage-entity :value 40)"
+    },
+    {
+      "Concept": "phone-number-entity",
+      "Subroles": ":value",
+      "Definition": "For phone numbers.\n        555-867-5309\n          (p / phone-number-entity :value \"555-867-5309\")"
+    },
+    {
+      "Concept": "email-address-entity",
+      "Subroles": ":value",
+      "Definition": "For email addresses.\n         John.Doe@gmail.com\n          (e / email-address-entity :value \"John.Doe@gmail.com\")"
+    },
+    {
+      "Concept": "score-entity",
+      "Subroles": ":op1... :opX",
+      "Definition": "def\n         We lost 1-10. \n          (l / lose-03\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number plural)\n    :extent (s / score-entity\n        :op1 1\n        :op2 10)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "date-interval",
+      "Subroles": ":op1\n\n        :op2",
+      "Definition": "I will be away June 9-13. \n          (a / away-01\n    :ARG1 (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :temporal (d / date-interval\n        :op1 (d2 / date-entity\n            :month 6\n            :day 9)\n        :op2 (d3 / date-entity\n            :month 6\n            :day 13))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "value-interval",
+      "Subroles": ":op1\n\n        :op2",
+      "Definition": "Refers to all parts within an interval.\n        Please read pages 320-325.\n          (r / read-01\n    :mode imperative\n    :polite +\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number plural)\n    :ARG1 (p2 / page\n        :refer-number plural\n        :mod (v / value-interval\n            :op1 320\n            :op2 325))\n    :aspect performance\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Concept": "between",
+      "Subroles": ":op1... :opX",
+      "Definition": "For ranges, where some number in the interval holds, but not all numbers.\n         between four and five thousand boys\n          (b / boy\n    :quant (b2 / between\n        :op1 4000\n        :op2 5000))"
+    },
+    {
+      "Concept": "slash",
+      "Subroles": ":op1\n\n        :op2",
+      "Definition": "For slashes that indicate alternation.\n         terrorist/political instability in oil-producing countries\n          (s / slash\n    :op1 (s2 / stable-02\n        :polarity -\n        :cause (t / terrorism-03)\n        :aspect state\n        :modal-strength full-affirmative)\n    :op2 (s3 / stable-02\n        :polarity -\n        :cause (p / politics)\n        :aspect state\n        :modal-strength full-affirmative)\n    :place (c9 / country\n        :refer-number plural\n        :ARG0-of (p5 / produce-01\n            :ARG1 (o4 / oil)\n            :aspect habitual\n            :modal-strength full-affirmative)))"
+    },
+    {
+      "Concept": "emoticon",
+      "Subroles": ":value",
+      "Definition": "For emoticons\n         very :)\n          (h / have-degree-91\n    :ARG3 (v / very)\n        :mod (e / emoticon :value \":)\"))"
+    },
+    {
+      "Concept": "relative-position",
+      "Subroles": ":op1\n\n        :quant\n\n        :direction",
+      "Definition": "For spatial relations, if spatial relation rolesets don't exist.\n        The plane crash occurred 50 miles east of Moscow.\n          (c / crash-01\n    :ARG1 (p / plane)\n    :place (r / relative-position\n        :op1 (h / human-settlement :wiki \"Moscow\"\n            :name (n / name :op1 \"Moscow\"))\n        :quant (d / distance-quantity\n            :quant 50\n            :unit (m / mile))\n        :direction (e / east))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "relative-orientation",
+      "Subroles": ":op1\n\n        :quant\n\n        :orientation",
+      "Definition": "so from there add two 90 degrees to what you just made.\n          (a / add-02\n    :mode imperative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (t / thing\n        :quant 2)\n    :start (t2 / there)\n    :manner (h / have-orientation-91\n        :ARG1 t\n        :ARG2 (r / relative-orientation\n            :op1 (t3 / thing\n                :ARG1-of (m / make-01\n                    :ARG0 p\n                    :temporal (j / just)\n                    :aspect performance\n                    :modal-strength full-affirmative))\n            :quant (a2 / angle-quantity\n                :unit (d / degree)\n                :quant 90)))\n    :aspect performance\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Concept": "less-than",
+      "Subroles": ":op1",
+      "Definition": "The exam will take less than 5 minutes.\n          (t / take-10\n    :ARG0 (e / exam)\n    :ARG1 (l / less-than\n        :op1 (t2 / temporal-quantity\n            :quant 5\n            :unit (m / minute)))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "more-than",
+      "Subroles": ":op1",
+      "Definition": "Jim retired more than five years ago.\n          (r / retire-01\n    :ARG0 (p / person\n        :name (n / name :op1 \"Jim\"))\n    :time (b / before\n        :op1 (n / now)\n        :quant (m / more-than\n            :op1 (t / temporal-quantity\n                :quant 5\n                :unit (y / year))))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "at-least",
+      "Subroles": ":op1",
+      "Definition": "300 grams or more of heroin\n          (h / heroin\n    :quant (a / at-least\n        :op1 (m / mass-quantity\n            :quant 300\n            :unit (g / gram))))"
+    },
+    {
+      "Concept": "at-most",
+      "Subroles": ":op1",
+      "Definition": "Mary planned to spend up to $5 on the gift.\n          (p / plan-01\n    :ARG0 (p / person\n        :name (n / name :op1 \"Mary\"))\n    :ARG1 (s / spend-01\n        :ARG0 p\n        :ARG1 (g / gift)\n        :ARG3 (a / at-most\n            :op1 (m / monetary-quantity\n                :quant 5\n                :unit (d / dollar))))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "sum-of",
+      "Subroles": ":op1... :opX",
+      "Definition": "Patrick Makau finished running the marathon in 2 hours, 3 minutes and 38 seconds.\n          (r / run-02\n    :ARG0 (p / person\n        :wiki \"Patrick_Makau_Musyoki\"\n        :name (n / name :op1 \"Patrick\" :op2 \"Makau\"))\n    :ARG1 (m / marathon)\n    :duration (s2 / sum-of\n        :op1 (t2 / temporal-quantity\n            :quant 2\n            :unit (h / hour))\n        :op2 (t3 / temporal-quantity\n            :quant 3\n            :unit (m2 / minute))\n        :op3 (t4 / temporal-quantity\n            :quant 38\n            :unit (s3 / second))))"
+    },
+    {
+      "Concept": "product-of",
+      "Subroles": ":op1... :opX",
+      "Definition": "The aircraft's velocity reached three times the speed of sound. \n          (r / reach-01\n    :ARG0 (v / velocity\n        :possessor (a / aircraft))\n    :ARG1 (p / product-of\n        :op1 3\n        :op2 (s / speed\n            :possessor (s2 / sound))))"
+    },
+    {
+      "Concept": "ratio-of",
+      "Subroles": ":op1... :opX",
+      "Definition": "The ratio of boys to girls in the class is 3:2.\n          (i / identity-91\n    :ARG1 (r / ratio-of\n        :op1 (q / quantity\n            :quant-of (b / boy\n                :place (c / class)))\n        :op2 (q / quantity\n            :quant-of (g / girl\n                :place c)))\n    :ARG2 \"3/2\"\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "difference-of",
+      "Subroles": ":op1... :opX",
+      "Definition": "Seven minus two is five.\n          (i / identity-91\n    :ARG1 (d / difference-of\n        :op1 7\n        :op2 2)\n    :ARG2 5\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "quotient-of",
+      "Subroles": ":op1... :opX",
+      "Definition": "12 divided by 3 equals 4. \n          (i / identity-91\n    :ARG1 (q / quotient-of\n        :op1 12\n        :op2 3)\n    :ARG2 4\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "power-of",
+      "Subroles": ":op1\n\n        :op2",
+      "Definition": "2^3 = 8\n          (e / equal-01\n    :ARG1 (p / power-of\n        :op1 2\n        :op2 3)\n    :ARG2 8\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "root-of",
+      "Subroles": ":op1\n\n        :op2",
+      "Definition": "square root of 25\n          (r / root-of\n    :op1 25\n    :op2 2)"
+    },
+    {
+      "Concept": "logarithm-of",
+      "Subroles": ":op1\n\n        :op2",
+      "Definition": "The natural logarithm of 7.5 is approximately 2.0149.\n          (i / identity-91\n     :ARG1 (l / logarithm-of\n          :op1 7.5\n          :op2 (m / mathematical-constant-e))\n     :ARG2 (a / approximately\n          :op1 2.0149))"
+    }
+  ],
+  [
+    {
+      "Concept": "monetary-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "dollar, \n        euro, \n        pound, \n        yen, \n        yuan",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "distance-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "meter, \n        kilometer, \n        inch, \n        foot, \n        yard, \n        mile, \n        light-year, \n        kilo-base-pair",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "area-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "square-meter, \n        square-kilometer, \n        square-foot, \n        acre, \n        hectare, \n        square-mile",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "volume-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "liter, \n        cubic-meter, \n        fluid-ounce, \n        pint, \n        gallon, \n        cubic-mile",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "temporal-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "second, \n        minute, \n        hour, \n        day, \n        week, \n        month, \n        year, \n        decade, \n        century",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "frequency-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "hertz",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "speed-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "meter-per-second, \n        mile-per-hour",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "acceleration-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "meter-per-second-squared",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "mass-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "kilogram, \n        ounce, \n        pound,  \n        ton, \n        atomic-mass-unit,  \n        kilodalton",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "force-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "newton",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "pressure-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "pascal, \n        bar, \n        psi, \n        atmosphere, \n        torr",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "energy-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "joule, \n        calorie, \n        kilowatt-hour, \n        btu, \n        electron-volt",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "power-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "watt, \n        horsepower",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "charge-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "coulomb",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "potential-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "volt",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "resistance-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "ohm",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "inductance-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "henry",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "magnetic-field-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "tesla, \n        gauss",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "magnetic-flux-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "maxwell, \n        weber",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "radiation-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "becquerel, \n        curie, \n        sievert, \n        rem, \n        gray, \n        rad",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "fuel-consumption-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "liter-per-100-kilometer, \n        mile-per-gallon",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "numerical-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "point, \n        mole",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "information-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "bit, \n        gigabit, \n        byte, \n        kilobyte, \n        megabyte, \n        gigabyte, \n        terabyte, \n        petabyte, \n        exabyte, \n        zettabyte, \n        yottabyte, \n        nibble",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "concentration-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "molar , \n        micromolar , \n        kilogram-per-cubit-meter, \n        parts-per-million, \n        katal , \n        microkatal, \n        nanokatal, \n        enzyme-unit",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "catalytic-activity-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "katal , \n        microkatal, \n        nanokatal, \n        enzyme-unit",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "acidity-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":scale",
+      "Subroles": "ph",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "seismic-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":scale",
+      "Subroles": "richter",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "temperature-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":unit",
+      "Subroles": "degree",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":scale",
+      "Subroles": "celsius, \n        kelvin, \n        farenheit,",
+      "Possible Values": ""
+    },
+    {
+      "Concept": "seismic-quantity",
+      "Subroles": ":quant",
+      "Possible Values": ""
+    },
+    {
+      "Concept": ":scale",
+      "Subroles": "degree, \n        radian",
+      "Possible Values": ""
+    }
+  ],
+  [
+    {
+      "Concept": "cartesian-coordinate-entity",
+      "Subroles": ":x\n\n        :y\n\n        :z\n\n        :framework",
+      "Definition": "For Cartesian coordinates.\n        [Builder puts down a green block at X:0 Y:1 Z:-3]\n          (p / put-down-17\n    :ARG0 (b / builder)\n    :ARG1 (b2 / block\n        :color (g / green))\n    :ARG2 (s / space\n        :place (c / cartesian-coordinate-entity\n            :x 0\n            :y 1\n            :z -3)))"
+    },
+    {
+      "Concept": "dimension-entity",
+      "Subroles": ":value\n\n        :unit",
+      "Definition": "For references to dimension measurements of objects.\n        we're going to build a 3 by square\n          (b / build-01\n    :ARG0 (p / person\n        :refer-person 1st\n        :refer-number plural)\n    :ARG1 (s / square\n        :size (d / dimension-entity :value 3))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Concept": "slope-quantity",
+      "Subroles": ":quant\n\n        :rise-axis\n\n        :run-axis\n\n        :quant",
+      "Definition": "Can be used to document the slope measurements, but also to ground the axes of the diagonal to spatial relations.\n        From the red block, make a diagonal of 3 green going down and to the right.\n          (m / make-01\n    :mode imperative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (c3 / composite-entity\n        :ARG1-of (d / diagonal-02\n            :ARG3 (s / slope-quantity\n                :rise-axis (a / axis\n                    :ARG4-of (d2 / down-03\n                        :ARG5 (c / cartesian-framework-91\n                            :ARG1 (b2 / build-space))))\n                :run-axis (a2 / axis\n                    :ARG4-of (r / right-04\n                        :ARG3 (c2 / cartesian-framework-91\n                            :ARG1 p)))))\n        :consist-of (t2 / thing\n            :color (g / green)\n            :quant 3))\n    :source (b / block\n        :color (r2 / red))\n    :aspect performance\n    :modal-strength partial-affirmative)\n\n    \n        (from a grounding graph in the Minecraft Corpus)\n          :configuration (s / stack\n    :ARG1-of (d / diagonal-02\n        :ARG3 (a6 / and\n            :op1 (s2 / slope-quantity\n                :rise-axis y\n                :run-axis x\n                :quant 1)\n            :op2 (s3 / slope-quantity\n                :rise-axis y\n                :run-axis z\n                :quant \"-1\"))))"
+    },
+    {
+      "Concept": "composite-entity",
+      "Subroles": "-",
+      "Definition": "Used as a general concept for block constructions in Minecraft, or other composite entities.\n        (from a grounding graph in Minecraft Corpus)\n          :snt8 (c7 / composite-entity\n    :configuration (e / eye)\n    :ARG1-of (c8 / cartesian-framework-91\n        :ARG2 (x5 / x-axis)\n        :ARG3 (y5 / y-axis)\n        :ARG4 (z5 / z-axis)\n        :ARG6 (b / builder)\n        :ARG7 (a / armature\n            :axis-layout right-handed\n            :frame-of-reference-type relative\n            :translation rotated))\n    :ARG1-of (c9 / cartesian-framework-91\n        :ARG2 (x6 / x-axis)\n        :ARG3 (y6 / y-axis)\n        :ARG4 (z6 / z-axis)\n        :ARG7 (a / armature\n            :axis-layout left-handed\n            :frame-of-reference-type intrinsic)))"
+    },
+    {
+      "Concept": "space",
+      "Subroles": "-",
+      "Definition": "Abstract concept that refers to a volume of space. Typically this space can be described spatially, and is used as a destination for a placement instruction (etc.).\n        [Builder puts down a green block at X:0 Y:1 Z:-3]\n          (p / put-down-17\n    :ARG0 (b / builder)\n    :ARG1 (b2 / block\n        :color (g / green))\n    :ARG2 (s / space\n        :place (c / cartesian-coordinate-entity\n            :x 0\n            :y 1\n            :z -3)))"
+    },
+    {
+      "Concept": "trajectory",
+      "Subroles": ":axis-of\n        :direction-of",
+      "Definition": "Abstract concept for paths, directions. Used as a head concept node that spatial rolesets can attach to.\n        Now make a 3 block long line going away from you\n          (m / make-01\n    :mode imperative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (l / line\n        :ARG1-of (l2 / long-03\n            :ARG2 (d / distance-quantity\n                :unit (b / block)\n                :quant 3))\n        :ARG1-of (g / go-35\n            :direction (t / trajectory\n                :ARG3-of (a / away-01\n                    :ARG2 p))))\n    :temporal (n / now))"
+    }
+  ]
+]

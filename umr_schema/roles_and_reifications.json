@@ -1,0 +1,455 @@
+[
+  [
+    {
+      "Role": ":actor\n          Ex: He ate the corn.\n    (e / eat-01\n        :actor (p / person\n            :refer-person 3rd\n            :refer-number singular)\n        :undergoer (c / corn)\n        :aspect performance\n        :modal-strength full-affirmative)",
+      "Inverse": ":actor-of\n          Ex: the boy who ate the corn\n    (b / boy\n        :actor-of (e / eat-01\n            :undergoer (c / corn)\n            :aspect performance\n            :modal-strength full-affirmative))",
+      "Reification": "have-actor-91\n\n          :ARG1 event\n \n            :ARG2 actor",
+      "Definition": "Animate entity that initiates the action.\n\n        The doctor laughed.\n          (l / laugh-01\n  :actor (d / doctor)\n  :aspect performance\n  :modal-strength full-affirmative)\n  \n        The doctor ate a salad.\n          (e / eat-01\n  :actor (d / doctor)\n  :undergoer (s / salad)\n  :aspect performance\n  :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":co-actor\n          Ex: I was arguing with him.\n    (a / argue-01\n        :actor (p / person\n            :refer-person 1st\n            :refer-number singular)\n        :co-actor (p2 / person\n            :refer-person 3rd\n            :refer-number singluar)\n        :aspect activity\n       :modal-strength full-affirmative)",
+      "Inverse": ":co-actor-of\n          Ex: the man I was arguing with\n    (m / man\n        :co-actor-of (a / argue-01\n            :actor (p2 / person\n               :refer-person 1st\n               :refer-number singular)\n           :aspect activity\n           :modal-strength full-affirmative))",
+      "Reification": "have-co-actor-91\n\n          :ARG1 event\n \n            :ARG2 co-actor",
+      "Definition": "Secondary parallel Actor who is acting independently of the primary :actor.\n\n        James battled the dragon.\n          (b / battle-01\n    :actor (p / person\n        :name (n / name :op1 \"James\"))\n    :co-actor (d / dragon)\n    :aspect activity\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":undergoer\n          Ex: He ate the corn.\n    (e / eat-01\n        :actor (p / person\n            :refer-person 3rd\n            :refer-number singular)\n        :undergoer (c / corn)\n        :aspect performance\n        :modal-strength full-affirmative)",
+      "Inverse": ":undergoer-of\n          Ex: the corn the boy ate\n    (c / corn\n       :undergoer-of (e / eat-01\n            :actor (b / boy)\n            :aspect performance\n           :modal-strength full-affirmative))",
+      "Reification": "have-undergoer-91\n\n          :ARG1 event\n \n            :ARG2 undergoer",
+      "Definition": "Entity (animate or inanimate) that is affected by the action.\n\n        The papers  burned.\n          (b / burn-01\n    :undergoer (p / paper\n        :refer-number plural)\n    :aspect activity\n    :modal-strength full-affirmative)\n        He burned the onions.\n          (b / burn-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :undergoer (o / onion\n        :refer-number plural)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":theme\n          Ex: She put the books on the shelf.\n    (p / put-01\n        :actor (p2 / person\n            :refer-person 3rd\n            :refer-number singular)\n        :theme (b / book\n            :refer-number plural)\n        :goal (s / shelf)\n        :aspect performance\n        :modal-strength full-affirmative)",
+      "Inverse": ":theme-of\n          Ex: the books she had put on the shelf\n     (p2 / put-01\n            :actor (p3 / person\n                :refer-person 3rd\n                :refer-number singular)\n            :goal (s / shelf)\n            :aspect performance\n            :modal-strength full-affirmative))",
+      "Reification": "have-theme-91\n\n          :ARG1 event\n \n            :ARG2 theme",
+      "Definition": "Entity (animate, inanimate, or abstract) that moves from one entity to another entity, either spatially or metaphorically.\n\n        She put the books on the shelf.\n          (p / put-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (b / book\n        :refer-number plural)\n    :aspect performance\n    :modal-strength full-affirmative)\n        She tore a page from the book.\n          (t /tear-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (p2 / page\n        :refer-number singular)\n    :source (b / book\n        :refer-number plural)\n    :aspect performance\n    :modal-strength full-affirmative)\n        He gave me a sandwich.\n          (g / give-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (s / sandwich\n        :refer-number singular)\n    :recipient (p2 / person\n        :refer-person 1st\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative)\n        She told him a story.\n          (t / tell-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (s / story\n        :refer-number singular)\n    :recipient (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":recipient\n          Ex: I gave Martha a book.\n    (g / give-01\n        :actor (p / person\n            :refer-person 1st\n            :refer-number singular)\n        :recipient (p2 / person :name (n / name :op1 \"Martha\"))\n        :theme (b / book)\n        :aspect performance\n        :modal-strength full-affirmative)",
+      "Inverse": ":recipient-of\n          Ex: The book I gave Martha was old.\n    (h / have-age-91\n        :ARG1 (b / book\n            :theme-of (g / give-01\n                :actor (p / person\n                    :refer-person 1st\n                    :refer-number singular)\n                :recipient (p2 / person :name (n / name :op1 \"Martha\"))\n                :aspect performance\n                :modal-strength full-affirmative))\n        :ARG2 (o / old)",
+      "Reification": "have-recipient-91\n\n          :ARG1 event\n \n            :ARG2 recipient",
+      "Definition": "Animate entity that gains possession (or at least temporary control) of another entity.\n        He gave me a sandwich.\n          (g / give-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (s / sandwich\n        :refer-number singular)\n    :recipient (p2 / person\n        :refer-person 1st\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative)\n        She told him a story.\n          (t / tell-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (s / story\n        :refer-number singular)\n    :recipient (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":force\n          Ex: The storm damaged the power lines.\n    (d/ damage-01 \n        :force (s/ storm)  \n        :undergoer (l/ line\n            :purpose (p/ power)\n            :refer-number plural)\n        :aspect performance\n        :modal-strength full-affirmative)",
+      "Inverse": ":force-of\n          Ex: the storm that damaged the power lines\n    (s/ storm\n        :force-of (d/ damage-01   \n            :undergoer (l/ line\n                :purpose (p/ power)\n                :refer-number plural)\n          \t:aspect performance\n          \t:modal-strength full-affirmative))",
+      "Reification": "have-force-91\n\n          :ARG1 event\n \n            :ARG2 force",
+      "Definition": "Inanimate entity that initiates the action.\n        The wind knocked down the tree.\n          (k / knock-down-02\n    :force (w / wind)\n    :undergoer (t / tree)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":causer\n          Ex:\n    Parte   in    Cinte a         hni-ter  \n    Parte   ERG   Cinte 3SG.NOM   laugh.1-CAUS  \n    ‘Parte made Cinte laugh.’\n\n    (h/ hniter-00 ‘make laugh’ \n        :causer (p/ person\n            :name (n/ name :op1 \"Parte\")) \n        :actor (p2/ person\n            :name (n2/ name :op1 \"Cinte\"))  \n        :aspect performance\n        :modal-strength full-affirmative)",
+      "Inverse": ":causer-of\n          Ex:",
+      "Reification": "have-causer-91\n\n          :ARG1 event\n \n            :ARG2 causer",
+      "Definition": "Animate entity that acts on another animate entity to initiate the action.\n\n        The mother made her child eat the broccoli.\n          (m / make-01\n    :causer (p / person\n        :ARG1-of (h / have-rel-role-91\n            :ARG2 (p2 / person)\n            :ARG3 (m / mother)\n            :ARG4 (c / child)))\n    :theme (e / eat-01\n        :actor p2\n        :undergoer (b / broccoli)\n    :aspect performance\n    :modal-strength full-affirmative))"
+    },
+    {
+      "Role": ":experiencer\n          Ex:",
+      "Inverse": ":experiencer-of\n          Ex:",
+      "Reification": "have-experience-91\n\n          :ARG1 experiencer\n \n            :ARG2 the experience\n \n            :ARG3 stimulus\n \n            :ARG4 the event, if separate",
+      "Definition": "Animate entity that cognitively or sensorily experiences a stimulus.\n        The dog heard a sound.\n          (h / hear-01\n    :experiencer (d / dog)\n    :stimulus (s / sound)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":stimulus\n          Ex:",
+      "Inverse": ":stimulus-of\n          Ex:",
+      "Reification": "Entity (animate or inanimate) that is experienced by an :experiencer\n\n        The dog heard a sound.\n          (h / hear-01\n    :experiencer (d / dog)\n    :stimulus (s / sound)\n    :aspect performance\n    :modal-strength full-affirmative)",
+      "Definition": ""
+    },
+    {
+      "Role": ":instrument\n          Ex:",
+      "Inverse": ":instrument-of\n          Ex:",
+      "Reification": "have-instrument-91\n\n          :ARG1 event\n \n            :ARG2 instrument",
+      "Definition": "Inanimate entity that is manipulated by an external Causer in order to initiate the action.\n\n        She hit him with a broom. \n          (h / hit-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :undergoer (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :instrument (b / broom)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":companion\n          Ex:",
+      "Inverse": ":companion-of\n          Ex:",
+      "Reification": "have-companion-91\n\n          :ARG1 event\n \n            :ARG2 companion",
+      "Definition": "Animate entity that acts with the actor to initiate the action.\n\n        He cooked dinner with his wife. \n          (c / cook-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :undergoer (d / dinner)\n    :companion (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":material\n          Ex:",
+      "Inverse": ":material-of\n          Ex:",
+      "Reification": "have-material-91\n\n          :ARG1 event\n \n            :ARG2 material",
+      "Definition": "Entity (inanimate) that is transformed into a new entity.\n        He made a roux with flour and butter.  \n          (m / make-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :undergoer (r / roux)\n    :material (a / and\n        :op1 (f / flour)\n        :op2 (b / butter))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":source\n          Ex:",
+      "Inverse": ":source-of\n          Ex:",
+      "Reification": "have-source-91\n\n          :ARG1 event\n \n            :ARG2 source",
+      "Definition": "Entity from which the :theme detaches.\n        He plucked a flower from the bush.   \n          (p / pluck-01\n    :actor (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (f / flower)\n    :source (b / bush)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":place\n          Ex:",
+      "Inverse": ":place-of\n          Ex:",
+      "Reification": "have-place-91\n\n          :ARG1 event\n \n            :ARG2 place",
+      "Definition": "Location at which the action takes place.\n        He read a book in the garden.   \n          (r / read-01\n    :actor (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (b / book)\n    :place (g / garden)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":start\n          Ex:",
+      "Inverse": ":start-of\n          Ex:",
+      "Reification": "have-start-91\n\n          :ARG1 event\n \n            :ARG2 start",
+      "Definition": "Location at which a motion event begins.\n        She biked from her house.    \n          (b / bike-01\n    :actor (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :start (h / house\n        :possessor p2)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":goal\n        Ex:",
+      "Inverse": ":goal-of\n          Ex:",
+      "Reification": "have-goal-91\n\n          :ARG1 event\n \n            :ARG2 goal",
+      "Definition": "Location at which the action ends, the end point at which the theme arrives.\n        She put the books on the shelf.  \n          (p / put-01\n    :actor (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (b / book\n        :refer-number plural)\n    :goal (s / shelf)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":affectee\n          Ex:",
+      "Inverse": ":affectee-of\n          Ex:",
+      "Reification": "have-affectee-91\n\n          :ARG1 event\n \n            :ARG2 affectee",
+      "Definition": "Animate entity which the action has a positive or negative influence on, i.e. beneficiary or maleficiary.\n\n        He made a cake forthe dog.\n          (m / make-01\n    :actor (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (c / cake)\n    :affectee (d / dog)\n    :aspect performance\n    :modal-strength full-affirmative)\n        She twisted his words against him.\n          (t / twist-01\n    :actor (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :theme (w / word\n        :refer-number plural\n        :possessor (p / person\n            :refer-person 3rd\n            :refer-number singular)\n    :affectee p\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":cause\n          Ex:",
+      "Inverse": ":cause-of\n          Ex:",
+      "Reification": "have-cause-91\n\n          :ARG1 event\n \n            :ARG2 cause",
+      "Definition": "Inanimate entity that causes the action to happen.\n        He was late because of the fire.\n          (l / late-02\n    :theme (p2 / person\n        :refer-person 3rd\n        :refer-number singular)\n    :cause (f / fire-05\n        :aspect process\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":manner\n          Ex:",
+      "Inverse": ":manner-of\n          Ex:",
+      "Reification": "have-manner-91\n\n          :ARG1 event\n \n            :ARG2 manner",
+      "Definition": "Manner in which the action takes place.\n        She exercised bylifting weights.\n          (e / exercise-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :manner (l / lift-01\n        :actor p \n        :theme (w / weight\n            :refer-number plural)\n        :aspect performance\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":reason\n          Ex:",
+      "Inverse": ":reason-of\n          Ex:",
+      "Reification": "have-reason-91\n\n          :ARG1 event\n \n            :ARG2 reason",
+      "Definition": "Motivation for the :actor to initiate the action.\n        They got married because they were in love.\n          (m / marry-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number plural)\n    :reason (l / love-01\n        :actor p \n        :aspect state\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":purpose\n          Ex:",
+      "Inverse": ":purpose-of\n          Ex:",
+      "Reification": "have-purpose-91\n\n          :ARG1 event\n \n            :ARG2 purpose",
+      "Definition": "Intended event that results from the action.\n        They dropped water in order to fight fires.\n          (d / drop-01\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number plural)\n    :theme (w / water)\n    :purpose (f / fight-01\n        :actor p \n        :force (f2 / fire-05\n            :refer-number plural\n            :aspect process)\n        :aspect habitual\n        :modal-strength partial-affirmative)\n    :aspect habitual\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":result\n          Ex:",
+      "Inverse": ":result-of\n          Ex:",
+      "Reification": "have-result-91\n\n          :ARG1 event\n \n            :ARG2 result",
+      "Definition": "Event or state that comes about in some way that is contingent on another event.\n        She worked her fingers raw.\n          (w / work-10\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :undergoer (f / finger\n        :part-of p \n        :refer-number plural)\n    :result (r / raw-01\n        :theme f\n        :aspect state\n        :modal-strength full-affirmative)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":temporal\n          Ex:",
+      "Inverse": ":temporal-of\n          Ex:",
+      "Reification": "have-temporal-91\n\n          :ARG1 event\n \n            :ARG2 temporal",
+      "Definition": "Element (event or time expression) that has a temporal relation with the action.\n        She left after dinner.\n          (l / leave-11\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :temporal (a / after\n        :op1 (d / dinner))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":extent\n          Ex:",
+      "Inverse": ":extent-of\n          Ex:",
+      "Reification": "have-extent-91\n\n          :ARG1 event\n \n            :ARG2 extent",
+      "Definition": "Measurement phrase.\n        He ran 7 miles.\n          (r / run-02\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :extent (d / distance-quantity\n        :quant 7\n        :unit (m / mile))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":other-role\n          Ex:",
+      "Inverse": ":other-role-of\n          Ex:",
+      "Reification": "have-other-role-91\n\n          :ARG1 event\n \n            :ARG2 other role",
+      "Definition": "This role can be used when an annotator is unsure of which role is appropriate."
+    }
+  ],
+  [
+    {
+      "Role": ":direction\n          Ex: Move that block the other way\n    (m / move-01 \n        :mode imperative\n        :actor (p / person\n            :refer-person 2nd\n            :refer-number singular)\n        :theme (b / block\n            :mod (t / that))\n        :direction (w / way\n                :mod-of (o / other-01))\n        :aspect performance\n        :modal-strength partial-affirmative)",
+      "Inverse": ":direction-of\n          Ex:",
+      "Reification": "have-direction-91\n\n          :ARG1 event\n \n            :ARG2 direction",
+      "Definition": "Direction of motion event.\n        He drove west.\n          (d / drive\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :direction (t / trajectory\n        :direction-of (w / west-01))\n    :aspect activity\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":path\n          Ex:",
+      "Inverse": ":path-of\n          Ex:",
+      "Reification": "have-path-91\n\n          :ARG1 event/entity\n \n            :ARG2 path",
+      "Definition": "Path of motion event.\n        I walked the track at the highschool.\n          (w / walk-01\n    :actor (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :path (t / track)\n    :place (h / highschool)\n    :aspect activity\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":quant\n          Ex:",
+      "Inverse": ":quant-of\n          Ex:",
+      "Reification": "have-quant-91\n\n          :ARG1 entity\n \n            :ARG2 quant",
+      "Definition": "Quantity of an entity.\n        My brother has 12 pets.\n          (h / have-91\n    :ARG1 (p / person\n        :ARG1-of (h2 / have-rel-role-91\n            :ARG2 (p / person\n                :refer-person 1st\n                :refer-number singular)\n            :ARG3 (b / brother)))\n    :ARG2 (p2 / pet\n        :quant 12)\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":degree",
+      "Inverse": "(see under Attributes)",
+      "Reification": "",
+      "Definition": ""
+    },
+    {
+      "Role": ":duration\n          Ex:",
+      "Inverse": ":duration-of\n          Ex:",
+      "Reification": "have-duration-91\n\n          :ARG1 event\n \n            :ARG2 duration",
+      "Definition": "Duration of an event.\n        The commencement ceremony went on for 4 hours.\n          (g / go-on-15\n    :theme (c / ceremony-01\n        :purpose (c2 / commencement)\n        :aspect process\n        :modal-strength full-affirmative)\n    :duration (t / temporal-quantity\n        :quant 4 \n        :unit (h2 / hour))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":frequency\n          Ex:",
+      "Inverse": ":frequency-of\n          Ex:",
+      "Reification": "have-frequency-91\n\n          :ARG1 event\n \n            :ARG2 frequency",
+      "Definition": "How often an event occurs.\n        My dog runs around the yard whenever it rains.\n          (r / run-02\n    :actor (d / dog\n        :possessor (p / person\n            :refer-person 1st\n            :refer-number singular))\n    :path (a / around\n        :op1 (y / yard))\n    :frequency (r2 / rate-entity-91\n        :ARG4 (r3 / rain-01\n            :aspect performance\n            :modal-strength partial-affirmative))\n    :aspect habitual\n    :modal-strength full-affirmative)\n    \n        My cat hit my dog on the nose 3 times.\n          (h / hit-01\n    :actor (c / cat\n        :possessor (p / person\n            :refer-person 1st\n            :refer-number singular))\n    :undergoer (d / dog\n        :possessor p)\n    :place (n / nose\n        :part-of d)\n    :frequency 3\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":mod\n          Ex:",
+      "Inverse": ":mod-of\n          Ex:",
+      "Reification": "have-mod-91\n\n          :ARG1 entity\n \n            :ARG2 modifier",
+      "Definition": "For generic modifiers of entities and events.\n\n        I don't want to wear those shoes.\n          (w / want-01\n    :polarity -\n    :experiencer (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :stimulus (w2 / wear-01\n        :actor p \n        :theme (s / shoe \n            :refer-number plural\n            :mod (t / that))\n        :aspect state\n        :modal-strength partial-negative\n        :modal-predicate w)\n    :aspect state\n    :modal-strength full-negative)The tall man reached the mayonnaise for me.\n          (r / reach-01\n    :actor (m / man\n        :mod (t / tall))\n    :theme (m2 / mayonnaise)\n    :affectee (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":topic\n          Ex:",
+      "Inverse": ":topic-of\n          Ex:",
+      "Reification": "have-topic-91\n\n          :ARG1 event/entity\n \n            :ARG2 topic",
+      "Definition": "The subject matter of an event or entity.\n        The cobbler wrote a book about shoes.\n          (w / write-01\n    :actor (p / person\n        :ARG1-of (h / have-role-91\n            :ARG2 (c / cobbler)))\n    :theme (b / book\n        :topic (s / shoe\n            :refer-number plural))\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":vocative\n          Ex:",
+      "Inverse": ":vocative-of\n          Ex:",
+      "Reification": "have-vocative-91\n\n          :ARG1 event\n \n            :ARG2 person addressed",
+      "Definition": "Within utterances, when the addressee is called out.\n        \"Good morning, Bert.\"\n          (s / say-91\n    :ARG1 (g / good-02\n        :theme (m / morning)\n        :vocative (p / person \n            :name (n / name :op1 \"Bert\"))\n        :aspect state\n        :modal-strength full-affirmative\n        :quote s)\n    :ARG2 p)"
+    },
+    {
+      "Role": ":medium\n          Ex:",
+      "Inverse": ":medium-of\n          Ex:",
+      "Reification": "have-medium-91\n\n          :ARG1 event/entity\n \n            :ARG2 medium",
+      "Definition": "The medium through which an event is carried out.\n        I called my mother on the phone.\n          (c / call-02\n    :actor (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :theme (p2 / person\n        :ARG1-of (h / have-rel-role-91\n            :ARG2 (p3 / person)\n            :ARG3 (m / mother)))\n    :medium (p4 / phone)\n        :aspect performance\n        :modal-strength full-affirmative)\n        a French song\n          (s / song\n    :medium (l / language\n        :name (n / name :op1 \"French\")))"
+    },
+    {
+      "Role": ":possessor\n          Ex:",
+      "Inverse": ":possessor-of\n          Ex:",
+      "Reification": "have-poss-91\n\n          :ARG1 possessed entity\n \n            :ARG2 possessor",
+      "Definition": "The entity who has possession (or temporary control) over something.\n        His shoes are on the floor.\n          (h / have-place-91\n    :ARG1 (s / shoe\n        :refer-number plural\n        :possessor (p / person\n            :refer-person 3rd\n            :refer-number singular))\n    :ARG2 (f / floor)\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":part\n          Ex:",
+      "Inverse": ":part-of\n          Ex:",
+      "Reification": "have-part-91\n\n          :ARG1 whole entity\n \n            :ARG2 part",
+      "Definition": "A component part of a whole.\n        My nose itched.\n          (i / itch-01\n    :experiencer (n / nose\n        :part-of (p / person\n            :refer-person 1st\n            :refer-number singular))\n    :aspect state\n    :modal-strength full-affirmative)\n    \n        The movers lay the box on its side.\n          (l / lay-01\n    :actor (p / person\n        :refer-number plural\n        :actor-of (m / move-01))\n    :theme (b / box)\n    :orientation (o / on-04\n        :theme b \n        :part (s / side\n        :part-of b)\n    :aspect performance\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":group\n          Ex:",
+      "Inverse": ":group-of\n          Ex:",
+      "Reification": "have-group-91\n\n          :ARG1 members\n \n            :ARG2 group",
+      "Definition": "For set/member relationships.\n        a swarm of bees\n          (s / swarm\n    :group-of (b / bee\n        :refer-number plural))"
+    },
+    {
+      "Role": ":age\n          Ex: .",
+      "Inverse": ":age-of\n          Ex:",
+      "Reification": "have-age-91\n\n          :ARG1 entity\n \n            :ARG2 age\n          Ex: The book I gave Martha was old.\n    (h / have-age-91\n        :ARG1 (b / book\n            :theme-of (g / give-01\n                :actor (p / person\n                    :refer-person 1st\n                    :refer-number singular)\n                :recipient (p2 / person :name (n / name :op1 \"Martha\"))\n                :aspect performance\n                :modal-strength full-affirmative))\n        :ARG2 (o / old))",
+      "Definition": "The age of an entity.\n        the 3 year old boy\n          (b / boy\n    :age (t / temporal-quantity\n        :quant 3 \n        :unit (y / year))"
+    },
+    {
+      "Role": ":example\n          Ex:",
+      "Inverse": ":example-of\n          Ex:",
+      "Reification": "have-example-91\n\n          :ARG1 event/entity\n \n          :ARG2 example",
+      "Definition": "For exemplars.\n        Countries like Germany and France. \n          (c / country\n    :refer-number plural\n    :example (a / and\n        :op1 (c2 / country \n            :name (n / name :op1 \"Germany\"))\n        :op2 (c3 / country\n            :name (n2 / name :op2 \"France\")))))"
+    },
+    {
+      "Role": ":ord\n\n        child concept:\n\n        \n          (o / ordinal-entity)\n        subroles:\n\n        \n          :value\n\n          :range\n\n          :range-start\n\n          :range-trajectory\n        Ex: \n          popup",
+      "Inverse": ":ord-of\n          Ex:",
+      "Reification": "have-ord-91\n\n          :ARG1 main entity\n \n            :ARG2 ord\n \n            :ARG3 range\n \n            :ARG4 range-start\n\n            :ARG5 range-trajectory",
+      "Definition": "Ordinal relations. This role takes the concept ordinal-entity as its value, with one mandatory subrole (:value, for the number), and three optional subroles that give further information about how the counter is thinking about the counting.\n\n        the last man standing \n          (m / man\n    :actor-of (s / stand-01\n        :ord (o / ordinal-entity :value \"-1\")\n        :aspect state\n        :modal-strength full-affirmative))\n        \n        the first book in the stack \n          (b / book\n    :ord (o / ordinal-entity :value \"1\")\n        :range (s / stack))\n            \n        the 3rd block from the lefthand side \n          (b / block\n    :ord (o / ordinal-entity :value \"3\")\n        :range-start (s / side\n            :ARG2-of (l / left-24)))\n            \n        the 2nd chair toward the front\n          (c / chair\n    :ord (o / ordinal-entity :value \"2\")\n        :range-trajectory (f / front-03))"
+    },
+    {
+      "Role": ":list-item\n          Ex:",
+      "Inverse": ":list-item-of\n          Ex:",
+      "Reification": "have-list-item-91\n\n          :ARG1 entity\n \n          :ARG2 number/value",
+      "Definition": "For enumeration of items in lists.\n        I like two things: 1. dogs, and 2. coffee.\n          (l / like-01\n    :experiencer (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :stimulus (t / thing\n        :quant 2\n        :ARG1-of (i / identity-91\n            :ARG2 (a / and\n                :op1 (d / dog\n                    :refer-number plural\n                    :list-item \"1\")\n                :op1 (c / coffee\n                    :list-item \"2\")))))"
+    }
+  ],
+  [
+    {
+      "Role": ":size",
+      "Inverse": ":size-of",
+      "Reification": "have-size-91\n          :ARG1 entity\n \n            :ARG2 size",
+      "Definition": "For size modifiers.\n\n        Build a 3 by 3 square.\n          (b / build-01\n    :mode imperative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (s / square\n        :size (a / and\n            :op1 (d / dimension-entity :value \"3\")\n            :op2 (d2 / dimension-entity :value \"3\")))\n    :aspect performance\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Role": ":color",
+      "Inverse": ":color-of",
+      "Reification": "have-color-91\n          :ARG1 entity\n \n            :ARG2 color",
+      "Definition": "For colors.\n\n        Build a red triangle.\n          (b / build-01\n    :mode imperative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-number singular)\n    :ARG1 (t / triangle\n        :color (r / red))\n    :aspect performance\n    :modal-strength partial-affirmative)"
+    },
+    {
+      "Role": ":configuration",
+      "Inverse": ":configuration-of",
+      "Reification": "have-configuration-91\n          :ARG1 components\n \n            :ARG2 configuration",
+      "Definition": "For configurations, where individual, separable component parts are arranged in a particular way.\n\n        Now take the orange blocks and build a =strong>.\n          (a / and\n    :op1 (t / take-01\n        :mode imperative\n        :ARG0 (p / person\n            :refer-person 2nd\n            :refer-number singular)\n        :ARG1 (b / block\n            :refer-number plural\n            :color (o / orange))\n        :aspect performance\n        :modal-strength partial-affirmative)\n    :op2 (b2 / build-01\n        :mode imperative\n        :ARG0 p\n        :ARG1 (t / thing\n            :configuration (s / string-entity :value \"=\"))\n        :ARG2 b\n        :aspect performance\n        :modal-strength partial-affirmative))"
+    },
+    {
+      "Role": ":orientation",
+      "Inverse": ":orientation-of",
+      "Reification": "have-orientation-91\n          :ARG1 entity\n \n            :ARG2 orientation",
+      "Definition": "For orientations of entities who are facing a particular way.\n\n        The painting was upside-downstrong>.\n          (h / have-orientation-91\n    :ARG1 (t / thing\n        :ARG1-of (p / paint-01))\n    :ARG2 (u / upside-down)\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":anchor",
+      "Inverse": ":anchor-of",
+      "Reification": "have-anchor-91\n          :ARG1 spatial relation\n \n            :ARG2 anchor",
+      "Definition": "Marks the spatial frame of reference (usually a defined spatial framework) the speaker is referencing.\n\n        My laptop is on topstrong> of my desk.\n          (o / on-top-03\n    :ARG1 (l / laptop\n        :possessor (p / person\n            :refer-person 1st\n            :refer-number singular))\n    :ARG2 (d / desk\n        :possessor p)\n    :anchor (c / cartesian-framework-91\n        :ARG1 (e / environment))\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role": ":axis",
+      "Inverse": ":axis-of",
+      "Reification": "have-axis-91\n          :ARG1 spatial relation\n \n            :ARG2 axis",
+      "Definition": "For directed spatial relations, the ray that points in the eponymous direction. May be an abstract ray, or may be a physical structure.\n\n        The church is down the street from the school.\n          (d / down-05\n    :ARG1 (c / church)\n    :ARG2 (s / school)\n    :axis (s2 / street)\n    :aspect state\n    :modal-strength full-affirmative)\n\n    \n        He drove west.\n          (d / drive\n    :actor (p / person\n        :refer-person 3rd\n        :refer-number singular)\n    :direction (t / trajectory\n        :axis-of (w / west-01))\n    :aspect activity\n    :modal-strength full-affirmative)"
+    }
+  ],
+  [
+    {
+      "Role, Inverse, Reification": ":polite\n\n\n        \n        (no inverse)\n\n\n        \n        be-polite-91\n          :ARG1 proposition\n \n          :ARG2 politeness value",
+      "Values": "+",
+      "Definitions": "Politeness constructions.\n\n        Please pass the sugar."
+    },
+    {
+      "Role, Inverse, Reification": "-",
+      "Values": "Rudeness constructions.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": ":polarity\n\n\n        \n        :polarity-of\n\n\n        \n        have-polarity-91\n\n          :ARG1 proposition\n \n          :ARG2 polarity value",
+      "Values": "-",
+      "Definitions": "Simple negation.\n\n        We don't have money."
+    },
+    {
+      "Role, Inverse, Reification": "-intense",
+      "Values": "Double negation that adds emphasis.\n\n        We ain't got no money.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "+",
+      "Values": "Explicit affirmation.\n\n        Doch. 'yes it does so'",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "(t / truth-value)",
+      "Values": "'Whether' constructions.\n\n        I don't know if I have money.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "(u / umr-unknown)",
+      "Values": "Yes/no questions.\n\n        Do you have money?",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": ":mode\n\n\n        \n        (no inverse)\n\n\n        \n        (no reification)",
+      "Values": "interrogative",
+      "Definitions": "Questions.\n\n        Who at the cheese?"
+    },
+    {
+      "Role, Inverse, Reification": "imperative\n          Ex:",
+      "Values": "Commands, suggestions.\n\n        Move that block the other way.\n          (m / move-01 \n        :mode imperative\n        :actor (p / person\n            :refer-person 2nd\n            :refer-number singular)\n        :theme (b / block\n            :mod (t / that))\n        :direction (w / way\n                :mod-of (o / other-01))\n        :aspect performance\n        :modal-strength partial-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "expressive",
+      "Values": "Expressive constructions, profanity.\n        I can't find my flippin socks.\n          (f / find-01 \n    :mode expressive\n    :polarity -\n    :actor (p / person\n        :refer-person 1st\n        :refer-number singular)\n    :theme (s / sock\n        :refer-number plural\n        :mod (f / flippin))\n    :aspect state\n    :modal-strength full-negative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": ":degree\n\n\n        \n        :degree-of\n\n\n        \n        have-degree-91\n          :ARG1 entity\n\n          :ARG2 attribute\n \n          :ARG3 degree\n \n          :ARG4 compared to\n \n          :ARG5 reference to superset\n \n          :ARG6 threshold of sufficiency\n        \n        Ex: The girl is taller than the boy.\n    (h / have-degree-91\n        :ARG1 (g / girl)\n        :ARG2 (t / tall-01)\n        :ARG3 (m / more)\n        :ARG4 (b / boy)\n        :aspect state\n        :modal-strength full-affirmative)\n  \nEx: He runs as fast as lightning.\n    (h / have-degree-91\n        :ARG1 (r / run-02\n            :ARG1 (p / person\n                :refer-person 3rd\n                :refer-number singular\n            :aspect habitual\n            :modal-strength full-affirmative))\n        :ARG2 (f / fast)\n        :ARG3 (e / equal)\n        :ARG4 (l / lightning)\n        :aspect state\n        :modal-strength full-affirmative)\n  \nEx: It is too early to reach any conclusion as to the motive and identity of the attackers .\n    (h / have-degree-91\n        :ARG2 (e / early-01)\n        :ARG3 (t / too)\n        :ARG6 (c / conclude-01\n            :ARG2 (a / and\n                :op1 (t2 / thing\n                    :ARG0-of (m / motivate-01\n                        :ARG1 (p / person\n                            :ARG0-of (a / attack-01))))\n                :op2 (p2 / person\n                    :ARG1-of (i / identity-91\n                        :ARG2 p)))\n            :aspect performance\n            :modal-strength partial-affirmative)\n        :aspect state\n        :modal-strength full-affirmative)\n  \nEx: the most intelligent girl on the team\n    (g / girl\n        :ARG1-of (h / have-degree-91\n            :ARG2 (i / intelligent)\n            :ARG3 (m / most)\n            :ARG5 (g2 / girl\n                :ARG1-of (h2 / have-org-role-92\n                    :ARG2 (t / team)))))\n\n          \n        have-degree-92\n          :ARG1 state\n\n          :ARG2 degree value\n        \n        Ex: I know that he is of high intelligence.\n    (k / know-01\n        :ARG0 (p / person\n            :refer-person 1st\n            :refer-number singular)\n        :ARG1 (h / have-degree-92\n            :ARG1 (i / intelligent-01\n                :ARG1 (p / person\n                    :refer-person 3rd\n                    :refer-number singular))\n            :ARG2 intensifier\n            :aspect state\n            :modal-strength full-affirmative))\n        :aspect state\n        :modal-strength full-affirmative)",
+      "Values": "intensifier",
+      "Definitions": "Modifiers that increase the degree to which a state holds.\n\n        The man is very tall.\n          (t / tall-01\n    :theme (m / man) \n    :degree intensifier\n    :aspect state\n    :modal-strength full-affirmative)"
+    },
+    {
+      "Role, Inverse, Reification": "downtoner",
+      "Values": "Modifiers that reduce the degree to which a state holds.\n\n        The taxi is almost there. \n          (h / have-place-91\n    :ARG1 (m / man) \n    :ARG2 (t / there)\n    :degree downtoner\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "equal",
+      "Values": "Modifiers that indicate a state holds for two entities to an equal degree.\n\n        The woman is highly intelligent. \n          (i / intelligent-01\n    :ARG1 (w / woman) \n    :degree (h / high)\n    :aspect state\n    :modal-strength full-affirmative)",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "(some concept)",
+      "Values": "For cases where you want to insert a lexical item from the sentence.",
+      "Definitions": ""
+    }
+  ],
+  [
+    {
+      "Role, Inverse, Reification": ":refer-person\n\n\n      \n        (no inverse)\n\n\n        \n        (no reification)",
+      "Values": "non-1st",
+      "Definitions": "2nd and 3rd are clustered together"
+    },
+    {
+      "Role, Inverse, Reification": "non-3rd",
+      "Values": "1st and 2nd are clustered together",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "1st",
+      "Values": "1st person.\n        I, me, my, we, us, etc.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "2nd",
+      "Values": "2nd person.\n\n        you, y'all, you guys, etc.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "3rd",
+      "Values": "Third person.\n\n        he, she, it, they, one, etc.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "1st-inclusive",
+      "Values": "Includes you as well as me or us.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "1st-exclusive",
+      "Values": "Includes me or us without you.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "singular",
+      "Values": "singular.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "nonsingular",
+      "Values": "Everything but singular, may refer to a group, class or type.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "paucal",
+      "Values": "A small imprecise number (maybe 3-10).",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "plural",
+      "Values": "More than one.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "dual",
+      "Values": "Exactly 2.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "non-dual-paucal",
+      "Values": "A small imprecise number other than 2. (English annotation has not typically used the paucal tag, but 'a few' is a paucal concept.)\n        There were only a few radishes.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "greater-plural",
+      "Values": "Category captures a larger number than the regular plural class.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "trial",
+      "Values": "Exactly 3.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": "non-trial-paucal",
+      "Values": "A small imprecise number greater than 3.",
+      "Definitions": ""
+    },
+    {
+      "Role, Inverse, Reification": ":refer-definiteness\n\n\n      \n        (no inverse)\n\n\n        \n        (no reification)",
+      "Values": "class",
+      "Definitions": "Use for generic pronouns. Other uses not explored yet.\n\n        One does not simply walk into Mordor. \n          (w / walk-01\n    :polarity -\n    :ARG0 (p / person\n        :refer-person 3rd\n        :refer-definiteness class)\n    :goal (p2 / place\n        :name (n / name :op1 \"Mordor\"))\n    :manner (s / simple)\n    :aspect state\n    :modal-strength full-negative)\n    \n        You shouldn't judge a book by its cover.\n          (j / judge-01\n    :mode imperative\n    :ARG0 (p / person\n        :refer-person 2nd\n        :refer-definiteness class)\n    :ARG1 (b / book)\n    :ARG3 (c / cover\n        :part-of b)\n    :aspect state\n    :modal-strength partial-negative)"
+    }
+  ]
+]
