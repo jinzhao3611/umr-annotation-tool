@@ -6,21 +6,25 @@
     <script src="{{ url_for('static', filename='scripts/alignments_v2.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/alignment_generator.js') }}"></script>
     <style>
-        /* Line numbers styling - using table layout */
+        /* The card-body holding the annotation scrolls horizontally */
+        .annotation-card-body {
+            overflow-x: auto;
+        }
+
         .amr-wrapper {
             background-color: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 0.25rem;
-            overflow-x: auto;
-        }
-
-        .amr-table {
-            display: table;
+            width: max-content;
             min-width: 100%;
         }
 
+        .amr-table {
+            display: flex;
+        }
+
         .amr-line-numbers {
-            display: table-cell;
+            flex-shrink: 0;
             width: 45px;
             padding: 0.5rem 8px;
             background-color: #f1f3f4;
@@ -28,17 +32,15 @@
             color: #6c757d;
             font-family: monospace;
             font-size: 13px;
-            line-height: 20px;  /* Fixed pixel height for consistency */
+            line-height: 20px;
             text-align: right;
             user-select: none;
-            vertical-align: top;
             white-space: pre;
         }
 
         .amr-content-cell {
-            display: table-cell;
-            vertical-align: top;
-            width: 100%;
+            flex: 1;
+            min-width: 0;
         }
 
         #amr {
@@ -52,7 +54,7 @@
             padding: 0.5rem;
             font-family: monospace;
             font-size: 13px;
-            line-height: 20px;  /* Same fixed pixel height as line numbers */
+            line-height: 20px;
             white-space: pre;
         }
     </style>
@@ -2574,7 +2576,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body annotation-card-body">
                     <!-- Graph View (default) -->
                     <div class="amr-wrapper" id="graph-view-container">
                         <div class="amr-table">

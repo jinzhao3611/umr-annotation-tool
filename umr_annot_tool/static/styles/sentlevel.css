@@ -31,6 +31,7 @@ html, body {
 .left-panel, .right-panel {
     height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
     padding: 15px;
     padding-bottom: 80px;
 }
