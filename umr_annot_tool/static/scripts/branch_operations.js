@@ -210,6 +210,12 @@
         let pos = valueStart;
 
         while (pos < text.length) {
+            // Stop at closing parenthesis - these close parent structures
+            // and are never part of a simple (non-parenthesized) value
+            if (text[pos] === ')') {
+                break;
+            }
+
             // Stop at next relation (: preceded by whitespace)
             if (text[pos] === ':' && pos > valueStart && /\s/.test(text[pos - 1])) {
                 break;
