@@ -4478,31 +4478,46 @@ async function showAddBranchDialog(parentVariableSpan) {
                 // Fallback to the previous method if exact match not found
                 console.log('Could not find exact variable definition line, falling back to alternative method');
                 for (let i = 0; i < lines.length; i++) {
-                    if (nodePattern.test(lines[i])) {
+                    const nodeExec = nodePattern.exec(lines[i]);
+                    if (nodeExec) {
                         // Found the line containing our node
                         let currentLine = lines[i];
-                        
+
                         // Find the indentation of the current line
                         const indentMatch = currentLine.match(/^(\s*)/);
                         const currentIndent = indentMatch ? indentMatch[1] : '';
                         const nextIndent = currentIndent + '    '; // Add one level of indentation (4 spaces)
-                        
+
                         // Check if the line already has other relations
                         if (currentLine.includes(')')) {
-                            // This line has a closing parenthesis, we need to insert before it
-                            const closingParenIndex = currentLine.lastIndexOf(')');
+                            // Use depth counting from the node's opening ( to find
+                            // the matching closing ). This ensures ALL closing parens
+                            // (for this node and its ancestors) are moved to the new branch.
+                            const openParenPos = nodeExec.index; // nodePattern starts with \(
+                            let depth = 1;
+                            let closingParenIndex = -1;
+                            for (let j = openParenPos + 1; j < currentLine.length; j++) {
+                                if (currentLine[j] === '(') depth++;
+                                else if (currentLine[j] === ')') {
+                                    depth--;
+                                    if (depth === 0) {
+                                        closingParenIndex = j;
+                                        break;
+                                    }
+                                }
+                            }
                             if (closingParenIndex !== -1) {
-                                // Insert the branch before the closing parenthesis
+                                // Split at the matching ) — afterParen includes this ) and any ancestor )s
                                 const beforeParen = currentLine.substring(0, closingParenIndex).trimRight();
                                 const afterParen = currentLine.substring(closingParenIndex);
-                                
+
                                 // Update the current line and add a new line for our branch
                                 updatedLines[i] = beforeParen;
                                 updatedLines.splice(i+1, 0, `${nextIndent}${newBranch}`);
-                                // Add the closing parenthesis to the last branch line instead of its own line
+                                // Add the closing parentheses to the last branch line
                                 const lastBranchIndex = i + 1;
                                 updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + afterParen;
-                                
+
                                 nodeFound = true;
                                 break;
                             }

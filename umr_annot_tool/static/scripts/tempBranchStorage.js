@@ -1055,30 +1055,64 @@ function addBranchToNode(variable, branchContent, customElement) {
     let updatedLines = [...lines];
     
     if (hasClosingParen) {
-        // Get the content of the node before the closing parenthesis
-        const nodeContent = nodeLine.substring(0, nodeLine.lastIndexOf(')'));
-        // Get any content after all closing parentheses
-        const remainingContent = nodeLine.substring(nodeLine.lastIndexOf(')'));
-        
-        // Check if the node already has children (look for a colon)
+        // Use depth counting from the node's opening ( to find the matching ).
+        // This ensures ALL closing parens (for this node and ancestors) are moved
+        // to the new last child, not just the very last one on the line.
+        const nodeExec = nodePattern.exec(nodeLine);
+        let openParenPos = -1;
+        if (nodeExec) {
+            // nodePattern matches "variable / concept" — look backward for the (
+            const prefix = nodeLine.substring(0, nodeExec.index);
+            openParenPos = prefix.lastIndexOf('(');
+        }
+
+        let nodeContent, remainingContent;
+        if (openParenPos !== -1) {
+            let depth = 1;
+            let closingIdx = -1;
+            for (let j = openParenPos + 1; j < nodeLine.length; j++) {
+                if (nodeLine[j] === '(') depth++;
+                else if (nodeLine[j] === ')') {
+                    depth--;
+                    if (depth === 0) {
+                        closingIdx = j;
+                        break;
+                    }
+                }
+            }
+            if (closingIdx !== -1) {
+                nodeContent = nodeLine.substring(0, closingIdx);
+                remainingContent = nodeLine.substring(closingIdx);
+            } else {
+                // Fallback if depth counting fails (unbalanced input)
+                nodeContent = nodeLine.substring(0, nodeLine.lastIndexOf(')'));
+                remainingContent = nodeLine.substring(nodeLine.lastIndexOf(')'));
+            }
+        } else {
+            // Fallback if we can't find the opening paren
+            nodeContent = nodeLine.substring(0, nodeLine.lastIndexOf(')'));
+            remainingContent = nodeLine.substring(nodeLine.lastIndexOf(')'));
+        }
+
+        // Check if the node already has children (look for a colon in the content before closing parens)
         const hasExistingChildren = nodeContent.includes(':');
-        
+
         if (!hasExistingChildren) {
             // For a simple node with no children, add the branch before the closing parenthesis
             // Format: (variable / concept
             //     :relation (child))
             updatedLines[nodeLineIndex] = nodeContent;
             updatedLines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
-            // Add the closing parenthesis at the end of the last branch line
+            // Add the closing parentheses at the end of the last branch line
             const lastBranchIndex = nodeLineIndex + formattedBranch.length;
             updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + remainingContent;
         } else {
             // For a node that already has children, add the branch before the closing parenthesis
-            // But keep the closing parenthesis on the same line as the last branch line
+            // But keep the closing parentheses on the same line as the last branch line
             updatedLines[nodeLineIndex] = nodeContent;
             updatedLines.splice(nodeLineIndex + 1, 0, ...formattedBranch);
-            
-            // Add the closing parenthesis to the last branch line instead of its own line
+
+            // Add the closing parentheses to the last branch line instead of its own line
             const lastBranchIndex = nodeLineIndex + formattedBranch.length;
             updatedLines[lastBranchIndex] = updatedLines[lastBranchIndex] + remainingContent;
         }
@@ -2085,5 +2119,5 @@ function balanceParentheses(text) {
 
 // Export for testing (Node.js / Jest)
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { extractNodes, extractBranchFromRelation, balanceParentheses };
+    module.exports = { extractNodes, extractBranchFromRelation, balanceParentheses, addBranchToNode };
 }
