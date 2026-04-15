@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="proceder">
+        <note />
+        <note />
+    <roleset framnet="execute.02" id="proceder.01" name="fazer; executar" vncls="">
+            <roles>
+                <role descr="agent, doer" n="0" />
+                <role descr="thing done" n="1" />
+                <role descr="benefactive, done for or about" n="2" />
+                <role descr="instrumental" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2842:  Tudo_  isso deve ser considerado para que se entenda que uma exata transposição do aluguel praticado em cruzeiros reais para o sistema da URV só é possível se os contratantes procederem a uma extração da média dos aluguéis nos últimos meses que corresponderem a periodicidade de reajustamento do contrato,  para,  só então,  transformar tal média em URVs. 
+</text>
+                <arg f="" n="0">os contratantes
+</arg>
+                <rel f="">procederem</rel>
+                <arg f="" n="1">a uma extração da média dos aluguéis nos últimos meses que corresponderem a periodicidade de reajustamento do contrato
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="proceder.02" name="ter fundamento" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1566:  « As denúncias que vêm sendo feitas procedem »,  disse Raia. 
+</text>
+                <arg f="" n="1">As denúncias que vêm sendo feitas
+</arg>
+                <rel f="">procedem</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

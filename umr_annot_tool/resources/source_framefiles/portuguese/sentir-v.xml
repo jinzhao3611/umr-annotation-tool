@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sentir">
+        <note />
+    <roleset framnet="feel.01" id="sentir.01" name="perceber com um dos sentidos" vncls="30.1 30.4">
+            <roles>
+                <role descr="feeler, person experiencing emotion" n="0">
+                    <vnrole vncls="30.4" vntheta="Experiencer" />
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="emotion or sensation" n="1">
+                    <vnrole vncls="30.4" vntheta="Stimulus" />
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <role descr="entity to or for whom the emotion is directed" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3139:  Dá para sentir a terra estremecer e o barulho parece o de um trovão. 
+</text>
+                <rel f="">sentir</rel>
+                <arg f="" n="1">a terra estremecer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3008:  A diferença é_  que no videogame você sente. 
+</text>
+                <arg f="loc" n="m">no videogame
+</arg>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">sente</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2870:  Ou então lutava contra uma depressão repentina,  tentava controlar minha raiva,  fazia piadas com alguém ou fazia força para não sentir saudades de casa. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">sentir</rel>
+                <arg f="" n="1">saudades de casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2070:  « Senti que eu já conhecia o Brasil antes de ter vindo aqui ». 
+</text>
+                <rel f="">Senti</rel>
+                <arg f="" n="1">que eu já conhecia o Brasil antes de ter vindo aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1968:  Sinto isso. 
+</text>
+                <rel f="">Sinto</rel>
+                <arg f="" n="1">isso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1362:  « Senti dores e,  como tenho uns casos de câncer na família,  decidi fazer o exame »,  contou a modelo. 
+</text>
+                <rel f="">Senti</rel>
+                <arg f="" n="1">dores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s745:  Com tanta violência,  sinto uma angústia muito grande »,  afirmou. 
+</text>
+                <arg f="cau" n="m">Com tanta violência
+</arg>
+                <rel f="">sinto</rel>
+                <arg f="" n="1">uma angústia muito grande
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s465:  Sente o bafejar da sorte a acariciar-  lhe a cara. 
+</text>
+                <rel f="">Sente</rel>
+                <arg f="" n="1">o bafejar da sorte a acariciar-  lhe a cara
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s454:  « Se sentir que há um desejo coletivo,  ele vai encaminhar as emendas constitucionais »,  disse Luiz_  Henrique após uma hora de conversa com Itamar,  ontem,  no Planalto. 
+</text>
+                <rel f="">sentir</rel>
+                <arg f="" n="1">que há um desejo coletivo
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="sentir-se">
+        <note />
+    <roleset framnet="feel.01" id="sentir.02" name="experimentar a sensação de estar " vncls="30.1 30.4">
+            <roles>
+                <role descr="feeler, person experiencing emotion" n="0">
+                    <vnrole vncls="30.4" vntheta="Experiencer" />
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="emotion or sensation" n="1">
+                    <vnrole vncls="30.4" vntheta="Stimulus" />
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <role descr="entity to or for whom the emotion is directed" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2867:  Nada_  do_  que eu havia lido ou ouvido antes de vir para cá me preparara para as emoções que eu iria viver e várias vezes me senti numa montanha-  russa emocional. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="tmp" n="m">várias vezes
+</arg>
+                <rel f="">senti</rel>
+                <arg f="" n="1">numa montanha-  russa emocional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1974:  Tenho muito trabalho a fazer antes de me sentir assim. 
+</text>
+                <rel f="">sentir</rel>
+                <arg f="" n="1">assim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1972:  E como você se sente como « estrela de cinema »? 
+</text>
+                <arg f="" n="1">como
+</arg>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">sente</rel>
+                <arg f="tmp" n="m">como « estrela de cinema »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s730:  « Nenhum eleitor evangélico deve se sentir culpado por ter opinião diferente de seu pastor ou líder espiritual »,  diz a cartilha. 
+</text>
+                <arg f="" n="0">Nenhum eleitor evangélico
+</arg>
+                <rel f="">sentir</rel>
+                <arg f="" n="1">culpado por ter opinião diferente de seu pastor ou líder espiritual
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="sentir_falta_de">
+        <note />
+    <roleset framnet="miss.01" id="sentir.03" name="ter carência ou saudade de" vncls="31.2">
+            <roles>
+                <role descr="person experiencing emotion" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing longed for, thing lacking" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1739:  Encontramos um homem-  gol de que sentíamos falta há muitos anos »,  disse Van_  Himst,  ele próprio um dos maiores jogadores que a Bélgica já teve. 
+</text>
+                <arg f="" n="1">de que
+</arg>
+                <rel f="">sentíamos</rel>
+                <arg f="tmp" n="m">há muitos anos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

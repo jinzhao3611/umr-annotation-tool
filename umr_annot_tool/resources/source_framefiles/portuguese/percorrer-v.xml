@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="percorrer">
+        <note />
+    <roleset framnet="travel.01" id="percorrer.01" name="andar (com ênfase no caminho)" vncls="51.3.2">
+            <roles>
+                <role descr="traveller" n="0">
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="destination or path" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2432:  Por dois motivos:  primeiro,  a indisponibilidade do escritor,  que simplesmente não estava interessado em percorrer os Estados_  Unidos ou debater suas idéias ; segundo,  seus comentários sobre a « decadência moral » do Ocidente logo o tornaram inconveniente. 
+</text>
+                <rel f="">percorrer</rel>
+                <arg f="" n="1">os Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1493:  Cruzeiro Percorre Em Quatro Dias Três Cidades De Dois Países
+</text>
+                <arg f="" n="0">Cruzeiro
+</arg>
+                <rel f="">Percorre</rel>
+                <arg f="tmp" n="m">Em Quatro Dias
+</arg>
+                <arg f="" n="1">Três Cidades De Dois Países
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1116:  Se você tentar medi-  lo,  estará enxergando apenas seu reflexo,  como o da lua num lago ; não estará percorrendo seu caminho ». 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">percorrendo</rel>
+                <arg f="" n="1">seu caminho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

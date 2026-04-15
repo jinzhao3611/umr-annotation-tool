@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="berrar">
+        <note />
+    <roleset framnet="yell.01" id="berrar.01" name="emitir berro, gritar" vncls="37.7 38">
+            <roles>
+                <role descr="Yeller" n="0">
+                    <vnrole vncls="38" vntheta="Agent" />
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="Utterance" n="1">
+                    <vnrole vncls="38" vntheta="Theme" />
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="Hearer" n="2">
+                    <vnrole vncls="38" vntheta="Recipient" />
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1886:  Ou como berrou o locutor: 
+</text>
+                <arg f="mnr" n="m">como
+</arg>
+                <rel f="">berrou</rel>
+                <arg f="" n="0">o locutor
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

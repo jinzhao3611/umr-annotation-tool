@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comportar-se">
+        <note />
+    <roleset framnet="comprise.01" id="comportar.01" name="admitir como parte integrante" vncls="-">
+            <roles>
+                <role descr="group" n="1" />
+                <role descr="parts or members" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3423:  Não comporta qualquer reserva,  e bendito o país em que os homens públicos exigem dos candidatos a solução de problemas nacionais,  minorar a fome,  dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">comporta</rel>
+                <arg f="" n="2">qualquer reserva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2478:  O bom é que o Fernando_  Henrique não estava presente e não se comportou como o Maurício_  Corrêa. 
+</text>
+                <arg f="" n="0">o Fernando_  Henrique
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">comportou</rel>
+                <arg f="" n="1">como o Maurício_  Corrêa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

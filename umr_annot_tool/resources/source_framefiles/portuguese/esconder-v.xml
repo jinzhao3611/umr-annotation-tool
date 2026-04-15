@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esconder">
+        <note />
+    <roleset framnet="hide.01" id="esconder.01" name="ocultar" vncls="16">
+            <roles>
+                <role descr="hider" n="0">
+                    <vnrole vncls="16" vntheta="Agent" />
+                </role>
+                <role descr="thing hidden" n="1">
+                    <vnrole vncls="16" vntheta="Patient" />
+                </role>
+                <role descr="hidden from" n="2">
+                    <vnrole vncls="16" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3765:  O experimentalismo do filme não esconde sua proposição simbólica,  a alienação na sociedade tecnológica. 
+</text>
+                <arg f="" n="0">O experimentalismo do filme
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">esconde</rel>
+                <arg f="" n="1">sua proposição simbólica,  a alienação na sociedade tecnológica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1824:  Cores nos campos dos EUA,  conseguidas pelo corte na grama,  ajudam a esconder marcas do futebol americano
+</text>
+                <rel f="">esconder</rel>
+                <arg f="" n="1">marcas do futebol americano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s510:  Um exemplo é o técnico norte-  americano,  Taras_  Liskevich,  que não esconde seu objetivo:  conquistar a medalha de ouro olímpica. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">esconde</rel>
+                <arg f="" n="1">seu objetivo:  conquistar a medalha de ouro olímpica
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

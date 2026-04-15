@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conversar">
+        <note />
+    <roleset framnet="talk.01" id="conversar.01" name="falar" vncls="">
+            <roles>
+                <role descr="talker" n="0" />
+                <role descr="subject" n="1" />
+                <role descr="hearer" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3905:  Beckenbauer aconselha o lateral a conversar com o treinador,  procurando reverter a situação. 
+</text>
+                <arg f="" n="0">o lateral
+</arg>
+                <rel f="">conversar</rel>
+                <arg f="" n="2">com o treinador
+</arg>
+                <arg f="pnc" n="m">procurando reverter a situação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3829:  A Guarda_  Nacional da Venezuela passou a conversar com os índios e a convencê-  los de fazer o papel dela,  ou_  seja,  reprimir os garimpeiros »,  diz Altino. 
+</text>
+                <arg f="" n="0">A Guarda_  Nacional da Venezuela
+</arg>
+                <rel f="">conversar</rel>
+                <arg f="" n="2">com os índios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3184:  Beijou,  abraçou duas vezes e conversou por alguns minutos com o conterrâneo presidente. 
+</text>
+                <rel f="">conversou</rel>
+                <arg f="tmp" n="m">por alguns minutos
+</arg>
+                <arg f="" n="2">com o conterrâneo presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2845:  Depois de conversar com Antunes,  sempre faço uma maquete. 
+</text>
+                <rel f="">conversar</rel>
+                <arg f="" n="2">com Antunes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1646:  Agora,  as negociações são internacionais:  Amélia vai conversar com a Krupp alemã e a Japan_  Steel. 
+</text>
+                <arg f="" n="0">Amélia
+</arg>
+                <rel f="">conversar</rel>
+                <arg f="" n="2">com a Krupp alemã e a Japan_  Steel
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1452:  O ministro limitou-  se a dizer que havia conversado por telefone com assessores do presidente Itamar_  Franco sobre a proposta de uma nova legislação contra abusos do poder econômico. 
+</text>
+                <arg f="" n="0">O ministro
+</arg>
+                <rel f="">conversado</rel>
+                <arg f="mnr" n="m">por telefone
+</arg>
+                <arg f="" n="2">com assessores do presidente Itamar_  Franco
+</arg>
+                <arg f="" n="1">sobre a proposta de uma nova legislação contra abusos do poder econômico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s401:  Há a necessidade de uma representação permanente do trabalhador que converse com o empregador e signifique garantia de que não haverá perseguição aos negociadores,  diz Siqueira. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">converse</rel>
+                <arg f="" n="2">com o empregador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s181:  « Meu compromisso com o Pará é inarredável »,  afirmou ontem depois de conversar com Amin. 
+</text>
+                <rel f="">conversar</rel>
+                <arg f="" n="2">com Amin
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

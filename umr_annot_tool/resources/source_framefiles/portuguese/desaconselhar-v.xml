@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desaconselhar">
+        <note />
+    <roleset framnet="" id="desaconselhar.01" name="aconselhar não fazer" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3338:  Em telefonema a Maurício_  Corrêa,  ministro da Justiça,  o governador do Rio,  Leonel_  Brizola,  desaconselhou a ida de Itamar ao Sambódromo. 
+</text>
+                <arg f="loc" n="m">Em telefonema a Maurício_  Corrêa,  ministro da Justiça, 
+</arg>
+                <arg f="" n="0">o governador do Rio,  Leonel_  Brizola, 
+</arg>
+                <rel f="">desaconselhou</rel>
+                <arg f="" n="1">a ida de Itamar ao Sambódromo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

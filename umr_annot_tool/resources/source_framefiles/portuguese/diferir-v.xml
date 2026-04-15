@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="diferir">
+        <note />
+    <roleset framnet="" id="diferir.01" name="ser diferente de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s803:  Ao_  vivo,  sua música não difere muito do pop agressivo de Ministry,  Young_  Gods a quem substituiu no BHRIF,  Nine_  Inch_  Nails e KMFDM. 
+</text>
+                <arg f="mnr" n="m">Ao_  vivo
+</arg>
+                <arg f="" n="1">sua música
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">difere</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="2">do pop agressivo de Ministry,  Young_  Gods a quem substituiu no BHRIF,  Nine_  Inch_  Nails e KMFDM
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

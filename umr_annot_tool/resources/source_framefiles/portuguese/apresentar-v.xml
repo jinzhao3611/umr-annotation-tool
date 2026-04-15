@@ -1,0 +1,481 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apresentar">
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="present.01" id="apresentar.01" name="exibir em si mesmo, ter" vncls="13.4.1">
+            <roles>
+                <role descr="giver" n="0">
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing given" n="1">
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="given to" n="2">
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <role descr="secondary attribute of thing given" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4157:  A Rodovia Castelo_  Branco,  que segue para o oeste do Estado,  apresenta vários pontos com neblina. 
+</text>
+                <arg f="" n="0">A Rodovia Castelo_  Branco,  que segue para o oeste do Estado, 
+</arg>
+                <rel f="">apresenta</rel>
+                <arg f="" n="1">vários pontos com neblina
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2992:  O Banco apresentou em 1993 um nível de alavancagem alto,  demonstrando maior agressividade nas suas operações. 
+</text>
+                <arg f="" n="0">O Banco
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="tmp" n="m">em 1993
+</arg>
+                <arg f="" n="1">um nível de alavancagem alto
+</arg>
+                <arg f="adv" n="m">demonstrando maior agressividade nas suas operações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2600:  No parágrafo único do seu primeiro artigo,  ele afirma que os candidatos não podem apresentar « patologia com perspectiva presente,  de incapacidade no futuro ». 
+</text>
+                <arg f="loc" n="m">No parágrafo único do seu primeiro artigo
+</arg>
+                <arg f="" n="0">os candidatos
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">apresentar</rel>
+                <arg f="" n="1">« patologia com perspectiva presente,  de incapacidade no futuro »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2583:  O número de ações ordinárias em junho apresentou queda de 10,  36%  comparado com o mês de maio. 
+</text>
+                <arg f="" n="2">O número de ações ordinárias em junho
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="" n="1">queda de 10,  36% 
+</arg>
+                <arg f="adv" n="m">comparado com o mês de maio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2020:  O mercado brasileiro de cigarros apresentou uma queda de 6,  5%  com o total de unidades vendidas passando de 127,  8 bilhões em 92 para 119,  5 bilhões no ano passado. 
+</text>
+                <arg f="" n="2">O mercado brasileiro de cigarros
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="" n="1">uma queda de 6,  5% 
+</arg>
+                <arg f="adv" n="m">com o total de unidades vendidas passando de 127,  8 bilhões em 92 para 119,  5 bilhões no ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="show.01" id="apresentar.02" name="mostrar, fazer demonstração" vncls="29.5 37.1-1 40.3.2">
+            <roles>
+                <role descr="shower" n="0">
+                    <vnrole vncls="29.5" vntheta="Agent" />
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                </role>
+                <role descr="thing seen/shown" n="1">
+                    <vnrole vncls="29.5" vntheta="Predicate" />
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                </role>
+                <role descr="seer" n="2">
+                    <vnrole vncls="29.5" vntheta="Theme" />
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                    <vnrole vncls="40.3.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4094:  A Kodak,  por_  exemplo,  apresentou as impressoras/  copiadoras ColorEdge 1.  560 e 1.  565,  capazes de copiar em cores frente e verso de documentos de várias páginas. 
+</text>
+                <arg f="" n="0">A Kodak
+</arg>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="" n="1">as impressoras/  copiadoras ColorEdge 1.  560 e 1.  565,  capazes de copiar em cores frente e verso de documentos de várias páginas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3898:  Ambas não apresentavam preços de produtos expostos nas vitrines. 
+</text>
+                <arg f="" n="0">Ambas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">apresentavam</rel>
+                <arg f="" n="1">preços de produtos expostos nas vitrines
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1570:  Foi apresentada pela Agropecuária_  América e arrematada pela Citrovita_  Agropecuária. 
+</text>
+                <rel f="">apresentada</rel>
+                <arg f="" n="0">pela Agropecuária_  América
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1491:  Como não se pretende o monopólio da verdade,  apresento o raciocínio(  e as contas)  que fundamentam a tese de que não haverá perdas. 
+</text>
+                <arg f="cau" n="m">Como não se pretende o monopólio da verdade
+</arg>
+                <rel f="">apresento</rel>
+                <arg f="" n="1">o raciocínio(  e as contas) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s40:  O futebol precisa seguir o exemplo da CPI do orçamento e apresentar todos os podres. 
+</text>
+                <arg f="" n="0">O futebol
+</arg>
+                <rel f="">apresentar</rel>
+                <arg f="" n="1">todos os podres
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="introduce.01" id="apresentar.03" name="apresentar alguém a outra(s) pessoa(s)" vncls="22.2">
+            <roles>
+                <role descr="entity making introduction" n="0">
+                    <vnrole vncls="22.2" vntheta="Agent" />
+                </role>
+                <role descr="entity being introduced" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient1" />
+                </role>
+                <role descr="entity being introduced TO" n="2">
+                    <vnrole vncls="22.2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3746:  Destaca que o Partido_  Liberal_  Democrático(  PLD) ,  derrubado do poder no ano passado,  deverá apresentar seu presidente,  Yohei_  Kono,  como candidato a primeiro-  ministro do Japão. 
+</text>
+                <arg f="" n="0">o Partido_  Liberal_  Democrático(  PLD) ,  derrubado do poder no ano passado, 
+</arg>
+                <rel f="">apresentar</rel>
+                <arg f="" n="1">seu presidente,  Yohei_  Kono, 
+</arg>
+                <arg f="" n="3">como candidato a primeiro-  ministro do Japão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1869:  Alkimin achou que também era hora de firmar namoro e pediu a JK que o apresentasse às amigas da namorada. 
+</text>
+                <arg f="" n="0">JK
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">apresentasse</rel>
+                <arg f="" n="2">às amigas da namorada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s555:  O candidato do PT apresentou o vice de seu principal adversário como alguém « identificado com o autoritarismo ». 
+</text>
+                <arg f="" n="0">O candidato do PT
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="" n="1">o vice de seu principal adversário
+</arg>
+                <arg f="" n="3">como alguém « identificado com o autoritarismo »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="present.01" id="apresentar.04" name="dar a conhecer" vncls="13.4.1">
+            <roles>
+                <role descr="giver" n="0">
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing given" n="1">
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="given to" n="2">
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <role descr="secondary attribute of thing given" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3350:  « A_  Interpretação_  dos_  Sonhos »,  um dos textos fundadores da psicanálise,  apresenta toda uma tropologia do ato de sonhar e dá a base para uma poética que combina a teoria da tropologia com a noção da invenção poética. 
+</text>
+                <arg f="" n="0">« A_  Interpretação_  dos_  Sonhos »,  um dos textos fundadores da psicanálise, 
+</arg>
+                <rel f="">apresenta</rel>
+                <arg f="" n="1">toda uma tropologia do ato de sonhar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3285:  Para multiplicar o porte das suas denúncias,  ele apresentou as suas perorações em dois sítios diferentes,  às procuradorias de Roma e de Milão. 
+</text>
+                <arg f="pnc" n="m">Para multiplicar o porte das suas denúncias
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="" n="1">as suas perorações
+</arg>
+                <arg f="loc" n="m">em dois sítios diferentes
+</arg>
+                <arg f="" n="2">às procuradorias de Roma e de Milão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2705:  Depois de registrado,  Queiroz apresentou uma segunda declaração ao TSE(  Tribunal_  Superior_  Eleitoral) ,  acrescentando bens que alegou ter « esquecido » nos primeiros papéis que foram apresentados. 
+</text>
+                <arg f="tmp" n="m">Depois de registrado
+</arg>
+                <arg f="" n="0">Queiroz
+</arg>
+                <rel f="">apresentou</rel>
+                <arg f="" n="1">uma segunda declaração
+</arg>
+                <arg f="" n="2">ao TSE(  Tribunal_  Superior_  Eleitoral) 
+</arg>
+                <arg f="adv" n="m">acrescentando bens que alegou ter « esquecido » nos primeiros papéis que foram apresentados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2689:  Serra- -  Seria e o foi apresentado assim,  numa reunião da_  qual participei. 
+</text>
+                <arg f="" n="1">Serra
+</arg>
+                <rel f="">apresentado</rel>
+                <arg f="mnr" n="m">assim
+</arg>
+                <arg f="tmp" n="m">numa reunião da_  qual participei
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2447:  Não preciso repetir,  agora,  quem era o homem que Fernando_  Henrique apresentava como adequado ao plano,  sob o argumento de que tinha trânsito nas esquerdas para encabeçar um pacto conciliador. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">Fernando_  Henrique
+</arg>
+                <rel f="">apresentava</rel>
+                <arg f="" n="3">como adequado ao plano
+</arg>
+                <arg f="cau" n="m">sob o argumento de que tinha trânsito nas esquerdas para encabeçar um pacto conciliador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2195:  O destaque,  sem dúvida,  é o balé Bolshoi da Rússia,  que há pelo_  menos cinco anos consecutivos se apresenta na cidade. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">há pelo_  menos cinco anos consecutivos
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">apresenta</rel>
+                <arg f="loc" n="m">na cidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1182:  Dois dias depois,  o Salute_  Milk,  baixou a média para R$  3.  000 na venda de metade das 30 vacas holandesas que foram apresentadas para negócio. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">apresentadas</rel>
+                <arg f="pnc" n="m">para negócio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s780:  A TVA apresenta em VT a partida entre Detroit e Dallas,  às 7h. 
+</text>
+                <arg f="" n="0">A TVA
+</arg>
+                <rel f="">apresenta</rel>
+                <arg f="mnr" n="m">em VT
+</arg>
+                <arg f="" n="1">a partida entre Detroit e Dallas
+</arg>
+                <arg f="tmp" n="m">às 7h
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s766:  Se eu fosse você,  passava a andar de táxi especial e apresentava a conta ﻿à concessionária. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="adv" n="m">Se eu fosse você
+</arg>
+                <rel f="">apresentava</rel>
+                <arg f="" n="1">a conta
+</arg>
+                <arg f="" n="2">﻿à concessionária
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s533:  A defesa apresentará o « recurso extraordinário » no último dia do prazo:  três dias úteis após a publicação no Diário_  da_  Justiça da decisão do TSE sobre o « embargo declaratório » pedido pelos advogados de Lucena. 
+</text>
+                <arg f="" n="0">A defesa
+</arg>
+                <rel f="">apresentará</rel>
+                <arg f="" n="1">o « recurso extraordinário »
+</arg>
+                <arg f="tmp" n="m">no último dia do prazo:  três dias úteis após a publicação no Diário_  da_  Justiça da decisão do TSE sobre o « embargo declaratório » pedido pelos advogados de Lucena
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s41:  Se eu dirigisse uma federação,  apresentaria balanços mensais e liberaria minhas contas bancárias. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="adv" n="m">Se eu dirigisse uma federação
+</arg>
+                <rel f="">apresentaria</rel>
+                <arg f="" n="1">balanços mensais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s19:  O atacante,  que deveria ter se apresentado anteontem ﻿à noite,  pediu mais um dia de folga ao treinador. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">apresentado</rel>
+                <arg f="tmp" n="m">anteontem ﻿à noite
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="express.01" id="apresentar.06" name="manifestar verbalmente" vncls="48.1.2">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="48.1.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2281:  O presidente da Uefa,  Lennart_  Johansson,  negou que a entidade européia vá apresentar oposição a Havelange. 
+</text>
+                <arg f="" n="0">a entidade européia
+</arg>
+                <rel f="">apresentar</rel>
+                <arg f="" n="1">oposição a Havelange
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="apresentar-se">
+        <note />
+    <roleset framnet="be.01" id="apresentar.05" name="cópula: estar" vncls="-">
+            <roles>
+                <role descr="topic" n="1" />
+                <role descr="comment" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2761:  No plano dos costumes,  a reviravolta se apresenta sob aspecto viral,  epidêmico. 
+</text>
+                <arg f="loc" n="m">No plano dos costumes
+</arg>
+                <arg f="" n="1">a reviravolta
+</arg>
+                <rel f="">apresenta</rel>
+                <arg f="" n="2">sob aspecto viral,  epidêmico
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="imaginar">
+        <note />
+    <roleset framnet="imagine.01" id="imaginar.01" name="pensar; conceber ideia" vncls="29.1 29.2">
+            <roles>
+                <role descr="thinker" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="object, thing under consideration" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2661:  Ele está me municiando e me dando o instrumental de que careço para imaginar a solução dos problemas do Estado. 
+</text>
+                <rel f="">imaginar</rel>
+                <arg f="" n="1">a solução dos problemas do Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2513:  Imagino que para a grande maioria dos políticos este seja o momento de glória porque exercita o_  que considera uma virtude:  a arte da esperteza,  a política segundo os cânones herdados da velha tradição das raposas políticas. 
+</text>
+                <rel f="">Imagino</rel>
+                <arg f="" n="1">que para a grande maioria dos políticos este seja o momento de glória porque exercita o_  que considera uma virtude:  a arte da esperteza,  a política segundo os cânones herdados da velha tradição das raposas políticas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1338:  « Tinha vôo marcado para esta noite(  ontem) ,  porque não imaginava ser capaz de vencer Sampras »,  disse Alami. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">imaginava</rel>
+                <arg f="" n="1">ser capaz de vencer Sampras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s464:  Agora imagina que é chegado o momento. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <rel f="">imagina</rel>
+                <arg f="" n="1">que é chegado o momento
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

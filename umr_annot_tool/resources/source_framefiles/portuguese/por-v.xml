@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="por">
+        <note />
+    <roleset framnet="put.03" id="por.01" name="colocar" vncls="-">
+            <roles>
+                <role descr="putter" n="0" />
+                <role descr="thing put" n="1" />
+                <role descr="attribute of arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3987:  Ferrara põe o excelente Harvey_  Keitel para interpretar o seu papel:  o do diretor que faz da falsa loira uma verdadeira atriz. 
+</text>
+                <arg f="" n="0">Ferrara
+</arg>
+                <rel f="">põe</rel>
+                <arg f="" n="1">o excelente Harvey_  Keitel
+</arg>
+                <arg f="" n="2">para interpretar o seu papel:  o do diretor que faz da falsa loira uma verdadeira atriz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3468:  O presidente articulou,  então,  lobby certeiro em_  direção_  ao Sebrae(  Serviço_  de_  Apoio_  à_  Pequena_  e_  Média_  Empresa)  e ainda pediu a FHC que o ajudasse a pôr Durante na presidência da entidade. 
+</text>
+                <rel f="">pôr</rel>
+                <arg f="" n="1">Durante
+</arg>
+                <arg f="" n="2">na presidência da entidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2124:  Em consequência,  põe a nu uma crise dos próprios gêneros com que trabalha. 
+</text>
+                <arg f="dis" n="m">Em consequência
+</arg>
+                <rel f="">põe</rel>
+                <arg f="" n="2">a nu
+</arg>
+                <arg f="" n="1">uma crise dos próprios gêneros com que trabalha
+</arg>
+                <note>"por a nu"  equivale a "expose.01", mas hesitei tratá-lo como predicado complexo</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s306:  Mostrou que a maioria dos seus políticos profissionais cuja respeitabilidade não pode ser posta em dúvida oscilava entre o centro nacionalista e os radicais do PMDB. 
+</text>
+                <arg f="" n="1">cuja respeitabilidade
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">posta</rel>
+                <arg f="" n="2">em dúvida
+</arg>
+                <note>"por em dúvida" equivale a "cast doubt on", mas os dois têm perspectiva diferente</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s206:  Schumacher põe culpa em degrau
+</text>
+                <arg f="" n="0">Schumacher
+</arg>
+                <rel f="">põe</rel>
+                <arg f="" n="1">culpa
+</arg>
+                <arg f="" n="2">em degrau
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="por_em_risco">
+        <note />
+    <roleset framnet="endanger.01" id="por.02" name="arriscar" vncls="-">
+            <roles>
+                <role descr="exposer to danger, agent" n="0" />
+                <role descr="entity endangered" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4130:  Boutros-  Ghali teme que as potências se retirem e suspendam sanções contra a Sérvia pondo em risco outras partes da ex-  Iugoslávia se o plano for aceito. 
+</text>
+                <rel f="">pondo</rel>
+                <arg f="" n="1">outras partes da ex-  Iugoslávia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="por_fim">
+        <note />
+    <roleset framnet="extinguish.01" id="por.03" name="encerrar" vncls="-">
+            <roles>
+                <role descr="extinguisher, agent" n="0" />
+                <role descr="fire" n="1" />
+                <role descr="instrument, if separate from arg0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1608:  A Nike também teve bons resultados,  pondo fim a especulações de que teria passado o auge das famosas fabricantes de tênis dos EUA. 
+</text>
+                <rel f="">pondo</rel>
+                <arg f="" n="1">a especulações de que teria passado o auge das famosas fabricantes de tênis dos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="por_termo">
+        <note />
+    <roleset framnet="extinguish.01" id="por.04" name="encerrar" vncls="-">
+            <roles>
+                <role descr="extinguisher, agent" n="0" />
+                <role descr="fire" n="1" />
+                <role descr="instrument, if separate from arg0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1097:  O mal residia,  enfim,  no fato de que a política real da UDN se traduzia no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">lhe
+</arg>
+                <rel f="">pusesse</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

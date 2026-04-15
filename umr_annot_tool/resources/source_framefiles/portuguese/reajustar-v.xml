@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reajustar">
+        <note />
+    <roleset framnet="readjust.01" id="reajustar.01" name="alterar; adequar" vncls="">
+            <roles>
+                <role descr="agent, readjuster" n="0" />
+                <role descr="theme, thing being adjusted" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3850:  « Do ponto de vista de proteção ao consumidor,  vou reajustar o preço da tarifa pública no dia normal como_  se ela fosse URV. 
+</text>
+                <arg f="adv" n="m">Do ponto de vista de proteção ao consumidor
+</arg>
+                <rel f="">reajustar</rel>
+                <arg f="" n="1">o preço da tarifa pública no dia normal
+</arg>
+                <arg f="mnr" n="m">como_  se ela fosse URV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1501:  Nesse caso,  embora o valor do aluguel do imóvel fique fixo por 12 meses,  os da garagem e do telefone podem ser reajustados até_  mesmo mensalmente. 
+</text>
+                <arg f="dis" n="m">Nesse caso
+</arg>
+                <arg f="adv" n="m">embora o valor do aluguel do imóvel fique fixo por 12 meses
+</arg>
+                <arg f="" n="1">os da garagem e do telefone
+</arg>
+                <rel f="">reajustados</rel>
+                <arg f="tmp" n="m">até_  mesmo mensalmente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

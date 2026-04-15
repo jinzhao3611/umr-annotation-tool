@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aventurar-se">
+        <note />
+    <roleset framnet="venture.01" id="aventurar.01" name="arriscar-se" vncls="-">
+            <roles>
+                <role descr="foolhardy entity in motion" n="0" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3510:  Aventure-  se no Alasca a_  bordo de um trenó
+</text>
+                <rel f="">Aventure-</rel>
+                <arg f="loc" n="m">no Alasca
+</arg>
+                <arg f="loc" n="m">a_  bordo de um trenó
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3190:  Se não quiser se aventurar pela importação direta,  existem empresas,  como a Brasoftware(  tel.  011/  253-  1588)  que importam programas sob encomenda. 
+</text>
+                <rel f="">aventurar</rel>
+                <arg f="loc" n="m">pela importação direta
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="residir">
+        <note />
+    <roleset framnet="lay.01" id="residir.01" name="morar; existir em determinado lugar" vncls="9.2">
+            <roles>
+                <role descr="layer" n="0">
+                    <vnrole vncls="9.2" vntheta="Agent" />
+                </role>
+                <role descr="thing laid" n="1">
+                    <vnrole vncls="9.2" vntheta="Theme" />
+                </role>
+                <role descr="location" n="2">
+                    <vnrole vncls="9.2" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3650:  Tanta coincidência só pode ser instrutiva ; pode mostrar mais a Alemanha que qualquer contato político afinal,  como dizem eles,  o ser reside na linguagem. 
+</text>
+                <arg f="" n="1">o ser
+</arg>
+                <rel f="">reside</rel>
+                <arg f="" n="2">na linguagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1097:  O mal residia,  enfim,  no fato de que a política real da UDN se traduzia no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta. 
+</text>
+                <arg f="" n="1">O mal
+</arg>
+                <rel f="">residia</rel>
+                <arg f="tmp" n="m">enfim
+</arg>
+                <arg f="" n="2">no fato de que a política real da UDN se traduzia no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s269:  « A explicação da reviravolta não reside numa pretensa especificidade brasileira,  que seria um coquetel de leviandade,  inconstância e pusilanimidade,  tudo ao som de salsa »,  ironiza o editorial. 
+</text>
+                <arg f="" n="1">A explicação da reviravolta
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">reside</rel>
+                <arg f="" n="2">numa pretensa especificidade brasileira,  que seria um coquetel de leviandade,  inconstância e pusilanimidade,  tudo ao som de salsa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

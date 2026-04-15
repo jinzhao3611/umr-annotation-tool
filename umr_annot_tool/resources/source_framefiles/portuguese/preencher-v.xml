@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="preencher">
+        <note />
+    <roleset framnet="fill.01" id="preencher.01" name="encher espaço, campo ou lacuna" vncls="9.8 45.4">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="container" n="1">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="substance" n="2">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1603:  Os votos foram preenchidos com a mesma letra. 
+</text>
+                <arg f="" n="1">Os votos
+</arg>
+                <rel f="">preenchidos</rel>
+                <arg f="mnr" n="m">com a mesma letra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s332:  O governo do Estado realizará um concurso público para preencher 200 vagas de agente fiscal. 
+</text>
+                <rel f="">preencher</rel>
+                <arg f="" n="1">200 vagas de agente fiscal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

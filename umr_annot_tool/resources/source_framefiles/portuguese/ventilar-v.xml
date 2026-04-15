@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ventilar">
+        <note />
+    <roleset framnet="ventilate.01" id="ventilar.01" name="arejar" vncls="-">
+            <roles>
+                <role descr="allower, agent" n="0" />
+                <role descr="stuffy room" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1371:  Na traseira também há disco ventilado de 230 mm. 
+</text>
+                <rel f="">ventilado</rel>
+                <note>uso adjetival</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

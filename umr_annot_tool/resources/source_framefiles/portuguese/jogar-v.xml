@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="jogar">
+        <note />
+        <note />
+    <roleset framnet="play.01" id="jogar.01" name="atuar em jogo " vncls="26.7-1">
+            <roles>
+                <role descr="player" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="game/music" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="instrument used to play game/music" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4126:  Na semana passada,  o jogador Buchwald criticou a escalação de Matthaeus como líbero,  pedindo que ele jogasse no meio-  campo. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">jogasse</rel>
+                <arg f="loc" n="m">no meio-  campo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4004:  Dos dez cestinhas da atual temporada,  apenas um joga fora_  do garrafão. 
+</text>
+                <arg f="" n="0">Dos dez cestinhas da atual temporada apenas um
+</arg>
+                <rel f="">joga</rel>
+                <arg f="loc" n="m">fora_  do garrafão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3992:  Vi,  num jogo quase inacreditável da Copa,  o Eire jogar futebol muito melhor do_  que a Itália. 
+</text>
+                <arg f="" n="0">o Eire
+</arg>
+                <rel f="">jogar</rel>
+                <arg f="" n="1">futebol muito melhor do_  que a Itália
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3172:  A melhor equipe é_  que deve jogar. 
+</text>
+                <arg f="" n="0">A melhor equipe
+</arg>
+                <rel f="">jogar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3171:  Seleção é isso,  joga quem está melhor,  não tem esse negócio de nome. 
+</text>
+                <rel f="">joga</rel>
+                <arg f="" n="0">quem está melhor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2937:  « Os demais estão sendo poupados,  mas poderiam jogar se fosse preciso.  »
+</text>
+                <arg f="" n="0">Os demais
+</arg>
+                <rel f="">jogar</rel>
+                <arg f="adv" n="m">se fosse preciso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosG.  s2718:  « Quando era menina gostava muito de jogar futebol com meu irmão »,  disse a jogadora,  que,  ao_  contrário_  do vôlei,  onde atua como atacante,  prefere jogar como quarto-  zagueiro no futebol. 
+</text>
+                <rel f="">jogar</rel>
+                <arg f="mnr" n="m">como quarto-  zagueiro
+</arg>
+                <arg f="loc" n="m">no futebol
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2718:  « Quando era menina gostava muito de jogar futebol com meu irmão »,  disse a jogadora,  que,  ao_  contrário_  do vôlei,  onde atua como atacante,  prefere jogar como quarto-  zagueiro no futebol. 
+</text>
+                <rel f="">jogar</rel>
+                <arg f="" n="1">futebol
+</arg>
+                <arg f="mnr" n="m">com meu irmão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2064:  Mauro_  Silva diz que seria'  um desgosto'  ir para reserva ; para Zagalo,  seleção de 82 venceria se jogasse como a de 94
+</text>
+                <arg f="" n="0">seleção de 82
+</arg>
+                <rel f="">jogasse</rel>
+                <arg f="mnr" n="m">como a de 94
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1780:  Parte porque o Palmeiras jogou com extremo empenho e raro talento. 
+</text>
+                <arg f="" n="0">o Palmeiras
+</arg>
+                <rel f="">jogou</rel>
+                <arg f="mnr" n="m">com extremo empenho e raro talento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosG.  s1092:  Vamos confrontar os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano:  enquanto os titulares de Telê privilegiam o meio-  campo,  com três,  quatro,  às_  vezes cinco volantes congestionando o setor,  o_  que,  na prática,  não confere nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa,  os garotos jogam com Mona,  o único volante típico. 
+</text>
+                <arg f="" n="0">os garotos
+</arg>
+                <rel f="">jogam</rel>
+                <arg f="mnr" n="m">com Mona,  o único volante típico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1004:  A princípio,  a dúvida era sobre a necessidade de se jogar com dois volantes meias que também auxiliam na defesa,  Dunga e Mauro_  Silva. 
+</text>
+                <rel f="">jogar</rel>
+                <arg f="mnr" n="m">com dois volantes meias que também auxiliam na defesa,  Dunga e Mauro_  Silva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s695:  A exclusão de Maradona,  por ter jogado dopado contra a Nigéria,  abalou os jogadores. 
+</text>
+                <rel f="">jogado</rel>
+                <arg f="mnr" n="m">dopado
+</arg>
+                <arg f="" n="3">contra a Nigéria
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s36:  Ele só não jogava porque não estava bem. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">jogava</rel>
+                <arg f="cau" n="m">porque não estava bem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s34:  Aqui só joga quem está bem. 
+</text>
+                <arg f="loc" n="m">Aqui
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">joga</rel>
+                <arg f="" n="0">quem está bem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="toss.01" id="jogar.03" name="colocar sem cuidado" vncls="17.1 40.3.2 26.3-1">
+            <roles>
+                <role descr="tosser(s)" n="0">
+                    <vnrole vncls="17.1" vntheta="Agent" />
+                    <vnrole vncls="26.3-1" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                </role>
+                <role descr="thing tossed" n="1">
+                    <vnrole vncls="17.1" vntheta="Patient" />
+                    <vnrole vncls="26.3-1" vntheta="Product" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3040:  « A gente não pode pensar em jogar a mulher no mercado de trabalho enquanto houver excesso de mão-  de-  obra ». 
+</text>
+                <rel f="">jogar</rel>
+                <arg f="" n="1">a mulher
+</arg>
+                <arg f="" n="2">no mercado de trabalho
+</arg>
+                <arg f="tmp" n="m">enquanto houver excesso de mão-  de-  obra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2534:  Antes de ir embora,  o ladrão pegou o título de eleitor e o CIC da assistente de secretaria e os jogou atrás_  do caixa. 
+</text>
+                <arg f="" n="0">o ladrão
+</arg>
+                <arg f="" n="1">os
+</arg>
+                <rel f="">jogou</rel>
+                <arg f="" n="2">atrás_  do caixa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2137:  « Se isso der certo,  o Lessa joga no lixo sua credibilidade,  mas sem Bulhões ele fica sem apoio no interior e perde a eleição.  »
+</text>
+                <arg f="adv" n="m">Se isso der certo, 
+</arg>
+                <arg f="" n="0">o Lessa
+</arg>
+                <rel f="">joga</rel>
+                <arg f="" n="2">no lixo
+</arg>
+                <arg f="" n="1">sua credibilidade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="jogar_fora">
+        <note />
+    <roleset framnet="throw.07" id="jogar.02" name="desperdiçar; descartar" vncls="-">
+            <roles>
+                <role descr="thrower" n="0" />
+                <role descr="thing gotten rid of" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3943:  Para Simon_  Franco,  55,  presidente da Simon_  Franco_  Recursos_  Humanos,  « não se pode jogar fora 15 anos de experiência ». 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">jogar</rel>
+                <arg f="" n="1">15 anos de experiência
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

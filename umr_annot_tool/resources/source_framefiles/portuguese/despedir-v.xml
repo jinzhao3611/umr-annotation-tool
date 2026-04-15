@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="despedir-se">
+        <note />
+    <roleset framnet="" id="despedir.01" name="dizer adeus" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4188:  Com Boniperti se despede o técnico Giovanni_  Trapattoni,  que cederá o posto a Marcello_  Lippi,  hoje no Napoli. 
+</text>
+                <arg f="mnr" n="m">Com Boniperti
+</arg>
+                <rel f="">despede</rel>
+                <arg f="" n="0">o técnico Giovanni_  Trapattoni,  que cederá o posto a Marcello_  Lippi,  hoje no Napoli
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

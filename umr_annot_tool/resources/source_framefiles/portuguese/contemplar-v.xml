@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="contemplar">
+        <note />
+        <note />
+    <roleset framnet="look.06" id="contemplar.01" name="olhar atentamente sem tomar nenhuma atitude" vncls="-">
+            <roles>
+                <role descr="looker, examiner" n="0" />
+                <role descr="thing examined, looked at" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3141:  Durante o passeio,  escutávamos os ruídos da movimentação lenta deste enorme rio de gelo e contemplávamos os contrastes cromáticos da superfície congelada refletindo o céu azul. 
+</text>
+                <arg f="tmp" n="m">Durante o passeio
+</arg>
+                <rel f="">contemplávamos</rel>
+                <arg f="" n="1">os contrastes cromáticos da superfície congelada
+</arg>
+                <arg f="prd" n="m">refletindo o céu azul
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="include.01" id="contemplar.02" name="incluir" vncls="107 65">
+            <roles>
+                <role descr="agent, entity causing some grouping" n="0">
+                    <vnrole vncls="107" vntheta="Agent" />
+                    <vnrole vncls="65" vntheta="Agent" />
+                </role>
+                <role descr="theme, thing being included in some group" n="1">
+                    <vnrole vncls="107" vntheta="Theme" />
+                    <vnrole vncls="65" vntheta="Theme" />
+                </role>
+                <role descr="group" n="2">
+                    <vnrole vncls="107" vntheta="Destination" />
+                    <vnrole vncls="65" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s667:  Um,  o convencional,  é o que o Plano_  Real contempla e tem como instrumentos essenciais a importação ﻿à taxa cambial fixa e baixa e quase sem tarifa aduaneira de mercadorias,  tornando impossível pela competição os produtores e comerciantes brasileiros aumentarem seus preços ; e a redução da demanda por bens de consumo e de investimento,  mediante juros altos e corte do gasto público,  impedindo as remarcações de preços pelo excesso de oferta suscitado. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="2">o Plano_  Real
+</arg>
+                <rel f="">contempla</rel>
+                <note>Arg2 como sujeito</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

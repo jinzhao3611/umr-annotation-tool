@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="notar">
+        <note />
+    <roleset framnet="notice.01" id="notar.01" name="observar; perceber" vncls="30.1">
+            <roles>
+                <role descr="noticer" n="0">
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="noticed" n="1">
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3641:  « As empresas notaram que sua imagem é a maior prejudicada quando um funcionário comete uma indelicadeza em_  público e diante_  de um cliente ou subordinado »,  afirma o consultor de marketing pessoal Otto_  Reiter,  69. 
+</text>
+                <arg f="" n="0">As empresas
+</arg>
+                <rel f="">notaram</rel>
+                <arg f="" n="1">que sua imagem é a maior prejudicada quando um funcionário comete uma indelicadeza em_  público e diante_  de um cliente ou subordinado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3105:  Notamos ainda que,  quando um passageiro brasileiro se inscreve num programa de milhagem de uma companhia aérea internacional que serve o Brasil,  passados 30 dias,  recebe a proposta da Iapa. 
+</text>
+                <rel f="">Notamos</rel>
+                <arg f="dis" n="m">ainda
+</arg>
+                <arg f="" n="1">que,  quando um passageiro brasileiro se inscreve num programa de milhagem de uma companhia aérea internacional que serve o Brasil,  passados 30 dias,  recebe a proposta da Iapa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3045:  Acho importante notar que a Bienal mudou a maneira de conseguir patrocínio cultural no país,  que antes era feito ﻿à base do « me_  dá_  um_  dinheiro_  aí ». 
+</text>
+                <rel f="">notar</rel>
+                <arg f="" n="1">que a Bienal mudou a maneira de conseguir patrocínio cultural no país,  que antes era feito ﻿à base do « me_  dá_  um_  dinheiro_  aí »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s248:  Como notou o jornalista Jim_  Greer,  da revista americana « Spin »,  é uma boa grana,  mas nada muito absurdo. 
+</text>
+                <rel f="">notou</rel>
+                <arg f="" n="0">o jornalista Jim_  Greer,  da revista americana « Spin »
+</arg>
+                <arg f="" n="1">é uma boa grana
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

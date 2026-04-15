@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="assistir">
+        <note />
+    <roleset framnet="watch.01" id="assistir.01" name="ver" vncls="30.2">
+            <roles>
+                <role descr="observer" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing looked at" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4097:  Assista ao filme de_  novo:  você não vai me ver completamente nua a não ser numa cena,  no final do strip_  tease. 
+</text>
+                <rel f="">Assista</rel>
+                <arg f="" n="1">ao filme
+</arg>
+                <arg f="tmp" n="m">de_  novo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3379:  Ohtake diz que até o compositor e cantor baiano Caetano_  Veloso manifestou desejo de assistir ao show de Nusrat,  nesta segunda-  feira,  em São_  Paulo. 
+</text>
+                <rel f="">assistir</rel>
+                <arg f="" n="1">ao show de Nusrat
+</arg>
+                <arg f="tmp" n="m">nesta segunda-  feira
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3245:  « Já estamos contentes por ter chegado às oitavas-  de-  final »,  disse Phillip_  Trent,  24,  que assistiu o jogo ao_  lado_  do amigo Brian_  Fagerburg,  24. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">assistiu</rel>
+                <arg f="" n="1">o jogo
+</arg>
+                <arg f="mnr" n="m">ao_  lado_  do amigo Brian_  Fagerburg,  24
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1901:  Pago CR$  1.  000 pra quem assistir o vídeo até o fim. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">assistir</rel>
+                <arg f="" n="1">o vídeo
+</arg>
+                <arg f="loc" n="m">até o fim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1396:  « Eu estou apaixonado »,  declarou o presidente Itamar_  Franco,  63,  no hall do Teatro_  Nacional de Brasília,  onde assistiu anteontem o balé « Quebra_  Nozes » com a pedagoga June_  Drummond,  31. 
+</text>
+                <arg f="" n="0">o presidente Itamar_  Franco,  63, 
+</arg>
+                <arg f="loc" n="m">onde
+</arg>
+                <rel f="">assistiu</rel>
+                <arg f="tmp" n="m">anteontem
+</arg>
+                <arg f="" n="1">o balé « Quebra_  Nozes »
+</arg>
+                <arg f="mnr" n="m">com a pedagoga June_  Drummond,  31
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1027:  Zagalo assistiu ao jogo entre Flamengo e Corinthians,  domingo,  no Maracanã. 
+</text>
+                <arg f="" n="0">Zagalo
+</arg>
+                <rel f="">assistiu</rel>
+                <arg f="" n="1">ao jogo entre Flamengo e Corinthians
+</arg>
+                <arg f="tmp" n="m">domingo
+</arg>
+                <arg f="loc" n="m">no Maracanã
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s486:  mais_  de 110 mil pessoas assistiram ﻿à partida,  no estádio Santiago_  Bernabeu. 
+</text>
+                <arg f="" n="0">mais_  de 110 mil pessoas
+</arg>
+                <rel f="">assistiram</rel>
+                <arg f="" n="1">﻿à partida
+</arg>
+                <arg f="loc" n="m">no estádio Santiago_  Bernabeu
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

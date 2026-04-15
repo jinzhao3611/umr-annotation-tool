@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="determinar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="determine.01" id="determinar.01" name="ordenar" vncls="84">
+            <roles>
+                <role descr="decider" n="0">
+                    <vnrole vncls="84" vntheta="Agent" />
+                </role>
+                <role descr="thing determined" n="1">
+                    <vnrole vncls="84" vntheta="Theme" />
+                </role>
+                <role descr="grounds" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2858:  O juiz determina ainda o restabelecimento dos meios necessários ao funcionamento da Comissão_  de_  Processos_  Administrativos_  Especiais,  responsável pelo inquérito. 
+</text>
+                <arg f="" n="0">O juiz
+</arg>
+                <rel f="">determina</rel>
+                <arg f="adv" n="m">ainda
+</arg>
+                <arg f="" n="1">o restabelecimento dos meios necessários ao funcionamento da Comissão_  de_  Processos_  Administrativos_  Especiais,  responsável pelo inquérito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2856:  A liminar,  ainda não cumprida pelo governo do Espírito_  Santo,  determina que o delegado responsável pelo caso,  Francisco_  Badenes,  seja reconduzido ao cargo. 
+</text>
+                <arg f="" n="0">A liminar,  ainda não cumprida pelo governo do Espírito_  Santo, 
+</arg>
+                <rel f="">determina</rel>
+                <arg f="" n="1">que o delegado responsável pelo caso,  Francisco_  Badenes,  seja reconduzido ao cargo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2649:  De_  acordo com a assessoria,  o secretário dos Transportes,  Márcio_  Ribeiro,  determinou que os engenheiros do Departamento_  de_  Estradas_  de_  Rodagem(  DER)  apressassem os estudos para a duplicação. 
+</text>
+                <arg f="dis" n="m">De_  acordo com a assessoria
+</arg>
+                <arg f="" n="0">o secretário dos Transportes,  Márcio_  Ribeiro, 
+</arg>
+                <rel f="">determinou</rel>
+                <arg f="" n="1">que os engenheiros do Departamento_  de_  Estradas_  de_  Rodagem(  DER)  apressassem os estudos para a duplicação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2261:  Se o mínimo sofrer alteração,  a Constituição determina que as aposentadorias também sejam revistas. 
+</text>
+                <arg f="adv" n="m">Se o mínimo sofrer alteração
+</arg>
+                <arg f="" n="0">a Constituição
+</arg>
+                <rel f="">determina</rel>
+                <arg f="" n="1">que as aposentadorias também sejam revistas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1601:  Ontem,  o plenário do TRE do Rio determinou a recontagem dos votos da 81ª seção da 77ª zona. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="" n="0">o plenário do TRE do Rio
+</arg>
+                <rel f="">determinou</rel>
+                <arg f="" n="1">a recontagem dos votos da 81ª seção da 77ª zona
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="cause.01" id="determinar.02" name="causar, provocar" vncls="27">
+            <roles>
+                <role descr="forcer, causer" n="0">
+                    <vnrole vncls="27" vntheta="Theme1" />
+                </role>
+                <role descr="impelled action" n="1">
+                    <vnrole vncls="27" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1800:  Creio que essa vocação de poeta determinou um dos maiores problemas(  há vários)  na realização da obra de Murilo_  Mendes. 
+</text>
+                <arg f="" n="0">essa vocação de poeta
+</arg>
+                <rel f="">determinou</rel>
+                <arg f="" n="1">um dos maiores problemas(  há vários) 
+</arg>
+                <arg f="prd" n="m">na realização da obra de Murilo_  Mendes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="determine.01" id="determinar.03" name="definir; estabelecer; tornar preciso" vncls="84">
+            <roles>
+                <role descr="decider" n="0">
+                    <vnrole vncls="84" vntheta="Agent" />
+                </role>
+                <role descr="thing determined" n="1">
+                    <vnrole vncls="84" vntheta="Theme" />
+                </role>
+                <role descr="grounds" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1624:  A Secretaria_  da_  Fazenda do Estado_  de_  São_  Paulo determinou que,  quando um contribuinte realizar venda de mercadorias em feiras,  exposições ou em locais chamados de « outlets » ou « feira de promoções » e permanecer na área determinada por mais_  de 60 dias,  será obrigatória a inscrição do referido local no cadastro de contribuintes do ICMS(  Fund. :  portaria CAT 116/  93) . 
+</text>
+                <arg f="" n="0">A Secretaria_  da_  Fazenda do Estado_  de_  São_  Paulo
+</arg>
+                <rel f="">determinou</rel>
+                <arg f="" n="1">que,  quando um contribuinte realizar venda de mercadorias em feiras,  exposições ou em locais chamados de « outlets » ou « feira de promoções » e permanecer na área determinada por mais_  de 60 dias,  será obrigatória a inscrição do referido local no cadastro de contribuintes do ICMS(  Fund. :  portaria CAT 116/  93) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1280:  A mudança foi determinada como opção de retorno ou acesso ﻿à avenida_  Santo_  Amaro. 
+</text>
+                <arg f="" n="1">A mudança
+</arg>
+                <rel f="">determinada</rel>
+                <arg f="pnc" n="m">como opção de retorno ou acesso ﻿à avenida_  Santo_  Amaro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s520:  Para o Rio_  Branco,  bastou o primeiro tempo do jogo para determinar o resultado. 
+</text>
+                <rel f="">determinar</rel>
+                <arg f="" n="1">o resultado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s56:  Para o terceiro réu,  Alexandre_  Cardoso,  21,  o « Topeira »,  o juiz determinou uma pena de 20 anos. 
+</text>
+                <arg f="prd" n="m">Para o terceiro réu,  Alexandre_  Cardoso,  21,  o « Topeira », 
+</arg>
+                <arg f="" n="0">o juiz
+</arg>
+                <rel f="">determinou</rel>
+                <arg f="" n="1">uma pena de 20 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s50:  A mudança do local de jogo que deve acontecer também na partida contra o Corinthians,  no próximo dia 17 foi determinada pela CBF,  que não viu garantias de segurança no estádio santista. 
+</text>
+                <arg f="" n="1">A mudança do local de jogo que deve acontecer também na partida contra o Corinthians,  no próximo dia 17
+</arg>
+                <rel f="">determinada</rel>
+                <arg f="" n="0">pela CBF,  que não viu garantias de segurança no estádio santista
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

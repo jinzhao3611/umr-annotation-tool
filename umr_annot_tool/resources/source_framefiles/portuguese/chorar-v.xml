@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="chorar">
+        <note />
+    <roleset framnet="cry.02" id="chorar.01" name="verter lágrimas" vncls="40.1.2-1 40.2">
+            <roles>
+                <role descr="cryer" n="0">
+                    <vnrole vncls="40.1.2-1" vntheta="Agent" />
+                    <vnrole vncls="40.2" vntheta="Agent" />
+                </role>
+                <role descr="cognate object" n="1">
+                    <vnrole vncls="40.1.2-1" vntheta="Theme" />
+                    <vnrole vncls="40.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2339:  10h46- -  a primeira pessoa a ver o caixão é Márcio_  Putnoki,  13 ; o estudante tinha chegado às 15h de anteontem ; ao passar pelo hall monumental,  Márcio chora ;
+</text>
+                <arg f="tmp" n="m">ao passar pelo hall monumental
+</arg>
+                <arg f="" n="0">Márcio
+</arg>
+                <rel f="">chora</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

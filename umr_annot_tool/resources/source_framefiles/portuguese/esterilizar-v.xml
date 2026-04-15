@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esterilizar">
+        <note />
+    <roleset framnet="sterilize.01" id="esterilizar.01" name="tornar estéril" vncls="-">
+            <roles>
+                <role descr="sterilizer" n="0" />
+                <role descr="entity sterilized" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1678:  A entrada de capitais,  para ser esterilizada monetariamente,  teve de ser absorvida pelo crescimento da dívida pública,  o_  que por_  sua_  vez requereu um superávit fiscal primário crescente. 
+</text>
+                <rel f="">esterilizada</rel>
+                <arg f="mnr" n="m">monetariamente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

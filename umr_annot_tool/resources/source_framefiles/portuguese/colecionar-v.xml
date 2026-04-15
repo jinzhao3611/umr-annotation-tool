@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="colecionar">
+        <note />
+    <roleset framnet="" id="colecionar.01" name="juntar coisas de um mesmo tipo (normalmente por hobby); fazer coleção" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s912:  Advogado de NY coleciona jacarés
+</text>
+                <arg f="" n="0">Advogado de NY
+</arg>
+                <rel f="">coleciona</rel>
+                <arg f="" n="1">jacarés
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

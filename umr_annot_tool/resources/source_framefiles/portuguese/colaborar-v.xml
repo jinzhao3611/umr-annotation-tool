@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="colaborar">
+        <note />
+    <roleset framnet="collaborate.01" id="colaborar.01" name="trabalhar junto; ajudar no trabalho" vncls="36.1">
+            <roles>
+                <role descr="focussed party, agent" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="second party" n="1">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <role descr="shared task" n="2">
+                    <vnrole vncls="36.1" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2465:  O Japão é o principal alvo da lista por barreiras aos produtos,  serviços e investimentos norte-  americanos,  que segundo o USTR,  colaboraram para que o déficit dos EUA no comércio com os japoneses atingisse US$  60 bilhões no ano passado. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="dis" n="m">segundo o USTR
+</arg>
+                <rel f="">colaboraram</rel>
+                <arg f="" n="2">para que o déficit dos EUA no comércio com os japoneses atingisse US$  60 bilhões no ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s565:  Colaborou Aurélio_  Alonso,  da Folha_  Norte. 
+</text>
+                <rel f="">Colaborou</rel>
+                <arg f="" n="0">Aurélio_  Alonso,  da Folha_  Norte
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

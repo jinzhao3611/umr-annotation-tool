@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="bancar">
+        <note />
+    <roleset framnet="support.01" id="bancar.01" name="financiar" vncls="31.2">
+            <roles>
+                <role descr="helper" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="person or project being supported" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3021:  « Ele reclamou de que não lhe pagariam o prometido,  não lhe dariam um carro e que só bancariam seis meses de aluguel de sua casa e não os quatro anos,  como esperava »,  disse o dirigente. 
+</text>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">bancariam</rel>
+                <arg f="" n="1">seis meses de aluguel de sua casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2106:  O grupo Sendas entra com o terreno de 154 mil metros quadrados,  e o Nacional_  Iguatemi_  Empreendimentos,  dono de shoppings_  centers no Nordeste e sócio de Tasso_  Jereissati no Iguatemi de São_  Paulo,  com os recursos para bancar o empreendimento. 
+</text>
+                <rel f="">bancar</rel>
+                <arg f="" n="1">o empreendimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s220:  Com medo de perder poderes,  Modiano chamou Mourão e,  numa atitude mesquinha,  comunicou-  lhe que,  como o financiamento do projeto seria bancado pelo BNDES,  ele iria para lá,  mas na qualidade de representante do banco. 
+</text>
+                <arg f="" n="1">o financiamento do projeto
+</arg>
+                <rel f="">bancado</rel>
+                <arg f="" n="0">pelo BNDES
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

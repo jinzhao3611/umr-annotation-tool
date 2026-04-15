@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="quebrar">
+        <note />
+        <note />
+    <roleset framnet="break.01" id="quebrar.01" name="dividir o todo em partes; destruir" vncls="23.2 45.1 40.8.3-1">
+            <roles>
+                <role descr="breaker" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                    <vnrole vncls="40.8.3-1" vntheta="Experiencer" />
+                    <vnrole vncls="45.1" vntheta="Agent" />
+                </role>
+                <role descr="thing broken" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient1" />
+                    <vnrole vncls="40.8.3-1" vntheta="Patient" />
+                    <vnrole vncls="45.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="45.1" vntheta="Instrument" />
+                </role>
+                <role descr="pieces" n="3">
+                    <vnrole vncls="23.2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3821:  Para isso,  porém,  é necessário que o nosso Banco_  Central busque não a « independência » do Tesouro,  que é impossível,  mas que deixe de « quebrar-  lo » com a sua política agressiva de juros. 
+</text>
+                <rel f="">quebrar-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="" n="2">com a sua política agressiva de juros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3504:  « Não quero subir muito agora e quebrar a cara depois.  »
+</text>
+                <rel f="">quebrar</rel>
+                <arg f="" n="1">a cara
+</arg>
+                <arg f="tmp" n="m">depois
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3445:  Aparentemente ele quebrou o pescoço quando tentava fugir do fogo cruzado. 
+</text>
+                <arg f="tmp" n="m">Aparentemente
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">quebrou</rel>
+                <arg f="" n="1">o pescoço
+</arg>
+                <arg f="tmp" n="m">quando tentava fugir do fogo cruzado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2099:  Os invasores quebraram portas,  janelas,  grades e cadeados. 
+</text>
+                <arg f="" n="0">Os invasores
+</arg>
+                <rel f="">quebraram</rel>
+                <arg f="" n="1">portas,  janelas,  grades e cadeados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s988:  Nenhum filme brasileiro foi escolhido,  quebrando assim a expectativa criada em_  torno_  de « Alma_  Corsária » de Carlos_  Reichenbach e « Mil_  e_  Uma » de Suzana_  de_  Moraes. 
+</text>
+                <rel f="">quebrando</rel>
+                <arg f="mnr" n="m">assim
+</arg>
+                <arg f="" n="1">a expectativa criada em_  torno_  de « Alma_  Corsária » de Carlos_  Reichenbach e « Mil_  e_  Uma » de Suzana_  de_  Moraes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="bankrupt.01" id="quebrar.02" name="ir à falência" vncls="-">
+            <roles>
+                <role descr="causer" n="0" />
+                <role descr="person bankrupt" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s32:  Quebraram aquelas que estavam « descasadas »,  ou_  seja,  que financiavam no mercado interbancário de um dia(  CDI)  os empréstimos e carteiras de títulos estaduais e municipais com prazos longos. 
+</text>
+                <rel f="">Quebraram</rel>
+                <arg f="" n="1">aquelas que estavam « descasadas »,  ou_  seja,  que financiavam no mercado interbancário de um dia(  CDI)  os empréstimos e carteiras de títulos estaduais e municipais com prazos longos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

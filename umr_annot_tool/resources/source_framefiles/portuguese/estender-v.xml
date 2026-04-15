@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estender">
+        <note />
+    <roleset framnet="lay.01" id="estender.01" name="estirar" vncls="9.2">
+            <roles>
+                <role descr="layer" n="0">
+                    <vnrole vncls="9.2" vntheta="Agent" />
+                </role>
+                <role descr="thing laid" n="1">
+                    <vnrole vncls="9.2" vntheta="Theme" />
+                </role>
+                <role descr="location" n="2">
+                    <vnrole vncls="9.2" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1991:  « Dobrando pelo vinco a calça jeans ou a calça de veludo,  e estendendo-  a sobre o carpete do quarto do hotel,  ela fica como_  se tivesse sido passada a ferro.  »
+</text>
+                <rel f="">estendendo-</rel>
+                <arg f="" n="1">a
+</arg>
+                <arg f="" n="2">sobre o carpete do quarto do hotel
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

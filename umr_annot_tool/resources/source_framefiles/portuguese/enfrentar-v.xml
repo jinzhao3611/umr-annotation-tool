@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="enfrentar">
+        <note />
+    <roleset framnet="face.01" id="enfrentar.01" name="vivenciar (algo ruim); lutar contra" vncls="98">
+            <roles>
+                <role descr="looker, facer" n="0">
+                    <vnrole vncls="98" vntheta="Agent" />
+                </role>
+                <role descr="looked at, faced" n="1">
+                    <vnrole vncls="98" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4017:  Há cidades que enfrentam programas de racionamento de água. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">enfrentam</rel>
+                <arg f="" n="1">programas de racionamento de água
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3728:  Tropas do presidente Burhanuddin_  Rabbani enfrentam soldados do primeiro-  ministro Gulbuddin_  Hekmatyar. 
+</text>
+                <arg f="" n="0">Tropas do presidente Burhanuddin_  Rabbani
+</arg>
+                <rel f="">enfrentam</rel>
+                <arg f="" n="1">soldados do primeiro-  ministro Gulbuddin_  Hekmatyar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3103:  O mais grave,  no_  entanto,  são os problemas que os clientes poderão enfrentar. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">os clientes
+</arg>
+                <rel f="">enfrentar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2998:  Em termos políticos,  o país saiu das eleições com um Estado mais vigoroso e democrático,  em melhores condições de enfrentar a inflação e o desemprego. 
+</text>
+                <rel f="">enfrentar</rel>
+                <arg f="" n="1">a inflação e o desemprego
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2754:  O PT não tem estatura ideológica para enfrentar o candidato conservador. 
+</text>
+                <rel f="">enfrentar</rel>
+                <arg f="" n="1">o candidato conservador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2692:  As dificuldades que bancos federais e estaduais provavelmente enfrentarão reforçam as dúvidas quanto_  ﻿à conveniência do setor público ser proprietário de tantas instituições financeiras. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">bancos federais e estaduais
+</arg>
+                <arg f="adv" n="m">provavelmente
+</arg>
+                <rel f="">enfrentarão</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2256:  Pérez enfrentou duas tentativas de golpe militar e,  a_  exemplo de Fernando_  Collor,  acabou sofrendo impeachment por corrupção e,  hoje,  encontra-  se numa cela ﻿à espera de julgamento. 
+</text>
+                <arg f="" n="0">Pérez
+</arg>
+                <rel f="">enfrentou</rel>
+                <arg f="" n="1">duas tentativas de golpe militar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2046:  Quem queria comprar,  por_  exemplo,  meia dúzia de pães e um litro de leite,  mas só tinha cruzeiros reais no bolso,  teve que enfrentar fila de até duas horas. 
+</text>
+                <arg f="" n="0">Quem queria comprar,  por_  exemplo,  meia dúzia de pães e um litro de leite,  mas só tinha cruzeiros reais no bolso
+</arg>
+                <rel f="">enfrentar</rel>
+                <arg f="" n="1">fila de até duas horas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1683:  A equipe enfrenta o time carioca às 20h30 no ginásio do Tijuca_  Tênis_  Clune
+</text>
+                <arg f="" n="0">A equipe
+</arg>
+                <rel f="">enfrenta</rel>
+                <arg f="" n="1">o time carioca
+</arg>
+                <arg f="tmp" n="m">às 20h30
+</arg>
+                <arg f="loc" n="m">no ginásio do Tijuca_  Tênis_  Clune
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1676:  « Nosso objetivo no campeonato,  portanto,  será definido depois do domingo,  quando enfrentamos o São_  Paulo »,  disse o volante. 
+</text>
+                <rel f="">enfrentamos</rel>
+                <arg f="" n="1">o São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1674:  Segundo o jogador,  o Palmeiras só terá dificuldades para garantir o título na partida contra o Corinthians pois deve enfrentar antes adversários teoricamente fáceis(  Mogi_  Mirim,  Ituano e Santo_  André) . 
+</text>
+                <arg f="" n="0">o Palmeiras
+</arg>
+                <rel f="">enfrentar</rel>
+                <arg f="tmp" n="m">antes
+</arg>
+                <arg f="" n="1">adversários teoricamente fáceis(  Mogi_  Mirim,  Ituano e Santo_  André) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s966:  O grupo Bordon enfrenta briga de família. 
+</text>
+                <arg f="" n="0">O grupo Bordon
+</arg>
+                <rel f="">enfrenta</rel>
+                <arg f="" n="1">briga de família
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s702:  Antes da urgente reforma constitucional,  a extensão da desoneração tributária das exportações para todas as etapas da cadeia produtiva enfrenta dificuldades operacionais insuperáveis no âmbito federal. 
+</text>
+                <arg f="tmp" n="m">Antes da urgente reforma constitucional
+</arg>
+                <arg f="" n="0">a extensão da desoneração tributária das exportações para todas as etapas da cadeia produtiva
+</arg>
+                <rel f="">enfrenta</rel>
+                <arg f="" n="1">dificuldades operacionais insuperáveis
+</arg>
+                <arg f="loc" n="m">no âmbito federal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s186:  Por_  exemplo:  o master-  franqueado da Arby'  s no México enfrentará menos problemas e menos burocracia para importar o rosbife(  que,  ao_  contrário_  do que ocorre com a Arby'  s Brasil,  vem dos EUA)  e as batatinhas(  canadenses)  que serve em seus restaurantes próprios e franqueados. 
+</text>
+                <arg f="dis" n="m">Por_  exemplo
+</arg>
+                <arg f="" n="0">o master-  franqueado da Arby'  s no México
+</arg>
+                <rel f="">enfrentará</rel>
+                <arg f="" n="1">menos problemas e menos burocracia
+</arg>
+                <arg f="pnc" n="m">para importar o rosbife(  que,  ao_  contrário_  do que ocorre com a Arby'  s Brasil,  vem dos EUA)  e as batatinhas(  canadenses)  que serve em seus restaurantes próprios e franqueados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s126:  Como a idéia de enxugar a Constituição enfrenta resistência inclusive nos partidos que apóiam o governo,  a equipe de FHC resolveu fazer as reformas por partes. 
+</text>
+                <arg f="dis" n="m">Como
+</arg>
+                <arg f="" n="0">a idéia de enxugar a Constituição
+</arg>
+                <rel f="">enfrenta</rel>
+                <arg f="" n="1">resistência
+</arg>
+                <arg f="prd" n="m">inclusive nos partidos que apóiam o governo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="discutir">
+        <note />
+        <note />
+    <roleset framnet="discuss.01" id="discutir.01" name="debater" vncls="">
+            <roles>
+                <role descr="discussant" n="0" />
+                <role descr="topic" n="1" />
+                <role descr="conversation partner, if explicit" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4144:  Belo negou que na reunião tenha sido discutida a incorporação aos quadros da PM de cerca_  de 2.  000 soldados do Exército. 
+</text>
+                <arg f="loc" n="m">na reunião
+</arg>
+                <rel f="">discutida</rel>
+                <arg f="" n="1">a incorporação aos quadros da PM de cerca_  de 2.  000 soldados do Exército
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4065:  Esses são alguns dos temas que estarão sendo discutidos no Congresso da Fenasoft,  promovido paralelamente ﻿à feira. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">discutidos</rel>
+                <arg f="loc" n="m">no Congresso da Fenasoft,  promovido paralelamente ﻿à feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3766:  Audiência na Justiça do Pará discute diploma
+</text>
+                <arg f="" n="0">Audiência na Justiça do Pará
+</arg>
+                <rel f="">discute</rel>
+                <arg f="" n="1">diploma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3624:  Ontem,  a diretoria da atlética e Amato_  Neto que iniciou a organização dos alunos para a preservação do clube se reuniram para discutir alternativas para a área. 
+</text>
+                <rel f="">discutir</rel>
+                <arg f="" n="1">alternativas para a área
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3471:  As causas da violência no campo também são discutidas. 
+</text>
+                <arg f="" n="1">As causas da violência no campo
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">discutidas</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3449:  Britto já informou a Streck que é favorável,  mas ficou de discutir a questão com o PMDB gaúcho. 
+</text>
+                <arg f="" n="0">Britto
+</arg>
+                <rel f="">discutir</rel>
+                <arg f="" n="1">a questão
+</arg>
+                <arg f="" n="2">com o PMDB gaúcho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2479:  Senão eu não ia mais conseguir discutir salário com ele sem me lembrar do episódio e rir.  »
+</text>
+                <rel f="">discutir</rel>
+                <arg f="" n="1">salário com ele
+</arg>
+                <arg f="mnr" n="m">sem me lembrar do episódio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2277:  « Eles não suportariam a aridez da teoria,  mas discuto temas como espaço público e privado através de fatos como o comportamento do Itamar no Carnaval »,  diz. 
+</text>
+                <rel f="">discuto</rel>
+                <arg f="" n="1">temas como espaço público e privado
+</arg>
+                <arg f="mnr" n="m">através de fatos como o comportamento do Itamar no Carnaval
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2183:  O Conia,  por_  exemplo,  é a parte do congresso que discute o uso da informática pelos profissionais liberais. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">discute</rel>
+                <arg f="" n="1">o uso da informática
+</arg>
+                <arg f="prd" n="m">pelos profissionais liberais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1905:  As aparências são as principais vítimas do sarcasmo de Altman,  desde as « peruas » que discutem a cor de seus cabelos até a noiva,  que usa aparelho,  escovando os dentes alegre diante_  do espelho. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">discutem</rel>
+                <arg f="" n="1">a cor de seus cabelos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s865:  A reunião de bispos discutirá a vida de padres e freiras. 
+</text>
+                <arg f="" n="0">A reunião de bispos
+</arg>
+                <rel f="">discutirá</rel>
+                <arg f="" n="1">a vida de padres e freiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s231:  Para isso,  ele afirma pretender inaugurar uma câmara setorial para discutir as questões específicas da economia no Estado. 
+</text>
+                <rel f="">discutir</rel>
+                <arg f="" n="1">as questões específicas da economia no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="argue.02" id="discutir.02" name="brigar verbalmente" vncls="36.1 36.4-1 37.6">
+            <roles>
+                <role descr="first arguer" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                    <vnrole vncls="36.4-1" vntheta="Actor1" />
+                    <vnrole vncls="37.6" vntheta="Actor1" />
+                </role>
+                <role descr="second arguer" n="1">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                    <vnrole vncls="36.4" vntheta="Actor2" />
+                    <vnrole vncls="37.6" vntheta="Actor2" />
+                </role>
+                <role descr="topic" n="2">
+                    <vnrole vncls="36.1" vntheta="Topic" />
+                    <vnrole vncls="36.4-1" vntheta="Topic" />
+                    <vnrole vncls="37.6" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3375:  O aposentado Eliseu_  Francisco_  de_  Lyra(  na época com 44 anos) ,  depois de discutir com o irmão,  saiu do carro,  subiu no capô,  tirou as roupas e sapateou. 
+</text>
+                <rel f="">discutir</rel>
+                <arg f="" n="2">com o irmão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s696:  O time,  antes bastante aguerrido e solidário,  passou a discutir em campo. 
+</text>
+                <arg f="" n="0">O time
+</arg>
+                <arg f="prd" n="m">antes bastante aguerrido e solidário
+</arg>
+                <rel f="">discutir</rel>
+                <arg f="loc" n="m">em campo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

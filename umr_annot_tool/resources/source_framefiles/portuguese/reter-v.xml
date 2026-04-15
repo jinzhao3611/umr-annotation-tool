@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reter">
+        <note />
+    <roleset framnet="detain.01" id="reter.01" name="segurar; não deixar seguir adiante" vncls="-">
+            <roles>
+                <role descr="police, etc." n="0" />
+                <role descr="entity detained" n="1" />
+                <role descr="detained for what?" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1109:  Os vôos da tarde de ontem entre Buenos_  Aires e São_  Paulo ou Rio foram retidos em Ezeiza. 
+</text>
+                <arg f="" n="1">Os vôos da tarde de ontem entre Buenos_  Aires e São_  Paulo ou Rio
+</arg>
+                <rel f="">retidos</rel>
+                <arg f="loc" n="m">em Ezeiza
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1108:  Na noite de ontem,  havia cerca_  de 3.  000 pessoas retidas no aeroporto de Ezeiza,  o principal de Buenos_  Aires. 
+</text>
+                <rel f="">retidas</rel>
+                <arg f="loc" n="m">no aeroporto de Ezeiza,  o principal de Buenos_  Aires
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abranger">
+        <note />
+    <roleset framnet="encompass.01" id="abranger.01" name="abarcar, incluir" vncls="47.8">
+            <roles>
+                <role descr="entity encompassing" n="0">
+                    <vnrole vncls="47.8" vntheta="Theme1" />
+                </role>
+                <role descr="entity encompassed" n="1">
+                    <vnrole vncls="47.8" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3098:  Dividido em seis partes,  o livro traz 32 capítulos que procuram abranger todos os recursos do programa. 
+</text>
+                <rel f="">abranger</rel>
+                <arg f="" n="1">todos os recursos do programa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1915:  Os acordos já feitos abrangem 33 mil agricultores. 
+</text>
+                <arg f="" n="0">Os acordos já feitos
+</arg>
+                <rel f="">abrangem</rel>
+                <arg f="" n="1">33 mil agricultores
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

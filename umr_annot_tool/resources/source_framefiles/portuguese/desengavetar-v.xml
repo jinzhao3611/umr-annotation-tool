@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desengavetar">
+        <note />
+    <roleset framnet="reactivate.01" id="desengavetar.01" name="tirar da gaveta; reativar" vncls="-">
+            <roles>
+                <role descr="reactivator" n="0" />
+                <role descr="thing now active" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2105:  O aquecimento das vendas nos últimos dois meses fez com que o empresário carioca Arthur_  Sendas desengavetasse antigo projeto de construção de shopping_  center,  hipermercado e conjunto residencial em área do grupo localizada na Via_  Dutra,  no final da Linha_  Vermelha. 
+</text>
+                <arg f="" n="0">o empresário carioca Arthur_  Sendas
+</arg>
+                <rel f="">desengavetasse</rel>
+                <arg f="" n="1">antigo projeto de construção de shopping_  center,  hipermercado e conjunto residencial em área do grupo localizada na Via_  Dutra,  no final da Linha_  Vermelha
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

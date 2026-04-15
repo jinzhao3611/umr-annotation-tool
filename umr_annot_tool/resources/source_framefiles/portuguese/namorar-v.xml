@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="namorar">
+        <note />
+    <roleset framnet="date.02" id="namorar.01" name="manter relação amorosa" vncls="36.2">
+            <roles>
+                <role descr="dater" n="0">
+                    <vnrole vncls="36.2" vntheta="Actor1" />
+                </role>
+                <role descr="dated" n="1">
+                    <vnrole vncls="36.2" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1868:  Um dia Juscelino comunicou a Alkimin que estava namorando a moça Sara_  Lemos,  filha do político Jayme_  Lemos. 
+</text>
+                <arg f="" n="0">Juscelino
+</arg>
+                <rel f="">namorando</rel>
+                <arg f="" n="1">a moça Sara_  Lemos,  filha do político Jayme_  Lemos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s759:  « Pela bossa_  nova,  namoro até o Trio_  Irakitan »,  dizia. 
+</text>
+                <arg f="cau" n="m">Pela bossa_  nova
+</arg>
+                <rel f="">namoro</rel>
+                <arg f="" n="1">até o Trio_  Irakitan
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s758:  Cite uma cantora da bossa_  nova ou estrela da televisão dos anos 60 e há poucas chances de que ele não a tenha namorado sempre dando a impressão de que fazia isto por tarefa. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="1">a
+</arg>
+                <rel f="">namorado</rel>
+                <arg f="dis" n="m">dando a impressão de que fazia isto por tarefa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

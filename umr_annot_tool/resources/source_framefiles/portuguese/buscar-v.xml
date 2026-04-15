@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="buscar">
+        <note />
+        <note />
+    <roleset framnet="seek.01" id="buscar.01" name="tentar encontrar" vncls="35.6">
+            <roles>
+                <role descr="Agent / entity seeking" n="0">
+                    <vnrole vncls="35.6" vntheta="Agent" />
+                </role>
+                <role descr="thing sought, attempted action" n="1">
+                    <vnrole vncls="35.6" vntheta="Theme" />
+                </role>
+                <role descr="sought-from" n="2">
+                    <vnrole vncls="35.6" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3821:  Para isso,  porém,  é necessário que o nosso Banco_  Central busque não a « independência » do Tesouro,  que é impossível,  mas que deixe de « quebrar-  lo » com a sua política agressiva de juros. 
+</text>
+                <arg f="" n="0">o nosso Banco_  Central
+</arg>
+                <rel f="">busque</rel>
+                <arg f="" n="1">não a « independência » do Tesouro,  que é impossível, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3731:  Biotecnologia- -  busca o aprimoramento e criação de novos produtos a_  partir_  da manipulação de animais e plantas destinados ﻿à saúde e estética humana. 
+</text>
+                <arg f="" n="0">Biotecnologia
+</arg>
+                <rel f="">busca</rel>
+                <arg f="" n="1">o aprimoramento e criação de novos produtos
+</arg>
+                <arg f="mnr" n="m">a_  partir_  da manipulação de animais e plantas destinados ﻿à saúde e estética humana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3215:  Segundo o ministro das Minas_  e_  Energia,  Alexis_  Stepanenko,  essa melhoria deverá ser buscada através da redução de custos e aumento de eficiência. 
+</text>
+                <arg f="" n="1">essa melhoria
+</arg>
+                <rel f="">buscada</rel>
+                <arg f="mnr" n="m">através da redução de custos e aumento de eficiência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2602:  Já passou da hora de governo,  prestadores de serviços e usuários se empenharem para não só aprofundar as discussões sobre a ineficácia do sistema de saúde,  como também para buscar alternativas e soluções viáveis,  a_  fim_  de proporcionar um atendimento mais digno ﻿à população em_  geral. 
+</text>
+                <rel f="">buscar</rel>
+                <arg f="" n="1">alternativas e soluções viáveis
+</arg>
+                <arg f="pnc" n="m">a_  fim_  de proporcionar um atendimento mais digno ﻿à população em_  geral
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1763:  Essas dificuldades,  que surgiram desde o lançamento da idéia,  estimularam economistas e governo a buscar caminhos mais rápidos. 
+</text>
+                <rel f="">buscar</rel>
+                <arg f="" n="1">caminhos mais rápidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosH.  s1673:  Os discursos da frugalidade,  da austeridade ficaram para as repúblicas gregas e romanas,  aquelas que Montesquieu ainda celebrava,  em meados do século 18,  quando dizia que o regime republicano se caracteriza pela disposição de seus cidadãos a renunciar ao bem privado em_  favor_  do bem comum e por isso,  acrescentava ele,  trata-  se de regime impossível na modernidade,  na_  qual se busca a vantagem pessoal. 
+</text>
+                <arg f="loc" n="m">na_  qual
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">busca</rel>
+                <arg f="" n="1">a vantagem pessoal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1133:  Tal cobertura,  assistemática e voltada para buscar escândalos,  leva-  os,  também,  a trabalhar sobre fatos consumados. 
+</text>
+                <rel f="">buscar</rel>
+                <arg f="" n="1">escândalos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s660:  É preciso que tenhamos a consciência de que os nossos tratados,  que envolvem questões transcendentais que buscam uma circulação de bens e serviços sem barreiras entre nossos países,  exigem uma visão da história. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">buscam</rel>
+                <arg f="" n="1">uma circulação de bens e serviços sem barreiras entre nossos países
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s366:  Cada banco buscará no BC ou no BB o volume de dinheiro compatível com suas operações. 
+</text>
+                <arg f="" n="0">Cada banco
+</arg>
+                <rel f="">buscará</rel>
+                <arg f="" n="2">no BC ou no BB
+</arg>
+                <arg f="" n="1">o volume de dinheiro compatível com suas operações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="take.01" id="buscar.02" name="pegar em um lugar para trazer para outro" vncls="10.5 11.3">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from, or prepositional complement of arg1" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2849:  O resultado positivo da estratégia pode ser comprovado agora,  dizem os criadores,  uma_  vez_  que hoje são os EUA que estão buscando cavalo árabe no Brasil. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">buscando</rel>
+                <arg f="" n="1">cavalo árabe
+</arg>
+                <arg f="loc" n="m">no Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

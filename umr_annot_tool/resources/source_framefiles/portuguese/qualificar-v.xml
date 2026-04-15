@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="qualificar">
+        <note />
+    <roleset framnet="qualify.01" id="qualificar.01" name="definir" vncls="29.2">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing being described" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary predication" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s197:  « L' _  Osservatore_  Romano »,  o jornal do Vaticano,  qualificou a campanha de US$  15 milhões como « terrorismo de imagem ». 
+</text>
+                <arg f="" n="0">« L' _  Osservatore_  Romano »,  o jornal do Vaticano, 
+</arg>
+                <rel f="">qualificou</rel>
+                <arg f="" n="1">a campanha de US$  15 milhões
+</arg>
+                <arg f="" n="2">como « terrorismo de imagem »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

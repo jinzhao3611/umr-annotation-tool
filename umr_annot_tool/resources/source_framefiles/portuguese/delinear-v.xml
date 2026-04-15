@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="delinear">
+        <note />
+    <roleset framnet="outline.01" id="delinear.01" name="esboçar" vncls="">
+            <roles>
+                <role descr="describer" n="0" />
+                <role descr="thing being described" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2221:  Segundo Markus_  Sokol,  coordenador de comunicação,  a estratégia de comunicação foi delineada num seminário realizado em dezembro passado. 
+</text>
+                <arg f="dis" n="m">Segundo Markus_  Sokol,  coordenador de comunicação, 
+</arg>
+                <arg f="" n="1">a estratégia de comunicação
+</arg>
+                <rel f="">delineada</rel>
+                <arg f="loc" n="m">num seminário realizado em dezembro passado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

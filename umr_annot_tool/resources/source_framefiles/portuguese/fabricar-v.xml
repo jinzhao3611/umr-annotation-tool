@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fabricar">
+        <note />
+    <roleset framnet="manufacture.01" id="fabricar.01" name="produzir artefato" vncls="26.4">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                </role>
+                <role descr="creation" n="1">
+                    <vnrole vncls="26.4" vntheta="Product" />
+                </role>
+                <role descr="created-from, thing changed" n="2">
+                    <vnrole vncls="26.4" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.4" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1927:  A empresa possui laboratório próprio na França e fabrica os equipamentos usados em suas clínicas. 
+</text>
+                <arg f="" n="0">A empresa
+</arg>
+                <rel f="">fabrica</rel>
+                <arg f="" n="1">os equipamentos usados em suas clínicas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

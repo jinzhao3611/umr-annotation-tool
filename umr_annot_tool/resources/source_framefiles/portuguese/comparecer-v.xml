@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comparecer">
+        <note />
+    <roleset framnet="" id="comparecer.01" name="estar presente em um local" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3873:  Stephen_  Freehill,  16(  foto) ,  compareceu ontem a um tribunal de Cingapura para uma audiência preliminar. 
+</text>
+                <arg f="" n="0">Stephen_  Freehill,  16(  foto) , 
+</arg>
+                <rel f="">compareceu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">a um tribunal de Cingapura
+</arg>
+                <arg f="pnc" n="m">para uma audiência preliminar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2913:  Nenhum dirigente do PMDB compareceu ontem,  em São_  Paulo,  ﻿à cerimônia de instalação do Instituto_  Ulysses_  Guimarães_  de_  Estudos_  Políticos_  e_  Sociais. 
+</text>
+                <arg f="" n="0">Nenhum dirigente do PMDB
+</arg>
+                <rel f="">compareceu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <arg f="" n="1">﻿à cerimônia de instalação do Instituto_  Ulysses_  Guimarães_  de_  Estudos_  Políticos_  e_  Sociais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2398:  O presidente do partido no Rio,  Sá_  Freire,  disse que o pedido de cassação foi feito porque Walter_  Queiroz não teria comparecido às reuniões marcadas para que ele explicasse sua nova declaração de renda. 
+</text>
+                <arg f="" n="0">Walter_  Queiroz
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">comparecido</rel>
+                <arg f="" n="1">às reuniões marcadas para que ele explicasse sua nova declaração de renda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s901:  Eles têm que comparecer no Juquery de segunda a sexta-  feira,  das 8h às 17h. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">comparecer</rel>
+                <arg f="" n="1">no Juquery
+</arg>
+                <arg f="tmp" n="m">de segunda a sexta-  feira
+</arg>
+                <arg f="tmp" n="m">das 8h às 17h
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

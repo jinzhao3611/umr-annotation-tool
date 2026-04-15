@@ -1,0 +1,457 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="usar">
+        <note />
+        <note />
+    <roleset framnet="use.01" id="usar.01" name="empregar algo para determinada finalidade; utilizar" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4141:  A energia nuclear é usada só para movimentar a embarcação. 
+</text>
+                <rel f="">usada</rel>
+                <arg f="dir" n="m">só para movimentar a embarcação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4135:  Alguns tenistas são assim,  usam sua carga emocional como combustível. 
+</text>
+                <arg f="" n="0">Alguns tenistas
+</arg>
+                <rel f="">usam</rel>
+                <arg f="" n="1">sua carga emocional
+</arg>
+                <arg f="" n="2">como combustível
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4132:  Gilbert- -  Acho que Andre usou essa mesma pressão a seu favor. 
+</text>
+                <arg f="" n="0">Andre
+</arg>
+                <rel f="">usou</rel>
+                <arg f="" n="1">essa mesma pressão
+</arg>
+                <arg f="" n="2">a seu favor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3846:  O governo vai usar a URV para corrigir impostos,  garantiu FHC. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">usar</rel>
+                <arg f="" n="1">a URV
+</arg>
+                <arg f="" n="2">para corrigir impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3515:  Precisei cair mais algumas vezes até aprender a usar o breque. 
+</text>
+                <rel f="">usar</rel>
+                <arg f="" n="1">o breque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3462:  Para aquele verniz atualizador,  passe desde_  já a usar a expressão « blues_  rap ». 
+</text>
+                <arg f="" n="2">Para aquele verniz atualizador
+</arg>
+                <rel f="">usar</rel>
+                <arg f="" n="1">a expressão « blues_  rap »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3230:  A substância também é usada em vários medicamentos vendidos no Brasil,  que dizem ser capazes de aliviar dores causadas por varizes e eliminar câimbras noturnas em pessoas que sofrem problemas de circulação nas pernas. 
+</text>
+                <arg f="" n="1">A substância
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">usada</rel>
+                <arg f="" n="2">em vários medicamentos vendidos no Brasil,  que dizem ser capazes de aliviar dores causadas por varizes e eliminar câimbras noturnas em pessoas que sofrem problemas de circulação nas pernas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3034:  É certo que,  desta_  vez,  o governo está mais atento do_  que no Plano_  Cruzado e vai usar,  segundo o ministro Rubens_  Ricupero,  todos os artifícios para evitar uma febre de consumo. 
+</text>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">usar</rel>
+                <arg f="" n="1">todos os artifícios
+</arg>
+                <arg f="" n="2">para evitar uma febre de consumo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2908:  3.  978 pessoas usam o Folha_  Informações
+</text>
+                <arg f="" n="0">3.  978 pessoas
+</arg>
+                <rel f="">usam</rel>
+                <arg f="" n="1">o Folha_  Informações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2848:  « Isto foi fundamental,  pois conseguimos aumentar nossos criatórios e agora usamos como garanhões selecionadores apenas aqueles realmente de ponta »,  diz. 
+</text>
+                <arg f="tmp" n="m">agora
+</arg>
+                <rel f="">usamos</rel>
+                <arg f="" n="2">como garanhões selecionadores
+</arg>
+                <arg f="" n="1">apenas aqueles realmente de ponta
+</arg>
+                <note>argumentos invertidos</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2734:  Vice de FHC,  Maciel nunca usou tanto a expressão « ternurar ». 
+</text>
+                <arg f="" n="0">Maciel
+</arg>
+                <arg f="tmp" n="m">nunca
+</arg>
+                <rel f="">usou</rel>
+                <arg f="ext" n="m">tanto
+</arg>
+                <arg f="" n="1">a expressão « ternurar »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2611:  Assim,  se você está usando uma planilha,  por_  exemplo,  pode selecionar parte(  ou todo)  e levar o_  que foi selecionado para outra planilha ou qualquer programa que estiver sendo usado. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">usando</rel>
+                <arg f="" n="1">uma planilha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2384:  Outro ponto é que as bolas que vão ser usadas no campeonato não devem ser escolhidas por interesses comerciais. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">usadas</rel>
+                <arg f="" n="2">no campeonato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2268:  Nas aulas,  Candelori usa reportagens de jornais para introduzir seus temas e colocar toda a classe para falar. 
+</text>
+                <arg f="loc" n="m">Nas aulas
+</arg>
+                <arg f="" n="0">Candelori
+</arg>
+                <rel f="">usa</rel>
+                <arg f="" n="1">reportagens de jornais
+</arg>
+                <arg f="" n="2">para introduzir seus temas e colocar toda a classe para falar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2232:  Tecnologia dos EUA,  que usa microorganismos devoradores de material orgânico,  está sendo testada pela Petrobrás
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">usa</rel>
+                <arg f="" n="1">microorganismos devoradores de material orgânico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2218:  Campanha do PT vai usar mídias alternativas
+</text>
+                <arg f="" n="2">Campanha do PT
+</arg>
+                <rel f="">usar</rel>
+                <arg f="" n="1">mídias alternativas
+</arg>
+                <note>arg2 como sujeito??</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2212:  Eu tento usar o processo de edição,  como se trabalha numa mesa de edição. 
+</text>
+                <rel f="">usar</rel>
+                <arg f="" n="1">o processo de edição
+</arg>
+                <arg f="mnr" n="m">como se trabalha numa mesa de edição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1827:  Os nove estádios do Mundial são normalmente usados para o futebol americano,  que tem marcas próprias na grama. 
+</text>
+                <arg f="" n="1">Os nove estádios do Mundial
+</arg>
+                <arg f="adv" n="m">normalmente
+</arg>
+                <rel f="">usados</rel>
+                <arg f="" n="2">para o futebol americano,  que tem marcas próprias na grama
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1269:  Jack_  «Girafa»_  Charlton,  técnico da Irlanda,  usou seu pescoço comprido e seus quase dois metros de altura para vislumbrar a passagem da equipe para as quartas,  depois de um estréia vitoriosa contra a Itália na primeira fase. 
+</text>
+                <arg f="" n="0">Jack_  «Girafa»_  Charlton,  técnico da Irlanda, 
+</arg>
+                <rel f="">usou</rel>
+                <arg f="" n="1">seu pescoço comprido e seus quase dois metros de altura
+</arg>
+                <arg f="" n="2">para vislumbrar a passagem da equipe para as quartas,  depois de um estréia vitoriosa contra a Itália na primeira fase
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1245:  Muitos dos cassinos têm grandes grupos por_  trás,  que usam incentivos aos índios como fachada. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">usam</rel>
+                <arg f="" n="1">incentivos aos índios
+</arg>
+                <arg f="" n="2">como fachada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1211:  Estudo da Associação_  dos_  Engenheiros da Petrobrás sobre a estrutura de preços dos combustíveis mostra que a Petrobrás tem uma margem de até 29%  no preço do combustível que poderia ser usada para reduzir o valor da gasolina. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">usada</rel>
+                <arg f="" n="2">para reduzir o valor da gasolina
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1036:  Ao_  todo,  serão usados cerca_  de 5.  800 computadores. 
+</text>
+                <arg f="adv" n="m">Ao_  todo
+</arg>
+                <rel f="">usados</rel>
+                <arg f="" n="1">cerca_  de 5.  800 computadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s924:  Os pescadores detidos em_  flagrante usando tarrafas(  redes de pesca)  serão acusados de crime contra fauna,  que prevê de um a três anos de prisão. 
+</text>
+                <rel f="">usando</rel>
+                <arg f="" n="1">tarrafas(  redes de pesca) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s846:  Deve-  se usar pedras(  pedra goiás e ardósias) ,  madeiras não-  brilhantes(  que riscam facilmente)  e cerâmicas não-  esmaltadas. 
+</text>
+                <rel f="">usar</rel>
+                <arg f="" n="1">pedras(  pedra goiás e ardósias) ,  madeiras não-  brilhantes(  que riscam facilmente)  e cerâmicas não-  esmaltadas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s128:  O Pentágono usa a Internet,  que conecta computadores a sistemas telefônicos,  para que seus funcionários troquem informações. 
+</text>
+                <arg f="" n="0">O Pentágono
+</arg>
+                <rel f="">usa</rel>
+                <arg f="" n="1">a Internet,  que conecta computadores a sistemas telefônicos, 
+</arg>
+                <arg f="" n="2">para que seus funcionários troquem informações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="wear.01" id="usar.02" name="vestir" vncls="41.3.1">
+            <roles>
+                <role descr="wearer" n="0">
+                    <vnrole vncls="41.3.1" vntheta="Agent" />
+                </role>
+                <role descr="clothing" n="1">
+                    <vnrole vncls="41.3.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4101:  Jurava que ele usava um chapéu de cowboy. 
+</text>
+                <rel f="">usava</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3128:  Fabiane recebeu CR$  35 mil para usar camiseta da candidata e gritar o nome de Quércia. 
+</text>
+                <rel f="">usar</rel>
+                <arg f="" n="1">camiseta da candidata
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2507:  O Chacal chegou ontem às 10h30(  5h30 no Brasil)  ao Palácio_  da_  Justiça,  usando algemas e cercado por um forte esquema de segurança. 
+</text>
+                <rel f="">usando</rel>
+                <arg f="" n="1">algemas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1905:  As aparências são as principais vítimas do sarcasmo de Altman,  desde as « peruas » que discutem a cor de seus cabelos até a noiva,  que usa aparelho,  escovando os dentes alegre diante_  do espelho. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">usa</rel>
+                <arg f="" n="1">aparelho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1554:  A guarda usará uniformes especiais. 
+</text>
+                <arg f="" n="0">A guarda
+</arg>
+                <rel f="">usará</rel>
+                <arg f="" n="1">uniformes especiais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1498:  Mesmo nos meses quentes do hemisfério Norte,  é recomendável levar um suéter para ser usado ﻿à noite
+</text>
+                <rel f="">usado</rel>
+                <arg f="tmp" n="m">﻿à noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1231:  Nunca use anágua curta com uma saia comprida. 
+</text>
+                <arg f="tmp" n="m">Nunca
+</arg>
+                <rel f="">use</rel>
+                <arg f="" n="1">anágua curta
+</arg>
+                <arg f="mnr" n="m">com uma saia comprida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1230:  A anágua deve ser usada sob roupa transparente. 
+</text>
+                <arg f="" n="1">A anágua
+</arg>
+                <rel f="">usada</rel>
+                <arg f="mnr" n="m">sob roupa transparente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1229:  Uma blusa preta pode ser usada com um sutiã branco se a saia for branca »,  explica. 
+</text>
+                <arg f="" n="1">Uma blusa preta
+</arg>
+                <rel f="">usada</rel>
+                <arg f="mnr" n="m">com um sutiã branco
+</arg>
+                <arg f="adv" n="m">se a saia for branca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

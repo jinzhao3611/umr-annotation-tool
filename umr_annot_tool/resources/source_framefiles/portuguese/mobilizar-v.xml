@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mobilizar">
+        <note />
+    <roleset framnet="mobilize.01" id="mobilizar.01" name="fazer mover" vncls="45.4">
+            <roles>
+                <role descr="mobilizer" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing mobilized" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3580:  O próprio presidente Itamar_  Franco pedirá empenho de todos os ministros para mobilizar os seus partidos para a votação. 
+</text>
+                <rel f="">mobilizar</rel>
+                <arg f="" n="1">os seus partidos
+</arg>
+                <arg f="pnc" n="m">para a votação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

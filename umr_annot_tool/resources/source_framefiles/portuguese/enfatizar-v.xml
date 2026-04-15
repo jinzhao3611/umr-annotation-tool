@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="enfatizar">
+        <note />
+    <roleset framnet="emphasize.01" id="enfatizar.01" name="destacar; colocar ênfase" vncls="">
+            <roles>
+                <role descr="emphasizer" n="0" />
+                <role descr="utterance" n="1" />
+                <role descr="hearer" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3472:  O diretor executivo do FMI também enfatizou a necessidade da queda dos juros no Brasil para incentivar a volta de investimentos maciços nos setor produtivo. 
+</text>
+                <arg f="" n="0">O diretor executivo do FMI
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">enfatizou</rel>
+                <arg f="" n="1">a necessidade da queda dos juros no Brasil para incentivar a volta de investimentos maciços nos setor produtivo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

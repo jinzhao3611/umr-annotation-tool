@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esboçar">
+        <note />
+    <roleset framnet="draft.01" id="esboçar.01" name="traçar" vncls="-">
+            <roles>
+                <role descr="drafter, agent" n="0" />
+                <role descr="plan, entity drafted" n="1" />
+                <role descr="beneficiary" n="2" />
+                <role descr="other participant" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2222:  Executivos em cargos de liderança assumem seus cargos com mais uma pesada função:  implementar cada passo da estratégia que eles próprios esboçaram. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">eles próprios
+</arg>
+                <rel f="">esboçaram</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1540:  Em março,  esboça-  se a mesma tendência. 
+</text>
+                <arg f="tmp" n="m">Em março
+</arg>
+                <rel f="">esboça-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">a mesma tendência
+</arg>
+                <note>"se" partícula apassivadora: anotado com arg0 para marcar a supressão do agente</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s310:  O tancredismo concedeu ao seu principal teórico,  professor e senador Fernando_  Henrique_  Cardoso,  a oportunidade de esboçar a filosofia política do mudancismo. 
+</text>
+                <rel f="">esboçar</rel>
+                <arg f="" n="1">a filosofia política do mudancismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

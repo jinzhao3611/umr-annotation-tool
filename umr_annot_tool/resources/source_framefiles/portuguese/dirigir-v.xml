@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dirigir">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="direct.01" id="dirigir.01" name="comandar; orientar" vncls="26.7-1">
+            <roles>
+                <role descr="director" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="thing directed" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="direction, towards what" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3989:  Eddie(  Harvey_  Keitel)  dirige a história de um casal de ricos drogados em crise(  Madonna e James_  Russo) . 
+</text>
+                <arg f="" n="0">Eddie(  Harvey_  Keitel) 
+</arg>
+                <rel f="">dirige</rel>
+                <arg f="" n="1">a história de um casal de ricos drogados em crise(  Madonna e James_  Russo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3074:  Agora,  além_  de dirigir seu grupo sediado em Nova_  York,  ele também vai atuar como coreógrafo-  residente do Ballet_  da_  Ópera_  de_  Lyon,  que acaba de nomear-  lo para o cargo,  antes ocupado por Maguy_  Marin. 
+</text>
+                <rel f="">dirigir</rel>
+                <arg f="" n="1">seu grupo sediado em Nova_  York
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s41:  Se eu dirigisse uma federação,  apresentaria balanços mensais e liberaria minhas contas bancárias. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">dirigisse</rel>
+                <arg f="" n="1">uma federação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="drive.01" id="dirigir.02" name="conduzir veículo" vncls="51.4.2 11.5-1">
+            <roles>
+                <role descr="driver" n="0">
+                    <vnrole vncls="11.5-1" vntheta="Agent" />
+                    <vnrole vncls="51.4.2" vntheta="Agent" />
+                </role>
+                <role descr="vehicle or path" n="1">
+                    <vnrole vncls="11.5-1" vntheta="Theme" />
+                    <vnrole vncls="51.4.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3539:  Ele dirigia sozinho um Santana 90 em alta velocidade na avenida_  do_  Estado,  no Cambuci(  região central) ,  quando,  provavelmente,  perdeu o controle do carro e bateu num poste. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">dirigia</rel>
+                <arg f="mnr" n="m">sozinho
+</arg>
+                <arg f="" n="1">um Santana 90
+</arg>
+                <arg f="mnr" n="m">em alta velocidade
+</arg>
+                <arg f="loc" n="m">na avenida_  do_  Estado
+</arg>
+                <arg f="loc" n="m">no Cambuci(  região central) 
+</arg>
+                <arg f="tmp" n="m">quando,  provavelmente,  perdeu o controle do carro e bateu num poste
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="direct.01" id="dirigir.03" name="direcionar" vncls="26.7-1">
+            <roles>
+                <role descr="director" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="thing directed" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="direction, towards what" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2184:  O Conia terá 18 palestras dirigidas às áreas de medicina,  odontologia,  veterinária,  arquitetura,  urbanismo,  engenharia e direito. 
+</text>
+                <rel f="">dirigidas</rel>
+                <arg f="" n="1">às áreas de medicina,  odontologia,  veterinária,  arquitetura,  urbanismo,  engenharia e direito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s756:  Também em isto Bôscoli estava em seu elemento:  poucos podiam ser mais hilariantemente viperinos desde_  que a piada não fosse dirigida contra você. 
+</text>
+                <arg f="" n="1">a piada
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">dirigida</rel>
+                <arg f="" n="2">contra você
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="approach.01" id="dirigir.04" name="mover-se em direção a" vncls="98 51.1-2">
+            <roles>
+                <role descr="entity in motion" n="1">
+                    <vnrole vncls="98" vntheta="Agent" />
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="destination" n="2">
+                    <vnrole vncls="98" vntheta="Theme" />
+                    <vnrole vncls="51.1-2" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s297:  O candidato deu rápida entrevista no saguão do aeroporto e dirigiu-  se ao Hotel_  Delmonicos,  na Park_  Avenue,  em Manhattan,  onde a diária é de US$  195(  CR$  253 mil)  no fim_  de_  semana e US$  250(  CR$  325 mil)  de segunda a sexta-  feira. 
+</text>
+                <arg f="" n="0">O candidato
+</arg>
+                <rel f="">dirigiu-</rel>
+                <arg f="" n="1">ao Hotel_  Delmonicos
+</arg>
+                <arg f="prd" n="m">na Park_  Avenue
+</arg>
+                <arg f="prd" n="m">em Manhattan,  onde a diária é de US$  195(  CR$  253 mil)  no fim_  de_  semana e US$  250(  CR$  325 mil)  de segunda a sexta-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

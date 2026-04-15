@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="escovar">
+        <note />
+    <roleset framnet="brush.01" id="escovar.01" name="esfregar escova sobre superfície (dentes, cabelo, pelo, chão)" vncls="10.4.2">
+            <roles>
+                <role descr="entity with brush, agent" n="0">
+                    <vnrole vncls="10.4.2" vntheta="Agent" />
+                </role>
+                <role descr="entity brushed" n="1">
+                    <vnrole vncls="10.4.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1905:  As aparências são as principais vítimas do sarcasmo de Altman,  desde as « peruas » que discutem a cor de seus cabelos até a noiva,  que usa aparelho,  escovando os dentes alegre diante_  do espelho. 
+</text>
+                <rel f="">escovando</rel>
+                <arg f="" n="1">os dentes
+</arg>
+                <arg f="mnr" n="m">alegre
+</arg>
+                <arg f="loc" n="m">diante_  do espelho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

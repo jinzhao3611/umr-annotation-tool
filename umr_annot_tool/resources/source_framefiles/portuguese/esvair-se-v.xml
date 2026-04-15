@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esvair-se">
+        <note />
+    <roleset framnet="go.18" id="esvair-se.01" name="escoar-se; desaparecer" vncls="-">
+            <roles>
+                <role descr="thing being extinguished" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3587:  Na condição de senhor de meia-  idade com idéias adolescentes,  tio Dave vem observando com bastante inquietação que seu sentido do paladar parece estar se esvaindo pelo ralo. 
+</text>
+                <rel f="">esvaindo</rel>
+                <arg f="loc" n="m">pelo ralo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

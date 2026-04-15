@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desanimar">
+        <note />
+    <roleset framnet="discourage.01" id="desanimar.01" name="tirar o ânimo" vncls="67 77">
+            <roles>
+                <role descr="entity removing confidence, agent" n="0">
+                    <vnrole vncls="67" vntheta="Agent" />
+                    <vnrole vncls="77" vntheta="Agent" />
+                </role>
+                <role descr="entity discouraged" n="1">
+                    <vnrole vncls="67" vntheta="Theme" />
+                </role>
+                <role descr="discouraged from" n="2">
+                    <vnrole vncls="77" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3392:  Desanima o leitor,  que recebe dezenas deles por dia
+</text>
+                <rel f="">Desanima</rel>
+                <arg f="" n="1">o leitor,  que recebe dezenas deles por dia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

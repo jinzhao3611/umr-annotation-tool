@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="telefonar">
+        <note />
+    <roleset framnet="phone.01" id="telefonar.01" name="fazer ligação telefônica" vncls="13.5.1 37.4">
+            <roles>
+                <role descr="agent making a call" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                    <vnrole vncls="37.4" vntheta="Agent" />
+                </role>
+                <role descr="receiver" n="1">
+                    <vnrole vncls="37.4" vntheta="Recipient" />
+                </role>
+                <role descr="message" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                    <vnrole vncls="37.4" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3020:  Durante a negociação,  ontem ﻿à tarde,  Muller telefonou para o presidente do São_  Paulo,  Fernando_  Casal_  de_  Rey,  e se lamentou. 
+</text>
+                <arg f="tmp" n="m">Durante a negociação
+</arg>
+                <arg f="tmp" n="m">ontem ﻿à tarde
+</arg>
+                <arg f="" n="0">Muller
+</arg>
+                <rel f="">telefonou</rel>
+                <arg f="" n="1">para o presidente do São_  Paulo,  Fernando_  Casal_  de_  Rey, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s584:  « O editor da revista me telefonou e deu a idéia. 
+</text>
+                <arg f="" n="0">O editor da revista
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">telefonou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s571:  Burle_  Filho disse que combinou a ida de seu auxiliar após telefonar para seu colega carioca,  Antônio_  Carlos_  Biscaia. 
+</text>
+                <rel f="">telefonar</rel>
+                <arg f="" n="1">para seu colega carioca,  Antônio_  Carlos_  Biscaia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

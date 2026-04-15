@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="amarrar">
+        <note />
+    <roleset framnet="obstruct.01" id="amarrar.02" name="obstruir" vncls="-">
+            <roles>
+                <role descr="blocker, obstruction" n="0" />
+                <role descr="thing obstructed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3357:  Teses modernas e sociais como o controle civil sobre o sistema de saúde esbarram em resistências enormes dos setores hegemônicos do PT,  sob o argumento de que amarrariam a atuação do governo,  logo agora que o partido se prepara para assumir o poder. 
+</text>
+                <arg f="" n="0">Teses modernas e sociais como o controle civil sobre o sistema de saúde
+</arg>
+                <rel f="">amarrariam</rel>
+                <arg f="" n="1">a atuação do governo
+</arg>
+                <arg f="tmp" n="m">logo agora que o partido se prepara para assumir o poder
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="transmitir">
+        <note />
+    <roleset framnet="transmit.01" id="transmitir.01" name="comunicar; passar" vncls="11.1-1">
+            <roles>
+                <role descr="sender" n="0">
+                    <vnrole vncls="11.1-1" vntheta="Agent" />
+                </role>
+                <role descr="sent" n="1">
+                    <vnrole vncls="11.1-1" vntheta="Theme" />
+                </role>
+                <role descr="sent-to" n="2">
+                    <vnrole vncls="11.1-1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3416:  Tudo depende da capacidade que o Parlamento tiver de transmitir as suas idéias ﻿à imprensa,  ao rádio e ﻿à televisão. 
+</text>
+                <rel f="">transmitir</rel>
+                <arg f="" n="1">as suas idéias
+</arg>
+                <arg f="" n="2">﻿à imprensa,  ao rádio e ﻿à televisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3272:  Entre 20h e 20h30,  horário em que o « cartoon » costuma ir ao ar,  a emissora transmitiu uma sequência de videoclipes. 
+</text>
+                <arg f="tmp" n="m">Entre 20h e 20h30,  horário em que o « cartoon » costuma ir ao ar, 
+</arg>
+                <arg f="" n="0">a emissora
+</arg>
+                <rel f="">transmitiu</rel>
+                <arg f="" n="1">uma sequência de videoclipes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s787:  Ele sequestrou e violentou três meninos com a intenção de lhes transmitir o vírus da Aids de que se sabia portador. 
+</text>
+                <arg f="" n="2">lhes
+</arg>
+                <rel f="">transmitir</rel>
+                <arg f="" n="1">o vírus da Aids de que se sabia portador
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

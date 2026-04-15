@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abraçar">
+        <note />
+    <roleset framnet="embrace.02" id="abraçar.01" name="envolver com os braços" vncls="36.2">
+            <roles>
+                <role descr="hugger" n="0">
+                    <vnrole vncls="36.2" vntheta="Actor1" />
+                </role>
+                <role descr="person hugged" n="1">
+                    <vnrole vncls="36.2" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3184:  Beijou,  abraçou duas vezes e conversou por alguns minutos com o conterrâneo presidente. 
+</text>
+                <rel f="">abraçou</rel>
+                <arg f="tmp" n="m">duas vezes
+</arg>
+                <arg f="" n="1">o conterrâneo presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s560:  « Ele já está abraçando a candidatura Quércia »,  disse Itamar_  Borges(  PMDB) ,  de Santa_  Fé_  do_  Sul. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">abraçando</rel>
+                <arg f="" n="1">a candidatura Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

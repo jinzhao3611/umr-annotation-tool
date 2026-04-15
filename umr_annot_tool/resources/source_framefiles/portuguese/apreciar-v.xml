@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apreciar">
+        <note />
+    <roleset framnet="appreciate.02" id="apreciar.01" name="admirar, gostar" vncls="31.2">
+            <roles>
+                <role descr="emoter" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing appreciated" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4007:  Chance imperdível para aqueles que apreciam enterradas,  tocos e a mais primitiva troca de porradas. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">apreciam</rel>
+                <arg f="" n="1">enterradas,  tocos e a mais primitiva troca de porradas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1085:  Na sonolenta Eindhoven,  cidade do Brabante(  região do sul da Holanda) ,  seriedade e pontualidade são apreciadas. 
+</text>
+                <arg f="loc" n="m">Na sonolenta Eindhoven,  cidade do Brabante(  região do sul da Holanda) , 
+</arg>
+                <arg f="" n="1">seriedade e pontualidade
+</arg>
+                <rel f="">apreciadas</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

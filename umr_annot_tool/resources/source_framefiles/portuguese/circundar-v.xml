@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="circundar">
+        <note />
+    <roleset framnet="surround.01" id="circundar.01" name="fazer um círculo em torno de" vncls="9.8">
+            <roles>
+                <role descr="causative agent" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="thing surrounding" n="1">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <role descr="thing surrounded" n="2">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2402:  Ele circundou com giz os cinco meias. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">circundou</rel>
+                <arg f="" n="1">com giz
+</arg>
+                <arg f="" n="2">os cinco meias
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

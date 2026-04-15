@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sobreviver">
+        <note />
+    <roleset framnet="survive.01" id="sobreviver.01" name="continuar vivo" vncls="">
+            <roles>
+                <role descr="survivor" n="0" />
+                <role descr="adverse circumstances" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2891:  Afinal,  por_  mais_  que tentem matar o craque,  ele sempre sobrevive,  aqui ou ali,  onde menos se espera. 
+</text>
+                <arg f="tmp" n="m">Afinal
+</arg>
+                <rel f="">sobrevive</rel>
+                <arg f="tmp" n="m">aqui ou ali
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s806:  « Só sobrevivemos porque encontramos duas cabanas de caçadores com mantimentos e cobertores »,  disse Nascimento. 
+</text>
+                <arg f="adv" n="m">Só
+</arg>
+                <rel f="">sobrevivemos</rel>
+                <arg f="cau" n="m">porque encontramos duas cabanas de caçadores com mantimentos e cobertores
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

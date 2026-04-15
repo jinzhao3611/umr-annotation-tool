@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="capitalizar">
+        <note />
+    <roleset framnet="capitalize.02" id="capitalizar.01" name="tirar vantagem de, aproveitar" vncls="">
+            <roles>
+                <role descr="exploiter" n="0" />
+                <role descr="thing exploited" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2431:  Ao_  contrário_  do que poderia esperar a direita norte-  americana na vigência da Guerra_  Fria,  a vinda de Soljenitsin não pôde ser capitalizada em discursos e aparições públicas. 
+</text>
+                <arg f="" n="1">a vinda de Soljenitsin
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">capitalizada</rel>
+                <arg f="loc" n="m">em discursos e aparições públicas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

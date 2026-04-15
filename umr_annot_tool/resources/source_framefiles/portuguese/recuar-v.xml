@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recuar">
+        <note />
+    <roleset framnet="retreat.01" id="recuar.01" name="retroceder; andar para trás" vncls="">
+            <roles>
+                <role descr="causal agent" n="A" />
+                <role descr="retreater" n="0" />
+                <role descr="scary thing" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3576:  A_  partir_  de agora,  a taxa deve sempre recuar. 
+</text>
+                <arg f="tmp" n="m">A_  partir_  de agora
+</arg>
+                <arg f="" n="1">a taxa
+</arg>
+                <arg f="adv" n="m">sempre
+</arg>
+                <rel f="">recuar</rel>
+                <note>"decrease.01" seria adequado no que diz respeito a "taxas"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3484:  « Um ataque agora não faz mais sentido,  desde_  que os sérvios continuem a recuar »,  disse ﻿à Folha o coronel Andrew_  Duncan,  do IIEE. 
+</text>
+                <arg f="" n="0">os sérvios
+</arg>
+                <rel f="">recuar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1517:  Outra pesquisa do Datafolha mostra que estes alimentos recuaram 0,  47%  na última semana de novembro. 
+</text>
+                <arg f="" n="1">estes alimentos
+</arg>
+                <rel f="">recuaram</rel>
+                <arg f="" n="2">0,  47% 
+</arg>
+                <arg f="tmp" n="m">na última semana de novembro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

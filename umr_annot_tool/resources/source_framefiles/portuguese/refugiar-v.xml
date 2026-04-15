@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="refugiar-se">
+        <note />
+    <roleset framnet="shelter.01" id="refugiar.01" name="abrigar-se após fugir" vncls="46 9.10 47.1 16">
+            <roles>
+                <role descr="agent, putter in shelter" n="0">
+                    <vnrole vncls="16" vntheta="Agent" />
+                    <vnrole vncls="9.10" vntheta="Agent" />
+                </role>
+                <role descr="thing in shelter (if separate from arg0)" n="1">
+                    <vnrole vncls="47.1" vntheta="Theme" />
+                    <vnrole vncls="16" vntheta="Patient" />
+                    <vnrole vncls="9.10" vntheta="Theme" />
+                    <vnrole vncls="46" vntheta="Theme" />
+                </role>
+                <role descr="shelter" n="2">
+                    <vnrole vncls="47.1" vntheta="Location" />
+                    <vnrole vncls="16" vntheta="Location" />
+                    <vnrole vncls="9.10" vntheta="Location" />
+                    <vnrole vncls="46" vntheta="Location" />
+                </role>
+                <role descr="danger, sheltered from" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s428:  Esse palco,  além_  de revelar inúmeros talentos que depois se « refugiaram » na Europa,  como Sonia_  Motta,  serviu para Marilena inaugurar a fase mais fértil de sua carreira. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">depois
+</arg>
+                <rel f="">refugiaram</rel>
+                <arg f="" n="2">na Europa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

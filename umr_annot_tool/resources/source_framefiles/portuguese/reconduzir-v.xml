@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reconduzir">
+        <note />
+    <roleset framnet="reappoint.01" id="reconduzir.01" name="renomear; levar de novo para o mesmo lugar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2856:  A liminar,  ainda não cumprida pelo governo do Espírito_  Santo,  determina que o delegado responsável pelo caso,  Francisco_  Badenes,  seja reconduzido ao cargo. 
+</text>
+                <arg f="" n="1">o delegado responsável pelo caso,  Francisco_  Badenes, 
+</arg>
+                <rel f="">reconduzido</rel>
+                <arg f="" n="2">ao cargo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s60:  Começou bem antes do que se previa a batalha pela futura sucessão na Fifa apenas seis meses depois do super-  acordo que,  nas vésperas da Copa,  reconduziu o brasileiro João_  Havelange ao sexto mandato consecutivo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">nas vésperas da Copa
+</arg>
+                <rel f="">reconduziu</rel>
+                <arg f="" n="1">o brasileiro João_  Havelange
+</arg>
+                <arg f="" n="2">ao sexto mandato consecutivo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

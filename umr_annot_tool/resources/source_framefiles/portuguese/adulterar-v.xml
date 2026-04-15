@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="adulterar">
+        <note />
+    <roleset framnet="corrupt.01" id="adulterar.01" name="alterar " vncls="45.4">
+            <roles>
+                <role descr="causer of corruption" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="entity corrupted" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="corrupted with what? instrument if separate from arg 0" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1223:  A advogada diz que o Mais!  adulterou a obra « para satisfazer a vontade de neonazistas brasileiros ». 
+</text>
+                <arg f="" n="0">o Mais! 
+</arg>
+                <rel f="">adulterou</rel>
+                <arg f="" n="1">a obra
+</arg>
+                <arg f="pnc" n="m">para satisfazer a vontade de neonazistas brasileiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

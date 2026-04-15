@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acabar">
+        <note />
+        <note />
+    <roleset framnet="end.01" id="acabar.01" name="causar o fim de" vncls="55.1">
+            <roles>
+                <role descr="Intentional agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Thing ending" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Explicit instrument, thing ended with" n="2" />
+                <role descr="point at which something ends" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3684:  Divulgado na semana passada,  o fraco resultado em novembro da produção industrial e das novas encomendas às indústrias acabou com as esperanças de que a Alemanha tivesse saído da pior recessão do pós-  guerra no último trimestre do ano. 
+</text>
+                <arg f="" n="0">o fraco resultado em novembro da produção industrial e das novas encomendas às indústrias
+</arg>
+                <rel f="">acabou</rel>
+                <arg f="" n="1">com as esperanças de que a Alemanha tivesse saído da pior recessão do pós-  guerra no último trimestre do ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1377:  O massacre ocorreu quando a tropa de choque da PM invadiu o pavilhão para acabar com uma rebelião,  em 2 de outubro de 92. 
+</text>
+                <rel f="">acabar</rel>
+                <arg f="" n="1">com uma rebelião
+</arg>
+                <arg f="tmp" n="m">em 2 de outubro de 92
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="finish.01" id="acabar.02" name="terminar" vncls="55.1">
+            <roles>
+                <role descr="Intentional agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Thing finishing" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Explicit instrument, thing finished with" n="2" />
+                <role descr="point at which something finishs" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2803:  Os quatro grandes jornais deram,  na segunda-  feira,  a mesma manchete para informar como acabou o Grande_  Prêmio do Brasil,  que aconteceu domingo passado. 
+</text>
+                <arg f="mnr" n="m">como
+</arg>
+                <rel f="">acabou</rel>
+                <arg f="" n="1">o Grande_  Prêmio do Brasil,  que aconteceu domingo passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s981:  O de meia-  noite é ótimo,  mas é em Botafogo e acaba tarde. 
+</text>
+                <arg f="" n="1">O de meia-  noite
+</arg>
+                <rel f="">acaba</rel>
+                <arg f="tmp" n="m">tarde
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="acabar-se">
+        <note />
+    <roleset framnet="finish.01" id="acabar.03" name="terminar" vncls="55.1">
+            <roles>
+                <role descr="Intentional agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Thing finishing" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Explicit instrument, thing finished with" n="2" />
+                <role descr="point at which something finishs" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4186:  Acabou-  se a gestão do ex-  craque Giampiero_  Boniperti na administração do clube. 
+</text>
+                <rel f="">Acabou-</rel>
+                <arg f="" n="1">a gestão do ex-  craque Giampiero_  Boniperti na administração do clube
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

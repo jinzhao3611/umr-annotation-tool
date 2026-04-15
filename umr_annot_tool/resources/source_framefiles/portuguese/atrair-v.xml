@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atrair">
+        <note />
+    <roleset framnet="appeal.03" id="atrair.01" name="exercer atração sobre" vncls="31.4">
+            <roles>
+                <role descr="appealing thing" n="0">
+                    <vnrole vncls="31.4" vntheta="Cause" />
+                </role>
+                <role descr="entity attracted" n="1">
+                    <vnrole vncls="31.4" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2912:  Instituto com nome de Ulysses não atrai PMDB
+</text>
+                <arg f="" n="0">Instituto com nome de Ulysses
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">atrai</rel>
+                <arg f="" n="1">PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2737:  Caciques do PFL já preparam o discurso para rebater uma possível tentativa tucana de atrair apoios doutros partidos para « diluir » a influência pefelista num eventual governo FHC: 
+</text>
+                <rel f="">atrair</rel>
+                <arg f="" n="1">apoios doutros partidos
+</arg>
+                <arg f="pnc" n="m">para « diluir » a influência pefelista num eventual governo FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2663:  E emoção significa público,  o_  qual atrai patrocinadores. 
+</text>
+                <arg f="" n="0">o_  qual
+</arg>
+                <rel f="">atrai</rel>
+                <arg f="" n="1">patrocinadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1723:  O turismo de pesca ainda atrai 75%  dos visitantes que vão ao Mato_  Grosso_  do_  Sul. 
+</text>
+                <arg f="" n="0">O turismo de pesca
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">atrai</rel>
+                <arg f="" n="1">75%  dos visitantes que vão ao Mato_  Grosso_  do_  Sul
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1543:  A Fenasoft deixou de ser um reduto de especialistas em informática para atrair também quem pretendia comprar o primeiro computador. 
+</text>
+                <arg f="" n="0">A Fenasoft
+</arg>
+                <rel f="">atrair</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">quem pretendia comprar o primeiro computador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1541:  Feira atrai iniciante em informática
+</text>
+                <arg f="" n="0">Feira
+</arg>
+                <rel f="">atrai</rel>
+                <arg f="" n="1">iniciante em informática
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1281:  FHC atrai peemedebistas
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <rel f="">atrai</rel>
+                <arg f="" n="1">peemedebistas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s757:  E havia outro motivo para_  que ele atraísse a ira de tantos:  seu sucesso com as mulheres. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">atraísse</rel>
+                <arg f="" n="1">a ira de tantos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="protestar">
+        <note />
+    <roleset framnet="protest.01" id="protestar.01" name="reclamar; demonstrar revolta contra" vncls="-">
+            <roles>
+                <role descr="protester" n="0" />
+                <role descr="objectionable thing" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2385:  Cerca_  de 300 cubano-  americanos protestaram na_  frente_  do prédio da missão cubana na ONU,  onde as negociações ocorreram. 
+</text>
+                <arg f="" n="0">Cerca_  de 300 cubano-  americanos
+</arg>
+                <rel f="">protestaram</rel>
+                <arg f="loc" n="m">na_  frente_  do prédio da missão cubana
+</arg>
+                <arg f="loc" n="m">na ONU,  onde as negociações ocorreram
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

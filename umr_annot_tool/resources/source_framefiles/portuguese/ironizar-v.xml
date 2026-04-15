@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ironizar">
+        <note />
+    <roleset framnet="" id="ironizar.01" name="falar em tom de ironia" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1589:  Perguntado sobre a qualidade das refeições,  Covas ironizou: 
+</text>
+                <arg f="tmp" n="m">Perguntado sobre a qualidade das refeições
+</arg>
+                <arg f="" n="0">Covas
+</arg>
+                <rel f="">ironizou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s269:  « A explicação da reviravolta não reside numa pretensa especificidade brasileira,  que seria um coquetel de leviandade,  inconstância e pusilanimidade,  tudo ao som de salsa »,  ironiza o editorial. 
+</text>
+                <arg f="" n="1">« A explicação da reviravolta não reside numa pretensa especificidade brasileira,  que seria um coquetel de leviandade,  inconstância e pusilanimidade,  tudo ao som de salsa »
+</arg>
+                <rel f="">ironiza</rel>
+                <arg f="" n="0">o editorial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

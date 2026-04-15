@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atender">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="assist.01" id="atender.01" name="dar assistência" vncls="72">
+            <roles>
+                <role descr="assistant" n="0">
+                    <vnrole vncls="72" vntheta="Agent" />
+                </role>
+                <role descr="assisted" n="1">
+                    <vnrole vncls="72" vntheta="Beneficiary" />
+                </role>
+                <role descr="project" n="2">
+                    <vnrole vncls="72" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4066:  O congresso é dividido em três temas,  com o objetivo de atender de profissionais de informática a executivos e empresários interessados em novas tecnologias,  passando pelo usuário final. 
+</text>
+                <rel f="">atender</rel>
+                <arg f="" n="1">de profissionais de informática a executivos e empresários interessados em novas tecnologias,  passando pelo usuário final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3881:  « Não damos conta de atendê-  los. 
+</text>
+                <rel f="">atendê-</rel>
+                <arg f="" n="1">los
+</arg>
+                <note>exemplo muito curto para inferir sentido</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3123:  Cerca_  de 30 feridos leves foram atendidos na Santa_  Casa da cidade. 
+</text>
+                <arg f="" n="1">Cerca_  de 30 feridos leves
+</arg>
+                <rel f="">atendidos</rel>
+                <arg f="loc" n="m">na Santa_  Casa da cidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2575:  É a terceira linha especial de socorro criada pelo BC desde o lançamento do real,  todas com o objetivo de atender bancos que tiveram sua saúde financeira comprometida. 
+</text>
+                <rel f="">atender</rel>
+                <arg f="" n="1">bancos que tiveram sua saúde financeira comprometida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2359:  Com a colisão,  cinco passageiros ficaram feridos e foram atendidos no Hospital_  Mário_  Gatti. 
+</text>
+                <arg f="" n="1">cinco passageiros
+</arg>
+                <rel f="">atendidos</rel>
+                <arg f="loc" n="m">no Hospital_  Mário_  Gatti
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="meet.05" id="atender.02" name="satisfazer, preencher" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4061:  Minha expectativa não foi atendida em vários pontos. 
+</text>
+                <arg f="" n="1">Minha expectativa
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">atendida</rel>
+                <arg f="loc" n="m">em vários pontos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s232:  Para atender ﻿à política desejada pelo governador eleito,  Barelli vai comandar uma revisão da antiga pasta(  Secretaria_  das_  Relações_  do_  Trabalho) . 
+</text>
+                <rel f="">atender</rel>
+                <arg f="" n="1">﻿à política desejada pelo governador eleito
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="fill.06" id="atender.03" name="entregar" vncls="45.4">
+            <roles>
+                <role descr="satisfier, (order) filler" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="order, thing satisfied" n="1">
+                    <vnrole vncls="45.4" vntheta="Theme" />
+                </role>
+                <role descr="secondary predication" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3343:  A Kodak ainda passou a atender encomendas de peças plásticas para a Philips,  Wapsa e NGK,  entre 16 clientes. 
+</text>
+                <arg f="" n="0">A Kodak
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">atender</rel>
+                <arg f="" n="1">encomendas de peças plásticas para a Philips,  Wapsa e NGK,  entre 16 clientes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="answer.01" id="atender.04" name="responder" vncls="">
+            <roles>
+                <role descr="replier" n="0" />
+                <role descr="in response to" n="1" />
+                <role descr="answer" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2910:  O pico de audiência aconteceu entre as 20h e 21h de sábado,  quando o sistema atendeu 309 ligações. 
+</text>
+                <arg f="" n="0">o sistema
+</arg>
+                <rel f="">atendeu</rel>
+                <arg f="" n="1">309 ligações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2909:  O Folha_  Informações atendeu no último fim-  de-  semana 3.  978 pessoas,  que acionaram o serviço para saber o resultado de Guarani e Palmeiras. 
+</text>
+                <arg f="" n="0">O Folha_  Informações
+</arg>
+                <rel f="">atendeu</rel>
+                <arg f="tmp" n="m">no último fim-  de-  semana
+</arg>
+                <arg f="" n="1">3.  978 pessoas,  que acionaram o serviço para saber o resultado de Guarani e Palmeiras
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

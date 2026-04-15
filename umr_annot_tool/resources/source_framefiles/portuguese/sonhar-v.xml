@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sonhar">
+        <note />
+    <roleset framnet="dream.01" id="sonhar.01" name="visualizar enquanto dorme; almejar; imaginar" vncls="62">
+            <roles>
+                <role descr="dreamer" n="0">
+                    <vnrole vncls="62" vntheta="Experiencer" />
+                </role>
+                <role descr="dream" n="1">
+                    <vnrole vncls="62" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3836:  O torcedor paulista sonhava com uma era futura,  em que São_  Paulo chegaria ﻿à supremacia,  se possível de forma arrasadora. 
+</text>
+                <arg f="" n="0">O torcedor paulista
+</arg>
+                <rel f="">sonhava</rel>
+                <arg f="" n="1">com uma era futura,  em que São_  Paulo chegaria ﻿à supremacia,  se possível de forma arrasadora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2038:  Quem ainda não escolheu sua carreira ou sonha dar uma guinada na vida profissional pode recorrer aos serviços de orientação vocacional oferecidos por algumas instituições em São_  Paulo. 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">sonha</rel>
+                <arg f="" n="1">dar uma guinada na vida profissional
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

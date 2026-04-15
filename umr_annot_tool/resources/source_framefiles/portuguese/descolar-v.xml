@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="descolar">
+        <note />
+    <roleset framnet="" id="descolar.01" name="&quot;obter&quot; - registro coloquial" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1545:  Enquanto isso(  ou entrementes,  como nas antigas histórias em quadrinho) ,  o ex-  governador ACM descola suntuoso empréstimo para socorrer os cacaueiros da Bahia,  quatro anos de carência,  juros de 2%  subsidiados,  um empréstimo de pai(  governo)  para filho(  fazendeiros) . 
+</text>
+                <arg f="" n="0">o ex-  governador ACM
+</arg>
+                <rel f="">descola</rel>
+                <arg f="" n="1">suntuoso empréstimo para socorrer os cacaueiros da Bahia,  quatro anos de carência,  juros de 2%  subsidiados,  um empréstimo de pai(  governo)  para filho(  fazendeiros) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

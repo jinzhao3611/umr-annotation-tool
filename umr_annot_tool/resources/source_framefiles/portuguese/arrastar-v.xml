@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="arrastar">
+        <note />
+    <roleset framnet="drag.01" id="arrastar.01" name="mover à força" vncls="11.4 35.2">
+            <roles>
+                <role descr="dragger" n="0">
+                    <vnrole vncls="11.4" vntheta="agent" />
+                    <vnrole vncls="35.2" vntheta="agent" />
+                </role>
+                <role descr="thing dragged" n="1">
+                    <vnrole vncls="11.4" vntheta="theme" />
+                    <vnrole vncls="35.2" vntheta="theme" />
+                </role>
+                <role descr="direction" n="2">
+                    <vnrole vncls="11.4" vntheta="destination" />
+                    <vnrole vncls="35.2" vntheta="location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2945:  Isso termina por arrastá-  la destestavelmente,  sem que se chegue a parte alguma. 
+</text>
+                <arg f="" n="0">Isso
+</arg>
+                <rel f="">arrastá-</rel>
+                <arg f="" n="1">la
+</arg>
+                <arg f="mnr" n="m">destestavelmente
+</arg>
+                <arg f="adv" n="m">sem que se chegue a parte alguma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s719:  De que adiantaria os jornais do dia seguinte omitirem os nomes,  se eles já haviam sido arrastados ﻿à lama por um noticiário que atinge cerca_  de 60 milhões de pessoas,  certamente mais do_  que a tiragem conjunta de todos os jornais brasileiros? 
+</text>
+                <arg f="" n="1">eles
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">arrastados</rel>
+                <arg f="" n="2">﻿à lama
+</arg>
+                <arg f="" n="0">por um noticiário que atinge cerca_  de 60 milhões de pessoas,  certamente mais do_  que a tiragem conjunta de todos os jornais brasileiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="arrastar-se">
+        <note />
+    <roleset framnet="drag.02" id="arrastar.02" name="alternância incoativa de &quot;arrastar&quot;: ser continuamente protelado" vncls="-">
+            <roles>
+                <role descr="dragger" n="0" />
+                <role descr="thing dragged" n="1" />
+                <role descr="direction or path" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s497:  O advogado Mariano_  Gonçalves_  Neto,  autor da ação popular que se arrasta há 12 anos,  acusa os ex-  ministros de aprovarem uma superavaliação dos terrenos entregues pelo grupo Delfin como pagamento de uma dívida que,  em 1982,  chegava a Cr 70 milhões. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">arrasta</rel>
+                <arg f="tmp" n="m">há 12 anos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="temer">
+        <note />
+    <roleset framnet="fear.01" id="temer.01" name="ter medo" vncls="31.2 31.3">
+            <roles>
+                <role descr="entity afraid" n="0">
+                    <vnrole vncls="31.3" vntheta="Experiencer" />
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="afraid of what?" n="1">
+                    <vnrole vncls="31.3" vntheta="Cause" />
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4130:  Boutros-  Ghali teme que as potências se retirem e suspendam sanções contra a Sérvia pondo em risco outras partes da ex-  Iugoslávia se o plano for aceito. 
+</text>
+                <arg f="" n="0">Boutros-  Ghali
+</arg>
+                <rel f="">teme</rel>
+                <arg f="" n="1">que as potências se retirem e suspendam sanções contra a Sérvia pondo em risco outras partes da ex-  Iugoslávia se o plano for aceito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4070:  O senhor teme ser condenado? 
+</text>
+                <arg f="" n="0">O senhor
+</arg>
+                <rel f="">teme</rel>
+                <arg f="" n="1">ser condenado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2364:  Já assessores do federalista Delors,  que em dez anos na presidência da CE aumentou os poderes do cargo e entrou em conflito com Margaret_  Thatcher(  antecessora de Major) ,  temem que a escolha de Santer sirva para enfraquecer os poderes do presidente,  o_  que abriria caminho para o eixo Alemanha-  França consolidar o seu domínio. 
+</text>
+                <arg f="dis" n="m">Já
+</arg>
+                <arg f="" n="0">assessores do federalista Delors,  que em dez anos na presidência da CE aumentou os poderes do cargo e entrou em conflito com Margaret_  Thatcher(  antecessora de Major) , 
+</arg>
+                <rel f="">temem</rel>
+                <arg f="" n="1">que a escolha de Santer sirva para enfraquecer os poderes do presidente,  o_  que abriria caminho para o eixo Alemanha-  França consolidar o seu domínio. 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1309:  Eles temem,  porém,  que um relacionamento especial entre Moscou e a aliança os deixe sem garantias de segurança. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">temem</rel>
+                <arg f="dis" n="m">porém
+</arg>
+                <arg f="" n="1">que um relacionamento especial entre Moscou e a aliança os deixe sem garantias de segurança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s997:  O adversário que os romenos mais temem não é nenhuma seleção,  mas o cansaço. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">os romenos
+</arg>
+                <arg f="ext" n="m">mais
+</arg>
+                <rel f="">temem</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s996:  Romênia teme cansaço provocado por viagens
+</text>
+                <arg f="" n="0">Romênia
+</arg>
+                <rel f="">teme</rel>
+                <arg f="" n="1">cansaço provocado por viagens
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s142:  São_  Paulo teme a violência do Inter na semifinal júnior
+</text>
+                <arg f="" n="0">São_  Paulo
+</arg>
+                <rel f="">teme</rel>
+                <arg f="" n="1">a violência do Inter
+</arg>
+                <arg f="loc" n="m">na semifinal júnior
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

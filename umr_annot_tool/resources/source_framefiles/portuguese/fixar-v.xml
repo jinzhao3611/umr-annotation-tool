@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fixar">
+        <note />
+    <roleset framnet="fix.03" id="fixar.01" name="tornar fixo; ajustar, combinar" vncls="54.4">
+            <roles>
+                <role descr="agent, setter" n="0">
+                    <vnrole vncls="54.4" vntheta="Agent" />
+                </role>
+                <role descr="thing set" n="1">
+                    <vnrole vncls="54.4" vntheta="Theme" />
+                </role>
+                <role descr="location, position, attribute" n="2">
+                    <vnrole vncls="54.4" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3849:  Quanto_  às tarifas públicas,  não serão fixadas em URV para evitar reajustes diários,  mas terão correções periódicas pelo indexador. 
+</text>
+                <arg f="" n="1">as tarifas públicas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">fixadas</rel>
+                <arg f="" n="2">em URV
+</arg>
+                <arg f="pnc" n="m">para evitar reajustes diários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2887:  Por dois motivos:  a eventual queda na arrecadação e problemas jurídicos que impedem mexer na base de cálculo do imposto por_  meio_  de MP,  já_  que ela foi fixada em emenda constitucional. 
+</text>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">fixada</rel>
+                <arg f="" n="2">em emenda constitucional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1859:  Desta_  forma,  para se proteger de uma reviravolta inoportuna dos índices econômicos,  FHC e seus amigos do governo tiveram o cuidado de fixar um calendário vantajoso. 
+</text>
+                <rel f="">fixar</rel>
+                <arg f="" n="1">um calendário vantajoso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1007:  O cliente passará seu cartão de débito ou de crédito Bradesco_  Visa no terminal da empresa conveniada e fixará as datas de pagamento de suas compras. 
+</text>
+                <arg f="" n="0">O cliente
+</arg>
+                <rel f="">fixará</rel>
+                <arg f="" n="1">as datas de pagamento de suas compras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s942:  Uma proposta plausível é a de se fixar um prazo determinado,  três ou quatro meses,  para que a sociedade se adapte voluntariamente ﻿à URV,  estabelecendo regras privadas de conversão. 
+</text>
+                <rel f="">fixar</rel>
+                <arg f="" n="1">um prazo determinado,  três ou quatro meses,  para que a sociedade se adapte voluntariamente ﻿à URV,  estabelecendo regras privadas de conversão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="fixar-se">
+        <note />
+    <roleset framnet="linger.01" id="fixar.02" name="Alternância incoativa de &quot;fixar&quot;: ficar parado em determinado lugar ou foco; ater-se" vncls="47.1-1 53.1">
+            <roles>
+                <role descr="entity lingering" n="1">
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                    <vnrole vncls="53.1" vntheta="Agent" />
+                </role>
+                <role descr="location or state" n="2">
+                    <vnrole vncls="47.1-1" vntheta="Location" />
+                    <vnrole vncls="53.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2944:  O filme passa como vento pelas questões,  nada pequenas,  dos tratamentos psiquiátricos contemporâneos e se fixa no que existe de mais óbvio na história. 
+</text>
+                <arg f="" n="1">O filme
+</arg>
+                <rel f="">fixa</rel>
+                <arg f="" n="2">no que existe de mais óbvio na história
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

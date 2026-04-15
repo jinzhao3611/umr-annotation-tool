@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="restringir-se">
+        <note />
+    <roleset framnet="limit.01" id="restringir.01" name="incoativo de &quot;restringir&quot;: ficar limitado a" vncls="76">
+            <roles>
+                <role descr="agent, limiter" n="0">
+                    <vnrole vncls="76" vntheta="Cause" />
+                </role>
+                <role descr="thing limited" n="1">
+                    <vnrole vncls="76" vntheta="Patient" />
+                </role>
+                <role descr="limit" n="2">
+                    <vnrole vncls="76" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4162:  A impressão de que o índice de alta dos preços cai se restringe a 27$ %  das respostas. 
+</text>
+                <arg f="" n="1">A impressão de que o índice de alta dos preços cai
+</arg>
+                <rel f="">restringe</rel>
+                <arg f="" n="2">a 27$ %  das respostas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="restringir">
+        <note />
+    <roleset framnet="limit.01" id="restringir.02" name="limitar" vncls="76">
+            <roles>
+                <role descr="agent, limiter" n="0">
+                    <vnrole vncls="76" vntheta="Cause" />
+                </role>
+                <role descr="thing limited" n="1">
+                    <vnrole vncls="76" vntheta="Patient" />
+                </role>
+                <role descr="limit" n="2">
+                    <vnrole vncls="76" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2955:  Isto restringe ﻿à URV todos os poderes da moeda do país. 
+</text>
+                <arg f="" n="0">Isto
+</arg>
+                <rel f="">restringe</rel>
+                <arg f="" n="2">﻿à URV
+</arg>
+                <arg f="" n="1">todos os poderes da moeda do país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s970:  Elas não apenas restringem a liberdade e o futuro dos que tentam deixar Cuba como também oferecem expectativa de « reformas democráticas forçadas » aos que ficam na ilha. 
+</text>
+                <arg f="" n="0">Elas
+</arg>
+                <arg f="dis" n="m">não apenas
+</arg>
+                <rel f="">restringem</rel>
+                <arg f="" n="1">a liberdade e o futuro dos que tentam deixar Cuba
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s884:  O STF derrubou dispositivos da lei eleitoral que restringiam a participação dos partidos de_  acordo com sua representação na Câmara. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">restringiam</rel>
+                <arg f="" n="1">a participação dos partidos
+</arg>
+                <arg f="mnr" n="m">de_  acordo com sua representação na Câmara
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

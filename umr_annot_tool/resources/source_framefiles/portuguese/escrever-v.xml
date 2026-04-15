@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="escrever">
+        <note />
+    <roleset framnet="write.01" id="escrever.01" name="registrar por meio de letras e símbolos" vncls="25.2 26.7-2 37.1-1">
+            <roles>
+                <role descr="writer" n="0">
+                    <vnrole vncls="26.7-2" vntheta="Agent" />
+                    <vnrole vncls="25.2" vntheta="Agent" />
+                </role>
+                <role descr="thing written" n="1">
+                    <vnrole vncls="26.7-2" vntheta="Theme" />
+                    <vnrole vncls="25.2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="26.7-2" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3493:  A tumorectomia « garante sobrevida comparável e melhor qualidade de vida do_  que a mastectomia total »,  escreveu a chefe do novo estudo,  Anna_  Lee-  Feldstein. 
+</text>
+                <arg f="" n="1">A tumorectomia « garante sobrevida comparável e melhor qualidade de vida do_  que a mastectomia total »
+</arg>
+                <rel f="">escreveu</rel>
+                <arg f="" n="0">a chefe do novo estudo,  Anna_  Lee-  Feldstein
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2806:  A Folha chegou a escrever que o melhor piloto do mundo(  Senna) ,  na direção do melhor carro do mundo(  a Williams)  teria sua consagração no autódromo. 
+</text>
+                <arg f="" n="0">A Folha
+</arg>
+                <rel f="">escrever</rel>
+                <arg f="" n="1">que o melhor piloto do mundo(  Senna) ,  na direção do melhor carro do mundo(  a Williams)  teria sua consagração no autódromo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2216:  O inglês John_  Ritchings vai escrever um livro sobre os meses que foi torturado pelo galo da vizinha,  diz o jornal. 
+</text>
+                <arg f="" n="0">O inglês John_  Ritchings
+</arg>
+                <rel f="">escrever</rel>
+                <arg f="" n="1">um livro sobre os meses que foi torturado pelo galo da vizinha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2001:  Escrevia ﻿à época « Um_  Paraíso_  Perdido »,  livro sobre a Amazônia,  interrompido com a morte. 
+</text>
+                <rel f="">Escrevia</rel>
+                <arg f="tmp" n="m">﻿à época
+</arg>
+                <arg f="" n="1">« Um_  Paraíso_  Perdido »,  livro sobre a Amazônia,  interrompido com a morte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1547:  Enquanto isso(  outra_  vez a vontade de escrever entrementes) ,  a Receita_  Federal divulga a lista dos devedores do Imposto_  de_  Renda que nada pagarão. 
+</text>
+                <rel f="">escrever</rel>
+                <arg f="adv" n="m">entrementes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1065:  Outro dia mesmo,  durante a Copa,  um jornalista inglês que escreve sobre o futebol para os principais jornais do mundo,  reclamava dos poucos autores de expressão que escreveram sobre o fut. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">escreveram</rel>
+                <arg f="" n="1">sobre o fut
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1065:  Outro dia mesmo,  durante a Copa,  um jornalista inglês que escreve sobre o futebol para os principais jornais do mundo,  reclamava dos poucos autores de expressão que escreveram sobre o fut. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">escreve</rel>
+                <arg f="" n="1">sobre o futebol
+</arg>
+                <arg f="" n="2">para os principais jornais do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s663:  José_  Sarney escreve às sextas-  feiras nesta coluna. 
+</text>
+                <arg f="" n="0">José_  Sarney
+</arg>
+                <rel f="">escreve</rel>
+                <arg f="tmp" n="m">às sextas-  feiras
+</arg>
+                <arg f="loc" n="m">nesta coluna
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s353:  Quando José_  Sarney começou a escrever semanalmente para a Folha,  chegaram protestos ﻿à redação. 
+</text>
+                <arg f="" n="0">José_  Sarney
+</arg>
+                <rel f="">escrever</rel>
+                <arg f="tmp" n="m">semanalmente
+</arg>
+                <arg f="" n="2">para a Folha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s284:  Daí a alguns anos,  os Gershwins foram para Hollywood,  a_  fim_  de fazer o que intimamente desprezavam:  escrever canções para filmes. 
+</text>
+                <rel f="">escrever</rel>
+                <arg f="" n="1">canções para filmes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

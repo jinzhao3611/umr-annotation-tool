@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="responder">
+        <note />
+        <note />
+    <roleset framnet="answer.01" id="responder.01" name="dar resposta" vncls="">
+            <roles>
+                <role descr="replier" n="0" />
+                <role descr="in response to" n="1" />
+                <role descr="answer" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4163:  Tudo fica como está na opinião de 23$ % ,  enquanto 5$ %  não sabem responder. 
+</text>
+                <rel f="">responder</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3134:  O técnico irritou-  se com uma pergunta e não a respondeu. 
+</text>
+                <arg f="" n="0">O técnico
+</arg>
+                <arg f="tmp" n="m">não
+</arg>
+                <arg f="" n="1">a
+</arg>
+                <rel f="">respondeu</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2162:  Os bancos devem responder ﻿à proposta do grupo até o dia 12. 
+</text>
+                <arg f="" n="0">Os bancos
+</arg>
+                <rel f="">responder</rel>
+                <arg f="" n="1">﻿à proposta do grupo
+</arg>
+                <arg f="tmp" n="m">até o dia 12
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2011:  Segundo o pai de André,  Luis_  Carlos_  Scafura,  os sequestradores provaram que ele está vivo,  ao responder corretamente algumas perguntas sobre a vida do rapaz. 
+</text>
+                <rel f="">responder</rel>
+                <arg f="mnr" n="m">corretamente
+</arg>
+                <arg f="" n="1">algumas perguntas sobre a vida do rapaz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1945:  Lula respondeu perguntas do público sobre saúde e cultura. 
+</text>
+                <arg f="" n="0">Lula
+</arg>
+                <rel f="">respondeu</rel>
+                <arg f="" n="1">perguntas do público sobre saúde e cultura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1447:  « Não podemos aceitar medidas que contrariem o combate ﻿à inflação »,  disse FHC,  ao responder sobre o assunto. 
+</text>
+                <rel f="">responder</rel>
+                <arg f="" n="1">sobre o assunto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1397:  June não respondeu se também estava apaixonada. 
+</text>
+                <arg f="" n="0">June
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">respondeu</rel>
+                <arg f="" n="1">se também estava apaixonada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s561:  Fleury aproveitou a viagem para responder ao ex-  secretário José_  Machado_  de_  Campos_  Filho,  que o chamara de traidor por não apoiar Quércia. 
+</text>
+                <rel f="">responder</rel>
+                <arg f="" n="2">ao ex-  secretário José_  Machado_  de_  Campos_  Filho,  que o chamara de traidor por não apoiar Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="vouch.01" id="responder.02" name="ser responsável por" vncls="-">
+            <roles>
+                <role descr="guarantor" n="0" />
+                <role descr="guarantee" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3719:  Do volume de protestos,  a região Sudeste respondeu por 39,  1$ %  do total e a Sul,  23,  5$ % . 
+</text>
+                <arg f="" n="1">Do volume de protestos por 39,  1$ %  do total
+</arg>
+                <arg f="" n="0">a região Sudeste
+</arg>
+                <rel f="">respondeu</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2141:  O CNDA(  Conselho_  Nacional_  de_  Direito_  Autoral) ,  que respondia pela fiscalização,  consulta e assistência nas matérias relativas a direitos autorais,  foi desativado pelo governo Collor. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">respondia</rel>
+                <arg f="" n="1">pela fiscalização,  consulta e assistência nas matérias relativas a direitos autorais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

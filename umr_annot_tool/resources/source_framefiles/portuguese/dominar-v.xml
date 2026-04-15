@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dominar">
+        <note />
+        <note />
+    <roleset framnet="dominate.01" id="dominar.01" name="deter o poder sobre um domínio" vncls="47.8">
+            <roles>
+                <role descr="surpasser" n="0">
+                    <vnrole vncls="47.8" vntheta="Theme1" />
+                </role>
+                <role descr="thing surpassed" n="1">
+                    <vnrole vncls="47.8" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3755:  O engenheiro Bruno_  Maranhão,  líder do Movimento_  por_  Terra, _  Trabalho_  e_  Liberdade,  pertence a uma das famílias que dominam os latifúndios no Nordeste. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">dominam</rel>
+                <arg f="" n="1">os latifúndios
+</arg>
+                <arg f="loc" n="m">no Nordeste
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1689:  4 grupos dominam TV por assinatura
+</text>
+                <arg f="" n="0">4 grupos
+</arg>
+                <rel f="">dominam</rel>
+                <arg f="" n="1">TV por assinatura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1451:  Ao_  contrário_  do que tem acontecido em suas últimas declarações públicas,  FHC evitou ontem fazer ataques aos chamados « aumentos abusivos de preços » por_  parte_  dos oligopólios grandes empresas que dominam determinados segmentos da economia. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">dominam</rel>
+                <arg f="" n="1">determinados segmentos da economia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1323:  O Brasil dominou o jogo inteiro,  mas perdeu diversas chances de marcar
+</text>
+                <arg f="" n="0">O Brasil
+</arg>
+                <rel f="">dominou</rel>
+                <arg f="" n="1">o jogo inteiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1013:  O período da tarde do Seminário_  Internacional foi dominado pelo conceito de Qualidade_  Total. 
+</text>
+                <arg f="" n="1">O período da tarde do Seminário_  Internacional
+</arg>
+                <rel f="">dominado</rel>
+                <arg f="" n="0">pelo conceito de Qualidade_  Total
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s515:  O time,  que nos anos 80 dominou o vôlei feminino,  voltou a decepcionar no Mundial. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">nos anos 80
+</arg>
+                <rel f="">dominou</rel>
+                <arg f="" n="1">o vôlei feminino
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="master.01" id="dominar.02" name="ter competência em determinada área" vncls="-">
+            <roles>
+                <role descr="master" n="0" />
+                <role descr="thing mastered" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3516:  Além_  de dominar esta habilidade,  as duas únicas coisas realmente necessárias para se viajar de trenó pelo Alasca eram estar em razoável boa forma física e ter mais_  de 13 anos de idade. 
+</text>
+                <rel f="">dominar</rel>
+                <arg f="" n="1">esta habilidade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

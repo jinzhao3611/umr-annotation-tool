@@ -1,0 +1,994 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ficar">
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="become.01" id="ficar.01" name="Verbo de cópula: tornar-se (mudança de estado) " vncls="-">
+            <roles>
+                <role descr="entity changing" n="1" />
+                <role descr="new state" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4195:  Com a determinação da Justiça,  os empregados ficam impedidos de fazer o pagamento das ações. 
+</text>
+                <arg f="cau" n="m">Com a determinação da Justiça
+</arg>
+                <arg f="" n="1">os empregados
+</arg>
+                <rel f="">ficam</rel>
+                <arg f="" n="2">impedidos de fazer o pagamento das ações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3785:  Com a inclusão de mais esse dado comparativo,  a tabela fica mais completa. 
+</text>
+                <arg f="cau" n="m">Com a inclusão de mais esse dado comparativo
+</arg>
+                <arg f="" n="1">a tabela
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">mais completa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3581:  O ministro Ricupero ficou satisfeito com aprovação da MP da URV na comissão mista do Congresso que examinou a medida. 
+</text>
+                <arg f="" n="1">O ministro Ricupero
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">satisfeito com aprovação da MP da URV na comissão mista do Congresso que examinou a medida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3448:  O deputado Adroaldo_  Streck(  PSDB-  RS)  ficou encarregado de confirmar com Britto o encontro. 
+</text>
+                <arg f="" n="1">O deputado Adroaldo_  Streck(  PSDB-  RS) 
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">encarregado de confirmar com Britto o encontro
+</arg>
+                <note>em inglês "ficar encarregado de " = "to be in charge of"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3244:  Os norte-  americanos que se reuniram ontem na Câmara_  de_  Comércio_  Brasil-  Estados_  Unidos,  em São_  Paulo,  ficaram conformados com a derrota de sua seleção. 
+</text>
+                <arg f="" n="1">Os norte-  americanos que se reuniram ontem na Câmara_  de_  Comércio_  Brasil-  Estados_  Unidos,  em São_  Paulo
+</arg>
+                <rel f="">ficaram</rel>
+                <arg f="" n="2">conformados com a derrota de sua seleção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3204:  Enquanto Gloria_  Pires ficou nervosa em sua estréia como modette,  o marido Orlando_  Moraes amou e pediu bis. 
+</text>
+                <arg f="" n="1">Gloria_  Pires
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">nervosa
+</arg>
+                <arg f="loc" n="m">em sua estréia
+</arg>
+                <arg f="prd" n="m">como modette
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2954:  Diz o artigo primeiro que fica instituída a URV,  dotada de « curso legal » para servir « exclusivamente » como padrão de valor monetário. 
+</text>
+                <rel f="">fica</rel>
+                <arg f="" n="2">instituída
+</arg>
+                <arg f="" n="1">a URV,  dotada de « curso legal » para servir « exclusivamente » como padrão de valor monetário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2926:  « Fiquei muito honrada com a proposta,  mas o governador Brizola tem nomes muito bons para compor sua chapa »,  afirmou. 
+</text>
+                <rel f="">Fiquei</rel>
+                <arg f="" n="2">muito honrada com a proposta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2804:  Era « Senna_  erra_  e_  Schumacher_  vence »(  em « O_  Globo »,  a frase ficou pouco maior que isso) . 
+</text>
+                <arg f="" n="1">a frase
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">pouco maior que isso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2581:  Ficando novamente vago o cargo,  o presidente do Senado e,  sucessivamente,  do Supremo_  Tribunal_  Federal(  STF)  assumem a incumbência. 
+</text>
+                <rel f="">Ficando</rel>
+                <arg f="tmp" n="m">novamente
+</arg>
+                <arg f="" n="2">vago
+</arg>
+                <arg f="" n="1">o cargo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2545:  « Ainda não dá para ficar tranquilo. 
+</text>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">tranquilo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2541:  Ele ficou famoso no todo o país. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">famoso
+</arg>
+                <arg f="loc" n="m">no todo o país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2299:  Os líderes acertaram que,  havendo quorum,  o Orçamento de 95 só não será votado hoje se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">pronta
+</arg>
+                <arg f="" n="1">a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1994:  Nos discursos de agradecimento em Wimbledon e Us_  Open,  meses antes,  a alemã lembrara o público de que não ficava feliz em vencer torneios na ausência de Monica_  Seles,  afastada das quadras depois de ser esfaqueada na quadra. 
+</text>
+                <arg f="" n="1">a alemã
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">ficava</rel>
+                <arg f="" n="2">feliz
+</arg>
+                <arg f="cau" n="m">em vencer torneios na ausência de Monica_  Seles,  afastada das quadras depois de ser esfaqueada na quadra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1991:  « Dobrando pelo vinco a calça jeans ou a calça de veludo,  e estendendo-  a sobre o carpete do quarto do hotel,  ela fica como_  se tivesse sido passada a ferro.  »
+</text>
+                <arg f="adv" n="m">Dobrando pelo vinco a calça jeans ou a calça de veludo,  e estendendo-  a sobre o carpete do quarto do hotel
+</arg>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">como_  se tivesse sido passada a ferro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1740:  « Com um homem como Weber,  o jogo fica mais fácil para todo o time.  »
+</text>
+                <arg f="mnr" n="m">Com um homem como Weber
+</arg>
+                <arg f="" n="1">o jogo
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">mais fácil para todo o time
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1620:  A resolução normativa de 4 de junho de 1987 do Instituto_  Brasileiro_  de_  Turismo(  Embratur)  afirma que « os meios de hospedagem de turismo dos tipos hotel,  hotel de lazer e hotel-  residência,  de qualquer categoria,  ficam obrigados a dispor de local específico,  devidamente sinalizado e apropriado ao embarque e desembarque de usuários portadores de deficiências,  além_  de estacionamentos para seus veículos ». 
+</text>
+                <arg f="" n="1">os meios de hospedagem de turismo dos tipos hotel,  hotel de lazer e hotel-  residência,  de qualquer categoria, 
+</arg>
+                <rel f="">ficam</rel>
+                <arg f="" n="2">obrigados a dispor de local específico,  devidamente sinalizado e apropriado ao embarque e desembarque de usuários portadores de deficiências,  além_  de estacionamentos para seus veículos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1012:  Sem educação,  reforma ficará'  capenga' . 
+</text>
+                <arg f="mnr" n="m">Sem educação
+</arg>
+                <arg f="" n="1">reforma
+</arg>
+                <rel f="">ficará</rel>
+                <arg f="" n="2">capenga
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s906:  « Eles têm medo de ser mortos,  porque a coisa está ficando violenta demais. 
+</text>
+                <arg f="" n="1">a coisa
+</arg>
+                <rel f="">ficando</rel>
+                <arg f="" n="2">violenta demais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s860:  Pela desvinculação,  o governo fica desobrigado de cumprir os artigos da Constituição que mandam aplicar percentuais fixos do Orçamento em educação e habitação. 
+</text>
+                <arg f="cau" n="m">Pela desvinculação
+</arg>
+                <arg f="" n="1">o governo
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">desobrigado de cumprir os artigos da Constituição que mandam aplicar percentuais fixos do Orçamento em educação e habitação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s506:  « Isso ainda não ficou acertado pelo governo canadense »,  disse. 
+</text>
+                <arg f="" n="1">Isso
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">acertado pelo governo canadense
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s388:  No clima de sinistrose,  as fragilidades do PT não ficaram tão visíveis ﻿à opinião_  pública:  a dificuldade de se fazerem alianças capazes de sustentar Lula quando virasse presidente ; os aloprados que conquistaram posições estratégicas no partido ; a falta de generalizada convicção sobre o valor da democracia. 
+</text>
+                <arg f="loc" n="m">No clima de sinistrose
+</arg>
+                <arg f="" n="1">as fragilidades do PT
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">ficaram</rel>
+                <arg f="" n="2">tão visíveis ﻿à opinião_  pública:  a dificuldade de se fazerem alianças capazes de sustentar Lula quando virasse presidente ; os aloprados que conquistaram posições estratégicas no partido ; a falta de generalizada convicção sobre o valor da democracia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s170:  O novo manifesto do movimento não ficará pronto antes das eleições. 
+</text>
+                <arg f="" n="1">O novo manifesto do movimento
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">ficará</rel>
+                <arg f="" n="2">pronto
+</arg>
+                <arg f="tmp" n="m">antes das eleições
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="stay.01" id="ficar.02" name="Verbo de cópula: permanecer" vncls="47.1-1">
+            <roles>
+                <role descr="thing remaining" n="1">
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, probably will not occur" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4163:  Tudo fica como está na opinião de 23$ % ,  enquanto 5$ %  não sabem responder. 
+</text>
+                <arg f="" n="1">Tudo
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">como está
+</arg>
+                <arg f="dis" n="m">na opinião de 23$ % 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3951:  « Ficaram de_  fora_  de nossa regulamentação »,  disse ﻿à Folha Antonio_  Henrique_  Pedrosa_  Neto,  diretor do CFM. 
+</text>
+                <rel f="">Ficaram</rel>
+                <arg f="" n="3">de_  fora_  de nossa regulamentação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3864:  O homem que atacou Charles anteontem não terá direito a fiança e ficará preso pelo_  menos até o fim da visita de cinco dias do príncipe ao país. 
+</text>
+                <arg f="" n="1">O homem que atacou Charles anteontem
+</arg>
+                <rel f="">ficará</rel>
+                <arg f="" n="2">preso pelo_  menos até o fim da visita de cinco dias do príncipe ao país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3842:  Ele teria ficado preso numa rede de pesca sem condições de subir ﻿à tona para respirar. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">ficado</rel>
+                <arg f="" n="2">preso numa rede de pesca sem condições de subir ﻿à tona para respirar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3222:  Vargas,  na verdade,  preferia ficar de_  fora,  ou aliar-  se com os vencedores. 
+</text>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">de_  fora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3157:  Nessa época,  o cantor forjou alguns de seus maiores sucessos como,  para ficar num só exemplo,  « It'  s_  Now_  or_  Never ». 
+</text>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">num só exemplo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3108:  Segundo a tesoureira da campanha de Lula,  Tatau_  Godinho,  os custos se resumem ﻿à passagem aérea,  já_  que o candidato ficou hospedado na casa do embaixador do Brasil na África_  do_  Sul,  Antônio_  Amaral_  de_  Sampaio. 
+</text>
+                <arg f="" n="1">o candidato
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">hospedado na casa do embaixador do Brasil na África_  do_  Sul,  Antônio_  Amaral_  de_  Sampaio
+</arg>
+                <note>nesse exemplo "hospedado"  está explícito, mas se fosse suprimido, o sentido continuaria o mesmo</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2617:  Ninguém fica parado com o vento que sopra do Pacífico. 
+</text>
+                <arg f="" n="1">Ninguém
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">parado
+</arg>
+                <arg f="cau" n="m">com o vento que sopra do Pacífico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1983:  Espero que possa voltar lá e dizer às crianças que elas não precisam ficar presas lá,  que existe todo um outro mundo fora dali. 
+</text>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">presas
+</arg>
+                <arg f="loc" n="m">lá
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1698:  O quarto em que ficou era pequeno e sua porta permaneceu sempre aberta. 
+</text>
+                <arg f="" n="2">em que
+</arg>
+                <rel f="">ficou</rel>
+                <note>nesse exemplo não aparece a palavra "hospedado", mas ela está implícita</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1697:  A casa em que Faria ficou era de dois quartos. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <arg f="" n="1">Faria
+</arg>
+                <rel f="">ficou</rel>
+                <note>nesse exemplo não aparece a palavra "hospedado", mas ela está implícita</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1651:  Na Alemanha,  a obra ficaria na Casa_  da_  Cultura_  dos_  Povos em Berlim. 
+</text>
+                <arg f="loc" n="m">Na Alemanha
+</arg>
+                <arg f="" n="1">a obra
+</arg>
+                <rel f="">ficaria</rel>
+                <arg f="" n="2">na Casa_  da_  Cultura_  dos_  Povos
+</arg>
+                <arg f="loc" n="m">em Berlim
+</arg>
+                <note>nesse exemplo não aparece a palavra "hospedada" (ou "abrigada"), mas ela está implícita</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1592:  Lula fica na África_  do_  Sul até quarta-  feira ﻿à noite,  quando viaja então para a Alemanha,  onde permanece até sexta-  feira ﻿à noite. 
+</text>
+                <arg f="" n="1">Lula
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">na África_  do_  Sul
+</arg>
+                <arg f="tmp" n="m">até quarta-  feira ﻿à noite,  quando viaja então para a Alemanha,  onde permanece até sexta-  feira ﻿à noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1480:  A praça,  por ser tombada,  deveria ficar como era antes da obra. 
+</text>
+                <arg f="" n="1">A praça
+</arg>
+                <arg f="cau" n="m">por ser tombada
+</arg>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">como era antes da obra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1434:  As chibatadas rompem a pele e as cicatrizes ficam por toda a vida. 
+</text>
+                <arg f="" n="1">as cicatrizes
+</arg>
+                <rel f="">ficam</rel>
+                <arg f="tmp" n="m">por toda a vida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1312:  São três as certezas entre as partes que negociam o aumento de salário para o funcionalismo:  a decisão não pode ser adiada,  a aparência de equilíbrio fiscal deve ser preservada e Ricupero ficará no cargo em quaisquer circunstâncias. 
+</text>
+                <arg f="" n="1">Ricupero
+</arg>
+                <rel f="">ficará</rel>
+                <arg f="" n="2">no cargo
+</arg>
+                <arg f="adv" n="m">em quaisquer circunstâncias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1089:  Apesar_  disso ou exatamente por_  causa_  disso,  conseguiu a classificação diante_  do Corinthians,  que ficou no meio do caminho:  nem escalou sua força máxima,  nem optou por um time de juniores com alguns reservas de reforço. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">no meio do caminho:  nem escalou sua força máxima,  nem optou por um time de juniores com alguns reservas de reforço
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s970:  Elas não apenas restringem a liberdade e o futuro dos que tentam deixar Cuba como também oferecem expectativa de « reformas democráticas forçadas » aos que ficam na ilha. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">ficam</rel>
+                <arg f="" n="2">na ilha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s903:  Fica mais_  de 36 horas ininterruptas no pronto-  socorro. 
+</text>
+                <rel f="">Fica</rel>
+                <arg f="tmp" n="m">mais_  de 36 horas ininterruptas
+</arg>
+                <arg f="loc" n="m">no pronto-  socorro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s673:  A fanfarra que a seguir compôs para « Dizem_  que_  É_  Amor »(  High_  Time)  só não ficou também gravada na memória de todo mundo porque,  daquela vez,  Edwards nem_  sequer chutou na trave. 
+</text>
+                <arg f="" n="1">A fanfarra que a seguir compôs para « Dizem_  que_  É_  Amor »(  High_  Time) 
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">também gravada
+</arg>
+                <arg f="prd" n="m">na memória de todo mundo
+</arg>
+                <arg f="cau" n="m">porque,  daquela vez,  Edwards nem_  sequer chutou na trave
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s441:  Além_  do zagueiro Grun e do centroavante Weber,  o lateral-  esquerdo Vital_  Borkelmans encontra-  se também com um cartão amarelo e pode ficar de_  fora hoje. 
+</text>
+                <arg f="" n="1">o lateral-  esquerdo Vital_  Borkelmans
+</arg>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">de_  fora
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s374:  As crianças podem ficar 15 minutos em cada_  um dos jogos. 
+</text>
+                <arg f="" n="1">As crianças
+</arg>
+                <rel f="">ficar</rel>
+                <arg f="tmp" n="m">15 minutos
+</arg>
+                <arg f="" n="2">em cada_  um dos jogos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s218:  O máximo que consigo ficar com alguém é dois anos ») 
+</text>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">com alguém
+</arg>
+                <note>"com alguém" é companhia e não coisa possuída (comparar com ficar.03)</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="ficar.03" name="Ficar com: obter ou manter a posse de; ser obtido por; permanecer em poder de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3964:  O time comandado pelo técnico Miguel_  Ângelo_  da_  Luz ficou com o título ao derrotar anteontem ﻿à noite na final a forte seleção de Cuba por 115 a 93(  54 a 44 no primeiro tempo) . 
+</text>
+                <arg f="" n="0">O time comandado pelo técnico Miguel_  Ângelo_  da_  Luz
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="1">com o título
+</arg>
+                <arg f="tmp" n="m">ao derrotar anteontem ﻿à noite na final a forte seleção de Cuba por 115 a 93(  54 a 44 no primeiro tempo) 
+</arg>
+                <note>neste sentido, "win.01" é adequado, mas não seria caso houvesse alternância ( O título ficou com o time). </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3962:  Feminino bate Cuba e fica com título em PE
+</text>
+                <arg f="" n="0">Feminino
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="1">com título em PE
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2445:  Para isso,  a presidência não poderia ficar com o candidato óbvio na época,  Ulysses_  Guimarães,  que supostamente representava o risco de confronto com os militares. 
+</text>
+                <arg f="dis" n="m">Para isso
+</arg>
+                <arg f="" n="1">a presidência
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">com o candidato óbvio na época,  Ulysses_  Guimarães,  que supostamente representava o risco de confronto com os militares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2121:  Vladimir_  Rioli- -  Pode ficar com a presidência do Banespa. 
+</text>
+                <arg f="" n="1">Vladimir_  Rioli
+</arg>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">com a presidência do Banespa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1759:  Já as maiores quedas,  dos preços médios,  ficaram com a cenoura( -  13,  82) ,  batata comum(  5,  14% )  e pão francês( -  1,  25% ) . 
+</text>
+                <arg f="" n="1">as maiores quedas,  dos preços médios, 
+</arg>
+                <rel f="">ficaram</rel>
+                <arg f="" n="2">com a cenoura( -  13,  82) ,  batata comum(  5,  14% )  e pão francês( -  1,  25% ) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s851:  Fica com o pacote Jordan-  Peugeot. 
+</text>
+                <rel f="">Fica</rel>
+                <arg f="" n="2">com o pacote Jordan-  Peugeot
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="ficar.04" name="ficar sem: &quot;perder o que já se tinha&quot; ou &quot;não ganhar&quot;" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3124:  O prefeito Mercedes_  Ribeiro_  de_  Miranda(  PMDB)  decretou estado de calamidade pública na cidade,  que ficou sem água e luz durante 22 horas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">sem água e luz
+</arg>
+                <arg f="tmp" n="m">durante 22 horas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2318:  Toda_  vez_  que um crime cometido por representantes do poder público fica sem punição,  o ônus recai sobre a corporação como um todo,  gerando um turbilhão que indiferência os bons dos maus policiais. 
+</text>
+                <arg f="" n="1">um crime cometido por representantes do poder público
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">sem punição
+</arg>
+                <note>"ficar sem punição" em inglês: "to go unpunished"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2137:  « Se isso der certo,  o Lessa joga no lixo sua credibilidade,  mas sem Bulhões ele fica sem apoio no interior e perde a eleição.  »
+</text>
+                <arg f="" n="1">ele
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">sem apoio
+</arg>
+                <arg f="loc" n="m">no interior
+</arg>
+                <note>"ficar sem", aqui, equivale a "to loss"</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="be.01" id="ficar.05" name="Verbo de cópula: ser ou estar localizado em" vncls="-">
+            <roles>
+                <role descr="topic" n="1" />
+                <role descr="comment" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3879:  A base fica a apenas 50 km de Áden,  a capital do sul. 
+</text>
+                <arg f="" n="1">A base
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">a apenas 50 km de Áden,  a capital do sul
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3138:  A frente do glaciar,  que fica na beira do rio,  desprende blocos de gelo do tamanho de um prédio de 30 andares. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">na beira do rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2789:  Os desfiles se realizam pelo segundo ano em tendas ou pavilhões localizados no Bryant_  Park,  que fica atrás_  da Biblioteca_  Nacional,  na rua 40. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">atrás_  da Biblioteca_  Nacional
+</arg>
+                <arg f="loc" n="m">na rua 40
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2745:  Na delegacia,  que fica no Jardim_  Mutinga,  trabalham seis policiais com dois carros. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">no Jardim_  Mutinga
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2325:  E como ninguém é de ferro e Orlando fica perto,  duas horas e meia de avião,  a turma depois dá uma passadinha para um milk_  shake com Mickey e Pateta. 
+</text>
+                <arg f="" n="1">Orlando
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">perto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1699:  O conjunto fica próximo_  ﻿à estrada de Madureira,  uma das principais vias de Nova_  Iguaçu. 
+</text>
+                <arg f="" n="1">O conjunto
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">próximo_  ﻿à estrada de Madureira,  uma das principais vias de Nova_  Iguaçu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1221:  Fica na fazenda Itereí,  em Juquitiba,  a 120 quilômetros de São_  Paulo. 
+</text>
+                <rel f="">Fica</rel>
+                <arg f="" n="2">na fazenda Itereí
+</arg>
+                <arg f="loc" n="m">em Juquitiba
+</arg>
+                <arg f="loc" n="m">a 120 quilômetros de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s841:  Os vãos permitem a saída do ar quente,  que fica na parte superior do ambiente. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">na parte superior do ambiente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="stand.04" id="ficar.06" name="fechar em; resultar em; terminar em (arg2 é valor, quantidade ou posição)" vncls="-">
+            <roles>
+                <role descr="focus" n="1" />
+                <role descr="attribute" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3636:  No mercado futuro de dólar,  a expectativa de desvalorização cambial para abril ficou em 42,  40$ % ,  contra 42,  53$ %  no dia anterior. 
+</text>
+                <arg f="loc" n="m">No mercado futuro de dólar
+</arg>
+                <arg f="" n="1">a expectativa de desvalorização cambial para abril
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">em 42,  40$ % 
+</arg>
+                <arg f="mnr" n="m">contra 42,  53$ %  no dia anterior
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2086:  O IPCR,  para famílias com renda de 1 a 8 mínimos,  ficou em 3,  06% ,  contra os 2,  85%  do mesmo período de outubro. 
+</text>
+                <arg f="" n="1">O IPCR,  para famílias com renda de 1 a 8 mínimos, 
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">em 3,  06% 
+</arg>
+                <arg f="prd" n="m">contra os 2,  85%  do mesmo período de outubro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2084:  Em comparação ﻿à quadrissemana anterior,  quando o IPCA ficou em 3,  28% ,  houve redução. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="1">o IPCA
+</arg>
+                <rel f="">ficou</rel>
+                <arg f="" n="2">em 3,  28% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s516:  Novamente,  não conseguiu ficar entre os quatro melhores. 
+</text>
+                <rel f="">ficar</rel>
+                <arg f="" n="2">entre os quatro melhores
+</arg>
+                <note>Arg2 é um resultado (assim como seria "ficar em primeiro lugar")</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="ficar.07" name="ficar para alguém: ser atribuído a; ser herdado por" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1673:  Os discursos da frugalidade,  da austeridade ficaram para as repúblicas gregas e romanas,  aquelas que Montesquieu ainda celebrava,  em meados do século 18,  quando dizia que o regime republicano se caracteriza pela disposição de seus cidadãos a renunciar ao bem privado em_  favor_  do bem comum e por isso,  acrescentava ele,  trata-  se de regime impossível na modernidade,  na_  qual se busca a vantagem pessoal. 
+</text>
+                <arg f="" n="1">Os discursos da frugalidade,  da austeridade
+</arg>
+                <rel f="">ficaram</rel>
+                <arg f="" n="2">para as repúblicas gregas e romanas,  aquelas que Montesquieu ainda celebrava,  em meados do século 18,  quando dizia que o regime republicano se caracteriza pela disposição de seus cidadãos a renunciar ao bem privado em_  favor_  do bem comum e por isso,  acrescentava ele,  trata-  se de regime impossível na modernidade,  na_  qual se busca a vantagem pessoal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="ficar.08" name="ficar para DATA: ser adiado ou agendado para determinada data" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s946:  Isso significa que,  tudo indo bem,  a criação da URV fica para março. 
+</text>
+                <arg f="" n="1">a criação da URV
+</arg>
+                <rel f="">fica</rel>
+                <arg f="" n="2">para março
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="ficar_na_mão">
+        <note />
+    <roleset framnet="" id="ficar.09" name="expressão idiomática: não ser atendido (comparar com &quot;deixar alguém na mão&quot; que é do ponto de vista de quem não atendeu)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s643:  E tem gente que ainda fica na mão? 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">fica</rel>
+                <note>"ficar na mão" (sem especificar na mão de quem!) = "to be left hanging"</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

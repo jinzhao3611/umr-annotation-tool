@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="intrometer">
+        <note />
+    <roleset framnet="intrude.01" id="intrometer.01" name="colocar dentro" vncls="48.1.2">
+            <roles>
+                <role descr="putter" n="0">
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="thing put" n="1">
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <role descr="where put" n="2">
+                    <vnrole vncls="48.1.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4201:  Eu tolerei pois não quis me intrometer na vida privada dos meus funcionários »,  disse Antinori,  para quem Fishel era um excelente técnico. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">intrometer</rel>
+                <arg f="" n="2">na vida privada dos meus funcionários
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desistir">
+        <note />
+    <roleset framnet="give.07" id="desistir.01" name="renunciar; decidir não querer ou não fazer" vncls="">
+            <roles>
+                <role descr="abandoner" n="0" />
+                <role descr="project" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s885:  15 de maio- -  Sarney desiste de disputar a prévia do PMDB contra Requião e Quércia. 
+</text>
+                <arg f="tmp" n="m">15 de maio
+</arg>
+                <arg f="" n="0">Sarney
+</arg>
+                <rel f="">desiste</rel>
+                <arg f="" n="1">de disputar a prévia do PMDB contra Requião e Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

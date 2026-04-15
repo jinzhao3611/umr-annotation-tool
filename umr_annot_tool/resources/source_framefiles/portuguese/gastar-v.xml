@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="gastar">
+        <note />
+    <roleset framnet="spend.01" id="gastar.01" name="despender; consumir" vncls="">
+            <roles>
+                <role descr="spender, buyer" n="0" />
+                <role descr="thing bought, commodity" n="1" />
+                <role descr="seller" n="2" />
+                <role descr="price paid, money" n="3" />
+                <role descr="benefactive" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3125:  Todos os anunciantes que aderiram ﻿à idéia dos clubes infantis estão atrás_  de um mercado de dimensões gigantescas:  os miniconsumidores americanos na faixa de idade entre 4 e 12 anos gastaram no ano passado US$  7,  3 bilhões das suas próprias mesadas e influenciaram suas famílias a comprar mais US$  130 bilhões. 
+</text>
+                <arg f="" n="0">os miniconsumidores americanos na faixa de idade entre 4 e 12 anos
+</arg>
+                <rel f="">gastaram</rel>
+                <arg f="tmp" n="m">no ano passado
+</arg>
+                <arg f="" n="3">US$  7,  3 bilhões das suas próprias mesadas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2142:  FHC e Malan não esclareceram,  até o momento,  quanto o governo gastou e quando foram comprados os papéis. 
+</text>
+                <arg f="" n="3">quanto
+</arg>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">gastou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1811:  Jânio_  Quadros também gastou em obras viárias e Mario_  Covas marcou sua gestão pela construção de corredores de ônibus exclusivos,  como o da avenida Nove_  de_  Julho. 
+</text>
+                <arg f="" n="0">Jânio_  Quadros
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">gastou</rel>
+                <arg f="" n="1">em obras viárias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s507:  A família de Christiane já gastou aproximadamente US$  1 milhão para tentar a sua libertação. 
+</text>
+                <arg f="" n="0">A família de Christiane
+</arg>
+                <arg f="dis" n="m">já
+</arg>
+                <rel f="">gastou</rel>
+                <arg f="ext" n="m">aproximadamente
+</arg>
+                <arg f="" n="3">US$  1 milhão
+</arg>
+                <arg f="pnc" n="m">para tentar a sua libertação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s475:  O governador da Flórida,  Lawton_  Chiles,  63,  resolveu processar o governo dos EUA para recuperar os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado. 
+</text>
+                <arg f="" n="3">que
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">gastando</rel>
+                <arg f="" n="1">em despesas com imigrantes ilegais
+</arg>
+                <arg f="loc" n="m">em seu Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

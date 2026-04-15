@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="neutralizar">
+        <note />
+    <roleset framnet="neutralize.01" id="neutralizar.01" name="tornar neutro; tornar sem efeito" vncls="45.4">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="entity neutralized" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1325:  Aldair e Márcio_  Santos avançaram pouco e neutralizaram Dahlin e Kennet_  Andersson
+</text>
+                <arg f="" n="0">Aldair e Márcio_  Santos
+</arg>
+                <rel f="">neutralizaram</rel>
+                <arg f="" n="1">Dahlin e Kennet_  Andersson
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s578:  Me deram uma licença de dois anos,  acreditavam que o exílio ia me neutralizar. 
+</text>
+                <arg f="" n="0">o exílio
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">neutralizar</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="queixar-se">
+        <note />
+    <roleset framnet="complain.01" id="queixar.01" name="reclamar" vncls="37.8">
+            <roles>
+                <role descr="complainer" n="0">
+                    <vnrole vncls="37.8" vntheta="Agent" />
+                </role>
+                <role descr="cause, complain of or about" n="1">
+                    <vnrole vncls="37.8" vntheta="Topic" />
+                </role>
+                <role descr="hearer, complain to" n="2">
+                    <vnrole vncls="37.8" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3564:  A entidade também se queixou de aumentos que variam de 5,  5%  a 11,  5%  no custo de alguns fundidos,  forjados,  aço plano e rolamentos. 
+</text>
+                <arg f="" n="0">A entidade
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">queixou</rel>
+                <arg f="" n="1">de aumentos que variam de 5,  5%  a 11,  5%  no custo de alguns fundidos,  forjados,  aço plano e rolamentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3543:  O ministro da Aeronáutica,  Lélio_  Viana_  Lôbo,  aproveitou a comemoração do Dia_  do_  Soldado ontem para queixar-  se das dificuldades salariais dos militares. 
+</text>
+                <rel f="">queixar-</rel>
+                <arg f="" n="1">das dificuldades salariais dos militares
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

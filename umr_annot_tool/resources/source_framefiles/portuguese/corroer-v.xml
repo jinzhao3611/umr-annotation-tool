@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="corroer">
+        <note />
+    <roleset framnet="corrode.01" id="corroer.01" name="consumir de forma progressiva" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s485:  Mesmo indexado,  « o salário convertido em cruzeiros reais continua a ser corroído pela inflação ». 
+</text>
+                <arg f="" n="1">o salário convertido em cruzeiros reais
+</arg>
+                <rel f="">corroído</rel>
+                <arg f="" n="0">pela inflação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="catequizar">
+        <note />
+    <roleset framnet="catechize.01" id="catequizar.01" name="ensinar; especificamente, ensinar o catecismo (doutrina católica)" vncls="">
+            <roles>
+                <role descr="questioner" n="0" />
+                <role descr="one being questioned" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3080:  Marcella_  Hazan falou sobre alcachofras e catequizou o público sobre a supremacia do óleo de oliva extra virgem para cozinhar,  apesar_  da exorbitância do preço. 
+</text>
+                <arg f="" n="0">Marcella_  Hazan
+</arg>
+                <rel f="">catequizou</rel>
+                <arg f="" n="1">o público
+</arg>
+                <arg f="" n="2">sobre a supremacia do óleo de oliva extra virgem para cozinhar,  apesar_  da exorbitância do preço
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

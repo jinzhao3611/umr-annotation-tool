@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sofrer">
+        <note />
+        <note />
+    <roleset framnet="suffer.01" id="sofrer.01" name="experimentar dor ou dano, físico ou emocional" vncls="31.3">
+            <roles>
+                <role descr="entity suffering" n="0">
+                    <vnrole vncls="31.3" vntheta="Experiencer" />
+                </role>
+                <role descr="malady" n="1">
+                    <vnrole vncls="31.3" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3544:  « Vivemos ainda dias difíceis,  num contexto econômico,  social e político em que as necessidades básicas de nossas forças( . . . )  têm sofrido severamente as agruras que toda nação atravessa »,  disse,  em saudação enviada ao Exército. 
+</text>
+                <arg f="" n="0">as necessidades básicas de nossas forças
+</arg>
+                <rel f="">sofrido</rel>
+                <arg f="ext" n="m">severamente
+</arg>
+                <arg f="" n="1">as agruras que toda nação atravessa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s3230:  A substância também é usada em vários medicamentos vendidos no Brasil,  que dizem ser capazes de aliviar dores causadas por varizes e eliminar câimbras noturnas em pessoas que sofrem problemas de circulação nas pernas. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">sofrem</rel>
+                <arg f="" n="1">problemas de circulação nas pernas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2934:  Grava disse que os dois sofreram rompimentos de feixes musculares em músculos da coxa direita. 
+</text>
+                <arg f="" n="0">os dois
+</arg>
+                <rel f="">sofreram</rel>
+                <arg f="" n="1">rompimentos de feixes musculares em músculos da coxa direita
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2180:  « Se não fizéssemos isso,  os jogadores sofreriam mais. 
+</text>
+                <arg f="adv" n="m">Se não fizéssemos isso
+</arg>
+                <arg f="" n="1">os jogadores
+</arg>
+                <rel f="">sofreriam</rel>
+                <arg f="ext" n="m">mais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1853:  O assunto veio ﻿à tona durante conversa do advogado Osmar(  Nuno_  Leal_  Maia)  com o jardineiro Kennedy(  Alexandre_  Moreno) ,  jovem negro que sofrera insultos racistas do patrão,  o empresário Raul_  Pelegrini(  Tarcísio_  Meira) . 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">sofrera</rel>
+                <arg f="" n="2">insultos racistas do patrão,  o empresário Raul_  Pelegrini(  Tarcísio_  Meira) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1564:  Em Nova_  York,  o FBI(  Federal_  Bureau_  Investigation,  a polícia federal dos Estados_  Unidos)  recebeu uma ligação anônima no final da noite de anteontem informando que o Consulado de Israel sofreria um atentado a bomba. 
+</text>
+                <arg f="" n="1">o Consulado de Israel
+</arg>
+                <rel f="">sofreria</rel>
+                <arg f="" n="2">um atentado a bomba
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s190:  Roberto_  Capuano,  presidente do Creci-  SP(  Conselho_  Regional_  de_  Corretores_  de_  Imóveis) ,  diz que o mercado de usados sofre com a carência de financiamentos desde 70. 
+</text>
+                <arg f="" n="1">o mercado de usados
+</arg>
+                <rel f="">sofre</rel>
+                <arg f="" n="2">com a carência de financiamentos desde 70
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="undergo.01" id="sofrer.02" name="passar por" vncls="">
+            <roles>
+                <role descr="experiencer" n="1" />
+                <role descr="experienced" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2261:  Se o mínimo sofrer alteração,  a Constituição determina que as aposentadorias também sejam revistas. 
+</text>
+                <arg f="" n="1">o mínimo
+</arg>
+                <rel f="">sofrer</rel>
+                <arg f="" n="2">alteração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2256:  Pérez enfrentou duas tentativas de golpe militar e,  a_  exemplo de Fernando_  Collor,  acabou sofrendo impeachment por corrupção e,  hoje,  encontra-  se numa cela ﻿à espera de julgamento. 
+</text>
+                <arg f="" n="1">Pérez
+</arg>
+                <arg f="adv" n="m">a_  exemplo de Fernando_  Collor
+</arg>
+                <rel f="">sofrendo</rel>
+                <arg f="" n="2">impeachment
+</arg>
+                <arg f="cau" n="m">por corrupção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s873:  A Mocotex vai sofrer análise para saber onde ocorre a contaminação. 
+</text>
+                <arg f="" n="1">A Mocotex
+</arg>
+                <rel f="">sofrer</rel>
+                <arg f="" n="2">análise
+</arg>
+                <arg f="pnc" n="m">para saber onde ocorre a contaminação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s69:  O panorama sofre prejuízos demais em_  favor_  da tese. 
+</text>
+                <arg f="" n="1">O panorama
+</arg>
+                <rel f="">sofre</rel>
+                <arg f="" n="2">prejuízos demais
+</arg>
+                <arg f="prd" n="m">em_  favor_  da tese
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

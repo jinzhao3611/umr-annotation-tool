@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="supor">
+        <note />
+    <roleset framnet="suppose.01" id="supor.01" name="imaginar; fazer suposição" vncls="29.4">
+            <roles>
+                <role descr="Thinker" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="Thought" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <role descr="Attributive" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2412:  Agora suponha que a economia toda vire um bando de gente que ganha mesada e de gente que dá mesada. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <rel f="">suponha</rel>
+                <arg f="" n="1">que a economia toda vire um bando de gente que ganha mesada e de gente que dá mesada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2316:  Ainda_  assim,  é de se supor que existam bons agentes de polícia. 
+</text>
+                <arg f="dis" n="m">Ainda_  assim
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">supor</rel>
+                <arg f="" n="1">que existam bons agentes de polícia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="negligenciar">
+        <note />
+    <roleset framnet="overlook.01" id="negligenciar.01" name="não dar atenção" vncls="-">
+            <roles>
+                <role descr="non-noticer, agent" n="0" />
+                <role descr="thing overlooked" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3673:  O corpo foi negligenciado »,  disse Viola ﻿à Folha em 92. 
+</text>
+                <arg f="" n="1">O corpo
+</arg>
+                <rel f="">negligenciado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

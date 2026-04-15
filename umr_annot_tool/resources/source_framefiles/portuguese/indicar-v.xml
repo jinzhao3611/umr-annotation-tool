@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="indicar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="indicate.01" id="indicar.01" name="dar indícios; apontar" vncls="78-1">
+            <roles>
+                <role descr="indicator" n="0">
+                    <vnrole vncls="78-1" vntheta="Cause" />
+                </role>
+                <role descr="thing indicated" n="1">
+                    <vnrole vncls="78-1" vntheta="Topic" />
+                </role>
+                <role descr="indicated to" n="2">
+                    <vnrole vncls="78-1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3749:  Os documentos indicam que a primeira-  dama dos EUA estava mais envolvida no dia-  a-  dia da administração da firma do_  que fora admitido até agora. 
+</text>
+                <arg f="" n="0">Os documentos
+</arg>
+                <rel f="">indicam</rel>
+                <arg f="" n="1">que a primeira-  dama dos EUA estava mais envolvida no dia-  a-  dia da administração da firma do_  que fora admitido até agora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3231:  Levantamento realizado entre pacientes que ingeriram cápsulas com a substância entre 1969 e 1992 indicou que 16 pessoas podem ter morrido em consequência de contra-  indicações causadas pelo sulfato de quinino. 
+</text>
+                <arg f="" n="0">Levantamento realizado entre pacientes que ingeriram cápsulas com a substância entre 1969 e 1992
+</arg>
+                <rel f="">indicou</rel>
+                <arg f="" n="1">que 16 pessoas podem ter morrido em consequência de contra-  indicações causadas pelo sulfato de quinino
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2680:  O trabalho da publicação inglesa,  divulgado pelo « Financial_  Times »,  indica que há menos preocupação com riscos políticos e econômicos do_  que com a falta de liquidez e diversificação. 
+</text>
+                <arg f="" n="0">O trabalho da publicação inglesa,  divulgado pelo « Financial_  Times », 
+</arg>
+                <rel f="">indica</rel>
+                <arg f="" n="1">que há menos preocupação com riscos políticos e econômicos do_  que com a falta de liquidez e diversificação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2411:  Policiais orientarão os motoristas com placas educativas que indicarão os cuidados básicos contra acidentes. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">indicarão</rel>
+                <arg f="" n="1">os cuidados básicos contra acidentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1307:  Pesquisa da Laerte_  Cordeiro_  &amp;_  Associados,  com_  base_  em anúncios de emprego,  indica que a área voltou a ocupar a segunda posição na demanda. 
+</text>
+                <arg f="" n="0">Pesquisa da Laerte_  Cordeiro_  &amp;_  Associados,  com_  base_  em anúncios de emprego, 
+</arg>
+                <rel f="">indica</rel>
+                <arg f="" n="1">que a área voltou a ocupar a segunda posição na demanda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s339:  Tudo indica que os telejornais da Globo vão ganhar novo repórter especial. 
+</text>
+                <arg f="" n="0">Tudo
+</arg>
+                <rel f="">indica</rel>
+                <arg f="" n="1">que os telejornais da Globo vão ganhar novo repórter especial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s92:  A primeira previsão do IBGE(  Fundação_  Instituto_  Brasileiro_  de_  Geografia_  e_  Estatística)  indica queda de 0,  62%  na área plantada nesta safra em_  relação_  a anterior. 
+</text>
+                <arg f="" n="0">A primeira previsão do IBGE(  Fundação_  Instituto_  Brasileiro_  de_  Geografia_  e_  Estatística) 
+</arg>
+                <rel f="">indica</rel>
+                <arg f="" n="1">queda de 0,  62%  na área plantada nesta safra em_  relação_  a anterior
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="appoint.01" id="indicar.02" name="fazer indicação (para cargo); recomendar" vncls="29.1">
+            <roles>
+                <role descr="appointer, employer" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="appointee, employee" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="job, position" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s866:  É a primeira vez que o papa indica uma mulher para um cargo desse nível na Igreja Católica. 
+</text>
+                <arg f="" n="0">o papa
+</arg>
+                <rel f="">indica</rel>
+                <arg f="" n="1">uma mulher
+</arg>
+                <arg f="" n="2">para um cargo desse nível
+</arg>
+                <arg f="loc" n="m">na Igreja Católica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s863:  Papa indica mulher para secretaria
+</text>
+                <arg f="" n="0">Papa
+</arg>
+                <rel f="">indica</rel>
+                <arg f="" n="1">mulher
+</arg>
+                <arg f="" n="2">para secretaria
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="recommend.01" id="indicar.03" name="recomendar" vncls="29.2 48.1.2">
+            <roles>
+                <role descr="recommender" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="thing recommended" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <role descr="recommended to" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                    <vnrole vncls="48.1.2" vntheta="Recipient" />
+                </role>
+                <role descr="secondary attribute" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s659:  Esse equipamento « envolve » o prédio e é indicado para construções que ocupem áreas horizontais,  como galpões e indústrias. 
+</text>
+                <arg f="" n="1">Esse equipamento
+</arg>
+                <rel f="">indicado</rel>
+                <arg f="" n="2">para construções que ocupem áreas horizontais,  como galpões e indústrias
+</arg>
+                <note>uso adjetival</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

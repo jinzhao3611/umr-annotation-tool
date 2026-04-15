@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="alimentar">
+        <note />
+    <roleset framnet="feed.01" id="alimentar.01" name="nutrir" vncls="13.1-2">
+            <roles>
+                <role descr="causal agent" n="0">
+                    <vnrole vncls="13.1-2" vntheta="Agent" />
+                </role>
+                <role descr="food" n="1">
+                    <vnrole vncls="13.1-2" vntheta="Theme" />
+                </role>
+                <role descr="eater" n="2">
+                    <vnrole vncls="13.1-2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3423:  Não comporta qualquer reserva,  e bendito o país em que os homens públicos exigem dos candidatos a solução de problemas nacionais,  minorar a fome,  dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="2">se
+</arg>
+                <rel f="">alimentam</rel>
+                <arg f="" n="1">de lixo
+</arg>
+                <note>o arg2 é a entidade que recebe o alimento  </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s434:  É o delírio que alimenta o Sendero_  Luminoso. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">alimenta</rel>
+                <arg f="" n="2">o Sendero_  Luminoso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

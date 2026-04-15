@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aconselhar">
+        <note />
+    <roleset framnet="advise.01" id="aconselhar.01" name="dar conselho" vncls="37.9-1">
+            <roles>
+                <role descr="entity giving advice" n="0">
+                    <vnrole vncls="37.9-1" vntheta="Agent" />
+                </role>
+                <role descr="entity getting advice, impelled agent" n="1">
+                    <vnrole vncls="37.9-1" vntheta="Recipient" />
+                </role>
+                <role descr="advice, impelled action" n="2">
+                    <vnrole vncls="37.9-1" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3905:  Beckenbauer aconselha o lateral a conversar com o treinador,  procurando reverter a situação. 
+</text>
+                <arg f="" n="0">Beckenbauer
+</arg>
+                <rel f="">aconselha</rel>
+                <arg f="" n="1">o lateral
+</arg>
+                <arg f="" n="2">a conversar com o treinador,  procurando reverter a situação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3051:  Dinho aconselha time a partir para o ataque
+</text>
+                <arg f="" n="0">Dinho
+</arg>
+                <rel f="">aconselha</rel>
+                <arg f="" n="1">time
+</arg>
+                <arg f="" n="2">a partir para o ataque
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

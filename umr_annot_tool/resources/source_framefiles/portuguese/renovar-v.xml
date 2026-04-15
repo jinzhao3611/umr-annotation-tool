@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="renovar">
+        <note />
+    <roleset framnet="renew.01" id="renovar.01" name="revalidar; trocar o velho pelo novo" vncls="">
+            <roles>
+                <role descr="agent, causer of renewal" n="0" />
+                <role descr="thing becoming newish" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3888:  Pepe ainda tem esperança que o centroavante Guga renove o seu contrato,  vencido em 31 de dezembro. 
+</text>
+                <arg f="" n="0">o centroavante Guga
+</arg>
+                <rel f="">renove</rel>
+                <arg f="" n="1">o seu contrato,  vencido em 31 de dezembro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1190:  O contrato,  diz ele,  expirou ano passado e só foi renovado em fevereiro. 
+</text>
+                <arg f="" n="1">O contrato
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">renovado</rel>
+                <arg f="tmp" n="m">em fevereiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

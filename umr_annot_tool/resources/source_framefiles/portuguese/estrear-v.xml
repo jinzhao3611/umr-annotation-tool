@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estrear">
+        <note />
+    <roleset framnet="inaugurate.01" id="estrear.01" name="inaugurar; usar/exibir algo pela primeira vez; exibir-se pela primeira vez" vncls="-">
+            <roles>
+                <role descr="agent (rare)" n="0" />
+                <role descr="new officer" n="1" />
+                <role descr="office, role" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3368:  Francis_  Bacon vira nome de bar e Lanterna estréia pista
+</text>
+                <arg f="" n="0">Lanterna
+</arg>
+                <rel f="">estréia</rel>
+                <arg f="" n="1">pista
+</arg>
+                <note>com arg0 sujeito (alternância causativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2003:  « Trata-  se de um candidato que estreou em comício sob vaias e quer,  pela via do preconceito,  enfraquecer quem lidera as pesquisas »,  disse Falcão sobre FHC. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estreou</rel>
+                <arg f="loc" n="m">em comício
+</arg>
+                <arg f="mnr" n="m">sob vaias
+</arg>
+                <note>com arg1 sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1425:  Brigada com o namorado,  Regina optou por estrear na São_  Silvestre. 
+</text>
+                <rel f="">estrear</rel>
+                <arg f="loc" n="m">na São_  Silvestre
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s881:  Se depender de assinatura,  terá longa vida o bar-  café todo envidraçado que estréia este mês dentro_  da Livraria_  da_  Vila
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estréia</rel>
+                <arg f="tmp" n="m">este mês
+</arg>
+                <arg f="loc" n="m">dentro_  da Livraria_  da_  Vila
+</arg>
+                <note>com arg1 sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s340:  Antes de estrear como editor senior da « Playboy »,  Nirlando_  Beirão fez uma série de testes de vídeo. 
+</text>
+                <rel f="">estrear</rel>
+                <arg f="" n="2">como editor senior da « Playboy »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s13:  « Câmera_  Manchete » é o nome do novo programa jornalístico que estréia quarta-  feira,  às 22h30,  na Rede_  Manchete. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estréia</rel>
+                <arg f="tmp" n="m">quarta-  feira
+</arg>
+                <arg f="tmp" n="m">às 22h30
+</arg>
+                <arg f="loc" n="m">na Rede_  Manchete
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s12:  Manchete estréia novo jornalístico
+</text>
+                <arg f="" n="0">Manchete
+</arg>
+                <rel f="">estréia</rel>
+                <arg f="" n="1">novo jornalístico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s10:  A série exibida aqui pela Cultura estreou na TVI de Portugal. 
+</text>
+                <arg f="" n="1">A série exibida aqui pela Cultura
+</arg>
+                <rel f="">estreou</rel>
+                <arg f="loc" n="m">na TVI de Portugal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

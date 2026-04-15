@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="agendar">
+        <note />
+    <roleset framnet="schedule.01" id="agendar.01" name="marcar data e horário previamente" vncls="">
+            <roles>
+                <role descr="planner" n="0" />
+                <role descr="event" n="1" />
+                <role descr="scheduled for or because of" n="2" />
+                <role descr="time of event" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3663:  Eles tentaram agendar um encontro com Lula para pedir que ele ajudasse na negociação. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">agendar</rel>
+                <arg f="" n="1">um encontro com Lula para pedir que ele ajudasse na negociação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1653:  Nos EUA,  o Museu da OEA(  Organização_  dos_  Estados_  Americanos)  já tem agendada uma exposição de Amélia,  mas ela não sabe se instala lá suas « Sete_  Ondas ». 
+</text>
+                <arg f="loc" n="m">Nos EUA
+</arg>
+                <rel f="">agendada</rel>
+                <arg f="" n="1">uma exposição de Amélia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

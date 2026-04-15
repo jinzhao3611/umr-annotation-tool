@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="equivaler">
+        <note />
+    <roleset framnet="correspond.02" id="equivaler.01" name="ser igual a" vncls="47.2">
+            <roles>
+                <role descr="topic, theme" n="1">
+                    <vnrole vncls="47.2" vntheta="Theme" />
+                </role>
+                <role descr="compared with" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3002:  Do ponto de vista lógico,  um plano de estabilização equivale a uma promessa. 
+</text>
+                <arg f="mnr" n="m">Do ponto de vista lógico
+</arg>
+                <arg f="" n="1">um plano de estabilização
+</arg>
+                <rel f="">equivale</rel>
+                <arg f="" n="2">a uma promessa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

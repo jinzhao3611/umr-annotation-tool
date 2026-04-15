@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conferir">
+        <note />
+        <note />
+    <roleset framnet="confer.02" id="conferir.01" name="dar" vncls="-">
+            <roles>
+                <role descr="giver" n="0" />
+                <role descr="gift" n="1" />
+                <role descr="given to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2662:  Schumacher era a esperança de conferir alguma emoção a um Mundial que já parecia ter dono. 
+</text>
+                <rel f="">conferir</rel>
+                <arg f="" n="1">alguma emoção
+</arg>
+                <arg f="" n="2">a um Mundial que já parecia ter dono
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s1092:  Vamos confrontar os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano:  enquanto os titulares de Telê privilegiam o meio-  campo,  com três,  quatro,  às_  vezes cinco volantes congestionando o setor,  o_  que,  na prática,  não confere nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa,  os garotos jogam com Mona,  o único volante típico. 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <arg f="adv" n="m">na prática
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">confere</rel>
+                <arg f="" n="1">nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s449:  Em nível internacional,  há um processo de conglomerização de empresas que,  ao permitir a integração de softwares,  conferiu aos grandes grupos vantagens expressivas sobre os independentes. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">ao permitir a integração de softwares
+</arg>
+                <rel f="">conferiu</rel>
+                <arg f="" n="2">aos grandes grupos
+</arg>
+                <arg f="" n="1">vantagens expressivas sobre os independentes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="check.01" id="conferir.02" name="verificar" vncls="35.2">
+            <roles>
+                <role descr="checker" n="0">
+                    <vnrole vncls="35.2" vntheta="Agent" />
+                </role>
+                <role descr="thing checked" n="1">
+                    <vnrole vncls="35.2" vntheta="Location" />
+                </role>
+                <role descr="checked for" n="2">
+                    <vnrole vncls="35.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1812:  Ontem a cidade conferiu os estragos causados pela chuva de quinta_  feira,  a maior chuva de março desde 1930. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="" n="0">a cidade
+</arg>
+                <rel f="">conferiu</rel>
+                <arg f="" n="1">os estragos causados pela chuva de quinta_  feira,  a maior chuva de março desde 1930
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1728:  Confira algumas(  preços por_  pessoa,  pesquisados na semana passada) : 
+</text>
+                <rel f="">Confira</rel>
+                <arg f="" n="1">algumas(  preços por_  pessoa,  pesquisados na semana passada) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1560:  Vale a pena conferir os produtos e comparar a qualidade de impressão dos modelos jato de tinta. 
+</text>
+                <rel f="">conferir</rel>
+                <arg f="" n="1">os produtos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1557:  Confira as novidades em impressoras
+</text>
+                <rel f="">Confira</rel>
+                <arg f="" n="1">as novidades em impressoras
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

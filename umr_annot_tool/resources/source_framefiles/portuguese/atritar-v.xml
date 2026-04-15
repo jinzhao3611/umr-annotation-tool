@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atritar">
+        <note />
+    <roleset framnet="fall.03" id="atritar.01" name="entrar em desacordo" vncls="-">
+            <roles>
+                <role descr="parties on bad terms" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2442:  Não é a primeira vez,  e espero não ser a última,  que Fernando_  Henrique e esta coluna se atritam pelo mesmo motivo. 
+</text>
+                <arg f="" n="0">Fernando_  Henrique e esta coluna
+</arg>
+                <arg f="rec" n="m">se
+</arg>
+                <rel f="">atritam</rel>
+                <arg f="cau" n="m">pelo mesmo motivo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

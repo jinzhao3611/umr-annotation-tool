@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="inventar">
+        <note />
+    <roleset framnet="" id="inventar.01" name="criar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3209:  A sensação de insegurança e a debilidade do poder público eram sem dúvida características dos Estados_  Unidos do final do século 18,  quando(  segundo a versão mais aceita)  a palavra teria sido inventada a_  partir_  da prática adotada por um juiz Lynch,  de condenar e executar seus adversários sem o devido processo legal. 
+</text>
+                <arg f="" n="1">a palavra
+</arg>
+                <rel f="">inventada</rel>
+                <arg f="mnr" n="m">a_  partir_  da prática adotada por um juiz Lynch,  de condenar e executar seus adversários sem o devido processo legal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s606:  Um camelô cearense inventou o kit Aids:  um par de joelheiras e 45 camisinhas! 
+</text>
+                <arg f="" n="0">Um camelô cearense
+</arg>
+                <rel f="">inventou</rel>
+                <arg f="" n="1">o kit Aids:  um par de joelheiras e 45 camisinhas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

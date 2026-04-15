@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vender">
+        <note />
+    <roleset framnet="sell.01" id="vender.01" name="ceder algo em troca de dinheiro" vncls="13.1-1">
+            <roles>
+                <role descr="Seller" n="0">
+                    <vnrole vncls="13.1-1" vntheta="Agent" />
+                </role>
+                <role descr="Thing Sold" n="1">
+                    <vnrole vncls="13.1-1" vntheta="Theme" />
+                </role>
+                <role descr="Buyer" n="2">
+                    <vnrole vncls="13.1-1" vntheta="Recipient" />
+                </role>
+                <role descr="Price Paid" n="3" />
+                <role descr="Benefactive" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4082:  A intenção de Fleury é vender as ações para equilibrar as finanças e começar a pagar a dívida do Estado,  estimada em R$  31 bilhões. 
+</text>
+                <rel f="">vender</rel>
+                <arg f="" n="1">as ações
+</arg>
+                <arg f="pnc" n="m">para equilibrar as finanças
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3967:  O principal destaque na pista foi a vaca Santya,  selecionada para ser doadora em transferência de embriões,  que foi vendida por 40,  2 mil URVs. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vendida</rel>
+                <arg f="" n="3">por 40,  2 mil URVs
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3777:  A PF(  Polícia_  Federal)  indiciou ontem duas pessoas por vender carro com ágio. 
+</text>
+                <rel f="">vender</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3665:  No banheiro,  um funcionário vende balas,  cigarros,  chocolates,  água mineral,  remédios(  Engov)  e,  claro,  camisinhas. 
+</text>
+                <arg f="loc" n="m">No banheiro
+</arg>
+                <arg f="" n="0">um funcionário
+</arg>
+                <rel f="">vende</rel>
+                <arg f="" n="1">balas,  cigarros,  chocolates,  água mineral,  remédios(  Engov)  e,  claro,  camisinhas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3260:  Disse que o governo vai vender « desde automóvel até participação acionária em empresas de energia elétrica ». 
+</text>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">vender</rel>
+                <arg f="" n="1">desde automóvel até participação acionária em empresas de energia elétrica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3046:  Vendendo cada sala especial para um patrocinador exclusivo,  demos a ele um retorno muito mais palpável,  com anúncios em meios de comunicação e o abatimento de impostos. 
+</text>
+                <rel f="">Vendendo</rel>
+                <arg f="" n="1">cada sala especial
+</arg>
+                <arg f="" n="2">para um patrocinador exclusivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2883:  Em 93 vendeu 83 milhões de litros(  US$  128 milhões) . 
+</text>
+                <arg f="tmp" n="m">Em 93
+</arg>
+                <rel f="">vendeu</rel>
+                <arg f="" n="1">83 milhões de litros(  US$  128 milhões) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2882:  Apesar_  dos esforços,  estima fechar o ano vendendo 75 milhões de litros de sorvetes(  US$  120 milhões) . 
+</text>
+                <rel f="">vendendo</rel>
+                <arg f="" n="1">75 milhões de litros de sorvetes(  US$  120 milhões) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2835:  Produtores da Paraíba,  por_  exemplo,  venderam abacaxi a um grupo de empresários espanhóis,  no valor de US$  323 mil. 
+</text>
+                <arg f="" n="0">Produtores da Paraíba
+</arg>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <rel f="">venderam</rel>
+                <arg f="" n="1">abacaxi
+</arg>
+                <arg f="" n="2">a um grupo de empresários espanhóis
+</arg>
+                <arg f="" n="3">no valor de US$  323 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1911:  Os personagens de « Cerimônia_  de_  Casamento » parecem saídos das páginas de « recém-  casados » do « The_  New_  York_  Times »,  uma das seções mais provincianas da imprensa mundial e de maior leitura num jornal que vende a imagem de um dos mais cosmopolitas do mundo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">vende</rel>
+                <arg f="" n="1">a imagem de um dos mais cosmopolitas do mundo
+</arg>
+                <note>uso metafórico: "vender uma imagem de'" significa "passar aos outros uma  imagem de si mesmo com determinada característica" </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1805:  A CompUSA de Los_  Angeles vendia,  na semana passada,  a impressora jato de tinta Epson_  Stylus_  800 por US$  199. 
+</text>
+                <arg f="" n="0">A CompUSA de Los_  Angeles
+</arg>
+                <rel f="">vendia</rel>
+                <arg f="tmp" n="m">na semana passada
+</arg>
+                <arg f="" n="1">a impressora jato de tinta Epson_  Stylus_  800
+</arg>
+                <arg f="" n="3">por US$  199
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1666:  O diretor de Assuntos_  Internacionais do Banco_  Central,  Gustavo_  Franco,  disse que o BC vai comprar dólares por uma cotação « bem abaixo » de R$  1,  00,  preço pelo_  qual vende a moeda norte-  americana. 
+</text>
+                <arg f="" n="0">o BC
+</arg>
+                <rel f="">vende</rel>
+                <arg f="" n="1">a moeda norte-  americana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1665:  Diretor do Banco_  Central não acredita que o real esteja valorizado porque « tem gente comprando e vendendo »
+</text>
+                <arg f="" n="0">gente
+</arg>
+                <rel f="">vendendo</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1567:  Já os quatro leilões realizados durante a Expomilk venderam 124 cabeças de raças holandes,  jersei,  pardo-  suíço e girolanda. 
+</text>
+                <arg f="" n="0">os quatro leilões realizados durante a Expomilk
+</arg>
+                <rel f="">venderam</rel>
+                <arg f="" n="1">124 cabeças de raças holandes,  jersei,  pardo-  suíço e girolanda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s249:  « Meantime »,  disco de estréia da banda no Interscope,  vendeu 500 mil cópias. 
+</text>
+                <arg f="" n="1">« Meantime »,  disco de estréia da banda no Interscope, 
+</arg>
+                <rel f="">vendeu</rel>
+                <arg f="ext" n="m">500 mil cópias
+</arg>
+                <note>arg1 sujeito (voz média)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s22:  O modelo Lx_  810,  da Epson,  é vendido em Miami por US$  178. 
+</text>
+                <arg f="" n="1">O modelo Lx_  810,  da Epson, 
+</arg>
+                <rel f="">vendido</rel>
+                <arg f="loc" n="m">em Miami
+</arg>
+                <arg f="" n="3">por US$  178
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s21:  Free_  shops dos aeroportos internacionais também vendem o equipamento. 
+</text>
+                <arg f="" n="0">Free_  shops dos aeroportos internacionais
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">vendem</rel>
+                <arg f="" n="1">o equipamento
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

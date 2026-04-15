@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="garfar">
+        <note />
+    <roleset framnet="grab.01" id="garfar.01" name="pegar algo com um garfo para comer; apropriar-se de (uso figurado)" vncls="10.5 13.5.2 15.1-1">
+            <roles>
+                <role descr="grabber" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                    <vnrole vncls="15.1-1" vntheta="Agent" />
+                </role>
+                <role descr="entity grabbed" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                    <vnrole vncls="15.1-1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s480:  O governo se comprometeu a não « garfar » a poupança,  nas palavras do presidente do BC. 
+</text>
+                <arg f="tmp" n="m">não
+</arg>
+                <rel f="">garfar</rel>
+                <arg f="" n="1">a poupança
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

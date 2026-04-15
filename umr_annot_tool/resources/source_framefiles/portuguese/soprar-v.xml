@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="soprar">
+        <note />
+    <roleset framnet="blow.01" id="soprar.01" name="causar movimento pela corrente de ar" vncls="23.2">
+            <roles>
+                <role descr="wind" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                </role>
+                <role descr="thing being moved" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient1" />
+                </role>
+                <role descr="path or medium" n="m" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2617:  Ninguém fica parado com o vento que sopra do Pacífico. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">sopra</rel>
+                <arg f="dir" n="m">do Pacífico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2254:  E,  de_  fato,  os ventos não sopram em_  favor_  dos venezuelanos. 
+</text>
+                <arg f="adv" n="m">de_  fato
+</arg>
+                <arg f="" n="0">os ventos
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">sopram</rel>
+                <arg f="dir" n="m">em_  favor_  dos venezuelanos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

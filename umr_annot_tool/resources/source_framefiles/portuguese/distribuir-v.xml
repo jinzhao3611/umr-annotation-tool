@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="distribuir">
+        <note />
+    <roleset framnet="distribute.01" id="distribuir.01" name="repartir; dar" vncls="13.2">
+            <roles>
+                <role descr="distributor" n="0">
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="thing distributed" n="1">
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="distributed to" n="2">
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3630:  Também vamos distribuir 1 milhão de cestas básicas,  para matar a fome da população até a transição para a democracia. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <rel f="">distribuir</rel>
+                <arg f="" n="1">1 milhão de cestas básicas
+</arg>
+                <arg f="pnc" n="m">para matar a fome da população até a transição para a democracia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3626:  Para evitar distúrbios,  vamos distribuir às TVs uma fita para mostrar ﻿à população o_  que viemos fazer aqui. 
+</text>
+                <arg f="pnc" n="m">Para evitar distúrbios
+</arg>
+                <rel f="">distribuir</rel>
+                <arg f="" n="2">às TVs
+</arg>
+                <arg f="" n="1">uma fita para mostrar ﻿à população o_  que viemos fazer aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2494:  O atlas que a Folha vai distribuir aos leitores em 19 fascículos tem três patrocinadores:  o Banco_  Itamarati,  a Companhia_  Brasileira_  de_  Alumínio(  do grupo Votorantim)  e a OAS_  Participações. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">a Folha
+</arg>
+                <rel f="">distribuir</rel>
+                <arg f="" n="2">aos leitores
+</arg>
+                <arg f="mnr" n="m">em 19 fascículos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s185:  Isso vai facilitar as atividades de franqueadores que precisam importar produtos para distribuir-  los a seus franqueados que operam noutro deles. 
+</text>
+                <rel f="">distribuir-</rel>
+                <arg f="" n="1">los
+</arg>
+                <arg f="" n="2">a seus franqueados que operam noutro deles
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s44:  O presidente da Cooper,  Benedito_  Vieira_  Pereira,  49,  afirmou que pretendia distribuir leite C nos postos de venda hoje. 
+</text>
+                <rel f="">distribuir</rel>
+                <arg f="" n="1">leite C
+</arg>
+                <arg f="loc" n="m">nos postos de venda
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

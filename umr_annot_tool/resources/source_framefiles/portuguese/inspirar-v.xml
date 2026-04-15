@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="inspirar">
+        <note />
+        <note />
+    <roleset framnet="inspire.01" id="inspirar.01" name="servir de molde ou estímulo; estimular; dar inspiração" vncls="31.1">
+            <roles>
+                <role descr="causer of inspiration" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="experiencer" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="inspired action" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3948:  Determinadas pelo Conselho_  Federal_  de_  Medicina(  CFM) ,  as normas éticas foram inspiradas nas doutros países,  Estados_  Unidos,  França e Itália,  por_  exemplo. 
+</text>
+                <arg f="prd" n="m">Determinadas pelo Conselho_  Federal_  de_  Medicina(  CFM) 
+</arg>
+                <arg f="" n="1">as normas éticas
+</arg>
+                <rel f="">inspiradas</rel>
+                <arg f="" n="0">nas doutros países,  Estados_  Unidos,  França e Itália,  por_  exemplo
+</arg>
+                <note>passiva</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2621:  A própria Receita_  Federal pode ter,  indiretamente,  inspirado este golpe. 
+</text>
+                <arg f="" n="0">A própria Receita_  Federal
+</arg>
+                <rel f="">inspirado</rel>
+                <arg f="" n="1">este golpe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s205:  O escritor,  identificado com a cultura beatnik,  admitia somente ter sido inspirado por um outro autor da Califórnia,  John_  Fante(  « Pergunte_  ao_  Pó »,  entre outros) ,  que Bukowski descobriu nas suas leituras em bibliotecas públicas quando jovem. 
+</text>
+                <rel f="">inspirado</rel>
+                <arg f="" n="0">por um outro autor da Califórnia,  John_  Fante(  « Pergunte_  ao_  Pó »,  entre outros) ,  que Bukowski descobriu nas suas leituras em bibliotecas públicas quando jovem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="base.02" id="inspirar.03" name="basear" vncls="97.1">
+            <roles>
+                <role descr="justifier, agent (rarely seen)" n="0">
+                    <vnrole vncls="97.1" vntheta="Agent" />
+                </role>
+                <role descr="decision" n="1">
+                    <vnrole vncls="97.1" vntheta="Theme1" />
+                </role>
+                <role descr="justification" n="2">
+                    <vnrole vncls="97.1" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s204:  O filme « Barfly »(  traduzido no Brasil como « Condenados_  pelo_  Vício »)  foi inspirado na vida de Bukowski. 
+</text>
+                <arg f="" n="1">O filme « Barfly »(  traduzido no Brasil como « Condenados_  pelo_  Vício ») 
+</arg>
+                <rel f="">inspirado</rel>
+                <arg f="" n="2">na vida de Bukowski
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="inspirar-se">
+        <note />
+    <roleset framnet="inspire.01" id="inspirar.02" name="alternância incoativa de &quot;inspirar&quot;: tornar-se inspirado; ser inspirado por; buscar inspiração em" vncls="31.1">
+            <roles>
+                <role descr="causer of inspiration" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="experiencer" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="inspired action" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3078:  « Inspira-  se no mais antigo e melhor bailarino de minha companhia,  que morreu no último verão »,  ela diz. 
+</text>
+                <rel f="">Inspira-</rel>
+                <arg f="" n="0">no mais antigo e melhor bailarino de minha companhia,  que morreu no último verão
+</arg>
+                <note>arg1 (coisa ou pessoa inspirada) é sujeito oculto</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2939:  Doucet se inspirava muito em suas viagens e refletia isso no título de vários de seus trabalhos,  como « Guatemala_  Blues » e « Mostar_  Sarajevo ». 
+</text>
+                <arg f="" n="1">Doucet
+</arg>
+                <rel f="">inspirava</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="0">em suas viagens
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

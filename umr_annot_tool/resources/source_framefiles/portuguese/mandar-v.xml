@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mandar">
+        <note />
+        <note />
+    <roleset framnet="send.01" id="mandar.01" name="enviar" vncls="11.1-1">
+            <roles>
+                <role descr="sender" n="0">
+                    <vnrole vncls="11.1-1" vntheta="Agent" />
+                </role>
+                <role descr="sent" n="1">
+                    <vnrole vncls="11.1-1" vntheta="Theme" />
+                </role>
+                <role descr="sent-to" n="2">
+                    <vnrole vncls="11.1-1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3532:  Em_  vez_  de mandar um papel pelo garçom com cantadas escritas,  o plínio liga para a plínia de sua predileção e pronto- -  está feito o contato imediato. 
+</text>
+                <rel f="">mandar</rel>
+                <arg f="mnr" n="m">pelo garçom
+</arg>
+                <arg f="" n="1">um papel com cantadas escritas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3224:  Welles foi mandado como uma espécie de embaixador cultural. 
+</text>
+                <arg f="" n="1">Welles
+</arg>
+                <rel f="">mandado</rel>
+                <arg f="cau" n="m">como uma espécie de embaixador cultural
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2576:  A frase do ex-  presidente é uma referência a uma das promessas feitas por Cafeteira,  um ex-  sarneyzista que insinuava,  durante a sua campanha,  mandar Sarney para_  fora_  do seu Estado. 
+</text>
+                <rel f="">mandar</rel>
+                <arg f="" n="1">Sarney
+</arg>
+                <arg f="" n="2">para_  fora_  do seu Estado
+</arg>
+                <note>arg2 como lugar de destino</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s30:  Posteriormente,  diante_  da ameaça do tribunal de entrar com uma ação judicial,  o governo mandou ao Congresso uma alteração ao projeto,  aumentando para R$  452,  7 milhões a dotação do TSE. 
+</text>
+                <arg f="tmp" n="m">Posteriormente
+</arg>
+                <arg f="cau" n="m">diante_  da ameaça do tribunal de entrar com uma ação judicial
+</arg>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">mandou</rel>
+                <arg f="" n="2">ao Congresso
+</arg>
+                <arg f="" n="1">uma alteração ao projeto
+</arg>
+                <arg f="adv" n="m">aumentando para R$  452,  7 milhões a dotação do TSE
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="order.01" id="mandar.02" name="ordenar" vncls="60-1">
+            <roles>
+                <role descr="forcer" n="0">
+                    <vnrole vncls="60-1" vntheta="Agent" />
+                </role>
+                <role descr="impelled agent" n="1">
+                    <vnrole vncls="60-1" vntheta="Patient" />
+                </role>
+                <role descr="impelled action" n="2">
+                    <vnrole vncls="60-1" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s860:  Pela desvinculação,  o governo fica desobrigado de cumprir os artigos da Constituição que mandam aplicar percentuais fixos do Orçamento em educação e habitação. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">mandam</rel>
+                <arg f="" n="2">aplicar percentuais fixos do Orçamento em educação e habitação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="mandar-se_para">
+        <note />
+    <roleset framnet="go.01" id="mandar.03" name="ir embora para" vncls="47.7 51.1-2">
+            <roles>
+                <role descr="entity in motion/goer" n="1">
+                    <vnrole vncls="47.7" vntheta="Theme" />
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="extent" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point, end state of arg1" n="4" />
+                <role descr="medium" n="M" />
+                <role descr="direction (usually up or down)" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s239:  Pegam os dois pimpolhos Joana e Luca e se mandam para Lake_  Powell,  Arizona. 
+</text>
+                <rel f="">mandam</rel>
+                <arg f="" n="4">para Lake_  Powell,  Arizona
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

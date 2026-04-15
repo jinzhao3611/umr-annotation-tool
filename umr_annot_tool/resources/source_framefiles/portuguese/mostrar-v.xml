@@ -1,0 +1,454 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mostrar">
+        <note />
+    <roleset framnet="show.01" id="mostrar.01" name="demonstrar; revelar" vncls="29.5 37.1-1 40.3.2">
+            <roles>
+                <role descr="shower" n="0">
+                    <vnrole vncls="29.5" vntheta="Agent" />
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                </role>
+                <role descr="thing seen/shown" n="1">
+                    <vnrole vncls="29.5" vntheta="Predicate" />
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                </role>
+                <role descr="seer" n="2">
+                    <vnrole vncls="29.5" vntheta="Theme" />
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                    <vnrole vncls="40.3.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4058:  Ele fala que tem idéias e não um programa,  mas muitas_  vezes,  quando perguntado ele mostra que também não tem nem idéia.  »
+</text>
+                <arg f="tmp" n="m">muitas_  vezes
+</arg>
+                <arg f="tmp" n="m">quando perguntado
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">que também não tem nem idéia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3626:  Para evitar distúrbios,  vamos distribuir às TVs uma fita para mostrar ﻿à população o_  que viemos fazer aqui. 
+</text>
+                <rel f="">mostrar</rel>
+                <arg f="" n="2">﻿à população
+</arg>
+                <arg f="" n="1">o_  que viemos fazer aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3602:  Conta com recursos de figuras e sons,  que mostram o significado das palavras. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">mostram</rel>
+                <arg f="" n="1">o significado das palavras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3550:  Lutava contra a bestialidade das pessoas e sempre mostrou isso de uma forma bizarra »,  conta Mano_  Bap,  29,  vocalista da The_  Central_  Scrutinizer. 
+</text>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">mostrou</rel>
+                <arg f="" n="1">isso
+</arg>
+                <arg f="mnr" n="m">de uma forma bizarra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3541:  O levantamento mostra que a Constituição de 1988 elevou de 15,  27%  para 20,  53%  a alíquota média sobre o consumo no Brasil em 1989. 
+</text>
+                <arg f="" n="0">O levantamento
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">que a Constituição de 1988 elevou de 15,  27%  para 20,  53%  a alíquota média sobre o consumo no Brasil em 1989
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3502:  A casa vai estar cheia e nós vamos mostrar porque viemos disputar a Copa »,  afirma. 
+</text>
+                <arg f="" n="0">nós
+</arg>
+                <rel f="">mostrar</rel>
+                <arg f="" n="1">porque viemos disputar a Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3385:  Se reagir é interessante porque mostrará que está vivo.  »
+</text>
+                <rel f="">mostrará</rel>
+                <arg f="" n="1">que está vivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3301:  Outros institutos mostram números diferentes,  mas não são divulgados pela televisão. 
+</text>
+                <arg f="" n="0">Outros institutos
+</arg>
+                <rel f="">mostram</rel>
+                <arg f="" n="1">números diferentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3193:  Arriet_  Chanin- -  A artista mostra 15 monotipias trabalhadas em papel artesanal de folha de bananeira e 12 gravuras em metal,  que são instrumentos musicais e conchas. 
+</text>
+                <arg f="" n="0">A artista
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">15 monotipias trabalhadas em papel artesanal de folha de bananeira e 12 gravuras em metal,  que são instrumentos musicais e conchas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3079:  O tema de Julia_  Child era uma simples quiche,  mas era político:  mostrar aos paranóicos americanos que o ovo e a manteiga fazem pratos deliciosos e que a patrulha do colesterol deve dar espaço ao prazer da comida. 
+</text>
+                <rel f="">mostrar</rel>
+                <arg f="" n="2">aos paranóicos americanos
+</arg>
+                <arg f="" n="1">que o ovo e a manteiga fazem pratos deliciosos e que a patrulha do colesterol deve dar espaço ao prazer da comida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2757:  Pesquisa da Cia. _  City_  de_  Desenvolvimento mostra que os empresários procuram locais com infra-  estrutura,  facilidade de acesso,  boa oferta de mão-  de-  obra,  próximos de São_  Paulo e das rodovias e longe de movimentos sindicais. 
+</text>
+                <arg f="" n="0">Pesquisa da Cia. _  City_  de_  Desenvolvimento
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">que os empresários procuram locais com infra-  estrutura,  facilidade de acesso,  boa oferta de mão-  de-  obra,  próximos de São_  Paulo e das rodovias e longe de movimentos sindicais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2427:  A situação tende a se agravar,  uma_  vez_  que nenhuma das partes parece mostrar disposição de recuar. 
+</text>
+                <rel f="">mostrar</rel>
+                <arg f="" n="1">disposição de recuar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2229:  Pesquisas têm mostrado que o fenilcetonúrico deve seguir a dieta durante toda a vida. 
+</text>
+                <arg f="" n="0">Pesquisas
+</arg>
+                <rel f="">mostrado</rel>
+                <arg f="" n="1">que o fenilcetonúrico deve seguir a dieta durante toda a vida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2110:  Em sua avaliação,  a conversa com o deputado fluminense mostrou que ambos desejam a aproximação. 
+</text>
+                <arg f="loc" n="m">Em sua avaliação
+</arg>
+                <arg f="" n="0">a conversa com o deputado fluminense
+</arg>
+                <rel f="">mostrou</rel>
+                <arg f="" n="1">que ambos desejam a aproximação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2068:  Os mapas de países,  como os do terceiro fascículo,  mostram 16 tipos de vias de comunicação(  de estradas a aeroportos de tráfego local e internacional) ,  rios,  lagos,  cachoeiras,  montanhas(  acompanhas da altitude) ,  parques nacionais,  reservas de gás natural etc. 
+</text>
+                <arg f="" n="0">Os mapas de países,  como os do terceiro fascículo, 
+</arg>
+                <rel f="">mostram</rel>
+                <arg f="" n="1">16 tipos de vias de comunicação(  de estradas a aeroportos de tráfego local e internacional) ,  rios,  lagos,  cachoeiras,  montanhas(  acompanhas da altitude) ,  parques nacionais,  reservas de gás natural etc
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1932:  E o tempo vem mostrando que o fenômeno não é mero modismo. 
+</text>
+                <arg f="" n="0">o tempo
+</arg>
+                <rel f="">mostrando</rel>
+                <arg f="" n="1">que o fenômeno não é mero modismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1862:  Minha experiência,  nos dois últimos anos,  supervisionando programas de qualidade total dentro_  do grupo Rhône-  Poulenc tem mostrado isso com frequência. 
+</text>
+                <arg f="tmp" n="m">nos dois últimos anos
+</arg>
+                <arg f="" n="0">Minha experiência supervisionando programas de qualidade total dentro_  do grupo Rhône-  Poulenc
+</arg>
+                <rel f="">mostrado</rel>
+                <arg f="" n="1">isso
+</arg>
+                <arg f="tmp" n="m">com frequência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1837:  IBGE mostra inflação menor no Rio e SP
+</text>
+                <arg f="" n="0">IBGE
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">inflação menor
+</arg>
+                <arg f="prd" n="m">no Rio e SP
+</arg>
+                <note>o local "no Rio e SP" modifica o NP "inflação menor" e não o verbo "mostrar"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1561:  A Epson mostra na Comdex quatro modelos com tecnologia jato de tinta,  que deverão substituir os modelos matriciais no dia-  a-  dia dos usuários e empresas. 
+</text>
+                <arg f="" n="0">A Epson
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="loc" n="m">na Comdex
+</arg>
+                <arg f="" n="1">quatro modelos com tecnologia jato de tinta,  que deverão substituir os modelos matriciais no dia-  a-  dia dos usuários e empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1519:  Este levantamento de preços que inclui também produtos de higiene e de limpeza mostra recuo de 1,  58%  em_  relação_  ﻿à sexta-  feira anterior. 
+</text>
+                <arg f="" n="0">Este levantamento de preços que inclui também produtos de higiene e de limpeza
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">recuo de 1,  58%  em_  relação_  ﻿à sexta-  feira anterior
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1517:  Outra pesquisa do Datafolha mostra que estes alimentos recuaram 0,  47%  na última semana de novembro. 
+</text>
+                <arg f="" n="0">Outra pesquisa do Datafolha
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">que estes alimentos recuaram 0,  47%  na última semana de novembro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1378:  Mal,  pelo_  menos por_  enquanto,  na eleição presidencial,  o PMDB mostra na corrida dos senadores que ainda tem cacife. 
+</text>
+                <arg f="prd" n="m">Mal
+</arg>
+                <arg f="prd" n="m">pelo_  menos por_  enquanto
+</arg>
+                <arg f="prd" n="m">na eleição presidencial
+</arg>
+                <arg f="" n="0">o PMDB
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="loc" n="m">na corrida dos senadores
+</arg>
+                <arg f="" n="1">que ainda tem cacife
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1211:  Estudo da Associação_  dos_  Engenheiros da Petrobrás sobre a estrutura de preços dos combustíveis mostra que a Petrobrás tem uma margem de até 29%  no preço do combustível que poderia ser usada para reduzir o valor da gasolina. 
+</text>
+                <arg f="" n="0">Estudo da Associação_  dos_  Engenheiros da Petrobrás sobre a estrutura de preços dos combustíveis
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">que a Petrobrás tem uma margem de até 29%  no preço do combustível que poderia ser usada para reduzir o valor da gasolina
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1141:  No galpão serão mostradas fotos dos bastidores dos lançamentos de moda em registros de Claudia_  Guimarães,  da Folha_  Imagem. 
+</text>
+                <arg f="loc" n="m">No galpão
+</arg>
+                <rel f="">mostradas</rel>
+                <arg f="" n="1">fotos dos bastidores dos lançamentos de moda em registros de Claudia_  Guimarães,  da Folha_  Imagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s974:  Profissionais com longa experiência em cargos gerenciais e administrativos devem se preocupar,  ao fazer o currículo,  em mostrar a essência da carreira,  resumindo suas conquistas e realizações. 
+</text>
+                <rel f="">mostrar</rel>
+                <arg f="" n="1">a essência da carreira
+</arg>
+                <arg f="mnr" n="m">resumindo suas conquistas e realizações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s973:  Profissional experiente deve mostrar essência da carreira
+</text>
+                <arg f="" n="0">Profissional experiente
+</arg>
+                <rel f="">mostrar</rel>
+                <arg f="" n="1">essência da carreira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s779:  A Bandeirantes mostra o videoteipe de Kansas e Atlanta,  às 17h45. 
+</text>
+                <arg f="" n="0">A Bandeirantes
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">o videoteipe de Kansas e Atlanta
+</arg>
+                <arg f="tmp" n="m">às 17h45
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s381:  Uma carta de Champollion de 1822 ﻿à Academia_  de_  Inscrições_  e_  Belas_  Artes,  mostrando seus resultados,  é o nascimento da egiptologia,  segundo Vercoutter. 
+</text>
+                <rel f="">mostrando</rel>
+                <arg f="" n="1">seus resultados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s306:  Mostrou que a maioria dos seus políticos profissionais cuja respeitabilidade não pode ser posta em dúvida oscilava entre o centro nacionalista e os radicais do PMDB. 
+</text>
+                <rel f="">Mostrou</rel>
+                <arg f="" n="1">que a maioria dos seus políticos profissionais cuja respeitabilidade não pode ser posta em dúvida oscilava entre o centro nacionalista e os radicais do PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s226:  No primeiro volume de « Esses_  Byrne » mostrou soberbas trilhas sonoras de filmes indianos. 
+</text>
+                <arg f="loc" n="m">No primeiro volume de « Esses_  Byrne »
+</arg>
+                <rel f="">mostrou</rel>
+                <arg f="" n="1">soberbas trilhas sonoras de filmes indianos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s222:  Uma sala tem como ícones uma pilha de discos,  um aparelho de som,  uma enciclopédia e uma janela que mostra a encruzilhada onde Robert_  Johnson teria feito um pacto com o diabo,  trocando a alma pelo sucesso. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">mostra</rel>
+                <arg f="" n="1">a encruzilhada onde Robert_  Johnson teria feito um pacto com o diabo,  trocando a alma pelo sucesso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s14:  Sob o comando de Ronaldo_  Rosas,  o programa mostrará reportagens especiais de Sônia_  Pompeu. 
+</text>
+                <arg f="prd" n="m">Sob o comando de Ronaldo_  Rosas
+</arg>
+                <arg f="" n="0">o programa
+</arg>
+                <rel f="">mostrará</rel>
+                <arg f="" n="1">reportagens especiais de Sônia_  Pompeu
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="mostrar-se">
+        <note />
+    <roleset framnet="" id="mostrar.02" name="verbo pronominal com função de cópula: revelar ser" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s129:  Os arquivos são protegidos por senhas e códigos,  que acabaram mostrando-  se vulneráveis. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">mostrando-</rel>
+                <arg f="" n="2">vulneráveis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

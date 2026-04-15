@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="assustar-se">
+        <note />
+    <roleset framnet="startle.01" id="assustar.01" name="alternância incoativa de &quot;assustar&quot;: ficar assustado; ser pego de surpresa" vncls="-">
+            <roles>
+                <role descr="cause of surprise" n="0" />
+                <role descr="experiencer of surprise" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1922:  Embora não fosse o alvo,  o ex-  presidente assustou-  se com os flashes. 
+</text>
+                <arg f="adv" n="m">Embora não fosse o alvo, 
+</arg>
+                <arg f="" n="1">o ex-  presidente
+</arg>
+                <rel f="">assustou-</rel>
+                <arg f="" n="0">com os flashes
+</arg>
+                <note>incoativo: assustar-se</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1918:  Collor sai para jantar e se assusta com flashes
+</text>
+                <arg f="" n="1">Collor
+</arg>
+                <rel f="">assusta</rel>
+                <arg f="" n="0">com flashes
+</arg>
+                <note>incoativo: assustar-se</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esquecer">
+        <note />
+    <roleset framnet="forget.01" id="esquecer.01" name="sair da memória; deixar de trazer; deixar em outro lugar" vncls="-">
+            <roles>
+                <role descr="forgetter" n="0" />
+                <role descr="thing forgotten" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3461:  Ou_  melhor,  não esqueça porque ainda se faz muita coisa boa,  mas deixe de querer ser bacana citando-  o como a última tendência. 
+</text>
+                <arg f="dis" n="m">Ou_  melhor
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">esqueça</rel>
+                <arg f="" n="1">porque ainda se faz muita coisa boa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2705:  Depois de registrado,  Queiroz apresentou uma segunda declaração ao TSE(  Tribunal_  Superior_  Eleitoral) ,  acrescentando bens que alegou ter « esquecido » nos primeiros papéis que foram apresentados. 
+</text>
+                <arg f="" n="0">Queiroz
+</arg>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">esquecido</rel>
+                <arg f="loc" n="m">nos primeiros papéis que foram apresentados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1878:  Baixa o carcamano e você esquece a noção do ridículo »
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">esquece</rel>
+                <arg f="" n="1">a noção do ridículo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1497:  Não esqueça dos óculos escuros e uma capa de chuva. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">esqueça</rel>
+                <arg f="" n="1">dos óculos escuros e uma capa de chuva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s433:  Em dois países esses índios ainda não esqueceram o trauma da conquista:  Cortéz,  no próprio México,  e Pizarro,  no Peru. 
+</text>
+                <arg f="loc" n="m">Em dois países
+</arg>
+                <arg f="" n="0">esses índios
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">esqueceram</rel>
+                <arg f="" n="1">o trauma da conquista:  Cortéz,  no próprio México,  e Pizarro,  no Peru
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s62:  Havelange aceitaria engolir o italiano Antonio_  Matarrese como o seu vice-  executivo e,  além_  disso,  esqueceria os seus modos autoritários,  coordenando a entidade de maneira colegiada. 
+</text>
+                <arg f="" n="0">Havelange
+</arg>
+                <rel f="">esqueceria</rel>
+                <arg f="" n="1">os seus modos autoritários
+</arg>
+                <arg f="mnr" n="m">coordenando a entidade de maneira colegiada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="esquecer-se">
+        <note />
+    <roleset framnet="forget.01" id="esquecer.02" name="sair da memória" vncls="-">
+            <roles>
+                <role descr="forgetter" n="0" />
+                <role descr="thing forgotten" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2811:  A imprensa já se esqueceu de que os oligopólios são o vilão da URV e do plano FHC. 
+</text>
+                <arg f="" n="0">A imprensa
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">esqueceu</rel>
+                <arg f="" n="1">de que os oligopólios são o vilão da URV e do plano FHC
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="administrar">
+        <note />
+    <roleset framnet="manage.01" id="administrar.01" name="gerir" vncls="">
+            <roles>
+                <role descr="manager" n="0" />
+                <role descr="thing managed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2720:  Anteontem,  o Banerj,  que administra a dívida pública estadual,  não conseguiu que o Banco_  Central negociasse R$  84 milhões em títulos estaduais,  trocando-  os por títulos federais. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">administra</rel>
+                <arg f="" n="1">a dívida pública estadual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s882:  São os garotos do Nabuco que vão administrar o negócio. 
+</text>
+                <arg f="" n="0">os garotos do Nabuco
+</arg>
+                <rel f="">administrar</rel>
+                <arg f="" n="1">o negócio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

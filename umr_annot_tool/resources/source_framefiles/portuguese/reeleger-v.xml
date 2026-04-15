@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reeleger">
+        <note />
+    <roleset framnet="reelect.01" id="reeleger.01" name="eleger de novo" vncls="29.1">
+            <roles>
+                <role descr="voters" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="candidate" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="office or position" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3202:  O empresário e corretor de imóveis,  Roberto_  Capuano,  foi reeleito pela terceira vez presidente do Conselho_  Regional_  de_  Corretores_  de_  Imóveis do Estado de São_  Paulo(  Creci) . 
+</text>
+                <arg f="" n="1">O empresário e corretor de imóveis,  Roberto_  Capuano, 
+</arg>
+                <rel f="">reeleito</rel>
+                <arg f="tmp" n="m">pela terceira vez
+</arg>
+                <arg f="" n="2">presidente do Conselho_  Regional_  de_  Corretores_  de_  Imóveis do Estado de São_  Paulo(  Creci) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2896:  Depois de dois mandatos,  Menem não poderia ser reeleito em 1999. 
+</text>
+                <arg f="tmp" n="m">Depois de dois mandatos
+</arg>
+                <arg f="" n="1">Menem
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">reeleito</rel>
+                <arg f="tmp" n="m">em 1999
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="reeleger-se">
+        <note />
+    <roleset framnet="reelect.01" id="reeleger.02" name="tornar-se reeleito (uso incoativo de &quot;reeleger&quot;)" vncls="29.1">
+            <roles>
+                <role descr="voters" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="candidate" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="office or position" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3201:  Capuano se reelege presidente do Creci
+</text>
+                <arg f="" n="1">Capuano
+</arg>
+                <rel f="">reelege</rel>
+                <arg f="" n="2">presidente do Creci
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s478:  Chiles,  que pertence ao Partido_  Democrata e ao mesmo grupo neoconservador que ajudou Bill_  Clinton a chegar ﻿à Casa_  Branca,  vai tentar se reeleger em novembro deste ano. 
+</text>
+                <arg f="" n="1">Chiles,  que pertence ao Partido_  Democrata e ao mesmo grupo neoconservador que ajudou Bill_  Clinton a chegar ﻿à Casa_  Branca
+</arg>
+                <rel f="">reeleger</rel>
+                <arg f="tmp" n="m">em novembro deste ano
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

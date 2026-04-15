@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vislumbrar">
+        <note />
+    <roleset framnet="glimpse.01" id="vislumbrar.01" name="enxergar fracamente" vncls="30.2">
+            <roles>
+                <role descr="looker" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing looked at" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1269:  Jack_  «Girafa»_  Charlton,  técnico da Irlanda,  usou seu pescoço comprido e seus quase dois metros de altura para vislumbrar a passagem da equipe para as quartas,  depois de um estréia vitoriosa contra a Itália na primeira fase. 
+</text>
+                <rel f="">vislumbrar</rel>
+                <arg f="" n="1">a passagem da equipe para as quartas
+</arg>
+                <arg f="tmp" n="m">depois de um estréia vitoriosa contra a Itália na primeira fase
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s73:  Disse que não conseguia vislumbrar artifícios fraudulentos ou prática de peculato no protocolo assinado por Quércia. 
+</text>
+                <rel f="">vislumbrar</rel>
+                <arg f="" n="1">artifícios fraudulentos ou prática de peculato
+</arg>
+                <arg f="loc" n="m">no protocolo assinado por Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

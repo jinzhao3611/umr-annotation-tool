@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fumar">
+        <note />
+    <roleset framnet="smoke.02" id="fumar.01" name="absorver por inalação da fumaça" vncls="-">
+            <roles>
+                <role descr="smoker" n="0" />
+                <role descr="cigarettes (etc)" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3774:  O homem fuma entre 11 e 20 cigarros por dia e a mulher,  entre 5 e 10. 
+</text>
+                <arg f="" n="0">O homem
+</arg>
+                <rel f="">fuma</rel>
+                <arg f="" n="1">entre 11 e 20 cigarros
+</arg>
+                <arg f="tmp" n="m">por dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3427:  Assim,  se abre espaço na arquibancada para fumar maconha.  »
+</text>
+                <rel f="">fumar</rel>
+                <arg f="" n="1">maconha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1877:  Ao parar de fumar,  acabei perdendo a estribeira algumas vezes. 
+</text>
+                <rel f="">fumar</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

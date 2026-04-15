@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conceituar">
+        <note />
+    <roleset framnet="conceptualize.01" id="conceituar.01" name="transformar em conceito" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s102:  A aplicação dessas observações ao caso americano e às relações entre negros e brancos sugere uma nova maneira de conceituar os argumentos já conhecidos do « legado da escravidão ». 
+</text>
+                <rel f="">conceituar</rel>
+                <arg f="" n="1">os argumentos já conhecidos do « legado da escravidão »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

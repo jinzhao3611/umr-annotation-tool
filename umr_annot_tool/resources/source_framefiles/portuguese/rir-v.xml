@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rir">
+        <note />
+    <roleset framnet="laugh.01" id="rir.01" name="dar risada" vncls="40.2">
+            <roles>
+                <role descr="laugher" n="0">
+                    <vnrole vncls="40.2" vntheta="Agent" />
+                </role>
+                <role descr="cognate object" n="1">
+                    <vnrole vncls="40.2" vntheta="Theme" />
+                </role>
+                <role descr="source of joy" n="2">
+                    <vnrole vncls="40.2" vntheta="Cause" />
+                </role>
+                <role descr="end state of arg0, as result of laughing" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3612: (  FHC começa a rir) . 
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <rel f="">rir</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

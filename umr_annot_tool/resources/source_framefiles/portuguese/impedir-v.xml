@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="impedir">
+        <note />
+    <roleset framnet="prevent.01" id="impedir.01" name="evitar; não permitir" vncls="">
+            <roles>
+                <role descr="Agent" n="0" />
+                <role descr="Theme (action or object being prevented)" n="1" />
+                <role descr="secondary predication or action" n="2" />
+                <role descr="instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4148:  A lei do Estado da Califórnia dá ao juiz de cada caso autoridade para impedir a presença de câmaras no tribunal Se achar que ela prejudica a Justiça. 
+</text>
+                <rel f="">impedir</rel>
+                <arg f="" n="1">a presença de câmaras no tribunal
+</arg>
+                <arg f="adv" n="m">Se achar que ela prejudica a Justiça
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3534:  A queda das cotações internacionais viabilizaria o ingresso do produto a preços mais baixos,  fato que impediria maiores avanços das cotações internas. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">impediria</rel>
+                <arg f="" n="1">maiores avanços das cotações internas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3311:  O veto impediu a declaração que pedia aos sérvios da Bósnia que parassem ataques no encrave muçulmano de Bihac. 
+</text>
+                <arg f="" n="0">O veto
+</arg>
+                <rel f="">impediu</rel>
+                <arg f="" n="1">a declaração que pedia aos sérvios da Bósnia que parassem ataques no encrave muçulmano de Bihac
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3270:  Justiça impede exibição de desenho na TV
+</text>
+                <arg f="" n="0">Justiça
+</arg>
+                <rel f="">impede</rel>
+                <arg f="" n="1">exibição de desenho na TV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2887:  Por dois motivos:  a eventual queda na arrecadação e problemas jurídicos que impedem mexer na base de cálculo do imposto por_  meio_  de MP,  já_  que ela foi fixada em emenda constitucional. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">impedem</rel>
+                <arg f="" n="1">mexer na base de cálculo do imposto por_  meio_  de MP,  já_  que ela foi fixada em emenda constitucional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2776:  O vice-  presidente da Câmara,  Adylson_  Motta,  disse que o regimento da Câmara impede o corte. 
+</text>
+                <arg f="" n="0">o regimento da Câmara
+</arg>
+                <rel f="">impede</rel>
+                <arg f="" n="1">o corte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2172:  Censura a filme impede presença de Yimou
+</text>
+                <arg f="" n="0">Censura a filme
+</arg>
+                <rel f="">impede</rel>
+                <arg f="" n="1">presença de Yimou
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2097:  Isto não impede que,  no íntimo,  eu deseje alguma espécie de uma complexa,  delicada e difícil soberania para nós. 
+</text>
+                <arg f="" n="0">Isto
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">impede</rel>
+                <arg f="" n="1">que,  no íntimo,  eu deseje alguma espécie de uma complexa,  delicada e difícil soberania para nós
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2043:  O projeto também permite ﻿à polícia impedir,  interromper e interceptar a escuta e a gravação das conversas telefônicas. 
+</text>
+                <arg f="" n="0">﻿à polícia
+</arg>
+                <rel f="">impedir</rel>
+                <arg f="" n="1">a escuta e a gravação das conversas telefônicas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1717:  O assalto foi impedido pela segurança do carro blindado. 
+</text>
+                <arg f="" n="1">O assalto
+</arg>
+                <rel f="">impedido</rel>
+                <arg f="" n="0">pela segurança do carro blindado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s667:  Um,  o convencional,  é o que o Plano_  Real contempla e tem como instrumentos essenciais a importação ﻿à taxa cambial fixa e baixa e quase sem tarifa aduaneira de mercadorias,  tornando impossível pela competição os produtores e comerciantes brasileiros aumentarem seus preços ; e a redução da demanda por bens de consumo e de investimento,  mediante juros altos e corte do gasto público,  impedindo as remarcações de preços pelo excesso de oferta suscitado. 
+</text>
+                <rel f="">impedindo</rel>
+                <arg f="" n="1">as remarcações de preços pelo excesso de oferta suscitado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s579:  Tinha uma família para sustentar,  e pensavam que isso me impediria de fazer qualquer coisa. 
+</text>
+                <arg f="" n="0">isso
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">impediria</rel>
+                <arg f="" n="2">de fazer qualquer coisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s476:  Ele acusa o governo federal de não cumprir bem sua missão de impedir a entrada no país de estrangeiros e de não repor o dinheiro gasto pelos Estados com eles. 
+</text>
+                <rel f="">impedir</rel>
+                <arg f="prd" n="m">no país
+</arg>
+                <arg f="" n="1">a entrada de estrangeiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s474:  Governador do Estado acusa governo federal dos EUA de não impedir entrada de estrangeiros(  De Washington) 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">impedir</rel>
+                <arg f="" n="1">entrada de estrangeiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

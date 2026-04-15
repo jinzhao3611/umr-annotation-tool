@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="viajar">
+        <note />
+    <roleset framnet="travel.01" id="viajar.01" name="deslocar-se de um lugar para outro; fazer viagem" vncls="51.3.2">
+            <roles>
+                <role descr="traveller" n="0">
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="destination or path" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3658:  A_  partir_  da próxima semana,  vão viajar para os Estados os membros da coordenação que não pertenceram ao núcleo que passa a deter as decisões. 
+</text>
+                <arg f="tmp" n="m">A_  partir_  da próxima semana
+</arg>
+                <rel f="">viajar</rel>
+                <arg f="" n="1">para os Estados
+</arg>
+                <arg f="" n="0">os membros da coordenação que não pertenceram ao núcleo que passa a deter as decisões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3516:  Além_  de dominar esta habilidade,  as duas únicas coisas realmente necessárias para se viajar de trenó pelo Alasca eram estar em razoável boa forma física e ter mais_  de 13 anos de idade. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">viajar</rel>
+                <arg f="mnr" n="m">de trenó
+</arg>
+                <arg f="" n="1">pelo Alasca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3450:  Camila viajava no colo de Dalva,  na_  frente_  do veículo. 
+</text>
+                <arg f="" n="0">Camila
+</arg>
+                <rel f="">viajava</rel>
+                <arg f="mnr" n="m">no colo de Dalva
+</arg>
+                <arg f="loc" n="m">na_  frente_  do veículo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3126:  Tanto dinheiro parece tornar desprezível a ética do marketing:  a Delta recebe centenas de cartas de crianças denunciando pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce. 
+</text>
+                <rel f="">viajar</rel>
+                <arg f="mnr" n="m">por outras companhias aéreas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2782:  O avião em que o presidente da Argentina,  Carlos_  Menem,  viajava no último dia 30 de dezembro para Anillaco,  sua cidade natal,  iria ser atacado por um míssil,  disse ontem o jornal de Buenos_  Aires « Ambito_  Financiero ». 
+</text>
+                <arg f="loc" n="m">em que
+</arg>
+                <arg f="" n="0">o presidente da Argentina,  Carlos_  Menem, 
+</arg>
+                <rel f="">viajava</rel>
+                <arg f="tmp" n="m">no último dia 30 de dezembro
+</arg>
+                <arg f="" n="1">para Anillaco,  sua cidade natal, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2424:  Damascene viaja raramente de navio,  mas não é um estranho ao mar. 
+</text>
+                <arg f="" n="0">Damascene
+</arg>
+                <rel f="">viaja</rel>
+                <arg f="tmp" n="m">raramente
+</arg>
+                <arg f="mnr" n="m">de navio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1990:  « Quando viajar pela Europa de carro,  prefira as estradas secundárias às auto-  estradas,  pois nelas não há cobrança de pedágio e você poderá conhecer pequenas cidades,  lugarejos,  sítios e plantações de uvas com degustação de vinhos.  »
+</text>
+                <rel f="">viajar</rel>
+                <arg f="" n="1">pela Europa
+</arg>
+                <arg f="mnr" n="m">de carro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1661:  Eles viajavam em sentido contrário. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">viajavam</rel>
+                <arg f="dir" n="m">em sentido contrário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1592:  Lula fica na África_  do_  Sul até quarta-  feira ﻿à noite,  quando viaja então para a Alemanha,  onde permanece até sexta-  feira ﻿à noite. 
+</text>
+                <arg f="" n="0">Lula
+</arg>
+                <arg f="tmp" n="m">quando
+</arg>
+                <rel f="">viaja</rel>
+                <arg f="tmp" n="m">então
+</arg>
+                <arg f="" n="1">para a Alemanha,  onde permanece até sexta-  feira ﻿à noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1277:  O jornalista LUÍS_  ANTÔNIO_  GIRON viaja ﻿à Áustria a convite da agência Austríaca_  de_  Turismo e da Lufthansa. 
+</text>
+                <arg f="" n="0">O jornalista LUÍS_  ANTÔNIO_  GIRON
+</arg>
+                <rel f="">viaja</rel>
+                <arg f="" n="1">﻿à Áustria
+</arg>
+                <arg f="mnr" n="m">a convite da agência Austríaca_  de_  Turismo e da Lufthansa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1202:  Ontem,  o juiz Juan_  Jose_  Galeano,  responsável pelo caso,  viajou para a Venezuela. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="" n="0">o juiz Juan_  Jose_  Galeano,  responsável pelo caso, 
+</arg>
+                <rel f="">viajou</rel>
+                <arg f="" n="1">para a Venezuela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s492:  Stepanenko viajou para a China há uma semana e deve voltar na sexta-  feira. 
+</text>
+                <arg f="" n="0">Stepanenko
+</arg>
+                <rel f="">viajou</rel>
+                <arg f="" n="1">para a China
+</arg>
+                <arg f="tmp" n="m">há uma semana
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

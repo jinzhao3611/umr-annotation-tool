@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pensar">
+        <note />
+    <roleset framnet="think.01" id="pensar.01" name="considerar; imaginar" vncls="29.4">
+            <roles>
+                <role descr="Thinker" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="Thought" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <role descr="Attributive" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4016:  « O número é mais alarmante se pensarmos que daria para abastecer toda a população brasileira por oito meses »,  diz Dalmo_  Rosalen,  da Secretaria_  do_  Meio_  Ambiente. 
+</text>
+                <rel f="">pensarmos</rel>
+                <arg f="" n="1">que daria para abastecer toda a população brasileira por oito meses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3858:  « As pessoas pensam que recebem US$  80,  mas 30 dias depois esse valor é muito menor ». 
+</text>
+                <arg f="" n="0">As pessoas
+</arg>
+                <rel f="">pensam</rel>
+                <arg f="" n="1">que recebem US$  80
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3692:  Já_  não é correto pensar que o progresso técnico é um privilégio das grandes empresas
+</text>
+                <rel f="">pensar</rel>
+                <arg f="" n="1">que o progresso técnico é um privilégio das grandes empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3355:  Não se pense que esta ruptura modernizante passa pelo PT. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">pense</rel>
+                <arg f="" n="1">que esta ruptura modernizante passa pelo PT
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3265:  E que,  portanto,  nem pensa numa troca de Guilherme_  Palmeira. 
+</text>
+                <arg f="dis" n="m">portanto
+</arg>
+                <arg f="neg" n="m">nem
+</arg>
+                <rel f="">pensa</rel>
+                <arg f="" n="1">numa troca de Guilherme_  Palmeira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3040:  « A gente não pode pensar em jogar a mulher no mercado de trabalho enquanto houver excesso de mão-  de-  obra ». 
+</text>
+                <arg f="" n="0">A gente
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">pensar</rel>
+                <arg f="" n="1">em jogar a mulher no mercado de trabalho
+</arg>
+                <arg f="tmp" n="m">enquanto houver excesso de mão-  de-  obra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1629:  Já pensando no Mundial da Grécia,  que será disputado em setembro em Atenas,  o técnico brasileiro retoma o comando dos treinos da equipe a_  partir_  da próxima segunda-  feira. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">pensando</rel>
+                <arg f="" n="1">no Mundial da Grécia,  que será disputado em setembro em Atenas, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1492:  Quem pensa o contrário,  que trate de comprovar que o raciocínio está furado. 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">pensa</rel>
+                <arg f="" n="1">o contrário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s933:  O que ele pensa em_  relação_  a educação muda a educação no Estado e muda o Estado de São_  Paulo.  »
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">pensa</rel>
+                <arg f="" n="2">em_  relação_  a educação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s620:  « Ah_  bem pensei que voce ia pescar ». 
+</text>
+                <arg f="dis" n="m">Ah_  bem
+</arg>
+                <rel f="">pensei</rel>
+                <arg f="" n="1">que voce ia pescar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s580:  Pensavam que meu livro « Três_  Tristes_  Tigres » seria recebido sem grande estardalhaço. 
+</text>
+                <rel f="">Pensavam</rel>
+                <arg f="" n="1">que meu livro « Três_  Tristes_  Tigres » seria recebido sem grande estardalhaço
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s579:  Tinha uma família para sustentar,  e pensavam que isso me impediria de fazer qualquer coisa. 
+</text>
+                <rel f="">pensavam</rel>
+                <arg f="" n="1">que isso me impediria de fazer qualquer coisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s450:  Tem que se pensar,  para o Brasil,  numa empresa com modelo acionário flexível,  que permita incorporar,  numa única marca,  os esforços individuais desses criadores e dispor da sinergia necessária para investir no mercado internacional. 
+</text>
+                <rel f="">pensar</rel>
+                <arg f="" n="3">para o Brasil
+</arg>
+                <arg f="" n="1">numa empresa com modelo acionário flexível,  que permita incorporar,  numa única marca,  os esforços individuais desses criadores e dispor da sinergia necessária para investir no mercado internacional
+</arg>
+                <note>em inglês, "to figure out" (figure.03) seria mais adequado</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

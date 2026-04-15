@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="debutar">
+        <note />
+    <roleset framnet="debut.01" id="debutar.01" name="aparecer pela primeira vez" vncls="-">
+            <roles>
+                <role descr="causer of appearance" n="0" />
+                <role descr="thing appearing" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3023:  Foi nesse papel que,  encarnada por outra Jacqueline(  Bisset) ,  Jackie_  O.  debutou na tela,  15 anos depois de ter-  se transformado na mais pranteada e sedutora viúva deste século. 
+</text>
+                <arg f="loc" n="m">nesse papel que
+</arg>
+                <arg f="prd" n="m">encarnada por outra Jacqueline(  Bisset) 
+</arg>
+                <arg f="" n="1">Jackie_  O. 
+</arg>
+                <rel f="">debutou</rel>
+                <arg f="loc" n="m">na tela
+</arg>
+                <arg f="tmp" n="m">15 anos depois de ter-  se transformado na mais pranteada e sedutora viúva deste século
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dispensar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="dismiss.01" id="dispensar.01" name="despedir; mandar embora" vncls="10.1">
+            <roles>
+                <role descr="entity removing" n="0">
+                    <vnrole vncls="10.1" vntheta="Agent" />
+                </role>
+                <role descr="thing being removed" n="1">
+                    <vnrole vncls="10.1" vntheta="Theme" />
+                </role>
+                <role descr="removed from" n="2">
+                    <vnrole vncls="10.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4000:  Sem dizer que o seu clube dispensou,  humilhantemente,  o seu arqueiro Zubizarreta- -  depois da derrota para o Milan,  0 a 4,  na decisão da Copa da Europa. 
+</text>
+                <arg f="" n="0">o seu clube
+</arg>
+                <rel f="">dispensou</rel>
+                <arg f="mnr" n="m">humilhantemente
+</arg>
+                <arg f="" n="1">o seu arqueiro Zubizarreta
+</arg>
+                <arg f="tmp" n="m">depois da derrota para o Milan,  0 a 4,  na decisão da Copa da Europa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2515:  É_  que « os dirigentes petistas acreditavam tanto na vitória no primeiro turno que dispensaram os políticos »,  quer_  dizer,  a direita. 
+</text>
+                <arg f="" n="0">os dirigentes petistas
+</arg>
+                <rel f="">dispensaram</rel>
+                <arg f="" n="1">os políticos »,  quer_  dizer,  a direita
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="exempt.01" id="dispensar.02" name="não exigir" vncls="-">
+            <roles>
+                <role descr="releaser, agent" n="0" />
+                <role descr="entity exempted" n="1" />
+                <role descr="entity exempted from" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3187:  Os pedidos até US$  20 mil dispensam guia de importação. 
+</text>
+                <arg f="" n="0">Os pedidos até US$  20 mil
+</arg>
+                <rel f="">dispensam</rel>
+                <arg f="" n="1">guia de importação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s245:  Tem tamanho,  peso intrínseco que dispensa volume alto. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">dispensa</rel>
+                <arg f="" n="1">volume alto
+</arg>
+                <note>exemplo pouco elucidativo</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="give.01" id="dispensar.03" name="dar, conceder" vncls="13.1-1">
+            <roles>
+                <role descr="giver" n="0">
+                    <vnrole vncls="13.1-1" vntheta="Agent" />
+                </role>
+                <role descr="thing given" n="1">
+                    <vnrole vncls="13.1-1" vntheta="Theme" />
+                </role>
+                <role descr="entity given to" n="2">
+                    <vnrole vncls="13.1-1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1125:  Adelaide critica Emília por esta sair pouco de casa e,  em_  seguida,  deixa a sala irritada pela pouca atenção que lhe é dispensada pela mãe. 
+</text>
+                <arg f="" n="1">lhe
+</arg>
+                <rel f="">dispensada</rel>
+                <arg f="" n="0">pela mãe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

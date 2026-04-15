@@ -1,0 +1,662 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="passar">
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="touch.01" id="passar.01" name="incluir; envolver" vncls="20 31.1">
+            <roles>
+                <role descr="causal agent" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                    <vnrole vncls="20" vntheta="Agent" />
+                </role>
+                <role descr="thing touched" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                    <vnrole vncls="20" vntheta="Experiencer" />
+                </role>
+                <role descr="touched with, if separate from agent" n="2">
+                    <vnrole vncls="20" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4066:  O congresso é dividido em três temas,  com o objetivo de atender de profissionais de informática a executivos e empresários interessados em novas tecnologias,  passando pelo usuário final. 
+</text>
+                <rel f="">passando</rel>
+                <arg f="" n="1">pelo usuário final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3358:  Tampouco passa por FHC,  representante da contemporização bem explicada,  ou por Antonio_  Britto cujo voto,  em_  favor_  da anistia total aos agricultores,  semana passada,  ressuscitou os piores prognósticos sobre seu estilo. 
+</text>
+                <rel f="">passa</rel>
+                <arg f="" n="1">por FHC,  representante da contemporização bem explicada,  ou por Antonio_  Britto cujo voto,  em_  favor_  da anistia total aos agricultores,  semana passada,  ressuscitou os piores prognósticos sobre seu estilo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3355:  Não se pense que esta ruptura modernizante passa pelo PT. 
+</text>
+                <arg f="" n="0">esta ruptura modernizante
+</arg>
+                <rel f="">passa</rel>
+                <arg f="" n="1">pelo PT
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2944:  O filme passa como vento pelas questões,  nada pequenas,  dos tratamentos psiquiátricos contemporâneos e se fixa no que existe de mais óbvio na história. 
+</text>
+                <arg f="" n="0">O filme
+</arg>
+                <rel f="">passa</rel>
+                <arg f="mnr" n="m">como vento
+</arg>
+                <arg f="" n="1">pelas questões,  nada pequenas,  dos tratamentos psiquiátricos contemporâneos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2473:  Entre a defesa e o ataque,  a bola quase sempre passa por seus pés. 
+</text>
+                <arg f="loc" n="m">Entre a defesa e o ataque
+</arg>
+                <arg f="" n="0">a bola
+</arg>
+                <arg f="tmp" n="m">quase sempre
+</arg>
+                <rel f="">passa</rel>
+                <arg f="" n="1">por seus pés
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.12" id="passar.02" name="experienciar" vncls="-">
+            <roles>
+                <role descr="experiencer" n="1" />
+                <role descr="experienced" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4037:  Nem todos passam pelas duas fases. 
+</text>
+                <arg f="" n="1">Nem todos
+</arg>
+                <rel f="">passam</rel>
+                <arg f="" n="2">pelas duas fases
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3713:  Folha- -  Países como a Argentina,  que passaram por ajustes parecidos com o do Brasil,  têm hoje um desemprego recorde. . . 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">passaram</rel>
+                <arg f="" n="2">por ajustes parecidos com o do Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3639:  O comportamento das pessoas no trabalho está passando por uma nova e importante alteração. 
+</text>
+                <arg f="" n="1">O comportamento das pessoas no trabalho
+</arg>
+                <rel f="">passando</rel>
+                <arg f="" n="2">por uma nova e importante alteração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s990:  Tampouco nenhum filme latino-  americano passou pelo crivo da « Quinzena_  dos_  Realizadores ». 
+</text>
+                <arg f="tmp" n="m">Tampouco
+</arg>
+                <arg f="" n="1">nenhum filme latino-  americano
+</arg>
+                <rel f="">passou</rel>
+                <arg f="" n="2">pelo crivo da « Quinzena_  dos_  Realizadores »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s876:  Uma das poucas surpresas na eleição anticlimática por que passou o país foi a alta incidência de votos brancos e nulos nas eleições legislativas e para os governos estaduais. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">passou</rel>
+                <arg f="" n="1">o país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s282:  Passamos por dificuldades:  meu pai perdeu praticamente todo o seu patrimônio por se dedicar 100%  ﻿à política »
+</text>
+                <rel f="">Passamos</rel>
+                <arg f="" n="2">por dificuldades:  meu pai perdeu praticamente todo o seu patrimônio por se dedicar 100%  ﻿à política
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="pass.03" id="passar.03" name="decorrer (tempo)" vncls="-">
+            <roles>
+                <role descr="thing passing" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3837:  Passaram-  se uns 50 anos e o sonho se realizou,  trazendo alegria e também,  inesperadamente,  frustração. 
+</text>
+                <rel f="">Passaram-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">uns 50 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1608:  A Nike também teve bons resultados,  pondo fim a especulações de que teria passado o auge das famosas fabricantes de tênis dos EUA. 
+</text>
+                <rel f="">passado</rel>
+                <arg f="" n="1">o auge das famosas fabricantes de tênis dos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s363:  « A própria Fipe prevê que em novembro isso tudo passa e a inflação cai »,  disse. 
+</text>
+                <arg f="tmp" n="m">em novembro
+</arg>
+                <arg f="" n="1">isso tudo
+</arg>
+                <rel f="">passa</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="spend.02" id="passar.04" name="gastar (tempo)" vncls="">
+            <roles>
+                <role descr="bider, waiter" n="0" />
+                <role descr="unit of time" n="1" />
+                <role descr="activity" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3367:  O presidente Bill_  Clinton passou a maior parte do dia de ontem em reuniões com seus assessores militares e de segurança nacional na Casa_  Branca. 
+</text>
+                <arg f="" n="0">O presidente Bill_  Clinton
+</arg>
+                <rel f="">passou</rel>
+                <arg f="" n="1">a maior parte do dia de ontem
+</arg>
+                <arg f="" n="2">em reuniões com seus assessores militares e de segurança nacional na Casa_  Branca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1734:  A matéria-  prima desse primeiro livro é o período que o autor passou em Paris nos anos 20,  perambulando de prostíbulo em bar,  de quarto emprestado a banco de estação,  enquanto tentava escrever. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o autor
+</arg>
+                <rel f="">passou</rel>
+                <arg f="loc" n="m">em Paris
+</arg>
+                <arg f="tmp" n="m">nos anos 20
+</arg>
+                <arg f="" n="2">perambulando de prostíbulo em bar,  de quarto emprestado a banco de estação,  enquanto tentava escrever
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1586:  O tucano tem passado a maior parte do tempo em seu quarto e,  ao_  contrário_  dos 60 hóspedes,  não tem feito exercícios. 
+</text>
+                <arg f="" n="0">O tucano
+</arg>
+                <rel f="">passado</rel>
+                <arg f="" n="1">a maior parte do tempo
+</arg>
+                <arg f="loc" n="m">em seu quarto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s948:  A atriz e apresentadora norte-  americana de TV Ricki_  Lake e outras 14 pessoas passaram a noite de anteontem na cadeia em Nova_  York,  depois de haverem realizado um protesto nos escritórios do estilista Karl_  Lagerfeld em Manhattan. 
+</text>
+                <arg f="" n="0">A atriz e apresentadora norte-  americana de TV Ricki_  Lake e outras 14 pessoas
+</arg>
+                <rel f="">passaram</rel>
+                <arg f="" n="1">a noite de anteontem
+</arg>
+                <arg f="loc" n="m">na cadeia
+</arg>
+                <arg f="loc" n="m">em Nova_  York
+</arg>
+                <arg f="tmp" n="m">depois de haverem realizado um protesto nos escritórios do estilista Karl_  Lagerfeld em Manhattan
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s947:  Atriz Ricki_  Lake protesta e passa a noite na cadeia
+</text>
+                <arg f="" n="0">Atriz Ricki_  Lake
+</arg>
+                <rel f="">passa</rel>
+                <arg f="" n="1">a noite
+</arg>
+                <arg f="loc" n="m">na cadeia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s280:  Meu avô materno foi prefeito de Limeira,  meu pai foi duas vezes prefeito de Itapira,  onde passei toda minha infância. 
+</text>
+                <arg f="loc" n="m">onde
+</arg>
+                <rel f="">passei</rel>
+                <arg f="" n="1">toda minha infância
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s236:  « Um diplomata da Bélgica comprou apartamento para passar as férias de julho e janeiro,  mas fora desse período ele aluga o imóvel por US$  1.  000 »,  diz Bezerra. 
+</text>
+                <rel f="">passar</rel>
+                <arg f="" n="1">as férias de julho e janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s152:  A primeira missão lunar dos EUA em 21 anos teve início ontem,  quando um foguete Titã_  2 colocou no espaço a astronave não tripulada Clementine_  1,  que vai passar dois meses em duas órbitas da Lua para realizar completo mapeamento mineralógico e topográfico do satélite da Terra. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">passar</rel>
+                <arg f="" n="1">dois meses
+</arg>
+                <arg f="loc" n="m">em duas órbitas da Lua
+</arg>
+                <arg f="pnc" n="m">para realizar completo mapeamento mineralógico e topográfico do satélite da Terra
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="range.01" id="passar.05" name="mudar " vncls="">
+            <roles>
+                <role descr="thing moving" n="1" />
+                <role descr="EXT or MNR" n="2" />
+                <role descr="start or low point" n="3" />
+                <role descr="end or high point" n="4" />
+                <role descr="medium" n="5" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2860:  O líder Tasso_  Jereissati(  PSDB)  passou de 61%  para 58% ,  perdendo três pontos percentuais em_  relação_  ﻿à última pesquisa. 
+</text>
+                <arg f="" n="1">O líder Tasso_  Jereissati(  PSDB) 
+</arg>
+                <rel f="">passou</rel>
+                <arg f="" n="3">de 61% 
+</arg>
+                <arg f="" n="4">para 58% 
+</arg>
+                <arg f="adv" n="m">perdendo três pontos percentuais em_  relação_  ﻿à última pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2020:  O mercado brasileiro de cigarros apresentou uma queda de 6,  5%  com o total de unidades vendidas passando de 127,  8 bilhões em 92 para 119,  5 bilhões no ano passado. 
+</text>
+                <arg f="" n="1">o total de unidades vendidas
+</arg>
+                <rel f="">passando</rel>
+                <arg f="" n="3">de 127,  8 bilhões em 92
+</arg>
+                <arg f="" n="4">para 119,  5 bilhões no ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="convey.01" id="passar.06" name="transmitir" vncls="37.7 11.1">
+            <roles>
+                <role descr="sender, speaker" n="0">
+                    <vnrole vncls="11.1" vntheta="Agent" />
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="thing sent, utterance" n="1">
+                    <vnrole vncls="11.1" vntheta="Theme" />
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="recipient, hearer" n="2">
+                    <vnrole vncls="11.1" vntheta="Destination" />
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2489:  O nome seria uma tentativa de passar às pessoas o conceito de auto-  suficiência cada ser é um « planeta » mas também de inter-  relação entre os « planetas ». 
+</text>
+                <rel f="">passar</rel>
+                <arg f="" n="2">às pessoas
+</arg>
+                <arg f="" n="1">o conceito de auto-  suficiência cada ser é um « planeta » mas também de inter-  relação entre os « planetas »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.01" id="passar.07" name="ir de um lugar a outro" vncls="47.7 51.1-2">
+            <roles>
+                <role descr="entity in motion/goer" n="1">
+                    <vnrole vncls="47.7" vntheta="Theme" />
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="extent" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point, end state of arg1" n="4" />
+                <role descr="medium" n="M" />
+                <role descr="direction (usually up or down)" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1530:  Ela teve ação prolongada como dilatadora dos brônquios(  tubo por_  onde o ar passa aos pulmões) . 
+</text>
+                <arg f="med" n="m">por_  onde
+</arg>
+                <arg f="" n="1">o ar
+</arg>
+                <rel f="">passa</rel>
+                <arg f="" n="4">aos pulmões
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="exceed.01" id="passar.08" name="exceder; ultrapassar (medida)" vncls="90">
+            <roles>
+                <role descr="thing that's more" n="0">
+                    <vnrole vncls="90" vntheta="Theme1" />
+                </role>
+                <role descr="thing that's less" n="1">
+                    <vnrole vncls="90" vntheta="Theme2" />
+                </role>
+                <role descr="margin, difference" n="2">
+                    <vnrole vncls="90" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2395:  No período mais seco,  quando as chuvas não passam de dez milímetros$ /  mês,  os produtores plantam soja,  que exige menos água. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="0">as chuvas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">passam</rel>
+                <arg f="" n="2">de dez milímetros$ /  mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2291:  A menos_  de uma semana da eleição deste ano,  Munhoz não passou dos 12% . 
+</text>
+                <arg f="tmp" n="m">A menos_  de uma semana da eleição deste ano
+</arg>
+                <arg f="" n="0">Munhoz
+</arg>
+                <rel f="">passou</rel>
+                <arg f="" n="2">dos 12% 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="be.02" id="passar.099" name="estar, ir (uso idiomático) " vncls="-">
+            <roles>
+                <role descr="thing that is" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2360:  Todos passam bem. 
+</text>
+                <arg f="" n="1">Todos
+</arg>
+                <rel f="">passam</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="cross.02" id="passar.10" name="cruzar com algo no caminho" vncls="51.1-1">
+            <roles>
+                <role descr="entity in motion" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="barrier" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2339:  10h46- -  a primeira pessoa a ver o caixão é Márcio_  Putnoki,  13 ; o estudante tinha chegado às 15h de anteontem ; ao passar pelo hall monumental,  Márcio chora ;
+</text>
+                <rel f="">passar</rel>
+                <arg f="med" n="m">pelo hall monumental
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2036:  A principal diferença verificada é a sensação de « frio na barriga » quando se passa pelas curvas do elevado Costa_  e_  Silva(  Minhocão) ,  mesmo numa velocidade média de 60 km/  h. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <rel f="">passa</rel>
+                <arg f="med" n="m">pelas curvas do elevado Costa_  e_  Silva(  Minhocão) 
+</arg>
+                <arg f="adv" n="m">mesmo numa velocidade média de 60 km/  h
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1581:  É quando o rastreamento das pistas da contravenção começa a bater em personalidades acima_  de qualquer suspeita,  dentro_  do pequeno círculo íntimo da elite cosmopolita brasileira um amálgama que reúne intelectuais de esquerda e direita,  eleitores de Lula a Maluf,  passando por todo o espectro intermediário,  empresários,  profissionais liberais,  jornalistas e membros do judiciário. 
+</text>
+                <rel f="">passando</rel>
+                <arg f="" n="1">por todo o espectro intermediário,  empresários,  profissionais liberais,  jornalistas e membros do judiciário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s457:  O corredor começará na marginal Tietê,  na altura do Cebolão,  passará pelo Ceagesp,  praça Panamericana,  Faria_  Lima,  Luís_  Carlos_  Berrini e terminará,  por_  enquanto,  no shopping Morumbi. 
+</text>
+                <arg f="" n="0">O corredor
+</arg>
+                <rel f="">passará</rel>
+                <arg f="" n="1">pelo Ceagesp,  praça Panamericana,  Faria_  Lima,  Luís_  Carlos_  Berrini
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="passar.11" name="expressão idiomática: &quot;já passou da hora de&quot;" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2602:  Já passou da hora de governo,  prestadores de serviços e usuários se empenharem para não só aprofundar as discussões sobre a ineficácia do sistema de saúde,  como também para buscar alternativas e soluções viáveis,  a_  fim_  de proporcionar um atendimento mais digno ﻿à população em_  geral. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">passou</rel>
+                <arg f="" n="1">a hora de governo,  prestadores de serviços e usuários se empenharem para não só aprofundar as discussões sobre a ineficácia do sistema de saúde,  como também para buscar alternativas e soluções viáveis,  a_  fim_  de proporcionar um atendimento mais digno ﻿à população em_  geral
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="passar.13" name="introduzir e tirar cartão na máquina leitora" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1007:  O cliente passará seu cartão de débito ou de crédito Bradesco_  Visa no terminal da empresa conveniada e fixará as datas de pagamento de suas compras. 
+</text>
+                <arg f="" n="0">O cliente
+</arg>
+                <rel f="">passará</rel>
+                <arg f="" n="1">seu cartão de débito ou de crédito Bradesco_  Visa
+</arg>
+                <arg f="loc" n="m">no terminal da empresa conveniada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="start.01" id="passar.14" name="auxiliar de aspecto incoativo - passar a + infinitivo: começar" vncls="55.1">
+            <roles>
+                <role descr="Agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Theme(-Creation)" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3462:  Para aquele verniz atualizador,  passe desde_  já a usar a expressão « blues_  rap ». 
+</text>
+                <rel f="">passe</rel>
+                <arg f="tmp" n="m">desde_  já
+</arg>
+                <arg f="" n="1">a usar a expressão « blues_  rap »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="passar_mal">
+        <note />
+    <roleset framnet="iron.01" id="passar.12" name="passar roupa" vncls="26.3-2 10.4.2">
+            <roles>
+                <role descr="entities working something out" n="0">
+                    <vnrole vncls="26.3-2" vntheta="Agent" />
+                    <vnrole vncls="10.4.2" vntheta="Agent" />
+                </role>
+                <role descr="thing ironed out" n="1">
+                    <vnrole vncls="26.3-2" vntheta="Product" />
+                    <vnrole vncls="10.4.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1991:  « Dobrando pelo vinco a calça jeans ou a calça de veludo,  e estendendo-  a sobre o carpete do quarto do hotel,  ela fica como_  se tivesse sido passada a ferro.  »
+</text>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">passada</rel>
+                <arg f="mnr" n="m">a ferro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1741:  Carmelita_  Aralse_  Teb,  89,  moradora do oitavo andar,  passou mal com a fumaça e teve de ser carregada pelas escadas até uma ambulância. 
+</text>
+                <arg f="" n="0">Carmelita_  Aralse_  Teb,  89,  moradora do oitavo andar, 
+</arg>
+                <rel f="">passou</rel>
+                <arg f="cau" n="m">com a fumaça
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

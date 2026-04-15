@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="varrer">
+        <note />
+    <roleset framnet="sweep.02" id="varrer.01" name="passar por toda a superfície" vncls="51.3.2 47.2">
+            <roles>
+                <role descr="cause of motion" n="0" />
+                <role descr="thing in motion" n="1">
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="location" n="2">
+                    <vnrole vncls="51.3.2" vntheta="Location" />
+                </role>
+                <role descr="destination" n="3">
+                    <vnrole vncls="51.3.2" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2724:  Os economistas alinham vários motivos básicos,  entre eles a possibilidade de inversão aberta com a queda dos regimes socialistas,  a onda liberalizante que varre a América_  Latina,  a forte expansão econômica dos países do Sudeste_  Asiático e também a baixa e estável remuneração de tradicionais aplicações. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">varre</rel>
+                <arg f="" n="2">a América_  Latina
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

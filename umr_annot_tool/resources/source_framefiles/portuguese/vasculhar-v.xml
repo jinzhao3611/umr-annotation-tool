@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vasculhar">
+        <note />
+    <roleset framnet="scour.02" id="vasculhar.01" name="procurar minuciosamente" vncls="">
+            <roles>
+                <role descr="searcher" n="0" />
+                <role descr="locale searched" n="1" />
+                <role descr="thing searched for" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2206:  Os responsáveis pelo programa vasculharam uma multidão de arquivos de filmes(  russos,  norte-  americanos,  franceses,  ingleses,  alemães)  e selecionaram imagens produzidas pelas agências oficiais desses países que compõem uma formidável ilustração da história do século 20,  tal_  como vista por seus protagonistas. 
+</text>
+                <arg f="" n="0">Os responsáveis pelo programa
+</arg>
+                <rel f="">vasculharam</rel>
+                <arg f="" n="1">uma multidão de arquivos de filmes(  russos,  norte-  americanos,  franceses,  ingleses,  alemães) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

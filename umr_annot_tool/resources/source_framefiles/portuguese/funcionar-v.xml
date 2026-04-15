@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="funcionar">
+        <note />
+    <roleset framnet="work.09" id="funcionar.01" name="estar em atividade; operar; dar certo (figurativo)" vncls="">
+            <roles>
+                <role descr="worker" n="0" />
+                <role descr="job" n="1" />
+                <role descr="beneficiary" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4179:  Empresa funciona das 9h às 19h,  diariamente. 
+</text>
+                <arg f="" n="1">Empresa
+</arg>
+                <rel f="">funciona</rel>
+                <arg f="tmp" n="m">das 9h às 19h
+</arg>
+                <arg f="tmp" n="m">diariamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4176:  O painel vai funcionar das 8h às 22h. 
+</text>
+                <arg f="" n="1">O painel
+</arg>
+                <rel f="">funcionar</rel>
+                <arg f="tmp" n="m">das 8h às 22h
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4133:  Ele funciona desse jeito. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">funciona</rel>
+                <arg f="mnr" n="m">desse jeito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2272:  « É preciso cobrar o governo para as coisas funcionarem »,  completa Bruno_  Fanizzi,  15. 
+</text>
+                <arg f="" n="1">as coisas
+</arg>
+                <rel f="">funcionarem</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2113:  O Jucabaré-  Theatro_  Inteligente vai funcionar na rua Major_  Sertório,  661,  no centro de São_  Paulo. 
+</text>
+                <arg f="" n="1">O Jucabaré-  Theatro_  Inteligente
+</arg>
+                <rel f="">funcionar</rel>
+                <arg f="loc" n="m">na rua Major_  Sertório,  661, 
+</arg>
+                <arg f="loc" n="m">no centro de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1475:  Não é um PI porque só funciona com algo que já existia(  o telefone) . 
+</text>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">funciona</rel>
+                <arg f="mnr" n="m">com algo que já existia(  o telefone) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1255:  O museu funciona na casa em que nasceu Meirelles,  autor do quadro « A_  Primeira_  Missa_  no_  Brasil »,  sua obra mais famosa. 
+</text>
+                <arg f="" n="1">O museu
+</arg>
+                <rel f="">funciona</rel>
+                <arg f="loc" n="m">na casa em que nasceu Meirelles,  autor do quadro « A_  Primeira_  Missa_  no_  Brasil »,  sua obra mais famosa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1240:  Com a mudança,  o metrô de São_  Paulo vai funcionar hoje uma hora a mais,  como_  se tivesse duas meias-  noites. 
+</text>
+                <arg f="cau" n="m">Com a mudança
+</arg>
+                <arg f="" n="1">o metrô de São_  Paulo
+</arg>
+                <rel f="">funcionar</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="ext" n="m">uma hora a mais
+</arg>
+                <arg f="mnr" n="m">como_  se tivesse duas meias-  noites
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1041:  Continuam interditados o Cine_  West_  PLaza_  3,  o Comodoro e o Iguatemi,  que só deve voltar a funcionar em dezembro. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">funcionar</rel>
+                <arg f="tmp" n="m">em dezembro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s657:  Para quem vai fazer a pesquisa no computador a separação de dados não faz nenhuma diferença:  tudo funciona como_  se fizesse parte de um só arquivo. 
+</text>
+                <arg f="" n="1">tudo
+</arg>
+                <rel f="">funciona</rel>
+                <arg f="mnr" n="m">como_  se fizesse parte de um só arquivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s427:  O livro de Marilena_  Ansaldi também oferece detalhes sobre uma das mais bem-  sucedidas experiências culturais de São_  Paulo:  o Teatro_  da_  Dança,  que funcionou a_  partir_  de 1975 na Sala_  Gil_  Vicente do Teatro_  Ruth_  Escobar. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">funcionou</rel>
+                <arg f="tmp" n="m">a_  partir_  de 1975
+</arg>
+                <arg f="loc" n="m">na Sala_  Gil_  Vicente do Teatro_  Ruth_  Escobar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s215:  Comissão_  Parlamentar_  de_  Inquérito sobre o caso Whitewater começa a funcionar dia 29. 
+</text>
+                <arg f="" n="1">Comissão_  Parlamentar_  de_  Inquérito sobre o caso Whitewater
+</arg>
+                <rel f="">funcionar</rel>
+                <arg f="tmp" n="m">dia 29
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

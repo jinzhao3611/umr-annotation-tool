@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="anteceder">
+        <note />
+    <roleset framnet="precede.01" id="anteceder.01" name="vir antes" vncls="47.8">
+            <roles>
+                <role descr="thing preceding" n="0">
+                    <vnrole vncls="47.8" vntheta="Theme1" />
+                </role>
+                <role descr="thing preceded" n="1">
+                    <vnrole vncls="47.8" vntheta="Theme2" />
+                </role>
+                <role descr="causal agent" n="A" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3604:  Ele disse,  no_  entanto,  que a lei antitruste aprovada pelo Congresso reflete o clima que o país está vivendo nessa fase que antecede o lançamento do real. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">antecede</rel>
+                <arg f="" n="1">o lançamento do real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2511:  É a fase do vale-  tudo que antecede a escolha dos candidatos pelos partidos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">antecede</rel>
+                <arg f="" n="1">a escolha dos candidatos
+</arg>
+                <arg f="prd" n="m">pelos partidos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="variar">
+        <note />
+    <roleset framnet="vary.01" id="variar.01" name="oscilar; alterar-se" vncls="">
+            <roles>
+                <role descr="causer of motion" n="0" />
+                <role descr="thing moving" n="1" />
+                <role descr="EXT or MNR" n="2" />
+                <role descr="low point" n="3" />
+                <role descr="high point" n="4" />
+                <role descr="medium" n="5" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3564:  A entidade também se queixou de aumentos que variam de 5,  5%  a 11,  5%  no custo de alguns fundidos,  forjados,  aço plano e rolamentos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">variam</rel>
+                <arg f="" n="3">de 5,  5% 
+</arg>
+                <arg f="" n="4">a 11,  5% 
+</arg>
+                <arg f="tmp" n="m">no custo de alguns fundidos,  forjados,  aço plano e rolamentos
+</arg>
+                <note>com arg3 e arg4: menor e maior limite da variação</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2991:  Hoje,  varia entre 12%  e 15%  ». 
+</text>
+                <arg f="tmp" n="m">Hoje
+</arg>
+                <rel f="">varia</rel>
+                <arg f="" n="2">entre 12%  e 15% 
+</arg>
+                <note>com arg2: extensão da variação</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2627:  Para a taxa de inflação de dezembro de 1994,  por_  exemplo,  as previsões variam de civilizados 2%  para explosivos 150% . 
+</text>
+                <arg f="prd" n="m">Para a taxa de inflação de dezembro de 1994
+</arg>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <arg f="" n="1">as previsões
+</arg>
+                <rel f="">variam</rel>
+                <arg f="" n="3">de civilizados 2% 
+</arg>
+                <arg f="" n="4">para explosivos 150% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2607:  A primeira varia tanto,  dia-  a-  dia,  que uma semana é suficiente para produzir um aumento de mais_  de 10%  nos vencimentos antecipados dos congressistas e dos magistrados. 
+</text>
+                <arg f="" n="1">A primeira
+</arg>
+                <rel f="">varia</rel>
+                <arg f="" n="2">tanto
+</arg>
+                <arg f="tmp" n="m">dia-  a-  dia
+</arg>
+                <arg f="adv" n="m">que uma semana é suficiente para produzir um aumento de mais_  de 10%  nos vencimentos antecipados dos congressistas e dos magistrados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2048:  As vitrinas sempre guardam surpresas,  variando desde o caro refinamento da avenida Montaigne(  que concentra a alta costura,  no Champs_  Elysèes)  até as pechinchas nas pequenas lojas espalhadas pela cidade e nos magazines. 
+</text>
+                <rel f="">variando</rel>
+                <arg f="" n="3">desde o caro refinamento da avenida Montaigne(  que concentra a alta costura,  no Champs_  Elysèes) 
+</arg>
+                <arg f="" n="4">até as pechinchas nas pequenas lojas espalhadas pela cidade e nos magazines
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1057:  O cardápio varia entre pratos de massa al_  dente(  cerca_  de US$  15)  e peixes grelhados(  US$  20) . 
+</text>
+                <arg f="" n="1">O cardápio
+</arg>
+                <rel f="">varia</rel>
+                <arg f="" n="2">entre pratos de massa al_  dente(  cerca_  de US$  15)  e peixes grelhados(  US$  20) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s698:  Variava entre um 4-  3-  3 e um 4-  2-  4. 
+</text>
+                <rel f="">Variava</rel>
+                <arg f="" n="2">entre um 4-  3-  3 e um 4-  2-  4
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s675:  De todo modo,  uma sólida e longa parceria se configurava,  alternando comédias e dramas cuja qualidade cinematográfica variava infinitamente mais que as virtudes de suas trilhas sonoras. 
+</text>
+                <arg f="" n="1">cuja qualidade cinematográfica
+</arg>
+                <rel f="">variava</rel>
+                <arg f="" n="2">infinitamente mais que as virtudes de suas trilhas sonoras
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

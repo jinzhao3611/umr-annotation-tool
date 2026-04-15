@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="metralhar">
+        <note />
+    <roleset framnet="shoot.02" id="metralhar.01" name="atirar (em um alvo)  com com metralhadora" vncls="42.2">
+            <roles>
+                <role descr="shooter" n="0">
+                    <vnrole vncls="42.2" vntheta="Agent" />
+                </role>
+                <role descr="corpse" n="1">
+                    <vnrole vncls="42.2" vntheta="Patient" />
+                </role>
+                <role descr="gun" n="2">
+                    <vnrole vncls="42.2" vntheta="Instrument" />
+                </role>
+                <role descr="specific location of wound" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3283:  Por isso,  metralhou Antonio_  Matarrese,  presidente da federação. 
+</text>
+                <arg f="cau" n="m">Por isso
+</arg>
+                <rel f="">metralhou</rel>
+                <arg f="" n="1">Antonio_  Matarrese,  presidente da federação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

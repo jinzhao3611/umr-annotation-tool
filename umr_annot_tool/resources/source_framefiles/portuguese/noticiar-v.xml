@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="noticiar">
+        <note />
+    <roleset framnet="report.01" id="noticiar.01" name="dar notícia; divulgar" vncls="29.1 37.7">
+            <roles>
+                <role descr="Reporter" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="thing reported" n="1">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="entity reported to" n="2">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2444:  Foi quando noticiei que Fernando_  Henrique estava em contatos sigilosos com o governo Figueiredo,  oferecendo um plano de conciliação entre o regime que se exauria e o que nasceria. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <rel f="">noticiei</rel>
+                <arg f="" n="1">que Fernando_  Henrique estava em contatos sigilosos com o governo Figueiredo,  oferecendo um plano de conciliação entre o regime que se exauria e o que nasceria
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

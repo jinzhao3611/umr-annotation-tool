@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="intervir">
+        <note />
+    <roleset framnet="intervene.01" id="intervir.01" name="interferir" vncls="-">
+            <roles>
+                <role descr="nosy individual" n="0" />
+                <role descr="intervene in" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s176:  Países produtores e consumidores de café entraram num tipo de pré-  pacto internacional que não intervenha nos preços do produto,  afirmou o porta-  voz da Organização_  Internacional_  do_  Café(  OIC) . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">intervenha</rel>
+                <arg f="" n="1">nos preços do produto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="articular">
+        <note />
+    <roleset framnet="orchestrate.01" id="articular.01" name="" vncls="">
+            <roles>
+                <role descr="conductor, manager" n="0" />
+                <role descr="things being coordinated or managed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3468:  O presidente articulou,  então,  lobby certeiro em_  direção_  ao Sebrae(  Serviço_  de_  Apoio_  à_  Pequena_  e_  Média_  Empresa)  e ainda pediu a FHC que o ajudasse a pôr Durante na presidência da entidade. 
+</text>
+                <arg f="" n="0">O presidente
+</arg>
+                <rel f="">articulou</rel>
+                <arg f="tmp" n="m">então
+</arg>
+                <arg f="" n="1">lobby certeiro em_  direção_  ao Sebrae(  Serviço_  de_  Apoio_  à_  Pequena_  e_  Média_  Empresa) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2932:  Confiante numa eventual vitória do candidato Fernando_  Henrique_  Cardoso,  a cúpula do PSDB já articula a formação de um superpartido para não depender do PFL no Congresso. 
+</text>
+                <arg f="adv" n="m">Confiante numa eventual vitória do candidato Fernando_  Henrique_  Cardoso
+</arg>
+                <arg f="" n="0">a cúpula do PSDB
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">articula</rel>
+                <arg f="" n="1">a formação de um superpartido
+</arg>
+                <arg f="pnc" n="m">para não depender do PFL no Congresso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s211:  Em entrevista ﻿à Folha,  Angarita elogiou a iniciativa do Sindicato dos Eletricitários de São_  Paulo,  que articulou uma ação judicial para tentar suspender a venda de ações da Eletropaulo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">articulou</rel>
+                <arg f="" n="1">uma ação judicial para tentar suspender a venda de ações da Eletropaulo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="mover.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2618:  « Move,  move!  »
+</text>
+                <rel f="">Move</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="mover">
+        <note />
+    <roleset framnet="bring.01" id="mover.02" name="mover ação judicial" vncls="11.3">
+            <roles>
+                <role descr="bringer" n="0">
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing brought" n="1">
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, brought-for, brought-to" n="2">
+                    <vnrole vncls="11.3" vntheta="Destination" />
+                </role>
+                <role descr="attribute" n="3" />
+                <role descr="ablative, brought-from" n="4">
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s118:  A ação está sendo movida por pescadores,  lojistas,  propietários de terra e nativos. 
+</text>
+                <arg f="" n="1">A ação
+</arg>
+                <rel f="">movida</rel>
+                <arg f="" n="0">por pescadores,  lojistas,  propietários de terra e nativos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

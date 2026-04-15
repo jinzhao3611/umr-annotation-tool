@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="matar">
+        <note />
+    <roleset framnet="kill.01" id="matar.01" name="tirar a vida de; eliminar" vncls="42.1-1 42.3">
+            <roles>
+                <role descr="killer" n="0">
+                    <vnrole vncls="42.1-1" vntheta="Agent" />
+                    <vnrole vncls="42.3" vntheta="Agent" />
+                </role>
+                <role descr="corpse" n="1">
+                    <vnrole vncls="42.1-1" vntheta="Patient" />
+                    <vnrole vncls="42.3" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="42.1-1" vntheta="Instrument" />
+                    <vnrole vncls="42.3" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4206:  O cineasta italiano Franco_  Zefirelli revelou que,  para iludir o serviço militar durante o período fascista,  se tornou um partisan e acabou matando um soldado alemão. 
+</text>
+                <arg f="" n="0">O cineasta italiano Franco_  Zefirelli
+</arg>
+                <arg f="pnc" n="m">para iludir o serviço militar durante o período fascista
+</arg>
+                <rel f="">matando</rel>
+                <arg f="" n="1">um soldado alemão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3630:  Também vamos distribuir 1 milhão de cestas básicas,  para matar a fome da população até a transição para a democracia. 
+</text>
+                <rel f="">matar</rel>
+                <arg f="" n="1">a fome da população
+</arg>
+                <arg f="tmp" n="m">até a transição para a democracia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3409:  Em 90,  quatro membros do CV foram mortos após um tiroteio em Cidade_  Tiradentes
+</text>
+                <arg f="tmp" n="m">Em 90
+</arg>
+                <arg f="" n="1">quatro membros do CV
+</arg>
+                <rel f="">mortos</rel>
+                <arg f="tmp" n="m">após um tiroteio
+</arg>
+                <arg f="loc" n="m">em Cidade_  Tiradentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2899:  Duas bombas mataram duas pessoas em Teerã ontem,  segundo a agência oficial de notícias « Irna ». 
+</text>
+                <arg f="" n="0">Duas bombas
+</arg>
+                <rel f="">mataram</rel>
+                <arg f="" n="1">duas pessoas
+</arg>
+                <arg f="loc" n="m">em Teerã
+</arg>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="dis" n="m">segundo a agência oficial de notícias « Irna »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2898:  Bombas matam duas pessoas no Irã
+</text>
+                <arg f="" n="0">Bombas
+</arg>
+                <rel f="">matam</rel>
+                <arg f="" n="1">duas pessoas
+</arg>
+                <arg f="loc" n="m">no Irã
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2891:  Afinal,  por_  mais_  que tentem matar o craque,  ele sempre sobrevive,  aqui ou ali,  onde menos se espera. 
+</text>
+                <rel f="">matar</rel>
+                <arg f="" n="1">o craque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2833:  Khalil e Mustafa,  disfarçados,  tentaram matar Mahfouz um dia antes,  mas ele não estava em casa. 
+</text>
+                <arg f="" n="0">Khalil e Mustafa,  disfarçados, 
+</arg>
+                <rel f="">matar</rel>
+                <arg f="" n="1">Mahfouz
+</arg>
+                <arg f="tmp" n="m">um dia antes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2728:  No último dia 11,  Frank_  Kerr,  53,  foi morto com um tiro na cabeça quando três homens assaltaram um posto do correio. 
+</text>
+                <arg f="tmp" n="m">No último dia 11
+</arg>
+                <arg f="" n="1">Frank_  Kerr,  53, 
+</arg>
+                <rel f="">morto</rel>
+                <arg f="" n="2">com um tiro na cabeça
+</arg>
+                <arg f="tmp" n="m">quando três homens assaltaram um posto do correio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2726:  Ira afirma que seus militantes mataram carteiro sem permissão
+</text>
+                <arg f="" n="0">seus militantes
+</arg>
+                <rel f="">mataram</rel>
+                <arg f="" n="1">carteiro
+</arg>
+                <arg f="mnr" n="m">sem permissão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2648:  Um acidente envolvendo um caminhão e um ônibus,  na última sexta-  feira,  matou 16 estudantes,  três motoristas e deixou nove feridos no km 5,  4 da estrada,  que é chamada de « rodovia da morte ». 
+</text>
+                <arg f="" n="0">Um acidente envolvendo um caminhão e um ônibus,  na última sexta-  feira, 
+</arg>
+                <rel f="">matou</rel>
+                <arg f="" n="1">16 estudantes,  três motoristas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2500:  Colosio,  candidato do Partido_  Revolucionário_  Institucional(  PRI,  governista)  foi morto a tiros em Tijuana durante um comício. 
+</text>
+                <arg f="" n="1">Colosio,  candidato do Partido_  Revolucionário_  Institucional(  PRI,  governista) 
+</arg>
+                <rel f="">morto</rel>
+                <arg f="" n="2">a tiros
+</arg>
+                <arg f="loc" n="m">em Tijuana
+</arg>
+                <arg f="tmp" n="m">durante um comício
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s422:  E,  com essa medida,  pode matar dois coelhos. 
+</text>
+                <arg f="cau" n="m">com essa medida
+</arg>
+                <rel f="">matar</rel>
+                <arg f="" n="1">dois coelhos
+</arg>
+                <note>"matar dois coelhos" vem de "matar dois coelhos com uma só cajadada" e significa obter dois resultados com uma só ação</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s164:  A Polícia_  Civil_  de_  Ourinhos(  371 km a oeste de São_  Paulo)  prendeu ontem ﻿à tarde o ex-  líder religioso Jonas_  Rúbio,  45,  acusado de matar na quarta-  feira a estudante Claudirene_  Contijo,  13,  com um tiro de espingarda. 
+</text>
+                <rel f="">matar</rel>
+                <arg f="tmp" n="m">na quarta-  feira
+</arg>
+                <arg f="" n="1">a estudante Claudirene_  Contijo,  13, 
+</arg>
+                <arg f="" n="2">com um tiro de espingarda
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

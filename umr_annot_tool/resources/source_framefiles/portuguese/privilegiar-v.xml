@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="privilegiar">
+        <note />
+    <roleset framnet="favor.01" id="privilegiar.01" name="tratar melhor; dar preferência a" vncls="31.2">
+            <roles>
+                <role descr="liker" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing preferred, favored" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2938:  O Cobra privilegiava os atos impulsivos e as cores fortes e seus principais nomes foram Appel e Alechinsky. 
+</text>
+                <arg f="" n="0">O Cobra
+</arg>
+                <rel f="">privilegiava</rel>
+                <arg f="" n="1">os atos impulsivos e as cores fortes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2362:  Esta vertente,  francamente conteudista,  derivava das experiências realizadas no período pré-  64 pelos Centros_  Populares_  de_  Cultura(  CPCs) ,  ligados ﻿à União_  Nacional_  dos_  Estudantes,  que privilegiavam a « mensagem » e procuravam falar uma idealizada linguagem do « povo ». 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">privilegiavam</rel>
+                <arg f="" n="1">a « mensagem »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1092:  Vamos confrontar os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano:  enquanto os titulares de Telê privilegiam o meio-  campo,  com três,  quatro,  às_  vezes cinco volantes congestionando o setor,  o_  que,  na prática,  não confere nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa,  os garotos jogam com Mona,  o único volante típico. 
+</text>
+                <arg f="tmp" n="m">enquanto
+</arg>
+                <arg f="" n="0">os titulares de Telê
+</arg>
+                <rel f="">privilegiam</rel>
+                <arg f="" n="1">o meio-  campo
+</arg>
+                <arg f="mnr" n="m">com três,  quatro,  às_  vezes cinco volantes congestionando o setor, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s749:  A idéia é privilegiar os de maior qualidade e as feiras estaduais »,  diz Souza. 
+</text>
+                <rel f="">privilegiar</rel>
+                <arg f="" n="1">os de maior qualidade e as feiras estaduais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

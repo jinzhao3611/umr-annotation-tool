@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="festejar">
+        <note />
+    <roleset framnet="celebrate.02" id="festejar.01" name="comemorar" vncls="33">
+            <roles>
+                <role descr="celebrator(s)" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="party, occasion" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1455:  As redes de revendedores das duas marcas festejam a dissolução. 
+</text>
+                <arg f="" n="0">As redes de revendedores das duas marcas
+</arg>
+                <rel f="">festejam</rel>
+                <arg f="" n="1">a dissolução
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

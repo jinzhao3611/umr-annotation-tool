@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mimetizar">
+        <note />
+    <roleset framnet="imitate.01" id="mimetizar.01" name="imitar" vncls="25.4">
+            <roles>
+                <role descr="imitator" n="0">
+                    <vnrole vncls="25.4" vntheta="Agent" />
+                </role>
+                <role descr="entity imitated" n="1">
+                    <vnrole vncls="25.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2258:  Se não há mais bossa_  nova realmente nova,  o melhor é mimetizar o criador do estilo,  o cantor João_  Gilberto. 
+</text>
+                <rel f="">mimetizar</rel>
+                <arg f="" n="1">o criador do estilo,  o cantor João_  Gilberto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

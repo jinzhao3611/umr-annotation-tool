@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="associar">
+        <note />
+    <roleset framnet="associate.01" id="associar.01" name="relacionar; fazer associação entre duas coisas" vncls="22.2">
+            <roles>
+                <role descr="agent, entity causing some grouping, making an   association" n="0" />
+                <role descr="theme, thing being included in some group" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient1" />
+                </role>
+                <role descr="group, associated-with" n="2">
+                    <vnrole vncls="22.2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3804:  Eu não me associo com moda. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">associo</rel>
+                <arg f="" n="2">com moda
+</arg>
+                <note>reflexivo: associar-se</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

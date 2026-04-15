@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="localizar">
+        <note />
+    <roleset framnet="locate.02" id="localizar.01" name="encontrar; descobrir o local onde se encontra algo" vncls="">
+            <roles>
+                <role descr="finder" n="0" />
+                <role descr="thing found" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2570:  A polícia pretende localizar todos os envolvidos na briga até o dia 21 de outubro. 
+</text>
+                <rel f="">localizar</rel>
+                <arg f="" n="1">todos os envolvidos na briga
+</arg>
+                <arg f="tmp" n="m">até o dia 21 de outubro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s737:  Com o uso do método tridimencional,  foi possível localizá-  lo e descobrir a causa da morte. 
+</text>
+                <rel f="">localizá-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="limitar-se">
+        <note />
+    <roleset framnet="" id="limitar.01" name="Verbo aspectual: limitar-se a + infinitivo; não fazer nada além de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2353:  Quando vai aos EUA,  ele não se limita a comprar blazers caros. 
+</text>
+                <arg f="tmp" n="m">Quando vai aos EUA
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">limita</rel>
+                <arg f="" n="2">a comprar blazers caros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2271:  São as mesmas pessoas que acham que sua responsabilidade social se limita a pagar impostos »,  diz Letícia_  Zioni_  Gomes,  16. 
+</text>
+                <arg f="" n="0">sua responsabilidade social
+</arg>
+                <rel f="">limita</rel>
+                <arg f="" n="2">a pagar impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1452:  O ministro limitou-  se a dizer que havia conversado por telefone com assessores do presidente Itamar_  Franco sobre a proposta de uma nova legislação contra abusos do poder econômico. 
+</text>
+                <arg f="" n="0">O ministro
+</arg>
+                <rel f="">limitou-</rel>
+                <arg f="" n="2">a dizer que havia conversado por telefone com assessores do presidente Itamar_  Franco sobre a proposta de uma nova legislação contra abusos do poder econômico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s498:  O ex-  ministro da Fazenda Ernane_  Galvêas(  governo Figueiredo)  disse que sua participação no episódio limitou-  se a um « de_  acordo » no processo que teria vindo pronto do Banco_  Nacional_  de_  Habitação,  subordinado na época ao Ministério_  do_  Interior. 
+</text>
+                <arg f="" n="0">sua participação no episódio
+</arg>
+                <rel f="">limitou-</rel>
+                <arg f="rec" n="m">se
+</arg>
+                <arg f="" n="2">a um « de_  acordo »
+</arg>
+                <arg f="prd" n="m">no processo que teria vindo pronto do Banco_  Nacional_  de_  Habitação,  subordinado na época ao Ministério_  do_  Interior
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="limitar">
+        <note />
+    <roleset framnet="limit.01" id="limitar.02" name="restringir; estabelecer que algo tenha que ficar dentro de certo limite" vncls="76">
+            <roles>
+                <role descr="agent, limiter" n="0">
+                    <vnrole vncls="76" vntheta="Cause" />
+                </role>
+                <role descr="thing limited" n="1">
+                    <vnrole vncls="76" vntheta="Patient" />
+                </role>
+                <role descr="limit" n="2">
+                    <vnrole vncls="76" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1355:  As escolas limitam os vestibulinhos a algumas séries que têm maior procura por vagas. 
+</text>
+                <arg f="" n="0">As escolas
+</arg>
+                <rel f="">limitam</rel>
+                <arg f="" n="1">os vestibulinhos
+</arg>
+                <arg f="" n="2">a algumas séries que têm maior procura por vagas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s86:  Apesar_  de limitar a venda de quatro ingressos por pessoa,  a Mesbla não evitava ontem que uma mesma pessoa comprasse mais_  de uma vez. 
+</text>
+                <rel f="">limitar</rel>
+                <arg f="" n="1">a venda de quatro ingressos por pessoa
+</arg>
+                <note>frase mal escrita, deixa arg1 e arg2 no mesmo NP</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

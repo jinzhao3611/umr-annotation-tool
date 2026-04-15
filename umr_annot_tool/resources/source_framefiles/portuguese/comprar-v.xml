@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comprar">
+        <note />
+    <roleset framnet="buy.01" id="comprar.01" name="adquirir" vncls="13.5.1">
+            <roles>
+                <role descr="buyer" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing bought" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="seller" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <role descr="price paid" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Asset" />
+                </role>
+                <role descr="benefactive" n="4">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4118:  Fui procurado pelos ladrões para comprar a carga. 
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">a carga
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3787:  A versão mais corrente sobre o início do enriquecimento de Quércia é de que ele comprou terrenos em áreas de periferia que seriam beneficiadas pelos projetos de melhoria urbana da Prefeitura. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">comprou</rel>
+                <arg f="" n="1">terrenos
+</arg>
+                <arg f="loc" n="m">em áreas de periferia que seriam beneficiadas pelos projetos de melhoria urbana da Prefeitura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3524:  Lá,  os plínios fazem amigos,  influenciam pessoas,  revêem colegas,  contam as novidades- -  as últimas viagens para os Estados_  Unidos,  quem comprou carro novo,  quem « vai ter » que começar a trabalhar com o pai,  os que ainda não conseguiram telefone celular. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">comprou</rel>
+                <arg f="" n="1">carro novo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3125:  Todos os anunciantes que aderiram ﻿à idéia dos clubes infantis estão atrás_  de um mercado de dimensões gigantescas:  os miniconsumidores americanos na faixa de idade entre 4 e 12 anos gastaram no ano passado US$  7,  3 bilhões das suas próprias mesadas e influenciaram suas famílias a comprar mais US$  130 bilhões. 
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">mais US$  130 bilhões
+</arg>
+                <note>a cifra aqui não é o preço (arg3) e sim a quantidade de mercadoria (por extensão, arg1)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2987:  Com o dinheiro do amendoim Guidi conseguiu comprar duas camionetes e um trator de 150 Hp,  está construindo uma casa em Pontal e ainda tem para receber US$  470 mil referente_  ﻿à venda de 49,  4 mil sacas. 
+</text>
+                <arg f="mnr" n="m">Com o dinheiro do amendoim
+</arg>
+                <arg f="" n="0">Guidi
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">duas camionetes e um trator de 150 Hp
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2356:  O filósofo José_  Arthur_  Giannotti diz que se sente angustiado em livrarias e prefere comprar seus livros por catálogos. 
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">seus livros
+</arg>
+                <arg f="mnr" n="m">por catálogos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2353:  Quando vai aos EUA,  ele não se limita a comprar blazers caros. 
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">blazers caros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2142:  FHC e Malan não esclareceram,  até o momento,  quanto o governo gastou e quando foram comprados os papéis. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <rel f="">comprados</rel>
+                <arg f="" n="1">os papéis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2046:  Quem queria comprar,  por_  exemplo,  meia dúzia de pães e um litro de leite,  mas só tinha cruzeiros reais no bolso,  teve que enfrentar fila de até duas horas. 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <arg f="" n="1">meia dúzia de pães e um litro de leite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1882:  Boa notícia:  o Parreira já comprou sua Mitsubishi! 
+</text>
+                <arg f="" n="0">o Parreira
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">comprou</rel>
+                <arg f="" n="1">sua Mitsubishi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1668:  Segundo Franco,  o BC vai comprar dólares quando a cotação cair a um ponto determinado,  « não conhecido pelo mercado ». 
+</text>
+                <arg f="dis" n="m">Segundo Franco
+</arg>
+                <arg f="" n="0">o BC
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">dólares
+</arg>
+                <arg f="tmp" n="m">quando a cotação cair a um ponto determinado,  « não conhecido pelo mercado »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1666:  O diretor de Assuntos_  Internacionais do Banco_  Central,  Gustavo_  Franco,  disse que o BC vai comprar dólares por uma cotação « bem abaixo » de R$  1,  00,  preço pelo_  qual vende a moeda norte-  americana. 
+</text>
+                <arg f="" n="0">o BC
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">dólares
+</arg>
+                <arg f="" n="3">por uma cotação « bem abaixo » de R$  1,  00,  preço pelo_  qual vende a moeda norte-  americana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1665:  Diretor do Banco_  Central não acredita que o real esteja valorizado porque « tem gente comprando e vendendo »
+</text>
+                <arg f="" n="0">gente
+</arg>
+                <rel f="">comprando</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1664:  BC espera queda para comprar dólar
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">dólar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1544:  « Estou comprando o micro- -  o portátil Aero,  da Compaq- -  para acelerar as pesquisas da minha tese de mestrado »,  disse Deborah_  Caldas. 
+</text>
+                <rel f="">comprando</rel>
+                <arg f="" n="1">o micro- -  o portátil Aero,  da Compaq- - 
+</arg>
+                <arg f="pnc" n="m">para acelerar as pesquisas da minha tese de mestrado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1543:  A Fenasoft deixou de ser um reduto de especialistas em informática para atrair também quem pretendia comprar o primeiro computador. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">o primeiro computador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1410:  « O aumento na arrecadação possibilitou que,  depois de 30 anos,  a prefeitura pudesse comprar três caminhões,  um ônibus e um trator »,  disse o prefeito Fausto_  Camper,  43(  PMDB) . 
+</text>
+                <arg f="tmp" n="m">depois de 30 anos
+</arg>
+                <arg f="" n="0">a prefeitura
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">três caminhões,  um ônibus e um trator
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s653:  Lá em Portugal,  eu costumo comprar a Folha »,  afirma Barra. 
+</text>
+                <arg f="loc" n="m">Lá
+</arg>
+                <arg f="loc" n="m">em Portugal
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">a Folha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s495:  Ir a uma feira livre serve de aula para os principiantes aprenderem a comprar frutas,  legumes e verduras mais baratos e de melhor qualidade. 
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">frutas,  legumes e verduras
+</arg>
+                <arg f="prd" n="m">mais baratos e de melhor qualidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s236:  « Um diplomata da Bélgica comprou apartamento para passar as férias de julho e janeiro,  mas fora desse período ele aluga o imóvel por US$  1.  000 »,  diz Bezerra. 
+</text>
+                <arg f="" n="0">Um diplomata da Bélgica
+</arg>
+                <rel f="">comprou</rel>
+                <arg f="" n="1">apartamento
+</arg>
+                <arg f="pnc" n="m">para passar as férias de julho e janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s235:  Segundo ele,  italianos e belgas já descobriram que comprar imóveis em Natal é um ótimo negócio. 
+</text>
+                <rel f="">comprar</rel>
+                <arg f="" n="1">imóveis
+</arg>
+                <arg f="loc" n="m">em Natal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s86:  Apesar_  de limitar a venda de quatro ingressos por pessoa,  a Mesbla não evitava ontem que uma mesma pessoa comprasse mais_  de uma vez. 
+</text>
+                <arg f="" n="0">uma mesma pessoa
+</arg>
+                <rel f="">comprasse</rel>
+                <arg f="tmp" n="m">mais_  de uma vez
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

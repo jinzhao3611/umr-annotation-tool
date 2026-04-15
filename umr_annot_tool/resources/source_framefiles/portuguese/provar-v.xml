@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="provar">
+        <note />
+    <roleset framnet="prove.01" id="provar.01" name="dar provas; demonstrar a veracidade" vncls="29.4">
+            <roles>
+                <role descr="prover" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="proposition" n="1">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <role descr="benefactive, proved-to" n="2">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2011:  Segundo o pai de André,  Luis_  Carlos_  Scafura,  os sequestradores provaram que ele está vivo,  ao responder corretamente algumas perguntas sobre a vida do rapaz. 
+</text>
+                <arg f="" n="0">os sequestradores
+</arg>
+                <rel f="">provaram</rel>
+                <arg f="" n="1">que ele está vivo,  ao responder corretamente algumas perguntas sobre a vida do rapaz
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

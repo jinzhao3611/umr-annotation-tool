@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estabelecer">
+        <note />
+    <roleset framnet="establish.01" id="estabelecer.01" name="definir" vncls="29.2 55.5-1">
+            <roles>
+                <role descr="agent, setter" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="55.5-1" vntheta="Agent" />
+                </role>
+                <role descr="thing set" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="55.5-1" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <role descr="benefactive" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4084:  Segundo a assessoria de imprensa do governador,  Fleury já pediu um levantamento de preço das ações,  junto a consultores especializados,  para estabelecer o valor mínimo das ações,  que vão ser levadas a leilão. 
+</text>
+                <rel f="">estabelecer</rel>
+                <arg f="" n="1">o valor mínimo das ações,  que vão ser levadas a leilão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2468:  A Super-  301,  que já foi aplicada contra o Brasil quando esteve em vigor em 1989 e 1990,  estabelece um prazo de 18 meses para que as negociações bilaterais levem ﻿à eliminação do que os EUA consideram barreiras ao comércio. 
+</text>
+                <arg f="" n="0">A Super-  301,  que já foi aplicada contra o Brasil quando esteve em vigor em 1989 e 1990, 
+</arg>
+                <rel f="">estabelece</rel>
+                <arg f="" n="1">um prazo de 18 meses para que as negociações bilaterais levem ﻿à eliminação do que os EUA consideram barreiras ao comércio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2278:  Sobre o controle antidoping,  a Fifa estabelecerá uma « fax_  hotline »,  em operação 24 horas por dia,  para que os médicos das delegações consultem a organização da Copa antes de fornecer qualquer medicamento a seus jogadores. 
+</text>
+                <arg f="cau" n="m">Sobre o controle antidoping
+</arg>
+                <arg f="" n="0">a Fifa
+</arg>
+                <rel f="">estabelecerá</rel>
+                <arg f="" n="1">uma « fax_  hotline »
+</arg>
+                <arg f="prd" n="m">em operação 24 horas por dia
+</arg>
+                <arg f="" n="3">para que os médicos das delegações consultem a organização da Copa antes de fornecer qualquer medicamento a seus jogadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2051:  Com essas definições,  a equipe teria condições de estabelecer as regras o real. 
+</text>
+                <rel f="">estabelecer</rel>
+                <arg f="" n="1">as regras o real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1765:  O governo cria a URV e estabelece um prazo de três a quatro meses para que a sociedade negocie conversões voluntárias. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">estabelece</rel>
+                <arg f="" n="1">um prazo de três a quatro meses para que a sociedade negocie conversões voluntárias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1733:  Nessa obra literalmente seminal,  Miller estabeleceu o padrão do que seria de_  ali_  para_  diante a sua literatura:  memórias pessoais vistas com a minúcia de um estudo biológico e narradas no tom exaltado de um profeta bêbado. 
+</text>
+                <arg f="loc" n="m">Nessa obra literalmente seminal
+</arg>
+                <arg f="" n="0">Miller
+</arg>
+                <rel f="">estabeleceu</rel>
+                <arg f="" n="1">o padrão do que seria de_  ali_  para_  diante a sua literatura:  memórias pessoais vistas com a minúcia de um estudo biológico e narradas no tom exaltado de um profeta bêbado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s942:  Uma proposta plausível é a de se fixar um prazo determinado,  três ou quatro meses,  para que a sociedade se adapte voluntariamente ﻿à URV,  estabelecendo regras privadas de conversão. 
+</text>
+                <rel f="">estabelecendo</rel>
+                <arg f="" n="1">regras privadas de conversão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s481:  Estabeleceu que as tarifas públicas vão todas marchar ao_  compasso_  da URV até meados de maio. 
+</text>
+                <rel f="">Estabeleceu</rel>
+                <arg f="" n="1">que as tarifas públicas vão todas marchar ao_  compasso_  da URV até meados de maio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s294:  Cerca_  de 72%  dos empresários da construção querem que o próprio setor negocie a conversão dos contratos para a URV,  enquanto 28%  desejam que o governo estabeleça as regras. 
+</text>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">estabeleça</rel>
+                <arg f="" n="1">as regras
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

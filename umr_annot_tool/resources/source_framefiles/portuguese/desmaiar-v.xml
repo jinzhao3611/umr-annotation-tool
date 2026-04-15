@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desmaiar">
+        <note />
+    <roleset framnet="faint.01" id="desmaiar.01" name="desfalecer; perder os sentidos" vncls="40.8.4">
+            <roles>
+                <role descr="fainter" n="0">
+                    <vnrole vncls="40.8.4" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1435:  A dor faz os golpeados desmaiarem. 
+</text>
+                <arg f="" n="0">os golpeados
+</arg>
+                <rel f="">desmaiarem</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

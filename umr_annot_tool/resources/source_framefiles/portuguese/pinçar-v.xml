@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pinçar">
+        <note />
+    <roleset framnet="pick.01" id="pinçar.01" name="retirar (com pinça ou não)" vncls="13.5.1">
+            <roles>
+                <role descr="picker" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing picked" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="group or source" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s776:  Quando Ricupero foi pinçado da sua missão amazônica,  lembrei Osvaldo_  Aranha,  que dizia que o Brasil é um deserto de homens e de idéias. 
+</text>
+                <arg f="tmp" n="m">Quando
+</arg>
+                <arg f="" n="1">Ricupero
+</arg>
+                <rel f="">pinçado</rel>
+                <arg f="" n="2">da sua missão amazônica
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

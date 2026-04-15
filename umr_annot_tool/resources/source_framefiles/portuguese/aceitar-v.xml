@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aceitar">
+        <note />
+    <roleset framnet="accept.01" id="aceitar.01" name="receber de boa vontade" vncls="13.5.2 29.2">
+            <roles>
+                <role descr="acceptor" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="thing accepted" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="accepted-from" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="attribute" n="3">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4130:  Boutros-  Ghali teme que as potências se retirem e suspendam sanções contra a Sérvia pondo em risco outras partes da ex-  Iugoslávia se o plano for aceito. 
+</text>
+                <arg f="" n="1">o plano
+</arg>
+                <rel f="">aceito</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3396:  Será que já_  não nos basta a humilde compulsão passiva dos leitores que aceitam nos ler para serem informados? 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">aceitam</rel>
+                <arg f="" n="1">nos ler para serem informados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2371:  As paulistas Mancha_  Verde(  Palmeiras)  e Gaviões_  da_  Fiel(  Corinthians)  aceitaram,  mas as cariocas se recusaram. 
+</text>
+                <arg f="" n="0">As paulistas Mancha_  Verde(  Palmeiras)  e Gaviões_  da_  Fiel(  Corinthians) 
+</arg>
+                <rel f="">aceitaram</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2042:  Atualmente,  esse tipo de prova não é aceito na Justiça. 
+</text>
+                <arg f="tmp" n="m">Atualmente
+</arg>
+                <arg f="" n="1">esse tipo de prova
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">aceito</rel>
+                <arg f="loc" n="m">na Justiça
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1906:  O humor de Altman vai na direção das convenções de uma sociedade que,  tendo que aceitar tudo sob as aparências,  acaba perpetuando uma vasta rede de hipocrisia. 
+</text>
+                <rel f="">aceitar</rel>
+                <arg f="" n="1">tudo
+</arg>
+                <arg f="mnr" n="m">sob as aparências
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1807:  Não aceita cartão de crédito internacional. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">aceita</rel>
+                <arg f="" n="1">cartão de crédito internacional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1447:  « Não podemos aceitar medidas que contrariem o combate ﻿à inflação »,  disse FHC,  ao responder sobre o assunto. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">aceitar</rel>
+                <arg f="" n="1">medidas que contrariem o combate ﻿à inflação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1446:  Pelo que a Folha apurou,  a equipe econômica não está disposta a aceitar modificações nos dispositivos sobre salários da medida provisória que instituiu a URV. 
+</text>
+                <rel f="">aceitar</rel>
+                <arg f="" n="1">modificações nos dispositivos sobre salários da medida provisória que instituiu a URV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s354:  Como aceitar que,  depois de uma passagem tão ruim pela Presidência,  Sarney dispusesse de espaço privilegiado no jornal? 
+</text>
+                <arg f="mnr" n="m">Como
+</arg>
+                <rel f="">aceitar</rel>
+                <arg f="" n="1">que,  depois de uma passagem tão ruim pela Presidência,  Sarney dispusesse de espaço privilegiado no jornal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s62:  Havelange aceitaria engolir o italiano Antonio_  Matarrese como o seu vice-  executivo e,  além_  disso,  esqueceria os seus modos autoritários,  coordenando a entidade de maneira colegiada. 
+</text>
+                <arg f="" n="0">Havelange
+</arg>
+                <rel f="">aceitaria</rel>
+                <arg f="" n="1">engolir o italiano Antonio_  Matarrese como o seu vice-  executivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s61:  Pelo acordo,  os três continentes mais obstinados em cortar o reinado de Havelange,  a África,  a Ásia e a Europa,  aceitaram cancelar os seus movimentos de oposição em troca,  basicamente,  de dois compromissos. 
+</text>
+                <arg f="dis" n="m">Pelo acordo
+</arg>
+                <arg f="" n="0">os três continentes mais obstinados em cortar o reinado de Havelange,  a África,  a Ásia e a Europa, 
+</arg>
+                <rel f="">aceitaram</rel>
+                <arg f="" n="1">cancelar os seus movimentos de oposição em troca,  basicamente,  de dois compromissos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

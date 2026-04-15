@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desagradar">
+        <note />
+    <roleset framnet="displease.01" id="desagradar.01" name="aborrecer; causar desprazer" vncls="31.1">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="experiencer" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2825:  A frase do ministro desagradou até_  mesmo ao PSDB. 
+</text>
+                <arg f="" n="0">A frase do ministro
+</arg>
+                <rel f="">desagradou</rel>
+                <arg f="adv" n="m">até_  mesmo
+</arg>
+                <arg f="" n="1">ao PSDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2735:  Ele a emprega quando tem que dizer não a uma pessoa sem desagradá-  la no caso,  a seus colegas de PFL que querem repartir os cargos com o PSDB antes do 1º turno. 
+</text>
+                <rel f="">desagradá-</rel>
+                <arg f="" n="1">la
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1713:  Em 1920,  a sujeição do sultão Mohamed_  6º ao Tratado_  de_  Sèvres desagradou os nacionalistas liderados por Mustafá_  Kemal,  militar que lutou nas guerras balcânicas e na Primeira_  Guerra_  Mundial. 
+</text>
+                <arg f="tmp" n="m">Em 1920
+</arg>
+                <arg f="" n="0">a sujeição do sultão Mohamed_  6º ao Tratado_  de_  Sèvres
+</arg>
+                <rel f="">desagradou</rel>
+                <arg f="" n="1">os nacionalistas liderados por Mustafá_  Kemal,  militar que lutou nas guerras balcânicas e na Primeira_  Guerra_  Mundial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1005:  Esta armação dá ﻿à equipe um caráter excessivamente defensivo,  o_  que desagrada àqueles que esperam da seleção brasileira um futebol alegre,  sempre visando ao gol. 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <rel f="">desagrada</rel>
+                <arg f="" n="1">àqueles que esperam da seleção brasileira um futebol alegre,  sempre visando ao gol
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

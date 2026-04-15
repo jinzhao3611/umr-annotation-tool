@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reinaugurar">
+        <note />
+    <roleset framnet="inaugurate.02" id="reinaugurar.01" name="inaugurar de novo" vncls="-">
+            <roles>
+                <role descr="marker" n="0" />
+                <role descr="thing beginning" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1254:  O Instituto_  Brasileiro_  do_  Patrimônio_  Cultural reinaugura dia 18 o Museu_  Victor_  Meirelles,  em Florianópolis. 
+</text>
+                <arg f="" n="0">O Instituto_  Brasileiro_  do_  Patrimônio_  Cultural
+</arg>
+                <rel f="">reinaugura</rel>
+                <arg f="tmp" n="m">18
+</arg>
+                <arg f="" n="1">o Museu_  Victor_  Meirelles
+</arg>
+                <arg f="loc" n="m">em Florianópolis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

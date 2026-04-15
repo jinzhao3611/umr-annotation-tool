@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="compor-se">
+        <note />
+    <roleset framnet="compose.01" id="compor.01" name="ser formado de" vncls="26.4">
+            <roles>
+                <role descr="causer of group, agent" n="0">
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                </role>
+                <role descr="entity composed" n="1">
+                    <vnrole vncls="26.4" vntheta="Product" />
+                </role>
+                <role descr="composed of" n="2">
+                    <vnrole vncls="26.4" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3071:  O cenário,  de Donald_  Baechler,  se compõe de pedaços de um barco,  uma pequena casa e um tubo de chaminé. 
+</text>
+                <arg f="" n="1">O cenário,  de Donald_  Baechler, 
+</arg>
+                <rel f="">compõe</rel>
+                <arg f="" n="2">de pedaços de um barco,  uma pequena casa e um tubo de chaminé
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="compor">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="compose.01" id="compor.02" name="formar" vncls="26.4">
+            <roles>
+                <role descr="causer of group, agent" n="0">
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                </role>
+                <role descr="entity composed" n="1">
+                    <vnrole vncls="26.4" vntheta="Product" />
+                </role>
+                <role descr="composed of" n="2">
+                    <vnrole vncls="26.4" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2926:  « Fiquei muito honrada com a proposta,  mas o governador Brizola tem nomes muito bons para compor sua chapa »,  afirmou. 
+</text>
+                <rel f="">compor</rel>
+                <arg f="" n="1">sua chapa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2206:  Os responsáveis pelo programa vasculharam uma multidão de arquivos de filmes(  russos,  norte-  americanos,  franceses,  ingleses,  alemães)  e selecionaram imagens produzidas pelas agências oficiais desses países que compõem uma formidável ilustração da história do século 20,  tal_  como vista por seus protagonistas. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">compõem</rel>
+                <arg f="" n="1">uma formidável ilustração da história do século 20
+</arg>
+                <note>Arg2 como sujeito</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1298:  Na reta final de seu mandato,  o presidente Itamar_  Franco decidiu arrumar empregos,  a_  partir_  de janeiro próximo,  para seus amigos que compõem o chamado « Grupo_  de_  Juiz_  de_  Fora ». 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">compõem</rel>
+                <arg f="" n="1">o chamado « Grupo_  de_  Juiz_  de_  Fora »
+</arg>
+                <note>Arg2 como sujeito</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1093:  O resto é composto de meias-  armadores e atacantes. 
+</text>
+                <arg f="" n="1">O resto
+</arg>
+                <rel f="">composto</rel>
+                <arg f="" n="2">de meias-  armadores e atacantes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="compose.02" id="compor.03" name="criar obra de arte (música, poema)" vncls="26.4 26.7-2">
+            <roles>
+                <role descr="artist, agent" n="0">
+                    <vnrole vncls="26.7-2" vntheta="Agent" />
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                </role>
+                <role descr="entity composed" n="1">
+                    <vnrole vncls="26.7-2" vntheta="Theme" />
+                    <vnrole vncls="26.4" vntheta="Product" />
+                </role>
+                <role descr="beneficiary" n="2">
+                    <vnrole vncls="26.7-2" vntheta="Beneficiary" />
+                    <vnrole vncls="26.4" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s673:  A fanfarra que a seguir compôs para « Dizem_  que_  É_  Amor »(  High_  Time)  só não ficou também gravada na memória de todo mundo porque,  daquela vez,  Edwards nem_  sequer chutou na trave. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="tmp" n="m">a seguir
+</arg>
+                <rel f="">compôs</rel>
+                <arg f="pnc" n="m">para « Dizem_  que_  É_  Amor »(  High_  Time) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s671:  O impacto provocado pela jazzística trilha de « A_  Marca_  da_  Maldade »,  com temas influenciados por Stan_  Kenton e até por pianistas de bordel,  chamou a atenção de Edwards,  que em 1958 procurava um músico novo,  talentoso e barato para compor o prefixo da telessérie « Peter_  Gunn ». 
+</text>
+                <rel f="">compor</rel>
+                <arg f="" n="1">o prefixo da telessérie « Peter_  Gunn »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s286:  Num único ano,  1937,  eles compuseram « They_  Can'  t_  Take_  That_  Away_  From_  Me »,  « Let'  s_  Call_  the_  Whole_  Thing_  Off »,  « A_  Foggy_  Day »,  « Nice_  Work_  if_  You_  Can_  Get_  it »,  « They_  All_  Laughed »,  « Love_  Walked_  In »'  e « Love_  Is_  Here_  to_  Stay »' ,  e essas são apenas as que ficaram universalmente conhecidas. 
+</text>
+                <arg f="tmp" n="m">Num único ano,  1937, 
+</arg>
+                <arg f="" n="0">eles
+</arg>
+                <rel f="">compuseram</rel>
+                <arg f="" n="1">« They_  Can'  t_  Take_  That_  Away_  From_  Me »,  « Let'  s_  Call_  the_  Whole_  Thing_  Off »,  « A_  Foggy_  Day »,  « Nice_  Work_  if_  You_  Can_  Get_  it »,  « They_  All_  Laughed »,  « Love_  Walked_  In »'  e « Love_  Is_  Here_  to_  Stay »' 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="manage.01" id="compor.04" name="gerenciar" vncls="">
+            <roles>
+                <role descr="manager" n="0" />
+                <role descr="thing managed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s398:  Todo esforço deve ser no sentido de transformar o local do trabalho em primeira instância do processo trabalhista,  com o poder de compor conflitos. 
+</text>
+                <rel f="">compor</rel>
+                <arg f="" n="1">conflitos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

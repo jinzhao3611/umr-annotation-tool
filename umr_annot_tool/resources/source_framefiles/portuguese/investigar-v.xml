@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="investigar">
+        <note />
+    <roleset framnet="investigate.01" id="investigar.01" name="procurar descobrir seguindo pistas" vncls="30.2 35.4">
+            <roles>
+                <role descr="examiner" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                    <vnrole vncls="35.4" vntheta="Agent" />
+                </role>
+                <role descr="examined" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                    <vnrole vncls="35.4" vntheta="Location" />
+                </role>
+                <role descr="examined for" n="2">
+                    <vnrole vncls="35.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3555:  O caso passou a ser investigado porque pessoas que foram ao velório de Pereira teriam dito que o cadáver suava e teve sua pele arrepiada dentro_  do caixão. 
+</text>
+                <arg f="" n="1">O caso
+</arg>
+                <rel f="">investigado</rel>
+                <arg f="cau" n="m">porque pessoas que foram ao velório de Pereira teriam dito que o cadáver suava e teve sua pele arrepiada dentro_  do caixão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3287:  De todo modo,  na Bota,  ﻿à Justiça cabe a missão de investigar,  antes de meramente julgar. 
+</text>
+                <rel f="">investigar</rel>
+                <arg f="tmp" n="m">antes de meramente julgar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s957:  O diretor-  geral da PF,  coronel Wilson_  Romão,  disse que recebeu « recomendações expressas para investigar tudo a_  fundo ». 
+</text>
+                <rel f="">investigar</rel>
+                <arg f="" n="1">tudo
+</arg>
+                <arg f="mnr" n="m">a_  fundo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

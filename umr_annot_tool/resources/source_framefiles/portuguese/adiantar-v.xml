@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="adiantar">
+        <note />
+        <note />
+    <roleset framnet="advance.01" id="adiantar.01" name="realizar ou revelar antes do previsto" vncls="45.4">
+            <roles>
+                <role descr="agent, causing advance" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing advancing" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="EXT, amount advanced by" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4068:  Ele afirmou que pretende reforçar seu meio-  campo,  mas não adiantou a escalação da equipe. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">adiantou</rel>
+                <arg f="" n="1">a escalação da equipe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s720:  O treinador Levir_  Culpi não quis adiantar o substituto de Éder_  Aleixo. 
+</text>
+                <arg f="" n="0">O treinador Levir_  Culpi
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">adiantar</rel>
+                <arg f="" n="1">o substituto de Éder_  Aleixo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s572:  Segundo Burle_  Filho,  Biscaia não lhe adiantou nada por telefone sobre o assunto. 
+</text>
+                <arg f="dis" n="m">Segundo Burle_  Filho
+</arg>
+                <arg f="" n="0">Biscaia
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="2">lhe
+</arg>
+                <rel f="">adiantou</rel>
+                <arg f="mnr" n="m">por telefone
+</arg>
+                <arg f="" n="1">nada sobre o assunto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="adiantar.02" name="valer a pena, ter valor" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3889:  « Se isso acontecer,  tem que ser rápido,  do contrário não adianta mais »,  afirmou. 
+</text>
+                <rel f="">adianta</rel>
+                <arg f="neg" n="m">não mais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2544:  Para Serra,  se não for aprovada a emenda constitucional que desvincula dos fundos de participação dos Estados e municípios as receitas dos novos tributos,  de nada adiantará o aumento de impostos. 
+</text>
+                <arg f="dis" n="m">se não for aprovada a emenda constitucional que desvincula dos fundos de participação dos Estados e municípios as receitas dos novos tributos
+</arg>
+                <arg f="ext" n="m">de nada
+</arg>
+                <rel f="">adiantará</rel>
+                <arg f="" n="1">o aumento de impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s719:  De que adiantaria os jornais do dia seguinte omitirem os nomes,  se eles já haviam sido arrastados ﻿à lama por um noticiário que atinge cerca_  de 60 milhões de pessoas,  certamente mais do_  que a tiragem conjunta de todos os jornais brasileiros? 
+</text>
+                <arg f="ext" n="m">De que
+</arg>
+                <rel f="">adiantaria</rel>
+                <arg f="" n="1">os jornais do dia seguinte omitirem os nomes
+</arg>
+                <arg f="dis" n="m">se eles já haviam sido arrastados ﻿à lama por um noticiário que atinge cerca_  de 60 milhões de pessoas,  certamente mais do_  que a tiragem conjunta de todos os jornais brasileiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

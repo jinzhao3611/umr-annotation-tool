@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="personificar">
+        <note />
+    <roleset framnet="personify.01" id="personificar.01" name="ser a representação de" vncls="-">
+            <roles>
+                <role descr="abstraction" n="1" />
+                <role descr="person-form" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1249:  Apoiada nos travesseiros,  o busto levantado na animação da conversa,  o rosto concentrado no jogo dos búzios,  no instante da adivinhação,  Menininha_  do_  Gantois personificava a verdade do Brasil,  de um Brasil mais profundo e mais belo,  situado além_  da corrupção,  da injustiça,  da violência,  da mentira,  das pequenezes,  da delação transformada pelos pobres homens da baixa política em suprema virtude nacional. 
+</text>
+                <arg f="prd" n="m">Apoiada nos travesseiros,  o busto levantado na animação da conversa,  o rosto concentrado no jogo dos búzios,  no instante da adivinhação
+</arg>
+                <arg f="" n="0">Menininha_  do_  Gantois
+</arg>
+                <rel f="">personificava</rel>
+                <arg f="" n="1">a verdade do Brasil,  de um Brasil mais profundo e mais belo,  situado além_  da corrupção,  da injustiça,  da violência,  da mentira,  das pequenezes,  da delação transformada pelos pobres homens da baixa política em suprema virtude nacional
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

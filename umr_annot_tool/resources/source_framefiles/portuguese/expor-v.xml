@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="expor">
+        <note />
+    <roleset framnet="expose.01" id="expor.01" name="colocar em exposição; mostrar" vncls="48.1.2">
+            <roles>
+                <role descr="exposer" n="0">
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="thing seen/shown" n="1">
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <role descr="seer" n="2">
+                    <vnrole vncls="48.1.1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4149:  Angola,  uma tragédia esquecida- -  O fotógrafo André_  Penner expõe 29 fotos coloridas que retratam o cotidiano da guerra civil em Angola. 
+</text>
+                <arg f="" n="0">O fotógrafo André_  Penner
+</arg>
+                <rel f="">expõe</rel>
+                <arg f="" n="1">29 fotos coloridas que retratam o cotidiano da guerra civil em Angola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3369:  Artistas brasileiros expõem « covers » de telas do pintor
+</text>
+                <arg f="" n="0">Artistas brasileiros
+</arg>
+                <rel f="">expõem</rel>
+                <arg f="" n="1">« covers » de telas do pintor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3038:  Recebi ontem por fax entrevista que ele concedeu em 1979 para a revista « Especial »,  onde expõe sua visão sobre a mulher. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="loc" n="m">onde
+</arg>
+                <rel f="">expõe</rel>
+                <arg f="" n="1">sua visão sobre a mulher
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1386:  A excursão está sendo organizada pelo clube More_  Fun,  que promove a troca de correspondências entre gays que não querem expor publicamente suas preferências sexuais. 
+</text>
+                <rel f="">expor</rel>
+                <arg f="mnr" n="m">publicamente
+</arg>
+                <arg f="" n="1">suas preferências sexuais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

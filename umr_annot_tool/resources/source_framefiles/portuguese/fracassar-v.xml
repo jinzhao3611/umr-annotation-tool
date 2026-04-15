@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fracassar">
+        <note />
+    <roleset framnet="fail.01" id="fracassar.01" name="não obter êxito" vncls="74-2">
+            <roles>
+                <role descr="assessor of not failing (professor)" n="0">
+                    <vnrole vncls="74-2" vntheta="Agent" />
+                </role>
+                <role descr="thing failing" n="1">
+                    <vnrole vncls="74-2" vntheta="Theme" />
+                </role>
+                <role descr="task" n="2" />
+                <role descr="benefactive" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3401:  Em Medicina,  ganharam Richard_  Dart e Richard_  Gustafson,  da Universidade_  de_  Arizona,  por fracassarem ao tratar um paciente mordido por uma cascavel com choques elétricos aplicados no lábio durante cinco minutos. 
+</text>
+                <rel f="">fracassarem</rel>
+                <arg f="" n="2">ao tratar um paciente mordido por uma cascavel com choques elétricos aplicados no lábio durante cinco minutos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="renegociar">
+        <note />
+    <roleset framnet="renegotiate.01" id="renegociar.01" name="fazer novo acordo" vncls="36.1">
+            <roles>
+                <role descr="negotiator" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="agreement" n="1">
+                    <vnrole vncls="36.1" vntheta="Topic" />
+                </role>
+                <role descr="explicit other party" n="2">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2149:  Essas condições,  para renegociar US$  35 bilhões,  foram aprovadas pelo Senado no final de 93. 
+</text>
+                <rel f="">renegociar</rel>
+                <arg f="" n="1">US$  35 bilhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1913:  O diretor de crédito agrícola do Banco_  do_  Brasil,  Said_  Miguel,  disse ontem na Comissão_  de_  Agricultura da Câmara_  dos_  Deputados que os agricultores já renegociaram R$  1,  7 bilhão das dívidas em atraso. 
+</text>
+                <arg f="" n="0">os agricultores
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">renegociaram</rel>
+                <arg f="" n="1">R$  1,  7 bilhão das dívidas em atraso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1656:  Nos períodos de choques,  41%  dos contratos do setor de confecções precisaram ser renegociados entre compradores e vendedores. 
+</text>
+                <arg f="tmp" n="m">Nos períodos de choques
+</arg>
+                <arg f="" n="1">41%  dos contratos do setor de confecções
+</arg>
+                <rel f="">renegociados</rel>
+                <arg f="" n="0">entre compradores e vendedores
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

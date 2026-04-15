@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="baixar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="reduce.01" id="baixar.01" name="diminuir em uma escala" vncls="">
+            <roles>
+                <role descr="Agent" n="0" />
+                <role descr="Logical subject, patient, thing falling" n="1" />
+                <role descr="EXT, amount fallen" n="2" />
+                <role descr="Start point" n="3" />
+                <role descr="End point, end state of arg1" n="4" />
+                <role descr="Medium" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1182:  Dois dias depois,  o Salute_  Milk,  baixou a média para R$  3.  000 na venda de metade das 30 vacas holandesas que foram apresentadas para negócio. 
+</text>
+                <arg f="tmp" n="m">Dois dias depois
+</arg>
+                <arg f="" n="0">o Salute_  Milk
+</arg>
+                <rel f="">baixou</rel>
+                <arg f="" n="1">a média
+</arg>
+                <arg f="" n="4">para R$  3.  000
+</arg>
+                <arg f="loc" n="m">na venda de metade das 30 vacas holandesas que foram apresentadas para negócio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="appear.01" id="baixar.02" name="aparecer, baixar espírito (em um lugar ou em um corpo)" vncls="48.1.1">
+            <roles>
+                <role descr="thing appearing" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2314:  O sushiman Oscar_  Tadaioshi_  Izumi baixa com hashi e raiz forte hoje nos domínios de Wilma_  Kovesi para entregar os segredos da cozinha japonesa. 
+</text>
+                <arg f="" n="0">O sushiman Oscar_  Tadaioshi_  Izumi
+</arg>
+                <rel f="">baixa</rel>
+                <arg f="mnr" n="m">com hashi e raiz forte
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="loc" n="m">nos domínios de Wilma_  Kovesi
+</arg>
+                <arg f="pnc" n="m">para entregar os segredos da cozinha japonesa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1878:  Baixa o carcamano e você esquece a noção do ridículo »
+</text>
+                <rel f="">Baixa</rel>
+                <arg f="" n="0">o carcamano
+</arg>
+                <note>baixar espírito: aparecer um "outro" dentro do corpo de alguém</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="issue.01" id="baixar.03" name="instituir" vncls="13.3 13.4.1 48.1.1">
+            <roles>
+                <role descr="issuer" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing issued" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="issued to" n="2">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <role descr="attribute, issued as or at" n="3">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s260:  Na semana passada,  a Secretaria_  Nacional_  de_  Direito_  Econômico baixou uma portaria,  que aplica uma multa de 250 Ufirs(  R$  170)  aos seis colégios por cada matrícula recusada. 
+</text>
+                <arg f="tmp" n="m">Na semana passada
+</arg>
+                <arg f="" n="0">a Secretaria_  Nacional_  de_  Direito_  Econômico
+</arg>
+                <rel f="">baixou</rel>
+                <arg f="" n="1">uma portaria,  que aplica uma multa de 250 Ufirs(  R$  170)  aos seis colégios por cada matrícula recusada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

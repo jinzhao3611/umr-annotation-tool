@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="coroar">
+        <note />
+    <roleset framnet="crown.01" id="coroar.01" name="culminar" vncls="29.1 29.3">
+            <roles>
+                <role descr="putter of crown" n="0">
+                    <vnrole vncls="29.3" vntheta="Agent" />
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="receiver of crown" n="1">
+                    <vnrole vncls="29.3" vntheta="Theme" />
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="crown, or attribute of arg1" n="2">
+                    <vnrole vncls="29.3" vntheta="Predicate" />
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2805:  Com essa constatação enviesada de que o alemão só chegou em primeiro porque o brasileiro cometeu uma bobagem,  a imprensa coroou o festival « sennista » da semana anterior,  quando todas- -  sem exceção,  todas- -  as coberturas apontavam a vitória de Ayrton_  Senna em Interlagos. 
+</text>
+                <arg f="" n="2">Com essa constatação enviesada de que o alemão só chegou em primeiro porque o brasileiro cometeu uma bobagem
+</arg>
+                <arg f="" n="0">a imprensa
+</arg>
+                <rel f="">coroou</rel>
+                <arg f="" n="1">o festival « sennista » da semana anterior,  quando todas- -  sem exceção,  todas- -  as coberturas apontavam a vitória de Ayrton_  Senna em Interlagos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

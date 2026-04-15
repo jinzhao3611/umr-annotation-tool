@@ -1,0 +1,218 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="viver">
+        <note />
+        <note />
+    <roleset framnet="live.01" id="viver.01" name="atividade/estado de quem não está morto; experienciar" vncls="39.6 46 47.1-1">
+            <roles>
+                <role descr="alive entity" n="0">
+                    <vnrole vncls="39.6" vntheta="Agent" />
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                    <vnrole vncls="46" vntheta="Theme" />
+                </role>
+                <role descr="life" n="1">
+                    <vnrole vncls="39.6" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4207:  Segundo declarações do próprio diretor,  ele vive até hoje de forma angustiada: 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">vive</rel>
+                <arg f="tmp" n="m">até hoje
+</arg>
+                <arg f="mnr" n="m">de forma angustiada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4185:  A Juve vive a transição para uma nova temporada. 
+</text>
+                <arg f="" n="0">A Juve
+</arg>
+                <rel f="">vive</rel>
+                <arg f="" n="1">a transição para uma nova temporada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3886:  O Santos volta a viver um clima tenso para o próximo jogo,  domingo contra o Santo_  André,  em busca da primeira vitória no Campeonato_  Paulista. 
+</text>
+                <arg f="" n="0">O Santos
+</arg>
+                <rel f="">viver</rel>
+                <arg f="" n="1">um clima tenso para o próximo jogo domingo contra o Santo_  André em busca da primeira vitória no Campeonato_  Paulista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3604:  Ele disse,  no_  entanto,  que a lei antitruste aprovada pelo Congresso reflete o clima que o país está vivendo nessa fase que antecede o lançamento do real. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o país
+</arg>
+                <rel f="">vivendo</rel>
+                <arg f="tmp" n="m">nessa fase que antecede o lançamento do real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3544:  « Vivemos ainda dias difíceis,  num contexto econômico,  social e político em que as necessidades básicas de nossas forças( . . . )  têm sofrido severamente as agruras que toda nação atravessa »,  disse,  em saudação enviada ao Exército. 
+</text>
+                <rel f="">Vivemos</rel>
+                <arg f="adv" n="m">ainda
+</arg>
+                <arg f="" n="1">dias difíceis
+</arg>
+                <arg f="loc" n="m">num contexto econômico,  social e político em que as necessidades básicas de nossas forças( . . . )  têm sofrido severamente as agruras que toda nação atravessa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3175:  A região vive uma epidemia da doença. 
+</text>
+                <arg f="" n="0">A região
+</arg>
+                <rel f="">vive</rel>
+                <arg f="" n="1">uma epidemia da doença
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3060:  Freddy_  Tatoo vive atualmente em Bolonha e já está acostumado ao circuito internacional da tatuagem. 
+</text>
+                <arg f="" n="0">Freddy_  Tatoo
+</arg>
+                <rel f="">vive</rel>
+                <arg f="tmp" n="m">atualmente
+</arg>
+                <arg f="loc" n="m">em Bolonha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2867:  Nada_  do_  que eu havia lido ou ouvido antes de vir para cá me preparara para as emoções que eu iria viver e várias vezes me senti numa montanha-  russa emocional. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">viver</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2491:  « Os negros,  as minorias,  têm que viver como as comunidades de insetos,  como as colméias,  os formigueiros,  para combater o poder.  »
+</text>
+                <arg f="" n="0">Os negros,  as minorias, 
+</arg>
+                <rel f="">viver</rel>
+                <arg f="mnr" n="m">como as comunidades de insetos,  como as colméias,  os formigueiros
+</arg>
+                <arg f="pnc" n="m">para combater o poder
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2448:  O professor Leitão_  de_  Abreu,  que era ministro do Gabinete_  Civil,  não vive para confirmar as visitas ofertantes de Fernando_  Henrique. 
+</text>
+                <arg f="" n="0">O professor Leitão_  de_  Abreu,  que era ministro do Gabinete_  Civil, 
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">vive</rel>
+                <arg f="" n="1">para confirmar as visitas ofertantes de Fernando_  Henrique
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1989:  « Eu quero viver!  »
+</text>
+                <rel f="">viver</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1982:  Eu podia ser uma drogada hoje,  podia viver na rua. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <rel f="">viver</rel>
+                <arg f="loc" n="m">na rua
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1980:  Quando se está num ambiente como o que eu vivia,  você não sabe que existe todo um mundo diferente fora dali. 
+</text>
+                <arg f="loc" n="m">que
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">vivia</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1580:  O país vive,  neste momento,  a parte mais crucial da grande luta pela implantação da cidadania. 
+</text>
+                <arg f="" n="0">O país
+</arg>
+                <rel f="">vive</rel>
+                <arg f="tmp" n="m">neste momento
+</arg>
+                <arg f="" n="1">a parte mais crucial da grande luta pela implantação da cidadania
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="play.02" id="viver.02" name="interpretar (na dramaturgia)" vncls="-">
+            <roles>
+                <role descr="actor" n="0" />
+                <role descr="role" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1688:  O ator vive um sem-  teto,  que o acaso coloca diante_  do estudante. 
+</text>
+                <arg f="" n="0">O ator
+</arg>
+                <rel f="">vive</rel>
+                <arg f="" n="1">um sem-  teto,  que o acaso coloca diante_  do estudante
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

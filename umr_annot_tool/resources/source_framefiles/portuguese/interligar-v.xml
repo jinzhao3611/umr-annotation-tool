@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="interligar">
+        <note />
+    <roleset framnet="interconnect.01" id="interligar.01" name="fazer ligação entre partes" vncls="22.2">
+            <roles>
+                <role descr="agent" n="0">
+                    <vnrole vncls="22.2" vntheta="Agent" />
+                </role>
+                <role descr="things connected" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3788:  Na sua administração,  executou um plano viário com largas avenidas interligando os bairros,  que provocaram um boom imobiliário. 
+</text>
+                <rel f="">interligando</rel>
+                <arg f="" n="1">os bairros,  que provocaram um boom imobiliário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

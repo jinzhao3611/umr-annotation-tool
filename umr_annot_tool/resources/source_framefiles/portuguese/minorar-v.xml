@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="minorar">
+        <note />
+    <roleset framnet="mitigate.01" id="minorar.01" name="tornar menor; aliviar o efeito de" vncls="">
+            <roles>
+                <role descr="reducer" n="0" />
+                <role descr="thing reduced" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3423:  Não comporta qualquer reserva,  e bendito o país em que os homens públicos exigem dos candidatos a solução de problemas nacionais,  minorar a fome,  dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país. 
+</text>
+                <rel f="">minorar</rel>
+                <arg f="" n="1">a fome
+</arg>
+                <arg f="mnr" n="m">dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

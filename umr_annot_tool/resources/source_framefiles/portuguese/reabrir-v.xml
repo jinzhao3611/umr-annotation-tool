@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reabrir.01">
+        <note />
+    <roleset framnet="reopen.01" id="reabrir.01" name="abrir novamente" vncls="40.3.2 45.4 47.6">
+            <roles>
+                <role descr="opener" n="0">
+                    <vnrole vncls="47.6" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing opening" n="1">
+                    <vnrole vncls="47.6" vntheta="Theme" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="40.3.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3767:  Uma audiência hoje na 7ª Junta_  da_  Justiça_  do_  Trabalho em Belém reabre a discussão sobre a obrigatoriedade do diploma específico para o exercício do jornalismo. 
+</text>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="0">Uma audiência na 7ª Junta_  da_  Justiça_  do_  Trabalho em Belém
+</arg>
+                <rel f="">reabre</rel>
+                <arg f="" n="1">a discussão sobre a obrigatoriedade do diploma específico para o exercício do jornalismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2304:  Os deputados petistas Luiz_  Gushiken(  federal)  e Luiz_  Azevedo(  estadual)  pedem que o Ministério_  Público estadual reabra processo sobre as importações. 
+</text>
+                <arg f="" n="0">o Ministério_  Público estadual
+</arg>
+                <rel f="">reabra</rel>
+                <arg f="" n="1">processo sobre as importações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

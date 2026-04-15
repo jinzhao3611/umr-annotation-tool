@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="assegurar">
+        <note />
+    <roleset framnet="ensure.01" id="assegurar.01" name="garantir" vncls="99">
+            <roles>
+                <role descr="entity making guarantee" n="0">
+                    <vnrole vncls="99" vntheta="Cause" />
+                </role>
+                <role descr="guarantee" n="1">
+                    <vnrole vncls="99" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, guaranteed-to" n="2">
+                    <vnrole vncls="99" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1121:  Ensino universitário,  contas de poupança nos bancos,  investimentos em ações e imóveis não asseguram a transmissão do patrimônio familiar dos pais para os filhos. 
+</text>
+                <arg f="" n="0">Ensino universitário,  contas de poupança nos bancos,  investimentos em ações e imóveis
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">asseguram</rel>
+                <arg f="" n="1">a transmissão do patrimônio familiar dos pais para os filhos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

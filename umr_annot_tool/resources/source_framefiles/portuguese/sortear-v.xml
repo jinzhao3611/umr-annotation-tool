@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sortear">
+        <note />
+    <roleset framnet="" id="sortear.01" name="escolher ou dar por sorteio (escolha aleatória, de sorte)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2343:  As fábricas que atingiram receberam uma placa e,  em alguns casos,  um veículo é sorteado para seus funcionários. 
+</text>
+                <arg f="" n="1">um veículo
+</arg>
+                <rel f="">sorteado</rel>
+                <arg f="" n="2">para seus funcionários
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

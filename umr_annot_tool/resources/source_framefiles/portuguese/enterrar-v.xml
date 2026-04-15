@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="enterrar">
+        <note />
+    <roleset framnet="bury.01" id="enterrar.01" name="colocar debaixo da terra; dar fim a" vncls="9.1">
+            <roles>
+                <role descr="burier" n="0">
+                    <vnrole vncls="9.1" vntheta="Agent" />
+                </role>
+                <role descr="buried" n="1">
+                    <vnrole vncls="9.1" vntheta="Theme" />
+                </role>
+                <role descr="ground (usually understood)" n="2">
+                    <vnrole vncls="9.1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3154:  A caixa com cinco « CDs Elvis: _  From_  Nashville_  To_  Memphis » enterra em_  parte o velho mito explicitado pelo beatle. 
+</text>
+                <arg f="" n="0">A caixa com cinco « CDs Elvis: _  From_  Nashville_  To_  Memphis »
+</arg>
+                <rel f="">enterra</rel>
+                <arg f="ext" n="m">em_  parte
+</arg>
+                <arg f="" n="1">o velho mito explicitado pelo beatle
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2809:  Enterrou as previsões mais do_  que otimistas,  e deixou ver quanto é viciado o noticiário esportivo. 
+</text>
+                <rel f="">Enterrou</rel>
+                <arg f="" n="1">as previsões mais do_  que otimistas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s403:  Foi enterrado ontem_  de_  manhã no cemitério Chora_  Menino,  em Santana(  zona norte de São_  Paulo) ,  o ex-  chefe do Departamento_  de_  Fotografia da Folha Waldemar_  Cordeiro,  63. 
+</text>
+                <rel f="">enterrado</rel>
+                <arg f="tmp" n="m">ontem_  de_  manhã
+</arg>
+                <arg f="" n="2">no cemitério Chora_  Menino
+</arg>
+                <arg f="loc" n="m">em Santana(  zona norte de São_  Paulo) 
+</arg>
+                <arg f="" n="1">o ex-  chefe do Departamento_  de_  Fotografia da Folha Waldemar_  Cordeiro,  63
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

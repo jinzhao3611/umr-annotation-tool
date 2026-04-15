@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="escalar">
+        <note />
+    <roleset framnet="select.01" id="escalar.01" name="escolher (jogadores)" vncls="13.5.2">
+            <roles>
+                <role descr="selector" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="entity selected" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="selected from" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="attribute, selected for/as" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2671:  O técnico Jair_  Pereira deve escalar um « time de reservas » amanhã,  às 17h,  contra o Flamengo,  em Caio_  Martins. 
+</text>
+                <arg f="" n="0">O técnico Jair_  Pereira
+</arg>
+                <rel f="">escalar</rel>
+                <arg f="" n="1">um « time de reservas »
+</arg>
+                <arg f="tmp" n="m">amanhã
+</arg>
+                <arg f="tmp" n="m">às 17h
+</arg>
+                <arg f="mnr" n="m">contra o Flamengo
+</arg>
+                <arg f="loc" n="m">em Caio_  Martins
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2670:  Jair escala o'  time reserva'  com Flamengo
+</text>
+                <arg f="" n="0">Jair
+</arg>
+                <rel f="">escala</rel>
+                <arg f="" n="1">o'  time reserva' 
+</arg>
+                <arg f="mnr" n="m">com Flamengo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2063:  Mazinho deve ser escalado contra EUA
+</text>
+                <arg f="" n="1">Mazinho
+</arg>
+                <rel f="">escalado</rel>
+                <arg f="mnr" n="m">contra EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1946:  Mercadante foi escalado para responder quando o tema foi aposentadoria. 
+</text>
+                <arg f="" n="1">Mercadante
+</arg>
+                <rel f="">escalado</rel>
+                <arg f="pnc" n="m">para responder quando o tema foi aposentadoria
+</arg>
+                <note>o argumento de tempo modifica o verbo "responder" e não o verbo "escalar"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1089:  Apesar_  disso ou exatamente por_  causa_  disso,  conseguiu a classificação diante_  do Corinthians,  que ficou no meio do caminho:  nem escalou sua força máxima,  nem optou por um time de juniores com alguns reservas de reforço. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">escalou</rel>
+                <arg f="" n="1">sua força máxima
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s35:  Ninguém força sua escalação porque há quem escale o time no São_  Paulo. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">escale</rel>
+                <arg f="" n="1">o time
+</arg>
+                <arg f="loc" n="m">no São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

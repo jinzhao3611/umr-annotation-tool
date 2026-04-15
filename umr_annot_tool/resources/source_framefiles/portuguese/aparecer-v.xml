@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aparecer">
+        <note />
+    <roleset framnet="appear.01" id="aparecer.01" name="surgir, comparecer, tornar-se visível" vncls="48.1.1">
+            <roles>
+                <role descr="thing appearing" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4008:  A NBA nem existia e o profissionalismo no esporte apenas engatinhava quando apareceu o primeiro gigante do basquete norte-  americano. 
+</text>
+                <rel f="">apareceu</rel>
+                <arg f="" n="1">o primeiro gigante do basquete norte-  americano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3264:  Fernando_  Henrique apareceu no rádio e na televisão dizendo que não existe nada contra o seu vice. 
+</text>
+                <arg f="" n="1">Fernando_  Henrique
+</arg>
+                <rel f="">apareceu</rel>
+                <arg f="loc" n="m">no rádio e na televisão
+</arg>
+                <arg f="adv" n="m">dizendo que não existe nada contra o seu vice
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3012:  A imagem de Ayrton aparece em fotos digitalizadas. 
+</text>
+                <arg f="" n="1">A imagem de Ayrton
+</arg>
+                <rel f="">aparece</rel>
+                <arg f="loc" n="m">em fotos digitalizadas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2820:  No ranking dedicado aos homens aparecem o ator Sean_  Connery e o cantor Sting. 
+</text>
+                <arg f="loc" n="m">No ranking dedicado aos homens
+</arg>
+                <rel f="">aparecem</rel>
+                <arg f="" n="1">o ator Sean_  Connery e o cantor Sting
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2293:  Na pesquisa Datafolha divulgada no último sábado,  o primeiro colocado,  Mário_  Covas,  aparece com 47% ,  nove pontos percentuais acima_  da soma dos índices dos demais candidatos. 
+</text>
+                <arg f="loc" n="m">Na pesquisa Datafolha divulgada no último sábado
+</arg>
+                <arg f="" n="1">o primeiro colocado,  Mário_  Covas, 
+</arg>
+                <rel f="">aparece</rel>
+                <arg f="mnr" n="m">com 47% ,  nove pontos percentuais acima_  da soma dos índices dos demais candidatos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2290:  Naquele ano,  Fleury já aparecia com 20%  das intenções de voto em setembro,  um mês antes do primeiro turno. 
+</text>
+                <arg f="tmp" n="m">Naquele ano
+</arg>
+                <arg f="" n="1">Fleury
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">aparecia</rel>
+                <arg f="mnr" n="m">com 20%  das intenções de voto
+</arg>
+                <arg f="tmp" n="m">em setembro,  um mês antes do primeiro turno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1857:  Esperava aparecer como o único responsável pelo plano de estabilização. 
+</text>
+                <rel f="">aparecer</rel>
+                <arg f="mnr" n="m">como o único responsável pelo plano de estabilização
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1359:  A modelo Monique_  Evans,  um dos destaques do Carnaval carioca deste ano,  vai submeter-  se a uma tomografia computadorizada na próxima semana para verificar a origem de « um pontinho » que apareceu em seu rim. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">apareceu</rel>
+                <arg f="loc" n="m">em seu rim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s407:  Segundo o jornal « USA_  Today »,  a revista publicará fotos nas_  quais Harding aparece mantendo relações sexuais com seu ex-  marido,  Jeff_  Gillooly. 
+</text>
+                <arg f="" n="1">Harding
+</arg>
+                <rel f="">aparece</rel>
+                <arg f="mnr" n="m">mantendo relações sexuais com seu ex-  marido,  Jeff_  Gillooly
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

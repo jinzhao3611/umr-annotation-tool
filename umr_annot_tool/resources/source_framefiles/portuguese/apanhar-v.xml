@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apanhar">
+        <note />
+    <roleset framnet="pick.01" id="apanhar.01" name="pegar" vncls="13.5.1">
+            <roles>
+                <role descr="picker" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing picked" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="group or source" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2535:  « Ele disse que era para eu apanhá-  los e para não tentar reagir e impedir sua fuga »,  afirmou Maria_  Estela. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">apanhá-</rel>
+                <arg f="" n="1">los
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

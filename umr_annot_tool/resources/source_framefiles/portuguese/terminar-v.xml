@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="terminar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="disrupt.01" id="terminar.01" name="terminar com = interromper" vncls="-">
+            <roles>
+                <role descr="disrupter, agent" n="0" />
+                <role descr="entity disrupted" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4146:  As emissoras se negaram a se retratar e o juiz ameaçou « terminar com a cobertura do julgamento »,  sem especificar como. 
+</text>
+                <rel f="">terminar</rel>
+                <arg f="" n="1">com a cobertura do julgamento
+</arg>
+                <arg f="mnr" n="m">sem especificar como
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="finish.01" id="terminar.02" name="acabar; concluir; completar" vncls="55.1">
+            <roles>
+                <role descr="Intentional agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Thing finishing" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Explicit instrument, thing finished with" n="2" />
+                <role descr="point at which something finishs" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3892:  Em 1989,  após ganhar diversos títulos paulistas e brasileiros no kart,  Barrichello disputou o Campeonato_  Brasileiro_  de_  Fórmula_  Ford,  terminando em quarto lugar. 
+</text>
+                <rel f="">terminando</rel>
+                <arg f="mnr" n="m">em quarto lugar
+</arg>
+                <note>"terminando (a prova) em quarto lugar" arg1 elíptico</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3792:  Depois de um tempo,  as vozes aumentam e acabo ficando atordoada e não consigo terminar o_  que comecei ». 
+</text>
+                <rel f="">terminar</rel>
+                <arg f="" n="1">o_  que comecei
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3312:  A reunião terminou ontem em Budapeste. 
+</text>
+                <arg f="" n="1">A reunião
+</arg>
+                <rel f="">terminou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em Budapeste
+</arg>
+                <note>arg1 como sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2961:  O mais cotado na bolsa de apostas é o brasileiro Raul_  Boesel,  que ontem não consegui terminar a corrida em Detroit. 
+</text>
+                <rel f="">terminar</rel>
+                <arg f="" n="1">a corrida em Detroit
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2690:  Nela,  o presidente confidenciou não acreditar mais que terminaria o seu mandato. 
+</text>
+                <arg f="" n="0">o presidente
+</arg>
+                <rel f="">terminaria</rel>
+                <arg f="" n="1">o seu mandato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1779:  Se o jogo terminasse 6 a 0 no primeiro tempo não seria mais que o fiel espelho da partida. 
+</text>
+                <arg f="" n="1">o jogo
+</arg>
+                <rel f="">terminasse</rel>
+                <arg f="mnr" n="m">6 a 0
+</arg>
+                <arg f="tmp" n="m">no primeiro tempo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1428:  Medeiros termina a prova e se promove,  Bob_  Fernandes
+</text>
+                <arg f="" n="0">Medeiros
+</arg>
+                <rel f="">termina</rel>
+                <arg f="" n="1">a prova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1020:  Quando ele terminou,  às 22h10,  metade das pessoas havia abandonado o local. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">terminou</rel>
+                <arg f="tmp" n="m">às 22h10
+</arg>
+                <note>sem arg1 (intransitivo)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s922:  A polícia do Mato_  Grosso_  do_  Sul vai combater a pesca predatória durante a piracema(  época de reprodução dos peixes) ,  que termina no dia 31 de janeiro. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">termina</rel>
+                <arg f="tmp" n="m">no dia 31 de janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s836:  Iniciado em 1958,  o estudo de « O_  Capital » por jovens intelectuais da USP só terminaria cinco anos mais tarde. 
+</text>
+                <arg f="prd" n="m">Iniciado em 1958
+</arg>
+                <arg f="" n="1">o estudo de « O_  Capital »
+</arg>
+                <arg f="prd" n="m">por jovens intelectuais da USP
+</arg>
+                <rel f="">terminaria</rel>
+                <arg f="tmp" n="m">cinco anos mais tarde
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s827:  As férias nos EUA podem terminar no balcão do consulado,  onde o passaporte é devolvido às 16h. 
+</text>
+                <arg f="" n="1">As férias nos EUA
+</arg>
+                <rel f="">terminar</rel>
+                <arg f="loc" n="m">no balcão do consulado,  onde o passaporte é devolvido às 16h
+</arg>
+                <note>arg1 como sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s517:  Em 92,  na Olimpíada de Barcelona,  as chinesas terminaram em sétimo lugar,  colocação que provocou grandes mudanças na equipe. 
+</text>
+                <arg f="tmp" n="m">Em 92
+</arg>
+                <arg f="loc" n="m">na Olimpíada de Barcelona
+</arg>
+                <arg f="" n="1">as chinesas
+</arg>
+                <rel f="">terminaram</rel>
+                <arg f="mnr" n="m">em sétimo lugar,  colocação que provocou grandes mudanças na equipe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s457:  O corredor começará na marginal Tietê,  na altura do Cebolão,  passará pelo Ceagesp,  praça Panamericana,  Faria_  Lima,  Luís_  Carlos_  Berrini e terminará,  por_  enquanto,  no shopping Morumbi. 
+</text>
+                <arg f="" n="1">O corredor
+</arg>
+                <rel f="">terminará</rel>
+                <arg f="tmp" n="m">por_  enquanto
+</arg>
+                <arg f="loc" n="m">no shopping Morumbi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s446:  A ação da PF começou às 16h30 de anteontem e só terminou ontem às 15h30. 
+</text>
+                <arg f="" n="1">A ação da PF
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">terminou</rel>
+                <arg f="tmp" n="m">ontem às 15h30
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="terminar.03" name="terminar por + infinitivo = auxiliar de aspecto terminativo" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2945:  Isso termina por arrastá-  la destestavelmente,  sem que se chegue a parte alguma. 
+</text>
+                <rel f="">termina</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

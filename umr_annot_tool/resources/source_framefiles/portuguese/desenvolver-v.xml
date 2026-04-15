@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desenvolver">
+        <note />
+    <roleset framnet="develop.02" id="desenvolver.01" name="causar progresso" vncls="26.1 26.2">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.1" vntheta="Agent" />
+                    <vnrole vncls="26.2" vntheta="Agent" />
+                </role>
+                <role descr="thing created" n="1">
+                    <vnrole vncls="26.1" vntheta="Product" />
+                    <vnrole vncls="26.2" vntheta="Product" />
+                </role>
+                <role descr="source" n="2">
+                    <vnrole vncls="26.1" vntheta="Material" />
+                    <vnrole vncls="26.2" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.1" vntheta="Beneficiary" />
+                </role>
+                <role descr="attribute, secondary predication" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s3423:  Não comporta qualquer reserva,  e bendito o país em que os homens públicos exigem dos candidatos a solução de problemas nacionais,  minorar a fome,  dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país. 
+</text>
+                <rel f="">desenvolver</rel>
+                <arg f="" n="1">o país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3354:  Lacan desenvolveu os conceitos de metáfora e metonímia para caracterizar certos modos de consciência. 
+</text>
+                <arg f="" n="0">Lacan
+</arg>
+                <rel f="">desenvolveu</rel>
+                <arg f="" n="1">os conceitos de metáfora e metonímia para caracterizar certos modos de consciência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3303:  A Liga_  de_  Assistência_  e_  Recuperação,  órgão ligado ﻿à Prefeitura de Salvador,  está desenvolvendo um projeto para a confecção de brinquedos a_  partir_  de sucatas. 
+</text>
+                <arg f="" n="0">A Liga_  de_  Assistência_  e_  Recuperação,  órgão ligado ﻿à Prefeitura de Salvador, 
+</arg>
+                <rel f="">desenvolvendo</rel>
+                <arg f="" n="1">um projeto para a confecção de brinquedos a_  partir_  de sucatas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2652:  « Through_  the_  Woods »(  Por_  o_  Bosque)  e « At_  the_  Seashore »(  Em_  a_  Praia)  foram desenvolvidos pela IBM. 
+</text>
+                <arg f="" n="1">« Through_  the_  Woods »(  Por_  o_  Bosque)  e « At_  the_  Seashore »(  Em_  a_  Praia) 
+</arg>
+                <rel f="">desenvolvidos</rel>
+                <arg f="" n="0">pela IBM
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2409:  A Polícia_  Militar do Amazonas está desenvolvendo uma campanha educativa de trânsito. 
+</text>
+                <arg f="" n="0">A Polícia_  Militar do Amazonas
+</arg>
+                <rel f="">desenvolvendo</rel>
+                <arg f="" n="1">uma campanha educativa de trânsito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s242:  Aos horticultores é preciso oferecer informações de mercado seguras e atuais para a programação da produção e desenvolver novas alternativas para o acondicionamento e embalagem dos produtos. 
+</text>
+                <rel f="">desenvolver</rel>
+                <arg f="" n="1">novas alternativas para o acondicionamento e embalagem dos produtos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s103:  Não se trata simplesmente da questão da escravidão certamente ter tido efeitos duradouros sobre a cultura negra,  nem_  mesmo dela ter exercido um amplo efeito negativo sobre a auto-  confiança e auto-  estima dos negros,  mas mais especificamente da experiência da escravatura ter desvirtuado e tolhido a evolução do algoritmo etnocêntrico que os negros americanos teriam desenvolvido no decorrer normal dos acontecimentos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">os negros americanos
+</arg>
+                <rel f="">desenvolvido</rel>
+                <arg f="tmp" n="m">no decorrer normal dos acontecimentos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

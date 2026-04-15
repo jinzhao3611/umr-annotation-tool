@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cobiçar">
+        <note />
+    <roleset framnet="crave.01" id="cobiçar.01" name="desejar algo que não lhe pertence" vncls="32.1 32.2">
+            <roles>
+                <role descr="Wanter" n="0">
+                    <vnrole vncls="32.2" vntheta="Experiencer" />
+                    <vnrole vncls="32.1" vntheta="Experiencer" />
+                </role>
+                <role descr="thing wanted" n="1">
+                    <vnrole vncls="32.2" vntheta="Theme" />
+                    <vnrole vncls="32.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2798:  A célebre escultura de Antonio_  Canova,  atualmente na Grã-  Bretanha,  está sendo cobiçada pelo museu Getty,  de Malibu,  na Califórnia. 
+</text>
+                <arg f="" n="1">A célebre escultura de Antonio_  Canova
+</arg>
+                <arg f="prd" n="m">atualmente na Grã-  Bretanha
+</arg>
+                <rel f="">cobiçada</rel>
+                <arg f="" n="0">pelo museu Getty,  de Malibu, 
+</arg>
+                <arg f="loc" n="m">na Califórnia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="inscrever">
+        <note />
+    <roleset framnet="register.02" id="inscrever.01" name="fazer inscrição (de alguém em alguma coisa)" vncls="-">
+            <roles>
+                <role descr="entity registering" n="0" />
+                <role descr="thing registered" n="1" />
+                <role descr="registered with or for" n="2" />
+                <role descr="secondary predication" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3105:  Notamos ainda que,  quando um passageiro brasileiro se inscreve num programa de milhagem de uma companhia aérea internacional que serve o Brasil,  passados 30 dias,  recebe a proposta da Iapa. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="0">um passageiro brasileiro
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">inscreve</rel>
+                <arg f="" n="2">num programa de milhagem de uma companhia aérea internacional que serve o Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1088:  O tricolor,  após tantas decepções na temporada,  vai às finais da Conmebol,  caça-  níqueis tão inexpressivo que o próprio São_  Paulo inscreveu apenas jogadores jovens,  que se denominaram Leões,  ao_  invés_  do tradicional Expressinho. 
+</text>
+                <arg f="" n="0">o próprio São_  Paulo
+</arg>
+                <rel f="">inscreveu</rel>
+                <arg f="" n="1">apenas jogadores jovens,  que se denominaram Leões,  ao_  invés_  do tradicional Expressinho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

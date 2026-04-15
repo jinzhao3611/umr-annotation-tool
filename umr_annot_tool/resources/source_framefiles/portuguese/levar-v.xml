@@ -1,0 +1,533 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="levar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="lead.01" id="levar.01" name="conduzir a" vncls="51.7">
+            <roles>
+                <role descr="leader" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="thing led" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4084:  Segundo a assessoria de imprensa do governador,  Fleury já pediu um levantamento de preço das ações,  junto a consultores especializados,  para estabelecer o valor mínimo das ações,  que vão ser levadas a leilão. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">levadas</rel>
+                <arg f="" n="4">a leilão
+</arg>
+                <note>parece ser  uma construção suporte "levar a leilão" = "leiloar"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4034:  A PMD(  psicose maníaco-  depressiva)  é uma doença psiquiátrica que leva a uma alteração abrupta do comportamento. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">leva</rel>
+                <arg f="" n="4">a uma alteração abrupta do comportamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2681:  No caso de Alvarez,  a intimidade com os EUA levou-  o a conhecer a mentalidade norte-  americana,  seus gostos,  seus costumes. 
+</text>
+                <arg f="loc" n="m">No caso de Alvarez
+</arg>
+                <arg f="" n="0">a intimidade com os EUA
+</arg>
+                <rel f="">levou-</rel>
+                <arg f="" n="1">o
+</arg>
+                <arg f="" n="2">conhecer a mentalidade norte-  americana,  seus gostos,  seus costumes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2630:  A tranquilidade pode levar uma equipe ao título ou pode destroçar-  la no caminho. 
+</text>
+                <arg f="" n="0">A tranquilidade
+</arg>
+                <rel f="">levar</rel>
+                <arg f="" n="1">uma equipe
+</arg>
+                <arg f="" n="2">ao título
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2468:  A Super-  301,  que já foi aplicada contra o Brasil quando esteve em vigor em 1989 e 1990,  estabelece um prazo de 18 meses para que as negociações bilaterais levem ﻿à eliminação do que os EUA consideram barreiras ao comércio. 
+</text>
+                <arg f="" n="0">as negociações bilaterais
+</arg>
+                <rel f="">levem</rel>
+                <arg f="" n="2">﻿à eliminação do que os EUA consideram barreiras ao comércio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2446:  Tancredo tivera com o governo conflitos impeditivos,  aqueles que o levaram a dissolver o PP de então. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">levaram</rel>
+                <arg f="" n="2">a dissolver o PP de então
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2441:  A leitura de todo o trecho leva,  aliás,  a outra mentira,  esta sobre os tempos de TV do PSDB e do PT. 
+</text>
+                <arg f="" n="0">A leitura de todo o trecho
+</arg>
+                <rel f="">leva</rel>
+                <arg f="dis" n="m">aliás
+</arg>
+                <arg f="" n="2">a outra mentira,  esta sobre os tempos de TV do PSDB e do PT
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2328:  « Tudo leva a crer que estamos num processo de endemia »,  sustenta o patologista Bruce_  Mendes_  Campos,  responsável pela análise do sangue. 
+</text>
+                <arg f="" n="0">Tudo
+</arg>
+                <rel f="">leva</rel>
+                <arg f="" n="2">a crer que estamos num processo de endemia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2253:  Desta_  feita,  porém,  não foi uma aventura castrista ou uma injunção política qualquer que levou o governo venezuelano a este ato extremo,  mas sim a conjuntura econômica. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">levou</rel>
+                <arg f="" n="1">o governo venezuelano
+</arg>
+                <arg f="" n="2">a este ato extremo
+</arg>
+                <arg f="loc" n="m">mas
+</arg>
+                <arg f="tmp" n="m">sim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1459:  Todos sabem que as reformas na agricultura foram a locomotiva que levou a China a seu estado atual. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">levou</rel>
+                <arg f="" n="1">a China
+</arg>
+                <arg f="" n="2">a seu estado atual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1133:  Tal cobertura,  assistemática e voltada para buscar escândalos,  leva-  os,  também,  a trabalhar sobre fatos consumados. 
+</text>
+                <arg f="" n="0">Tal cobertura,  assistemática e voltada para buscar escândalos, 
+</arg>
+                <rel f="">leva-</rel>
+                <arg f="" n="1">os
+</arg>
+                <arg f="" n="2">a trabalhar sobre fatos consumados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1023:  Muitas_  vezes as mudanças na vida do recém-  aposentado levam a uma sensação de perda de capacidade. 
+</text>
+                <arg f="tmp" n="m">Muitas_  vezes
+</arg>
+                <arg f="" n="0">as mudanças na vida do recém-  aposentado
+</arg>
+                <rel f="">levam</rel>
+                <arg f="" n="2">a uma sensação de perda de capacidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s213:  Essas conversas levaram em março ﻿à demissão de Bernard_  Nussbaum,  amigo da primeira-  dama,  do cargo de assessor jurídico da Casa_  Branca. 
+</text>
+                <arg f="" n="0">Essas conversas
+</arg>
+                <rel f="">levaram</rel>
+                <arg f="tmp" n="m">em março
+</arg>
+                <arg f="" n="2">﻿à demissão de Bernard_  Nussbaum,  amigo da primeira-  dama,  do cargo de assessor jurídico da Casa_  Branca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="bring.01" id="levar.02" name="carregar; transportar " vncls="11.3">
+            <roles>
+                <role descr="bringer" n="0">
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing brought" n="1">
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, brought-for, brought-to" n="2">
+                    <vnrole vncls="11.3" vntheta="Destination" />
+                </role>
+                <role descr="attribute" n="3" />
+                <role descr="ablative, brought-from" n="4">
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3796:  Quem não quiser beber durante o jantar,  poderá levar o champanhe para casa. 
+</text>
+                <arg f="" n="0">Quem não quiser beber durante o jantar
+</arg>
+                <rel f="">levar</rel>
+                <arg f="" n="1">o champanhe
+</arg>
+                <arg f="" n="2">para casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3681:  « Compramos o título para verificar,  levei para casa e não enxerguei nada »,  disse ontem Vera_  Melo_  Araújo,  chefe do Departamento_  de_  Fiscalização da Susep. 
+</text>
+                <rel f="">levei</rel>
+                <arg f="" n="2">para casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3418:  Os seus 100 quilômetros já levaram este ano 200 mil toneladas de soja. 
+</text>
+                <arg f="" n="0">Os seus 100 quilômetros
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">levaram</rel>
+                <arg f="tmp" n="m">este ano
+</arg>
+                <arg f="" n="1">200 mil toneladas de soja
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2729:  Os três levaram cerca_  de US$  210 mil. 
+</text>
+                <arg f="" n="0">Os três
+</arg>
+                <rel f="">levaram</rel>
+                <arg f="" n="1">cerca_  de US$  210 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2611:  Assim,  se você está usando uma planilha,  por_  exemplo,  pode selecionar parte(  ou todo)  e levar o_  que foi selecionado para outra planilha ou qualquer programa que estiver sendo usado. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">levar</rel>
+                <arg f="" n="1">o_  que foi selecionado para outra planilha ou qualquer programa que estiver sendo usado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1498:  Mesmo nos meses quentes do hemisfério Norte,  é recomendável levar um suéter para ser usado ﻿à noite
+</text>
+                <rel f="">levar</rel>
+                <arg f="" n="1">um suéter para ser usado ﻿à noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s805:  Segundo o COE,  eram remotas as chances de Lauro e Alex serem encontrados com vida porque eles haviam levado comida suficiente para apenas um dia. 
+</text>
+                <arg f="" n="0">eles
+</arg>
+                <rel f="">levado</rel>
+                <arg f="" n="1">comida suficiente para apenas um dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s763:  « Será um programa capaz de unir todas forças que querem levar o Brasil para o Primeiro_  Mundo. 
+</text>
+                <rel f="">levar</rel>
+                <arg f="" n="1">o Brasil
+</arg>
+                <arg f="" n="2">para o Primeiro_  Mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s535:  O embargo é uma medida para que o TSE admita a constitucionalidade da questão o_  que permite que o assunto seja levado ao STF. 
+</text>
+                <arg f="" n="1">o assunto
+</arg>
+                <rel f="">levado</rel>
+                <arg f="" n="2">ao STF
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s453:  Ontem levou,  no Rio,  os dois filhos a uma visita de rotina ao pediatra. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <rel f="">levou</rel>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <arg f="" n="1">os dois filhos
+</arg>
+                <arg f="" n="2">a uma visita de rotina ao pediatra
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="take.10" id="levar.04" name="gastar (tempo) em " vncls="-">
+            <roles>
+                <role descr="requirer" n="0" />
+                <role descr="thing required" n="1" />
+                <role descr="required-of, required-from ('ablative')" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3089:  George era rápido para trabalhar ; Ira era meticuloso e,  às_  vezes,  levava semanas numa letra,  trabalhando dia_  e_  noite
+</text>
+                <arg f="" n="0">Ira
+</arg>
+                <arg f="tmp" n="m">às_  vezes
+</arg>
+                <rel f="">levava</rel>
+                <arg f="" n="1">semanas
+</arg>
+                <arg f="" n="2">numa letra
+</arg>
+                <arg f="mnr" n="m">trabalhando dia_  e_  noite
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="levar.05" name="construção suporte: receber (surra, tapa, coice, pontapé, safanão, golpe, coice, susto); oposto de &quot;dar&quot; " vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2614:  O operário da construção civil negro e desempregado Rodney_  King,  28,  vai receber US$  3,  8 milhões da Prefeitura de Los_  Angeles como compensação pelos efeitos da surra que levou de quatro policiais brancos em março de 1991. 
+</text>
+                <arg f="" n="1">O operário da construção civil negro e desempregado Rodney_  King,  28, 
+</arg>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">levou</rel>
+                <arg f="" n="0">de quatro policiais brancos
+</arg>
+                <arg f="tmp" n="m">em março de 1991
+</arg>
+                <note>"levar uma surra" em inglês:  "to be beaten"  ou  "get a beating"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1835:  Em sinal de protesto,  de_  hoje_  em_  diante,  quem me cumprimentar com beijo suado leva uma muqueta no focinho. 
+</text>
+                <arg f="cau" n="m">Em sinal de protesto
+</arg>
+                <arg f="tmp" n="m">de_  hoje_  em_  diante
+</arg>
+                <arg f="" n="1">quem me cumprimentar com beijo suado
+</arg>
+                <rel f="">leva</rel>
+                <arg f="" n="2">uma muqueta
+</arg>
+                <arg f="loc" n="m">no focinho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1488:  Coincidentemente,  Jason também levou o maior número de balas(  132) ,  contra 27 de Michael_  Myers e apenas seis de Freddy_  Krueger. 
+</text>
+                <arg f="adv" n="m">Coincidentemente
+</arg>
+                <arg f="" n="1">Jason
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">levou</rel>
+                <arg f="" n="2">o maior número de balas(  132) 
+</arg>
+                <arg f="prd" n="m">contra 27 de Michael_  Myers e apenas seis de Freddy_  Krueger
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1183:  Segundo o Instituto_  Médico_  Legal de Taboão_  da_  Serra,  todas as vítimas levaram mais_  de um tiro,  a maioria na cabeça. 
+</text>
+                <arg f="" n="1">todas as vítimas
+</arg>
+                <rel f="">levaram</rel>
+                <arg f="" n="2">mais_  de um tiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s149:  Pereira levou um pisão na cabeça,  mesmo estando caído no chão. 
+</text>
+                <arg f="" n="1">Pereira
+</arg>
+                <rel f="">levou</rel>
+                <arg f="" n="2">um pisão na cabeça
+</arg>
+                <arg f="adv" n="m">mesmo estando caído no chão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="levar_em_conta">
+        <note />
+    <roleset framnet="take.04" id="levar.03" name="expressão idiomática: considerar" vncls="29.2">
+            <roles>
+                <role descr="understander" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3671:  O vídeo pode ser um instrumento poderoso para tocar as pessoas diretamente,  na percepção,  em áreas que a cultura ocidental não leva em_  conta como um caminho para o conhecimento. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">a cultura ocidental
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">leva</rel>
+                <arg f="" n="2">como um caminho para o conhecimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2323:  Amorim- -  Não posso dizer que algo me frustre,  levando em_  conta que há três anos a idéia do Mercosul surgia no Tratado_  de_  Assunção. 
+</text>
+                <rel f="">levando</rel>
+                <arg f="" n="1">que há três anos a idéia do Mercosul surgia no Tratado_  de_  Assunção
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="levar_em_consideração">
+        <note />
+    <roleset framnet="take.04" id="levar.06" name="construção suporte: considerar" vncls="29.2">
+            <roles>
+                <role descr="understander" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1507:  Blatter disse que o Comitê não levou em consideração o fato do jogador ter se desculpado e comparecido ao hospital para visitar o norte-  americano Tab_  Ramos. 
+</text>
+                <arg f="" n="0">o Comitê
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">levou</rel>
+                <arg f="" n="1">o fato do jogador ter se desculpado e comparecido ao hospital para visitar o norte-  americano Tab_  Ramos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

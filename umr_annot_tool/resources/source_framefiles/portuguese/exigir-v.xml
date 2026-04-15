@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="exigir">
+        <note />
+    <roleset framnet="require.01" id="exigir.01" name="requerer" vncls="">
+            <roles>
+                <role descr="requirer" n="0" />
+                <role descr="thing required" n="1" />
+                <role descr="required-of, required-from ('ablative')" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3768:  O Sindicato_  dos_  Jornalistas do Pará exige a demissão dos cerca_  de 150 jornalistas irregulares(  que não têm curso universitário de Jornalismo)  das empresas de Belém. 
+</text>
+                <arg f="" n="0">O Sindicato_  dos_  Jornalistas do Pará
+</arg>
+                <rel f="">exige</rel>
+                <arg f="" n="1">a demissão dos cerca_  de 150 jornalistas irregulares(  que não têm curso universitário de Jornalismo)  das empresas de Belém
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3640:  Gestão participativa,  times de qualidade e outros conceitos foram assimilados pelas empresas ao_  mesmo_  tempo em_  que elas passaram a exigir funcionários mais abertos ao diálogo e cientes da importância do cumprimento das regras de boas maneiras dentro_  do ambiente de trabalho. 
+</text>
+                <arg f="" n="0">elas
+</arg>
+                <rel f="">exigir</rel>
+                <arg f="" n="1">funcionários mais abertos ao diálogo e cientes da importância do cumprimento das regras de boas maneiras dentro_  do ambiente de trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3433:  Os sequestradores estariam exigindo US$  7 milhões(  cerca_  de CR$  9,  6 bilhões)  para libertá-  lo. 
+</text>
+                <arg f="" n="0">Os sequestradores
+</arg>
+                <rel f="">exigindo</rel>
+                <arg f="" n="1">US$  7 milhões(  cerca_  de CR$  9,  6 bilhões) 
+</arg>
+                <arg f="pnc" n="m">para libertá-  lo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3423:  Não comporta qualquer reserva,  e bendito o país em que os homens públicos exigem dos candidatos a solução de problemas nacionais,  minorar a fome,  dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país. 
+</text>
+                <arg f="" n="0">os homens públicos
+</arg>
+                <rel f="">exigem</rel>
+                <arg f="" n="2">dos candidatos
+</arg>
+                <arg f="" n="1">a solução de problemas nacionais,  minorar a fome,  dando leite às crianças que se alimentam de lixo,  e estradas para desenvolver o país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3309:  Moscou exige que conferência sobre segurança européia recompense a Sérvia por pressionar sérvios-  bósnios
+</text>
+                <arg f="" n="0">Moscou
+</arg>
+                <rel f="">exige</rel>
+                <arg f="" n="1">que conferência sobre segurança européia recompense a Sérvia por pressionar sérvios-  bósnios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3288:  Gloria_  Attanasio,  magistrada da capital,  meramente decidiu o_  que a sua função lhe exigia,  e enviou 250 detetives às sedes dos tais 34 clubes para,  lá,  coletarem os livros contábeis e os recibos correspondentes ao versamento dos impostos. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <arg f="" n="0">a sua função
+</arg>
+                <arg f="" n="2">lhe
+</arg>
+                <rel f="">exigia</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2395:  No período mais seco,  quando as chuvas não passam de dez milímetros$ /  mês,  os produtores plantam soja,  que exige menos água. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">exige</rel>
+                <arg f="" n="1">menos água
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1390:  Hoje_  em_  dia,  qualquer americano medianamente equipado pode fazer diante_  do teclado tarefas que antes exigiam que ele tirasse o bumbum da cadeira:  mandar e receber fax e mensagens eletrônicas,  reservar passagens aéreas,  controlar a conta bancária,  acessar bancos de dados e dezenas_  doutros serviços. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">antes
+</arg>
+                <rel f="">exigiam</rel>
+                <arg f="" n="1">que ele tirasse o bumbum da cadeira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1163:  Os países visitados poderão exigir a comprovação de « meios de subsistência » para a permanência do turista. 
+</text>
+                <arg f="" n="0">Os países visitados
+</arg>
+                <rel f="">exigir</rel>
+                <arg f="" n="1">a comprovação de « meios de subsistência »
+</arg>
+                <arg f="pnc" n="m">para a permanência do turista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s690:  PT,  PDT,  PC_  do_  B e os outros « contras »(  partidos contrários ﻿à revisão)  exigiram que as votações do Congresso revisor começassem pela questão tributária. 
+</text>
+                <arg f="" n="0">PT,  PDT,  PC_  do_  B e os outros « contras »(  partidos contrários ﻿à revisão) 
+</arg>
+                <rel f="">exigiram</rel>
+                <arg f="" n="1">que as votações do Congresso revisor começassem pela questão tributária
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s660:  É preciso que tenhamos a consciência de que os nossos tratados,  que envolvem questões transcendentais que buscam uma circulação de bens e serviços sem barreiras entre nossos países,  exigem uma visão da história. 
+</text>
+                <arg f="" n="0">os nossos tratados,  que envolvem questões transcendentais que buscam uma circulação de bens e serviços sem barreiras entre nossos países, 
+</arg>
+                <rel f="">exigem</rel>
+                <arg f="" n="1">uma visão da história
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s256:  Método japonês exige calhamaços de exercícios ; opositores dizem que'  técnica peca pelo mecanicismo' . 
+</text>
+                <arg f="" n="0">Método japonês
+</arg>
+                <rel f="">exige</rel>
+                <arg f="" n="1">calhamaços de exercícios
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

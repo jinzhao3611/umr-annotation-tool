@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="bastar">
+        <note />
+    <roleset framnet="" id="bastar.01" name="ser o bastante, ser o suficiente" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3994:  Já bastava,  para orgulho da Irlanda,  que a Inglaterra sequer tivesse chegado ﻿à Copa. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">bastava</rel>
+                <arg f="" n="2">para orgulho da Irlanda
+</arg>
+                <arg f="" n="1">que a Inglaterra sequer tivesse chegado ﻿à Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3396:  Será que já_  não nos basta a humilde compulsão passiva dos leitores que aceitam nos ler para serem informados? 
+</text>
+                <arg f="neg" n="m">já_  não
+</arg>
+                <arg f="" n="2">nos
+</arg>
+                <rel f="">basta</rel>
+                <arg f="" n="1">a humilde compulsão passiva dos leitores que aceitam nos ler para serem informados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3137:  « Quem tiver qualquer dúvida sobre nossa atuação,  basta ver o teipe.  »
+</text>
+                <arg f="" n="2">Quem tiver qualquer dúvida sobre nossa atuação
+</arg>
+                <rel f="">basta</rel>
+                <arg f="" n="1">ver o teipe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2603:  A crise da saúde tem solução,  basta vacinar-  la contra as ingerências político-  partidárias,  as omissões e desacertos dos responsáveis pelo setor. 
+</text>
+                <rel f="">basta</rel>
+                <arg f="" n="1">vacinar-  la contra as ingerências político-  partidárias,  as omissões e desacertos dos responsáveis pelo setor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s520:  Para o Rio_  Branco,  bastou o primeiro tempo do jogo para determinar o resultado. 
+</text>
+                <rel f="">bastou</rel>
+                <arg f="" n="1">o primeiro tempo do jogo
+</arg>
+                <arg f="" n="2">para determinar o resultado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

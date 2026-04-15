@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cultivar">
+        <note />
+    <roleset framnet="cultivate.01" id="cultivar.01" name="manter plantação" vncls="9.7-1 26.3-1">
+            <roles>
+                <role descr="grower, developer, agent" n="0">
+                    <vnrole vncls="9.7-1" vntheta="Agent" />
+                    <vnrole vncls="26.3-1" vntheta="Agent" />
+                </role>
+                <role descr="thing prospering, theme" n="1">
+                    <vnrole vncls="9.7-1" vntheta="Theme" />
+                    <vnrole vncls="26.3-1" vntheta="Product" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2658:  O fazendeiro,  que cultiva também 1 hectare de rosas,  diz que optou pelo morango após experiências « nem sempre vantajosas » com outras culturas. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">cultiva</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">1 hectare de rosas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s350:  Sarney cultiva a tolerância em suas crônicas
+</text>
+                <arg f="" n="0">Sarney
+</arg>
+                <rel f="">cultiva</rel>
+                <arg f="" n="1">a tolerância
+</arg>
+                <arg f="loc" n="m">em suas crônicas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

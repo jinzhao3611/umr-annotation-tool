@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="alugar">
+        <note />
+    <roleset framnet="lease.02" id="alugar.01" name="ceder posse em troca de dinheiro" vncls="13.1-1">
+            <roles>
+                <role descr="landlord" n="0">
+                    <vnrole vncls="13.1-1" vntheta="Agent" />
+                </role>
+                <role descr="thing rented (eg, apartment)" n="1">
+                    <vnrole vncls="13.1-1" vntheta="Theme" />
+                </role>
+                <role descr="renter" n="2">
+                    <vnrole vncls="13.1-1" vntheta="Recipient" />
+                </role>
+                <role descr="rent" n="3" />
+                <role descr="term" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1503:  Ou_  seja,  alugam o imóvel por um prazo máximo de 90 dias e ainda podem receber o valor adiantado. 
+</text>
+                <arg f="dis" n="m">Ou_  seja
+</arg>
+                <rel f="">alugam</rel>
+                <arg f="" n="1">o imóvel
+</arg>
+                <arg f="" n="4">por um prazo máximo de 90 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s236:  « Um diplomata da Bélgica comprou apartamento para passar as férias de julho e janeiro,  mas fora desse período ele aluga o imóvel por US$  1.  000 »,  diz Bezerra. 
+</text>
+                <arg f="loc" n="m">fora desse período
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">aluga</rel>
+                <arg f="" n="1">o imóvel
+</arg>
+                <arg f="" n="3">por US$  1.  000
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

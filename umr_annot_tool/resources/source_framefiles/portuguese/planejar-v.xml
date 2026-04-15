@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="planejar">
+        <note />
+    <roleset framnet="plan.01" id="planejar.01" name="programar; tencionar; projetar" vncls="">
+            <roles>
+                <role descr="planner" n="0" />
+                <role descr="thing planned" n="1" />
+                <role descr="grounds for planning" n="2" />
+                <role descr="beneficiary" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4125:  Cada hesitação,  cada silêncio,  cada desvio do olhar era um ganho na contabilidade do sublime que o diretor-  autor planejava. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o diretor-  autor
+</arg>
+                <rel f="">planejava</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2832:  O atentado teria sido planejado pelo grupo radical islâmico Gama'  a_  al-  Islamiya,  que lançou campanha contra o governo egípcio em 1992 para a criação de um Estado Islâmico fundamentalista. 
+</text>
+                <arg f="" n="1">O atentado
+</arg>
+                <rel f="">planejado</rel>
+                <arg f="" n="0">pelo grupo radical islâmico Gama'  a_  al-  Islamiya,  que lançou campanha contra o governo egípcio em 1992 para a criação de um Estado Islâmico fundamentalista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s894:  A dupla planeja agora temporada de dolce_  far_  niente. 
+</text>
+                <arg f="" n="0">A dupla
+</arg>
+                <rel f="">planeja</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="" n="1">temporada de dolce_  far_  niente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s406:  A patinadora Tonya_  Harding,  banida das competições por ter planejado atentado contra a rival Nancy_  Kerrigan,  será o destaque de setembro da revista « Penthouse ». 
+</text>
+                <rel f="">planejado</rel>
+                <arg f="" n="1">atentado contra a rival Nancy_  Kerrigan
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

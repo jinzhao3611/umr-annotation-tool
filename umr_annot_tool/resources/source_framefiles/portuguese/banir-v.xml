@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="banir">
+        <note />
+    <roleset framnet="banish.01" id="banir.01" name="excluir, colocar para fora, eliminar" vncls="10.2">
+            <roles>
+                <role descr="banisher, agent" n="0">
+                    <vnrole vncls="10.2" vntheta="Agent" />
+                </role>
+                <role descr="entity expelled" n="1">
+                    <vnrole vncls="10.2" vntheta="Theme" />
+                </role>
+                <role descr="expelled from" n="2">
+                    <vnrole vncls="10.2" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3762:  A história narra a ida de um agente secreto ﻿à desumana cidade futurista de Alphaville,  controlada por um cérebro eletrônico que baniu totalmente os conceitos de amor e solidariedade. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">baniu</rel>
+                <arg f="ext" n="m">totalmente
+</arg>
+                <arg f="" n="1">os conceitos de amor e solidariedade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

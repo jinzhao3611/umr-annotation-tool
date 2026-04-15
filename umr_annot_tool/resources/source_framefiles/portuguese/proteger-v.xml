@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="proteger">
+        <note />
+    <roleset framnet="protect.01" id="proteger.01" name="tomar medidas para defesa" vncls="">
+            <roles>
+                <role descr="protector" n="0" />
+                <role descr="protected" n="1" />
+                <role descr="danger" n="2" />
+                <role descr="instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1859:  Desta_  forma,  para se proteger de uma reviravolta inoportuna dos índices econômicos,  FHC e seus amigos do governo tiveram o cuidado de fixar um calendário vantajoso. 
+</text>
+                <arg f="dis" n="m">Desta_  forma
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">proteger</rel>
+                <arg f="" n="2">de uma reviravolta inoportuna dos índices econômicos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s300:  A lição parece clara em ambos os casos:  não será um artifício legal nem a boa_  vontade dos governos que protegerão a riqueza dos poupadores ou o poder de compra dos assalariados,  mas sim um ambiente de estabilidade econômica consistente. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">protegerão</rel>
+                <arg f="" n="1">a riqueza dos poupadores ou o poder de compra dos assalariados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s129:  Os arquivos são protegidos por senhas e códigos,  que acabaram mostrando-  se vulneráveis. 
+</text>
+                <arg f="" n="1">Os arquivos
+</arg>
+                <rel f="">protegidos</rel>
+                <arg f="" n="0">por senhas e códigos,  que acabaram mostrando-  se vulneráveis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s55:  O destaque do HBO é o inédito « Exterminador_  do_  Futuro_  2_ - - _  O_  Julgamento_  Final »,  em que Schwarzenegger é um robô com aparência humana que vem do futuro para proteger um garoto. 
+</text>
+                <rel f="">proteger</rel>
+                <arg f="" n="1">um garoto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

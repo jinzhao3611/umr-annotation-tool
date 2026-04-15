@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="durar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1454:  O Opala durou 23 anos,  o Chevette,  20,  a Kombi segue firme desde 1957. 
+</text>
+                <arg f="" n="1">O Opala
+</arg>
+                <rel f="">durou</rel>
+                <arg f="" n="2">23 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1195:  O percurso pelas avenidas Consolação,  Rebouças e Francisco_  Morato durou exatos 20 minutos,  sem trânsito moroso. 
+</text>
+                <arg f="" n="1">O percurso pelas avenidas Consolação,  Rebouças e Francisco_  Morato
+</arg>
+                <rel f="">durou</rel>
+                <arg f="" n="2">exatos 20 minutos,  sem trânsito moroso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1174:  A cirurgia durou duas horas. 
+</text>
+                <arg f="" n="1">A cirurgia
+</arg>
+                <rel f="">durou</rel>
+                <arg f="" n="2">duas horas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1127:  Cada curso dura dois sábados,  num total de 14 horas,  e custa US$  250. 
+</text>
+                <arg f="" n="1">Cada curso
+</arg>
+                <rel f="">dura</rel>
+                <arg f="" n="2">dois sábados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1122:  Esse quadro de inseguranças e de incertezas que já dura há duas décadas contribui para transformar o integrismo,  o racismo,  a intolerância política num formidável desafio ao sistema democrático neste nosso fim de século. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">dura</rel>
+                <arg f="" n="2">há duas décadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

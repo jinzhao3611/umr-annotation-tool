@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="incidir">
+        <note />
+    <roleset framnet="apply.02" id="incidir.01" name="recair; ser aplicado a" vncls="105">
+            <roles>
+                <role descr="applier" n="0">
+                    <vnrole vncls="105" vntheta="Agent" />
+                </role>
+                <role descr="thing applied, associated, worked" n="1">
+                    <vnrole vncls="105" vntheta="Theme" />
+                </role>
+                <role descr="applied to" n="2">
+                    <vnrole vncls="105" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2901:  A eísfora incidia sobre o valor das propriedades,  as_  quais estavam devidamente registradas nos « diagramas » públicos. 
+</text>
+                <arg f="" n="1">A eísfora
+</arg>
+                <rel f="">incidia</rel>
+                <arg f="" n="2">sobre o valor das propriedades,  as_  quais estavam devidamente registradas nos « diagramas » públicos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

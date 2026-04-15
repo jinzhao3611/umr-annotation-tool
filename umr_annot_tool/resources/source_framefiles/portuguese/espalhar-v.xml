@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="espalhar">
+        <note />
+    <roleset framnet="spread.01" id="espalhar.01" name="dispersar" vncls="9.7-1">
+            <roles>
+                <role descr="applier, intentional agent" n="0">
+                    <vnrole vncls="9.7-1" vntheta="Agent" />
+                </role>
+                <role descr="substance" n="1">
+                    <vnrole vncls="9.7-1" vntheta="Theme" />
+                </role>
+                <role descr="surface" n="2">
+                    <vnrole vncls="9.7-1" vntheta="Destination" />
+                </role>
+                <role descr="instrument, brush" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3395:  Um(  mecenas)  nobre que deifica o saber antes e mistifica o dar depois ou ele deve ser um iconoclasta,  espalhar o_  que sabe enquanto o tempo faz das novidades fatos descartáveis. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">espalhar</rel>
+                <arg f="" n="1">o_  que sabe
+</arg>
+                <arg f="tmp" n="m">enquanto o tempo faz das novidades fatos descartáveis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

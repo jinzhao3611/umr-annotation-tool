@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="traduzir">
+        <note />
+    <roleset framnet="translate.01" id="traduzir.01" name="mudar de uma língua para outra; mudar de uma coisa para outra " vncls="-">
+            <roles>
+                <role descr="causer of transformation" n="0" />
+                <role descr="thing changing" n="1" />
+                <role descr="end state" n="2" />
+                <role descr="start state" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3712:  Quando se fala do Real,  fala-  se de posições que traduzem aquilo que deve ser o papel de São_  Paulo. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">traduzem</rel>
+                <arg f="" n="1">aquilo que deve ser o papel de São_  Paulo
+</arg>
+                <note>arg2 (resultado) como sujeito</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="traduzir-se">
+        <note />
+    <roleset framnet="translate.01" id="traduzir.02" name="alternância incoativa de &quot;traduzir&quot;;  transformar-se em" vncls="-">
+            <roles>
+                <role descr="causer of transformation" n="0" />
+                <role descr="thing changing" n="1" />
+                <role descr="end state" n="2" />
+                <role descr="start state" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1097:  O mal residia,  enfim,  no fato de que a política real da UDN se traduzia no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta. 
+</text>
+                <arg f="" n="1">a política real da UDN
+</arg>
+                <rel f="">traduzia</rel>
+                <arg f="" n="2">no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

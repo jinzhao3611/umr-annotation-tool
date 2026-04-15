@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="traficar">
+        <note />
+    <roleset framnet="" id="traficar.01" name="fazer tráfico; comercializar ilegalmente" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3332:  A Polícia_  Federal prendeu ontem em Brasília Vicente_  Wilson_  Rivera_  Ramos,  o « Vicentico »,  filho de um dos chefes do Cartel_  de_  Cáli(  organização colombiana que trafica drogas) . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">trafica</rel>
+                <arg f="" n="1">drogas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

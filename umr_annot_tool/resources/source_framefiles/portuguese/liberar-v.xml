@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="liberar">
+        <note />
+    <roleset framnet="release.01" id="liberar.01" name="soltar; tornar disponível" vncls="">
+            <roles>
+                <role descr="releaser" n="0" />
+                <role descr="thing released" n="1" />
+                <role descr="released from" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2593:  Raia disse ainda que sua equipe levantou as necessidades de material de consumo da rede e que US$  3 milhões estão sendo liberados agora para gastos do primeiro trimestre. 
+</text>
+                <arg f="" n="1">US$  3 milhões
+</arg>
+                <rel f="">liberados</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="pnc" n="m">para gastos do primeiro trimestre
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2591:  Segundo o secretário,  US$  43,  5 milhões foram liberados pelo prefeito quatro meses atrás para ampliação ou reforma em dez hospitais e unidades de saúde. 
+</text>
+                <arg f="" n="1">US$  43,  5 milhões
+</arg>
+                <rel f="">liberados</rel>
+                <arg f="" n="0">pelo prefeito
+</arg>
+                <arg f="tmp" n="m">quatro meses atrás
+</arg>
+                <arg f="pnc" n="m">para ampliação ou reforma em dez hospitais e unidades de saúde
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2571:  BC libera linha de empréstimos a bancos
+</text>
+                <arg f="" n="0">BC
+</arg>
+                <rel f="">libera</rel>
+                <arg f="" n="1">linha de empréstimos a bancos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1038:  Prefeitura libera 10 salas
+</text>
+                <arg f="" n="0">Prefeitura
+</arg>
+                <rel f="">libera</rel>
+                <arg f="" n="1">10 salas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s564:  « Ele veio aqui e liberou US$  5 milhões,  1%  do valor da obra.  »,  declarou. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">liberou</rel>
+                <arg f="" n="1">US$  5 milhões
+</arg>
+                <arg f="prd" n="m">1%  do valor da obra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s41:  Se eu dirigisse uma federação,  apresentaria balanços mensais e liberaria minhas contas bancárias. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">liberaria</rel>
+                <arg f="" n="1">minhas contas bancárias
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tirar">
+        <note />
+    <roleset framnet="take.01" id="tirar.01" name="fazer sair; extrair; despir" vncls="10.5 11.3">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from, or prepositional complement of arg1" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3375:  O aposentado Eliseu_  Francisco_  de_  Lyra(  na época com 44 anos) ,  depois de discutir com o irmão,  saiu do carro,  subiu no capô,  tirou as roupas e sapateou. 
+</text>
+                <arg f="" n="0">O aposentado Eliseu_  Francisco_  de_  Lyra(  na época com 44 anos) 
+</arg>
+                <arg f="tmp" n="m">depois de discutir com o irmão
+</arg>
+                <rel f="">tirou</rel>
+                <arg f="" n="1">as roupas
+</arg>
+                <note>para a colocação "tirar a roupa", é adequado "take.07" (to take off)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2683:  É desse combate,  da maneira como ele chegou a criar as formas que geraram uma obra original,  que « O_  Olho_  da_  Revolução » tira seu interesse. 
+</text>
+                <arg f="" n="2">desse combate da maneira como ele chegou a criar as formas que geraram uma obra original
+</arg>
+                <arg f="" n="0">O_  Olho_  da_  Revolução
+</arg>
+                <rel f="">tira</rel>
+                <arg f="" n="1">seu interesse
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1978:  Eu me tirei das ruas e comecei a estudar. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">tirei</rel>
+                <arg f="" n="2">das ruas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1921:  Durante o jantar,  pessoas que estavam numa mesa próxima ﻿à de Collor e Rosane tiraram fotos. 
+</text>
+                <arg f="tmp" n="m">Durante o jantar
+</arg>
+                <arg f="" n="0">pessoas que estavam numa mesa próxima ﻿à de Collor e Rosane
+</arg>
+                <rel f="">tiraram</rel>
+                <arg f="" n="1">fotos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1510:  O desenlace,  porém,  não veio na forma do « golpe de timão » com reforma radical,  mas foi precipitado pelas duas balas que tiraram a vida de Colosio. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">tiraram</rel>
+                <arg f="" n="1">a vida
+</arg>
+                <arg f="" n="2">de Colosio
+</arg>
+                <note>"tirar a vida de alguém" = matar (em inglês é igual "to take someone's life")</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1390:  Hoje_  em_  dia,  qualquer americano medianamente equipado pode fazer diante_  do teclado tarefas que antes exigiam que ele tirasse o bumbum da cadeira:  mandar e receber fax e mensagens eletrônicas,  reservar passagens aéreas,  controlar a conta bancária,  acessar bancos de dados e dezenas_  doutros serviços. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">tirasse</rel>
+                <arg f="" n="1">o bumbum
+</arg>
+                <arg f="" n="2">da cadeira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s838:  FHC foi o primeiro a tirar consequências de tal estudo. 
+</text>
+                <rel f="">tirar</rel>
+                <arg f="" n="1">consequências
+</arg>
+                <arg f="" n="2">de tal estudo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

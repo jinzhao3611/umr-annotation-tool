@@ -1,0 +1,471 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="falar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="say.01" id="falar.01" name="dizer; declarar" vncls="37.7">
+            <roles>
+                <role descr="Sayer" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="Utterance" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="Hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <role descr="Attributive" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4058:  Ele fala que tem idéias e não um programa,  mas muitas_  vezes,  quando perguntado ele mostra que também não tem nem idéia.  »
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">fala</rel>
+                <arg f="" n="1">que tem idéias e não um programa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2381:  Não ouvi falar nada sobre arbitragens. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="ext" n="m">nada
+</arg>
+                <arg f="" n="1">sobre arbitragens
+</arg>
+                <note>"ouvir falar" = "to hear"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2032:  Convencido de que Munhoz tem uma boa retórica,  o publicitário pretende deixar o candidato « falar o que quiser » para,  antes da gravação final,  decidir o que irá ao ar. 
+</text>
+                <arg f="" n="0">o candidato
+</arg>
+                <rel f="">falar</rel>
+                <arg f="" n="1">o que quiser
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s203:  Não falei nada,  mas visualizei a Sra. _  oke,  sentada no salão amarelo,  o mesmo salão onde nenhum Oke de Okehurst exceto ela ousava permanecer sozinho,  envergando o vestido de sua antepassada e confrontando-  se,  por_  assim_  dizer,  com aquela coisa vaga,  plangente,  que parecia permear o aposento. . .  aquela vaga presença- -  assim me parecia do galante poeta assassinado. 
+</text>
+                <rel f="">falei</rel>
+                <arg f="ext" n="m">nada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="talk.01" id="falar.02" name="conversar" vncls="">
+            <roles>
+                <role descr="talker" n="0" />
+                <role descr="subject" n="1" />
+                <role descr="hearer" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3935:  Os jogadores e Parreira não falaram com a imprensa. 
+</text>
+                <arg f="" n="0">Os jogadores e Parreira
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">falaram</rel>
+                <arg f="" n="2">com a imprensa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3441:  Durante o almoço familiar,  por_  exemplo,  fala-  se muito sobre quase nada e ninguém mastiga. 
+</text>
+                <arg f="tmp" n="m">Durante o almoço familiar
+</arg>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <rel f="">fala-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="1">sobre quase nada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2382:  Não se fala na cobrança dos árbitros que apitam maldosamente,  para prejudicar uma equipe. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">fala</rel>
+                <arg f="" n="1">na cobrança dos árbitros que apitam maldosamente,  para prejudicar uma equipe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1979:  Aprendi a falar direito e tentei fazer minha vida melhor para mim. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="mnr" n="m">direito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1919:  Ex-  presidente não fala ﻿à imprensa,  mas posa para fotos
+</text>
+                <arg f="" n="0">Ex-  presidente
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">fala</rel>
+                <arg f="" n="2">﻿à imprensa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1189:  « Não garantiram casa,  carro,  assistência médica e passe livre depois de quatro anos »,  disse o diretor Kalef_  João_  Francisco,  que falou ontem com Muller. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">falou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="2">com Muller
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1159:  Juan_  Manuel_  Fangio,  sobrinho do argentino pentacampeão de Fórmula_  1,  está testando na Califórnia um novo protótipo que vai dar o_  que falar na Fórmula_  Indy. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">falar</rel>
+                <arg f="loc" n="m">na Fórmula_  Indy
+</arg>
+                <note>"dar o que falar" = "give much to talk about"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s739:  A Folha procurou falar com Melodia sobre o incidente. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="" n="2">com Melodia
+</arg>
+                <arg f="" n="1">sobre o incidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s728:  O TST fala em manter a produção de combustíveis e gás. 
+</text>
+                <arg f="" n="0">O TST
+</arg>
+                <rel f="">fala</rel>
+                <arg f="" n="1">em manter a produção de combustíveis e gás
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s108:  É ainda mais óbvio que é impossível falar abertamente sobre a superioridade de muitos atletas negros sem ser sujeito a acusações de que se estar sendo anti-  negro de uma maneira enviesada. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="mnr" n="m">abertamente
+</arg>
+                <arg f="" n="1">sobre a superioridade de muitos atletas negros
+</arg>
+                <arg f="mnr" n="m">sem ser sujeito a acusações de que se estar sendo anti-  negro de uma maneira enviesada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="speak.01" id="falar.03" name="fazer discurso sobre" vncls="37.5">
+            <roles>
+                <role descr="talker" n="0">
+                    <vnrole vncls="37.5" vntheta="Actor1" />
+                </role>
+                <role descr="subject/language" n="1">
+                    <vnrole vncls="37.5" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.5" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3712:  Quando se fala do Real,  fala-  se de posições que traduzem aquilo que deve ser o papel de São_  Paulo. 
+</text>
+                <arg f="tmp" n="m">Quando se fala do Real
+</arg>
+                <rel f="">fala-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">de posições que traduzem aquilo que deve ser o papel de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3712:  Quando se fala do Real,  fala-  se de posições que traduzem aquilo que deve ser o papel de São_  Paulo. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">fala</rel>
+                <arg f="" n="1">do Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3080:  Marcella_  Hazan falou sobre alcachofras e catequizou o público sobre a supremacia do óleo de oliva extra virgem para cozinhar,  apesar_  da exorbitância do preço. 
+</text>
+                <arg f="" n="0">Marcella_  Hazan
+</arg>
+                <rel f="">falou</rel>
+                <arg f="" n="1">sobre alcachofras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3072:  « É uma obra que fala de fé e eu espero que possibilite ao público uma compreensão direta do gospel,  uma música de palavras simples e profundas.  »
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">fala</rel>
+                <arg f="" n="1">de fé
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2517:  José_  Genoino,  entrevistado,  já falava como novo centro do poder. 
+</text>
+                <arg f="" n="0">José_  Genoino,  entrevistado, 
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">falava</rel>
+                <arg f="mnr" n="m">como novo centro do poder
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2486:  São mais cool,  falam de amor,  crescimento e amizade sempre com um viés « engajado »,  porém. 
+</text>
+                <rel f="">falam</rel>
+                <arg f="" n="1">de amor,  crescimento e amizade
+</arg>
+                <arg f="mnr" n="m">sempre com um viés « engajado »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2456:  Como Collor,  o novo presidente falou em:  « reforma do Estado »,  « abertura da economia »,  « avanço da privatização » e « flexibilização dos monopólios estatais ». 
+</text>
+                <arg f="prd" n="m">Como Collor
+</arg>
+                <arg f="" n="0">o novo presidente
+</arg>
+                <rel f="">falou</rel>
+                <arg f="" n="1">em:  « reforma do Estado »,  « abertura da economia »,  « avanço da privatização » e « flexibilização dos monopólios estatais »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2390:  Falando em futebol,  em bom futebol,  devemos saudar a chegada de Ronaldão aos Estados_  Unidos. 
+</text>
+                <rel f="">Falando</rel>
+                <arg f="" n="1">em futebol,  em bom futebol
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2362:  Esta vertente,  francamente conteudista,  derivava das experiências realizadas no período pré-  64 pelos Centros_  Populares_  de_  Cultura(  CPCs) ,  ligados ﻿à União_  Nacional_  dos_  Estudantes,  que privilegiavam a « mensagem » e procuravam falar uma idealizada linguagem do « povo ». 
+</text>
+                <rel f="">falar</rel>
+                <arg f="" n="1">uma idealizada linguagem do « povo »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2190:  « Como posso falar de quem me venceu?  »
+</text>
+                <arg f="mnr" n="m">Como
+</arg>
+                <rel f="">falar</rel>
+                <arg f="" n="1">de quem me venceu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2092:  Johnny(  guitarra) ,  Joey(  vocal) ,  CJ(  baixo)  e Mark(  bateria)  falam sobre o surgimento do grupo,  a influência de Iggy_  Pop,  processo de criação e o revival do punk considerado ridículo e ilegítimo por CJ. 
+</text>
+                <arg f="" n="0">Johnny(  guitarra) ,  Joey(  vocal) ,  CJ(  baixo)  e Mark(  bateria) 
+</arg>
+                <rel f="">falam</rel>
+                <arg f="" n="1">sobre o surgimento do grupo,  a influência de Iggy_  Pop,  processo de criação e o revival do punk considerado ridículo e ilegítimo por CJ
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2060:  O ex-  deputado Ibsen_  Pinheiro(  PMDB-  RS)  também não quis falar sobre a absolvição do ex-  presidente. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="" n="1">sobre a absolvição do ex-  presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2033:  Centrado no slogan « Fome_  e_  desemprego_ . _  Agricultura_  é_  a_  solução »,  Munhoz vai falar durante o tempo a que tem direito sobre a necessidade de aprimoramento do setor. 
+</text>
+                <arg f="prd" n="m">Centrado no slogan « Fome_  e_  desemprego_ . _  Agricultura_  é_  a_  solução »
+</arg>
+                <arg f="" n="0">Munhoz
+</arg>
+                <rel f="">falar</rel>
+                <arg f="tmp" n="m">durante o tempo a que tem direito
+</arg>
+                <arg f="" n="1">sobre a necessidade de aprimoramento do setor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1572:  Skinner- -  Não é permitido falar muito contra a monarquia no Parlamento porque supostamente você deve jurar fidelidade ﻿à rainha. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="1">contra a monarquia
+</arg>
+                <arg f="loc" n="m">no Parlamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1448:  Falando aos membros da Comissão_  de_  Assuntos_  Econômicos do Senado,  o ministro disse estar feliz por não haver,  até agora,  sentenças judiciais contrárias às medidas do plano econômico. 
+</text>
+                <rel f="">Falando</rel>
+                <arg f="" n="2">aos membros da Comissão_  de_  Assuntos_  Econômicos do Senado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1393:  Takuo_  Hirano e Tetsuyuki_  Hirano,  pai e filho,  vieram falar sobre o novo conceito de design que estão desenvolvendo. 
+</text>
+                <rel f="">falar</rel>
+                <arg f="" n="1">sobre o novo conceito de design que estão desenvolvendo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1107:  A socióloga e cientista política falou sobre o tema na última conferência do encontro da Associação_  Nacional_  de_  Pós-  graduação_  em_  Ciências_  Sociais(  Anpocs) . 
+</text>
+                <arg f="" n="0">A socióloga e cientista política
+</arg>
+                <rel f="">falou</rel>
+                <arg f="" n="1">sobre o tema
+</arg>
+                <arg f="loc" n="m">na última conferência do encontro da Associação_  Nacional_  de_  Pós-  graduação_  em_  Ciências_  Sociais(  Anpocs) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1019:  Segundo os organizadores,  havia 6.  000 pessoas no comício às 21h,  quando Brizola começou a falar. 
+</text>
+                <arg f="" n="0">Brizola
+</arg>
+                <rel f="">falar</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="falar_mal">
+        <note />
+    <roleset framnet="speak.01" id="falar.04" name="uso idiomático: criticar" vncls="37.5">
+            <roles>
+                <role descr="talker" n="0">
+                    <vnrole vncls="37.5" vntheta="Actor1" />
+                </role>
+                <role descr="subject/language" n="1">
+                    <vnrole vncls="37.5" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.5" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3525:  Pedem cerveja,  tequila e batidas,  num gasto médio de US$  30 por noite,  e falam mal dos mauricinhos que,  como diz Rubinho_  Gimenes,  são « cheios de querer ser ». 
+</text>
+                <rel f="">falam</rel>
+                <arg f="" n="1">dos mauricinhos que,  como diz Rubinho_  Gimenes,  são « cheios de querer ser »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="permanecer.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1624:  A Secretaria_  da_  Fazenda do Estado_  de_  São_  Paulo determinou que,  quando um contribuinte realizar venda de mercadorias em feiras,  exposições ou em locais chamados de « outlets » ou « feira de promoções » e permanecer na área determinada por mais_  de 60 dias,  será obrigatória a inscrição do referido local no cadastro de contribuintes do ICMS(  Fund. :  portaria CAT 116/  93) . 
+</text>
+                <arg f="" n="1">um contribuinte
+</arg>
+                <rel f="">permanecer</rel>
+                <arg f="" n="3">na área determinada por mais_  de 60 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1592:  Lula fica na África_  do_  Sul até quarta-  feira ﻿à noite,  quando viaja então para a Alemanha,  onde permanece até sexta-  feira ﻿à noite. 
+</text>
+                <arg f="" n="1">Lula
+</arg>
+                <arg f="" n="3">onde
+</arg>
+                <rel f="">permanece</rel>
+                <arg f="tmp" n="m">até sexta-  feira ﻿à noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1367:  Ele permaneceu no velório por aproximadamente uma hora e seguiu para descansar no hotel Glória até o horário do enterro. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">permaneceu</rel>
+                <arg f="" n="3">no velório
+</arg>
+                <arg f="tmp" n="m">por aproximadamente uma hora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s203:  Não falei nada,  mas visualizei a Sra. _  oke,  sentada no salão amarelo,  o mesmo salão onde nenhum Oke de Okehurst exceto ela ousava permanecer sozinho,  envergando o vestido de sua antepassada e confrontando-  se,  por_  assim_  dizer,  com aquela coisa vaga,  plangente,  que parecia permear o aposento. . .  aquela vaga presença- -  assim me parecia do galante poeta assassinado. 
+</text>
+                <rel f="">permanecer</rel>
+                <arg f="" n="3">sozinho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

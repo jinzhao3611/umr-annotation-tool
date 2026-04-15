@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="constar">
+        <note />
+    <roleset framnet="" id="constar.01" name="estar incluído em" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3470:  Constam do livro 15 quadros estatísticos relacionando os nomes das vítimas e os responsáveis por crimes ligados a conflitos de terra. 
+</text>
+                <rel f="">Constam</rel>
+                <arg f="" n="2">do livro
+</arg>
+                <arg f="" n="1">15 quadros estatísticos relacionando os nomes das vítimas e os responsáveis por crimes ligados a conflitos de terra
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

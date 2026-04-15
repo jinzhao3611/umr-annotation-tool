@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cumprimentar">
+        <note />
+    <roleset framnet="greet.01" id="cumprimentar.01" name="saudar" vncls="33">
+            <roles>
+                <role descr="greeter" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="thing greeted" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute, greeted as" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <role descr="specific reaction" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1835:  Em sinal de protesto,  de_  hoje_  em_  diante,  quem me cumprimentar com beijo suado leva uma muqueta no focinho. 
+</text>
+                <arg f="pnc" n="m">Em sinal de protesto
+</arg>
+                <arg f="tmp" n="m">de_  hoje_  em_  diante
+</arg>
+                <arg f="" n="0">quem
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">cumprimentar</rel>
+                <arg f="" n="3">com beijo suado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

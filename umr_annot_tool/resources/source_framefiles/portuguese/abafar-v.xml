@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abafar">
+        <note />
+    <roleset framnet="muffle.01" id="abafar.01" name="amortecer um som" vncls="42.3">
+            <roles>
+                <role descr="agentive muffler" n="0">
+                    <vnrole vncls="42.3" vntheta="Agent" />
+                </role>
+                <role descr="sound" n="1">
+                    <vnrole vncls="42.3" vntheta="Patient" />
+                </role>
+                <role descr="instrumental muffler" n="2">
+                    <vnrole vncls="42.3" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2386:  Funcionários do escritório cubano tentaram abafar os protestos na rua colocando caixas de som nas janelas do prédio com música alta. 
+</text>
+                <arg f="" n="0">Funcionários do escritório cubano
+</arg>
+                <rel f="">abafar</rel>
+                <arg f="" n="1">os protestos na rua
+</arg>
+                <arg f="" n="2">colocando caixas de som nas janelas do prédio com música alta
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

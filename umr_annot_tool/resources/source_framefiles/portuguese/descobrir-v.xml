@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="descobrir">
+        <note />
+        <note />
+    <roleset framnet="find.01" id="descobrir.01" name="encontrar o que estava escondido" vncls="13.5.1">
+            <roles>
+                <role descr="finder" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing found" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, found for" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3408:  De_  acordo com o coronel,  a polícia descobriu a quadrilha através de uma denúncia anônima. 
+</text>
+                <arg f="dis" n="m">De_  acordo com o coronel
+</arg>
+                <arg f="" n="0">a polícia
+</arg>
+                <rel f="">descobriu</rel>
+                <arg f="" n="1">a quadrilha
+</arg>
+                <arg f="mnr" n="m">através de uma denúncia anônima
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2714:  Quem experimenta a última versão(  safra 91)  descobrirá um vinho novo ainda,  adstringente,  mas de aroma e sabor intensos. 
+</text>
+                <arg f="" n="0">Quem experimenta a última versão(  safra 91) 
+</arg>
+                <rel f="">descobrirá</rel>
+                <arg f="" n="1">um vinho novo ainda,  adstringente,  mas de aroma e sabor intensos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1361:  Monique,  37,  disse que descobriu a « marquinha,  que não é pedra no rim » quando se separou do marido,  em junho passado. 
+</text>
+                <arg f="" n="0">Monique,  37, 
+</arg>
+                <rel f="">descobriu</rel>
+                <arg f="" n="1">a « marquinha,  que não é pedra no rim »
+</arg>
+                <arg f="tmp" n="m">quando se separou do marido,  em junho passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s737:  Com o uso do método tridimencional,  foi possível localizá-  lo e descobrir a causa da morte. 
+</text>
+                <rel f="">descobrir</rel>
+                <arg f="" n="1">a causa da morte
+</arg>
+                <note>nesse exemplo os sentidos se misturam; em inglês poderia ser "to find" ou "to find out" ou "to discover" </note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="discover.01" id="descobrir.02" name="tomar consciência de; descobrir algo antes do resto da humanidade" vncls="84 29.5-2">
+            <roles>
+                <role descr="finder" n="0">
+                    <vnrole vncls="84" vntheta="Agent" />
+                    <vnrole vncls="29.5-2" vntheta="Agent" />
+                </role>
+                <role descr="thing found, discovery" n="1">
+                    <vnrole vncls="84" vntheta="Theme" />
+                    <vnrole vncls="29.5-2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, found for" n="2">
+                    <vnrole vncls="29.5-2" vntheta="Predicate" />
+                </role>
+                <role descr="attribute on arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3393:  2.  Que o selecionador tenha que ler todo o currículo para descobrir o perfil do profissional. 
+</text>
+                <rel f="">descobrir</rel>
+                <arg f="" n="1">o perfil do profissional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2071:  Saar « descobriu » no Brasil o bambu verde. 
+</text>
+                <arg f="" n="0">Saar
+</arg>
+                <rel f="">descobriu</rel>
+                <arg f="loc" n="m">no Brasil
+</arg>
+                <arg f="" n="1">o bambu verde
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s235:  Segundo ele,  italianos e belgas já descobriram que comprar imóveis em Natal é um ótimo negócio. 
+</text>
+                <arg f="dis" n="m">Segundo ele
+</arg>
+                <arg f="" n="0">italianos e belgas
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">descobriram</rel>
+                <arg f="" n="1">que comprar imóveis em Natal é um ótimo negócio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s205:  O escritor,  identificado com a cultura beatnik,  admitia somente ter sido inspirado por um outro autor da Califórnia,  John_  Fante(  « Pergunte_  ao_  Pó »,  entre outros) ,  que Bukowski descobriu nas suas leituras em bibliotecas públicas quando jovem. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">Bukowski
+</arg>
+                <rel f="">descobriu</rel>
+                <arg f="loc" n="m">nas suas leituras em bibliotecas públicas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s112:  Cinco linhas paralelas,  de mais_  de 400 km cada,  foram descobertas por cientistas australianos no sul do país. 
+</text>
+                <arg f="" n="1">Cinco linhas paralelas,  de mais_  de 400 km cada, 
+</arg>
+                <rel f="">descobertas</rel>
+                <arg f="" n="0">por cientistas australianos
+</arg>
+                <arg f="loc" n="m">no sul do país
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dever">
+        <note />
+    <roleset framnet="" id="dever.01" name="dever" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1283:  Parte do crescimento de Fernando_  Henrique na última pesquisa Datafolha deve-  se ﻿à evolução do tucano entre os eleitores que declaram simpatia pelo PMDB de Orestes_  Quércia e pelo PPR de Esperidião_  Amin. 
+</text>
+                <arg f="" n="1">Parte do crescimento de Fernando_  Henrique na última pesquisa Datafolha
+</arg>
+                <rel f="">deve-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="2">﻿à evolução do tucano entre os eleitores que declaram simpatia pelo PMDB de Orestes_  Quércia e pelo PPR de Esperidião_  Amin
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

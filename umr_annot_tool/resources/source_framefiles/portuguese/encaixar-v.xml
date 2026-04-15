@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encaixar-se">
+        <note />
+    <roleset framnet="fit.01" id="encaixar.01" name="alternância incoativa de &quot;encaixar&quot;: combinar; ser adequado a" vncls="54.3">
+            <roles>
+                <role descr="agent, causer of fitting" n="0">
+                    <vnrole vncls="54.3" vntheta="Agent" />
+                </role>
+                <role descr="thing(s) fitting" n="1">
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3973:  Gravações acústicas se encaixam com o nosso tipo de som. 
+</text>
+                <arg f="" n="1">Gravações acústicas
+</arg>
+                <rel f="">encaixam</rel>
+                <arg f="" n="2">com o nosso tipo de som
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="encaixar">
+        <note />
+    <roleset framnet="fit.01" id="encaixar.02" name="alocar" vncls="54.3">
+            <roles>
+                <role descr="agent, causer of fitting" n="0">
+                    <vnrole vncls="54.3" vntheta="Agent" />
+                </role>
+                <role descr="thing(s) fitting" n="1">
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3467:  Itamar quis encaixá-  lo no Tribunal_  Superior_  do_  Trabalho,  mas a OAB(  Ordem_  dos_  Advogados_  do_  Brasil)  não deixou. 
+</text>
+                <rel f="">encaixá-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="" n="2">no Tribunal_  Superior_  do_  Trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

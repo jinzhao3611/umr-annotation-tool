@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="enviar">
+        <note />
+    <roleset framnet="send.01" id="enviar.01" name="remeter; despachar para outro lugar" vncls="11.1-1">
+            <roles>
+                <role descr="sender" n="0">
+                    <vnrole vncls="11.1-1" vntheta="Agent" />
+                </role>
+                <role descr="sent" n="1">
+                    <vnrole vncls="11.1-1" vntheta="Theme" />
+                </role>
+                <role descr="sent-to" n="2">
+                    <vnrole vncls="11.1-1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3288:  Gloria_  Attanasio,  magistrada da capital,  meramente decidiu o_  que a sua função lhe exigia,  e enviou 250 detetives às sedes dos tais 34 clubes para,  lá,  coletarem os livros contábeis e os recibos correspondentes ao versamento dos impostos. 
+</text>
+                <arg f="" n="0">Gloria_  Attanasio,  magistrada da capital, 
+</arg>
+                <rel f="">enviou</rel>
+                <arg f="" n="1">250 detetives
+</arg>
+                <arg f="" n="2">às sedes dos tais 34 clubes
+</arg>
+                <arg f="loc" n="m">lá
+</arg>
+                <arg f="pnc" n="m">para coletarem os livros contábeis e os recibos correspondentes ao versamento dos impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3029:  Ontem ﻿à tarde,  Pacheco disse que esperará até terça-  feira para que o clube carioca envie uma cópia do seguro de vida previsto no contrato de empréstimo do meia Dener,  morto terça-  feira. 
+</text>
+                <arg f="" n="0">o clube carioca
+</arg>
+                <rel f="">envie</rel>
+                <arg f="" n="1">uma cópia do seguro de vida previsto no contrato de empréstimo do meia Dener,  morto terça-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2391:  Empresas enviam nota ao TRE
+</text>
+                <arg f="" n="0">Empresas
+</arg>
+                <rel f="">enviam</rel>
+                <arg f="" n="1">nota
+</arg>
+                <arg f="" n="2">ao TRE
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2260:  A lei também prevê que até o final de junho o governo enviará ao Congresso um projeto sobre a elevação do valor real do salário mínimo. 
+</text>
+                <arg f="tmp" n="m">até o final de junho
+</arg>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">enviará</rel>
+                <arg f="" n="2">ao Congresso
+</arg>
+                <arg f="" n="1">um projeto sobre a elevação do valor real do salário mínimo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2140:  O Congresso_  Internacional_  de_  Direitos_  Autorais enviou,  na última sexta,  uma recomendação ao ministro da Cultura,  Luiz_  Roberto_  Nascimento_  Silva,  para reativar o órgão governamental que cuidava da área da propriedade intelectual. 
+</text>
+                <arg f="" n="0">O Congresso_  Internacional_  de_  Direitos_  Autorais
+</arg>
+                <rel f="">enviou</rel>
+                <arg f="tmp" n="m">na última sexta
+</arg>
+                <arg f="" n="1">uma recomendação ao ministro da Cultura,  Luiz_  Roberto_  Nascimento_  Silva,  para reativar o órgão governamental que cuidava da área da propriedade intelectual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s179:  Os países integrantes do instituto enviam o texto com o novo acordo para seus governos antes da aprovação final,  que deve ocorrer na semana que vem. 
+</text>
+                <arg f="" n="0">Os países integrantes do instituto
+</arg>
+                <rel f="">enviam</rel>
+                <arg f="" n="1">o texto com o novo acordo para seus governos
+</arg>
+                <arg f="tmp" n="m">antes da aprovação final,  que deve ocorrer na semana que vem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

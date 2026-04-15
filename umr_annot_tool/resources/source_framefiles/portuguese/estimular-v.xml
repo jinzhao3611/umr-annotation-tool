@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="estimular.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4023:  Eu estou muito preocupado em estimular as atividades preventivas. 
+</text>
+                <rel f="">estimular</rel>
+                <arg f="" n="1">as atividades preventivas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3936:  Para estimular a participação,  a cada dois dias de trabalho as meninas ganham uma boneca. 
+</text>
+                <rel f="">estimular</rel>
+                <arg f="" n="1">a participação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3161:  Além_  de aumentar o número de cassações,  deve-  se estimular as demais CPIs sobre Empreiteiras,  financiamentos eleitorais e CUT a CPI da CUT terá o dom de trazer ﻿à tona possíveis desvios da burocracia e da praga do corporativismo,  o_  que,  acreditem,  vai acabar ajudando não apenas o PT mas a democracia. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">estimular</rel>
+                <arg f="" n="1">as demais CPIs sobre Empreiteiras,  financiamentos eleitorais e CUT a CPI da CUT terá o dom de trazer ﻿à tona possíveis desvios da burocracia e da praga do corporativismo,  o_  que,  acreditem,  vai acabar ajudando não apenas o PT mas a democracia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1763:  Essas dificuldades,  que surgiram desde o lançamento da idéia,  estimularam economistas e governo a buscar caminhos mais rápidos. 
+</text>
+                <arg f="" n="0">Essas dificuldades,  que surgiram desde o lançamento da idéia, 
+</arg>
+                <rel f="">estimularam</rel>
+                <arg f="" n="1">economistas e governo
+</arg>
+                <arg f="" n="2">a buscar caminhos mais rápidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s419:  Simplesmente tornara-  se impossível,  por razões tecnológicas,  comerciais e financeiras,  estimular o desenvolvimento com base na substituição de importações. 
+</text>
+                <rel f="">estimular</rel>
+                <arg f="" n="1">o desenvolvimento com base na substituição de importações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="estimular">
+        <note />
+    <roleset framnet="encourage.01" id="estimular.02" name="incentivar; dar estímulo" vncls="59 102">
+            <roles>
+                <role descr="convincer" n="0">
+                    <vnrole vncls="59" vntheta="Agent" />
+                    <vnrole vncls="102" vntheta="Agent" />
+                </role>
+                <role descr="impelled agent" n="1">
+                    <vnrole vncls="59" vntheta="Patient" />
+                    <vnrole vncls="102" vntheta="Theme" />
+                </role>
+                <role descr="impelled action" n="2">
+                    <vnrole vncls="59" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4024:  Nossa preocupação é um projeto que estimule no jovem uma vida sem drogas,  promovendo-  se um comportamento construtivo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">estimule</rel>
+                <arg f="" n="1">no jovem
+</arg>
+                <arg f="" n="2">uma vida sem drogas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

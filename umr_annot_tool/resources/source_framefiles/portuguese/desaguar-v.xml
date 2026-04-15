@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desaguar">
+        <note />
+    <roleset framnet="" id="desaguar.01" name="verter as águas em (destino)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s426:  Com o dólar comercial já a R$  0,  85 e o governo dizendo que não há limite para baixo,  a necessária abertura pode involuntariamente desaguar num arriscado escancaramento. 
+</text>
+                <arg f="cau" n="m">Com o dólar comercial já a R$  0,  85 e o governo dizendo que não há limite para baixo
+</arg>
+                <arg f="" n="1">a necessária abertura
+</arg>
+                <arg f="mnr" n="m">involuntariamente
+</arg>
+                <rel f="">desaguar</rel>
+                <arg f="" n="2">num arriscado escancaramento
+</arg>
+                <note>uso metafórico: significa "resultar" </note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

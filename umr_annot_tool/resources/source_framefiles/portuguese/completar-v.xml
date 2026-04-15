@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="completar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2272:  « É preciso cobrar o governo para as coisas funcionarem »,  completa Bruno_  Fanizzi,  15. 
+</text>
+                <arg f="" n="1">É preciso cobrar o governo para as coisas funcionarem
+</arg>
+                <rel f="">completa</rel>
+                <arg f="" n="0">Bruno_  Fanizzi,  15
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="completar">
+        <note />
+        <note />
+    <roleset framnet="complement.01" id="completar.02" name="juntar partes para formar um todo" vncls="-">
+            <roles>
+                <role descr="thing complementing" n="1" />
+                <role descr="thing complemented" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3083:  Os irmãos Gershwin eram tão diferentes que se completavam às maravilhas. 
+</text>
+                <arg f="" n="1">Os irmãos Gershwin
+</arg>
+                <arg f="" n="2">se
+</arg>
+                <rel f="">completavam</rel>
+                <arg f="mnr" n="m">às maravilhas
+</arg>
+                <note>reflexivo recíproco: completar-se ("to complete each other")</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="complete.01" id="completar.03" name="concluir, finalizar" vncls="55.2">
+            <roles>
+                <role descr="finisher" n="0">
+                    <vnrole vncls="55.2" vntheta="Agent" />
+                </role>
+                <role descr="task, action coming to an end" n="1">
+                    <vnrole vncls="55.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2116:  33. . .  dias serão completados na próxima segunda-  feira,  dia de eleição,  sem que os vereadores da Câmara de São_  Paulo votem algum projeto importante. 
+</text>
+                <arg f="" n="1">33. . .  dias
+</arg>
+                <rel f="">completados</rel>
+                <arg f="tmp" n="m">na próxima segunda-  feira,  dia de eleição, 
+</arg>
+                <arg f="adv" n="m">sem que os vereadores da Câmara de São_  Paulo votem algum projeto importante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1222:  Steven quer aproveitar a viagem ao Brasil para completar sua discografia dos Mutantes e conhecer Arnaldo_  Baptista. 
+</text>
+                <arg f="" n="0">Steven
+</arg>
+                <rel f="">completar</rel>
+                <arg f="" n="1">sua discografia dos Mutantes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

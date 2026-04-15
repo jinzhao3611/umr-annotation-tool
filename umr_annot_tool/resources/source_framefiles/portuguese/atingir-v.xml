@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atingir">
+        <note />
+        <note />
+    <roleset framnet="hit.01" id="atingir.01" name="causar efeito sobre" vncls="18.1 18.4">
+            <roles>
+                <role descr="agent, hitter - animate only!" n="0">
+                    <vnrole vncls="18.1" vntheta="Agent" />
+                </role>
+                <role descr="thing hit" n="1">
+                    <vnrole vncls="18.4" vntheta="Theme" />
+                    <vnrole vncls="18.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument, thing hit by or with" n="2">
+                    <vnrole vncls="18.4" vntheta="Location" />
+                    <vnrole vncls="18.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2133:  A surpresa descrita por Pedro_  Collor atingiu todos os partidos que integram a chamada « Nova_  Força » da política local,  liderada por Lessa. 
+</text>
+                <arg f="" n="0">A surpresa descrita por Pedro_  Collor
+</arg>
+                <rel f="">atingiu</rel>
+                <arg f="" n="1">todos os partidos que integram a chamada « Nova_  Força » da política local,  liderada por Lessa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s732:  E condena a disseminação de boatos,  como os que atingiram Luiz_  Inácio_  Lula_  da_  Silva na eleição de 89. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atingiram</rel>
+                <arg f="" n="1">Luiz_  Inácio_  Lula_  da_  Silva
+</arg>
+                <arg f="loc" n="m">na eleição de 89
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s472:  A greve « por empresa » atingia ontem sete empresas e 12 mil empregados. 
+</text>
+                <arg f="" n="0">A greve « por empresa »
+</arg>
+                <rel f="">atingia</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">sete empresas e 12 mil empregados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s91:  A seca que atingiu as áreas produtoras de grãos não deve causar grandes estragos na safra 1994/  95. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atingiu</rel>
+                <arg f="" n="1">as áreas produtoras de grãos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4142:  Entre cada parte do submarino há isolamento,  evitando que acidentes numa parte atinjam as outras. 
+</text>
+                <arg f="" n="0">uma parte
+</arg>
+                <rel f="">atinjam</rel>
+                <arg f="" n="1">as outras
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="achieve.01" id="atingir.02" name="alcançar" vncls="">
+            <roles>
+                <role descr="achiever" n="0" />
+                <role descr="thing achieved, gotten, accomplished" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4050:  Um programa é um planejamento para se atingir certas metas. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">atingir</rel>
+                <arg f="" n="1">certas metas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3306:  A Secretaria_  de_  Saúde da Paraíba informou que João_  Pessoa está entre as cinco capitais brasileiras que atingiram 90%  de cobertura vacinal na última campanha de multivacinação,  realizada em 90. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atingiram</rel>
+                <arg f="" n="1">90%  de cobertura vacinal na última campanha de multivacinação,  realizada em 90
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2863:  Wilson_  Barbosa(  PMDB)  subiu seis pontos,  atingindo 55% . 
+</text>
+                <rel f="">atingindo</rel>
+                <arg f="" n="1">55% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2802:  O plantio no Cerrado atingiu 5.  000 kg$ /  ha nas lavouras comerciais e mais_  de 8.  000 kg$ /  ha em áreas experimentais. 
+</text>
+                <arg f="" n="0">O plantio no Cerrado
+</arg>
+                <rel f="">atingiu</rel>
+                <arg f="" n="1">5.  000 kg$ /  ha nas lavouras comerciais e mais_  de 8.  000 kg$ /  ha em áreas experimentais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2465:  O Japão é o principal alvo da lista por barreiras aos produtos,  serviços e investimentos norte-  americanos,  que segundo o USTR,  colaboraram para que o déficit dos EUA no comércio com os japoneses atingisse US$  60 bilhões no ano passado. 
+</text>
+                <arg f="" n="0">o déficit dos EUA no comércio com os japoneses
+</arg>
+                <rel f="">atingisse</rel>
+                <arg f="" n="1">US$  60 bilhões
+</arg>
+                <arg f="loc" n="m">no ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2399:  Já o sistema de tratamento de esgotos residenciais,  com a estação do ABC,  deverá atingir 150 toneladas$ /  dia. 
+</text>
+                <arg f="" n="0">o sistema de tratamento de esgotos residenciais,  com a estação do ABC, 
+</arg>
+                <rel f="">atingir</rel>
+                <arg f="" n="1">150 toneladas$ /  dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2342:  Segundo Migues,  algumas fábricas da Autolatina ainda não atingiram o padrão de excelência Q1. 
+</text>
+                <arg f="" n="0">algumas fábricas da Autolatina
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">atingiram</rel>
+                <arg f="" n="1">o padrão de excelência Q1
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2178:  Em_  relação_  ao mesmo mês do ano passado,  quando os negócios atingiram 139,  8 toneladas de ouro,  a redução é de 61,  37% . 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="0">os negócios
+</arg>
+                <rel f="">atingiram</rel>
+                <arg f="" n="1">139,  8 toneladas de ouro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1756:  No acumulado do mês atinge 43,  85% ,  superando as variações de março(  40,  91% ) ,  abril(  40,  23% )  e maio(  40,  23% ) . 
+</text>
+                <arg f="loc" n="m">No acumulado do mês
+</arg>
+                <rel f="">atinge</rel>
+                <arg f="" n="1">43,  85% 
+</arg>
+                <arg f="adv" n="m">superando as variações de março(  40,  91% ) ,  abril(  40,  23% )  e maio(  40,  23% ) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1568:  O faturamento bruto atingiu R$  615,  7 mil,  equivalentes a US$  721,  8 mil. 
+</text>
+                <arg f="" n="0">O faturamento bruto
+</arg>
+                <rel f="">atingiu</rel>
+                <arg f="" n="1">R$  615,  7 mil,  equivalentes a US$  721,  8 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1181:  Dia 19 último,  o 2º Special_  Girolando atingiu a média de R$  3.  600 por 44 fêmeas. 
+</text>
+                <arg f="tmp" n="m">Dia 19 último
+</arg>
+                <arg f="" n="0">o 2º Special_  Girolando
+</arg>
+                <rel f="">atingiu</rel>
+                <arg f="" n="1">a média de R$  3.  600 por 44 fêmeas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1180:  Na semana passada,  o mercado de gado leiteiro foi marcado por uma surpresa:  o gado girolando atingiu preço superior ao holandês puro-  sangue nos leilões. 
+</text>
+                <arg f="" n="0">o gado girolando
+</arg>
+                <rel f="">atingiu</rel>
+                <arg f="" n="1">preço superior ao holandês puro-  sangue
+</arg>
+                <arg f="loc" n="m">nos leilões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s719:  De que adiantaria os jornais do dia seguinte omitirem os nomes,  se eles já haviam sido arrastados ﻿à lama por um noticiário que atinge cerca_  de 60 milhões de pessoas,  certamente mais do_  que a tiragem conjunta de todos os jornais brasileiros? 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atinge</rel>
+                <arg f="" n="1">cerca_  de 60 milhões de pessoas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

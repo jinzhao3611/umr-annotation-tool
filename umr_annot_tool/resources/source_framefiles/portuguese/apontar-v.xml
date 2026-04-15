@@ -1,0 +1,242 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apontar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="point.01" id="apontar.01" name="indicar" vncls="40.3.1-1">
+            <roles>
+                <role descr="pointer" n="0">
+                    <vnrole vncls="40.3.1-1" vntheta="Agent" />
+                </role>
+                <role descr="thing pointed (defaults to finger)" n="1">
+                    <vnrole vncls="40.3.1-1" vntheta="Patient" />
+                </role>
+                <role descr="pointed at (a variety of prepositions)" n="2">
+                    <vnrole vncls="40.3.1-1" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3835:  Por razões que a própria razão desconhece,  no sorteio do local do jogo decisivo,  a bolinha quase sempre apontava o assustador estádio de São_  Januário. 
+</text>
+                <arg f="cau" n="m">Por razões que a própria razão desconhece
+</arg>
+                <arg f="loc" n="m">no sorteio do local do jogo decisivo
+</arg>
+                <arg f="" n="1">a bolinha
+</arg>
+                <arg f="tmp" n="m">quase sempre
+</arg>
+                <rel f="">apontava</rel>
+                <arg f="" n="2">o assustador estádio de São_  Januário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2805:  Com essa constatação enviesada de que o alemão só chegou em primeiro porque o brasileiro cometeu uma bobagem,  a imprensa coroou o festival « sennista » da semana anterior,  quando todas- -  sem exceção,  todas- -  as coberturas apontavam a vitória de Ayrton_  Senna em Interlagos. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="0">todas- -  sem exceção,  todas- -  as coberturas
+</arg>
+                <rel f="">apontavam</rel>
+                <arg f="" n="2">a vitória de Ayrton_  Senna em Interlagos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2164:  A pesquisa,  divulgada no último sábado,  aponta o candidato do PSDB em primeiro lugar,  com 48%  das intenções de voto. 
+</text>
+                <arg f="" n="0">A pesquisa,  divulgada no último sábado, 
+</arg>
+                <rel f="">aponta</rel>
+                <arg f="" n="2">o candidato do PSDB em primeiro lugar,  com 48%  das intenções de voto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2123:  Como num grandioso « mea_  culpa »,  os últimos filmes que Eastwood dirigiu « Os_  Imperdoáveis » e « Um_  Mundo_  Perfeito » apontam justamente para uma crise do herói,  de sua autoridade restauradora,  de sua integridade monolítica. 
+</text>
+                <arg f="mnr" n="m">Como num grandioso « mea_  culpa »
+</arg>
+                <arg f="" n="0">os últimos filmes que Eastwood dirigiu « Os_  Imperdoáveis » e « Um_  Mundo_  Perfeito »
+</arg>
+                <rel f="">apontam</rel>
+                <arg f="adv" n="m">justamente
+</arg>
+                <arg f="" n="2">para uma crise do herói,  de sua autoridade restauradora,  de sua integridade monolítica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1081:  O balanço aponta para uma queda nos investimentos nas áreas de saúde,  educação e habitação e redução nos salários da prefeitura. 
+</text>
+                <arg f="" n="1">O balanço
+</arg>
+                <rel f="">aponta</rel>
+                <arg f="" n="2">para uma queda nos investimentos nas áreas de saúde,  educação e habitação e redução nos salários da prefeitura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s74:  Afirmou que o conjunto de fatos,  em_  princípio,  aponta o envolvimento de Quércia. 
+</text>
+                <arg f="" n="1">o conjunto de fatos
+</arg>
+                <arg f="tmp" n="m">em_  princípio
+</arg>
+                <rel f="">aponta</rel>
+                <arg f="" n="2">o envolvimento de Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="cite.01" id="apontar.02" name="citar" vncls="29.2 37.1">
+            <roles>
+                <role descr="citer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="37.1" vntheta="Agent" />
+                </role>
+                <role descr="thing cited" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="37.1" vntheta="Topic" />
+                </role>
+                <role descr="secondary attribute, cited-as" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3552:  Ambos apontam o baixo volume de captação de recursos com a venda de CDBs aos investidores como o principal fator de insegurança dos bancos na definição dos custos dos empréstimos. 
+</text>
+                <arg f="" n="0">Ambos
+</arg>
+                <rel f="">apontam</rel>
+                <arg f="" n="1">o baixo volume de captação de recursos com a venda de CDBs aos investidores
+</arg>
+                <arg f="" n="2">como o principal fator de insegurança dos bancos na definição dos custos dos empréstimos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3015:  Os reservas da seleção brasileira Viola e Ronaldão e vários componentes da Nigéria também foram apontados. 
+</text>
+                <arg f="" n="1">Os reservas da seleção brasileira Viola e Ronaldão e vários componentes da Nigéria
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">apontados</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2564:  O atacante Casagrande aponta a falta de entrosamento como uma das causas para o seu baixo desempenho. 
+</text>
+                <arg f="" n="0">O atacante Casagrande
+</arg>
+                <rel f="">aponta</rel>
+                <arg f="" n="1">a falta de entrosamento
+</arg>
+                <arg f="" n="2">como uma das causas para o seu baixo desempenho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1861:  As listas apontam quase todas as divisões e departamentos da Polícia_  Civil do Rio como recebedoras de quantias mensais. 
+</text>
+                <arg f="" n="0">As listas
+</arg>
+                <rel f="">apontam</rel>
+                <arg f="" n="1">quase todas as divisões e departamentos da Polícia_  Civil do Rio
+</arg>
+                <arg f="" n="2">como recebedoras de quantias mensais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="point.02" id="apontar.03" name="mostrar, identificar" vncls="-">
+            <roles>
+                <role descr="pointer" n="0" />
+                <role descr="pointed at" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2953:  Outros especialistas apontam mais defeitos técnicos na MP. 
+</text>
+                <arg f="" n="0">Outros especialistas
+</arg>
+                <rel f="">apontam</rel>
+                <arg f="" n="1">mais defeitos técnicos
+</arg>
+                <arg f="" n="2">na MP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2949:  Saulo_  Ramos aponta irregularidades na MP
+</text>
+                <arg f="" n="0">Saulo_  Ramos
+</arg>
+                <rel f="">aponta</rel>
+                <arg f="" n="1">irregularidades
+</arg>
+                <arg f="" n="2">na MP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2900:  Não foram apontados suspeitos pelo atentado embora tenha sido dito que a polícia achou pistas dos terroristas. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">apontados</rel>
+                <arg f="" n="1">suspeitos pelo atentado
+</arg>
+                <arg f="adv" n="m">embora tenha sido dito que a polícia achou pistas dos terroristas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2302:  Perícia feita pela PF,  com três cientistas,  aponta sobrepreço de 343%  em importações de Israel para a Unesp(  Universidade_  Estadual_  Paulista) 
+</text>
+                <arg f="" n="0">Perícia feita pela PF,  com três cientistas, 
+</arg>
+                <rel f="">aponta</rel>
+                <arg f="" n="1">sobrepreço de 343% 
+</arg>
+                <arg f="" n="2">em importações de Israel para a Unesp(  Universidade_  Estadual_  Paulista) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

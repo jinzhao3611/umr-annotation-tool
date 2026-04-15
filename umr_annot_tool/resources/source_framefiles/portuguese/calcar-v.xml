@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="calcar">
+        <note />
+    <roleset framnet="base.01" id="calcar.01" name="basear, apoiar" vncls="97.1">
+            <roles>
+                <role descr="institution" n="1">
+                    <vnrole vncls="97.1" vntheta="Agent" />
+                </role>
+                <role descr="location" n="M">
+                    <vnrole vncls="97.1" vntheta="Theme1" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2879:  Os vocais de Callahan e English são calcados ao extremo nos de Michael_  Stipe e Mike_  Mills. 
+</text>
+                <arg f="" n="1">Os vocais de Callahan e English
+</arg>
+                <rel f="">calcados</rel>
+                <arg f="ext" n="m">ao extremo
+</arg>
+                <arg f="" n="2">nos de Michael_  Stipe e Mike_  Mills
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

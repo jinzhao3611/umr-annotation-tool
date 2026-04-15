@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="equilibrar">
+        <note />
+    <roleset framnet="balance.01" id="equilibrar.01" name="promover o equilíbrio; estabilizar" vncls="47.6 45.4">
+            <roles>
+                <role descr="balancer, agent" n="0">
+                    <vnrole vncls="47.6" vntheta="agent" />
+                    <vnrole vncls="45.4" vntheta="agent" />
+                </role>
+                <role descr="thing balanced" n="1">
+                    <vnrole vncls="47.6" vntheta="theme" />
+                    <vnrole vncls="45.4" vntheta="patient" />
+                </role>
+                <role descr="in comparison to" n="2">
+                    <vnrole vncls="47.6" vntheta="location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4082:  A intenção de Fleury é vender as ações para equilibrar as finanças e começar a pagar a dívida do Estado,  estimada em R$  31 bilhões. 
+</text>
+                <rel f="">equilibrar</rel>
+                <arg f="" n="1">as finanças
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2841:  A média no período de reajuste equilibra as vantagens de cada contratante durante todo período de uniformidade nominal do aluguel. 
+</text>
+                <arg f="" n="0">A média no período de reajuste
+</arg>
+                <rel f="">equilibra</rel>
+                <arg f="" n="1">as vantagens de cada contratante
+</arg>
+                <arg f="tmp" n="m">durante todo período de uniformidade nominal do aluguel
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

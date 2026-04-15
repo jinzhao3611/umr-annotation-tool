@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="calar">
+        <note />
+    <roleset framnet="shut.01" id="calar.01" name="fazer com que deixe de emitir som" vncls="45.4">
+            <roles>
+                <role descr="person doing the closing" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing closing" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1086:  « Gostamos de gente que cala a boca e faz seu trabalho,  como Ronaldo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">cala</rel>
+                <arg f="" n="1">a boca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

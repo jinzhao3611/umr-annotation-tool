@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desdenhar">
+        <note />
+    <roleset framnet="disdain.01" id="desdenhar.01" name="desprezar" vncls="31.2">
+            <roles>
+                <role descr="disdainer" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="disdained" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3340:  Avisado do alerta do governador,  Itamar desdenhou os riscos e manteve a viagem. 
+</text>
+                <arg f="prd" n="m">Avisado do alerta do governador
+</arg>
+                <arg f="" n="0">Itamar
+</arg>
+                <rel f="">desdenhou</rel>
+                <arg f="" n="1">os riscos
+</arg>
+                <note>Arg1 não preposicionado</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

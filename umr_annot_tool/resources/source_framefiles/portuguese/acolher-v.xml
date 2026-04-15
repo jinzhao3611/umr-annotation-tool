@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acolher">
+        <note />
+    <roleset framnet="accept.01" id="acolher.01" name="receber de boa vontade" vncls="13.5.2 29.2">
+            <roles>
+                <role descr="acceptor" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="thing accepted" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="accepted-from" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="attribute" n="3">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2299:  Os líderes acertaram que,  havendo quorum,  o Orçamento de 95 só não será votado hoje se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas. 
+</text>
+                <rel f="">acolhendo</rel>
+                <arg f="" n="1">cerca_  de R$  2,  5 bilhões em emendas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

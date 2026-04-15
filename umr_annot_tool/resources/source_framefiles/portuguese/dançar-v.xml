@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dançar">
+        <note />
+    <roleset framnet="dance.01" id="dançar.01" name="executar passos ao som da música" vncls="51.5 26.7-1">
+            <roles>
+                <role descr="dancer" n="0">
+                    <vnrole vncls="51.5" vntheta="Agent" />
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="dance" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="partner" n="2">
+                    <vnrole vncls="51.5" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3077:  A coreografia de Susan_  Marshall que o Ballet_  de_  Lyon dança hoje chama-  se « Central_  Figure »,  com música de Philip_  Glass. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o Ballet_  de_  Lyon
+</arg>
+                <rel f="">dança</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1909:  Dançamos em hospitais e manicômios »,  diz uma das tias do noivo,  uma senhora,  para as colegas « peruas ». 
+</text>
+                <rel f="">Dançamos</rel>
+                <arg f="loc" n="m">em hospitais e manicômios
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mencionar">
+        <note />
+    <roleset framnet="mention.01" id="mencionar.01" name="dizer" vncls="37.7">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="utterance, entity being mentioned" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <role descr="secondary attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2457:  Sem mencionar o nome,  o próprio FHC deu crédito a Collor: 
+</text>
+                <rel f="">mencionar</rel>
+                <arg f="" n="1">o nome
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

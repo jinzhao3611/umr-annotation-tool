@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="intermediar">
+        <note />
+    <roleset framnet="mediate.01" id="intermediar.01" name="servir como mediador" vncls="-">
+            <roles>
+                <role descr="resolver, agent" n="0" />
+                <role descr="thing mediated" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3481:  Ao se oferecer para intermediar o conflito,  a Rússia deu aos seus aliados sérvios a possibilidade de uma retirada honrosa. 
+</text>
+                <rel f="">intermediar</rel>
+                <arg f="" n="1">o conflito
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

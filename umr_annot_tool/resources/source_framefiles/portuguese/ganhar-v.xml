@@ -1,0 +1,507 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ganhar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="earn.01" id="ganhar.01" name="auferir lucro ou salário; receber dinheiro" vncls="13.5.1">
+            <roles>
+                <role descr="earner" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="wages" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <role descr="source" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4203:  Em poucos anos ganhou mais_  de US$  1 milhão ». 
+</text>
+                <arg f="tmp" n="m">Em poucos anos
+</arg>
+                <rel f="">ganhou</rel>
+                <arg f="" n="1">mais_  de US$  1 milhão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3854:  « Onze milhões de aposentados ganham mínimo. 
+</text>
+                <arg f="" n="0">Onze milhões de aposentados
+</arg>
+                <rel f="">ganham</rel>
+                <arg f="" n="1">mínimo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3095:  O jogador,  sabendo que ganharia mais_  de US$  250 mil,  fez o_  que a voz ordenou. 
+</text>
+                <arg f="" n="0">O jogador
+</arg>
+                <rel f="">ganharia</rel>
+                <arg f="" n="1">mais_  de US$  250 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2613:  Rodney_  King ganha US$  3,  8 mi
+</text>
+                <arg f="" n="0">Rodney_  King
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="1">US$  3,  8 mi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2412:  Agora suponha que a economia toda vire um bando de gente que ganha mesada e de gente que dá mesada. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="1">mesada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="receive.01" id="ganhar.02" name="receber" vncls="13.5.2">
+            <roles>
+                <role descr="receiver" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="thing gotten" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="received from" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="price, in exchange for" n="3" />
+                <role descr="attribute of arg1" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3936:  Para estimular a participação,  a cada dois dias de trabalho as meninas ganham uma boneca. 
+</text>
+                <arg f="pnc" n="m">Para estimular a participação
+</arg>
+                <arg f="tmp" n="m">a cada dois dias de trabalho
+</arg>
+                <arg f="" n="0">as meninas
+</arg>
+                <rel f="">ganham</rel>
+                <arg f="" n="1">uma boneca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3912:  Rodado no início da década de 50,  época áurea do macarthismo perseguição a artistas e intelectuais comunistas ou acusados de simpatizar com essa ideologia liderada pelo senador Joseph_  McCarthy nos EUA,  o filme ganha versão para CD-  ROM,  com direito a um extenso material de referência. 
+</text>
+                <arg f="prd" n="m">Rodado no início da década de 50,  época áurea do macarthismo perseguição a artistas e intelectuais comunistas ou acusados de simpatizar com essa ideologia liderada pelo senador Joseph_  McCarthy nos EUA, 
+</arg>
+                <arg f="" n="0">o filme
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="1">versão para CD-  ROM,  com direito a um extenso material de referência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3782:  Tabela ganha mais informações
+</text>
+                <arg f="" n="0">Tabela
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="1">mais informações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3370:  Vila_  Madalena e Pinheiros ganharam novas opções noturnas nesta semana. 
+</text>
+                <arg f="" n="0">Vila_  Madalena e Pinheiros
+</arg>
+                <rel f="">ganharam</rel>
+                <arg f="" n="1">novas opções noturnas
+</arg>
+                <arg f="tmp" n="m">nesta semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2917:  Os carros ganharam ainda proteção sob o cárter e sob o tanque de gasolina,  para suportar com menor risco os choques contra as pedras. 
+</text>
+                <arg f="" n="0">Os carros
+</arg>
+                <rel f="">ganharam</rel>
+                <arg f="dis" n="m">ainda
+</arg>
+                <arg f="" n="1">proteção sob o cárter e sob o tanque de gasolina
+</arg>
+                <arg f="pnc" n="m">para suportar com menor risco os choques contra as pedras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2248:  Ele converteu 23 pontos e ganhou 17 rebotes. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">ganhou</rel>
+                <arg f="" n="1">17 rebotes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1806:  Na loja de Nova_  York,  o Compaq_  Aero está por US$  996,  97(  se chegar às 9h da manhã,  ganha o cupom de desconto de US$  100) . 
+</text>
+                <arg f="adv" n="m">se chegar às 9h da manhã
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="1">o cupom de desconto de US$  100
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1427:  Ganhou um abraço,  um beijo no rosto,  e foi para a Mooca estourar uma champanhe ﻿à meia-  noite. 
+</text>
+                <rel f="">Ganhou</rel>
+                <arg f="" n="1">um abraço,  um beijo no rosto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s911:  Na promoção o cliente ganha uma diária grátis a cada três. 
+</text>
+                <arg f="loc" n="m">Na promoção
+</arg>
+                <arg f="" n="0">o cliente
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="1">uma diária grátis
+</arg>
+                <arg f="tmp" n="m">a cada três
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s680:  A novela que Janete_  Clair assinou entre junho de 70 e julho de 71 ganhará nova versão na Globo em 95
+</text>
+                <arg f="" n="0">A novela que Janete_  Clair assinou entre junho de 70 e julho de 71
+</arg>
+                <rel f="">ganhará</rel>
+                <arg f="" n="1">nova versão
+</arg>
+                <arg f="loc" n="m">na Globo
+</arg>
+                <arg f="tmp" n="m">em 95
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s382:  Hoje,  a praia ganhou nova infra-  estrutura com bares,  quiosques,  sistema de iluminação,  banheiros e quadras de esportes. 
+</text>
+                <arg f="tmp" n="m">Hoje
+</arg>
+                <arg f="" n="0">a praia
+</arg>
+                <rel f="">ganhou</rel>
+                <arg f="" n="1">nova infra-  estrutura
+</arg>
+                <arg f="prd" n="m">com bares,  quiosques,  sistema de iluminação,  banheiros e quadras de esportes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s339:  Tudo indica que os telejornais da Globo vão ganhar novo repórter especial. 
+</text>
+                <arg f="" n="0">os telejornais da Globo
+</arg>
+                <rel f="">ganhar</rel>
+                <arg f="" n="1">novo repórter especial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="win.01" id="ganhar.03" name="vencer e receber prêmio em disputa ou sorteio" vncls="13.5.1">
+            <roles>
+                <role descr="winner" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing won (contest or prize)" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="beneficiary" n="2" />
+                <role descr="loser, giver of prize" n="3" />
+                <role descr="in-exchange-for" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3892:  Em 1989,  após ganhar diversos títulos paulistas e brasileiros no kart,  Barrichello disputou o Campeonato_  Brasileiro_  de_  Fórmula_  Ford,  terminando em quarto lugar. 
+</text>
+                <rel f="">ganhar</rel>
+                <arg f="" n="1">diversos títulos paulistas e brasileiros
+</arg>
+                <arg f="loc" n="m">no kart
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3738:  A estratégia montada por Quércia tem o objetivo de ganhar a prévia do PMDB que vai definir o candidato do partido ﻿à Presidência no próximo dia 15,  bem_  como manter o PMDB unido durante a campanha. 
+</text>
+                <rel f="">ganhar</rel>
+                <arg f="" n="1">a prévia do PMDB que vai definir o candidato do partido ﻿à Presidência no próximo dia 15,  bem_  como manter o PMDB unido durante a campanha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3402:  Em Física,  ganhou a Agência_  Meteorológica_  Japonesa por um estudo de sete anos sobre a hipótese de terremotos serem causados por peixes rebolando suas caudas. 
+</text>
+                <arg f="" n="1">Em Física
+</arg>
+                <rel f="">ganhou</rel>
+                <arg f="" n="0">a Agência_  Meteorológica_  Japonesa
+</arg>
+                <arg f="" n="4">por um estudo de sete anos sobre a hipótese de terremotos serem causados por peixes rebolando suas caudas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3401:  Em Medicina,  ganharam Richard_  Dart e Richard_  Gustafson,  da Universidade_  de_  Arizona,  por fracassarem ao tratar um paciente mordido por uma cascavel com choques elétricos aplicados no lábio durante cinco minutos. 
+</text>
+                <arg f="" n="1">Em Medicina
+</arg>
+                <rel f="">ganharam</rel>
+                <arg f="" n="0">Richard_  Dart e Richard_  Gustafson,  da Universidade_  de_  Arizona, 
+</arg>
+                <arg f="" n="4">por fracassarem ao tratar um paciente mordido por uma cascavel com choques elétricos aplicados no lábio durante cinco minutos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1445:  Entretanto,  disse não saber « que perdas são essas »,  e que « até agora todo mundo está ganhando com a URV ». 
+</text>
+                <arg f="tmp" n="m">até agora
+</arg>
+                <arg f="" n="0">todo mundo
+</arg>
+                <rel f="">ganhando</rel>
+                <arg f="mnr" n="m">com a URV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1150:  Muitas empresas entraram na Justiça para obter o direito de contabilizar essa corrosão inflacionária em seus balanços,  e ganharam as ações em primeira instância. 
+</text>
+                <arg f="" n="0">Muitas empresas
+</arg>
+                <rel f="">ganharam</rel>
+                <arg f="" n="1">as ações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s714:  O técnico Sacchi elogiou ontem a « bravura » de seus jogadores,  especialmente de Baggio,  « com seu toque mágico para ganhar partidas ». 
+</text>
+                <rel f="">ganhar</rel>
+                <arg f="" n="1">partidas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s543:  Na sua defesa encaminhada ontem ao TSE,  ela admitiu ter cometido um « erro de interpretação » na produção da reportagem na_  qual Franco afirma que o PT,  caso ganhe as eleições presidenciais,  pode dar « um calote na dívida interna ». 
+</text>
+                <arg f="" n="0">o PT
+</arg>
+                <rel f="">ganhe</rel>
+                <arg f="" n="1">as eleições presidenciais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s518:  Rio_  Branco ganha do Santo_  André por 2 a 0
+</text>
+                <arg f="" n="0">Rio_  Branco
+</arg>
+                <rel f="">ganha</rel>
+                <arg f="" n="3">do Santo_  André
+</arg>
+                <arg f="ext" n="m">por 2 a 0
+</arg>
+                <note>em inglês, "to beat" é mais adequado</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="gain.02" id="ganhar.04" name="adquirir" vncls="13.5.1">
+            <roles>
+                <role descr="agent, entity acquiring something" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing acquired" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="source, gained from" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <role descr="benefactive, gained for" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2855:  Atuando em conjunto,  os franqueados ganham força e passam a ter voz ativa em questões vitais para o negócio,  como definicão de produtos,  prazos de pagamento e estratégias de propaganda. 
+</text>
+                <arg f="adv" n="m">Atuando em conjunto
+</arg>
+                <arg f="" n="0">os franqueados
+</arg>
+                <rel f="">ganham</rel>
+                <arg f="" n="1">força
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2851:  Organizados em associação,  os franqueados ganham maior poder de influência frente_  aos franqueadores
+</text>
+                <arg f="adv" n="m">Organizados em associação
+</arg>
+                <arg f="" n="0">os franqueados
+</arg>
+                <rel f="">ganham</rel>
+                <arg f="" n="1">maior poder de influência frente_  aos franqueadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2363:  Ele teve importante papel ao manter a política externa e muitos assuntos internos fora_  da esfera decisória da UE,  ganhando a simpatia britânica. 
+</text>
+                <rel f="">ganhando</rel>
+                <arg f="" n="1">a simpatia britânica
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="sair_ganhando">
+        <note />
+    <roleset framnet="win.01" id="ganhar.05" name="CP expressão idiomática: levar vantagem" vncls="13.5.1">
+            <roles>
+                <role descr="winner" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing won (contest or prize)" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="beneficiary" n="2" />
+                <role descr="loser, giver of prize" n="3" />
+                <role descr="in-exchange-for" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2839:  Portanto,  na primeira metade,  o locador sai ganhando,  pois recebe mais aluguel do_  que vale a locação. 
+</text>
+                <arg f="tmp" n="m">Portanto
+</arg>
+                <arg f="tmp" n="m">na primeira metade
+</arg>
+                <arg f="" n="1">o locador
+</arg>
+                <rel f="">ganhando</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1559:  Na disputa pelo mercado de impressoras quem sai ganhando é o consumidor. 
+</text>
+                <arg f="loc" n="m">Na disputa pelo mercado de impressoras
+</arg>
+                <rel f="">ganhando</rel>
+                <arg f="" n="0">o consumidor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1350:  Os contribuintes que pagarem seus tributos(  IPTU,  ISS etc. )  hoje sairão ganhando,  pois o cálculo será feito pela UFM de R$  26,  54. 
+</text>
+                <arg f="" n="0">Os contribuintes que pagarem seus tributos(  IPTU,  ISS etc. ) 
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">ganhando</rel>
+                <arg f="cau" n="m">pois o cálculo será feito pela UFM de R$  26,  54
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

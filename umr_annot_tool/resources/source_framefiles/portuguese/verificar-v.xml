@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="verify.01" id="verificar.01" name="averiguar; confirmar" vncls="-">
+            <roles>
+                <role descr="verifier" n="0" />
+                <role descr="verified" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3784:  O uso da comparação anualizada permite verificar a variação da atividade industrial sem a influência de fatores sazonais. 
+</text>
+                <rel f="">verificar</rel>
+                <arg f="" n="1">a variação da atividade industrial sem a influência de fatores sazonais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3681:  « Compramos o título para verificar,  levei para casa e não enxerguei nada »,  disse ontem Vera_  Melo_  Araújo,  chefe do Departamento_  de_  Fiscalização da Susep. 
+</text>
+                <rel f="">verificar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3562:  Vamos verificar o_  que houve com essas matérias-  primas.  »
+</text>
+                <rel f="">verificar</rel>
+                <arg f="" n="1">o_  que houve com essas matérias-  primas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3533:  Entretanto,  há possibilidade de queda nas cotações externas nos próximos meses,  em especial no segundo semestre,  quando se verifica a colheita de arroz no hemisfério Norte. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">verifica</rel>
+                <arg f="" n="1">a colheita de arroz no hemisfério Norte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3208:  De_  acordo com a Enciclopédia_  Britânica,  o linchamento é uma prática que se verifica em momentos de instabilidade ou de ameaça de anarquia. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">verifica</rel>
+                <arg f="tmp" n="m">em momentos de instabilidade ou de ameaça de anarquia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2589:  Porém,  se o total de junho for comparado com o mesmo mês de 93,  verifica-  se aumento de 28,  32% . 
+</text>
+                <arg f="dis" n="m">Porém
+</arg>
+                <arg f="adv" n="m">se o total de junho for comparado com o mesmo mês de 93
+</arg>
+                <rel f="">verifica-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">aumento de 28,  32% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2533:  O ladrão verificou qual era o saldo da conta de Maria_  Estela e,  em_  seguida,  retirou R$  225 do caixa. 
+</text>
+                <arg f="" n="0">O ladrão
+</arg>
+                <rel f="">verificou</rel>
+                <arg f="" n="1">qual era o saldo da conta de Maria_  Estela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1359:  A modelo Monique_  Evans,  um dos destaques do Carnaval carioca deste ano,  vai submeter-  se a uma tomografia computadorizada na próxima semana para verificar a origem de « um pontinho » que apareceu em seu rim. 
+</text>
+                <rel f="">verificar</rel>
+                <arg f="" n="1">a origem de « um pontinho » que apareceu em seu rim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1341:  Se separar as opiniões conforme a característica do entrevistado,  terá verificado igualmente que todos os empresários ouvidos são a_  favor. 
+</text>
+                <arg f="adv" n="m">Se separar as opiniões conforme a característica do entrevistado
+</arg>
+                <rel f="">verificado</rel>
+                <arg f="dis" n="m">igualmente
+</arg>
+                <arg f="" n="1">que todos os empresários ouvidos são a_  favor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s124:  Para fazer uma boa compra,  a técnica do Procon recomenda ao consumidor que verifique se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente. 
+</text>
+                <arg f="" n="0">o consumidor
+</arg>
+                <rel f="">verifique</rel>
+                <arg f="" n="1">se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

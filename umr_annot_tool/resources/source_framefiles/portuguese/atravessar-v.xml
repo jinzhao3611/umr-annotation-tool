@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atravessar">
+        <note />
+        <note />
+    <roleset framnet="cross.02" id="atravessar.01" name="passar por lugar " vncls="51.1-1">
+            <roles>
+                <role descr="entity in motion" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="barrier" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1246:  A emoção cresce quando atravesso o salão de festas e chego às salas do museu,  do Memorial_  de_  Menininha_  do_  Gantois. 
+</text>
+                <rel f="">atravesso</rel>
+                <arg f="" n="1">o salão de festas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.12" id="atravessar.02" name="experimentar, vivenciar" vncls="-">
+            <roles>
+                <role descr="experiencer" n="1" />
+                <role descr="experienced" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3544:  « Vivemos ainda dias difíceis,  num contexto econômico,  social e político em que as necessidades básicas de nossas forças( . . . )  têm sofrido severamente as agruras que toda nação atravessa »,  disse,  em saudação enviada ao Exército. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">toda nação
+</arg>
+                <rel f="">atravessa</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2315:  Ninguém ignora os terríveis problemas que o país atravessa,  dos_  quais a corrupção policial e os níveis de violência são apenas uma faceta. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o país
+</arg>
+                <rel f="">atravessa</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

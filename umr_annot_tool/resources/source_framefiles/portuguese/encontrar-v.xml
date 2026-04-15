@@ -1,0 +1,435 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encontrar">
+        <note />
+        <note />
+    <roleset framnet="encounter.01" id="encontrar.01" name="deparar-se com" vncls="-">
+            <roles>
+                <role descr="entity encountering something" n="0" />
+                <role descr="entity encountered " n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4077:  Os candidatos da Bahia estão encontrando certa dificuldade em contratar cantores para animar suas campanhas. 
+</text>
+                <arg f="" n="0">Os candidatos da Bahia
+</arg>
+                <rel f="">encontrando</rel>
+                <arg f="" n="1">certa dificuldade em contratar cantores para animar suas campanhas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1416:  O Jabaury_  Jr.  a gente encontra toda hora. 
+</text>
+                <arg f="" n="1">O Jabaury_  Jr. 
+</arg>
+                <arg f="" n="0">a gente
+</arg>
+                <rel f="">encontra</rel>
+                <arg f="tmp" n="m">toda hora
+</arg>
+                <note>encontrar de forma não combinada (diferente de encontrar-se com)</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="find.01" id="encontrar.02" name="achar" vncls="13.5.1">
+            <roles>
+                <role descr="finder" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing found" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, found for" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3954:  Polícia_  Civil encontrou dois homens amarrados,  amordaçados e de olhos vendados,  num barraco da favela Nova_  Brasília(  zona norte) . 
+</text>
+                <arg f="" n="0">Polícia_  Civil
+</arg>
+                <rel f="">encontrou</rel>
+                <arg f="" n="1">dois homens amarrados,  amordaçados e de olhos vendados
+</arg>
+                <arg f="loc" n="m">num barraco da favela Nova_  Brasília(  zona norte) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3741:  No caso de ontem,  um garoto de 14 anos foi encontrado enforcado numa viga em sua escola em Yorii,  50 km a sudoeste de Tóquio. 
+</text>
+                <arg f="loc" n="m">No caso de ontem
+</arg>
+                <arg f="" n="1">um garoto de 14 anos
+</arg>
+                <rel f="">encontrado</rel>
+                <arg f="mnr" n="m">enforcado numa viga em sua escola em Yorii,  50 km a sudoeste de Tóquio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3116:  Quando a gente se diz engajado,  corre o risco de evocar modelos anteriores e o engajamento hoje deve encontrar formas novas. 
+</text>
+                <arg f="" n="0">o engajamento
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">encontrar</rel>
+                <arg f="" n="1">formas novas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2965:  Um indigente conhecido como Daniel foi encontrado caído na rua Canindé na madrugada de ontem por policiais que estavam fazendo patrulhamento. 
+</text>
+                <arg f="" n="1">Um indigente conhecido como Daniel
+</arg>
+                <rel f="">encontrado</rel>
+                <arg f="mnr" n="m">caído na rua Canindé na madrugada de ontem
+</arg>
+                <arg f="cau" n="m">por policiais que estavam fazendo patrulhamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2758:  « Temos problemas com clientes e fornecedores que não conseguem encontrar a empresa »,  afirma Sérgio_  Ueta,  gerente administrativo da Ueta_  Indústria_  e_  Comércio_  de_  Aparelhos_  Eletrônicos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">encontrar</rel>
+                <arg f="" n="1">a empresa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2699:  Então,  os homens encontraram um lugar plano e resolveram construir uma torre que chegasse até o céu. 
+</text>
+                <arg f="" n="0">os homens
+</arg>
+                <rel f="">encontraram</rel>
+                <arg f="" n="1">um lugar plano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2651:  Crianças norte-  americanas encontram em maio mais dois programas educativos em CD-  ROM. 
+</text>
+                <arg f="" n="0">Crianças norte-  americanas
+</arg>
+                <rel f="">encontram</rel>
+                <arg f="tmp" n="m">em maio
+</arg>
+                <arg f="" n="1">mais dois programas educativos em CD-  ROM
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2495:  Não foi difícil encontrar patrocinadores para o projeto,  segundo Antonio_  Carlos_  de_  Moura,  35,  diretor comercial da empresa Folha_  da_  Manhã_  S/  A,  que edita a Folha. 
+</text>
+                <rel f="">encontrar</rel>
+                <arg f="" n="1">patrocinadores para o projeto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2387:  Em Miami,  duas bombas caseiras(  coquetéis Molotov)  foram encontradas ontem em_  frente ﻿à revista cubana « Replica »,  que apóia as negociações entre Cuba e EUA para tentar resolver a crise. 
+</text>
+                <arg f="loc" n="m">Em Miami
+</arg>
+                <arg f="" n="1">duas bombas caseiras(  coquetéis Molotov) 
+</arg>
+                <rel f="">encontradas</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em_  frente ﻿à revista cubana « Replica »,  que apóia as negociações entre Cuba e EUA para tentar resolver a crise
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1870:  Para ele,  os clubes precisam encontrar uma fórmula que concilie os dois aspectos. 
+</text>
+                <arg f="dis" n="m">Para ele
+</arg>
+                <arg f="" n="0">os clubes
+</arg>
+                <rel f="">encontrar</rel>
+                <arg f="" n="1">uma fórmula que concilie os dois aspectos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1813:  Reynaldo_  de_  Barros,  secretário de Vias_  Públicas,  participou de uma cerimônia pela_  manhã e depois não pôde mais ser encontrado em seu gabinete. 
+</text>
+                <arg f="" n="1">Reynaldo_  de_  Barros,  secretário de Vias_  Públicas, 
+</arg>
+                <arg f="tmp" n="m">depois
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">encontrado</rel>
+                <arg f="loc" n="m">em seu gabinete
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1739:  Encontramos um homem-  gol de que sentíamos falta há muitos anos »,  disse Van_  Himst,  ele próprio um dos maiores jogadores que a Bélgica já teve. 
+</text>
+                <rel f="">Encontramos</rel>
+                <arg f="" n="1">um homem-  gol de que sentíamos falta há muitos anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1695:  Os policiais foram a uma casa,  indicada pelas duas mulheres,  onde estariam outros integrantes da quadrilha,  mas nada foi encontrado ali. 
+</text>
+                <arg f="" n="1">nada
+</arg>
+                <rel f="">encontrado</rel>
+                <arg f="loc" n="m">ali
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1264:  O coordenador da Inteligência_  Fiscal da Receita,  Marcos_  Vinícius_  Lima,  disse que foram encontrados em 14 estabelecimentos de um conceituado colégio privado de São_  Paulo os equipamentos importados por uma fundação educacional ligada ao mesmo grupo. 
+</text>
+                <rel f="">encontrados</rel>
+                <arg f="loc" n="m">em 14 estabelecimentos de um conceituado colégio privado de São_  Paulo
+</arg>
+                <arg f="" n="1">os equipamentos importados por uma fundação educacional ligada ao mesmo grupo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1177:  Ninguém foi encontrado ontem nas secretarias municipais e estaduais da Saúde para comentar o assunto. 
+</text>
+                <arg f="" n="1">Ninguém
+</arg>
+                <rel f="">encontrado</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">nas secretarias municipais e estaduais da Saúde
+</arg>
+                <arg f="pnc" n="m">para comentar o assunto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s806:  « Só sobrevivemos porque encontramos duas cabanas de caçadores com mantimentos e cobertores »,  disse Nascimento. 
+</text>
+                <rel f="">encontramos</rel>
+                <arg f="" n="1">duas cabanas de caçadores com mantimentos e cobertores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s805:  Segundo o COE,  eram remotas as chances de Lauro e Alex serem encontrados com vida porque eles haviam levado comida suficiente para apenas um dia. 
+</text>
+                <arg f="" n="1">Lauro e Alex
+</arg>
+                <rel f="">encontrados</rel>
+                <arg f="mnr" n="m">com vida
+</arg>
+                <arg f="cau" n="m">porque eles haviam levado comida suficiente para apenas um dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s5:  Nem Lula nem o partido ainda encontraram um discurso para se diferenciar. 
+</text>
+                <arg f="" n="0">Nem Lula nem o partido
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">encontraram</rel>
+                <arg f="" n="1">um discurso para se diferenciar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="encontrar-se">
+        <note />
+        <note />
+    <roleset framnet="meet.03" id="encontrar.03" name="ter encontro com; reunir-se com" vncls="36.3">
+            <roles>
+                <role descr="one party" n="0">
+                    <vnrole vncls="36.3" vntheta="Actor1" />
+                </role>
+                <role descr="other party" n="1">
+                    <vnrole vncls="36.3" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3725:  Hoje,  os mediadores internacionais lorde Carrington e Henry_  Kissinger(  ex-  ministros do exterior do Reino_  Unido e EUA,  respectivamente)  se encontram com os líderes rivais negros Nelson_  Mandela(  CNA)  e Mangosuthu_  Buthelezi(  zulu) . 
+</text>
+                <arg f="tmp" n="m">Hoje
+</arg>
+                <arg f="" n="0">os mediadores internacionais lorde Carrington e Henry_  Kissinger(  ex-  ministros do exterior do Reino_  Unido e EUA,  respectivamente) 
+</arg>
+                <rel f="">encontram</rel>
+                <arg f="" n="1">com os líderes rivais negros Nelson_  Mandela(  CNA)  e Mangosuthu_  Buthelezi(  zulu) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3520:  E se encontram ﻿à noite no bar Cabral,  embora não se conheçam. 
+</text>
+                <rel f="">encontram</rel>
+                <arg f="tmp" n="m">﻿à noite
+</arg>
+                <arg f="loc" n="m">no bar Cabral
+</arg>
+                <arg f="adv" n="m">embora não se conheçam
+</arg>
+                <note>Arg0 e Arg1 em um só (porém não se analisa o SE como recíproco)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2637:  Hoje deve se encontrar com FHC. 
+</text>
+                <arg f="tmp" n="m">Hoje
+</arg>
+                <rel f="">encontrar</rel>
+                <arg f="" n="1">com FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s383:  Os jovens têm se encontrado em Atalaia,  principalmente entre quarta-  feira e domingo,  quando são realizados jogos de voleibol. 
+</text>
+                <arg f="" n="0">Os jovens
+</arg>
+                <rel f="">encontrado</rel>
+                <arg f="loc" n="m">em Atalaia
+</arg>
+                <arg f="tmp" n="m">principalmente entre quarta-  feira e domingo
+</arg>
+                <arg f="tmp" n="m">quando são realizados jogos de voleibol
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="be.01" id="encontrar.04" name="verbo pronominal de cópula = estar" vncls="-">
+            <roles>
+                <role descr="topic" n="1" />
+                <role descr="comment" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2256:  Pérez enfrentou duas tentativas de golpe militar e,  a_  exemplo de Fernando_  Collor,  acabou sofrendo impeachment por corrupção e,  hoje,  encontra-  se numa cela ﻿à espera de julgamento. 
+</text>
+                <arg f="" n="0">Pérez
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">encontra-</rel>
+                <arg f="loc" n="m">numa cela
+</arg>
+                <arg f="pnc" n="m">﻿à espera de julgamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1679:  há mais_  de um ano,  o México encontra-  se numa situação de desequilíbrio potencial permanente no balanço de transações correntes e no orçamento fiscal,  que foi compensado mais recentemente por um endividamento crescente do setor público nas praças financeiras internacionais,  em_  particular na Bolsa de Nova_  York. 
+</text>
+                <arg f="tmp" n="m">há mais_  de um ano
+</arg>
+                <arg f="" n="0">o México
+</arg>
+                <rel f="">encontra-</rel>
+                <arg f="loc" n="m">numa situação de desequilíbrio potencial permanente
+</arg>
+                <arg f="loc" n="m">no balanço de transações correntes e no orçamento fiscal,  que foi compensado mais recentemente por um endividamento crescente do setor público nas praças financeiras internacionais,  em_  particular na Bolsa de Nova_  York
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1206:  Embora ainda não possa ser definitivamente descartada,  a hipótese da candidatura do ex-  presidente José_  Sarney encontra-  se pelo_  menos momentaneamente bastante afastada,  abrindo espaço para que a campanha comece a deslanchar com base no atual grid de largada. 
+</text>
+                <arg f="adv" n="m">Embora ainda não possa ser definitivamente descartada
+</arg>
+                <arg f="" n="1">a hipótese da candidatura do ex-  presidente José_  Sarney
+</arg>
+                <rel f="">encontra-</rel>
+                <arg f="tmp" n="m">pelo_  menos momentaneamente
+</arg>
+                <arg f="mnr" n="m">bastante afastada
+</arg>
+                <arg f="mnr" n="m">abrindo espaço para que a campanha comece a deslanchar com base no atual grid de largada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s441:  Além_  do zagueiro Grun e do centroavante Weber,  o lateral-  esquerdo Vital_  Borkelmans encontra-  se também com um cartão amarelo e pode ficar de_  fora hoje. 
+</text>
+                <arg f="" n="1">o lateral-  esquerdo Vital_  Borkelmans
+</arg>
+                <rel f="">encontra-</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="mnr" n="m">com um cartão amarelo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

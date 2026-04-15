@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="efetivar">
+        <note />
+    <roleset framnet="effect.01" id="efetivar.01" name="tornar efetivo; concretizar" vncls="-">
+            <roles>
+                <role descr="cause" n="0" />
+                <role descr="effect, usually a change" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1120:  Pela_  primeira_  vez neste século,  vastos setores das classes médias ocidentais não conseguirão efetivar a proeza social- -  cimento da democracia e do capitalismo- -  realizada pelas gerações precedentes:  garantir a seus filhos um nível de vida igual ou superior ao que seus pais haviam desfrutado. 
+</text>
+                <rel f="">efetivar</rel>
+                <arg f="" n="1">a proeza social- -  cimento da democracia e do capitalismo- -  realizada pelas gerações precedentes:  garantir a seus filhos um nível de vida igual ou superior ao que seus pais haviam desfrutado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s814:  Itamar disse que até agora poucas demissões foram efetivadas porque « há sempre um processo legal e burocrático que precisar ser cumprido ». 
+</text>
+                <arg f="tmp" n="m">até agora
+</arg>
+                <arg f="" n="1">poucas demissões
+</arg>
+                <rel f="">efetivadas</rel>
+                <arg f="cau" n="m">porque « há sempre um processo legal e burocrático que precisar ser cumprido »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,202 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pegar">
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="catch.03" id="pegar.01" name="capturar; surpreender alguém que fez algo errado" vncls="-">
+            <roles>
+                <role descr="trapper" n="0" />
+                <role descr="trapped" n="1" />
+                <role descr="trap, either place or instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4200:  « Várias vezes os dois foram pegos fazendo amor na minha clínica. 
+</text>
+                <arg f="tmp" n="m">Várias vezes
+</arg>
+                <arg f="" n="1">os dois
+</arg>
+                <rel f="">pegos</rel>
+                <arg f="mnr" n="m">fazendo amor na minha clínica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s409:  Depois,  haverá campanha de fiscalização e aplicação de multas para quem for pego em_  flagrante. 
+</text>
+                <arg f="" n="1">quem
+</arg>
+                <rel f="">pego</rel>
+                <arg f="mnr" n="m">em_  flagrante
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="pick.01" id="pegar.02" name="escolher" vncls="13.5.1">
+            <roles>
+                <role descr="picker" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing picked" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="group or source" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3972:  Gostamos da idéia,  resolvemos pegar velhos sucessos e fazer neste formato. 
+</text>
+                <rel f="">pegar</rel>
+                <arg f="" n="1">velhos sucessos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="take.01" id="pegar.03" name="tomar para si" vncls="10.5 11.3">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from, or prepositional complement of arg1" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2534:  Antes de ir embora,  o ladrão pegou o título de eleitor e o CIC da assistente de secretaria e os jogou atrás_  do caixa. 
+</text>
+                <arg f="tmp" n="m">Antes de ir embora
+</arg>
+                <arg f="" n="0">o ladrão
+</arg>
+                <rel f="">pegou</rel>
+                <arg f="" n="1">o título de eleitor e o CIC da assistente de secretaria
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s239:  Pegam os dois pimpolhos Joana e Luca e se mandam para Lake_  Powell,  Arizona. 
+</text>
+                <rel f="">Pegam</rel>
+                <arg f="" n="1">os dois pimpolhos Joana e Luca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="catch.01" id="pegar.04" name="contrair (doença)" vncls="13.5.1">
+            <roles>
+                <role descr="receiver" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing gotten" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="giver" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1830:  « É por essas e outras que a gente acaba pegando uma micose na chica e depois não sabe explicar por_  quê »,  bradou a espanholita. 
+</text>
+                <arg f="cau" n="m">por essas e outras
+</arg>
+                <arg f="" n="0">a gente
+</arg>
+                <rel f="">pegando</rel>
+                <arg f="" n="1">uma micose na chica
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="confront.01" id="pegar.05" name="ter por adversário" vncls="98">
+            <roles>
+                <role descr="confrontational entity, agent" n="0">
+                    <vnrole vncls="98" vntheta="Agent" />
+                </role>
+                <role descr="entity confronted" n="1">
+                    <vnrole vncls="98" vntheta="Theme" />
+                </role>
+                <role descr="confronted with" n="2">
+                    <vnrole vncls="98" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1680:  Palmeiras pega Flamengo hoje pela Superliga
+</text>
+                <arg f="" n="0">Palmeiras
+</arg>
+                <rel f="">pega</rel>
+                <arg f="" n="1">Flamengo
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="mnr" n="m">pela Superliga
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="touch.01" id="pegar.06" name="tocar" vncls="20 31.1">
+            <roles>
+                <role descr="causal agent" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                    <vnrole vncls="20" vntheta="Agent" />
+                </role>
+                <role descr="thing touched" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                    <vnrole vncls="20" vntheta="Experiencer" />
+                </role>
+                <role descr="touched with, if separate from agent" n="2">
+                    <vnrole vncls="20" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s488:  Afastado de seu companheiro de ataque,  Stoichkov,  pegou pouco na bola. 
+</text>
+                <arg f="" n="0">Afastado de seu companheiro de ataque,  Stoichkov
+</arg>
+                <rel f="">pegou</rel>
+                <arg f="ext" n="m">pouco
+</arg>
+                <arg f="" n="1">na bola
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="insinuar">
+        <note />
+    <roleset framnet="insinuate.01" id="insinuar.01" name="dar a entender; sugerir" vncls="37.7">
+            <roles>
+                <role descr="suggester" n="0">
+                    <vnrole vncls="97.7" vntheta="Agent" />
+                </role>
+                <role descr="thing insinuated" n="1">
+                    <vnrole vncls="97.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2847:  Decidimos então,  por uma questão de economia cênica,  abolir uma das casas e só insinuar as outras duas,  fazendo apenas suas entradas,  que parecem as de um templo. 
+</text>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">insinuar</rel>
+                <arg f="" n="1">as outras duas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2576:  A frase do ex-  presidente é uma referência a uma das promessas feitas por Cafeteira,  um ex-  sarneyzista que insinuava,  durante a sua campanha,  mandar Sarney para_  fora_  do seu Estado. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">insinuava</rel>
+                <arg f="tmp" n="m">durante a sua campanha
+</arg>
+                <arg f="" n="1">mandar Sarney para_  fora_  do seu Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

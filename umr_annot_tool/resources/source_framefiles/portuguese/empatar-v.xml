@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="empatar">
+        <note />
+    <roleset framnet="tie.03" id="empatar.01" name="ter resultado igual; alcançar o mesmo número de pontos do adversário" vncls="-">
+            <roles>
+                <role descr="causer of equal score" n="0" />
+                <role descr="in comparison to" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1302:  Manchete,  Gazeta e Bandeirantes empataram. 
+</text>
+                <arg f="" n="0">Manchete,  Gazeta e Bandeirantes
+</arg>
+                <rel f="">empataram</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s941:  O atacante Emmanuel_  Amunike empatou dois minutos depois e marcou o gol da vitória aos 2 min do segundo tempo. 
+</text>
+                <arg f="" n="0">O atacante Emmanuel_  Amunike
+</arg>
+                <rel f="">empatou</rel>
+                <arg f="tmp" n="m">dois minutos depois
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s724:  O time pode empatar a segunda partida para se classificar. 
+</text>
+                <arg f="" n="0">O time
+</arg>
+                <rel f="">empatar</rel>
+                <arg f="" n="1">a segunda partida
+</arg>
+                <arg f="pnc" n="m">para se classificar
+</arg>
+                <note>com Arg1-competição</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

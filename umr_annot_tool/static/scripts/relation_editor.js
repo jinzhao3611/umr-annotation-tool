@@ -161,6 +161,66 @@ async function lemmatizeToken(token) {
     return lemmatizeTokenFallback(token);
 }
 
+// Normalize a roleset entry into a uniform shape regardless of which
+// frames_<lang>.json schema produced it. Older language files use a flat
+// {ARG0: "...", ARG1: "..."} dict; newer ones (e.g. Portuguese) use
+// {args, argm, vncls, framnet, name, examples}. Returns:
+//   { args: {ARGn: desc}, argm: {key: desc}, vncls, framnet, name, examples }
+function getRolesetMeta(senseEntry) {
+    if (!senseEntry || typeof senseEntry !== 'object') {
+        return { args: {}, argm: {}, examples: [] };
+    }
+    // Detect rich shape: has an explicit `args` sub-dict
+    if (senseEntry.args && typeof senseEntry.args === 'object' && !Array.isArray(senseEntry.args)) {
+        return {
+            args: senseEntry.args || {},
+            argm: senseEntry.argm || {},
+            vncls: senseEntry.vncls || '',
+            framnet: senseEntry.framnet || '',
+            name: senseEntry.name || '',
+            examples: Array.isArray(senseEntry.examples) ? senseEntry.examples : []
+        };
+    }
+    // Flat shape: every key is an ARG description
+    return { args: senseEntry, argm: {}, examples: [] };
+}
+
+// Build the HTML used inside the per-sense args panel and tooltip.
+function renderRolesetMeta(meta, opts = {}) {
+    const includeHeading = !!opts.heading;
+    const headingText = opts.heading || '';
+    let html = '';
+    if (includeHeading) {
+        html += `<div style="font-weight: bold;">${headingText}</div>`;
+    }
+    if (meta.name) {
+        html += `<div><em>${meta.name}</em></div>`;
+    }
+    for (const [arg, desc] of Object.entries(meta.args || {})) {
+        html += `<div><strong>${arg}:</strong> ${desc}</div>`;
+    }
+    const argmEntries = Object.entries(meta.argm || {});
+    if (argmEntries.length) {
+        html += `<div style="margin-top:4px;font-size:0.9em;color:#666;">Modifiers:</div>`;
+        for (const [arg, desc] of argmEntries) {
+            html += `<div style="font-size:0.9em;"><strong>${arg}:</strong> ${desc}</div>`;
+        }
+    }
+    const meta_bits = [];
+    if (meta.vncls) meta_bits.push(`VerbNet: ${meta.vncls}`);
+    if (meta.framnet) meta_bits.push(`FrameNet: ${meta.framnet}`);
+    if (meta_bits.length) {
+        html += `<div style="margin-top:4px;font-size:0.85em;color:#888;">${meta_bits.join(' &middot; ')}</div>`;
+    }
+    if (!opts.skipExamples && meta.examples && meta.examples.length) {
+        html += `<div style="margin-top:6px;font-size:0.9em;"><strong>Examples:</strong></div>`;
+        meta.examples.slice(0, opts.exampleLimit || 3).forEach(ex => {
+            html += `<div style="font-size:0.85em;margin:2px 0;padding-left:6px;border-left:2px solid #ccc;">${ex.text || ''}</div>`;
+        });
+    }
+    return html;
+}
+
 // Function to find frame senses for a lemma
 async function findFrameSenses(lemma) {
     try {
@@ -2874,11 +2934,8 @@ async function showAddBranchDialog(parentVariableSpan) {
 
                                     try {
                                         const framesData = await loadFramesData();
-                                        const args = framesData[selectedSense] || {};
-                                        let argsHtml = '';
-                                        for (const [arg, desc] of Object.entries(args)) {
-                                            argsHtml += `<div><strong>${arg}:</strong> ${desc}</div>`;
-                                        }
+                                        const meta = getRolesetMeta(framesData[selectedSense]);
+                                        const argsHtml = renderRolesetMeta(meta);
                                         if (argsHtml && argsDisplay && argsContent) {
                                             argsContent.innerHTML = argsHtml;
                                             argsDisplay.style.display = 'block';
@@ -3826,13 +3883,8 @@ async function showAddBranchDialog(parentVariableSpan) {
                                         // Fetch arguments directly from frames data
                                         try {
                                             const framesData = await loadFramesData();
-                                            const args = framesData[selectedSense] || {};
-                                            
-                                            let argsHtml = '';
-                                            for (const [arg, desc] of Object.entries(args)) {
-                                                argsHtml += `<div><strong>${arg}:</strong> ${desc}</div>`;
-                                            }
-                                            
+                                            const meta = getRolesetMeta(framesData[selectedSense]);
+                                            const argsHtml = renderRolesetMeta(meta);
                                             if (argsHtml) {
                                                 argsContent.innerHTML = argsHtml;
                                                 argsDisplay.style.display = 'block';
@@ -3878,13 +3930,9 @@ async function showAddBranchDialog(parentVariableSpan) {
                                                     document.body.appendChild(tooltip);
                                                 }
                                                 
-                                                // Format arguments
-                                                let argsHtml = `<div style="font-weight: bold;">${sense}</div>`;
-                                                for (const [arg, desc] of Object.entries(args)) {
-                                                    argsHtml += `<div><strong>${arg}:</strong> ${desc}</div>`;
-                                                }
-                                                
-                                                tooltip.innerHTML = argsHtml;
+                                                // Format arguments (tooltip: skip examples to keep it compact)
+                                                const meta = getRolesetMeta(args);
+                                                tooltip.innerHTML = renderRolesetMeta(meta, { heading: sense, skipExamples: true });
                                                 
                                                 // Position tooltip
                                                 const rect = event.target.getBoundingClientRect();

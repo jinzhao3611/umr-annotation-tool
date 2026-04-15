@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="puxar">
+        <note />
+    <roleset framnet="pull.01" id="puxar.01" name="fazer mover; impulsionar" vncls="">
+            <roles>
+                <role descr="puller" n="0" />
+                <role descr="thing pulled" n="1" />
+                <role descr="DIR or attribute of arg1" n="2" />
+                <role descr="EXT, distance moved" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3620:  Segundo o presidente do Corecon,  Hélio_  Portocarrero,  a inflação do real não será puxada pelos oligopólios,  apontados pela equipe econômica do governo como os principais vilões na subida de preços após a implantação da URV. 
+</text>
+                <arg f="" n="1">a inflação do real
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">puxada</rel>
+                <arg f="" n="0">pelos oligopólios,  apontados pela equipe econômica do governo como os principais vilões na subida de preços após a implantação da URV
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

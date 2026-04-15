@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="expedir">
+        <note />
+        <note />
+    <roleset framnet="issue.01" id="expedir.01" name="remeter, enviar" vncls="13.3 13.4.1 48.1.1">
+            <roles>
+                <role descr="issuer" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing issued" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="issued to" n="2">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <role descr="attribute, issued as or at" n="3">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2622:  Quando o secretário da Receita era Osires_  Lopes_  Filho,  várias cartas foram expedidas a profissionais liberais e empresas « convidando-  os » a acertar as contas com o leão. 
+</text>
+                <arg f="tmp" n="m">Quando o secretário da Receita era Osires_  Lopes_  Filho
+</arg>
+                <arg f="" n="1">várias cartas
+</arg>
+                <rel f="">expedidas</rel>
+                <arg f="" n="2">a profissionais liberais e empresas
+</arg>
+                <arg f="pnc" n="m">« convidando-  os » a acertar as contas com o leão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="issue.01" id="expedir.02" name="editar documentos legais" vncls="13.3 13.4.1 48.1.1">
+            <roles>
+                <role descr="issuer" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing issued" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="issued to" n="2">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <role descr="attribute, issued as or at" n="3">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1385:  Em plantão especial,  funcionários da Delegacia_  Regional_  do_  Trabalho e do Instituro_  Pedro_  Melo expedirão carteiras de trabalho e de identidade para mulheres. 
+</text>
+                <arg f="loc" n="m">Em plantão especial
+</arg>
+                <arg f="" n="0">funcionários da Delegacia_  Regional_  do_  Trabalho e do Instituro_  Pedro_  Melo
+</arg>
+                <rel f="">expedirão</rel>
+                <arg f="" n="1">carteiras de trabalho e de identidade
+</arg>
+                <arg f="" n="2">para mulheres
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="declinar">
+        <note />
+    <roleset framnet="decline.02" id="declinar.01" name="recusar; rejeitar" vncls="-">
+            <roles>
+                <role descr="entity turning down" n="0" />
+                <role descr="thing turned down" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3205:  Convidada para participar da passarela,  Rita_  Lee declinou por ter sido convocada apenas na véspera
+</text>
+                <arg f="tmp" n="m">Convidada para participar da passarela
+</arg>
+                <arg f="" n="0">Rita_  Lee
+</arg>
+                <rel f="">declinou</rel>
+                <arg f="cau" n="m">por ter sido convocada apenas na véspera
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2282:  « Deixamos claro a Havelange que a Uefa só consideraria a possibilidade de lançar um candidato se ele declinasse de sua candidatura.  »
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">declinasse</rel>
+                <arg f="" n="1">de sua candidatura
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

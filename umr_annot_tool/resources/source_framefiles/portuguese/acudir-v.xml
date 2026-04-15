@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acudir">
+        <note />
+    <roleset framnet="assist.01" id="acudir.01" name="socorrer" vncls="72">
+            <roles>
+                <role descr="assistant" n="0">
+                    <vnrole vncls="72" vntheta="Agent" />
+                </role>
+                <role descr="assisted" n="1">
+                    <vnrole vncls="72" vntheta="Beneficiary" />
+                </role>
+                <role descr="project" n="2">
+                    <vnrole vncls="72" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1250:  Ai,  mãe Menininha,  acode-  nos nesta hora de quase desespero,  dá-  no o alimento da confiança e do sonho. 
+</text>
+                <arg f="" n="0">mãe Menininha
+</arg>
+                <rel f="">acode-</rel>
+                <arg f="" n="1">nos
+</arg>
+                <arg f="tmp" n="m">nesta hora de quase desespero
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

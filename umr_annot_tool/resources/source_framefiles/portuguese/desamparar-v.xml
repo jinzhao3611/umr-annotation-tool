@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desamparar">
+        <note />
+    <roleset framnet="" id="desamparar.01" name="deixar sem proteção, sem amparo" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1058:  « Veja_  Esta_  Canção » tem liberdade desamparada dos meninos de rua
+</text>
+                <rel f="">desamparada</rel>
+                <note>usado como adjetivo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="adiar">
+        <note />
+    <roleset framnet="postpone.01" id="adiar.01" name="transferir compromisso para o futuro" vncls="">
+            <roles>
+                <role descr="agent, causer of delay" n="0" />
+                <role descr="event delayed" n="1" />
+                <role descr="delay itself, EXT, time period, how long arg 1 was delayed for" n="2" />
+                <role descr="original time" n="3" />
+                <role descr="new time" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3662:  Os funcionários da prefeitura reclamam que Lídice está adiando desde maio o pagamento das perdas salariais da categoria. 
+</text>
+                <arg f="" n="0">Lídice
+</arg>
+                <rel f="">adiando</rel>
+                <arg f="" n="2">desde maio
+</arg>
+                <arg f="" n="1">o pagamento das perdas salariais da categoria
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1312:  São três as certezas entre as partes que negociam o aumento de salário para o funcionalismo:  a decisão não pode ser adiada,  a aparência de equilíbrio fiscal deve ser preservada e Ricupero ficará no cargo em quaisquer circunstâncias. 
+</text>
+                <arg f="" n="1">a decisão
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">adiada</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

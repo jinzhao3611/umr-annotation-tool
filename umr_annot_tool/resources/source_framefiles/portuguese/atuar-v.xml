@@ -1,0 +1,251 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atuar">
+        <note />
+        <note />
+    <roleset framnet="act.01" id="atuar.01" name="trabalhar" vncls="29.6">
+            <roles>
+                <role descr="player" n="0">
+                    <vnrole vncls="29.6" vntheta="agent" />
+                </role>
+                <role descr="role" n="1">
+                    <vnrole vncls="29.6" vntheta="predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3074:  Agora,  além_  de dirigir seu grupo sediado em Nova_  York,  ele também vai atuar como coreógrafo-  residente do Ballet_  da_  Ópera_  de_  Lyon,  que acaba de nomear-  lo para o cargo,  antes ocupado por Maguy_  Marin. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="adv" n="m">também
+</arg>
+                <rel f="">atuar</rel>
+                <arg f="" n="1">como coreógrafo-  residente do Ballet_  da_  Ópera_  de_  Lyon,  que acaba de nomear-  lo para o cargo,  antes ocupado por Maguy_  Marin
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2855:  Atuando em conjunto,  os franqueados ganham força e passam a ter voz ativa em questões vitais para o negócio,  como definicão de produtos,  prazos de pagamento e estratégias de propaganda. 
+</text>
+                <rel f="">Atuando</rel>
+                <arg f="mnr" n="m">em conjunto
+</arg>
+                <arg f="" n="0">os franqueados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2718:  « Quando era menina gostava muito de jogar futebol com meu irmão »,  disse a jogadora,  que,  ao_  contrário_  do vôlei,  onde atua como atacante,  prefere jogar como quarto-  zagueiro no futebol. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="2">onde
+</arg>
+                <rel f="">atua</rel>
+                <arg f="" n="1">como atacante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2305:  O partido atua no movimento sindical através da « Corrente_  Sindical_  Classista »,  filiada ﻿à CUT. 
+</text>
+                <arg f="" n="0">O partido
+</arg>
+                <rel f="">atua</rel>
+                <arg f="" n="2">no movimento sindical
+</arg>
+                <arg f="mnr" n="m">através da « Corrente_  Sindical_  Classista »,  filiada ﻿à CUT
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1960:  A Eufrasio_  Veículos,  revendedora Ford,  aposta no showroom sazonal e se prepara para começar a atuar em Campos_  do_  Jordão por dois meses. 
+</text>
+                <arg f="" n="0">A Eufrasio_  Veículos,  revendedora Ford, 
+</arg>
+                <rel f="">atuar</rel>
+                <arg f="loc" n="m">em Campos_  do_  Jordão
+</arg>
+                <arg f="tmp" n="m">por dois meses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1691:  Os três primeiros estão voltados para a TV a cabo,  onde atuam como operadores em vários Estados e como sócios da maior empresa de distribuição de programação:  a Net_  Brasil
+</text>
+                <arg f="" n="0">Os três primeiros
+</arg>
+                <arg f="loc" n="m">onde
+</arg>
+                <rel f="">atuam</rel>
+                <arg f="loc" n="m">em vários Estados e
+</arg>
+                <arg f="" n="1">como operadores como sócios da maior empresa de distribuição de programação:  a Net_  Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1002:  Como exemplo no combate ﻿à violência,  o prefeito carioca cita a criação da Guarda_  Municipal,  um grupo de atividades especiais que tem atuado mais na liberação de áreas tradicionalmente ocupadas por camelôs. 
+</text>
+                <arg f="" n="0">de atividades especiais que
+</arg>
+                <rel f="">atuado</rel>
+                <arg f="ext" n="m">mais
+</arg>
+                <arg f="" n="2">na liberação de áreas tradicionalmente ocupadas por camelôs
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s391:  Os « contratos de gaveta »,  vistos pela CPI como mais um indício de que as empreiteiras atuavam em cartel,  são compromissos sigilosos entre as empresas. 
+</text>
+                <arg f="" n="0">as empreiteiras
+</arg>
+                <rel f="">atuavam</rel>
+                <arg f="mnr" n="m">em cartel
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="perform.01" id="atuar.02" name="desempenhar sua função própria" vncls="26.7-1">
+            <roles>
+                <role descr="performer" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="performance, thing performed" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3830:  A maioria dos bons jogadores brasileiros atuava em clubes profissionais,  filiados ﻿à FBF. 
+</text>
+                <arg f="" n="0">A maioria dos bons jogadores brasileiros
+</arg>
+                <rel f="">atuava</rel>
+                <arg f="" n="2">em clubes profissionais,  filiados ﻿à FBF
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2646:  Raul_  Torres_  &amp;_  Florêncio- -  Dupla que atuou dos anos 40 aos 60 e criou um estilo romântico de interpretação. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atuou</rel>
+                <arg f="tmp" n="m">dos anos 40 aos 60
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2472:  Ele atuou pela seleção argentina na Copa do Estados_  Unidos. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">atuou</rel>
+                <arg f="" n="3">pela seleção argentina
+</arg>
+                <arg f="" n="2">na Copa do Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2169:  Folha- -  Como vai atuar no jogo contra o Palmeiras? 
+</text>
+                <arg f="mnr" n="m">Como
+</arg>
+                <rel f="">atuar</rel>
+                <arg f="" n="2">no jogo contra o Palmeiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s583:  A idéia para o livro surgiu após uma entrevista que Andréa fez em meados de 93 para o « Tokyo_  Journal » com o jogador Zico,  ﻿à época atuando no Kashima. 
+</text>
+                <arg f="" n="0">Zico
+</arg>
+                <arg f="tmp" n="m">﻿à época
+</arg>
+                <rel f="">atuando</rel>
+                <arg f="" n="2">no Kashima
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s487:  O atacante Romário não atuou bem. 
+</text>
+                <arg f="" n="0">O atacante Romário
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">atuou</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s144:  Ontem pela_  manhã,  os atletas que não atuaram contra o Vitória,  participaram de um coletivo com a equipe principal. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="tmp" n="m">pela_  manhã
+</arg>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">atuaram</rel>
+                <arg f="" n="3">contra o Vitória
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s140:  Outros profissionais brasileiros,  que atuam nos EUA,  também participam. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atuam</rel>
+                <arg f="" n="2">nos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

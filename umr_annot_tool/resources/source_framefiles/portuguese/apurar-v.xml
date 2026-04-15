@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apurar">
+        <note />
+        <note />
+    <roleset framnet="investigate.01" id="apurar.01" name="investigar" vncls="30.2 35.4">
+            <roles>
+                <role descr="examiner" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                    <vnrole vncls="35.4" vntheta="Agent" />
+                </role>
+                <role descr="examined" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                    <vnrole vncls="35.4" vntheta="Location" />
+                </role>
+                <role descr="examined for" n="2">
+                    <vnrole vncls="35.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3843:  Os bombeiros pediram ajuda ao Cebimar(  Centro_  de_  Biologia_  Marinha)  da USP para apurar as causas da morte do golfinho. 
+</text>
+                <rel f="">apurar</rel>
+                <arg f="" n="1">as causas da morte do golfinho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2623:  O delegado informa que foi aberta sindicância interna no ministério para tentar apurar o caso e que a Polícia_  Federal deverá também abrir um inquérito. 
+</text>
+                <rel f="">apurar</rel>
+                <arg f="" n="1">o caso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1375:  Justiça apura chacina de 111
+</text>
+                <arg f="" n="0">Justiça
+</arg>
+                <rel f="">apura</rel>
+                <arg f="" n="1">chacina de 111
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="sharpen.01" id="apurar.02" name="afiar, refinar" vncls="45.4">
+            <roles>
+                <role descr="sharpener" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing getting sharper" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument, if agent is also present" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3592:  E,  horror dos horrores,  são as mulheres que têm o paladar mais apurado do_  que os homens(  pare de dar essas risadinhas,  você aí no fundo da classe) . 
+</text>
+                <rel f="">apurado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

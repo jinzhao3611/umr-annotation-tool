@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="suportar">
+        <note />
+        <note />
+    <roleset framnet="withstand.01" id="suportar.01" name="sustentar; resistir a" vncls="-">
+            <roles>
+                <role descr="entity withstanding" n="0" />
+                <role descr="entity opposed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2917:  Os carros ganharam ainda proteção sob o cárter e sob o tanque de gasolina,  para suportar com menor risco os choques contra as pedras. 
+</text>
+                <rel f="">suportar</rel>
+                <arg f="mnr" n="m">com menor risco
+</arg>
+                <arg f="" n="1">os choques contra as pedras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2277:  « Eles não suportariam a aridez da teoria,  mas discuto temas como espaço público e privado através de fatos como o comportamento do Itamar no Carnaval »,  diz. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">suportariam</rel>
+                <arg f="" n="1">a aridez da teoria
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="stand.03" id="suportar.02" name="tolerar" vncls="31.2">
+            <roles>
+                <role descr="tolerator" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing tolerated" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2619:  O politicamente correto institucionalizou-  se,  mas nem os americanos o suportam,  exceto,  é claro,  os eternos paroquiais. 
+</text>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">suportam</rel>
+                <arg f="adv" n="m">é claro
+</arg>
+                <arg f="" n="0">nem os americanos exceto os eternos paroquiais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s131:  O conselho fiscal entende que os acionistas não devem mais « suportar investir dinheiro bom em companhia sem condições de se reerguer ». 
+</text>
+                <arg f="" n="0">os acionistas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="adv" n="m">mais
+</arg>
+                <rel f="">suportar</rel>
+                <arg f="" n="1">investir dinheiro bom em companhia sem condições de se reerguer
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

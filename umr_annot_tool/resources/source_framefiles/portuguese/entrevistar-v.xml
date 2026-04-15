@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="entrevistar">
+        <note />
+    <roleset framnet="interview.01" id="entrevistar.01" name="fazer entrevista" vncls="37.1.3">
+            <roles>
+                <role descr="interviewer" n="0">
+                    <vnrole vncls="37.1.3" vntheta="Agent" />
+                </role>
+                <role descr="interviewee" n="1">
+                    <vnrole vncls="37.1.3" vntheta="Recipient" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="37.1.3" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2091:  « Fúria_  Metal » entrevista os integrantes do Ramones,  banda surgida em Nova_  York na década de 70. 
+</text>
+                <arg f="" n="0">Fúria_  Metal
+</arg>
+                <rel f="">entrevista</rel>
+                <arg f="" n="1">os integrantes do Ramones,  banda surgida em Nova_  York na década de 70
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1637:  Para chegar a suas conclusões,  Rosa entrevistou um grupo de funcionários públicos(  técnicos administrativos)  que trabalham e comem no centro velho da cidade de São_  Paulo(  ruas Líbero_  Badaró,  São_  Bento e adjacências) . 
+</text>
+                <arg f="pnc" n="m">Para chegar a suas conclusões
+</arg>
+                <arg f="" n="0">Rosa
+</arg>
+                <rel f="">entrevistou</rel>
+                <arg f="" n="1">um grupo de funcionários públicos(  técnicos administrativos)  que trabalham e comem no centro velho da cidade de São_  Paulo(  ruas Líbero_  Badaró,  São_  Bento e adjacências) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

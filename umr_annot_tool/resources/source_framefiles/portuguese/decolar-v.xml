@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="decolar">
+        <note />
+    <roleset framnet="take.19" id="decolar.01" name="sair do chão para alçar vôo (aeronaves)" vncls="-">
+            <roles>
+                <role descr="airplane" n="1" />
+                <role descr="airport" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3093:  Segundo a administração do aeroclube,  a quadrilha conseguiu decolar às 4h,  sob forte nevoeiro e sem iluminação. 
+</text>
+                <rel f="">decolar</rel>
+                <arg f="tmp" n="m">às 4h
+</arg>
+                <arg f="mnr" n="m">sob forte nevoeiro
+</arg>
+                <arg f="mnr" n="m">sem iluminação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1777:  Junto_  com sua Magda_  Collares,  Fausto_  Silva decola dia 13 para temporada de trivial variado cultura e showbizz em Nova_  York. 
+</text>
+                <arg f="mnr" n="m">Junto_  com sua Magda_  Collares
+</arg>
+                <arg f="" n="0">Fausto_  Silva
+</arg>
+                <rel f="">decola</rel>
+                <arg f="tmp" n="m">dia 13
+</arg>
+                <arg f="pnc" n="m">para temporada de trivial variado cultura e showbizz
+</arg>
+                <arg f="loc" n="m">em Nova_  York
+</arg>
+                <note>arg0 é a pessoa que toma o avião (metonímia)</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

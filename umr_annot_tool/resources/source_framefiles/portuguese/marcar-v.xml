@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="marcar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="" id="marcar.01" name="assinalar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4040:  Essa época marca a formação da base da moral samurai,  resultado da disciplina física e mental do zen-  budismo,  dos ditames do confuncionismo e do espírito militarista reinante. 
+</text>
+                <arg f="" n="0">Essa época
+</arg>
+                <rel f="">marca</rel>
+                <arg f="" n="1">a formação da base da moral samurai,  resultado da disciplina física e mental do zen-  budismo,  dos ditames do confuncionismo e do espírito militarista reinante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3965:  A cestinha do jogo foi Hortência,  que marcou 38 pontos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">marcou</rel>
+                <arg f="" n="1">38 pontos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2198:  O gol da vitória flamenguista foi marcado aos 20 min do segundo tempo. 
+</text>
+                <arg f="" n="1">O gol da vitória flamenguista
+</arg>
+                <rel f="">marcado</rel>
+                <arg f="tmp" n="m">aos 20 min do segundo tempo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1736:  Ele marcou cinco gols na vitória sobre a Zâmbia,  no começo do mês. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">marcou</rel>
+                <arg f="" n="1">cinco gols
+</arg>
+                <arg f="loc" n="m">na vitória sobre a Zâmbia
+</arg>
+                <arg f="tmp" n="m">no começo do mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s941:  O atacante Emmanuel_  Amunike empatou dois minutos depois e marcou o gol da vitória aos 2 min do segundo tempo. 
+</text>
+                <arg f="" n="0">O atacante Emmanuel_  Amunike
+</arg>
+                <rel f="">marcou</rel>
+                <arg f="" n="1">o gol da vitória
+</arg>
+                <arg f="tmp" n="m">aos 2 min do segundo tempo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="mark.02" id="marcar.02" name="fazer marca em; caracterizar" vncls="25.1">
+            <roles>
+                <role descr="agent, marker" n="0">
+                    <vnrole vncls="25.1" vntheta="Agent" />
+                </role>
+                <role descr="mark" n="1">
+                    <vnrole vncls="25.1" vntheta="Theme" />
+                </role>
+                <role descr="surface, marked-on" n="2">
+                    <vnrole vncls="25.1" vntheta="Destination" />
+                </role>
+                <role descr="instrument, marker" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3807:  Desorganização e violência marcam torneio que consolida o'  efeito Copa' . 
+</text>
+                <arg f="" n="0">Desorganização e violência
+</arg>
+                <rel f="">marcam</rel>
+                <arg f="" n="1">torneio que consolida o'  efeito Copa' 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2313:  O « Les_  Granges » tem aroma e sabor marcado por morangos e evolui bem na boca,  enquanto o Saumur,  também frutado,  é mais sério e(  levemente)  tânico. 
+</text>
+                <arg f="" n="1">aroma e sabor
+</arg>
+                <rel f="">marcado</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1811:  Jânio_  Quadros também gastou em obras viárias e Mario_  Covas marcou sua gestão pela construção de corredores de ônibus exclusivos,  como o da avenida Nove_  de_  Julho. 
+</text>
+                <arg f="" n="0">Mario_  Covas
+</arg>
+                <rel f="">marcou</rel>
+                <arg f="" n="1">sua gestão
+</arg>
+                <arg f="" n="2">pela construção de corredores de ônibus exclusivos
+</arg>
+                <arg f="prd" n="m">como o da avenida Nove_  de_  Julho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1392:  Para marcar a doação da coleção de Takeo_  Hirata para a biblioteca do Masp,  dois designers japoneses fizeram ontem uma palestra na Fiesp. 
+</text>
+                <rel f="">marcar</rel>
+                <arg f="" n="1">a doação da coleção de Takeo_  Hirata para a biblioteca do Masp
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1180:  Na semana passada,  o mercado de gado leiteiro foi marcado por uma surpresa:  o gado girolando atingiu preço superior ao holandês puro-  sangue nos leilões. 
+</text>
+                <arg f="tmp" n="m">Na semana passada
+</arg>
+                <arg f="" n="1">o mercado de gado leiteiro
+</arg>
+                <rel f="">marcado</rel>
+                <arg f="" n="0">por uma surpresa:  o gado girolando atingiu preço superior ao holandês puro-  sangue nos leilões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s959:  O presidente Miguel_  Kodja_  Neto ignorou a diplomacia que normalmente marca o futebol para acusar o ex-  jogador e empresário Pelé. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="adv" n="m">normalmente
+</arg>
+                <rel f="">marca</rel>
+                <arg f="" n="1">o futebol
+</arg>
+                <arg f="pnc" n="m">para acusar o ex-  jogador e empresário Pelé
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="marcar.03" name="vigiar o adversário para impedi-lo de pegar a bola (esportes coletivos)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2829:  A_  partir_  dos 22 min,  o São_  Paulo passou a marcar sob pressão e anulou o adversário. 
+</text>
+                <arg f="tmp" n="m">A_  partir_  dos 22 min
+</arg>
+                <arg f="" n="0">o São_  Paulo
+</arg>
+                <rel f="">marcar</rel>
+                <arg f="mnr" n="m">sob pressão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="schedule.01" id="marcar.04" name="agendar" vncls="">
+            <roles>
+                <role descr="planner" n="0" />
+                <role descr="event" n="1" />
+                <role descr="scheduled for or because of" n="2" />
+                <role descr="time of event" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1338:  « Tinha vôo marcado para esta noite(  ontem) ,  porque não imaginava ser capaz de vencer Sampras »,  disse Alami. 
+</text>
+                <arg f="" n="1">vôo
+</arg>
+                <rel f="">marcado</rel>
+                <arg f="" n="3">para esta noite(  ontem) 
+</arg>
+                <arg f="cau" n="m">porque não imaginava ser capaz de vencer Sampras
+</arg>
+                <note>uso adjetival</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

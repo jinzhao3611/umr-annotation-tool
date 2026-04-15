@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="listar">
+        <note />
+    <roleset framnet="list.01" id="listar.01" name="apontar; mencionar; colocar em uma lista" vncls="">
+            <roles>
+                <role descr="lister" n="0" />
+                <role descr="item" n="1" />
+                <role descr="list" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s544:  Promotor público,  procurador da Justiça e um dos criadores da Comissão_  Justiça_  e_  Paz da Arquidiocese de São_  Paulo,  Bicudo lista como outras prioridades temas de sua especialidade:  a reforma da Justiça e do sistema penitenciário. 
+</text>
+                <arg f="" n="0">Bicudo
+</arg>
+                <rel f="">lista</rel>
+                <arg f="" n="2">como outras prioridades
+</arg>
+                <arg f="" n="1">temas de sua especialidade:  a reforma da Justiça e do sistema penitenciário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

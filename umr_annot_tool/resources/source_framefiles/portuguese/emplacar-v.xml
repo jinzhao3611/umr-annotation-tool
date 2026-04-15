@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="emplacar">
+        <note />
+    <roleset framnet="" id="emplacar.01" name="conseguir que sua criação faça sucesso" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3758:  Depois de conquistar seu prêmio de estréia no concurso Smirnoff em São_  Paulo,  o jovem estilista Sérgio_  Machado emplacou mais uma. 
+</text>
+                <arg f="tmp" n="m">Depois de conquistar seu prêmio de estréia no concurso Smirnoff em São_  Paulo
+</arg>
+                <arg f="" n="0">o jovem estilista Sérgio_  Machado
+</arg>
+                <rel f="">emplacou</rel>
+                <arg f="" n="1">mais uma
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

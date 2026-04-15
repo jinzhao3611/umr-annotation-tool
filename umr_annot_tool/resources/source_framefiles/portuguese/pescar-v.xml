@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pescar">
+        <note />
+    <roleset framnet="fish.01" id="pescar.01" name="pegar peixe" vncls="13.7 35.1">
+            <roles>
+                <role descr="fisherman, agent" n="0">
+                    <vnrole vncls="13.7" vntheta="Agent" />
+                    <vnrole vncls="35.1" vntheta="Agent" />
+                </role>
+                <role descr="fish" n="1">
+                    <vnrole vncls="35.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3274:  Os nativos ainda se utilizam de lanças primitivas para pescar nas rasas piscinas naturais repletas de polvos e peixes tropicais. 
+</text>
+                <rel f="">pescar</rel>
+                <arg f="loc" n="m">nas rasas piscinas naturais repletas de polvos e peixes tropicais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s620:  « Ah_  bem pensei que voce ia pescar ». 
+</text>
+                <arg f="" n="0">voce
+</arg>
+                <rel f="">pescar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s619:  « Não,  eu vou pescar ». 
+</text>
+                <arg f="dis" n="m">Não
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">pescar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s618:  « Você vai pescar?  »
+</text>
+                <arg f="" n="0">Você
+</arg>
+                <rel f="">pescar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s616:  « Você vai pescar?  »
+</text>
+                <arg f="" n="0">Você
+</arg>
+                <rel f="">pescar</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

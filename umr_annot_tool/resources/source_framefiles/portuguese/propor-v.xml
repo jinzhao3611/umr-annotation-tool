@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="propor">
+        <note />
+    <roleset framnet="propose.01" id="propor.01" name="sugerir; apresentar proposta" vncls="37.7">
+            <roles>
+                <role descr="entity proposing" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="thing proposed, proposition" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="label???" n="2" />
+                <role descr="benefactive or entity proposed to" n="3">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3120:  A notícia veiculada por esta Folha(  em 10/  10/  1994)  de que o presidente eleito Fernando_  Henrique_  Cardoso pretende propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988)  juntamente com o contrato coletivo de trabalho,  demonstra sua coerência com a modernização das relações sociais. 
+</text>
+                <rel f="">propor</rel>
+                <arg f="" n="1">o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1831:  E propôs que eu desencadeasse nesta coluna uma campanha nacional contra saudações lambuzadas. 
+</text>
+                <rel f="">propôs</rel>
+                <arg f="" n="1">que eu desencadeasse nesta coluna uma campanha nacional contra saudações lambuzadas
+</arg>
+                <note>neste caso, suggest.01 também seria um equivalente adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1551:  O trabalho,  coordenado pela diretora Vera_  Bononi,  49,  propõe soluções para o aproveitamento do espaço construído,  em especial a marquise. 
+</text>
+                <arg f="" n="0">O trabalho,  coordenado pela diretora Vera_  Bononi,  49, 
+</arg>
+                <rel f="">propõe</rel>
+                <arg f="" n="1">soluções para o aproveitamento do espaço construído,  em especial a marquise
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s798:  O programa propõe a monetização da dívida interna(  pagamento com dinheiro impresso)  acompanhada da criação de uma nova moeda(  « assegurada a conversão da poupança em termos favoráveis »)  e imposição de rígido controle monetário. 
+</text>
+                <arg f="" n="0">O programa
+</arg>
+                <rel f="">propõe</rel>
+                <arg f="" n="1">a monetização da dívida interna(  pagamento com dinheiro impresso)  acompanhada da criação de uma nova moeda(  « assegurada a conversão da poupança em termos favoráveis »)  e imposição de rígido controle monetário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s796:  O PDT propõe uma auditoria para a dívida interna. 
+</text>
+                <arg f="" n="0">O PDT
+</arg>
+                <rel f="">propõe</rel>
+                <arg f="" n="1">uma auditoria para a dívida interna
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

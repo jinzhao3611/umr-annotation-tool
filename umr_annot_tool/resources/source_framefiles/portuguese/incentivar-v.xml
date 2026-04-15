@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="incentivar">
+        <note />
+    <roleset framnet="encourage.01" id="incentivar.01" name="estimular" vncls="59 102">
+            <roles>
+                <role descr="convincer" n="0">
+                    <vnrole vncls="59" vntheta="Agent" />
+                    <vnrole vncls="102" vntheta="Agent" />
+                </role>
+                <role descr="impelled agent" n="1">
+                    <vnrole vncls="59" vntheta="Patient" />
+                    <vnrole vncls="102" vntheta="Theme" />
+                </role>
+                <role descr="impelled action" n="2">
+                    <vnrole vncls="59" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3791:  Esses aspectos podem ser observados nos relatos das pacientes:  « quando tenho que arrumar a casa e não estou com_  vontade,  escuto vozes que me incentivam a começar a tarefa. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">incentivam</rel>
+                <arg f="" n="2">a começar a tarefa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3754:  Líder incentiva invasão das próprias terras
+</text>
+                <arg f="" n="0">Líder
+</arg>
+                <rel f="">incentiva</rel>
+                <arg f="" n="2">invasão das próprias terras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3081:  Patricia_  Wells ensinou o preparo de codornas marinadas e cuscuz marroquino e incentivava o público a repartir « food_  experiences »(  o nome moderno para receber amigos para comer)  como ela mesma faz em sua casa na Provence(  sul da França) ,  região em moda nos Estados_  Unidos. 
+</text>
+                <arg f="" n="0">Patricia_  Wells
+</arg>
+                <rel f="">incentivava</rel>
+                <arg f="" n="1">o público
+</arg>
+                <arg f="" n="2">a repartir « food_  experiences »(  o nome moderno para receber amigos para comer)  como ela mesma faz em sua casa na Provence(  sul da França) ,  região em moda nos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

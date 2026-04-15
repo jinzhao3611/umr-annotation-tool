@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ocupar">
+        <note />
+    <roleset framnet="" id="ocupar.01" name="preencher (lugar ou posição); estar em (lugar ou posição)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3752:  O segundo lugar foi conquistado pela Ericsson,  que em agosto de 93 ocupava a quarta posição em contratos assinados para fornecimento de equipamentos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">em agosto de 93
+</arg>
+                <rel f="">ocupava</rel>
+                <arg f="" n="1">a quarta posição
+</arg>
+                <arg f="" n="2">em contratos assinados para fornecimento de equipamentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3664:  Uma reprodução gigantesca da « Maja_  Desnuda »,  de Goya,  ocupa uma das paredes da casa. 
+</text>
+                <arg f="" n="0">Uma reprodução gigantesca da « Maja_  Desnuda »,  de Goya, 
+</arg>
+                <rel f="">ocupa</rel>
+                <arg f="" n="1">uma das paredes da casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3400:  A dimensão do fato está na relatividade da sua importância para cada leitor e não no espaço narcísico que ocupa sob uma assinatura. 
+</text>
+                <arg f="" n="0">o fato
+</arg>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">ocupa</rel>
+                <arg f="loc" n="m">sob uma assinatura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2960:  Nos últimos dias,  aumentaram as especulações sobre quem ocuparia o lugar de Mansell na Newmann/  Hass. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">ocuparia</rel>
+                <arg f="" n="1">o lugar de Mansell na Newmann/  Hass
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1307:  Pesquisa da Laerte_  Cordeiro_  &amp;_  Associados,  com_  base_  em anúncios de emprego,  indica que a área voltou a ocupar a segunda posição na demanda. 
+</text>
+                <arg f="" n="0">a área
+</arg>
+                <rel f="">ocupar</rel>
+                <arg f="" n="1">a segunda posição na demanda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s968:  O balanço do Eldorado_  S/  A informa que as irmãs Veríssimo,  filhas do fundador,  ocupam cargos na vice-  presidência e diretoria do grupo. 
+</text>
+                <arg f="" n="0">as irmãs Veríssimo,  filhas do fundador, 
+</arg>
+                <rel f="">ocupam</rel>
+                <arg f="" n="1">cargos
+</arg>
+                <arg f="" n="2">na vice-  presidência e diretoria do grupo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s864:  O papa João_  Paulo_  2º escolheu a irmã Emília_  Ehrlich para ocupar uma das três secretarias no sínodo que acontecerá em outubro. 
+</text>
+                <rel f="">ocupar</rel>
+                <arg f="" n="1">uma das três secretarias
+</arg>
+                <arg f="loc" n="m">no sínodo que acontecerá em outubro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s659:  Esse equipamento « envolve » o prédio e é indicado para construções que ocupem áreas horizontais,  como galpões e indústrias. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">ocupem</rel>
+                <arg f="" n="1">áreas horizontais
+</arg>
+                <arg f="prd" n="m">como galpões e indústrias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s656:  Esses núcleos coloniais,  entre eles o do Vale_  do_  Ribeira,  foram ocupados a_  partir_  de terras vendidas pelo governo. 
+</text>
+                <arg f="" n="1">Esses núcleos coloniais,  entre eles o do Vale_  do_  Ribeira, 
+</arg>
+                <rel f="">ocupados</rel>
+                <arg f="mnr" n="m">a_  partir_  de terras vendidas pelo governo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

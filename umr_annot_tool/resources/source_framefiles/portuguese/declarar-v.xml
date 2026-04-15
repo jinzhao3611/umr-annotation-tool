@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="declarar">
+        <note />
+        <note />
+    <roleset framnet="declare.02" id="declarar.01" name="dizer (verbo de elocução)" vncls="37.7">
+            <roles>
+                <role descr="announcer" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <role descr="attributive" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4114:  Claro sem descuidar de tudo mais,  mas vendo com clareza a questão das prioridades »,  declara Brizola. 
+</text>
+                <arg f="" n="1">Claro sem descuidar de tudo mais,  mas vendo com clareza a questão das prioridades
+</arg>
+                <rel f="">declara</rel>
+                <arg f="" n="0">Brizola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2716:  Ana_  Moser declara paixão por futebol
+</text>
+                <arg f="" n="0">Ana_  Moser
+</arg>
+                <rel f="">declara</rel>
+                <arg f="" n="1">paixão por futebol
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1396:  « Eu estou apaixonado »,  declarou o presidente Itamar_  Franco,  63,  no hall do Teatro_  Nacional de Brasília,  onde assistiu anteontem o balé « Quebra_  Nozes » com a pedagoga June_  Drummond,  31. 
+</text>
+                <arg f="" n="1">« Eu estou apaixonado »
+</arg>
+                <rel f="">declarou</rel>
+                <arg f="" n="0">o presidente Itamar_  Franco,  63, 
+</arg>
+                <arg f="loc" n="m">no hall do Teatro_  Nacional de Brasília,  onde assistiu anteontem o balé « Quebra_  Nozes » com a pedagoga June_  Drummond,  31
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1283:  Parte do crescimento de Fernando_  Henrique na última pesquisa Datafolha deve-  se ﻿à evolução do tucano entre os eleitores que declaram simpatia pelo PMDB de Orestes_  Quércia e pelo PPR de Esperidião_  Amin. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">declaram</rel>
+                <arg f="" n="1">simpatia pelo PMDB de Orestes_  Quércia e pelo PPR de Esperidião_  Amin
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s564:  « Ele veio aqui e liberou US$  5 milhões,  1%  do valor da obra.  »,  declarou. 
+</text>
+                <arg f="" n="1">« Ele veio aqui e liberou US$  5 milhões,  1%  do valor da obra.  »
+</arg>
+                <rel f="">declarou</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="declare.01" id="declarar.02" name="afirmar publicamente algo sobre algo ou alguém" vncls="29.4 48.1.2">
+            <roles>
+                <role descr="declarer, labeller" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="item being described" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2428:  O governo recebeu ontem outra má notícia:  empresários se declararam contrários ao CIP. 
+</text>
+                <arg f="" n="0">empresários
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">declararam</rel>
+                <arg f="" n="2">contrários ao CIP
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

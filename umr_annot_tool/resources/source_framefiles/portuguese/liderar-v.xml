@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="liderar">
+        <note />
+    <roleset framnet="lead.02" id="liderar.01" name="ser líder de" vncls="51.7">
+            <roles>
+                <role descr="leader" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="project or group" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2021:  A Souza_  Cruz,  que lidera o mercado,  teve sua participação reduzida de 83%  em 92 para 79,  6%  em 93,  consequência de uma retração de 10,  5%  nas suas vendas. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">lidera</rel>
+                <arg f="" n="1">o mercado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2003:  « Trata-  se de um candidato que estreou em comício sob vaias e quer,  pela via do preconceito,  enfraquecer quem lidera as pesquisas »,  disse Falcão sobre FHC. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">lidera</rel>
+                <arg f="" n="1">as pesquisas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

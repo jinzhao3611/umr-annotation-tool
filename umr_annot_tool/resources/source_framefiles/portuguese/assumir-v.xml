@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="assumir">
+        <note />
+        <note />
+    <roleset framnet="take.01" id="assumir.01" name="ocupar um cargo ou lugar de responsabilidade" vncls="10.5 11.3">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from, or prepositional complement of arg1" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4187:  Em seu lugar,  vai assumindo um outro ex-  atleta,  Roberto_  Bettega. 
+</text>
+                <arg f="loc" n="m">Em seu lugar
+</arg>
+                <rel f="">assumindo</rel>
+                <arg f="" n="0">um outro ex-  atleta,  Roberto_  Bettega
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3425:  O ex-  jogador assumiu o cargo ontem em substituição a Carlinhos,  demitido após a derrota para o Bahia(  0 a 1) ,  anteontem. 
+</text>
+                <arg f="" n="0">O ex-  jogador
+</arg>
+                <rel f="">assumiu</rel>
+                <arg f="" n="1">o cargo
+</arg>
+                <arg f="loc" n="m">ontem
+</arg>
+                <arg f="cau" n="m">em substituição a Carlinhos,  demitido após a derrota para o Bahia(  0 a 1) ,  anteontem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3357:  Teses modernas e sociais como o controle civil sobre o sistema de saúde esbarram em resistências enormes dos setores hegemônicos do PT,  sob o argumento de que amarrariam a atuação do governo,  logo agora que o partido se prepara para assumir o poder. 
+</text>
+                <rel f="">assumir</rel>
+                <arg f="" n="1">o poder
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2764:  O narcisismo assume uma feição cada_  vez_  mais frívola. 
+</text>
+                <arg f="" n="0">O narcisismo
+</arg>
+                <rel f="">assume</rel>
+                <arg f="" n="1">uma feição cada_  vez_  mais frívola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2581:  Ficando novamente vago o cargo,  o presidente do Senado e,  sucessivamente,  do Supremo_  Tribunal_  Federal(  STF)  assumem a incumbência. 
+</text>
+                <arg f="adv" n="m">Ficando novamente vago o cargo
+</arg>
+                <arg f="" n="0">o presidente do Senado e,  sucessivamente,  do Supremo_  Tribunal_  Federal(  STF) 
+</arg>
+                <rel f="">assumem</rel>
+                <arg f="" n="1">a incumbência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2222:  Executivos em cargos de liderança assumem seus cargos com mais uma pesada função:  implementar cada passo da estratégia que eles próprios esboçaram. 
+</text>
+                <arg f="" n="0">Executivos em cargos de liderança
+</arg>
+                <rel f="">assumem</rel>
+                <arg f="" n="1">seus cargos
+</arg>
+                <arg f="mnr" n="m">com mais uma pesada função:  implementar cada passo da estratégia que eles próprios esboçaram
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="bear.01" id="assumir.02" name="suportar, tomar responsabilidade por" vncls="31.2">
+            <roles>
+                <role descr="holder" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing held" n="1">
+                    <vnrole vncls="31.2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="31.2" vntheta="Predicate" />
+                </role>
+                <role descr="secondary attribute of thing held" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3107:  Como partiu do PT o pedido de encontro com o presidente Nelson_  Mandela,  o próprio partido assumiu os custos do trecho da viagem que inclui a África_  do_  Sul. 
+</text>
+                <arg f="adv" n="m">Como partiu do PT o pedido de encontro com o presidente Nelson_  Mandela
+</arg>
+                <arg f="" n="0">o próprio partido
+</arg>
+                <rel f="">assumiu</rel>
+                <arg f="" n="1">os custos do trecho da viagem que inclui a África_  do_  Sul
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

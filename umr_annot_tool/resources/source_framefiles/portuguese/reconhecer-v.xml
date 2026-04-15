@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reconhecer">
+        <note />
+    <roleset framnet="acknowledge.01" id="reconhecer.01" name="admitir" vncls="37.10 29.9-1">
+            <roles>
+                <role descr="admitter, claimer, speaker" n="0">
+                    <vnrole vncls="37.10 29.9-1" vntheta="Agent" />
+                </role>
+                <role descr="proposition, claim, utterance" n="1">
+                    <vnrole vncls="37.10 29.9-1" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.10 29.9-1" vntheta="Recipient" />
+                </role>
+                <role descr="secondary predication" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s542:  A agência de comunicação « Free_  Press »,  do comitê do candidato Fernando_  Henrique_  Cardoso(  PSDB-  PFL-  PTB) ,  reconheceu ter errado na divulgação de uma entrevista do diretor para Assuntos Internacionais do Banco_  Central,  Gustavo_  Franco,  concedida a ela como peça de campanha. 
+</text>
+                <arg f="" n="0">A agência de comunicação « Free_  Press »,  do comitê do candidato Fernando_  Henrique_  Cardoso(  PSDB-  PFL-  PTB) , 
+</arg>
+                <rel f="">reconheceu</rel>
+                <arg f="" n="1">ter errado na divulgação de uma entrevista do diretor para Assuntos Internacionais do Banco_  Central,  Gustavo_  Franco,  concedida a ela como peça de campanha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s541:  Agência tucana reconhece ter cometido erro
+</text>
+                <arg f="" n="0">Agência tucana
+</arg>
+                <rel f="">reconhece</rel>
+                <arg f="" n="1">ter cometido erro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s318:  Essas empresas,  diz Arruda,  reconheceram ter emitido « notas frias »,  sem o recebimento de nenhum serviço da empresa do pianista João_  Carlos_  Martins e de seu sócio Ettore_  Gagliardi. 
+</text>
+                <arg f="" n="0">Essas empresas
+</arg>
+                <rel f="">reconheceram</rel>
+                <arg f="" n="1">ter emitido « notas frias »,  sem o recebimento de nenhum serviço da empresa do pianista João_  Carlos_  Martins e de seu sócio Ettore_  Gagliardi
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

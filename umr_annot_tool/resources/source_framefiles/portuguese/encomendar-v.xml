@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encomendar">
+        <note />
+    <roleset framnet="order.02" id="encomendar.01" name="fazer pedido de mercadoria" vncls="13.5.1">
+            <roles>
+                <role descr="orderer" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing ordered" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, ordered-for" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <role descr="source" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2234:  A Nasa(  agência espacial dos EUA)  encomendou ﻿à empresa Micro-  Bac o desenvolvimento de um sistema de purificação de esgoto utilizando bactérias conhecidas por devorarem material orgânico. 
+</text>
+                <arg f="" n="0">A Nasa(  agência espacial dos EUA) 
+</arg>
+                <rel f="">encomendou</rel>
+                <arg f="" n="3">﻿à empresa Micro-  Bac
+</arg>
+                <arg f="" n="1">o desenvolvimento de um sistema de purificação de esgoto
+</arg>
+                <arg f="prd" n="m">utilizando bactérias conhecidas por devorarem material orgânico
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="enxergar">
+        <note />
+    <roleset framnet="view.01" id="enxergar.01" name="ver" vncls="30.2">
+            <roles>
+                <role descr="viewer" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing viewed" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3681:  « Compramos o título para verificar,  levei para casa e não enxerguei nada »,  disse ontem Vera_  Melo_  Araújo,  chefe do Departamento_  de_  Fiscalização da Susep. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">enxerguei</rel>
+                <arg f="" n="1">nada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1116:  Se você tentar medi-  lo,  estará enxergando apenas seu reflexo,  como o da lua num lago ; não estará percorrendo seu caminho ». 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">enxergando</rel>
+                <arg f="" n="1">apenas seu reflexo
+</arg>
+                <arg f="prd" n="m">como o da lua num lago
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s772:  Devo fingir que enxergo a figura ou sento às margens do Rio_  Piedra e choro?  »
+</text>
+                <rel f="">enxergo</rel>
+                <arg f="" n="1">a figura
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

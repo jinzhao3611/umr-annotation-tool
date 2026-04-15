@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="impugnar">
+        <note />
+    <roleset framnet="impugn.01" id="impugnar.01" name="contestar validade de" vncls="-">
+            <roles>
+                <role descr="attacker, slanderer, agent" n="0" />
+                <role descr="entity impugned" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2026:  O Sinicesp impugnou concorrência da Prefeitura de Santana_  de_  Parnaíba argumentando que o edital para obra de infra-  estrutura contraria a Lei_  8.  666. 
+</text>
+                <arg f="" n="0">O Sinicesp
+</arg>
+                <rel f="">impugnou</rel>
+                <arg f="" n="1">concorrência da Prefeitura de Santana_  de_  Parnaíba
+</arg>
+                <arg f="mnr" n="m">argumentando que o edital para obra de infra-  estrutura contraria a Lei_  8.  666
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="instituir">
+        <note />
+    <roleset framnet="institute" id="instituir.01" name="estabelecer" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2951:  A constatação é do jurista Saulo_  Ramos,  ex-  consultor Geral da República e ex-  ministro da Justiça,  que foi convidado a analisar o rascunho das medidas e na ocasião alertou para dois problemas:  o artigo primeiro e o parágrafo primeiro da MP 433 praticamente instituem duas moedas no país,  o_  que é proibido. 
+</text>
+                <arg f="" n="0">o artigo primeiro e o parágrafo primeiro da MP 433
+</arg>
+                <arg f="adv" n="m">praticamente
+</arg>
+                <rel f="">instituem</rel>
+                <arg f="" n="1">duas moedas
+</arg>
+                <arg f="loc" n="m">no país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2950:  Já nas primeiras palavras a Medida_  Provisória que institui a Unidade_  Real_  de_  Valor incorre em erro e abre brecha para contestações na Justiça. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">institui</rel>
+                <arg f="" n="1">a Unidade_  Real_  de_  Valor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1446:  Pelo que a Folha apurou,  a equipe econômica não está disposta a aceitar modificações nos dispositivos sobre salários da medida provisória que instituiu a URV. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">instituiu</rel>
+                <arg f="" n="1">a URV
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

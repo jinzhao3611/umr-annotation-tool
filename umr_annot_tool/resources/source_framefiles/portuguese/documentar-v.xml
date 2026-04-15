@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="documentar">
+        <note />
+    <roleset framnet="document.01" id="documentar.01" name="prover evidências materiais e escritas" vncls="-">
+            <roles>
+                <role descr="provider of evidence, agent" n="0" />
+                <role descr="thing documented" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s107:  Mesmo a simples tentativa de se documentar esse ponto deixa uma pessoa exposta a acusações de condescendência e,  assim,  os brancos de_  fato conseguiram cooptar os julgamentos de valor. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">documentar</rel>
+                <arg f="" n="1">esse ponto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

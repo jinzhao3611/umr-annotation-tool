@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acusar">
+        <note />
+    <roleset framnet="accuse.01" id="acusar.01" name="atribuir culpa por" vncls="81">
+            <roles>
+                <role descr="accuser" n="0">
+                    <vnrole vncls="81" vntheta="Agent" />
+                </role>
+                <role descr="accused" n="1">
+                    <vnrole vncls="81" vntheta="Theme" />
+                </role>
+                <role descr="crime" n="2">
+                    <vnrole vncls="81" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3874:  Ele é acusado de vandalismo. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">acusado</rel>
+                <arg f="" n="2">de vandalismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3872:  Cingapura acusa mais um americano
+</text>
+                <arg f="" n="0">Cingapura
+</arg>
+                <rel f="">acusa</rel>
+                <arg f="" n="1">mais um americano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3284:  Farina acusou os clubes de sonegarem impostos com a cumplicidade da federação. 
+</text>
+                <arg f="" n="0">Farina
+</arg>
+                <rel f="">acusou</rel>
+                <arg f="" n="1">os clubes
+</arg>
+                <arg f="" n="2">de sonegarem impostos com a cumplicidade da federação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2506:  Ele é acusado pela morte de pelo_  menos 83 pessoas e de ter ferido outras 200. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">acusado</rel>
+                <arg f="" n="2">pela morte de pelo_  menos 83 pessoas e de ter ferido outras 200
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2393:  A Tejofran e a Power são acusadas por Rui_  Ramos,  ex-  integrante da campanha tucana,  de financiar a estrutura política do candidato do PSDB ao governo,  Mário_  Covas. 
+</text>
+                <arg f="" n="1">A Tejofran e a Power
+</arg>
+                <rel f="">acusadas</rel>
+                <arg f="" n="0">por Rui_  Ramos,  ex-  integrante da campanha tucana, 
+</arg>
+                <arg f="" n="2">de financiar a estrutura política do candidato do PSDB ao governo,  Mário_  Covas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s959:  O presidente Miguel_  Kodja_  Neto ignorou a diplomacia que normalmente marca o futebol para acusar o ex-  jogador e empresário Pelé. 
+</text>
+                <arg f="" n="0">O presidente Miguel_  Kodja_  Neto
+</arg>
+                <rel f="">acusar</rel>
+                <arg f="" n="1">o ex-  jogador e empresário Pelé
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s924:  Os pescadores detidos em_  flagrante usando tarrafas(  redes de pesca)  serão acusados de crime contra fauna,  que prevê de um a três anos de prisão. 
+</text>
+                <arg f="" n="1">Os pescadores detidos em_  flagrante usando tarrafas(  redes de pesca) 
+</arg>
+                <rel f="">acusados</rel>
+                <arg f="" n="2">de crime contra fauna,  que prevê de um a três anos de prisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s497:  O advogado Mariano_  Gonçalves_  Neto,  autor da ação popular que se arrasta há 12 anos,  acusa os ex-  ministros de aprovarem uma superavaliação dos terrenos entregues pelo grupo Delfin como pagamento de uma dívida que,  em 1982,  chegava a Cr 70 milhões. 
+</text>
+                <arg f="" n="0">O advogado Mariano_  Gonçalves_  Neto,  autor da ação popular que se arrasta há 12 anos, 
+</arg>
+                <rel f="">acusa</rel>
+                <arg f="" n="1">os ex-  ministros
+</arg>
+                <arg f="" n="2">de aprovarem uma superavaliação dos terrenos entregues pelo grupo Delfin como pagamento de uma dívida que,  em 1982,  chegava a Cr 70 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s476:  Ele acusa o governo federal de não cumprir bem sua missão de impedir a entrada no país de estrangeiros e de não repor o dinheiro gasto pelos Estados com eles. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">acusa</rel>
+                <arg f="" n="1">o governo federal
+</arg>
+                <arg f="" n="2">de não cumprir bem sua missão de impedir a entrada no país de estrangeiros e de não repor o dinheiro gasto pelos Estados com eles
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s474:  Governador do Estado acusa governo federal dos EUA de não impedir entrada de estrangeiros(  De Washington) 
+</text>
+                <arg f="" n="0">Governador do Estado
+</arg>
+                <rel f="">acusa</rel>
+                <arg f="" n="1">governo federal dos EUA
+</arg>
+                <arg f="" n="2">de não impedir entrada de estrangeiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s166:  Rúbio era acusado por Claudirene de tê-  la estuprado no ano passado,  época em que era o líder da Assembléia_  de_  Deus na usina São_  Luiz,  onde a estudante morava. 
+</text>
+                <arg f="" n="1">Rúbio
+</arg>
+                <rel f="">acusado</rel>
+                <arg f="" n="0">por Claudirene
+</arg>
+                <arg f="" n="2">de tê-  la estuprado no ano passado,  época em que era o líder da Assembléia_  de_  Deus na usina São_  Luiz,  onde a estudante morava
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

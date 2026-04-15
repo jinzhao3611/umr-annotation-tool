@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cobrir">
+        <note />
+        <note />
+    <roleset framnet="cover.01" id="cobrir.01" name="compensar" vncls="9.8">
+            <roles>
+                <role descr="coverer" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="thing covered" n="1">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                </role>
+                <role descr="instrument, covered by" n="2">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3192:  A taxa de serviço da Brasoftware é coberta pelo desconto que obtém junto ao fornecedor. 
+</text>
+                <arg f="" n="1">A taxa de serviço da Brasoftware
+</arg>
+                <rel f="">coberta</rel>
+                <arg f="" n="2">pelo desconto que obtém junto ao fornecedor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2332:  Para viabilizar a viagem de pelo_  menos parte dos 20 integrantes do coral advogados,  bancários,  secretárias,  estudantes,  aposentados e apenas um padre,  a diretora diz que se uma empresa se dispuser a cobrir os custos da viagem,  o coral oferece em troca a gravação de um disco promocional. 
+</text>
+                <rel f="">cobrir</rel>
+                <arg f="" n="1">os custos da viagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1191:  Ele disse que a receita da ferrovia não cobre as despesas. 
+</text>
+                <arg f="" n="0">a receita da ferrovia
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">cobre</rel>
+                <arg f="" n="1">as despesas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="fuck.01" id="cobrir.02" name="ter relações sexuais (animais, do ponto de vista do macho)" vncls="-">
+            <roles>
+                <role descr="party the first" n="0" />
+                <role descr="party the second" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1418:  Tá cobrindo até vaca no pasto! 
+</text>
+                <rel f="">cobrindo</rel>
+                <arg f="adv" n="m">até
+</arg>
+                <arg f="" n="1">vaca no pasto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

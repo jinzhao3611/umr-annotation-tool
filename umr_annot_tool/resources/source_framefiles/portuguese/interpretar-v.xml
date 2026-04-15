@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="interpretar">
+        <note />
+        <note />
+    <roleset framnet="play.02" id="interpretar.01" name="dar interpretação a obra de arte ou texto; representar" vncls="-">
+            <roles>
+                <role descr="actor" n="0" />
+                <role descr="role" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3987:  Ferrara põe o excelente Harvey_  Keitel para interpretar o seu papel:  o do diretor que faz da falsa loira uma verdadeira atriz. 
+</text>
+                <rel f="">interpretar</rel>
+                <arg f="" n="1">o seu papel:  o do diretor que faz da falsa loira uma verdadeira atriz
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="interpret.01" id="interpretar.02" name="dar interpretação a; explicar" vncls="29.2">
+            <roles>
+                <role descr="interpreter" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="entity interpreted" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="attribute of arg1" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2604:  O Supremo interpreta,  em última instância,  a Constituição e as leis,  mesmo que elas digam respeito a contratos privados. 
+</text>
+                <arg f="" n="0">O Supremo
+</arg>
+                <rel f="">interpreta</rel>
+                <arg f="loc" n="m">em última instância
+</arg>
+                <arg f="" n="1">a Constituição e as leis
+</arg>
+                <arg f="adv" n="m">mesmo que elas digam respeito a contratos privados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

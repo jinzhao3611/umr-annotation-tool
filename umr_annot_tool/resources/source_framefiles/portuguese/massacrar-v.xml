@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="massacrar">
+        <note />
+    <roleset framnet="massacre.01" id="massacrar.01" name="amassar fortemente; matar cruelmente" vncls="42.1">
+            <roles>
+                <role descr="killer" n="0">
+                    <vnrole vncls="42.1" vntheta="Agent" />
+                </role>
+                <role descr="corpse" n="1">
+                    <vnrole vncls="42.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="42.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1828:  Comentei com minha amiga espanhola,  Dolores_  de_  Pança ; a profusão de beijos melados que massacraram minhas aveludadas bochechas na Bienal. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">massacraram</rel>
+                <arg f="" n="1">minhas aveludadas bochechas
+</arg>
+                <arg f="loc" n="m">na Bienal
+</arg>
+                <note>arg2 (instrumento) na posição de sujeito</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

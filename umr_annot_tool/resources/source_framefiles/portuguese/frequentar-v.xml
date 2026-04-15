@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="frequentar">
+        <note />
+    <roleset framnet="attend.01" id="frequentar.01" name="ir a um lugar com frequência" vncls="">
+            <roles>
+                <role descr="thing attending" n="0" />
+                <role descr="thing attended" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2352:  O ex-  ministro e candidato presidencial Fernando_  Henrique_  Cardoso disse ﻿à Folha que frequentava no passado os sebos do centro,  perto_  da Faculdade_  de_  Direito da USP. 
+</text>
+                <arg f="" n="0">O ex-  ministro e candidato presidencial Fernando_  Henrique_  Cardoso
+</arg>
+                <rel f="">frequentava</rel>
+                <arg f="tmp" n="m">no passado
+</arg>
+                <arg f="" n="1">os sebos do centro
+</arg>
+                <arg f="loc" n="m">perto_  da Faculdade_  de_  Direito da USP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1867:  Iam aos bailes no Automóvel_  Clube e reparavam nas poucas donzelas que ousavam frequentar os cafés. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">frequentar</rel>
+                <arg f="" n="1">os cafés
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

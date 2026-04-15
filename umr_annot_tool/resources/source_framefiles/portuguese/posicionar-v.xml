@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="posicionar">
+        <note />
+    <roleset framnet="position.01" id="posicionar.01" name="tomar posição" vncls="9.1">
+            <roles>
+                <role descr="agent, putter" n="0">
+                    <vnrole vncls="9.1" vntheta="Agent" />
+                </role>
+                <role descr="thing positioned, often REC" n="1">
+                    <vnrole vncls="9.1" vntheta="Theme" />
+                </role>
+                <role descr="location or position, or attribute of arg1" n="2">
+                    <vnrole vncls="9.1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4056:  Em muitos momentos ele simplesmente deixou de se posicionar. 
+</text>
+                <arg f="tmp" n="m">Em muitos momentos
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="adv" n="m">simplesmente
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">posicionar</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

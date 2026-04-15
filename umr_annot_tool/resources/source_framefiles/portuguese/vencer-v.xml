@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vencer">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="win.01" id="vencer.01" name="obter vitória" vncls="13.5.1">
+            <roles>
+                <role descr="winner" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing won (contest or prize)" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="beneficiary" n="2" />
+                <role descr="loser, giver of prize" n="3" />
+                <role descr="in-exchange-for" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3993:  Venceu por 1 a 0. 
+</text>
+                <rel f="">Venceu</rel>
+                <arg f="ext" n="m">por 1 a 0
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3633:  A Roma venceu ontem a Lazio,  também na capital italiana,  por 3 a 0,  na partida mais importante e empolgante da décima primeira rodada do Campeonato_  Italiano de 1994/  95. 
+</text>
+                <arg f="" n="0">A Roma
+</arg>
+                <rel f="">venceu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">a Lazio
+</arg>
+                <arg f="loc" n="m">também na capital italiana
+</arg>
+                <arg f="ext" n="m">por 3 a 0
+</arg>
+                <arg f="" n="2">na partida mais importante e empolgante da décima primeira rodada do Campeonato_  Italiano de 1994/  95
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2292:  Fleury foi para o segundo turno e venceu o atual prefeito de São_  Paulo,  Paulo_  Maluf(  PPR) . 
+</text>
+                <arg f="" n="0">Fleury
+</arg>
+                <rel f="">venceu</rel>
+                <arg f="" n="1">o atual prefeito de São_  Paulo,  Paulo_  Maluf(  PPR) 
+</arg>
+                <note>quando o ato de derrotar o adversário não é nos esportes, usa-se "defeat.01" </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2263:  O Mogi_  Mirim venceu ontem o União_  São_  João de Araras por 2 a 0 em Mogi e deu mais um passo para conquistar uma vaga na Copa_  Bandeirantes. 
+</text>
+                <arg f="" n="0">O Mogi_  Mirim
+</arg>
+                <rel f="">venceu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">o União_  São_  João de Araras
+</arg>
+                <arg f="ext" n="m">por 2 a 0
+</arg>
+                <arg f="loc" n="m">em Mogi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2246:  O Houston_  Rockets conquistou sua 27.  ª vitória na temporada da NBA(  contra apenas quatro derrotas) ,  em casa,  sábado,  ao vencer o Philadelphia 76 ers por 100 a 93. 
+</text>
+                <rel f="">vencer</rel>
+                <arg f="" n="1">o Philadelphia 76 ers
+</arg>
+                <arg f="ext" n="m">por 100 a 93
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2190:  « Como posso falar de quem me venceu?  »
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">venceu</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1338:  « Tinha vôo marcado para esta noite(  ontem) ,  porque não imaginava ser capaz de vencer Sampras »,  disse Alami. 
+</text>
+                <rel f="">vencer</rel>
+                <arg f="" n="1">Sampras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s201:  Moreira_  Alves também votou a_  favor_  de Collor noutros dois mandatos de segurança,  mas foi vencido nos dois julgamentos. 
+</text>
+                <arg f="" n="1">Moreira_  Alves
+</arg>
+                <rel f="">vencido</rel>
+                <arg f="loc" n="m">nos dois julgamentos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="win.01" id="vencer.02" name="ganhar competição ou concurso" vncls="13.5.1">
+            <roles>
+                <role descr="winner" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing won (contest or prize)" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="beneficiary" n="2" />
+                <role descr="loser, giver of prize" n="3" />
+                <role descr="in-exchange-for" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3056:  « Se vencermos esses quatro jogos,  chegaremos a 80%  de aproveitamento dos pontos disputados. 
+</text>
+                <rel f="">vencermos</rel>
+                <arg f="" n="1">esses quatro jogos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2864:  O candidato também deve vencer a eleição no primeiro turno. 
+</text>
+                <arg f="" n="0">O candidato
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">vencer</rel>
+                <arg f="" n="1">a eleição
+</arg>
+                <arg f="tmp" n="m">no primeiro turno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2064:  Mauro_  Silva diz que seria'  um desgosto'  ir para reserva ; para Zagalo,  seleção de 82 venceria se jogasse como a de 94
+</text>
+                <arg f="dis" n="m">para Zagalo
+</arg>
+                <arg f="" n="0">seleção de 82
+</arg>
+                <rel f="">venceria</rel>
+                <arg f="adv" n="m">se jogasse como a de 94
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1994:  Nos discursos de agradecimento em Wimbledon e Us_  Open,  meses antes,  a alemã lembrara o público de que não ficava feliz em vencer torneios na ausência de Monica_  Seles,  afastada das quadras depois de ser esfaqueada na quadra. 
+</text>
+                <rel f="">vencer</rel>
+                <arg f="" n="1">torneios
+</arg>
+                <arg f="tmp" n="m">na ausência de Monica_  Seles,  afastada das quadras depois de ser esfaqueada na quadra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1405:  Em 1973,  Ocaña venceu a Volta_  da_  França,  a maior competição do gênero no mundo. 
+</text>
+                <arg f="tmp" n="m">Em 1973
+</arg>
+                <arg f="" n="0">Ocaña
+</arg>
+                <rel f="">venceu</rel>
+                <arg f="" n="1">a Volta_  da_  França,  a maior competição do gênero no mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s886:  Ela é vencida por Quércia,  indicado candidato ﻿à Presidência. 
+</text>
+                <arg f="" n="1">Ela
+</arg>
+                <rel f="">vencida</rel>
+                <arg f="" n="0">por Quércia,  indicado candidato ﻿à Presidência
+</arg>
+                <note>este exemplo é ambíguo: se "ela" for uma adversária, o sentido é vencer.01; se "ela" for uma competição, o sentido é vencer.02</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s276:  Folha- -  Quem vence? 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">vence</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="overcome.01" id="vencer.03" name="superar (adversidade)" vncls="">
+            <roles>
+                <role descr="overcomer" n="0" />
+                <role descr="difficulty" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s355:  O tom familiar,  coloquial,  benigno de suas crônicas(  agora reunidas em « Sexta-  feira, _  Folha »,  ed.  Siciliano)  foi pouco_  a_  pouco vencendo as resistências do público. 
+</text>
+                <arg f="" n="0">O tom familiar,  coloquial,  benigno de suas crônicas(  agora reunidas em « Sexta-  feira, _  Folha »,  ed.  Siciliano) 
+</arg>
+                <arg f="mnr" n="m">pouco_  a_  pouco
+</arg>
+                <rel f="">vencendo</rel>
+                <arg f="" n="1">as resistências do público
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

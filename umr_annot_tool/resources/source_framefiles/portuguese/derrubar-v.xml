@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="derrubar">
+        <note />
+    <roleset framnet="overturn.01" id="derrubar.01" name="invalidar" vncls="45.4">
+            <roles>
+                <role descr="overturner (us. judge or court)" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing overturned, law or judgement" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s884:  O STF derrubou dispositivos da lei eleitoral que restringiam a participação dos partidos de_  acordo com sua representação na Câmara. 
+</text>
+                <arg f="" n="0">O STF
+</arg>
+                <rel f="">derrubou</rel>
+                <arg f="" n="1">dispositivos da lei eleitoral que restringiam a participação dos partidos de_  acordo com sua representação na Câmara. 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s807:  O PPR tentou derrubar a retenção das verbas de habitação e educação no primeiro turno,  mas uma manobra do governo barrou a mudança. 
+</text>
+                <rel f="">derrubar</rel>
+                <arg f="" n="1">a retenção das verbas de habitação e educação
+</arg>
+                <arg f="tmp" n="m">no primeiro turno
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

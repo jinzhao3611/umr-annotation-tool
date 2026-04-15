@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desestimular">
+        <note />
+    <roleset framnet="discourage.01" id="desestimular.01" name="tirar o estímulo; desencorajar" vncls="67 77">
+            <roles>
+                <role descr="entity removing confidence, agent" n="0">
+                    <vnrole vncls="67" vntheta="Agent" />
+                    <vnrole vncls="77" vntheta="Agent" />
+                </role>
+                <role descr="entity discouraged" n="1">
+                    <vnrole vncls="67" vntheta="Theme" />
+                </role>
+                <role descr="discouraged from" n="2">
+                    <vnrole vncls="77" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3979:  Está em estudo no Ministério_  da_  Previdência um conjunto de medidas para desestimular o aumento de aposentadorias no próximo ano. 
+</text>
+                <rel f="">desestimular</rel>
+                <arg f="" n="1">o aumento de aposentadorias no próximo ano
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

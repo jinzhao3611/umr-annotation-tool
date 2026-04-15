@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apoiar">
+        <note />
+    <roleset framnet="support.01" id="apoiar.01" name="dar apoio" vncls="31.2">
+            <roles>
+                <role descr="helper" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="person or project being supported" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3247:  Desembargador apóia repressão
+</text>
+                <arg f="" n="0">Desembargador
+</arg>
+                <rel f="">apóia</rel>
+                <arg f="" n="1">repressão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3165:  Se Roseana,  os senadores,  deputados e prefeitos estão me apoiando não é porque tenhamos firmado qualquer compromisso pessoal. 
+</text>
+                <arg f="" n="0">Roseana,  os senadores,  deputados e prefeitos
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">apoiando</rel>
+                <arg f="cau" n="m">não é porque tenhamos firmado qualquer compromisso pessoal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2927:  Governador apóia ação da PF
+</text>
+                <arg f="" n="0">Governador
+</arg>
+                <rel f="">apóia</rel>
+                <arg f="" n="1">ação da PF
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2387:  Em Miami,  duas bombas caseiras(  coquetéis Molotov)  foram encontradas ontem em_  frente ﻿à revista cubana « Replica »,  que apóia as negociações entre Cuba e EUA para tentar resolver a crise. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">apóia</rel>
+                <arg f="" n="1">as negociações entre Cuba e EUA
+</arg>
+                <arg f="pnc" n="m">para tentar resolver a crise
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s808:  Na ocasião,  o PMDB apoiou o governo,  mas agora não estaria totalmente unido para repetir a dose. 
+</text>
+                <arg f="tmp" n="m">Na ocasião
+</arg>
+                <arg f="" n="0">o PMDB
+</arg>
+                <rel f="">apoiou</rel>
+                <arg f="" n="1">o governo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s561:  Fleury aproveitou a viagem para responder ao ex-  secretário José_  Machado_  de_  Campos_  Filho,  que o chamara de traidor por não apoiar Quércia. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">apoiar</rel>
+                <arg f="" n="1">Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s531:  Embora não ocorra no Brasil há muito,  é absolutamente normal,  nos países de maior tradição democrática,  que o governo tenha um candidato e o apóie. 
+</text>
+                <arg f="" n="0">o governo
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">apóie</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s529:  Pode também cobrar dos membros de sua administração que apóiem o seu candidato ou deixem o governo. 
+</text>
+                <arg f="" n="0">os membros de sua administração
+</arg>
+                <rel f="">apóiem</rel>
+                <arg f="" n="1">o seu candidato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s528:  O presidente Itamar_  Franco tem,  como qualquer cidadão brasileiro,  o direito de apoiar a candidatura para a Presidência da República de quem bem entender. 
+</text>
+                <rel f="">apoiar</rel>
+                <arg f="" n="1">a candidatura para a Presidência da República de quem bem entender
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s126:  Como a idéia de enxugar a Constituição enfrenta resistência inclusive nos partidos que apóiam o governo,  a equipe de FHC resolveu fazer as reformas por partes. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">apóiam</rel>
+                <arg f="" n="1">o governo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

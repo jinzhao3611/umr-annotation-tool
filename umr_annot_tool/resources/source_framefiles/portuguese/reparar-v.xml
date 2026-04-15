@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reparar">
+        <note />
+        <note />
+    <roleset framnet="repair.01" id="reparar.01" name="consertar" vncls="-">
+            <roles>
+                <role descr="repairer, agent" n="0" />
+                <role descr="entity repaired" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2423:  A necessidade de reparar os equipamentos durante a viagem teria alterado os planos de trabalho. 
+</text>
+                <rel f="">reparar</rel>
+                <arg f="" n="1">equipamentos
+</arg>
+                <arg f="tmp" n="m">durante a viagem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="notice.01" id="reparar.02" name="notar; perceber" vncls="30.1">
+            <roles>
+                <role descr="noticer" n="0">
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="noticed" n="1">
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1867:  Iam aos bailes no Automóvel_  Clube e reparavam nas poucas donzelas que ousavam frequentar os cafés. 
+</text>
+                <rel f="">reparavam</rel>
+                <arg f="" n="1">nas poucas donzelas que ousavam frequentar os cafés
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

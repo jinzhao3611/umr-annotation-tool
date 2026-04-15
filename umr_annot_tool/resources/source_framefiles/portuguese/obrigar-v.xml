@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="obrigar">
+        <note />
+    <roleset framnet="oblige.02 " id="obrigar.01" name="forçar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4041:  Os EUA entram na vida japonesa em meados do século 19,  quando obrigam o « shogun » a assinar um tratado de comércio. 
+</text>
+                <arg f="" n="0">Os EUA
+</arg>
+                <rel f="">obrigam</rel>
+                <arg f="" n="1">o « shogun »
+</arg>
+                <arg f="" n="2">a assinar um tratado de comércio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2429:  O motivo é que ele obriga a empresa que contratar jovens a manter um tutor para ensinar o trabalho aos novos empregados. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">obriga</rel>
+                <arg f="" n="1">a empresa que contratar jovens
+</arg>
+                <arg f="" n="2">a manter um tutor para ensinar o trabalho aos novos empregados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1188:  O jogador contou o motivo que o obrigou a não acertar com o Everton. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">obrigou</rel>
+                <arg f="" n="2">a não acertar com o Everton
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

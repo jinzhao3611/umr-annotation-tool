@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="absorver">
+        <note />
+    <roleset framnet="absorb.01" id="absorver.01" name="consumir, fazer desaparecer, neutralizar" vncls="-">
+            <roles>
+                <role descr="absorber, cause or agent" n="0" />
+                <role descr="absorbed, us. liquid" n="1" />
+                <role descr="sponge, arg 1 is absorbed into this, when separate from cause/agent" n="2" />
+                <role descr="Source of liquid, absorbed from what?" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1678:  A entrada de capitais,  para ser esterilizada monetariamente,  teve de ser absorvida pelo crescimento da dívida pública,  o_  que por_  sua_  vez requereu um superávit fiscal primário crescente. 
+</text>
+                <arg f="" n="1">A entrada de capitais
+</arg>
+                <arg f="pnc" n="m">para ser esterilizada monetariamente
+</arg>
+                <rel f="">absorvida</rel>
+                <arg f="" n="0">pelo crescimento da dívida pública
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

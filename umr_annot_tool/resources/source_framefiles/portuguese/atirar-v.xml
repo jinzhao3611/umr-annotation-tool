@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atirar">
+        <note />
+    <roleset framnet="throw.01" id="atirar.01" name="jogar algo em um alvo" vncls="17.1">
+            <roles>
+                <role descr="thrower" n="0">
+                    <vnrole vncls="17.1" vntheta="Agent" />
+                </role>
+                <role descr="thing thrown" n="1">
+                    <vnrole vncls="17.1" vntheta="Patient" />
+                </role>
+                <role descr="thrown at, to, over, etc" n="2">
+                    <vnrole vncls="17.1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3337:  Mais que isso:  os papéis da segurança afirmavam que,  em_  razão_  da inflação alta,  não se deveria descartar sequer o risco do público atirar objetos no camarote presidencial. 
+</text>
+                <arg f="" n="0">o público
+</arg>
+                <rel f="">atirar</rel>
+                <arg f="" n="1">objetos
+</arg>
+                <arg f="loc" n="m">no camarote presidencial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

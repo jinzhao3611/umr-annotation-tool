@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="construir">
+        <note />
+    <roleset framnet="build.01" id="construir.01" name="cirar" vncls="26.1-1">
+            <roles>
+                <role descr="builder" n="0">
+                    <vnrole vncls="26.1-1" vntheta="Agent" />
+                </role>
+                <role descr="construction" n="1">
+                    <vnrole vncls="26.1-1" vntheta="Product" />
+                </role>
+                <role descr="material, start state" n="2">
+                    <vnrole vncls="26.1-1" vntheta="Material" />
+                </role>
+                <role descr="end state" n="4">
+                    <vnrole vncls="26.1-1" vntheta="Product" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4124:  No realismo moderno de John_  Cassavettes(  1929-  89) ,  por_  exemplo,  o ator construía o personagem em tempo real diante_  da câmera,  baseado no improviso. 
+</text>
+                <arg f="loc" n="m">No realismo moderno de John_  Cassavettes(  1929-  89) 
+</arg>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <arg f="" n="0">o ator
+</arg>
+                <rel f="">construía</rel>
+                <arg f="" n="1">o personagem
+</arg>
+                <arg f="mnr" n="m">em tempo real
+</arg>
+                <arg f="loc" n="m">diante_  da câmera
+</arg>
+                <arg f="prd" n="m">baseado no improviso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4110:  No projeto não há definição de quantos podem ser construídos. 
+</text>
+                <arg f="" n="1">quantos
+</arg>
+                <rel f="">construídos</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3763:  Para construir o ambiente futurista do filme,  Godard recorreu quase que totalmente ﻿à fotografia. 
+</text>
+                <rel f="">construir</rel>
+                <arg f="" n="1">o ambiente futurista do filme
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3389:  A dinâmica,  a maneira como os movimentos são construídos,  hoje é diferente. 
+</text>
+                <arg f="" n="1">os movimentos
+</arg>
+                <rel f="">construídos</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3290:  A quantidade de ferro daria para construir 180 carros iguais a um Santana. 
+</text>
+                <rel f="">construir</rel>
+                <arg f="" n="1">180 carros iguais a um Santana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2987:  Com o dinheiro do amendoim Guidi conseguiu comprar duas camionetes e um trator de 150 Hp,  está construindo uma casa em Pontal e ainda tem para receber US$  470 mil referente_  ﻿à venda de 49,  4 mil sacas. 
+</text>
+                <arg f="" n="0">Guidi
+</arg>
+                <rel f="">construindo</rel>
+                <arg f="" n="1">uma casa
+</arg>
+                <arg f="loc" n="m">em Pontal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2904:  Tratavam-  se de contribuições para construir os ágeis barcos trirremes. 
+</text>
+                <rel f="">construir</rel>
+                <arg f="" n="1">os ágeis barcos trirremes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2778:  Os exemplos de Simon e Brizola revelam que a precipitação e a busca de resultados políticos imediatos constróem o pior caminho para o desenvolvimento e são vícios que o curso da história não tarda a desnudar. 
+</text>
+                <arg f="" n="0">a precipitação e a busca de resultados políticos imediatos
+</arg>
+                <rel f="">constróem</rel>
+                <arg f="" n="1">o pior caminho para o desenvolvimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2699:  Então,  os homens encontraram um lugar plano e resolveram construir uma torre que chegasse até o céu. 
+</text>
+                <rel f="">construir</rel>
+                <arg f="" n="1">uma torre que chegasse até o céu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s693:  Ela foi construída em Marília(  cidade onde foi fundada o banco)  com capacidade para mil alunos. 
+</text>
+                <arg f="" n="1">Ela
+</arg>
+                <rel f="">construída</rel>
+                <arg f="loc" n="m">em Marília(  cidade onde foi fundada o banco) 
+</arg>
+                <arg f="prd" n="m">com capacidade para mil alunos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s357:  Como a separação das marcas é tida como uma tendência irreversível,  caberia ﻿à Volkswagen construir sua própria fábrica. 
+</text>
+                <rel f="">construir</rel>
+                <arg f="" n="1">sua própria fábrica
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

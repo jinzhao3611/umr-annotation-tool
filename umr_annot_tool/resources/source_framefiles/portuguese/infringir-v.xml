@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="infringir">
+        <note />
+    <roleset framnet="infringe.01" id="infringir.01" name="desrespeitar" vncls="-">
+            <roles>
+                <role descr="infringer" n="0" />
+                <role descr="infringed (up)on" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2244:  O jornal kuaitiano diz que o governo do país fechou um salão de beleza por uma semana por infringir a lei que proíbe mulheres de trabalhar em salões para homens e vice-  versa. 
+</text>
+                <rel f="">infringir</rel>
+                <arg f="" n="1">a lei que proíbe mulheres de trabalhar em salões para homens e vice-  versa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

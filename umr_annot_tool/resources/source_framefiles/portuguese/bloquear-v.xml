@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="bloquear">
+        <note />
+    <roleset framnet="block.01" id="bloquear.01" name="impedir a passagem" vncls="9.8 16">
+            <roles>
+                <role descr="blocker, Agent" n="0">
+                    <vnrole vncls="16" vntheta="Agent" />
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="Theme (action or object being stopped)" n="1">
+                    <vnrole vncls="16" vntheta="Patient" />
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <role descr="secondary predication" n="2" />
+                <role descr="Instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1719:  O carro-  forte do Banespa estava estacionado no pátio interno quando um caminhão basculante.  com homens armados na traseira.  bloqueou o portão. 
+</text>
+                <arg f="" n="0">um caminhão basculante.  com homens armados na traseira. 
+</arg>
+                <rel f="">bloqueou</rel>
+                <arg f="" n="1">o portão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

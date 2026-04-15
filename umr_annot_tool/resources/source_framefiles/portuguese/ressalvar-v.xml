@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="ressalvar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1444:  FHC ressalvou que não conhecia a proposta com detalhes e que o governo está aberto a negociações. 
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <rel f="">ressalvou</rel>
+                <arg f="" n="1">que não conhecia a proposta com detalhes e que o governo está aberto a negociações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

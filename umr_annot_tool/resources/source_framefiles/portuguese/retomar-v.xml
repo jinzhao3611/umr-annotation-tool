@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="retomar">
+        <note />
+    <roleset framnet="resume.01" id="retomar.01" name="recomeçar de onde parou; reassumir" vncls="55.1">
+            <roles>
+                <role descr="Agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Theme(-Creation)" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3668:  As questões colocadas pela « body_  art » nos anos 60 foram retomadas agora como reflexão sobre uma realidade em que os corpos estão submetidos a um trabalho de transformação que realça o sentido trágico. 
+</text>
+                <arg f="" n="1">As questões colocadas pela « body_  art » nos anos 60
+</arg>
+                <rel f="">retomadas</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="" n="2">como reflexão sobre uma realidade em que os corpos estão submetidos a um trabalho de transformação que realça o sentido trágico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3645:  A questão que enfrentaram era retomar a arte intensamente dramática de sua tradição sem se escravizar a ela. 
+</text>
+                <rel f="">retomar</rel>
+                <arg f="" n="1">a arte intensamente dramática de sua tradição
+</arg>
+                <arg f="mnr" n="m">sem se escravizar a ela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1629:  Já pensando no Mundial da Grécia,  que será disputado em setembro em Atenas,  o técnico brasileiro retoma o comando dos treinos da equipe a_  partir_  da próxima segunda-  feira. 
+</text>
+                <arg f="" n="0">o técnico brasileiro
+</arg>
+                <rel f="">retoma</rel>
+                <arg f="" n="1">o comando dos treinos da equipe
+</arg>
+                <arg f="tmp" n="m">a_  partir_  da próxima segunda-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s379:  Quando os britânicos retomaram o Egito em 1801 a pedra foi parar no Museu_  Britânico,  mas os franceses fizeram cópias dela. 
+</text>
+                <arg f="" n="0">os britânicos
+</arg>
+                <rel f="">retomaram</rel>
+                <arg f="" n="1">o Egito
+</arg>
+                <arg f="tmp" n="m">em 1801
+</arg>
+                <note>no sentido de retomar um território, equivale a "regain.01"</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

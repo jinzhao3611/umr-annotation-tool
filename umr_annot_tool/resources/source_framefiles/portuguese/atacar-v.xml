@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atacar">
+        <note />
+    <roleset framnet="attack.01" id="atacar.01" name="agredir física ou verbalmente, combater adversário" vncls="33">
+            <roles>
+                <role descr="attacker" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="entity attacked" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="33" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3864:  O homem que atacou Charles anteontem não terá direito a fiança e ficará preso pelo_  menos até o fim da visita de cinco dias do príncipe ao país. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">atacou</rel>
+                <arg f="" n="1">Charles
+</arg>
+                <arg f="tmp" n="m">anteontem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2782:  O avião em que o presidente da Argentina,  Carlos_  Menem,  viajava no último dia 30 de dezembro para Anillaco,  sua cidade natal,  iria ser atacado por um míssil,  disse ontem o jornal de Buenos_  Aires « Ambito_  Financiero ». 
+</text>
+                <arg f="" n="1">O avião em que o presidente da Argentina,  Carlos_  Menem,  viajava no último dia 30 de dezembro para Anillaco,  sua cidade natal, 
+</arg>
+                <rel f="">atacado</rel>
+                <arg f="" n="0">por um míssil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2455:  O Corinthians terá de atacar os 90 minutos para reverter a enorme vantagem palmeirense. 
+</text>
+                <arg f="" n="0">O Corinthians
+</arg>
+                <rel f="">atacar</rel>
+                <arg f="tmp" n="m">os 90 minutos
+</arg>
+                <arg f="pnc" n="m">para reverter a enorme vantagem palmeirense
+</arg>
+                <note>nesse sentido de "jogar na ofensiva", parece que é mais comum "play attacking"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s524:  Não por_  acaso,  o técnico Bernardinho diz que o time cubano ataca do terceiro andar. 
+</text>
+                <arg f="" n="0">o time cubano
+</arg>
+                <rel f="">ataca</rel>
+                <arg f="dir" n="m">do terceiro andar
+</arg>
+                <note>jogo de palavras: "ataca" por "a taca", do verbo "tacar"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s250:  As duas guitarras do Helmet atacam sempre juntas,  em pequenas células separadas por um silêncio nunca menos que perturbador. 
+</text>
+                <arg f="" n="0">As duas guitarras do Helmet
+</arg>
+                <rel f="">atacam</rel>
+                <arg f="mnr" n="m">sempre juntas
+</arg>
+                <arg f="loc" n="m">em pequenas células separadas por um silêncio nunca menos que perturbador
+</arg>
+                <note>sentido metafórico</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

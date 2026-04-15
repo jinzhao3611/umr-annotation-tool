@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estuprar">
+        <note />
+    <roleset framnet="rape.01" id="estuprar.01" name="violentar; abusar sexualmente de alguém" vncls="-">
+            <roles>
+                <role descr="assaulter, agent" n="0" />
+                <role descr="victim" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s926:  A polícia de Arealva(  386 km a noroeste de São_  Paulo)  prendeu três rapazes acusados de estuprar a funcionária pública A.  P.  S. ,  30,  no último domingo. 
+</text>
+                <rel f="">estuprar</rel>
+                <arg f="" n="1">a funcionária pública A.  P.  S. ,  30, 
+</arg>
+                <arg f="tmp" n="m">no último domingo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s166:  Rúbio era acusado por Claudirene de tê-  la estuprado no ano passado,  época em que era o líder da Assembléia_  de_  Deus na usina São_  Luiz,  onde a estudante morava. 
+</text>
+                <arg f="" n="1">la
+</arg>
+                <rel f="">estuprado</rel>
+                <arg f="tmp" n="m">no ano passado,  época em que era o líder da Assembléia_  de_  Deus na usina São_  Luiz,  onde a estudante morava
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mastigar">
+        <note />
+    <roleset framnet="chew.01" id="mastigar.01" name="triturar com os dentes" vncls="39.2-1">
+            <roles>
+                <role descr="chewer" n="0">
+                    <vnrole vncls="39.2-1" vntheta="Agent" />
+                </role>
+                <role descr="food" n="1">
+                    <vnrole vncls="39.2-1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3441:  Durante o almoço familiar,  por_  exemplo,  fala-  se muito sobre quase nada e ninguém mastiga. 
+</text>
+                <arg f="tmp" n="m">Durante o almoço familiar
+</arg>
+                <arg f="" n="0">ninguém
+</arg>
+                <rel f="">mastiga</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

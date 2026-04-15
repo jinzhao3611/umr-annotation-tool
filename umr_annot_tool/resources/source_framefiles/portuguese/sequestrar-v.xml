@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sequestrar">
+        <note />
+    <roleset framnet="kidnap.01" id="sequestrar.01" name="raptar; apoderar-se de algo para exigir compensação pela devolução" vncls="10.5">
+            <roles>
+                <role descr="kidnapper, agent" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                </role>
+                <role descr="person kidnapped" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3955:  Mauro_  Pereira e Gilson_  Paulino_  dos_  Santos disseram ter sido sequestrados por traficantes,  que os teriam confundido com policiais. 
+</text>
+                <arg f="" n="1">Mauro_  Pereira e Gilson_  Paulino_  dos_  Santos
+</arg>
+                <rel f="">sequestrados</rel>
+                <arg f="" n="0">por traficantes,  que os teriam confundido com policiais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3432:  O pai de Romário foi sequestrado na segunda-  feira ﻿à noite,  no Rio. 
+</text>
+                <arg f="" n="1">O pai de Romário
+</arg>
+                <rel f="">sequestrado</rel>
+                <arg f="tmp" n="m">na segunda-  feira
+</arg>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

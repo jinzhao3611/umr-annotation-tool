@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rodar">
+        <note />
+        <note />
+    <roleset framnet="spin.01" id="rodar.01" name="dar voltas" vncls="9.6 26.1 51.3.1">
+            <roles>
+                <role descr="causative agent" n="0">
+                    <vnrole vncls="9.6" vntheta="Agent" />
+                    <vnrole vncls="26.1" vntheta="Agent" />
+                    <vnrole vncls="51.3.1" vntheta="Agent" />
+                </role>
+                <role descr="thing spinning" n="1">
+                    <vnrole vncls="9.6" vntheta="Patient" />
+                    <vnrole vncls="26.1" vntheta="Product" />
+                    <vnrole vncls="51.3.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2808:  Senna,  todo mundo viu,  rodou quando estava em segundo lugar e com poucas chances de recuperar o primeiro. 
+</text>
+                <arg f="" n="1">Senna
+</arg>
+                <arg f="dis" n="m">todo mundo viu
+</arg>
+                <rel f="">rodou</rel>
+                <arg f="tmp" n="m">quando estava em segundo lugar e com poucas chances de recuperar o primeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1532:  Após fazer uma única volta rápida,  Schumacher emprestou seu carro para o companheiro Jos_  Verstappen,  que havia rodado nos treinos da manhã. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">rodado</rel>
+                <arg f="loc" n="m">nos treinos da manhã
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="travel.01" id="rodar.02" name="percorrer distância em veículo automotor" vncls="51.3.2">
+            <roles>
+                <role descr="traveller" n="0">
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="destination or path" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s910:  A Localiza tem diária promocional de R$  41 sendo_  que cada quilômetro rodado custa mais R$  0,  26. 
+</text>
+                <rel f="">rodado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

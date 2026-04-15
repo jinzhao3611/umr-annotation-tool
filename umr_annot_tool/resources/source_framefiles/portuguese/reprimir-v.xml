@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reprimir">
+        <note />
+    <roleset framnet="suppress.01" id="reprimir.01" name="conter; coibir" vncls="-">
+            <roles>
+                <role descr="suppressor" n="0" />
+                <role descr="suppressed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3829:  A Guarda_  Nacional da Venezuela passou a conversar com os índios e a convencê-  los de fazer o papel dela,  ou_  seja,  reprimir os garimpeiros »,  diz Altino. 
+</text>
+                <rel f="">reprimir</rel>
+                <arg f="" n="1">os garimpeiros »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

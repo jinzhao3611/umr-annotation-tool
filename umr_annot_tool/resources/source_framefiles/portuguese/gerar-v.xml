@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="gerar">
+        <note />
+    <roleset framnet="generate.01" id="gerar.01" name="dar origem a" vncls="27 26.2">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.2" vntheta="Agent" />
+                </role>
+                <role descr="thing created" n="1">
+                    <vnrole vncls="27" vntheta="Theme2" />
+                    <vnrole vncls="26.2" vntheta="Product" />
+                </role>
+                <role descr="source" n="2">
+                    <vnrole vncls="27" vntheta="Theme1" />
+                    <vnrole vncls="26.2" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3" />
+                <role descr="attribute, secondary predication" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2683:  É desse combate,  da maneira como ele chegou a criar as formas que geraram uma obra original,  que « O_  Olho_  da_  Revolução » tira seu interesse. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">geraram</rel>
+                <arg f="" n="1">uma obra original
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2318:  Toda_  vez_  que um crime cometido por representantes do poder público fica sem punição,  o ônus recai sobre a corporação como um todo,  gerando um turbilhão que indiferência os bons dos maus policiais. 
+</text>
+                <rel f="">gerando</rel>
+                <arg f="" n="1">um turbilhão que indiferência os bons dos maus policiais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s65:  Essa divisão gera algumas distorções terríveis. 
+</text>
+                <arg f="" n="0">Essa divisão
+</arg>
+                <rel f="">gera</rel>
+                <arg f="" n="1">algumas distorções terríveis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

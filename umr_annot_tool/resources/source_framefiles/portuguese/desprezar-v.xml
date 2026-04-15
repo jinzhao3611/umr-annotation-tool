@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desprezar">
+        <note />
+    <roleset framnet="despise.01" id="desprezar.01" name="não dar importância; desdenhar" vncls="31.2">
+            <roles>
+                <role descr="despiser" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing despised" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1685:  Na tese,  despreza o papel do povo num governo. 
+</text>
+                <arg f="mnr" n="m">Na tese
+</arg>
+                <rel f="">despreza</rel>
+                <arg f="" n="1">o papel do povo num governo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

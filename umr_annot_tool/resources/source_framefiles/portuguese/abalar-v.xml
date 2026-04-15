@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abalar">
+        <note />
+        <note />
+    <roleset framnet="shock.01" id="abalar.01" name="causar choque emocional" vncls="31.1">
+            <roles>
+                <role descr="surpriser" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="person surprised" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s695:  A exclusão de Maradona,  por ter jogado dopado contra a Nigéria,  abalou os jogadores. 
+</text>
+                <arg f="" n="0">A exclusão de Maradona
+</arg>
+                <arg f="cau" n="m">por ter jogado dopado contra a Nigéria
+</arg>
+                <rel f="">abalou</rel>
+                <arg f="" n="1">os jogadores
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="shake.01" id="abalar.02" name="causar distúrbio físico" vncls="31.1 40.3.2 40.6 47.3">
+            <roles>
+                <role descr="causer of trembling motion" n="0">
+                    <vnrole vncls="47.3" vntheta="Agent" />
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                    <vnrole vncls="40.6" vntheta="Cause" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                </role>
+                <role descr="thing trembling" n="1">
+                    <vnrole vncls="47.3" vntheta="Theme" />
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                    <vnrole vncls="40.6" vntheta="Experiencer" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s556:  Até aqui,  os tiros de Lula parecem não ter abalado o alvo. 
+</text>
+                <arg f="tmp" n="m">Até aqui
+</arg>
+                <arg f="" n="0">os tiros de Lula
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">abalado</rel>
+                <arg f="" n="1">o alvo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

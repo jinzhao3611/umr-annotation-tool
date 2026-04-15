@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="provocar">
+        <note />
+    <roleset framnet="provoke.01" id="provocar.01" name="causar" vncls="-">
+            <roles>
+                <role descr="causer" n="0" />
+                <role descr="reaction" n="1" />
+                <role descr="react-or, when separate from reaction" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3788:  Na sua administração,  executou um plano viário com largas avenidas interligando os bairros,  que provocaram um boom imobiliário. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">provocaram</rel>
+                <arg f="" n="1">um boom imobiliário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3702:  O tombamento de um caminhão no km 226 da pista Rio-  São_  Paulo da via Dutra às 5h de ontem provocou engarrafamento na rodovia. 
+</text>
+                <arg f="" n="0">O tombamento de um caminhão no km 226 da pista Rio-  São_  Paulo da via Dutra às 5h de ontem
+</arg>
+                <rel f="">provocou</rel>
+                <arg f="" n="1">engarrafamento
+</arg>
+                <arg f="" n="2">na rodovia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2615:  A absolvição em abril de 1992 dos policiais provocou 48 horas de conflitos raciais em LA que resultaram em 58 mortes,  4.  000 feridos e US$  1 bilhão em prejuízos. 
+</text>
+                <arg f="" n="0">A absolvição em abril de 1992 dos policiais
+</arg>
+                <rel f="">provocou</rel>
+                <arg f="" n="1">48 horas de conflitos raciais em LA que resultaram em 58 mortes,  4.  000 feridos e US$  1 bilhão em prejuízos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s517:  Em 92,  na Olimpíada de Barcelona,  as chinesas terminaram em sétimo lugar,  colocação que provocou grandes mudanças na equipe. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">provocou</rel>
+                <arg f="" n="1">grandes mudanças
+</arg>
+                <arg f="" n="2">na equipe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s202:  Aquele pensamento provocou-  me um arrepio estranho e delicioso. 
+</text>
+                <arg f="" n="0">Aquele pensamento
+</arg>
+                <rel f="">provocou-</rel>
+                <arg f="" n="2">me
+</arg>
+                <arg f="" n="1">um arrepio estranho e delicioso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s194:  A Benetton volta a provocar polêmica com um cartaz da série « United_  Collors ». 
+</text>
+                <arg f="" n="0">A Benetton
+</arg>
+                <rel f="">provocar</rel>
+                <arg f="" n="1">polêmica
+</arg>
+                <arg f="mnr" n="m">com um cartaz da série « United_  Collors »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

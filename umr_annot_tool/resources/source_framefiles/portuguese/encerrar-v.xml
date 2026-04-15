@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encerrar">
+        <note />
+        <note />
+    <roleset framnet="finish.01" id="encerrar.01" name="alternância incoativa de &quot;encerrar&quot;: tornar-se encerrado; chegar ao fim" vncls="55.1">
+            <roles>
+                <role descr="Intentional agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Thing finishing" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Explicit instrument, thing finished with" n="2" />
+                <role descr="point at which something finishs" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3042:  A campanha eleitoral encerrou-  se na noite de quinta-  feira,  com um pronunciamento de oito minutos de todos os candidatos. 
+</text>
+                <arg f="" n="1">A campanha eleitoral
+</arg>
+                <rel f="">encerrou-</rel>
+                <arg f="tmp" n="m">na noite de quinta-  feira,  com um pronunciamento de oito minutos de todos os candidatos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2774:  Os primeiros descontos aconteceriam na folha de pagamento deste mês,  que se encerra dia 15. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">encerra</rel>
+                <arg f="tmp" n="m">dia 15
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1354:  Ainda em setembro,  no final do mês,  encerram-  se as inscrições nos colégios Santa_  Cruz(  para a 1ª série do 1º grau)  e Santo_  Américo. 
+</text>
+                <arg f="tmp" n="m">Ainda em setembro
+</arg>
+                <arg f="tmp" n="m">no final do mês
+</arg>
+                <rel f="">encerram-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">as inscrições
+</arg>
+                <arg f="loc" n="m">nos colégios Santa_  Cruz(  para a 1ª série do 1º grau)  e Santo_  Américo
+</arg>
+                <note>com "se" apassivador: anota-se o "se" como arg0 para marcar a supressão do agente</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="finish.01" id="encerrar.02" name="fazer o encerramento de; finalizar" vncls="55.1">
+            <roles>
+                <role descr="Intentional agent" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="Thing finishing" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <role descr="Explicit instrument, thing finished with" n="2" />
+                <role descr="point at which something finishs" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1992:  Ali,  no torneio que encerrava a temporada 93,  Steffi aguardava mais um troféu,  olhando para o chão,  sem ligar para as 12 mil pessoas em volta da quadra. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">encerrava</rel>
+                <arg f="" n="1">a temporada 93
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

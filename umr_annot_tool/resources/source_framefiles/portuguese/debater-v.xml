@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="debater">
+        <note />
+    <roleset framnet="debate.01" id="debater.01" name="discutir; fazer debate" vncls="36.1 36.3-2">
+            <roles>
+                <role descr="discussant(s), debater(s)" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                    <vnrole vncls="36.3-2" vntheta="Actor1" />
+                </role>
+                <role descr="thing discussed" n="1">
+                    <vnrole vncls="36.1" vntheta="Theme" />
+                </role>
+                <role descr="person debated against" n="2">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                    <vnrole vncls="36.3-2" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2432:  Por dois motivos:  primeiro,  a indisponibilidade do escritor,  que simplesmente não estava interessado em percorrer os Estados_  Unidos ou debater suas idéias ; segundo,  seus comentários sobre a « decadência moral » do Ocidente logo o tornaram inconveniente. 
+</text>
+                <rel f="">debater</rel>
+                <arg f="" n="1">suas idéias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1937:  Trinta empresários argentinos e 25 brasileiros se reúnem na próxima sexta-  feira em seminário da FGV para debater perspectivas do setor privado nos dois países com o Mercosul. 
+</text>
+                <rel f="">debater</rel>
+                <arg f="" n="1">perspectivas do setor privado nos dois países com o Mercosul
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

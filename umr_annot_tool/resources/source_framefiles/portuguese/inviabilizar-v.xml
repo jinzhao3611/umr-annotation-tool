@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="inviabilizar">
+        <note />
+    <roleset framnet="" id="inviabilizar.01" name="tornar inviável" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2701:  Ela deverá inviabilizar a atual oportunidade de estabilizar afetivamente a economia brasileira e,  de_  quebra,  deverá fazer uma série de estragos irreversíveis,  que em muito debilitarão seu potencial de desenvolvimento a_  longo_  prazo. 
+</text>
+                <arg f="" n="0">Ela
+</arg>
+                <rel f="">inviabilizar</rel>
+                <arg f="" n="1">a atual oportunidade de estabilizar afetivamente a economia brasileira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1209:  Não só a expectativa é de uma tramitação demorada até a decisão do STJ o_  que pode inviabilizar uma eventual candidatura Sarney por falta de tempo até as eleições,  como também há informações dando conta de que o ex-  presidente poderá em_  breve anunciar seu apoio a Fernando_  Henrique_  Cardoso,  do PSDB. 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <rel f="">inviabilizar</rel>
+                <arg f="" n="1">uma eventual candidatura Sarney
+</arg>
+                <arg f="cau" n="m">por falta de tempo até as eleições
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s570:  Para outros 9% ,  haverá resistências mas não a_  ponto_  de inviabilizar a posse. 
+</text>
+                <rel f="">inviabilizar</rel>
+                <arg f="" n="1">a posse
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="crer">
+        <note />
+    <roleset framnet="believe.01" id="crer.01" name="acreditar" vncls="29.9-2 31.2">
+            <roles>
+                <role descr="believer" n="0">
+                    <vnrole vncls="29.9-2" vntheta="Agent" />
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="belief" n="1">
+                    <vnrole vncls="29.9-2" vntheta="Theme" />
+                    <vnrole vncls="31.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2328:  « Tudo leva a crer que estamos num processo de endemia »,  sustenta o patologista Bruce_  Mendes_  Campos,  responsável pela análise do sangue. 
+</text>
+                <rel f="">crer</rel>
+                <arg f="" n="1">que estamos num processo de endemia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1800:  Creio que essa vocação de poeta determinou um dos maiores problemas(  há vários)  na realização da obra de Murilo_  Mendes. 
+</text>
+                <rel f="">Creio</rel>
+                <arg f="" n="1">que essa vocação de poeta determinou um dos maiores problemas(  há vários)  na realização da obra de Murilo_  Mendes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

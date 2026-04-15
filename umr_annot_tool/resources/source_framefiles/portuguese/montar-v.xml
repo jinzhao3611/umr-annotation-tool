@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="montar">
+        <note />
+    <roleset framnet="assemble.01" id="montar.01" name="fazer; edificar" vncls="26.1">
+            <roles>
+                <role descr="builder" n="0">
+                    <vnrole vncls="26.1" vntheta="Agent" />
+                </role>
+                <role descr="construction" n="1">
+                    <vnrole vncls="26.1" vntheta="Product" />
+                </role>
+                <role descr="material, start state" n="2">
+                    <vnrole vncls="26.1" vntheta="Material" />
+                </role>
+                <role descr="end state" n="4">
+                    <vnrole vncls="26.1" vntheta="Product" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3764:  A câmera de Raoul_  Coutard conseguiu transformar Paris numa cidade gélida,  sem contar a ousadia de montar sequências inteiras em negativo. 
+</text>
+                <rel f="">montar</rel>
+                <arg f="" n="1">sequências inteiras
+</arg>
+                <arg f="" n="2">em negativo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s833:  O Banco_  de_  Leite_  Humano da Secretaria_  Estadual_  de_  Saúde montou um estande na praça Fausto_  Cardoso,  centro de Aracaju. 
+</text>
+                <arg f="" n="0">O Banco_  de_  Leite_  Humano da Secretaria_  Estadual_  de_  Saúde
+</arg>
+                <rel f="">montou</rel>
+                <arg f="" n="1">um estande
+</arg>
+                <arg f="loc" n="m">na praça Fausto_  Cardoso,  centro de Aracaju
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

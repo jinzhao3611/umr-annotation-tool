@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desviar">
+        <note />
+    <roleset framnet="misappropriate.01" id="desviar.01" name="afastar das vias normais; roubar " vncls="10.5">
+            <roles>
+                <role descr="embezzler" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                </role>
+                <role descr="thing embezzled" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                </role>
+                <role descr="source" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4121:  Eles desviaram quatro toneladas da carga. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">desviaram</rel>
+                <arg f="" n="1">quatro toneladas da carga
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

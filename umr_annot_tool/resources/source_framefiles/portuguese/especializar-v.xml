@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="especializar">
+        <note />
+    <roleset framnet="" id="especializar.01" name="tornar especializado" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3059:  « Me parece que há um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa.  »
+</text>
+                <rel f="">especializar</rel>
+                <arg f="" n="1">os centros vocacionados
+</arg>
+                <arg f="pnc" n="m">para a pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

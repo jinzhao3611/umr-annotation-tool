@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="experimentar">
+        <note />
+    <roleset framnet="try.01" id="experimentar.01" name="provar" vncls="-">
+            <roles>
+                <role descr="Agent/Entity Trying" n="0" />
+                <role descr="thing tried" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2714:  Quem experimenta a última versão(  safra 91)  descobrirá um vinho novo ainda,  adstringente,  mas de aroma e sabor intensos. 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">experimenta</rel>
+                <arg f="" n="1">a última versão(  safra 91) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2452:  Pois experimente ir a um show de música,  por_  exemplo,  ofender Tim_  Maia ou João_  Gilberto na boca do palco,  e você verá que a atitude de Edmundo foi,  no mínimo,  compreensível. 
+</text>
+                <rel f="">experimente</rel>
+                <arg f="" n="1">ir a um show de música,  por_  exemplo,  ofender Tim_  Maia ou João_  Gilberto na boca do palco
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1056:  Quem gosta de comida italiana,  deve experimentar o Christo'  s(  Lexington,  quase esquina com a rua_  49) . 
+</text>
+                <arg f="" n="0">Quem gosta de comida italiana
+</arg>
+                <rel f="">experimentar</rel>
+                <arg f="" n="1">o Christo'  s(  Lexington,  quase esquina com a rua_  49) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

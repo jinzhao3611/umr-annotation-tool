@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="autorizar">
+        <note />
+    <roleset framnet="authorize.01" id="autorizar.01" name="consentir, dar consentimento para" vncls="">
+            <roles>
+                <role descr="allower" n="0" />
+                <role descr="action allowed" n="1" />
+                <role descr="explicit allowed-agent" n="2" />
+                <role descr="purpose" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3609:  Mayhew disse que o IRA poderia demonstrar que realmente não autorizou a operação de Newry devolvendo os US$  210 mil levados durante o assalto. 
+</text>
+                <arg f="" n="0">o IRA
+</arg>
+                <arg f="adv" n="m">realmente
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">autorizou</rel>
+                <arg f="" n="1">a operação de Newry
+</arg>
+                <arg f="prd" n="m">devolvendo os US$  210 mil levados durante o assalto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosG.  s3106:  Ou_  seja,  se tal procedimento não for ocasional e tiver realmente a conivência das transportadoras aéreas,  estas estão expressamente contribuindo para a concorrência desleal e ilícita perante os agentes de viagens além_  de não preservar seus clientes,  que não são consultados sobre se querem ou não receber tais propostas ou se autorizam a divulgação de seus nomes e endereços. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">autorizam</rel>
+                <arg f="" n="1">a divulgação de seus nomes e endereços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2061:  Ex-  presidente da Câmara,  Ibsen conduziu a votação autorizando o impeachment de Collor,  em 29 de setembro de 1992. 
+</text>
+                <arg f="" n="0">a votação
+</arg>
+                <rel f="">autorizando</rel>
+                <arg f="" n="1">o impeachment de Collor
+</arg>
+                <arg f="tmp" n="m">em 29 de setembro de 1992
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

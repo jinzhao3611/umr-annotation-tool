@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="barrar">
+        <note />
+    <roleset framnet="bar.01" id="barrar.01" name="impedir " vncls="67">
+            <roles>
+                <role descr="stopper, Agent" n="0">
+                    <vnrole vncls="67" vntheta="Agent" />
+                </role>
+                <role descr="action or object being prevented" n="1">
+                    <vnrole vncls="67" vntheta="Theme" />
+                </role>
+                <role descr="secondary predication on action" n="2" />
+                <role descr="instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s826:  Consulado não revela quantos barra
+</text>
+                <arg f="" n="0">Consulado
+</arg>
+                <arg f="" n="1">quantos
+</arg>
+                <rel f="">barra</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s807:  O PPR tentou derrubar a retenção das verbas de habitação e educação no primeiro turno,  mas uma manobra do governo barrou a mudança. 
+</text>
+                <arg f="" n="0">uma manobra do governo
+</arg>
+                <rel f="">barrou</rel>
+                <arg f="" n="1">a mudança
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="implicar">
+        <note />
+    <roleset framnet="imply.01" id="implicar.01" name="envolver; pressupor" vncls="78">
+            <roles>
+                <role descr="implier" n="0">
+                    <vnrole vncls="78" vntheta="Cause" />
+                </role>
+                <role descr="implication" n="1">
+                    <vnrole vncls="78" vntheta="Topic" />
+                </role>
+                <role descr="listener" n="2">
+                    <vnrole vncls="78" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2147:  O acordo da dívida implica a troca dos papéis atuais por uma combinação de cinco tipos diferentes de novos papéis. 
+</text>
+                <arg f="" n="0">O acordo da dívida
+</arg>
+                <rel f="">implica</rel>
+                <arg f="" n="1">a troca dos papéis atuais por uma combinação de cinco tipos diferentes de novos papéis
+</arg>
+                <note>o verbo não parece adequado neste exemplo: o sentido seria melhor expresso por envolver (involve.01)</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="simpatizar">
+        <note />
+    <roleset framnet="sympathize.01" id="simpatizar.01" name="sentir simpatia por; gostar de" vncls="-">
+            <roles>
+                <role descr="experiencer" n="0" />
+                <role descr="shared feelings or ideas" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3912:  Rodado no início da década de 50,  época áurea do macarthismo perseguição a artistas e intelectuais comunistas ou acusados de simpatizar com essa ideologia liderada pelo senador Joseph_  McCarthy nos EUA,  o filme ganha versão para CD-  ROM,  com direito a um extenso material de referência. 
+</text>
+                <rel f="">simpatizar</rel>
+                <arg f="" n="1">com essa ideologia liderada pelo senador Joseph_  McCarthy nos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

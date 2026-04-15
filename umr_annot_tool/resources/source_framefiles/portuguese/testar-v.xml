@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="testar">
+        <note />
+    <roleset framnet="test.01" id="testar.01" name="submeter a testes; experimentar" vncls="-">
+            <roles>
+                <role descr="examiner" n="0" />
+                <role descr="examined" n="1" />
+                <role descr="in search of, for what" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2232:  Tecnologia dos EUA,  que usa microorganismos devoradores de material orgânico,  está sendo testada pela Petrobrás
+</text>
+                <arg f="" n="1">Tecnologia dos EUA,  que usa microorganismos devoradores de material orgânico, 
+</arg>
+                <rel f="">testada</rel>
+                <arg f="" n="0">pela Petrobrás
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1159:  Juan_  Manuel_  Fangio,  sobrinho do argentino pentacampeão de Fórmula_  1,  está testando na Califórnia um novo protótipo que vai dar o_  que falar na Fórmula_  Indy. 
+</text>
+                <arg f="" n="0">Juan_  Manuel_  Fangio,  sobrinho do argentino pentacampeão de Fórmula_  1, 
+</arg>
+                <rel f="">testando</rel>
+                <arg f="loc" n="m">na Califórnia
+</arg>
+                <arg f="" n="1">um novo protótipo que vai dar o_  que falar na Fórmula_  Indy
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

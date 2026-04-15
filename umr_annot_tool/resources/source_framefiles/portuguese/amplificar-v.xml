@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="amplificar">
+        <note />
+    <roleset framnet="amplify.01" id="amplificar.01" name="aumentar o som" vncls="45.4">
+            <roles>
+                <role descr="causer of becoming louder" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing becoming louder" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument, if separate from arg0" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s715:  Ainda_  assim,  foi a mídia que amplificou as acusações,  Ao divulgá-  las sem uma checagem mais aprofundada. 
+</text>
+                <arg f="dis" n="m">Ainda_  assim
+</arg>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">amplificou</rel>
+                <arg f="" n="1">as acusações
+</arg>
+                <arg f="tmp" n="m">Ao divulgá-  las sem uma checagem mais aprofundada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

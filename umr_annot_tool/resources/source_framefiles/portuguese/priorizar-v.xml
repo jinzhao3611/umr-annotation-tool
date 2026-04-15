@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="priorizar">
+        <note />
+    <roleset framnet="prioritize.01" id="priorizar.01" name="tratar com prioridade; dar preferência a" vncls="">
+            <roles>
+                <role descr="agent" n="0" />
+                <role descr="thing made a priority" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1810:  A prefeita Luiza_  Erundina priorizou o transporte público. 
+</text>
+                <arg f="" n="0">A prefeita Luiza_  Erundina
+</arg>
+                <rel f="">priorizou</rel>
+                <arg f="" n="1">o transporte público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s240:  Para tanto é imprescindível priorizar algumas ações como a recuperação de unidades armazenadoras de cereais e das rodovias,  além_  do incentivo ﻿à utilização das ferrovias. 
+</text>
+                <rel f="">priorizar</rel>
+                <arg f="" n="1">algumas ações como a recuperação de unidades armazenadoras de cereais e das rodovias,  além_  do incentivo ﻿à utilização das ferrovias
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

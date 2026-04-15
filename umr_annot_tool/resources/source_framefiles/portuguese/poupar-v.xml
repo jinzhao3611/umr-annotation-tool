@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="poupar">
+        <note />
+    <roleset framnet="save.01" id="poupar.01" name="deixar de usar para não desgastar; economizar" vncls="13.5.1 54.5">
+            <roles>
+                <role descr="entity saving money" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                    <vnrole vncls="54.5" vntheta="Agent" />
+                </role>
+                <role descr="money" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                    <vnrole vncls="54.5" vntheta="Asset" />
+                </role>
+                <role descr="beneficiary" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                    <vnrole vncls="54.5" vntheta="Recipient" />
+                </role>
+                <role descr="cause, reason" n="3">
+                    <vnrole vncls="54.5" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2937:  « Os demais estão sendo poupados,  mas poderiam jogar se fosse preciso.  »
+</text>
+                <arg f="" n="1">Os demais
+</arg>
+                <rel f="">poupados</rel>
+                <note>o Arg2, subentendido, seria "de jogar"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s532:  Ronald_  Reagan não poupou esforços para eleger seu vice,  George_  Bush,  presidente dos Estados_  Unidos,  em 1988. 
+</text>
+                <arg f="" n="0">Ronald_  Reagan
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">poupou</rel>
+                <arg f="" n="1">esforços
+</arg>
+                <arg f="" n="2">para eleger seu vice,  George_  Bush,  presidente dos Estados_  Unidos, 
+</arg>
+                <arg f="tmp" n="m">em 1988
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s78:  Toda a comissão técnica sabe que Romário é de treinar pouco,  geralmente se poupando entre dois jogos difíceis. 
+</text>
+                <arg f="adv" n="m">geralmente
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">poupando</rel>
+                <arg f="tmp" n="m">entre dois jogos difíceis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

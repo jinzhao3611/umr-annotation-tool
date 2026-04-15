@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="caminhar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s773:  O Brasil é um país do Terceiro_  Mundo,  ainda sem cara e sem personalidade,  mas metade do seu território é a Hiléia,  que tem fascinado os iluminados,  de Humboldt a Euclides_  da_  Cunha ; acontece que,  no passo de Jeca_  Tatu em que caminha,  o Brasil ameaça transformar a Hiléia,  no século 21,  que já nos olha com cara feia por_  cima_  do muro,  num gigantesco cinzeiro,  cheio da cinza das árvores e da cinza dos índios. 
+</text>
+                <arg f="mnr" n="m">em que
+</arg>
+                <rel f="">caminha</rel>
+                <arg f="" n="0">o Brasil
+</arg>
+                <note>uso metafórico</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

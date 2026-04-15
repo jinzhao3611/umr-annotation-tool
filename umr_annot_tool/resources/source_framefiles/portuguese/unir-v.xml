@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="unir">
+        <note />
+        <note />
+    <roleset framnet="link.01" id="unir.01" name="ligar" vncls="22.1-2 22.4">
+            <roles>
+                <role descr="agent, entity doing the tying" n="0">
+                    <vnrole vncls="22.1-2" vntheta="Agent" />
+                    <vnrole vncls="22.4" vntheta="Agent" />
+                </role>
+                <role descr="patient, thing(s) being tied" n="1">
+                    <vnrole vncls="22.1-2" vntheta="Patient1" />
+                    <vnrole vncls="22.4" vntheta="Patient1" />
+                </role>
+                <role descr="instrument, string" n="2">
+                    <vnrole vncls="22.1-2" vntheta="Patient2" />
+                    <vnrole vncls="22.4" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4155:  Na Anhanguera,  que une São_  Paulo a Ribeirão_  Preto,  costuma haver neblina pesada entre o km 21 e o km 43,  também perto_  de Perus e Cajamar. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">une</rel>
+                <arg f="" n="1">São_  Paulo
+</arg>
+                <arg f="" n="2">a Ribeirão_  Preto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="unite.01" id="unir.02" name="unir as partes para formar um todo" vncls="22.2">
+            <roles>
+                <role descr="uniter, agent" n="0">
+                    <vnrole vncls="22.2" vntheta="Agent" />
+                </role>
+                <role descr="(first) thing(s) being unified" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient1" />
+                </role>
+                <role descr="other things, if separate from arg1" n="2">
+                    <vnrole vncls="22.2" vntheta="Patient2" />
+                </role>
+                <role descr="unified whole" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3488:  O dramaturgo Dias_  Gomes,  que já teve problemas com a censura,  se une aos fardados mais histéricos para decretar: 
+</text>
+                <arg f="" n="0">O dramaturgo Dias_  Gomes,  que já teve problemas com a censura, 
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">une</rel>
+                <arg f="" n="2">aos fardados mais histéricos
+</arg>
+                <arg f="pnc" n="m">para decretar: 
+</arg>
+                <note>no PB inglês, "unir-se a" também pode ser "join.02" (reduzindo o número de argumentosl)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3219:  O chamado « mundo livre »(  que então incluía também a URSS)  unia-  se contra o nazi-  fascismo. 
+</text>
+                <arg f="" n="0">O chamado « mundo livre »(  que então incluía também a URSS) 
+</arg>
+                <rel f="">unia-</rel>
+                <arg f="" n="1">se
+</arg>
+                <arg f="pnc" n="m">contra o nazi-  fascismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s763:  « Será um programa capaz de unir todas forças que querem levar o Brasil para o Primeiro_  Mundo. 
+</text>
+                <rel f="">unir</rel>
+                <arg f="" n="1">todas forças que querem levar o Brasil para o Primeiro_  Mundo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

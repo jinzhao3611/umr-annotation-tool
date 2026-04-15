@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cotar">
+        <note />
+    <roleset framnet="quote.01" id="cotar.01" name="avaliar; atribuir valor" vncls="37.1-1">
+            <roles>
+                <role descr="quoter" n="0">
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                </role>
+                <role descr="quoted: speaker" n="1">
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                </role>
+                <role descr="quote: utterance or attribute of arg1" n="2">
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1152:  O dólar futuro na BM&amp;F foi cotado a R$  0,  977425 para os negócios com vencimento no próximo dia 29. 
+</text>
+                <arg f="" n="1">O dólar futuro na BM&amp;F
+</arg>
+                <rel f="">cotado</rel>
+                <arg f="" n="2">a R$  0,  977425
+</arg>
+                <arg f="prd" n="m">para os negócios com vencimento no próximo dia 29
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

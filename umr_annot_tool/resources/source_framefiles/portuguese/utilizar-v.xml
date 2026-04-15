@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="utilizar">
+        <note />
+    <roleset framnet="use.01" id="utilizar.01" name="fazer uso de" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4211:  O patrimônio público não é fetiche a ser adorado e sim bem a ser utilizado principalmente em_  favor_  de quem não tem acesso a escolas,  nem ﻿à assistência médica,  nem a empregos. 
+</text>
+                <rel f="">utilizado</rel>
+                <arg f="" n="2">principalmente em_  favor_  de quem não tem acesso a escolas,  nem ﻿à assistência médica,  nem a empregos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4088:  « Normalmente nós utilizamos dados históricos sobre a produtividade em cada região,  além_  de informações de agricultores »,  diz. 
+</text>
+                <arg f="adv" n="m">Normalmente
+</arg>
+                <arg f="" n="0">nós
+</arg>
+                <rel f="">utilizamos</rel>
+                <arg f="" n="1">dados históricos sobre a produtividade em cada região,  além_  de informações de agricultores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3509:  Parágrafo 4º. - -  A Taxa_  Referencial- -  TR- -  somente poderá ser utilizada nas operações realizadas nos mercados financeiro,  de valores mobiliários,  de seguros,  de previdência privada e de futuros. 
+</text>
+                <arg f="" n="1">A Taxa_  Referencial- -  TR- - 
+</arg>
+                <arg f="adv" n="m">somente
+</arg>
+                <rel f="">utilizada</rel>
+                <arg f="" n="2">nas operações realizadas nos mercados financeiro,  de valores mobiliários,  de seguros,  de previdência privada e de futuros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3289:  Para a construção do palco foram utilizadas 170 toneladas de ferro e alumínio. 
+</text>
+                <arg f="" n="2">Para a construção do palco
+</arg>
+                <rel f="">utilizadas</rel>
+                <arg f="" n="1">170 toneladas de ferro e alumínio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3261:  O dinheiro das vendas pode ser utilizado também para o pagamento da dívida do Banespa. 
+</text>
+                <arg f="" n="1">O dinheiro das vendas
+</arg>
+                <rel f="">utilizado</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="2">para o pagamento da dívida do Banespa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3099:  É bastante didático e utiliza bem desenhos para exemplificar efeitos especiais. 
+</text>
+                <rel f="">utiliza</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <arg f="" n="1">desenhos
+</arg>
+                <arg f="" n="2">para exemplificar efeitos especiais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2956:  No_  entanto,  o primeiro parágrafo deste artigo diz:  «. . .  continuando o cruzeiro real a ser utilizado como meio de pagamento dotado de poder liberatório. . .  »
+</text>
+                <arg f="" n="1">o cruzeiro real
+</arg>
+                <rel f="">utilizado</rel>
+                <arg f="" n="2">como meio de pagamento dotado de poder liberatório
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2852:  Os franqueados brasileiros começam a utilizar uma nova « arma » para aumentar seu poder de influência junto ﻿à cúpula das empresas franqueadoras. 
+</text>
+                <arg f="" n="0">Os franqueados brasileiros
+</arg>
+                <rel f="">utilizar</rel>
+                <arg f="" n="1">uma nova « arma » para aumentar seu poder de influência junto ﻿à cúpula das empresas franqueadoras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2234:  A Nasa(  agência espacial dos EUA)  encomendou ﻿à empresa Micro-  Bac o desenvolvimento de um sistema de purificação de esgoto utilizando bactérias conhecidas por devorarem material orgânico. 
+</text>
+                <rel f="">utilizando</rel>
+                <arg f="" n="1">bactérias conhecidas por devorarem material orgânico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2006:  Segundo a EMTU,  cerca_  de 215 mil pessoas utilizam diariamente o corredor do trólebus. 
+</text>
+                <arg f="dis" n="m">Segundo a EMTU
+</arg>
+                <arg f="" n="0">cerca_  de 215 mil pessoas
+</arg>
+                <rel f="">utilizam</rel>
+                <arg f="tmp" n="m">diariamente
+</arg>
+                <arg f="" n="1">o corredor do trólebus
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s98:  Foi utilizada técnica mista,  incluindo desenho,  pastel,  ceragrafia e fotografismo. 
+</text>
+                <rel f="">utilizada</rel>
+                <arg f="" n="1">técnica mista
+</arg>
+                <arg f="prd" n="m">incluindo desenho,  pastel,  ceragrafia e fotografismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="utilizar-se">
+        <note />
+    <roleset framnet="use.01" id="utilizar.02" name="fazer uso de (igual a utilizar)" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3274:  Os nativos ainda se utilizam de lanças primitivas para pescar nas rasas piscinas naturais repletas de polvos e peixes tropicais. 
+</text>
+                <arg f="" n="0">Os nativos
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">utilizam</rel>
+                <arg f="" n="1">de lanças primitivas
+</arg>
+                <arg f="" n="2">para pescar nas rasas piscinas naturais repletas de polvos e peixes tropicais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

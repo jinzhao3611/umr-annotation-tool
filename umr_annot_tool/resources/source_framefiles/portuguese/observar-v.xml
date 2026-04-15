@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="observar">
+        <note />
+    <roleset framnet="observe.01" id="observar.01" name="notar; perceber" vncls="30.2 35.4">
+            <roles>
+                <role descr="observer" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                    <vnrole vncls="35.4" vntheta="Agent" />
+                </role>
+                <role descr="thing looked at" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                    <vnrole vncls="35.4" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3791:  Esses aspectos podem ser observados nos relatos das pacientes:  « quando tenho que arrumar a casa e não estou com_  vontade,  escuto vozes que me incentivam a começar a tarefa. 
+</text>
+                <arg f="" n="1">Esses aspectos
+</arg>
+                <rel f="">observados</rel>
+                <arg f="loc" n="m">nos relatos das pacientes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3587:  Na condição de senhor de meia-  idade com idéias adolescentes,  tio Dave vem observando com bastante inquietação que seu sentido do paladar parece estar se esvaindo pelo ralo. 
+</text>
+                <arg f="prd" n="m">Na condição de senhor de meia-  idade com idéias adolescentes
+</arg>
+                <arg f="" n="0">tio Dave
+</arg>
+                <rel f="">observando</rel>
+                <arg f="mnr" n="m">com bastante inquietação
+</arg>
+                <arg f="" n="1">que seu sentido do paladar parece estar se esvaindo pelo ralo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2185:  Com ironia,  observa o calendário verde-  amarelo: 
+</text>
+                <arg f="mnr" n="m">Com ironia
+</arg>
+                <rel f="">observa</rel>
+                <arg f="" n="1">o calendário verde-  amarelo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1638:  Observou também os lugares onde essas pessoas almoçam. 
+</text>
+                <rel f="">Observou</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">os lugares onde essas pessoas almoçam
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

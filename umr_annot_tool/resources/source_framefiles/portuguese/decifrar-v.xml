@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="decifrar">
+        <note />
+    <roleset framnet="decipher.01" id="decifrar.01" name="descobrir o significado de, decodificar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s380:  O resultado foi que um francês,  Jean-  François_  Champollion,  que só visitou o Egito em 1828,  foi o primeiro a decifrar os hieroglifos. 
+</text>
+                <rel f="">decifrar</rel>
+                <arg f="" n="1">os hieroglifos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

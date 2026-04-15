@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dissolver">
+        <note />
+    <roleset framnet="dissolve.01" id="dissolver.01" name="desmanchar; dispersar" vncls="45.4">
+            <roles>
+                <role descr="causer, agent" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing dissolving" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="medium, such as water" n="2" />
+                <role descr="into components" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2446:  Tancredo tivera com o governo conflitos impeditivos,  aqueles que o levaram a dissolver o PP de então. 
+</text>
+                <rel f="">dissolver</rel>
+                <arg f="" n="1">o PP de então
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

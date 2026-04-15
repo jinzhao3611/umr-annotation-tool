@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apitar">
+        <note />
+    <roleset framnet="officiate.01" id="apitar.01" name="arbitrar" vncls="29.6">
+            <roles>
+                <role descr="official performing a duty" n="0">
+                    <vnrole vncls="29.6" vntheta="agent" />
+                </role>
+                <role descr="duty, ceremony officiated by arg 0" n="1" />
+                <role descr="role, secondary predication of arg0, officiated as what?" n="2">
+                    <vnrole vncls="29.6" vntheta="predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2382:  Não se fala na cobrança dos árbitros que apitam maldosamente,  para prejudicar uma equipe. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">apitam</rel>
+                <arg f="mnr" n="m">maldosamente
+</arg>
+                <arg f="pnc" n="m">para prejudicar uma equipe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

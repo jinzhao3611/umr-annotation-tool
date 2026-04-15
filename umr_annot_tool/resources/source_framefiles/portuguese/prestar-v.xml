@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="prestar">
+        <note />
+    <roleset framnet="provide.01" id="prestar.01" name="verbo suporte para várias colocações; dar" vncls="13.4.1">
+            <roles>
+                <role descr="provider" n="0">
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing provided" n="1">
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="entity provided for (benefactive)" n="2">
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2392:  As empresas Tejofran e Power informaram ontem,  em nota enviada ao TRE(  Tribunal_  Regional_  Eleitoral) ,  que prestam serviços aos comitês do PSDB e PMDB. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">prestam</rel>
+                <arg f="" n="1">serviços
+</arg>
+                <arg f="" n="2">aos comitês do PSDB e PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1942:  Collor recebia telefonemas o tempo inteiro,  dos advogados,  de políticos amigos e de pessoas que prestavam solidariedade. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">prestavam</rel>
+                <arg f="" n="1">solidariedade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s167:  « A mãe da estudante prestou queixa do estupro e,  depois,  das ameaças de morte que Rúbio teria feito a Claudirene »,  disse Borlina. 
+</text>
+                <arg f="" n="0">A mãe da estudante
+</arg>
+                <rel f="">prestou</rel>
+                <arg f="" n="1">queixa do estupro e,  depois,  das ameaças de morte que Rúbio teria feito a Claudirene
+</arg>
+                <note>em inglês "lodge.03" adequa-se à colocação "prestar queixa"</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

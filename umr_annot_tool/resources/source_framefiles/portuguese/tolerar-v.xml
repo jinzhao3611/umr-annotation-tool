@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tolerar">
+        <note />
+    <roleset framnet="tolerate.01" id="tolerar.01" name="suportar; aturar; permitir" vncls="31.2">
+            <roles>
+                <role descr="tolerater" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing tolerated" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4201:  Eu tolerei pois não quis me intrometer na vida privada dos meus funcionários »,  disse Antinori,  para quem Fishel era um excelente técnico. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <rel f="">tolerei</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

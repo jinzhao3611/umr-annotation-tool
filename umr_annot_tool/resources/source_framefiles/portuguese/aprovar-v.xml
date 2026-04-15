@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aprovar">
+        <note />
+    <roleset framnet="approve.01" id="aprovar.01" name="aceitar " vncls="31.3 64">
+            <roles>
+                <role descr="approver" n="0">
+                    <vnrole vncls="31.3" vntheta="Experiencer" />
+                    <vnrole vncls="64" vntheta="Agent" />
+                </role>
+                <role descr="thing approved" n="1">
+                    <vnrole vncls="31.3" vntheta="Cause" />
+                    <vnrole vncls="64" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3579:  A intenção é votar e aprovar a MP na próxima semana,  entre os dias 26 e 27. 
+</text>
+                <rel f="">aprovar</rel>
+                <arg f="" n="1">a MP
+</arg>
+                <arg f="tmp" n="m">na próxima semana
+</arg>
+                <arg f="tmp" n="m">entre os dias 26 e 27
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3492:  O jurista Miguel_  Reale_  Jr.  prefere um « pessedebismo » pedagógico,  ao aprovar a atitude da polícia em detê-  lo como exemplo para a juventude. 
+</text>
+                <rel f="">aprovar</rel>
+                <arg f="" n="1">a atitude da polícia em detê-  lo como exemplo para a juventude
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2573:  O Conselho_  Monetário_  Nacional aprovou ontem uma nova linha de empréstimos do Banco_  Central para socorrer bancos de qualquer porte. 
+</text>
+                <arg f="" n="0">O Conselho_  Monetário_  Nacional
+</arg>
+                <rel f="">aprovou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">uma nova linha de empréstimos do Banco_  Central para socorrer bancos de qualquer porte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2551:  O BC não teria aprovado a operação. 
+</text>
+                <arg f="" n="0">O BC
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">aprovado</rel>
+                <arg f="" n="1">a operação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2544:  Para Serra,  se não for aprovada a emenda constitucional que desvincula dos fundos de participação dos Estados e municípios as receitas dos novos tributos,  de nada adiantará o aumento de impostos. 
+</text>
+                <arg f="dis" n="m">Para Serra
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">aprovada</rel>
+                <arg f="" n="1">a emenda constitucional que desvincula dos fundos de participação dos Estados e municípios as receitas dos novos tributos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s2367:  Ora,  se o presidente chegar ﻿à posse sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas,  torna-  se muito mais difícil fazê-  los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC. 
+</text>
+                <arg f="" n="1">los
+</arg>
+                <rel f="">aprovar</rel>
+                <arg f="loc" n="m">no Congresso
+</arg>
+                <arg f="tmp" n="m">no prazo de um semestre definido pelo próprio FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2365:  O fato de haver razoável consenso acerca desses temas não significa,  porém,  que seja fácil ou rápido aprovar tais reformas no Congresso. 
+</text>
+                <rel f="">aprovar</rel>
+                <arg f="" n="1">tais reformas
+</arg>
+                <arg f="loc" n="m">no Congresso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2350:  A droga foi aprovada em julho passado pela FDA órgão de fiscalização de medicamentos dos Estados_  Unidos para o tratamento da doença. 
+</text>
+                <arg f="" n="1">A droga
+</arg>
+                <rel f="">aprovada</rel>
+                <arg f="tmp" n="m">em julho passado
+</arg>
+                <arg f="" n="0">pela FDA órgão de fiscalização de medicamentos dos Estados_  Unidos para o tratamento da doença
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2149:  Essas condições,  para renegociar US$  35 bilhões,  foram aprovadas pelo Senado no final de 93. 
+</text>
+                <arg f="" n="1">Essas condições
+</arg>
+                <arg f="pnc" n="m">para renegociar US$  35 bilhões
+</arg>
+                <rel f="">aprovadas</rel>
+                <arg f="" n="0">pelo Senado
+</arg>
+                <arg f="tmp" n="m">no final de 93
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2045:  Esse projeto também é do deputado do PDT e já foi aprovado pela Câmara. 
+</text>
+                <arg f="" n="1">Esse projeto
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">aprovado</rel>
+                <arg f="" n="0">pela Câmara
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1923:  Na sua avaliação,  a oposição sabe que o plano é bom,  « mas não quer aprová-  lo agora,  pois seria bater palma para o adversário ». 
+</text>
+                <rel f="">aprová-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="tmp" n="m">agora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1574:  A carga tributária das instituições financeiras poderá aumentar em 73%  caso o Congresso_  Nacional aprove o aumento da contribuição social sobre o lucro dos bancos e a inclusão da obrigatoriedade de recolhimento do PIS(  Programa_  de_  Integração_  Social) . 
+</text>
+                <arg f="" n="0">o Congresso_  Nacional
+</arg>
+                <rel f="">aprove</rel>
+                <arg f="" n="1">o aumento da contribuição social sobre o lucro dos bancos e a inclusão da obrigatoriedade de recolhimento do PIS(  Programa_  de_  Integração_  Social) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s733:  A IRLF só aprova o aborto quando a gravidez coloca em risco a vida da mãe. 
+</text>
+                <arg f="" n="0">A IRLF
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">aprova</rel>
+                <arg f="" n="1">o aborto
+</arg>
+                <arg f="tmp" n="m">quando a gravidez coloca em risco a vida da mãe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s497:  O advogado Mariano_  Gonçalves_  Neto,  autor da ação popular que se arrasta há 12 anos,  acusa os ex-  ministros de aprovarem uma superavaliação dos terrenos entregues pelo grupo Delfin como pagamento de uma dívida que,  em 1982,  chegava a Cr 70 milhões. 
+</text>
+                <arg f="" n="0">os ex-  ministros
+</arg>
+                <rel f="">aprovarem</rel>
+                <arg f="" n="1">uma superavaliação dos terrenos entregues pelo grupo Delfin
+</arg>
+                <arg f="pnc" n="m">como pagamento de uma dívida que,  em 1982,  chegava a Cr 70 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s127:  Primeiro aprova-  se o texto enxuto e depois negocia-  se a aprovação,  sem prazo definido,  das leis complementares e ordinárias. 
+</text>
+                <arg f="tmp" n="m">Primeiro
+</arg>
+                <rel f="">aprova-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">o texto enxuto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

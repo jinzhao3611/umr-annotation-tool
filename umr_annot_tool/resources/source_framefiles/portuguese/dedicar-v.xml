@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dedicar">
+        <note />
+    <roleset framnet="dedicate.01" id="dedicar.01" name="dar algo exclusivamente para determinado fim" vncls="79">
+            <roles>
+                <role descr="agent, dedicator" n="0">
+                    <vnrole vncls="79" vntheta="Agent" />
+                </role>
+                <role descr="thing dedicated" n="1">
+                    <vnrole vncls="79" vntheta="Theme" />
+                </role>
+                <role descr="to what" n="2">
+                    <vnrole vncls="79" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3025:  Além_  de muito ruim,  o filme « O_  Magnata_  Grego »(  The_  Greek_  Tycoon)  dedicava mais atenção ao seu segundo marido,  interpretado por Anthony_  Quinn,  que aliás faria o papel de Sócrates_  Onassis(  sogro de Jackie)  no telefilme « Onassis: _  The_  Richest_  Man_  in_  the_  World »,  produzido em 1988. 
+</text>
+                <arg f="" n="0">o filme « O_  Magnata_  Grego »(  The_  Greek_  Tycoon) 
+</arg>
+                <rel f="">dedicava</rel>
+                <arg f="" n="1">mais atenção
+</arg>
+                <arg f="" n="2">ao seu segundo marido,  interpretado por Anthony_  Quinn,  que aliás faria o papel de Sócrates_  Onassis(  sogro de Jackie)  no telefilme « Onassis: _  The_  Richest_  Man_  in_  the_  World »,  produzido em 1988
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2466:  O relatório dedica 42 páginas ao Japão,  « cujas barreiras ﻿à importação de produtos e serviços são muito maiores do_  que as dos demais membros do Grupo_  dos_  Sete(  países mais industrializados)  e representam um entrave inaceitável ao sistema de comércio global ». 
+</text>
+                <arg f="" n="0">O relatório
+</arg>
+                <rel f="">dedica</rel>
+                <arg f="" n="1">42 páginas
+</arg>
+                <arg f="" n="2">ao Japão,  « cujas barreiras ﻿à importação de produtos e serviços são muito maiores do_  que as dos demais membros do Grupo_  dos_  Sete(  países mais industrializados)  e representam um entrave inaceitável ao sistema de comércio global »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1969:  Quero ter mais experiência,  estudar e me dedicar 100%  a isto. 
+</text>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">dedicar</rel>
+                <arg f="ext" n="m">100% 
+</arg>
+                <arg f="" n="2">a isto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s852:  Por_  enquanto,  se dedica ﻿à preparação física. 
+</text>
+                <arg f="tmp" n="m">Por_  enquanto
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">dedica</rel>
+                <arg f="" n="2">﻿à preparação física
+</arg>
+                <note>reflexivo: dedicar-se </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s282:  Passamos por dificuldades:  meu pai perdeu praticamente todo o seu patrimônio por se dedicar 100%  ﻿à política »
+</text>
+                <arg f="" n="0">meu pai
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">dedicar</rel>
+                <arg f="ext" n="m">100% 
+</arg>
+                <arg f="" n="2">﻿à política
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

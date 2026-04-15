@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="executar">
+        <note />
+        <note />
+    <roleset framnet="execute.02" id="executar.01" name="realizar; colocar em prática" vncls="">
+            <roles>
+                <role descr="agent, doer" n="0" />
+                <role descr="thing done" n="1" />
+                <role descr="benefactive, done for or about" n="2" />
+                <role descr="instrumental" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3788:  Na sua administração,  executou um plano viário com largas avenidas interligando os bairros,  que provocaram um boom imobiliário. 
+</text>
+                <arg f="loc" n="m">Na sua administração
+</arg>
+                <rel f="">executou</rel>
+                <arg f="" n="1">um plano viário com largas avenidas interligando os bairros,  que provocaram um boom imobiliário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s45:  Prandi disse ainda que a empresa está elaborando « normas factíveis de serem executadas para a solução ou minimização dos problemas » existentes no local. 
+</text>
+                <rel f="">executadas</rel>
+                <arg f="pnc" n="m">para a solução ou minimização dos problemas » existentes no local
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="execute.01" id="executar.02" name="matar" vncls="42.1">
+            <roles>
+                <role descr="killer" n="0">
+                    <vnrole vncls="42.1" vntheta="Agent" />
+                </role>
+                <role descr="corpse" n="1">
+                    <vnrole vncls="42.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="42.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3209:  A sensação de insegurança e a debilidade do poder público eram sem dúvida características dos Estados_  Unidos do final do século 18,  quando(  segundo a versão mais aceita)  a palavra teria sido inventada a_  partir_  da prática adotada por um juiz Lynch,  de condenar e executar seus adversários sem o devido processo legal. 
+</text>
+                <rel f="">executar</rel>
+                <arg f="mnr" n="m">sem o devido processo legal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

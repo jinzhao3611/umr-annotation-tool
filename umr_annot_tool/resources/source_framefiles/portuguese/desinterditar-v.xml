@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desinterditar">
+        <note />
+    <roleset framnet="" id="desinterditar.01" name="remover interdição" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1039:  O Contru(  Departamento_  de_  Controle_  e_  Uso_  de_  Imóveis)  desinterditou ontem dez salas de cinema. 
+</text>
+                <arg f="" n="0">O Contru(  Departamento_  de_  Controle_  e_  Uso_  de_  Imóveis) 
+</arg>
+                <rel f="">desinterditou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">dez salas de cinema
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

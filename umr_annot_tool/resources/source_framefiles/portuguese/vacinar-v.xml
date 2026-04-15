@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vacinar">
+        <note />
+    <roleset framnet="??vaccinate" id="vacinar.01" name="aplicar ou receber vacina" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3307:  Neste ano,  a secretaria espera vacinar cerca_  de 480 mil crianças. 
+</text>
+                <rel f="">vacinar</rel>
+                <arg f="" n="1">cerca_  de 480 mil crianças
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2603:  A crise da saúde tem solução,  basta vacinar-  la contra as ingerências político-  partidárias,  as omissões e desacertos dos responsáveis pelo setor. 
+</text>
+                <rel f="">vacinar-</rel>
+                <arg f="" n="1">la
+</arg>
+                <arg f="" n="2">contra as ingerências político-  partidárias,  as omissões e desacertos dos responsáveis pelo setor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2158:  Na primeira fase,  no dia 11 de junho,  foram vacinadas cerca_  de 3,  2 milhões de crianças em São_  Paulo. 
+</text>
+                <arg f="tmp" n="m">Na primeira fase
+</arg>
+                <arg f="tmp" n="m">no dia 11 de junho
+</arg>
+                <rel f="">vacinadas</rel>
+                <arg f="" n="1">cerca_  de 3,  2 milhões de crianças
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

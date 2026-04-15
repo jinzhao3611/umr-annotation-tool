@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="figurar">
+        <note />
+    <roleset framnet="rank.01" id="figurar.01" name="constar; estar incluído; fazer parte" vncls="29.2 29.6">
+            <roles>
+                <role descr="assigner" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="29.6" vntheta="Agent" />
+                </role>
+                <role descr="thing assigned a position" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="29.6" vntheta="Theme" />
+                </role>
+                <role descr="position" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                    <vnrole vncls="29.6" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1316:  Para melhor cantor,  figuram José_  Carreras,  Thomas_  Hampson,  Ben_  Heppner,  Sergei_  Leiferkus e Bryn_  Terfei. 
+</text>
+                <arg f="" n="2">Para melhor cantor
+</arg>
+                <rel f="">figuram</rel>
+                <arg f="" n="1">José_  Carreras,  Thomas_  Hampson,  Ben_  Heppner,  Sergei_  Leiferkus e Bryn_  Terfei
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

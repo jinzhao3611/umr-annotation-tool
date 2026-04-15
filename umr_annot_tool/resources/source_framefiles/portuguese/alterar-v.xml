@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="alterar">
+        <note />
+    <roleset framnet="alter.01" id="alterar.01" name="transformar" vncls="26.6 45.4">
+            <roles>
+                <role descr="causer of transformation" n="0">
+                    <vnrole vncls="26.6" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing changing" n="1">
+                    <vnrole vncls="26.6" vntheta="Patient" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="end state" n="2">
+                    <vnrole vncls="26.6" vntheta="Product" />
+                </role>
+                <role descr="start state" n="3">
+                    <vnrole vncls="26.6" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4033:  Mania altera comportamento
+</text>
+                <arg f="" n="0">Mania
+</arg>
+                <rel f="">altera</rel>
+                <arg f="" n="1">comportamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2929:  Segundo a nota,  « as providências capazes de alterar o quadro atual de combate aos traficantes dizem respeito ﻿à Polícia_  Federal e às Forças_  Armadas,  com o objetivo de interromper o fluxo de armas proibidas e cocaína no Rio ». 
+</text>
+                <rel f="">alterar</rel>
+                <arg f="" n="1">o quadro atual de combate aos traficantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2423:  A necessidade de reparar os equipamentos durante a viagem teria alterado os planos de trabalho. 
+</text>
+                <arg f="" n="0">A necessidade de reparar os equipamentos durante a viagem
+</arg>
+                <rel f="">alterado</rel>
+                <arg f="" n="1">os planos de trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1636:  Isto_  é:  os diversos tipos de refeições são investidos de símbolos que alteram o valor que as pessoas atribuem ao que comem. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">alteram</rel>
+                <arg f="" n="1">o valor que as pessoas atribuem ao que comem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s397:  Além_  disso,  tem que se alterar o aparato jurídico para favorecer ações de negociação. 
+</text>
+                <arg f="dis" n="m">Além_  disso
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">alterar</rel>
+                <arg f="" n="1">o aparato jurídico
+</arg>
+                <arg f="pnc" n="m">para favorecer ações de negociação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="assassinar">
+        <note />
+    <roleset framnet="murder.01" id="assassinar.01" name="tirar a vida de outro de propósito" vncls="42.1">
+            <roles>
+                <role descr="killer" n="0">
+                    <vnrole vncls="42.1" vntheta="Agent" />
+                </role>
+                <role descr="corpse" n="1">
+                    <vnrole vncls="42.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="42.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2000:  Foi assassinado em agosto de 1909,  um mês antes do acordo entre os dois países. 
+</text>
+                <rel f="">assassinado</rel>
+                <arg f="tmp" n="m">em agosto de 1909,  um mês antes do acordo entre os dois países
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1748:  Nos primeiros 20 dias deste mês foram assassinados no Rio 223 pessoas média de 11 por dia. 
+</text>
+                <arg f="tmp" n="m">Nos primeiros 20 dias deste mês
+</arg>
+                <rel f="">assassinados</rel>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <arg f="" n="1">223 pessoas média de 11 por dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s782:  Promotores da Sicília pediram ﻿à Justiça local o julgamento de 23 pessoas,  acusadas de conspirarem para assassinar Salvo_  Lima,  político democrata-  cristão morto pela Máfia pouco antes das eleições de 1992. 
+</text>
+                <rel f="">assassinar</rel>
+                <arg f="" n="1">Salvo_  Lima,  político democrata-  cristão morto pela Máfia pouco antes das eleições de 1992
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

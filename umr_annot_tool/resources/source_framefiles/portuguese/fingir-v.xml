@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fingir">
+        <note />
+    <roleset framnet="pretend.01" id="fingir.01" name="agir como se fosse verdade" vncls="-">
+            <roles>
+                <role descr="pretender" n="0" />
+                <role descr="premise" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s772:  Devo fingir que enxergo a figura ou sento às margens do Rio_  Piedra e choro?  »
+</text>
+                <rel f="">fingir</rel>
+                <arg f="" n="1">que enxergo a figura
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

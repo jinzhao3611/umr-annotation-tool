@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cozinhar">
+        <note />
+    <roleset framnet="cook.01" id="cozinhar.01" name="preparar alimento" vncls="26.1 26.3-1 45.3">
+            <roles>
+                <role descr="cook, agent" n="0">
+                    <vnrole vncls="26.3-1" vntheta="Agent" />
+                    <vnrole vncls="26.1" vntheta="Agent" />
+                    <vnrole vncls="45.3" vntheta="Agent" />
+                </role>
+                <role descr="food" n="1">
+                    <vnrole vncls="26.3-1" vntheta="Product" />
+                    <vnrole vncls="26.1" vntheta="Product" />
+                    <vnrole vncls="45.3" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3080:  Marcella_  Hazan falou sobre alcachofras e catequizou o público sobre a supremacia do óleo de oliva extra virgem para cozinhar,  apesar_  da exorbitância do preço. 
+</text>
+                <rel f="">cozinhar</rel>
+                <note>sem argumentos</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

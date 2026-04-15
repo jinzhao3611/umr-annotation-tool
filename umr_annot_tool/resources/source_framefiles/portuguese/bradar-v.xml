@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="bradar">
+        <note />
+    <roleset framnet="shout.01" id="bradar.01" name="falar em voz bem alta" vncls="37.3">
+            <roles>
+                <role descr="shouter" n="0">
+                    <vnrole vncls="37.3" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="37.3" vntheta="Topic" />
+                </role>
+                <role descr="listener" n="2">
+                    <vnrole vncls="37.3" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1830:  « É por essas e outras que a gente acaba pegando uma micose na chica e depois não sabe explicar por_  quê »,  bradou a espanholita. 
+</text>
+                <arg f="" n="1">« É por essas e outras que a gente acaba pegando uma micose na chica e depois não sabe explicar por_  quê »
+</arg>
+                <rel f="">bradou</rel>
+                <arg f="" n="0">a espanholita
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="substituir">
+        <note />
+    <roleset framnet="substitute.01" id="substituir.01" name="colocar uma coisa no lugar de outra" vncls="13.6">
+            <roles>
+                <role descr="agent, entity trading" n="0">
+                    <vnrole vncls="13.6" vntheta="Agent" />
+                </role>
+                <role descr="thing being preferred, new thing" n="1">
+                    <vnrole vncls="13.6" vntheta="Theme2" />
+                </role>
+                <role descr="other item in exchange, old thing" n="3">
+                    <vnrole vncls="13.6" vntheta="Theme1" />
+                </role>
+                <role descr="benefactive" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3942:  Não poderia haver realização maior para um compositor:  substituir Beethoven,  ou ter pelo_  menos a ilusão de ser um novo ponto de partida. 
+</text>
+                <rel f="">substituir</rel>
+                <arg f="" n="2">Beethoven
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3816:  Arnold_  Schwarzenegger deu entrevistas como ator principal,  foi substituído por Bruce_  Willis há dois anos,  mas o projeto nunca saiu do papel. 
+</text>
+                <arg f="" n="2">Arnold_  Schwarzenegger
+</arg>
+                <rel f="">substituído</rel>
+                <arg f="" n="1">por Bruce_  Willis
+</arg>
+                <arg f="tmp" n="m">há dois anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3531:  O brinquedinho eletrônico tem uma função interessante no mundo dos plínios:  substitui o antigo « torpedo »,  bilhete desferido entre jovens em bares. 
+</text>
+                <arg f="" n="1">O brinquedinho eletrônico
+</arg>
+                <rel f="">substitui</rel>
+                <arg f="" n="2">o antigo « torpedo »,  bilhete desferido entre jovens em bares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3199:  As LaserJet 4_  Plus e 4M_  Plus substituem os modelos 4 e 4M. 
+</text>
+                <arg f="" n="1">As LaserJet 4_  Plus e 4M_  Plus
+</arg>
+                <rel f="">substituem</rel>
+                <arg f="" n="2">os modelos 4 e 4M
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2502:  Foi substituído como candidato por Ernesto_  Zedillo,  que chefiava sua campanha. 
+</text>
+                <rel f="">substituído</rel>
+                <arg f="prd" n="m">como candidato
+</arg>
+                <arg f="" n="1">por Ernesto_  Zedillo,  que chefiava sua campanha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2065:  O meia Mazinho deve substituir o meia defensivo Mauro_  Silva segunda-  feira contra os Estados_  Unidos pela segunda fase(  oitavas-  de-  final)  da Copa_  do_  Mundo. 
+</text>
+                <arg f="" n="1">O meia Mazinho
+</arg>
+                <rel f="">substituir</rel>
+                <arg f="" n="2">o meia defensivo Mauro_  Silva
+</arg>
+                <arg f="tmp" n="m">segunda-  feira
+</arg>
+                <arg f="loc" n="m">contra os Estados_  Unidos
+</arg>
+                <arg f="loc" n="m">pela segunda fase(  oitavas-  de-  final)  da Copa_  do_  Mundo
+</arg>
+                <note>"contra os Estados Unidos" significa "no jogo contra os Estados Unidos"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1716:  Depois do tratado de paz de 1923,  aboliu o califato,  a poligamia,  substituiu práticas legais islâmicas por outras de inspiração européia,  adotou o alfabeto romano e o calendário gregoriano e concedeu às mulheres direito de voto. 
+</text>
+                <arg f="tmp" n="m">Depois do tratado de paz de 1923
+</arg>
+                <rel f="">substituiu</rel>
+                <arg f="" n="2">práticas legais islâmicas
+</arg>
+                <arg f="" n="1">por outras de inspiração européia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1561:  A Epson mostra na Comdex quatro modelos com tecnologia jato de tinta,  que deverão substituir os modelos matriciais no dia-  a-  dia dos usuários e empresas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">substituir</rel>
+                <arg f="" n="2">os modelos matriciais
+</arg>
+                <arg f="tmp" n="m">no dia-  a-  dia dos usuários e empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1461:  Hoje nós temos o maior setor agrícola privado entre os países da Comunidade_  de_  Estados_  Independentes(  aliança que substituiu a URSS) . 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">substituiu</rel>
+                <arg f="" n="2">a URSS
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s803:  Ao_  vivo,  sua música não difere muito do pop agressivo de Ministry,  Young_  Gods a quem substituiu no BHRIF,  Nine_  Inch_  Nails e KMFDM. 
+</text>
+                <arg f="" n="1">sua música
+</arg>
+                <arg f="" n="2">a quem
+</arg>
+                <rel f="">substituiu</rel>
+                <arg f="loc" n="m">no BHRIF
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s729:  Se eles não substituírem o pessoal,  vão estar praticando desobediência judicial »,  disse Fortes. 
+</text>
+                <arg f="" n="0">eles
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">substituírem</rel>
+                <arg f="" n="2">o pessoal
+</arg>
+                <note>com agente</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

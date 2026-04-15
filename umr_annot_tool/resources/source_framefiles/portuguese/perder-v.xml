@@ -1,0 +1,417 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="perder">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="lose.03" id="perder.01" name="ser derrotado" vncls="">
+            <roles>
+                <role descr="loser" n="0" />
+                <role descr="battle" n="1" />
+                <role descr="winner" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4028:  Sanchez,  nº 2 do ranking mundial,  perdeu num jogo dramático para a francesa Julie_  Halard por 6/  2,  1/  6 e 7/  6,  com 7/  2 no tie-  break decisivo. 
+</text>
+                <arg f="" n="0">Sanchez,  nº 2 do ranking mundial, 
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">num jogo dramático
+</arg>
+                <arg f="" n="2">para a francesa Julie_  Halard
+</arg>
+                <arg f="ext" n="m">por 6/  2,  1/  6 e 7/  6
+</arg>
+                <arg f="mnr" n="m">com 7/  2 no tie-  break decisivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3906:  « Senão ele vai ser alvo fácil das críticas se o time perder.  »
+</text>
+                <arg f="" n="0">o time
+</arg>
+                <rel f="">perder</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3611:  Ruth- -  Por isso perdemos as eleições. 
+</text>
+                <arg f="cau" n="m">Por isso
+</arg>
+                <rel f="">perdemos</rel>
+                <arg f="" n="1">as eleições
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3295:  Não explica como,  mas garante que não vai perder a próxima eleição em Itabaiana. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">perder</rel>
+                <arg f="" n="1">a próxima eleição em Itabaiana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3293:  Apesar_  da popularidade,  Chico_  de_  Miguel perdeu as duas últimas eleições para a Prefeitura de Itabaiana,  que passou a ser controlada por políticos locais ligados ao governador João_  Alves. 
+</text>
+                <arg f="adv" n="m">Apesar_  da popularidade
+</arg>
+                <arg f="" n="0">Chico_  de_  Miguel
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">as duas últimas eleições para a Prefeitura de Itabaiana,  que passou a ser controlada por políticos locais ligados ao governador João_  Alves
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3096:  A roleta girou,  e ele perdeu. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">perdeu</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2249:  O Philadelphia tem apenas 12 vitórias e já perdeu 19 vezes. 
+</text>
+                <arg f="" n="0">O Philadelphia
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="ext" n="m">19 vezes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2137:  « Se isso der certo,  o Lessa joga no lixo sua credibilidade,  mas sem Bulhões ele fica sem apoio no interior e perde a eleição.  »
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">perde</rel>
+                <arg f="" n="1">a eleição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1334:  Pete_  Sampras e Michael_  Stich perderam no Torneio_  de_  Doha,  no Qatar,  para jogadores mais acostumados ao calor forte o marroquino Karim_  Alami e o haitiano Ronald_  Agenor. 
+</text>
+                <arg f="" n="0">Pete_  Sampras e Michael_  Stich
+</arg>
+                <rel f="">perderam</rel>
+                <arg f="" n="1">no Torneio_  de_  Doha,  no Qatar, 
+</arg>
+                <arg f="" n="2">para jogadores mais acostumados ao calor forte o marroquino Karim_  Alami e o haitiano Ronald_  Agenor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1092:  Vamos confrontar os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano:  enquanto os titulares de Telê privilegiam o meio-  campo,  com três,  quatro,  às_  vezes cinco volantes congestionando o setor,  o_  que,  na prática,  não confere nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa,  os garotos jogam com Mona,  o único volante típico. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">tudo
+</arg>
+                <rel f="">perderam</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s519:  O Santo_  André perdeu por 2 a O para o Rio_  Branco,  de Americana,  ontem ﻿à tarde no estádio Bruno_  José_  Daniel,  em Santo_  Andr. 
+</text>
+                <arg f="" n="0">O Santo_  André
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="ext" n="m">por 2 a O
+</arg>
+                <arg f="" n="2">para o Rio_  Branco,  de Americana, 
+</arg>
+                <arg f="tmp" n="m">ontem ﻿à tarde
+</arg>
+                <arg f="loc" n="m">no estádio Bruno_  José_  Daniel
+</arg>
+                <arg f="loc" n="m">em Santo_  Andr
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s268:  O jornal compara a eleição presidencial brasileira ﻿à francesa,  afirmando que o premiê Edouard_  Balladur,  ex-  favorito,  também pode perder,  em abril de 95. 
+</text>
+                <arg f="" n="0">o premiê Edouard_  Balladur,  ex-  favorito, 
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">perder</rel>
+                <arg f="tmp" n="m">em abril de 95
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="lose.02" id="perder.02" name="deixar de ter; ficar sem" vncls="13.2">
+            <roles>
+                <role descr="entity losing something" n="0">
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="thing lost" n="1">
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, entity gaining thing lost" n="2">
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3539:  Ele dirigia sozinho um Santana 90 em alta velocidade na avenida_  do_  Estado,  no Cambuci(  região central) ,  quando,  provavelmente,  perdeu o controle do carro e bateu num poste. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">o controle do carro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3268:  Segundo ele,  o alvará foi queimado,  com tudo_  o_  que se perdeu. 
+</text>
+                <arg f="" n="1">tudo_  o_  que
+</arg>
+                <rel f="">perdeu</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2830:  O Boca não conseguia sair jogando e perdia bolas em seu campo. 
+</text>
+                <arg f="" n="0">O Boca
+</arg>
+                <rel f="">perdia</rel>
+                <arg f="" n="1">bolas
+</arg>
+                <arg f="loc" n="m">em seu campo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2319:  É evidente que quem perde são os primeiros. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">perde</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2308:  Com o resultado,  o time perdeu a chance de garantir antecipadamente a vaga nas quartas-  de-  final. 
+</text>
+                <arg f="cau" n="m">Com o resultado
+</arg>
+                <arg f="" n="0">o time
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">a chance de garantir antecipadamente a vaga nas quartas-  de-  final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1889:  Que perdeu apenas 4 pênaltis em sua vida. 
+</text>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">apenas 4 pênaltis
+</arg>
+                <arg f="tmp" n="m">em sua vida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1877:  Ao parar de fumar,  acabei perdendo a estribeira algumas vezes. 
+</text>
+                <arg f="tmp" n="m">Ao parar de fumar
+</arg>
+                <rel f="">perdendo</rel>
+                <arg f="" n="1">a estribeira
+</arg>
+                <arg f="ext" n="m">algumas vezes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1533:  O piloto holandês,  em sua primeira volta,  perdeu o controle do Benetton e foi parar na brita. 
+</text>
+                <arg f="" n="0">O piloto holandês
+</arg>
+                <arg f="tmp" n="m">em sua primeira volta
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">o controle do Benetton
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1323:  O Brasil dominou o jogo inteiro,  mas perdeu diversas chances de marcar
+</text>
+                <arg f="" n="0">O Brasil
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">diversas chances de marcar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1155:  Aposto uma boneca Barbie como os pais de crianças entre cinco e doze anos ainda vão perder vários fios de cabelo procurando por um tal de Mighty_  Max debaixo_  do sofá,  no cinzeiro do carro ou atrás_  da geladeira. 
+</text>
+                <arg f="" n="0">os pais de crianças entre cinco e doze anos
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">perder</rel>
+                <arg f="" n="1">vários fios de cabelo procurando por um tal de Mighty_  Max debaixo_  do sofá,  no cinzeiro do carro ou atrás_  da geladeira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s677:  E faturamento em dobro para o compositor,  que não perdia uma chance de estourar no « hit_  parade » com uma canção. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">perdia</rel>
+                <arg f="" n="1">uma chance de estourar no « hit_  parade » com uma canção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s558:  O governador se convenceu ainda de que,  se abandonassse a candidatura,  poderia se tornar refém de Quércia e perderia o poder de influência na escolha do candidato do PMDB. 
+</text>
+                <arg f="" n="0">O governador
+</arg>
+                <rel f="">perderia</rel>
+                <arg f="" n="1">o poder de influência na escolha do candidato do PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s448:  A PF ainda não levantou os números exatos do golpe,  mas acredita que pelo_  menos cem pessoas tenham perdido seu dinheiro. 
+</text>
+                <arg f="" n="0">pelo_  menos cem pessoas
+</arg>
+                <rel f="">perdido</rel>
+                <arg f="" n="1">seu dinheiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s282:  Passamos por dificuldades:  meu pai perdeu praticamente todo o seu patrimônio por se dedicar 100%  ﻿à política »
+</text>
+                <arg f="" n="0">meu pai
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="adv" n="m">praticamente
+</arg>
+                <arg f="" n="1">todo o seu patrimônio
+</arg>
+                <arg f="cau" n="m">por se dedicar 100%  ﻿à política
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s220:  Com medo de perder poderes,  Modiano chamou Mourão e,  numa atitude mesquinha,  comunicou-  lhe que,  como o financiamento do projeto seria bancado pelo BNDES,  ele iria para lá,  mas na qualidade de representante do banco. 
+</text>
+                <rel f="">perder</rel>
+                <arg f="" n="1">poderes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s158:  Segundo o BC,  mais_  da metade dos recursos da caderneta são de poupadores de médio e grande porte em_  tese,  menos sujeitos a achar que o dinheiro perdeu rendimento com a queda da inflação. 
+</text>
+                <arg f="" n="0">o dinheiro
+</arg>
+                <rel f="">perdeu</rel>
+                <arg f="" n="1">rendimento
+</arg>
+                <arg f="cau" n="m">com a queda da inflação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="lose.01" id="perder.03" name="decrescer (medida)" vncls="">
+            <roles>
+                <role descr="logical subject, patient, thing falling" n="1" />
+                <role descr="EXT, amount fallen" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <role descr="medium" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2860:  O líder Tasso_  Jereissati(  PSDB)  passou de 61%  para 58% ,  perdendo três pontos percentuais em_  relação_  ﻿à última pesquisa. 
+</text>
+                <rel f="">perdendo</rel>
+                <arg f="" n="1">três pontos percentuais em_  relação_  ﻿à última pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

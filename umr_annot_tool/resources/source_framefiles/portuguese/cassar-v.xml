@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cassar">
+        <note />
+    <roleset framnet="withdraw.01" id="cassar.01" name="tirar (direito ou licença)" vncls="10.1 10.5">
+            <roles>
+                <role descr="entity removing" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="10.1" vntheta="Agent" />
+                </role>
+                <role descr="thing being withdrawn (often understood as 'self')" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="10.1" vntheta="Theme" />
+                </role>
+                <role descr="removed from" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="10.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1098:  A imprensa independente não quer cassar de Itamar_  Franco o direito de fazer seu sucessor. 
+</text>
+                <arg f="" n="0">A imprensa independente
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">cassar</rel>
+                <arg f="" n="2">de Itamar_  Franco
+</arg>
+                <arg f="" n="1">o direito de fazer seu sucessor
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

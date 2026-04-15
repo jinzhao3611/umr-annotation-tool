@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="soltar">
+        <note />
+    <roleset framnet="loose.01" id="soltar.01" name="desgarrar; libertar" vncls="">
+            <roles>
+                <role descr="releaser" n="0" />
+                <role descr="thing released" n="1" />
+                <role descr="released upon" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3514:  Na minha primeira tentativa,  fiz exatamente a mesma coisa que na primeira vez que pratiquei esqui aquático:  caí e me soltei. 
+</text>
+                <arg f="tmp" n="m">Na minha primeira tentativa
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">soltei</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s767:  Ligue imediatamente para o Procon(  tel. _  829-  3055)  e solte os cachorros. 
+</text>
+                <rel f="">solte</rel>
+                <arg f="" n="1">os cachorros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s613:  « Bloco_  da_  Galinha_  Azul Solta a Franga ». 
+</text>
+                <arg f="" n="0">Bloco_  da_  Galinha_  Azul
+</arg>
+                <rel f="">Solta</rel>
+                <arg f="" n="1">a Franga
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

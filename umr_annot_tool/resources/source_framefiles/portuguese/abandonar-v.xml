@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abandonar">
+        <note />
+    <roleset framnet="abandon.01" id="abandonar.01" name="desligar-se de alguém ou de algum lugar" vncls="51.2">
+            <roles>
+                <role descr="abandoner" n="0">
+                    <vnrole vncls="51.2" vntheta="Theme" />
+                </role>
+                <role descr="thing abandoned, left behind" n="1">
+                    <vnrole vncls="51.2" vntheta="Source" />
+                </role>
+                <role descr="attribute of arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2647:  Reis não quis dizer se também abandonará Esperidião_  Amin. 
+</text>
+                <arg f="" n="0">Reis
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">abandonará</rel>
+                <arg f="" n="1">Esperidião_  Amin
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1020:  Quando ele terminou,  às 22h10,  metade das pessoas havia abandonado o local. 
+</text>
+                <arg f="tmp" n="m">Quando ele terminou,  às 22h10
+</arg>
+                <arg f="" n="0">metade das pessoas
+</arg>
+                <rel f="">abandonado</rel>
+                <arg f="" n="1">o local
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s558:  O governador se convenceu ainda de que,  se abandonassse a candidatura,  poderia se tornar refém de Quércia e perderia o poder de influência na escolha do candidato do PMDB. 
+</text>
+                <arg f="" n="0">O governador
+</arg>
+                <rel f="">abandonassse</rel>
+                <arg f="" n="1">a candidatura
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

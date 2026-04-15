@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="atribuir">
+        <note />
+    <roleset framnet="assign.01" id="atribuir.01" name="dar, associar" vncls="13.3">
+            <roles>
+                <role descr="agent, assigner" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                </role>
+                <role descr="thing assigned" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                </role>
+                <role descr="assigned to" n="2">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3857:  Ele atribuiu a discussão sobre o valor dos benefícios a uma « ilusão monetária ». 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">atribuiu</rel>
+                <arg f="" n="1">a discussão sobre o valor dos benefícios
+</arg>
+                <arg f="" n="2">a uma « ilusão monetária »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3294:  Ele atribui as derrotas ao Judiciário,  acusado de auxiliar seus opositores. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">atribui</rel>
+                <arg f="" n="1">as derrotas
+</arg>
+                <arg f="" n="2">ao Judiciário,  acusado de auxiliar seus opositores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1636:  Isto_  é:  os diversos tipos de refeições são investidos de símbolos que alteram o valor que as pessoas atribuem ao que comem. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">as pessoas
+</arg>
+                <rel f="">atribuem</rel>
+                <arg f="" n="2">ao que comem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1200:  Os serviços de inteligência da Argentina que trabalham com a ajuda do Mossad(  serviço secreto de Israel)  e do FBI(  Polícia_  Federal dos EUA)  atribuem o atentado ao Hizbollah,  grupo muçulmano xiita pró-  Irã. 
+</text>
+                <arg f="" n="0">Os serviços de inteligência da Argentina que trabalham com a ajuda do Mossad(  serviço secreto de Israel)  e do FBI(  Polícia_  Federal dos EUA) 
+</arg>
+                <rel f="">atribuem</rel>
+                <arg f="" n="1">o atentado
+</arg>
+                <arg f="" n="2">ao Hizbollah,  grupo muçulmano xiita pró-  Irã
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1119:  O escocês atribuiu o seu desempenho ruim ao fato de desconhecer o carro sob as novas regras. 
+</text>
+                <arg f="" n="0">O escocês
+</arg>
+                <rel f="">atribuiu</rel>
+                <arg f="" n="1">o seu desempenho ruim
+</arg>
+                <arg f="" n="2">ao fato de desconhecer o carro sob as novas regras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1074:  O salto na produção é atribuído ao sucesso da privatização da indústria petrolífera. 
+</text>
+                <arg f="" n="1">O salto na produção
+</arg>
+                <rel f="">atribuído</rel>
+                <arg f="" n="2">ao sucesso da privatização da indústria petrolífera
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s359:  A TV-  A atribui ao Plano_  Real a conquista de 17 mil assinantes em outubro,  contra a média de 10 mil assinaturas$ /  mês no início do ano. 
+</text>
+                <arg f="" n="0">A TV-  A
+</arg>
+                <rel f="">atribui</rel>
+                <arg f="" n="2">ao Plano_  Real
+</arg>
+                <arg f="" n="1">a conquista de 17 mil assinantes
+</arg>
+                <arg f="tmp" n="m">em outubro
+</arg>
+                <arg f="prd" n="m">contra a média de 10 mil assinaturas$ /  mês no início do ano
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

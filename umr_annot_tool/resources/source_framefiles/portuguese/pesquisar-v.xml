@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="pesquisar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1518:  Mesma tendência teve o custo da cesta básica pesquisado pelo Procon,  em convênio com o Dieese. 
+</text>
+                <rel f="">pesquisado</rel>
+                <arg f="" n="0">pelo Procon
+</arg>
+                <arg f="loc" n="m">em convênio com o Dieese
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

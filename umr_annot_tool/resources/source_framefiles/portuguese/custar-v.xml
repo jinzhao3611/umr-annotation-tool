@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="custar">
+        <note />
+    <roleset framnet="cost.01" id="custar.01" name="ter como preço" vncls="54.2">
+            <roles>
+                <role descr="commodity" n="1">
+                    <vnrole vncls="54.2" vntheta="Theme" />
+                </role>
+                <role descr="price" n="2">
+                    <vnrole vncls="54.2" vntheta="Attribute" />
+                </role>
+                <role descr="buyer" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3603:  Custa US$  45 na Multimídia_  Center(  tel 011_  959-  2650) . 
+</text>
+                <rel f="">Custa</rel>
+                <arg f="" n="2">US$  45
+</arg>
+                <arg f="loc" n="m">na Multimídia_  Center(  tel 011_  959-  2650) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3596:  Custa US$  49,  na Brasoftware. 
+</text>
+                <rel f="">Custa</rel>
+                <arg f="" n="2">US$  49
+</arg>
+                <arg f="loc" n="m">na Brasoftware
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3189:  Pelo correio expresso o frete custa próximo_  de US$  50. 
+</text>
+                <arg f="mnr" n="m">Pelo correio expresso
+</arg>
+                <arg f="" n="1">o frete
+</arg>
+                <rel f="">custa</rel>
+                <arg f="" n="2">próximo_  de US$  50
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3043:  A propaganda eleitoral nas redes de TV custou ao uruguaio mais_  de US$  14 milhões(  cerca_  de US$  7,  00 por cada eleitor) . 
+</text>
+                <arg f="" n="1">A propaganda eleitoral nas redes de TV
+</arg>
+                <rel f="">custou</rel>
+                <arg f="" n="3">ao uruguaio
+</arg>
+                <arg f="" n="2">mais_  de US$  14 milhões(  cerca_  de US$  7,  00 por cada eleitor) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2654:  Cada um dos produtos deve custar US$  329. 
+</text>
+                <arg f="" n="1">Cada um dos produtos
+</arg>
+                <rel f="">custar</rel>
+                <arg f="" n="2">US$  329
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2235:  O estudo custou US$  400 mil. 
+</text>
+                <arg f="" n="1">O estudo
+</arg>
+                <rel f="">custou</rel>
+                <arg f="" n="2">US$  400 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1858:  O fracasso das medidas antiinflacionárias poderia lhe custar o acesso ao Planalto. 
+</text>
+                <arg f="" n="1">O fracasso das medidas antiinflacionárias
+</arg>
+                <arg f="" n="3">lhe
+</arg>
+                <rel f="">custar</rel>
+                <arg f="" n="2">o acesso ao Planalto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1127:  Cada curso dura dois sábados,  num total de 14 horas,  e custa US$  250. 
+</text>
+                <arg f="" n="1">Cada curso
+</arg>
+                <rel f="">custa</rel>
+                <arg f="" n="2">US$  250
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s910:  A Localiza tem diária promocional de R$  41 sendo_  que cada quilômetro rodado custa mais R$  0,  26. 
+</text>
+                <arg f="" n="1">cada quilômetro rodado
+</arg>
+                <rel f="">custa</rel>
+                <arg f="" n="2">mais R$  0,  26
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s49:  O top de linha custa US$  30 mil. 
+</text>
+                <arg f="" n="1">O top de linha
+</arg>
+                <rel f="">custa</rel>
+                <arg f="" n="2">US$  30 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s47:  Herbert_  Berger,  diretor-  superintendente da empresa,  diz que o Charade « se aproxima do Honda_  Civic em tamanho e custa bem menos ». 
+</text>
+                <arg f="" n="1">o Charade
+</arg>
+                <rel f="">custa</rel>
+                <arg f="" n="2">bem menos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

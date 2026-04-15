@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fugir">
+        <note />
+    <roleset framnet="flee.01" id="fugir.01" name="escapar; ir para longe de" vncls="51.1-1">
+            <roles>
+                <role descr="fleer, runner" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="fled--person or place" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3445:  Aparentemente ele quebrou o pescoço quando tentava fugir do fogo cruzado. 
+</text>
+                <rel f="">fugir</rel>
+                <arg f="" n="1">do fogo cruzado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2700:  Trata-  se de uma estratégia de inflação reprimida,  pronta para rebelar-  se pela via da explosão cambial no momento em que os agentes econômicos se convencem de que não é sustentável,  e em que os capitais começam a fugir. 
+</text>
+                <arg f="" n="0">os capitais
+</arg>
+                <rel f="">fugir</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2100:  Os outros 13 presos não tentaram fugir. 
+</text>
+                <arg f="" n="0">Os outros 13 presos
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">fugir</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1112:  « Procure saber se você se entrega,  ou se você foge de suas emoções. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">foge</rel>
+                <arg f="" n="1">de suas emoções
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s707:  Em 90 ele não pôde fugir. 
+</text>
+                <arg f="tmp" n="m">Em 90
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">fugir</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s705:  « Sempre fugia da raia. 
+</text>
+                <arg f="tmp" n="m">Sempre
+</arg>
+                <rel f="">fugia</rel>
+                <arg f="" n="1">da raia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

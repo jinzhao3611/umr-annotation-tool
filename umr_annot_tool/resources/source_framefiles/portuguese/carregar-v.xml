@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="carregar">
+        <note />
+    <roleset framnet="carry.01" id="carregar.01" name="levar consigo" vncls="11.4 54.2 54.3">
+            <roles>
+                <role descr="carrier" n="0">
+                    <vnrole vncls="11.4" vntheta="Agent" />
+                    <vnrole vncls="54.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing carried" n="1">
+                    <vnrole vncls="11.4" vntheta="Theme" />
+                    <vnrole vncls="54.2" vntheta="Attribute" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="instrument" n="2" />
+                <role descr="'with' reflecting back on arg0" n="3" />
+                <role descr="benefactive (predicted but not seen)" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4140:  O Emeraude não carrega armamento nuclear. 
+</text>
+                <arg f="" n="0">O Emeraude
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">carrega</rel>
+                <arg f="" n="1">armamento nuclear
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3236:  O Banespa carrega US$  8,  1 bilhões de créditos do setor público. 
+</text>
+                <arg f="" n="0">O Banespa
+</arg>
+                <rel f="">carrega</rel>
+                <arg f="" n="1">US$  8,  1 bilhões de créditos do setor público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1741:  Carmelita_  Aralse_  Teb,  89,  moradora do oitavo andar,  passou mal com a fumaça e teve de ser carregada pelas escadas até uma ambulância. 
+</text>
+                <arg f="" n="1">Carmelita_  Aralse_  Teb,  89,  moradora do oitavo andar, 
+</arg>
+                <rel f="">carregada</rel>
+                <arg f="loc" n="m">pelas escadas
+</arg>
+                <arg f="loc" n="m">até uma ambulância
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

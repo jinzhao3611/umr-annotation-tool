@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="denegrir">
+        <note />
+    <roleset framnet="denigrate.01" id="denegrir.01" name="sujar; macular" vncls="33">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="subject" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="grounds, reason" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1843:  Quércia disse que tem sido vítima de uma « campanha sórdida » com o objetivo de « denegrir » sua campanha. 
+</text>
+                <rel f="">denegrir</rel>
+                <arg f="" n="1">sua campanha
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

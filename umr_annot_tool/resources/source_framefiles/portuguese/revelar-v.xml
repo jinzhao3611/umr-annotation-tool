@@ -1,0 +1,316 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="revelar">
+        <note />
+    <roleset framnet="reveal.01" id="revelar.01" name="mostrar; tornar público" vncls="">
+            <roles>
+                <role descr="speaker, revealer" n="0" />
+                <role descr="utterance, truth condition" n="1" />
+                <role descr="hearer" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4213:  Além_  de Mauro_  Salles que surpreendeu a galera ao revelar seu côté de fotógrafo profissional no ínico da carreira,  o foco principal do encontro foi a mulher de J.  R.  Duran,  Alexandra_  Brochen. 
+</text>
+                <rel f="">revelar</rel>
+                <arg f="" n="1">seu côté de fotógrafo profissional
+</arg>
+                <arg f="tmp" n="m">no ínico da carreira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4206:  O cineasta italiano Franco_  Zefirelli revelou que,  para iludir o serviço militar durante o período fascista,  se tornou um partisan e acabou matando um soldado alemão. 
+</text>
+                <arg f="" n="0">O cineasta italiano Franco_  Zefirelli
+</arg>
+                <rel f="">revelou</rel>
+                <arg f="" n="1">que,  para iludir o serviço militar durante o período fascista,  se tornou um partisan e acabou matando um soldado alemão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3687:  A federação das pequenas e médias empresas revelou numa pesquisa que seus filiados estão próximos do pânico em_  relação_  ﻿à situação econômica. 
+</text>
+                <arg f="" n="0">A federação das pequenas e médias empresas
+</arg>
+                <rel f="">revelou</rel>
+                <arg f="loc" n="m">numa pesquisa
+</arg>
+                <arg f="" n="1">que seus filiados estão próximos do pânico em_  relação_  ﻿à situação econômica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3685:  Os dados detalhados sobre o desempenho do PIB entre outubro e dezembro não serão revelados até março. 
+</text>
+                <arg f="" n="1">Os dados detalhados sobre o desempenho do PIB entre outubro e dezembro
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">revelados</rel>
+                <arg f="tmp" n="m">até março
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2778:  Os exemplos de Simon e Brizola revelam que a precipitação e a busca de resultados políticos imediatos constróem o pior caminho para o desenvolvimento e são vícios que o curso da história não tarda a desnudar. 
+</text>
+                <arg f="" n="0">Os exemplos de Simon e Brizola
+</arg>
+                <rel f="">revelam</rel>
+                <arg f="" n="1">que a precipitação e a busca de resultados políticos imediatos constróem o pior caminho para o desenvolvimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2717:  A atacante Ana_  Moser(  26 anos,  1,  85 m e 70 kg) ,  revelou ontem que,  depois do vôlei,  sua segunda paixão é o futebol. 
+</text>
+                <arg f="" n="0">A atacante Ana_  Moser(  26 anos,  1,  85 m e 70 kg) 
+</arg>
+                <rel f="">revelou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">que,  depois do vôlei,  sua segunda paixão é o futebol
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2660:  Eu tenho um projeto,  que vou revelar aqui pela_  primeira_  vez,  que tem a assinatura de um dos homens mais inteligentes e criativos do mundo,  Eliezer_  Batista. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">revelar</rel>
+                <arg f="loc" n="m">aqui
+</arg>
+                <arg f="tmp" n="m">pela_  primeira_  vez
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2525:  Apenas o goleiro Gilmar(  Flamengo)  revelou o seu voto para as eleições presidenciais deste ano. 
+</text>
+                <arg f="" n="0">Apenas o goleiro Gilmar(  Flamengo) 
+</arg>
+                <rel f="">revelou</rel>
+                <arg f="" n="1">o seu voto para as eleições presidenciais deste ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2088:  Teremos o balanço entre defesa e ataque que tanto Zagalo e Parreira defendem,  mas que o time não revela em campo. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o time
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">revela</rel>
+                <arg f="loc" n="m">em campo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1962:  Pesquisa Update,  da Câmara_  Americana,  revela que os empresários esperam queda na inflação com o real. 
+</text>
+                <arg f="" n="0">Pesquisa Update,  da Câmara_  Americana, 
+</arg>
+                <rel f="">revela</rel>
+                <arg f="" n="1">que os empresários esperam queda na inflação com o real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1840:  Esses índices revelam queda de inflação de 0,  23 ponto percentual em São_  Paulo e 0,  59 ponto percentual no Rio,  em comparação com o período anterior. 
+</text>
+                <arg f="" n="0">Esses índices
+</arg>
+                <rel f="">revelam</rel>
+                <arg f="" n="1">queda de inflação de 0,  23 ponto percentual em São_  Paulo e 0,  59 ponto percentual no Rio em comparação com o período anterior
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1596:  A incursão de Wilson_  Barros ao universo dos seres noturnos paulistanos revela um traço tipicamente brasileiro:  uma espécie de vergonha de ser brasileiro. 
+</text>
+                <arg f="" n="0">A incursão de Wilson_  Barros ao universo dos seres noturnos paulistanos
+</arg>
+                <rel f="">revela</rel>
+                <arg f="" n="1">um traço tipicamente brasileiro:  uma espécie de vergonha de ser brasileiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1594:  « Disaster_  Movie »,  de 1979,  foi uma revelação:  apesar_  da produção apertada,  esse curta-  metragem revelava um talento mais que incontestável. 
+</text>
+                <arg f="dis" n="m">apesar_  da produção apertada
+</arg>
+                <arg f="" n="0">esse curta-  metragem
+</arg>
+                <rel f="">revelava</rel>
+                <arg f="" n="1">um talento mais que incontestável
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1097:  O mal residia,  enfim,  no fato de que a política real da UDN se traduzia no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">revelasse</rel>
+                <arg f="mnr" n="m">livre de paixões partidárias
+</arg>
+                <arg f="" n="1">sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1082:  Uma pesquisa da Associação_  Nacional_  de_  Agências_  de_  Viagens(  Abav)  revelou que o setor foi incrementado 29%  em média desde a implantação do Plano_  Real. 
+</text>
+                <arg f="" n="0">Uma pesquisa da Associação_  Nacional_  de_  Agências_  de_  Viagens(  Abav) 
+</arg>
+                <rel f="">revelou</rel>
+                <arg f="" n="1">que o setor foi incrementado 29%  em média desde a implantação do Plano_  Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1044:  A frequência na entrega de mercadorias para os clientes também revela grandes diferenças entre as empresas « world_  class » e as concorrentes. 
+</text>
+                <arg f="" n="0">A frequência na entrega de mercadorias para os clientes
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">revela</rel>
+                <arg f="" n="1">grandes diferenças entre as empresas « world_  class » e as concorrentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s826:  Consulado não revela quantos barra
+</text>
+                <arg f="" n="0">Consulado
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">revela</rel>
+                <arg f="" n="1">quantos barra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s530:  Ainda_  assim,  os planos do Planalto de dedicar apoio total ao ex-  ministro Fernando_  Henrique_  Cardoso,  como esta Folha revelou na edição de ontem,  esbarram em problemas. 
+</text>
+                <arg f="dis" n="m">Ainda_  assim
+</arg>
+                <arg f="" n="1">os planos do Planalto de dedicar apoio total ao ex-  ministro Fernando_  Henrique_  Cardoso
+</arg>
+                <arg f="" n="0">esta Folha
+</arg>
+                <rel f="">revelou</rel>
+                <arg f="loc" n="m">na edição de ontem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s483:  Sem revelar o coração do plano,  Itamar rebatizou o conjunto de medidas elaboradas pela equipe econômica do ex-  ministro_  da_  Fazenda,  Fernando_  Henrique_  Cardoso,  de Plano_  Real
+</text>
+                <rel f="">revelar</rel>
+                <arg f="" n="1">o coração do plano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s428:  Esse palco,  além_  de revelar inúmeros talentos que depois se « refugiaram » na Europa,  como Sonia_  Motta,  serviu para Marilena inaugurar a fase mais fértil de sua carreira. 
+</text>
+                <rel f="">revelar</rel>
+                <arg f="" n="1">inúmeros talentos que depois se « refugiaram » na Europa,  como Sonia_  Motta, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2:  Brasília Pesquisa_  Datafolha publicada hoje revela um dado supreendente:  recusando uma postura radical,  a esmagadora maioria(  77% )  dos eleitores quer o PT participando do Governo Fernando_  Henrique_  Cardoso. 
+</text>
+                <arg f="" n="0">Pesquisa_  Datafolha publicada hoje
+</arg>
+                <rel f="">revela</rel>
+                <arg f="" n="1">um dado supreendente:  recusando uma postura radical,  a esmagadora maioria(  77% )  dos eleitores quer o PT participando do Governo Fernando_  Henrique_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="revelar-se">
+        <note />
+    <roleset framnet="reveal.01" id="revelar.02" name="incoativo de &quot;revelar&quot;: ser revelado ou tornar-se revelado" vncls="">
+            <roles>
+                <role descr="speaker, revealer" n="0" />
+                <role descr="utterance, truth condition" n="1" />
+                <role descr="hearer" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2329:  De 205 pacientes com suspeitas da doença,  47 revelaram-  se positivas neste ano. 
+</text>
+                <arg f="" n="1">De 205 pacientes com suspeitas da doença 47
+</arg>
+                <rel f="">revelaram-</rel>
+                <arg f="" n="3">positivas
+</arg>
+                <arg f="tmp" n="m">neste ano
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

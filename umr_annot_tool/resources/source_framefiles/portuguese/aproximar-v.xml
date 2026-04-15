@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aproximar">
+        <note />
+    <roleset framnet="approach.01" id="aproximar.01" name="mover-se para perto " vncls="98 51.1-2">
+            <roles>
+                <role descr="entity in motion" n="1">
+                    <vnrole vncls="98" vntheta="Agent" />
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="destination" n="2">
+                    <vnrole vncls="98" vntheta="Theme" />
+                    <vnrole vncls="51.1-2" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3860:  O deputado se aproximou. 
+</text>
+                <arg f="" n="1">O deputado
+</arg>
+                <rel f="">aproximou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3808:  Aumento no número de passes e lançamentos aproxima futebol brasileiro do praticado no Mundial dos EUA
+</text>
+                <arg f="" n="0">Aumento no número de passes e lançamentos
+</arg>
+                <rel f="">aproxima</rel>
+                <arg f="" n="1">futebol brasileiro
+</arg>
+                <arg f="" n="2">do praticado no Mundial dos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="aproximar-se">
+        <note />
+    <roleset framnet="approximate.01" id="aproximar.02" name="ser próximo ou similar a" vncls="34.2 54.4">
+            <roles>
+                <role descr="entity coming close" n="0">
+                    <vnrole vncls="34.2" vntheta="Agent" />
+                    <vnrole vncls="54.4" vntheta="Agent" />
+                </role>
+                <role descr="entity coming close to" n="1">
+                    <vnrole vncls="34.2" vntheta="Theme" />
+                    <vnrole vncls="54.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s47:  Herbert_  Berger,  diretor-  superintendente da empresa,  diz que o Charade « se aproxima do Honda_  Civic em tamanho e custa bem menos ». 
+</text>
+                <arg f="" n="0">o Charade
+</arg>
+                <rel f="">aproxima</rel>
+                <arg f="" n="2">do Honda_  Civic
+</arg>
+                <arg f="mnr" n="m">em tamanho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

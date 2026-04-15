@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="enxugar">
+        <note />
+    <roleset framnet="dry.01" id="enxugar.01" name="secar; tornar seco; tornar conciso (figurativo)" vncls="45.4">
+            <roles>
+                <role descr="entity causing unproductivity, agent" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="entity dried up" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s126:  Como a idéia de enxugar a Constituição enfrenta resistência inclusive nos partidos que apóiam o governo,  a equipe de FHC resolveu fazer as reformas por partes. 
+</text>
+                <rel f="">enxugar</rel>
+                <arg f="" n="1">a Constituição
+</arg>
+                <note>uso figurativo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

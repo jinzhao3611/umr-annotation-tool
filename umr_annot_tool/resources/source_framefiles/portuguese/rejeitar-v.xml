@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rejeitar">
+        <note />
+    <roleset framnet="reject.01" id="rejeitar.01" name="não aceitar; repudiar" vncls="29.2">
+            <roles>
+                <role descr="rejecter" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing rejected" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="3">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1513:  Cantora rejeita som'  enlatado' . 
+</text>
+                <arg f="" n="0">Cantora
+</arg>
+                <rel f="">rejeita</rel>
+                <arg f="" n="1">som'  enlatado' 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

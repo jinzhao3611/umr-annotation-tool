@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="armazenar">
+        <note />
+    <roleset framnet="store.01" id="armazenar.01" name="guardar" vncls="15.2">
+            <roles>
+                <role descr="storer" n="0">
+                    <vnrole vncls="15.2" vntheta="Agent" />
+                </role>
+                <role descr="commodity" n="1">
+                    <vnrole vncls="15.2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3718:  Os dados são do SCI(  Serviço_  de_  Segurança_  ao_  Crédito_  e_  Informações)  que armazena informações comerciais sobre 1,  6 milhão de empresas no Brasil. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">armazena</rel>
+                <arg f="" n="1">informações comerciais sobre 1,  6 milhão de empresas
+</arg>
+                <arg f="loc" n="m">no Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

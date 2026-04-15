@@ -1,0 +1,512 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ver">
+        <note />
+    <roleset framnet="see.01" id="ver.01" name="enxergar; visualizar; perceber com o sentido da visão" vncls="29.2 30.1">
+            <roles>
+                <role descr="viewer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="thing viewed" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4154:  bastidores dos museus- -  O trabalho feito pelos fotógrafos Eduardo_  Castanho,  Saul_  Queiroz,  Rogério_  Voltan,  Ricardo_  Hantzchel,  Fausto_  Chermont e Eliana_  Lopes retrata o_  que as pessoas não vêem ao visitar um museu. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <arg f="" n="0">as pessoas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">vêem</rel>
+                <arg f="tmp" n="m">ao visitar um museu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4114:  Claro sem descuidar de tudo mais,  mas vendo com clareza a questão das prioridades »,  declara Brizola. 
+</text>
+                <rel f="">vendo</rel>
+                <arg f="mnr" n="m">com clareza
+</arg>
+                <arg f="" n="1">a questão das prioridades
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4097:  Assista ao filme de_  novo:  você não vai me ver completamente nua a não ser numa cena,  no final do strip_  tease. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">ver</rel>
+                <arg f="" n="2">completamente nua
+</arg>
+                <arg f="adv" n="m">a não ser numa cena,  no final do strip_  tease
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3992:  Vi,  num jogo quase inacreditável da Copa,  o Eire jogar futebol muito melhor do_  que a Itália. 
+</text>
+                <rel f="">Vi</rel>
+                <arg f="loc" n="m">num jogo quase inacreditável da Copa
+</arg>
+                <arg f="" n="1">o Eire jogar futebol muito melhor do_  que a Itália
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3950:  A possibilidade da gravidez pós-  menopausa e o uso de óvulos de fetos abortados(  veja texto ﻿à pág.  6)  são exemplos mais gritantes. 
+</text>
+                <rel f="">veja</rel>
+                <arg f="" n="1">texto ﻿à pág.  6
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3859:  Encerrada a festa,  Maluly viu o rapaz esperando. 
+</text>
+                <arg f="tmp" n="m">Encerrada a festa
+</arg>
+                <arg f="" n="0">Maluly
+</arg>
+                <rel f="">viu</rel>
+                <arg f="" n="1">o rapaz esperando
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3729:  Veja outras áreas em alta
+</text>
+                <rel f="">Veja</rel>
+                <arg f="" n="1">outras áreas em alta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3646:  A solução que deram,  obter equilíbrio entre figuração e abstração em que a profundidade não é nem clássica(  perspectiva)  nem modernista(  planificada) ,  mas sugerida por jogos cromáticos semilivres às_  vezes livres demais,  como você vai ver. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">ver</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3485:  O espantoso é que fora_  da polícia também se viu o « mal » no incidente de Cavalera. 
+</text>
+                <arg f="loc" n="m">fora_  da polícia
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">viu</rel>
+                <arg f="" n="1">o « mal »
+</arg>
+                <arg f="loc" n="m">no incidente de Cavalera
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3404:  Segundo o coronel,  eles viram o armamento da quadrilha ser retirado de um dos prédios num Gol. 
+</text>
+                <arg f="dis" n="m">Segundo o coronel
+</arg>
+                <arg f="" n="0">eles
+</arg>
+                <rel f="">viram</rel>
+                <arg f="" n="1">o armamento da quadrilha ser retirado de um dos prédios num Gol
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3380:  « Um monte de artistas vai querer ver os concertos »,  diz Ohtake. 
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">os concertos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3362:  Pesquisas comprovam que quando o motorista vê a fiscalização ele reduz a velocidade por pelo_  menos três quilômetros »,  diz Lehfeld. 
+</text>
+                <arg f="" n="0">o motorista
+</arg>
+                <rel f="">vê</rel>
+                <arg f="" n="1">a fiscalização
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3279:  O empresário disse que pretende ver também outros jogadores brasileiros,  entre eles Cafu,  do São_  Paulo,  Mirandinha,  do Paysandu,  e Claudinho,  da Ponte_  Preta. 
+</text>
+                <rel f="">ver</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">outros jogadores brasileiros,  entre eles Cafu,  do São_  Paulo,  Mirandinha,  do Paysandu,  e Claudinho,  da Ponte_  Preta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3137:  « Quem tiver qualquer dúvida sobre nossa atuação,  basta ver o teipe.  »
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">o teipe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3036:  Mais_  uma_  vez,  se vê que a deseducação é o problema que mais sai caro ao Brasil. 
+</text>
+                <arg f="tmp" n="m">Mais_  uma_  vez
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">vê</rel>
+                <arg f="" n="1">que a deseducação é o problema que mais sai caro ao Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3007:  Pela TV você vê. 
+</text>
+                <arg f="mnr" n="m">Pela TV
+</arg>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">vê</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2946:  Paradoxalmente,  é por aí que se podem ver as virtudes de Figgis. 
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">as virtudes de Figgis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2868:  Em várias ocasiões eu me vi,  como anotei em meu diário,  ﻿à beira das lágrimas. 
+</text>
+                <arg f="tmp" n="m">Em várias ocasiões
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">vi</rel>
+                <arg f="adv" n="m">como anotei em meu diário
+</arg>
+                <arg f="" n="2">﻿à beira das lágrimas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2809:  Enterrou as previsões mais do_  que otimistas,  e deixou ver quanto é viciado o noticiário esportivo. 
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">quanto é viciado o noticiário esportivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2808:  Senna,  todo mundo viu,  rodou quando estava em segundo lugar e com poucas chances de recuperar o primeiro. 
+</text>
+                <arg f="" n="0">todo mundo
+</arg>
+                <rel f="">viu</rel>
+                <arg f="" n="1">Senna quando estava em segundo lugar e com poucas chances de recuperar o primeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2470:  Fã do técnico são-  paulino Telê_  Santana(  « é muito modesto ») ,  Bianchi vê o time paulista tão forte como em 1992 e 93. 
+</text>
+                <arg f="prd" n="m">Fã do técnico são-  paulino Telê_  Santana « é muito modesto »
+</arg>
+                <arg f="" n="0">Bianchi
+</arg>
+                <rel f="">vê</rel>
+                <arg f="" n="1">o time paulista
+</arg>
+                <arg f="" n="2">tão forte como em 1992 e 93
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2452:  Pois experimente ir a um show de música,  por_  exemplo,  ofender Tim_  Maia ou João_  Gilberto na boca do palco,  e você verá que a atitude de Edmundo foi,  no mínimo,  compreensível. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">verá</rel>
+                <arg f="" n="1">que a atitude de Edmundo foi,  no mínimo,  compreensível
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2440:  Está visto que nem o conjunto,  nem qualquer outra frase dele,  dá ﻿à frase negada por Fernando_  Henrique o sentido que ela tem por_  si mesma. 
+</text>
+                <rel f="">visto</rel>
+                <arg f="" n="1">que nem o conjunto,  nem qualquer outra frase dele,  dá ﻿à frase negada por Fernando_  Henrique o sentido que ela tem por_  si mesma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2372:  Seria irônico ver os chefes das « organizadas » tendo ao_  fundo a seguinte pregação: 
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">os chefes das « organizadas » tendo ao_  fundo a seguinte pregação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2340:  No final é feita uma auditoria para ver se a auto-  avaliação feita pela fábrica corresponde ﻿à realidade. 
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">se a auto-  avaliação feita pela fábrica corresponde ﻿à realidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2339:  10h46- -  a primeira pessoa a ver o caixão é Márcio_  Putnoki,  13 ; o estudante tinha chegado às 15h de anteontem ; ao passar pelo hall monumental,  Márcio chora ;
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">o caixão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2136:  O presidente do PMDB,  Djalma_  Falcão,  vê a possibilidade da aliança dos colloridos e Lessa com pragmatismo: 
+</text>
+                <arg f="" n="0">O presidente do PMDB,  Djalma_  Falcão, 
+</arg>
+                <rel f="">vê</rel>
+                <arg f="" n="1">a possibilidade da aliança dos colloridos e Lessa
+</arg>
+                <arg f="mnr" n="m">com pragmatismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2072:  Sua idéia é fazer na 22ª Bienal uma instalação com bambus no segundo andar que seja vista por_  cima,  do terceiro,  « com toda sua cor e padrão ». 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vista</rel>
+                <arg f="mnr" n="m">por_  cima
+</arg>
+                <arg f="loc" n="m">do terceiro,  « com toda sua cor e padrão »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1743:  O comerciante Albano_  Miguel_  Ferreira,  37,  disse que estava na área de serviço de seu apartamento,  no primeiro andar,  e viu o fogo começar num barracão nos fundos da loja. 
+</text>
+                <arg f="" n="0">O comerciante Albano_  Miguel_  Ferreira,  37
+</arg>
+                <rel f="">viu</rel>
+                <arg f="" n="1">o fogo começar num barracão nos fundos da loja
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1642:  Nunca vi um partido render-  se tão rápida e incondicionalmente como o PT está fazendo. 
+</text>
+                <arg f="tmp" n="m">Nunca
+</arg>
+                <rel f="">vi</rel>
+                <arg f="" n="1">um partido render-  se tão rápida e incondicionalmente como o PT está fazendo. 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1619:  Veja como é a legislação
+</text>
+                <rel f="">Veja</rel>
+                <arg f="" n="1">como é a legislação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1414:  E sabe quem eu ainda não vi? 
+</text>
+                <arg f="" n="1">quem
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">vi</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s770:  O livro está em toda parte e eu sou daqueles que não conseguem ver a imagem noutra dimensão. 
+</text>
+                <rel f="">ver</rel>
+                <arg f="" n="1">a imagem
+</arg>
+                <arg f="mnr" n="m">noutra dimensão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s743:  Morando há seis anos ali,  Tatiana disse que nunca viu um período tão violento. 
+</text>
+                <arg f="" n="0">Tatiana
+</arg>
+                <arg f="tmp" n="m">nunca
+</arg>
+                <rel f="">viu</rel>
+                <arg f="" n="1">um período tão violento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s658:  Segundo Milton_  Julio_  Zanluqui,  da Paraklin_  Pára-  raios,  entre os tipos mais comuns(  veja exemplos ao lado)  estão o sistema de gaiola(  Gaiola_  de_  Faraday) ,  composto de seis partes principais:  captador do tipo terminal aéreo,  cabo de cobre,  suportes isoladores,  tubo de proteção,  malha de aterramento e conector de medição. 
+</text>
+                <rel f="">veja</rel>
+                <arg f="" n="1">exemplos
+</arg>
+                <arg f="loc" n="m">ao lado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s246:  A banda foi cortejada por vários selos multinacionais,  que viam nela um possível novo Nirvana. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">viam</rel>
+                <arg f="loc" n="m">nela
+</arg>
+                <arg f="" n="1">um possível novo Nirvana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s139:  O Mercado Americano para desenhistas é o tema da oficina com David_  Campitti(  veja trabalho dele ao lado) ,  roteirista de histórias do Super-  Homem e criador de vários personagens. 
+</text>
+                <rel f="">veja</rel>
+                <arg f="" n="1">trabalho dele
+</arg>
+                <arg f="loc" n="m">ao lado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s50:  A mudança do local de jogo que deve acontecer também na partida contra o Corinthians,  no próximo dia 17 foi determinada pela CBF,  que não viu garantias de segurança no estádio santista. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">viu</rel>
+                <arg f="" n="1">garantias de segurança
+</arg>
+                <arg f="loc" n="m">no estádio santista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s9:  Desde o último dia 13,  « Confissões_  de_  Adolescente » pode ser vista pelos teens portugueses. 
+</text>
+                <arg f="tmp" n="m">Desde o último dia 13
+</arg>
+                <arg f="" n="1">Confissões_  de_  Adolescente
+</arg>
+                <rel f="">vista</rel>
+                <arg f="" n="0">pelos teens portugueses
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

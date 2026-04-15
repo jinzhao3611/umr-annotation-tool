@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="gostar">
+        <note />
+    <roleset framnet="like.01" id="gostar.01" name="apreciar" vncls="31.2">
+            <roles>
+                <role descr="liker" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="object of affection" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4054:  « Gostei da sua posição sobre a religião. 
+</text>
+                <rel f="">Gostei</rel>
+                <arg f="" n="1">da sua posição sobre a religião
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3972:  Gostamos da idéia,  resolvemos pegar velhos sucessos e fazer neste formato. 
+</text>
+                <rel f="">Gostamos</rel>
+                <arg f="" n="1">da idéia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3820:  Ao_  contrário,  nesta situação econômica de extrema gravidade,  todos gostariam de ajudar o país. 
+</text>
+                <arg f="dis" n="m">Ao_  contrário
+</arg>
+                <arg f="loc" n="m">nesta situação econômica de extrema gravidade
+</arg>
+                <arg f="" n="0">todos
+</arg>
+                <rel f="">gostariam</rel>
+                <arg f="" n="1">de ajudar o país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3505:  Como sua musa Iris gosta do tema,  Silvio_  Santos vai agora todos os weekends ao teatro. 
+</text>
+                <arg f="" n="0">sua musa Iris
+</arg>
+                <rel f="">gosta</rel>
+                <arg f="" n="1">do tema
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3226:  E ele gostava de Roosevelt e detestava os nazistas. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">gostava</rel>
+                <arg f="" n="1">de Roosevelt
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2718:  « Quando era menina gostava muito de jogar futebol com meu irmão »,  disse a jogadora,  que,  ao_  contrário_  do vôlei,  onde atua como atacante,  prefere jogar como quarto-  zagueiro no futebol. 
+</text>
+                <arg f="tmp" n="m">Quando era menina
+</arg>
+                <rel f="">gostava</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="1">de jogar futebol com meu irmão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2543:  Quando menino,  gostava de estudar e não queria ser de circo,  como seus pais. 
+</text>
+                <arg f="tmp" n="m">Quando menino
+</arg>
+                <rel f="">gostava</rel>
+                <arg f="" n="1">de estudar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2537:  Arrelia não gostava de folia
+</text>
+                <arg f="" n="0">Arrelia
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">gostava</rel>
+                <arg f="" n="1">de folia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2057:  E eu gostaria de saber como fazer para adquirir a carteirinha de estudante. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">gostaria</rel>
+                <arg f="" n="1">de saber como fazer para adquirir a carteirinha de estudante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2055:  Primeiramente,  gostaria de dizer que o vosso caderno é « D+  »! ! ! 
+</text>
+                <arg f="tmp" n="m">Primeiramente
+</arg>
+                <rel f="">gostaria</rel>
+                <arg f="" n="1">de dizer que o vosso caderno é « D+  »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1832:  Taí,  gostei da idéia! 
+</text>
+                <arg f="dis" n="m">Taí
+</arg>
+                <rel f="">gostei</rel>
+                <arg f="" n="1">da idéia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1086:  « Gostamos de gente que cala a boca e faz seu trabalho,  como Ronaldo. 
+</text>
+                <rel f="">Gostamos</rel>
+                <arg f="" n="1">de gente que cala a boca e faz seu trabalho,  como Ronaldo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1056:  Quem gosta de comida italiana,  deve experimentar o Christo'  s(  Lexington,  quase esquina com a rua_  49) . 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">gosta</rel>
+                <arg f="" n="1">de comida italiana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1018:  Disse que FHC é incompetente administrativamente e que Lula é inexperiente e que não gosta de trabalhar. 
+</text>
+                <arg f="" n="0">Lula
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">gosta</rel>
+                <arg f="" n="1">de trabalhar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s591:  Exercendo o direito de não estar a_  favor_  ou_  contra ninguém,  gostaria aqui de remar contra a maré e pasmem manifestar meu otimismo. 
+</text>
+                <arg f="adv" n="m">Exercendo o direito de não estar a_  favor_  ou_  contra ninguém
+</arg>
+                <rel f="">gostaria</rel>
+                <arg f="loc" n="m">aqui
+</arg>
+                <arg f="" n="1">de remar contra a maré e manifestar meu otimismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s281:  Desde cedo fui orador da turma,  sempre gostei de declamar. 
+</text>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">gostei</rel>
+                <arg f="" n="1">de declamar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

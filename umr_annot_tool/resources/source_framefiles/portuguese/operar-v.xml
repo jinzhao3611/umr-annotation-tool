@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="operar">
+        <note />
+        <note />
+    <roleset framnet="operate.101" id="operar.01" name="fazer ou submeter-se a cirurgia" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4189:  A torcida da « Senhora » se conforta com a melhora de Roberto_  Baggio,  que não terá de operar o joelho. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">operar</rel>
+                <arg f="" n="2">o joelho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="operate.01" id="operar.02" name="trabalhar" vncls="45.4">
+            <roles>
+                <role descr="agent, operator" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing operated" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="explicit patient (thing operated on)" n="2" />
+                <role descr="explicit role" n="3" />
+                <role descr="explicit instrument (with or on, ususally)" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3344:  Uma nova divisão de serviços,  batizada de Kis,  opera na administração de copiadoras e outros equipamentos de imagem para grandes empresas. 
+</text>
+                <arg f="" n="0">Uma nova divisão de serviços,  batizada de Kis, 
+</arg>
+                <rel f="">opera</rel>
+                <arg f="" n="1">na administração de copiadoras e outros equipamentos de imagem para grandes empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1148:  O índice Bovespa operou em alta durante toda a manhã e início da tarde,  mas fechou em baixa de 0,  34% ,  considerando as medidas do CMN como restritivas ao funcionamento do sistema financeiro. 
+</text>
+                <arg f="" n="1">O índice Bovespa
+</arg>
+                <rel f="">operou</rel>
+                <arg f="mnr" n="m">em alta
+</arg>
+                <arg f="tmp" n="m">durante toda a manhã e início da tarde
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s447:  A MIT operava no mercado desde junho passado. 
+</text>
+                <arg f="" n="0">A MIT
+</arg>
+                <rel f="">operava</rel>
+                <arg f="loc" n="m">no mercado
+</arg>
+                <arg f="tmp" n="m">desde junho passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s185:  Isso vai facilitar as atividades de franqueadores que precisam importar produtos para distribuir-  los a seus franqueados que operam noutro deles. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">operam</rel>
+                <arg f="" n="2">noutro deles
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

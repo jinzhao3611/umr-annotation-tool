@@ -1,0 +1,626 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ir">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="go.02" id="ir.01" name="deslocar-se (movimento auto dirigido)" vncls="51.1-2">
+            <roles>
+                <role descr="goer" n="0">
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="journey" n="1" />
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4">
+                    <vnrole vncls="51.1-2" vntheta="Location" />
+                </role>
+                <role descr="direction (usually up or down" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4158:  O mais perigoso é na região da Serra_  das_  Concha,  entre o km 129 e o km 162,  logo após Tatuí,  para quem vai para o interior. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="4">para o interior
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3999:  Quem quiser,  vai em excursão até o resort local,  Casa_  de_  Campo. 
+</text>
+                <arg f="" n="0">Quem quiser
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="1">em excursão
+</arg>
+                <arg f="" n="4">até o resort local,  Casa_  de_  Campo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3923:  Um jogador que estava nos planos de Pepe era o meia Carlos_  Alberto_  Dias,  que acabou indo para o Flamengo,  já_  que a diretoria do Santos vetou o seu nome. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">indo</rel>
+                <arg f="" n="4">para o Flamengo
+</arg>
+                <arg f="cau" n="m">já_  que a diretoria do Santos vetou o seu nome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3862:  Príncipe Charles vai a inauguração
+</text>
+                <arg f="" n="0">Príncipe Charles
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="4">a inauguração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3657:  « Só tem campanha nos lugares em que eu e o Aloizio vamos.  »
+</text>
+                <arg f="" n="4">em que
+</arg>
+                <arg f="" n="0">eu e o Aloizio
+</arg>
+                <rel f="">vamos</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3555:  O caso passou a ser investigado porque pessoas que foram ao velório de Pereira teriam dito que o cadáver suava e teve sua pele arrepiada dentro_  do caixão. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">foram</rel>
+                <arg f="" n="4">ao velório de Pereira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3505:  Como sua musa Iris gosta do tema,  Silvio_  Santos vai agora todos os weekends ao teatro. 
+</text>
+                <arg f="cau" n="m">Como sua musa Iris gosta do tema
+</arg>
+                <arg f="" n="0">Silvio_  Santos
+</arg>
+                <rel f="">vai</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="tmp" n="m">todos os weekends
+</arg>
+                <arg f="" n="4">ao teatro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3499:  O jogador chegou no clube há dez meses e,  em novembro,  foi para a equipe de juniores. 
+</text>
+                <arg f="" n="0">O jogador
+</arg>
+                <arg f="tmp" n="m">em novembro
+</arg>
+                <rel f="">foi</rel>
+                <arg f="" n="4">para a equipe de juniores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2966:  Quem é_  que vai,  então? 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">vai</rel>
+                <arg f="dis" n="m">então
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2676:  « Ninguém,  por mais criança que seja,  pode ir para o estádio com uma arma. 
+</text>
+                <arg f="" n="0">Ninguém,  por mais criança que seja, 
+</arg>
+                <rel f="">ir</rel>
+                <arg f="" n="4">para o estádio
+</arg>
+                <arg f="mnr" n="m">com uma arma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2354:  Também vai ﻿à livraria Barnes_  and_  Nobles,  em Nova_  York. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="4">﻿à livraria Barnes_  and_  Nobles
+</arg>
+                <arg f="loc" n="m">em Nova_  York
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2353:  Quando vai aos EUA,  ele não se limita a comprar blazers caros. 
+</text>
+                <rel f="">vai</rel>
+                <arg f="" n="4">aos EUA
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2064:  Mauro_  Silva diz que seria'  um desgosto'  ir para reserva ; para Zagalo,  seleção de 82 venceria se jogasse como a de 94
+</text>
+                <rel f="">ir</rel>
+                <arg f="" n="4">para reserva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1867:  Iam aos bailes no Automóvel_  Clube e reparavam nas poucas donzelas que ousavam frequentar os cafés. 
+</text>
+                <rel f="">Iam</rel>
+                <arg f="" n="4">aos bailes
+</arg>
+                <arg f="loc" n="m">no Automóvel_  Clube
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1723:  O turismo de pesca ainda atrai 75%  dos visitantes que vão ao Mato_  Grosso_  do_  Sul. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">vão</rel>
+                <arg f="" n="4">ao Mato_  Grosso_  do_  Sul
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1695:  Os policiais foram a uma casa,  indicada pelas duas mulheres,  onde estariam outros integrantes da quadrilha,  mas nada foi encontrado ali. 
+</text>
+                <arg f="" n="0">Os policiais
+</arg>
+                <rel f="">foram</rel>
+                <arg f="" n="4">a uma casa,  indicada pelas duas mulheres,  onde estariam outros integrantes da quadrilha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1166:  Ontem,  ela foi ao aeroporto e se disse contente por tê-  lo « de_  volta ao colo ». 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">foi</rel>
+                <arg f="" n="4">ao aeroporto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1101:  Embora já estejam com as chaves do imóvel novo,  só devem ir para lá em fevereiro. 
+</text>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">ir</rel>
+                <arg f="" n="4">para lá
+</arg>
+                <arg f="tmp" n="m">em fevereiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1088:  O tricolor,  após tantas decepções na temporada,  vai às finais da Conmebol,  caça-  níqueis tão inexpressivo que o próprio São_  Paulo inscreveu apenas jogadores jovens,  que se denominaram Leões,  ao_  invés_  do tradicional Expressinho. 
+</text>
+                <arg f="" n="0">O tricolor
+</arg>
+                <arg f="tmp" n="m">após tantas decepções na temporada
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="4">às finais da Conmebol,  caça-  níqueis tão inexpressivo que o próprio São_  Paulo inscreveu apenas jogadores jovens,  que se denominaram Leões,  ao_  invés_  do tradicional Expressinho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1054:  Uma parada no Boathouse_  Cafe(  East_  72 com a Park_  Drive_  North)  pode ser uma boa idéia para quem está indo ao Metropolitan pelo Central_  Park. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">indo</rel>
+                <arg f="" n="4">ao Metropolitan
+</arg>
+                <arg f="dir" n="m">pelo Central_  Park
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s821:  A a tarde,  vai a Belo_  Horizonte e visita o jornal « O_  Estado_  de_  Minas » em companhia de Hélio_  Costa,  candidato do PP ao governo do Estado. 
+</text>
+                <arg f="tmp" n="m">A a tarde
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="4">a Belo_  Horizonte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s548:  Junto_  com seu guapo Luiz_  Zerbini,  foi até Muir_  Woods um bosque nas imediações da cidade,  onde só queria era abraçar árvores de preferência,  enormes sequóias. 
+</text>
+                <arg f="mnr" n="m">Junto_  com seu guapo Luiz_  Zerbini
+</arg>
+                <rel f="">foi</rel>
+                <arg f="" n="4">até Muir_  Woods um bosque nas imediações da cidade,  onde só queria era abraçar árvores de preferência,  enormes sequóias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s495:  Ir a uma feira livre serve de aula para os principiantes aprenderem a comprar frutas,  legumes e verduras mais baratos e de melhor qualidade. 
+</text>
+                <rel f="">Ir</rel>
+                <arg f="" n="4">a uma feira livre
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s311:  Na prática,  os que iriam constituir o cerne e a base do partido iam mais longe:  condenavam o autoritarismo,  o oportunismo,  o clientelismo e o fisiologismo. 
+</text>
+                <arg f="adv" n="m">Na prática
+</arg>
+                <arg f="" n="0">os que iriam constituir o cerne e a base do partido
+</arg>
+                <rel f="">iam</rel>
+                <arg f="ext" n="m">mais longe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s220:  Com medo de perder poderes,  Modiano chamou Mourão e,  numa atitude mesquinha,  comunicou-  lhe que,  como o financiamento do projeto seria bancado pelo BNDES,  ele iria para lá,  mas na qualidade de representante do banco. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">iria</rel>
+                <arg f="" n="4">para lá
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4091:  O prefeito de Juazeiro,  Manoel_  Salviano(  PSDB) ,  disse que qualquer funcionário que tenha participado da recepção « foi espontaneamente,  sem nenhuma pressão da prefeitura ». 
+</text>
+                <arg f="" n="1">qualquer funcionário que tenha participado da recepção
+</arg>
+                <rel f="">foi</rel>
+                <arg f="mnr" n="m">espontaneamente
+</arg>
+                <arg f="mnr" n="m">sem nenhuma pressão da prefeitura
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.01" id="ir.03" name="movimento" vncls="47.7 51.1-2">
+            <roles>
+                <role descr="entity in motion/goer" n="1">
+                    <vnrole vncls="47.7" vntheta="Theme" />
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="extent" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point, end state of arg1" n="4" />
+                <role descr="medium" n="M" />
+                <role descr="direction (usually up or down)" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3239:  Projeção vai a 3,  72%  brutos
+</text>
+                <arg f="" n="1">Projeção
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="4">a 3,  72%  brutos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1730:  Os pacotes,  com pensão completa,  incluindo passeios,  vão de US$  150(  CR$  68,  8 mil) ,  dois dias,  a US$  300(  CR$  137,  7 mil) ,  cinco dias. 
+</text>
+                <arg f="" n="1">Os pacotes,  com pensão completa,  incluindo passeios, 
+</arg>
+                <rel f="">vão</rel>
+                <arg f="" n="3">de US$  150(  CR$  68,  8 mil) ,  dois dias
+</arg>
+                <arg f="" n="4">a US$  300(  CR$  137,  7 mil) ,  cinco dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1582:  A corrupção institucional brasileira vai muito além_  de ratos gordos como João_  Alves. 
+</text>
+                <arg f="" n="1">A corrupção institucional brasileira
+</arg>
+                <rel f="">vai</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="4">além_  de ratos gordos como João_  Alves
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.15" id="ir.04" name="ocorrer, acontecer" vncls="55.1">
+            <roles>
+                <role descr="thing/entity continuing" n="1">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3147:  Oficina de Livros- -  A Oficina_  de_  Artes_  do_  Livro oferece 8 vagas para o curso « Papel_  Artesanal: _  Processamento_  de_  Fibras_  Vegetais »,  que vai de 5 a 14 de abril. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vai</rel>
+                <arg f="tmp" n="m">de 5 a 14 de abril
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2347:  A primeira etapa do programa começa hoje e vai até o dia 2 em João_  Pessoa(  PB) . 
+</text>
+                <arg f="" n="1">A primeira etapa do programa
+</arg>
+                <rel f="">vai</rel>
+                <arg f="tmp" n="m">até o dia 2
+</arg>
+                <arg f="loc" n="m">em João_  Pessoa(  PB) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1883:  Claro,  é a única que lhe dá garantia de ir até a Copa de 98! 
+</text>
+                <rel f="">ir</rel>
+                <arg f="" n="4">até a Copa de 98
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.10" id="ir.05" name="ser destinado a" vncls="-">
+            <roles>
+                <role descr="thing going" n="1" />
+                <role descr="receiver" n="2" />
+                <role descr="purpose" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2988:  Parte desse dinheiro vai para a colheita deste ano. 
+</text>
+                <arg f="" n="1">Parte desse dinheiro
+</arg>
+                <rel f="">vai</rel>
+                <arg f="" n="2">para a colheita deste ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s946:  Isso significa que,  tudo indo bem,  a criação da URV fica para março. 
+</text>
+                <arg f="" n="1">tudo
+</arg>
+                <rel f="">indo</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="ir_ao_ar">
+        <note />
+    <roleset framnet="go.15" id="ir.02" name="expressão idiomática: ser transmitido pela televisão" vncls="55.1">
+            <roles>
+                <role descr="thing/entity continuing" n="1">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3272:  Entre 20h e 20h30,  horário em que o « cartoon » costuma ir ao ar,  a emissora transmitiu uma sequência de videoclipes. 
+</text>
+                <arg f="tmp" n="m">em que
+</arg>
+                <arg f="" n="1">o « cartoon »
+</arg>
+                <rel f="">ir</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3102:  O especial deverá ir ao ar no Brasil e em vários países poucos dias antes da eleição para o Prêmio_  Nobel_  da_  Paz. 
+</text>
+                <arg f="" n="1">O especial
+</arg>
+                <rel f="">ir</rel>
+                <arg f="loc" n="m">no Brasil e em vários países
+</arg>
+                <arg f="tmp" n="m">poucos dias antes da eleição para o Prêmio_  Nobel_  da_  Paz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s2032:  Convencido de que Munhoz tem uma boa retórica,  o publicitário pretende deixar o candidato « falar o que quiser » para,  antes da gravação final,  decidir o que irá ao ar. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">irá</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s718:  Por partes:  a lista de nomes mais completa foi ao ar durante o Jornal_  Nacional,  da Rede_  Globo,  por_  volta_  de 20h. 
+</text>
+                <arg f="" n="1">a lista de nomes mais completa
+</arg>
+                <rel f="">foi</rel>
+                <arg f="tmp" n="m">durante o Jornal_  Nacional,  da Rede_  Globo, 
+</arg>
+                <arg f="tmp" n="m">por_  volta_  de 20h
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="ir_embora">
+        <note />
+    <roleset framnet="leave.01" id="ir.06" name="partir" vncls="51.1-1 51.2">
+            <roles>
+                <role descr="entity leaving" n="0">
+                    <vnrole vncls="51.2" vntheta="Theme" />
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="place, person, or thing left" n="1">
+                    <vnrole vncls="51.2" vntheta="Source" />
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <role descr="attribute of arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2534:  Antes de ir embora,  o ladrão pegou o título de eleitor e o CIC da assistente de secretaria e os jogou atrás_  do caixa. 
+</text>
+                <rel f="">ir</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="ir_a_leilão">
+        <note />
+    <roleset framnet="" id="ir.07" name="ser enviado para leilão; ser leiloado" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2498:  Uma mesa de encostar,  em jacarandá claro,  feita ﻿à mão no Rio no século 18,  vai a leilão no próximo mês em São_  Paulo por US$  15 mil,  preço equivalente a dois carros populares zero quilômetro,  como o Fusca. 
+</text>
+                <arg f="" n="1">Uma mesa de encostar,  em jacarandá claro,  feita ﻿à mão no Rio no século 18, 
+</arg>
+                <rel f="">vai</rel>
+                <arg f="tmp" n="m">no próximo mês
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <arg f="" n="2">por US$  15 mil,  preço equivalente a dois carros populares zero quilômetro,  como o Fusca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="ir_de_encontro">
+        <note />
+    <roleset framnet="counteract.01" id="ir.08" name="contrariar" vncls="-">
+            <roles>
+                <role descr="worker, Agent" n="0" />
+                <role descr="action or object being prevented" n="1" />
+                <role descr="instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1466:  Esses números vão de encontro com a tendência mundial,  segundo a_  qual o paciente deve ficar o menor tempo possível internado,  e os esforços devem ser para reintegrá-  lo na sociedade. 
+</text>
+                <arg f="" n="0">Esses números
+</arg>
+                <rel f="">vão</rel>
+                <arg f="" n="1">com a tendência mundial,  segundo a_  qual o paciente deve ficar o menor tempo possível internado,  e os esforços devem ser para reintegrá-  lo na sociedade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

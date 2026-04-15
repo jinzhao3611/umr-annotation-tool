@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="zerar">
+        <note />
+    <roleset framnet="reset.01" id="zerar.01" name="eliminar o conteúdo" vncls="">
+            <roles>
+                <role descr="resetter" n="0" />
+                <role descr="thing being reset" n="1" />
+                <role descr="value" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1034:  Na tarde de ontem,  diante_  de dezenas_  de jornalistas,  Pertence « zerou » os computadores da Justiça_  Eleitoral. 
+</text>
+                <arg f="tmp" n="m">Na tarde de ontem
+</arg>
+                <arg f="loc" n="m">diante_  de dezenas_  de jornalistas
+</arg>
+                <arg f="" n="0">Pertence
+</arg>
+                <rel f="">zerou</rel>
+                <arg f="" n="1">os computadores da Justiça_  Eleitoral
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

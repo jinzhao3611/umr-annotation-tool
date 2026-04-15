@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reverter">
+        <note />
+        <note />
+    <roleset framnet="reverse.01" id="reverter.01" name="consertar; alterar para o estado anterior" vncls="">
+            <roles>
+                <role descr="causer of reverse" n="0" />
+                <role descr="thing turning around" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3905:  Beckenbauer aconselha o lateral a conversar com o treinador,  procurando reverter a situação. 
+</text>
+                <rel f="">reverter</rel>
+                <arg f="" n="1">a situação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2455:  O Corinthians terá de atacar os 90 minutos para reverter a enorme vantagem palmeirense. 
+</text>
+                <rel f="">reverter</rel>
+                <arg f="" n="1">a enorme vantagem palmeirense
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="allocate.01" id="reverter.02" name="direcionar para; alocar em" vncls="13.3">
+            <roles>
+                <role descr="granter" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                </role>
+                <role descr="thing granted" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, granted-to" n="2">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s952:  O cantor Stevie_  Wonder anunciou anteontem que sua turnê norte-  americana a primeira desde 1989 reverterá fundos para campanhas contra a fome. 
+</text>
+                <arg f="" n="0">sua turnê norte-  americana a primeira desde 1989
+</arg>
+                <rel f="">reverterá</rel>
+                <arg f="" n="1">fundos para campanhas contra a fome
+</arg>
+                <note>arg1 e arg2 em um mesmo constituinte sintático</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="preocupar-se">
+        <note />
+    <roleset framnet="worry.02" id="preocupar.01" name="dar importância a; ficar preocupado (forma incoativa de &quot;preocupar&quot;" vncls="31.3">
+            <roles>
+                <role descr="worrier" n="0">
+                    <vnrole vncls="31.3" vntheta="Experiencer" />
+                </role>
+                <role descr="topic of worry" n="1">
+                    <vnrole vncls="31.3" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3801:  Em entrevista ﻿à Folha por telefone,  de Londres,  o estilista diz que moda hoje não é se preocupar com marcas: 
+</text>
+                <rel f="">preocupar</rel>
+                <arg f="" n="2">com marcas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s974:  Profissionais com longa experiência em cargos gerenciais e administrativos devem se preocupar,  ao fazer o currículo,  em mostrar a essência da carreira,  resumindo suas conquistas e realizações. 
+</text>
+                <arg f="" n="0">Profissionais com longa experiência em cargos gerenciais e administrativos
+</arg>
+                <rel f="">preocupar</rel>
+                <arg f="tmp" n="m">ao fazer o currículo
+</arg>
+                <arg f="" n="2">em mostrar a essência da carreira,  resumindo suas conquistas e realizações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="preocupar">
+        <note />
+    <roleset framnet="worry.01" id="preocupar.02" name="causar preocupação" vncls="31.1">
+            <roles>
+                <role descr="cause of worrying, troublesome topic" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="worrier" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s726:  « O que nos preocupa é o cumprimento da ordem judicial. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">nos
+</arg>
+                <rel f="">preocupa</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s76:  Segundo o médico,  o caso não preocupa. 
+</text>
+                <arg f="dis" n="m">Segundo o médico
+</arg>
+                <arg f="" n="0">o caso
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">preocupa</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="condenar">
+        <note />
+    <roleset framnet="condemn.01" id="condenar.01" name="desaprovar, julgar culpado e punir" vncls="33">
+            <roles>
+                <role descr="condemner" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="condemned" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="grounds for condemnation" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <role descr="destination" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3875:  Pode ser condenado ao açoite,  como seu compatriota Michael_  Fay,  18,  preso na mesma ocasião. 
+</text>
+                <rel f="">condenado</rel>
+                <arg f="" n="3">ao açoite
+</arg>
+                <arg f="adv" n="m">como seu compatriota Michael_  Fay,  18,  preso na mesma ocasião
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3334:  Filho de Vicente_  Rivera_  Gonzalez,  ele já foi condenado na Holanda a 14 anos de prisão,  segundo a PF. 
+</text>
+                <arg f="prd" n="m">Filho de Vicente_  Rivera_  Gonzalez
+</arg>
+                <arg f="" n="1">ele
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">condenado</rel>
+                <arg f="loc" n="m">na Holanda
+</arg>
+                <arg f="" n="3">a 14 anos de prisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2422:  Além_  dos dois,  também foram condenados outros 12 diretores da CEF. 
+</text>
+                <arg f="" n="1">Além_  dos dois outros 12 diretores da CEF
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">condenados</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s786:  Ignacio_  Perea,  32,  foi condenado a cinco penas de morte em Miami. 
+</text>
+                <arg f="" n="1">Ignacio_  Perea,  32, 
+</arg>
+                <rel f="">condenado</rel>
+                <arg f="" n="3">a cinco penas de morte
+</arg>
+                <arg f="loc" n="m">em Miami
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s785:  Miami condena aidético a 5 mortes
+</text>
+                <arg f="" n="0">Miami
+</arg>
+                <rel f="">condena</rel>
+                <arg f="" n="1">aidético
+</arg>
+                <arg f="" n="3">a 5 mortes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s735:  A IRLF condena ainda a eutanásia e os métodos contraceptivos não naturais,  inclusive a pílula. 
+</text>
+                <arg f="" n="0">A IRLF
+</arg>
+                <rel f="">condena</rel>
+                <arg f="adv" n="m">ainda
+</arg>
+                <arg f="" n="1">a eutanásia e os métodos contraceptivos não naturais,  inclusive a pílula
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s732:  E condena a disseminação de boatos,  como os que atingiram Luiz_  Inácio_  Lula_  da_  Silva na eleição de 89. 
+</text>
+                <rel f="">condena</rel>
+                <arg f="" n="1">a disseminação de boatos
+</arg>
+                <arg f="prd" n="m">como os que atingiram Luiz_  Inácio_  Lula_  da_  Silva na eleição de 89
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s311:  Na prática,  os que iriam constituir o cerne e a base do partido iam mais longe:  condenavam o autoritarismo,  o oportunismo,  o clientelismo e o fisiologismo. 
+</text>
+                <arg f="adv" n="m">Na prática
+</arg>
+                <arg f="" n="0">os que iriam constituir o cerne e a base do partido
+</arg>
+                <rel f="">condenavam</rel>
+                <arg f="" n="1">o autoritarismo,  o oportunismo,  o clientelismo e o fisiologismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

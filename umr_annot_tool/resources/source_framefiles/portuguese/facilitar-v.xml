@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="facilitar">
+        <note />
+    <roleset framnet="facilitate.01" id="facilitar.01" name="torna mais fácil" vncls="">
+            <roles>
+                <role descr="thing helping" n="0" />
+                <role descr="thing being helped" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2918:  A altura do solo foi ampliada em alguns centímetros para facilitar as investidas fora_  de estrada. 
+</text>
+                <rel f="">facilitar</rel>
+                <arg f="" n="1">as investidas fora_  de estrada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2612:  Os arquivos das pastas também podem ser abertos a_  partir_  do menu,  facilitando o uso de arquivos e aplicações. 
+</text>
+                <rel f="">facilitando</rel>
+                <arg f="" n="1">o uso de arquivos e aplicações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2266:  Há pontos de concentração de lojas que facilitam a pesquisa de preços. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">facilitam</rel>
+                <arg f="" n="1">a pesquisa de preços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2040:  O objetivo do projeto,  segundo Miro,  é facilitar a investigação policial e a obtenção de provas contra o crime organizado(  delitos praticados por atividades de quadrilha ou bando) . 
+</text>
+                <arg f="" n="0">O objetivo do projeto
+</arg>
+                <rel f="">facilitar</rel>
+                <arg f="" n="1">a investigação policial e a obtenção de provas contra o crime organizado(  delitos praticados por atividades de quadrilha ou bando) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1745:  « Há uma busca frenética por eletrônicos que facilitem o dia-  a-  dia do cidadão em casa e no escritório »,  afirma Quintana. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">facilitem</rel>
+                <arg f="" n="1">o dia-  a-  dia do cidadão
+</arg>
+                <arg f="loc" n="m">em casa e no escritório
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1389:  Curiosamente,  quanto_  mais os novos programas e redes « facilitam » a vida dos informatizados,  maior a tendência deles de ficarem grudados no computador. 
+</text>
+                <arg f="" n="0">os novos programas e redes
+</arg>
+                <rel f="">facilitam</rel>
+                <arg f="" n="1">a vida dos informatizados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1009:  O objetivo é facilitar a vida dos clientes e reduzir os custos da instituição financeira. 
+</text>
+                <rel f="">facilitar</rel>
+                <arg f="" n="1">a vida dos clientes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s842:  Vidros e janelas dão transparência ﻿à casa e facilitam a entrada do ar. 
+</text>
+                <arg f="" n="0">Vidros e janelas
+</arg>
+                <rel f="">facilitam</rel>
+                <arg f="" n="1">a entrada do ar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s185:  Isso vai facilitar as atividades de franqueadores que precisam importar produtos para distribuir-  los a seus franqueados que operam noutro deles. 
+</text>
+                <arg f="" n="0">Isso
+</arg>
+                <rel f="">facilitar</rel>
+                <arg f="" n="1">as atividades de franqueadores que precisam importar produtos para distribuir-  los a seus franqueados que operam noutro deles
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="envergar">
+        <note />
+    <roleset framnet="wear.01" id="envergar.01" name="usar; vestir" vncls="41.3.1">
+            <roles>
+                <role descr="wearer" n="0">
+                    <vnrole vncls="41.3.1" vntheta="Agent" />
+                </role>
+                <role descr="clothing" n="1">
+                    <vnrole vncls="41.3.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s461:  Não fosse a eleição,  d. _  Luciano_  Mendes teria de negar Cristo três vezes para que nosso senador empuleirasse no lombo de um cavalo,  envergando aquele chapéu de cangaceiro. 
+</text>
+                <rel f="">envergando</rel>
+                <arg f="" n="1">aquele chapéu de cangaceiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s203:  Não falei nada,  mas visualizei a Sra. _  oke,  sentada no salão amarelo,  o mesmo salão onde nenhum Oke de Okehurst exceto ela ousava permanecer sozinho,  envergando o vestido de sua antepassada e confrontando-  se,  por_  assim_  dizer,  com aquela coisa vaga,  plangente,  que parecia permear o aposento. . .  aquela vaga presença- -  assim me parecia do galante poeta assassinado. 
+</text>
+                <rel f="">envergando</rel>
+                <arg f="" n="1">o vestido de sua antepassada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

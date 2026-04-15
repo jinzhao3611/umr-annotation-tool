@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="justificar-se">
+        <note />
+    <roleset framnet="justify.01" id="justificar.01" name="alternância incoativa de &quot;justificar&quot;: ser ou tornar-se justificável" vncls="37.1.1">
+            <roles>
+                <role descr="justifier" n="0">
+                    <vnrole vncls="37.1.1" vntheta="Agent" />
+                </role>
+                <role descr="decision or attitude being shown to be right" n="1">
+                    <vnrole vncls="37.1.1" vntheta="Topic" />
+                </role>
+                <role descr="explicit instrument" n="2" />
+                <role descr="secondary predication" n="3" />
+                <role descr="benefactive, justified to" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1735:  O otimismo de Van_  Himst se justifica,  em_  parte,  pela entrada do centroavante belgo-  croata Josip_  Weber no time. 
+</text>
+                <arg f="" n="1">O otimismo de Van_  Himst
+</arg>
+                <rel f="">justifica</rel>
+                <arg f="mnr" n="m">em_  parte
+</arg>
+                <arg f="" n="2">pela entrada do centroavante belgo-  croata Josip_  Weber
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="justificar">
+        <note />
+    <roleset framnet="justify.01" id="justificar.02" name="apresentar razões" vncls="37.1.1">
+            <roles>
+                <role descr="justifier" n="0">
+                    <vnrole vncls="37.1.1" vntheta="Agent" />
+                </role>
+                <role descr="decision or attitude being shown to be right" n="1">
+                    <vnrole vncls="37.1.1" vntheta="Topic" />
+                </role>
+                <role descr="explicit instrument" n="2" />
+                <role descr="secondary predication" n="3" />
+                <role descr="benefactive, justified to" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s484:  Ao justificar sua necessidade,  o presidente da República abriu uma fresta para a realidade na propaganda sobre as virtudes da URV. 
+</text>
+                <rel f="">justificar</rel>
+                <arg f="" n="1">sua necessidade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

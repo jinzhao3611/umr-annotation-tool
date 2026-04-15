@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="convocar">
+        <note />
+    <roleset framnet="summon.01" id="convocar.01" name="intimar" vncls="-">
+            <roles>
+                <role descr="inviter" n="0" />
+                <role descr="invited" n="1" />
+                <role descr="invited-to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3205:  Convidada para participar da passarela,  Rita_  Lee declinou por ter sido convocada apenas na véspera
+</text>
+                <arg f="" n="1">Rita_  Lee
+</arg>
+                <rel f="">convocada</rel>
+                <arg f="tmp" n="m">apenas na véspera
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s219:  Só o procurou tempos depois,  quando o secretário de Assuntos_  Especiais,  Eliezer_  Baptista,  resolveu preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor e convocou Mourão para sua equipe. 
+</text>
+                <arg f="" n="0">o secretário de Assuntos_  Especiais,  Eliezer_  Baptista, 
+</arg>
+                <rel f="">convocou</rel>
+                <arg f="" n="1">Mourão
+</arg>
+                <arg f="" n="2">para sua equipe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

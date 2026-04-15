@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="radicalizar">
+        <note />
+    <roleset framnet="exacerbate.01" id="radicalizar.01" name="tornar radical; extremar" vncls="">
+            <roles>
+                <role descr="causer" n="0" />
+                <role descr="thing getting worse" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2555:  Resumindo:  Lutoslawski radicalizou Bartók naquilo que este tinha de noturno,  de dramático e « moderno ». 
+</text>
+                <arg f="mnr" n="m">Resumindo
+</arg>
+                <arg f="" n="0">Lutoslawski
+</arg>
+                <rel f="">radicalizou</rel>
+                <arg f="" n="1">Bartók
+</arg>
+                <arg f="" n="2">naquilo que este tinha de noturno,  de dramático e « moderno »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

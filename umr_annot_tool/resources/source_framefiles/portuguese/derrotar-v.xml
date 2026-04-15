@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="derrotar">
+        <note />
+    <roleset framnet="beat.03" id="derrotar.01" name="vencer o inimigo (guerra)  ou o adversário (esportes de confronto)" vncls="-">
+            <roles>
+                <role descr="winner" n="0" />
+                <role descr="loser" n="1" />
+                <role descr="competition" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3964:  O time comandado pelo técnico Miguel_  Ângelo_  da_  Luz ficou com o título ao derrotar anteontem ﻿à noite na final a forte seleção de Cuba por 115 a 93(  54 a 44 no primeiro tempo) . 
+</text>
+                <rel f="">derrotar</rel>
+                <arg f="tmp" n="m">anteontem ﻿à noite
+</arg>
+                <arg f="" n="2">na final
+</arg>
+                <arg f="" n="1">a forte seleção de Cuba
+</arg>
+                <arg f="" n="3">por 115 a 93(  54 a 44 no primeiro tempo) 
+</arg>
+                <note>"a final" aqui ocupa o lugar da competição</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3631:  Roma derrota Lazio e Batistuta faz mais um
+</text>
+                <arg f="" n="0">Roma
+</arg>
+                <rel f="">derrota</rel>
+                <arg f="" n="1">Lazio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2577:  Se derrotar o candidato do PPR,  Roseana se tornará a primeira governadora eleita na história do país. 
+</text>
+                <rel f="">derrotar</rel>
+                <arg f="" n="1">o candidato do PPR
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1332:  Sampras e Stich são derrotados no Qatar
+</text>
+                <arg f="" n="1">Sampras e Stich
+</arg>
+                <rel f="">derrotados</rel>
+                <arg f="loc" n="m">no Qatar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s939:  A Nigéria conquistou ontem o título da 19ª Copa_  Africana_  de_  Nações,  ao derrotar Zâmbia por 2 a 1,  em Túnis(  Tunísia) . 
+</text>
+                <rel f="">derrotar</rel>
+                <arg f="" n="1">Zâmbia
+</arg>
+                <arg f="" n="3">por 2 a 1
+</arg>
+                <arg f="loc" n="m">em Túnis(  Tunísia) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

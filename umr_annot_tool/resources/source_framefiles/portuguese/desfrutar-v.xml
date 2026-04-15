@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desfrutar">
+        <note />
+    <roleset framnet="enjoy.01" id="desfrutar.01" name="tirar prazer de " vncls="31.2">
+            <roles>
+                <role descr="enjoyer" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing enjoyed" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1120:  Pela_  primeira_  vez neste século,  vastos setores das classes médias ocidentais não conseguirão efetivar a proeza social- -  cimento da democracia e do capitalismo- -  realizada pelas gerações precedentes:  garantir a seus filhos um nível de vida igual ou superior ao que seus pais haviam desfrutado. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">seus pais
+</arg>
+                <rel f="">desfrutado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="remove.01" id="retirar.01" name="" vncls="10.1 10.2">
+            <roles>
+                <role descr="entity removing" n="0">
+                    <vnrole vncls="10.2" vntheta="Agent" />
+                    <vnrole vncls="10.1" vntheta="Agent" />
+                </role>
+                <role descr="thing being removed" n="1">
+                    <vnrole vncls="10.2" vntheta="Theme" />
+                    <vnrole vncls="10.1" vntheta="Theme" />
+                </role>
+                <role descr="removed from" n="2">
+                    <vnrole vncls="10.2" vntheta="Source" />
+                    <vnrole vncls="10.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3844:  Até as 17h,  a Prefeitura de Caraguatatuba não havia retirado o golfinho da praia. 
+</text>
+                <arg f="tmp" n="m">Até as 17h
+</arg>
+                <arg f="" n="0">a Prefeitura de Caraguatatuba
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">retirado</rel>
+                <arg f="" n="1">o golfinho
+</arg>
+                <arg f="" n="2">da praia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2533:  O ladrão verificou qual era o saldo da conta de Maria_  Estela e,  em_  seguida,  retirou R$  225 do caixa. 
+</text>
+                <arg f="" n="0">O ladrão
+</arg>
+                <arg f="tmp" n="m">em_  seguida
+</arg>
+                <rel f="">retirou</rel>
+                <arg f="" n="1">R$  225
+</arg>
+                <arg f="" n="2">do caixa
+</arg>
+                <note>"retirar" uma coisa de com o interesse de ficar com ela equivale a "withdraw.01"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s305:  Agora,  o partido retirou a máscara. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <arg f="" n="0">o partido
+</arg>
+                <rel f="">retirou</rel>
+                <arg f="" n="1">a máscara
+</arg>
+                <note>no sentido puro de "tirar", equivale a "take.07"</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

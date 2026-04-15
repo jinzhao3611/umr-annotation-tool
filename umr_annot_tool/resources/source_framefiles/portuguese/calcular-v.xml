@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="calcular">
+        <note />
+    <roleset framnet="calculate.01" id="calcular.01" name="fazer cálculo" vncls="">
+            <roles>
+                <role descr="Thinker" n="0" />
+                <role descr="Thought" n="1" />
+                <role descr="Attributive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4086:  Ele explicou que o índice foi calculado do dia 16 de junho(  ainda sobre cruzeiros reais)  ao dia 14 deste mês. 
+</text>
+                <arg f="" n="1">o índice
+</arg>
+                <rel f="">calculado</rel>
+                <arg f="tmp" n="m">o dia 16 de junho(  ainda sobre cruzeiros reais)  ao dia 14 deste mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2420:  Algumas ainda estão sendo calculadas pela Caixa. 
+</text>
+                <arg f="" n="1">Algumas
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">calculadas</rel>
+                <arg f="" n="0">pela Caixa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s534:  Os advogados de Lucena calculam que isso não deve ocorrer antes de terça ou quarta,  com Lucena já eleito,  segundo acreditam. 
+</text>
+                <arg f="" n="0">Os advogados de Lucena
+</arg>
+                <rel f="">calculam</rel>
+                <arg f="" n="1">que isso não deve ocorrer antes de terça ou quarta,  com Lucena já eleito,  segundo acreditam
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

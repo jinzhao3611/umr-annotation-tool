@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="precipitar">
+        <note />
+    <roleset framnet="precipitate.01" id="precipitar.01" name="apressar" vncls="-">
+            <roles>
+                <role descr="cause" n="0" />
+                <role descr="precipitated action" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1510:  O desenlace,  porém,  não veio na forma do « golpe de timão » com reforma radical,  mas foi precipitado pelas duas balas que tiraram a vida de Colosio. 
+</text>
+                <arg f="" n="1">O desenlace
+</arg>
+                <rel f="">precipitado</rel>
+                <arg f="" n="0">pelas duas balas que tiraram a vida de Colosio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

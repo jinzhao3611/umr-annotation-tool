@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="iluminar">
+        <note />
+    <roleset framnet="illuminate.01" id="iluminar.01" name="prover de luz" vncls="25.3">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="25.3" vntheta="Agent" />
+                </role>
+                <role descr="entity illuminated" n="1">
+                    <vnrole vncls="25.3" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2978:  E,  para Bruno_  Bettelheim,  as pequenas velas e lâmpadas que a iluminam seriam vestígios das antigas fogueiras que os pagãos do norte da Europa ateavam no alto das montanhas para antecipar a chegada do Sol e o fim do inverno. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">a
+</arg>
+                <rel f="">iluminam</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

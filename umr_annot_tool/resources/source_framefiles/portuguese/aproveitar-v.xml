@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aproveitar">
+        <note />
+    <roleset framnet="use.01" id="aproveitar.01" name="tirar proveito de" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3543:  O ministro da Aeronáutica,  Lélio_  Viana_  Lôbo,  aproveitou a comemoração do Dia_  do_  Soldado ontem para queixar-  se das dificuldades salariais dos militares. 
+</text>
+                <arg f="" n="0">O ministro da Aeronáutica,  Lélio_  Viana_  Lôbo, 
+</arg>
+                <rel f="">aproveitou</rel>
+                <arg f="" n="1">a comemoração do Dia_  do_  Soldado
+</arg>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="pnc" n="m">para queixar-  se das dificuldades salariais dos militares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2196:  O Flamengo ficou na espera do Grêmio,  procurando apenas aproveitar o contra-  ataque. 
+</text>
+                <arg f="adv" n="m">apenas
+</arg>
+                <rel f="">aproveitar</rel>
+                <arg f="" n="1">o contra-  ataque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1794:  Voltado para usuários leigos e avançados,  os 13 capítulos dão dicas para aproveitar melhor os recursos do sistema operacional da Microsoft. 
+</text>
+                <rel f="">aproveitar</rel>
+                <arg f="mnr" n="m">melhor
+</arg>
+                <arg f="" n="1">os recursos do sistema operacional da Microsoft
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1222:  Steven quer aproveitar a viagem ao Brasil para completar sua discografia dos Mutantes e conhecer Arnaldo_  Baptista. 
+</text>
+                <arg f="" n="0">Steven
+</arg>
+                <rel f="">aproveitar</rel>
+                <arg f="" n="1">a viagem ao Brasil
+</arg>
+                <arg f="pnc" n="m">para completar sua discografia dos Mutantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s699:  O técnico Alfio_  Basile tentou aproveitar seus melhores jogadores. 
+</text>
+                <arg f="" n="0">O técnico Alfio_  Basile
+</arg>
+                <rel f="">aproveitar</rel>
+                <arg f="" n="1">seus melhores jogadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s561:  Fleury aproveitou a viagem para responder ao ex-  secretário José_  Machado_  de_  Campos_  Filho,  que o chamara de traidor por não apoiar Quércia. 
+</text>
+                <arg f="" n="0">Fleury
+</arg>
+                <rel f="">aproveitou</rel>
+                <arg f="" n="1">a viagem
+</arg>
+                <arg f="pnc" n="m">para responder ao ex-  secretário José_  Machado_  de_  Campos_  Filho,  que o chamara de traidor por não apoiar Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s315:  Durante seis voltas,  os pilotos tiveram que manter suas posições por razões de segurança e aproveitavam para aquecer os pneus enquanto os carros envolvidos no acidente eram retirados. 
+</text>
+                <arg f="tmp" n="m">Durante seis voltas
+</arg>
+                <arg f="" n="0">os pilotos
+</arg>
+                <rel f="">aproveitavam</rel>
+                <arg f="pnc" n="m">para aquecer os pneus
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

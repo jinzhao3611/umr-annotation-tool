@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="possuir">
+        <note />
+    <roleset framnet="have.03" id="possuir.01" name="ter; ter a posse de" vncls="100">
+            <roles>
+                <role descr="owner" n="0">
+                    <vnrole vncls="100" vntheta="Theme1" />
+                </role>
+                <role descr="possession" n="1">
+                    <vnrole vncls="100" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4138:  Segundo FHC,  o Brasil possui esses recursos,  muitos deles naturais,  e vantagens comparativas para realizar essas metas. 
+</text>
+                <arg f="dis" n="m">Segundo FHC
+</arg>
+                <arg f="" n="0">o Brasil
+</arg>
+                <rel f="">possui</rel>
+                <arg f="" n="1">esses recursos,  muitos deles naturais,  e vantagens comparativas para realizar essas metas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3593:  Parece que a Universidade_  Yale,  aquela que nos deu o inesquecível George_  Bush,  comprovou a existência de « superdegustadores »,  ou_  seja pessoas que possuem um número de papilas gustativas muito além_  do normal. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">possuem</rel>
+                <arg f="" n="1">um número de papilas gustativas muito além_  do normal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1927:  A empresa possui laboratório próprio na França e fabrica os equipamentos usados em suas clínicas. 
+</text>
+                <arg f="" n="0">A empresa
+</arg>
+                <rel f="">possui</rel>
+                <arg f="" n="1">laboratório próprio
+</arg>
+                <arg f="loc" n="m">na França
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1420:  No caso do cartão Unidas,  o possuidor tem desconto de até 5%  na locação,  possui tratamento preferencial e melhoria na categoria de carro. 
+</text>
+                <arg f="loc" n="m">No caso do cartão Unidas
+</arg>
+                <arg f="" n="0">o possuidor
+</arg>
+                <rel f="">possui</rel>
+                <arg f="" n="1">tratamento preferencial e melhoria na categoria de carro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

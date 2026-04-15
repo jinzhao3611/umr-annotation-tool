@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="oscilar">
+        <note />
+    <roleset framnet="range.01" id="oscilar.01" name="sofrer variação" vncls="">
+            <roles>
+                <role descr="thing moving" n="1" />
+                <role descr="EXT or MNR" n="2" />
+                <role descr="start or low point" n="3" />
+                <role descr="end or high point" n="4" />
+                <role descr="medium" n="5" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4035:  As pessoas com PMD oscilam entre dois pólos. 
+</text>
+                <arg f="" n="1">As pessoas com PMD
+</arg>
+                <rel f="">oscilam</rel>
+                <arg f="" n="2">entre dois pólos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s306:  Mostrou que a maioria dos seus políticos profissionais cuja respeitabilidade não pode ser posta em dúvida oscilava entre o centro nacionalista e os radicais do PMDB. 
+</text>
+                <arg f="" n="1">a maioria dos seus políticos profissionais cuja respeitabilidade não pode ser posta em dúvida
+</arg>
+                <rel f="">oscilava</rel>
+                <arg f="" n="2">entre o centro nacionalista e os radicais do PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

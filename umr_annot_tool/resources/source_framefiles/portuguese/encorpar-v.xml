@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encorpar">
+        <note />
+    <roleset framnet="thicken.01" id="encorpar.01" name="ganhar mais corpo ou consistência" vncls="-">
+            <roles>
+                <role descr="cause, agent" n="0" />
+                <role descr="thing becoming thick" n="1" />
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2312:  O « Chinon_  Les_  Granges » e o Saumur-  Champigny_  «Domaine_  de_  la_  Martiniére» são pouco mais encorpados. 
+</text>
+                <rel f="">encorpados</rel>
+                <note>como adjetivo: em inglês "full bodied (wine)"</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

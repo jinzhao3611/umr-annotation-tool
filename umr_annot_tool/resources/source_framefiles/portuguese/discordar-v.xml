@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="discordar">
+        <note />
+    <roleset framnet="disagree.01" id="discordar.01" name="não concordar" vncls="36.1 36.4">
+            <roles>
+                <role descr="first arguer" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                    <vnrole vncls="36.4" vntheta="Actor1" />
+                </role>
+                <role descr="second arguer" n="1">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                    <vnrole vncls="36.4" vntheta="Actor2" />
+                </role>
+                <role descr="topic" n="2">
+                    <vnrole vncls="36.1" vntheta="Topic" />
+                    <vnrole vncls="36.4" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4003:  Só Salinas discordou dessa posição. 
+</text>
+                <arg f="" n="0">Só Salinas
+</arg>
+                <rel f="">discordou</rel>
+                <arg f="" n="2">dessa posição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2031:  Indagados sobre se concordavam com a posição da Igreja com_  relação_  ao uso de camisinha,  74%  discordaram totalmente e 13%  discordaram em_  parte. 
+</text>
+                <arg f="tmp" n="m">Indagados sobre se concordavam com a posição da Igreja com_  relação_  ao uso de camisinha
+</arg>
+                <arg f="" n="1">13% 
+</arg>
+                <rel f="">discordaram</rel>
+                <arg f="ext" n="m">em_  parte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2031:  Indagados sobre se concordavam com a posição da Igreja com_  relação_  ao uso de camisinha,  74%  discordaram totalmente e 13%  discordaram em_  parte. 
+</text>
+                <arg f="tmp" n="m">Indagados sobre se concordavam com a posição da Igreja com_  relação_  ao uso de camisinha
+</arg>
+                <arg f="" n="0">74% 
+</arg>
+                <rel f="">discordaram</rel>
+                <arg f="ext" n="m">totalmente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

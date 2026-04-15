@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comprometer-se">
+        <note />
+    <roleset framnet="commit.01" id="comprometer.01" name="assumir compromisso" vncls="79">
+            <roles>
+                <role descr="causal agent" n="0">
+                    <vnrole vncls="79" vntheta="Agent" />
+                </role>
+                <role descr="entity committed" n="1">
+                    <vnrole vncls="79" vntheta="Theme" />
+                </role>
+                <role descr="committed to" n="2">
+                    <vnrole vncls="79" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3001:  Prometer inflação zero extrapola o domínio daquilo que a autoridade monetária pode se comprometer a fazer
+</text>
+                <arg f="" n="1">a autoridade monetária
+</arg>
+                <rel f="">comprometer</rel>
+                <arg f="" n="2">a fazer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s480:  O governo se comprometeu a não « garfar » a poupança,  nas palavras do presidente do BC. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">comprometeu</rel>
+                <arg f="" n="1">a não « garfar » a poupança,  nas palavras do presidente do BC
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="comprometer">
+        <note />
+    <roleset framnet="compromise.02" id="comprometer.02" name="colocar em risco" vncls="36.1">
+            <roles>
+                <role descr="causer of loss" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="thing losing security" n="1">
+                    <vnrole vncls="36.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2790:  Não me comprometa
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">comprometa</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

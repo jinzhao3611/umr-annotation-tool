@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cursar">
+        <note />
+    <roleset framnet="" id="cursar.01" name="frequentar curso" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3529:  Cursando economia na Faap,  Kiko espera ansioso o seu telefone celular,  que « está para sair ». 
+</text>
+                <rel f="">Cursando</rel>
+                <arg f="" n="1">economia
+</arg>
+                <arg f="" n="2">na Faap
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

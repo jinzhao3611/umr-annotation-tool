@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="envolver">
+        <note />
+    <roleset framnet="involve.01" id="envolver.01" name="abranger; cobrir" vncls="107">
+            <roles>
+                <role descr="causer of inclusion" n="0">
+                    <vnrole vncls="107" vntheta="Agent" />
+                </role>
+                <role descr="theme, thing being included into a group" n="1">
+                    <vnrole vncls="107" vntheta="Theme" />
+                </role>
+                <role descr="group" n="2">
+                    <vnrole vncls="107" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3770:  O problema é político porque envolve,  por_  exemplo,  a gratuidade da educação,  da saúde,  da previdência mínima. 
+</text>
+                <arg f="" n="2">O problema
+</arg>
+                <rel f="">envolve</rel>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <arg f="" n="1">a gratuidade da educação,  da saúde,  da previdência mínima
+</arg>
+                <note>com arg2 sujeito</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2648:  Um acidente envolvendo um caminhão e um ônibus,  na última sexta-  feira,  matou 16 estudantes,  três motoristas e deixou nove feridos no km 5,  4 da estrada,  que é chamada de « rodovia da morte ». 
+</text>
+                <rel f="">envolvendo</rel>
+                <arg f="" n="1">um caminhão e um ônibus
+</arg>
+                <arg f="tmp" n="m">na última sexta-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s660:  É preciso que tenhamos a consciência de que os nossos tratados,  que envolvem questões transcendentais que buscam uma circulação de bens e serviços sem barreiras entre nossos países,  exigem uma visão da história. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">envolvem</rel>
+                <arg f="" n="1">questões transcendentais que buscam uma circulação de bens e serviços sem barreiras entre nossos países
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s659:  Esse equipamento « envolve » o prédio e é indicado para construções que ocupem áreas horizontais,  como galpões e indústrias. 
+</text>
+                <arg f="" n="2">Esse equipamento
+</arg>
+                <rel f="">envolve</rel>
+                <arg f="" n="1">o prédio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s393:  Além_  do contrato com a Servaz,  há outros do mesmo tipo,  envolvendo mais empreiteiras. 
+</text>
+                <rel f="">envolvendo</rel>
+                <arg f="" n="1">mais empreiteiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s314:  Por_  causa_  de um acidente envolvendo o finlandês J.  J. _  Letho,  da Benetton,  e o português Pedro_  Lamy,  da Lotus,  o « safety_  car » entrou na pista. 
+</text>
+                <rel f="">envolvendo</rel>
+                <arg f="" n="1">o finlandês J.  J. _  Letho,  da Benetton,  e o português Pedro_  Lamy,  da Lotus, 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

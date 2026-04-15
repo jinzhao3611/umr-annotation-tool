@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comparar">
+        <note />
+    <roleset framnet="compare.01" id="comparar.01" name="confrontar duas coisas" vncls="22.2">
+            <roles>
+                <role descr="entity making comparison" n="0">
+                    <vnrole vncls="22.2" vntheta="Agent" />
+                </role>
+                <role descr="first item in comparison" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient1" />
+                </role>
+                <role descr="second item in comparison, usually prepositional" n="2">
+                    <vnrole vncls="22.2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2589:  Porém,  se o total de junho for comparado com o mesmo mês de 93,  verifica-  se aumento de 28,  32% . 
+</text>
+                <arg f="" n="1">o total de junho
+</arg>
+                <rel f="">comparado</rel>
+                <arg f="" n="2">com o mesmo mês de 93
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1560:  Vale a pena conferir os produtos e comparar a qualidade de impressão dos modelos jato de tinta. 
+</text>
+                <rel f="">comparar</rel>
+                <arg f="" n="1">a qualidade de impressão dos modelos jato de tinta
+</arg>
+                <note>tudo incluso no Arg1</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1079:  PT compara gestão Erundina com a de Maluf
+</text>
+                <arg f="" n="0">PT
+</arg>
+                <rel f="">compara</rel>
+                <arg f="" n="1">gestão Erundina
+</arg>
+                <arg f="" n="2">com a de Maluf
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s268:  O jornal compara a eleição presidencial brasileira ﻿à francesa,  afirmando que o premiê Edouard_  Balladur,  ex-  favorito,  também pode perder,  em abril de 95. 
+</text>
+                <arg f="" n="0">O jornal
+</arg>
+                <rel f="">compara</rel>
+                <arg f="" n="1">a eleição presidencial brasileira
+</arg>
+                <arg f="" n="2">﻿à francesa
+</arg>
+                <arg f="adv" n="m">afirmando que o premiê Edouard_  Balladur,  ex-  favorito,  também pode perder,  em abril de 95
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

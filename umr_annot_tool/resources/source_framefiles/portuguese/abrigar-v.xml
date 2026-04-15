@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abrigar">
+        <note />
+    <roleset framnet="house.01" id="abrigar.01" name="dar abrigo, hospedar, sediar" vncls="9.10 54.3">
+            <roles>
+                <role descr="provider of housing" n="0">
+                    <vnrole vncls="9.10" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Agent" />
+                </role>
+                <role descr="entity housed" n="1">
+                    <vnrole vncls="9.10" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="location" n="2">
+                    <vnrole vncls="9.10" vntheta="Location" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2075:  A_  partir_  de hoje a área de convivência do Sesc_  Pompéia abriga instalação inédita do artista plástico Nuno_  Ramos,  « Montes ». 
+</text>
+                <arg f="tmp" n="m">A_  partir_  de hoje
+</arg>
+                <arg f="" n="2">a área de convivência do Sesc_  Pompéia
+</arg>
+                <rel f="">abriga</rel>
+                <arg f="" n="1">instalação inédita do artista plástico Nuno_  Ramos,  « Montes »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

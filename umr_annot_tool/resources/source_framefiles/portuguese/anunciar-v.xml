@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="anunciar">
+        <note />
+    <roleset framnet="announce.01" id="anunciar.01" name="dizer publicamente" vncls="37.7">
+            <roles>
+                <role descr="announcer" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4147:  Ito pode anunciar hoje que a transmissão está proibida. 
+</text>
+                <arg f="" n="0">Ito
+</arg>
+                <rel f="">anunciar</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="1">que a transmissão está proibida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4106:  Apesar_  de haver anunciado que o treino da Bulgária seria aberto ao público,  os dirigentes mudaram de idéia pouco antes do início do treinamento e proibiram a presença de torcedores no campo da Southern_  Methodist_  University,  em Dallas. 
+</text>
+                <arg f="adv" n="m">Apesar_  de
+</arg>
+                <rel f="">anunciado</rel>
+                <arg f="" n="1">que o treino da Bulgária seria aberto ao público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3878:  Forças do norte do Iêmen anunciaram a tomada da base aérea de Al_  Anad,  a principal dos sul-  iemenitas. 
+</text>
+                <arg f="" n="0">Forças do norte do Iêmen
+</arg>
+                <rel f="">anunciaram</rel>
+                <arg f="" n="1">a tomada da base aérea de Al_  Anad,  a principal dos sul-  iemenitas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3667:  19 de junho- -  Médici anuncia a construção da rodovia Transamazônica. 
+</text>
+                <arg f="tmp" n="m">19 de junho
+</arg>
+                <arg f="" n="0">Médici
+</arg>
+                <rel f="">anuncia</rel>
+                <arg f="" n="1">a construção da rodovia Transamazônica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3568:  A boa performance de Maluf em março último coincidiu com a fase em que ele anunciava sua candidatura ﻿à presidência e investia em inaugurações de grandes obras,  como o túnel do rio Pinheiros. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">anunciava</rel>
+                <arg f="" n="1">sua candidatura ﻿à presidência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3446:  A polícia anunciou a libertação de seis homens que estavam trancados no porão de um prédio do CNA em Johannesburgo. 
+</text>
+                <arg f="" n="0">A polícia
+</arg>
+                <rel f="">anunciou</rel>
+                <arg f="" n="1">a libertação de seis homens que estavam trancados no porão de um prédio do CNA em Johannesburgo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2773:  Inocêncio já havia anunciado a adoção do corte de um 30 avos dos salários dos deputados por falta em sessão da Câmara. 
+</text>
+                <arg f="" n="0">Inocêncio
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">anunciado</rel>
+                <arg f="" n="1">a adoção do corte de um 30 avos dos salários dos deputados por falta em sessão da Câmara
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2770:  A decisão foi anunciada na tarde de ontem pelo presidente da revisão constitucional,  senador Humberto_  Lucena(  PMDB-  PB) ,  que tomou a decisão mesmo tendo em mãos parecer contrário da sua assessoria jurídica. 
+</text>
+                <arg f="" n="1">A decisão
+</arg>
+                <rel f="">anunciada</rel>
+                <arg f="tmp" n="m">na tarde de ontem
+</arg>
+                <arg f="" n="0">pelo presidente da revisão constitucional,  senador Humberto_  Lucena(  PMDB-  PB) ,  que tomou a decisão mesmo tendo em mãos parecer contrário da sua assessoria jurídica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2289:  O time anunciou ontem a contratação do craque argentino. 
+</text>
+                <arg f="" n="0">O time
+</arg>
+                <rel f="">anunciou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">a contratação do craque argentino
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1766:  E anuncia,  no momento mesmo da criação do indexador,  que a_  partir_  de determinada data a conversão será obrigatória,  conforme regras predeterminadas. 
+</text>
+                <rel f="">anuncia</rel>
+                <arg f="tmp" n="m">no momento mesmo da criação do indexador
+</arg>
+                <arg f="" n="1">que a_  partir_  de determinada data a conversão será obrigatória,  conforme regras predeterminadas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1565:  O secretário disse que aguardava apenas uma definição de Paulo_  Maluf quanto_  a seu futuro político para anunciar medidas de base. 
+</text>
+                <rel f="">anunciar</rel>
+                <arg f="" n="1">medidas de base
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1536:  Dallari,  após negociações com os laboratórios,  candidamente anunciou que « para janeiro,  não se pode fazer mais_  nada,  mas em fevereiro os reajustes serão iguais ﻿à inflação ». 
+</text>
+                <arg f="" n="0">Dallari
+</arg>
+                <arg f="tmp" n="m">após negociações com os laboratórios
+</arg>
+                <arg f="mnr" n="m">candidamente
+</arg>
+                <rel f="">anunciou</rel>
+                <arg f="" n="1">que « para janeiro,  não se pode fazer mais_  nada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1462:  Por_  enquanto,  só estão definidos investimentos da_  ordem de US$  600 milhões nos próximos três anos na Argentina e mais US$  500 milhões no México,  anunciou Douglas_  Ivester. 
+</text>
+                <arg f="" n="1">Por_  enquanto,  só estão definidos investimentos da_  ordem de US$  600 milhões nos próximos três anos na Argentina e mais US$  500 milhões no México
+</arg>
+                <rel f="">anunciou</rel>
+                <arg f="" n="0">Douglas_  Ivester
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1209:  Não só a expectativa é de uma tramitação demorada até a decisão do STJ o_  que pode inviabilizar uma eventual candidatura Sarney por falta de tempo até as eleições,  como também há informações dando conta de que o ex-  presidente poderá em_  breve anunciar seu apoio a Fernando_  Henrique_  Cardoso,  do PSDB. 
+</text>
+                <arg f="" n="0">o ex-  presidente
+</arg>
+                <arg f="tmp" n="m">em_  breve
+</arg>
+                <rel f="">anunciar</rel>
+                <arg f="" n="1">seu apoio a Fernando_  Henrique_  Cardoso,  do PSDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s952:  O cantor Stevie_  Wonder anunciou anteontem que sua turnê norte-  americana a primeira desde 1989 reverterá fundos para campanhas contra a fome. 
+</text>
+                <arg f="" n="0">O cantor Stevie_  Wonder
+</arg>
+                <rel f="">anunciou</rel>
+                <arg f="tmp" n="m">anteontem
+</arg>
+                <arg f="" n="1">que sua turnê norte-  americana a primeira desde 1989
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s951:  Steve_  Wonder anuncia turnê contra a fome
+</text>
+                <arg f="" n="0">Steve_  Wonder
+</arg>
+                <rel f="">anuncia</rel>
+                <arg f="" n="1">turnê contra a fome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s26:  Na época,  o então ministro da Fazenda,  Fernando_  Henrique_  Cardoso,  fez um pronunciamento em cadeia nacional para anunciar a intenção do governo de destinar o FSE a investimentos sociais. 
+</text>
+                <rel f="">anunciar</rel>
+                <arg f="" n="1">a intenção do governo de destinar o FSE a investimentos sociais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="" id="anunciar.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2650:  IBM anuncia dois CDs educativos
+</text>
+                <arg f="" n="0">IBM
+</arg>
+                <rel f="">anuncia</rel>
+                <arg f="" n="1">dois CDs educativos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

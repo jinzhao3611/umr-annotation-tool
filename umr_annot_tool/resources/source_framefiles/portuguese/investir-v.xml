@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="investir">
+        <note />
+        <note />
+    <roleset framnet="invest.01" id="investir.01" name="colocar recursos em " vncls="13.4.2">
+            <roles>
+                <role descr="investor" n="0">
+                    <vnrole vncls="13.4.2" vntheta="Agent" />
+                </role>
+                <role descr="thing invested" n="1">
+                    <vnrole vncls="13.4.2" vntheta="Theme" />
+                </role>
+                <role descr="invested in" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3925:  Durante esta semana,  o agora dirigente esteve no Japão,  em busca de uma empresa que,  no futuro,  invista no Santos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">no futuro
+</arg>
+                <rel f="">invista</rel>
+                <arg f="" n="2">no Santos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3570:  A Gelaguela maior fabricante nacional de sobremesas individuais geladas está investindo US$  200 mil no sistema de franquias. 
+</text>
+                <arg f="" n="0">A Gelaguela maior fabricante nacional de sobremesas individuais geladas
+</arg>
+                <rel f="">investindo</rel>
+                <arg f="" n="1">US$  200 mil
+</arg>
+                <arg f="" n="2">no sistema de franquias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3568:  A boa performance de Maluf em março último coincidiu com a fase em que ele anunciava sua candidatura ﻿à presidência e investia em inaugurações de grandes obras,  como o túnel do rio Pinheiros. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">investia</rel>
+                <arg f="" n="2">em inaugurações de grandes obras,  como o túnel do rio Pinheiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2157:  A Secretaria_  Estadual_  da_  Saúde investiu R$  11 milhões na campanha,  de_  acordo com o diretor do Centro_  de_  Vigilância_  Epidemiológica,  Wagner_  Costa. 
+</text>
+                <arg f="" n="0">A Secretaria_  Estadual_  da_  Saúde
+</arg>
+                <rel f="">investiu</rel>
+                <arg f="" n="1">R$  11 milhões
+</arg>
+                <arg f="" n="2">na campanha
+</arg>
+                <arg f="dis" n="m">de_  acordo com o diretor do Centro_  de_  Vigilância_  Epidemiológica,  Wagner_  Costa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2104:  Sendas investe em shopping_  center no Rio
+</text>
+                <arg f="" n="0">Sendas
+</arg>
+                <rel f="">investe</rel>
+                <arg f="" n="2">em shopping_  center
+</arg>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1463:  Nos últimos cinco anos,  só na Argentina,  a Coca-  Cola investiu US$  800 milhões na aquisição de novos equipamentos e desenvolvimento de novas tecnologias,  lembrou Ivester após encontro com o presidente argentino Carlos_  Menem. 
+</text>
+                <arg f="tmp" n="m">Nos últimos cinco anos
+</arg>
+                <arg f="loc" n="m">só na Argentina
+</arg>
+                <arg f="" n="0">a Coca-  Cola
+</arg>
+                <rel f="">investiu</rel>
+                <arg f="" n="1">US$  800 milhões
+</arg>
+                <arg f="" n="2">na aquisição de novos equipamentos e desenvolvimento de novas tecnologias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1070:  O número é a soma dos US$  8,  6 bilhões arrecadados mais US$  3,  3 bilhões de dívidas das empresas(  transferidas para os novos controladores)  mais US$  3 bilhões que o governo deixou de investir. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">investir</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1025:  Que a organização investiu muito tempo e dinheiro na sensiblização para o programa e que,  agora,  é com eles. 
+</text>
+                <arg f="" n="0">a organização
+</arg>
+                <rel f="">investiu</rel>
+                <arg f="" n="1">muito tempo e dinheiro
+</arg>
+                <arg f="" n="2">na sensiblização para o programa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1016:  As duas palavras não chegaram a ser ditas,  mas resumem o consenso:  investir em treinamento nas empresas é bom,  mas não basta. 
+</text>
+                <rel f="">investir</rel>
+                <arg f="" n="2">em treinamento nas empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s450:  Tem que se pensar,  para o Brasil,  numa empresa com modelo acionário flexível,  que permita incorporar,  numa única marca,  os esforços individuais desses criadores e dispor da sinergia necessária para investir no mercado internacional. 
+</text>
+                <rel f="">investir</rel>
+                <arg f="" n="2">no mercado internacional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s131:  O conselho fiscal entende que os acionistas não devem mais « suportar investir dinheiro bom em companhia sem condições de se reerguer ». 
+</text>
+                <rel f="">investir</rel>
+                <arg f="" n="1">dinheiro bom
+</arg>
+                <arg f="" n="2">em companhia sem condições de se reerguer
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="vest.01" id="investir.02" name="revestir de " vncls="-">
+            <roles>
+                <role descr="provider" n="0" />
+                <role descr="entity vested" n="1" />
+                <role descr="vested with" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1636:  Isto_  é:  os diversos tipos de refeições são investidos de símbolos que alteram o valor que as pessoas atribuem ao que comem. 
+</text>
+                <arg f="dis" n="m">Isto_  é
+</arg>
+                <arg f="" n="1">os diversos tipos de refeições
+</arg>
+                <rel f="">investidos</rel>
+                <arg f="" n="2">de símbolos que alteram o valor que as pessoas atribuem ao que comem
+</arg>
+                <note>passiva</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

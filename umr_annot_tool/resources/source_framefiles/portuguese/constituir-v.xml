@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="constituir">
+        <note />
+        <note />
+    <roleset framnet="constitute.01" id="constituir.01" name="ser parte de" vncls="55.5">
+            <roles>
+                <role descr="components (almost always plural)" n="0">
+                    <vnrole vncls="55.5" vntheta="Agent" />
+                </role>
+                <role descr="whole" n="1">
+                    <vnrole vncls="55.5" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3211:  O bárbaro linchamento de três pessoas ocorrido esta semana no Paraná pode ter sido particularmente chocante e sem dúvida o foi,  filmado e transmitido pela televisão em toda a sua brutalidade,  mas constitui apenas mais um na lista dos crimes desse tipo registrados no país. 
+</text>
+                <arg f="" n="0">O bárbaro linchamento de três pessoas ocorrido esta semana no Paraná
+</arg>
+                <rel f="">constitui</rel>
+                <arg f="" n="1">apenas mais um na lista dos crimes desse tipo registrados no país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s311:  Na prática,  os que iriam constituir o cerne e a base do partido iam mais longe:  condenavam o autoritarismo,  o oportunismo,  o clientelismo e o fisiologismo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">constituir</rel>
+                <arg f="" n="1">o cerne e a base do partido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s212:  Cutler admitiu que as conversas entre funcionários da Casa_  Branca e do Tesouro sobre investigações sobre o banco de McDougal não eram « recomendáveis »,  mas não constituíram crime. 
+</text>
+                <arg f="" n="0">as conversas entre funcionários da Casa_  Branca e do Tesouro sobre investigações sobre o banco de McDougal
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">constituíram</rel>
+                <arg f="" n="1">crime
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="establish.01" id="constituir.02" name="criar" vncls="29.2 55.5-1">
+            <roles>
+                <role descr="agent, setter" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="55.5-1" vntheta="Agent" />
+                </role>
+                <role descr="thing set" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="55.5-1" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <role descr="benefactive" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1815:  Recentemente,  o Banco_  Mundial constituiu um grupo independente de inspeção para analisar queixas sobre seus projetos,  iniciou uma nova política de informações e o Gatt organizou o primeiro seminário com a participação de ONGs. 
+</text>
+                <arg f="" n="0">o Banco_  Mundial
+</arg>
+                <rel f="">constituiu</rel>
+                <arg f="" n="1">um grupo independente de inspeção para analisar queixas sobre seus projetos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

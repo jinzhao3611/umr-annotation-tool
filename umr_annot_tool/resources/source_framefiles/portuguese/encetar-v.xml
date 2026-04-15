@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encetar">
+        <note />
+    <roleset framnet="enter.01" id="encetar.01" name="começar, iniciar" vncls="51.1-1">
+            <roles>
+                <role descr="entity entering" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="place or thing entered" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2255:  Eleito em 1988,  o ex-  presidente Carlos_  Andrés_  Pérez(  social-  democrata)  encetou uma política econômica neoliberal que impôs sacrifícios ﻿à população dando início a uma série de violentos protestos. 
+</text>
+                <arg f="prd" n="m">Eleito em 1988
+</arg>
+                <arg f="" n="0">o ex-  presidente Carlos_  Andrés_  Pérez(  social-  democrata) 
+</arg>
+                <rel f="">encetou</rel>
+                <arg f="" n="1">uma política econômica neoliberal que impôs sacrifícios ﻿à população dando início a uma série de violentos protestos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

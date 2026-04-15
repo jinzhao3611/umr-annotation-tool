@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="checar">
+        <note />
+    <roleset framnet="check.01" id="checar.01" name="verificar" vncls="35.2">
+            <roles>
+                <role descr="checker" n="0">
+                    <vnrole vncls="35.2" vntheta="Agent" />
+                </role>
+                <role descr="thing checked" n="1">
+                    <vnrole vncls="35.2" vntheta="Location" />
+                </role>
+                <role descr="checked for" n="2">
+                    <vnrole vncls="35.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2817:  Suas atribuições são criticar o jornal sob a perspectiva do leitor recebendo e checando as reclamações que ele encaminha ﻿à Redação e comentar,  aos domingos,  o noticiário dos meios de comunicação. 
+</text>
+                <rel f="">checando</rel>
+                <arg f="" n="1">as reclamações que ele encaminha ﻿à Redação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s816:  O presidente disse que pediu ao ministro das Minas_  e_  Energia,  Alexis_  Stepanenko,  que cheque também as estatais ligadas a ele para saber se também houve desobediência. 
+</text>
+                <arg f="" n="0">o ministro das Minas_  e_  Energia,  Alexis_  Stepanenko, 
+</arg>
+                <rel f="">cheque</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">as estatais ligadas a ele
+</arg>
+                <arg f="" n="2">para saber se também houve desobediência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s125:  Caso a opção seja pelo aparelho multiuso,  o comprador deve checar se o produto tem assistência técnica,  diz ela. 
+</text>
+                <arg f="adv" n="m">Caso a opção seja pelo aparelho multiuso
+</arg>
+                <arg f="" n="0">o comprador
+</arg>
+                <rel f="">checar</rel>
+                <arg f="" n="1">se o produto tem assistência técnica
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="elaborar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1612:  Para elaborar a lista,  o grupo mede o custo de vida em quase 200 lugares. 
+</text>
+                <rel f="">elaborar</rel>
+                <arg f="" n="1">a lista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s761:  Segundo ele,  a parte econômica do programa poderá ser elaborada pelo ex-  ministro da Fazenda Gustavo_  Krause(  PFL-  PE) . 
+</text>
+                <arg f="" n="1">a parte econômica do programa
+</arg>
+                <rel f="">elaborada</rel>
+                <arg f="" n="0">pelo ex-  ministro da Fazenda Gustavo_  Krause(  PFL-  PE) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s585:  Fizemos um projeto e comecei a elaborar a estrutura do livro »,  diz Andréa. 
+</text>
+                <rel f="">elaborar</rel>
+                <arg f="" n="1">a estrutura do livro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s45:  Prandi disse ainda que a empresa está elaborando « normas factíveis de serem executadas para a solução ou minimização dos problemas » existentes no local. 
+</text>
+                <arg f="" n="0">a empresa
+</arg>
+                <rel f="">elaborando</rel>
+                <arg f="" n="1">« normas factíveis de serem executadas para a solução ou minimização dos problemas » existentes no local
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

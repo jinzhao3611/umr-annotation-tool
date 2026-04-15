@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desenhar">
+        <note />
+    <roleset framnet="draw.01" id="desenhar.01" name="representar graficamente com traços" vncls="25.2 26.7-2">
+            <roles>
+                <role descr="artist" n="0">
+                    <vnrole vncls="26.7-2" vntheta="Agent" />
+                    <vnrole vncls="25.2" vntheta="Agent" />
+                </role>
+                <role descr="art" n="1">
+                    <vnrole vncls="26.7-2" vntheta="Theme" />
+                    <vnrole vncls="25.2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="26.7-2" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2401:  Antes da derrota por 2 a 0 na primeira partida entre os dois clubes,  quinta-  feira no Mineirão,  o técnico botafoguense Renato_  Trindade desenhou a tática adversária num quadro negro do vestiário. 
+</text>
+                <arg f="tmp" n="m">Antes da derrota por 2 a 0 na primeira partida entre os dois clubes
+</arg>
+                <arg f="loc" n="m">no Mineirão
+</arg>
+                <arg f="" n="0">o técnico botafoguense Renato_  Trindade
+</arg>
+                <rel f="">desenhou</rel>
+                <arg f="" n="1">a tática adversária
+</arg>
+                <arg f="loc" n="m">num quadro negro do vestiário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="organizar">
+        <note />
+    <roleset framnet="organize.01" id="organizar.01" name="coordenar, planejar" vncls="26.4 55.5-1">
+            <roles>
+                <role descr="organizer" n="0">
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                    <vnrole vncls="55.5-1" vntheta="Agent" />
+                </role>
+                <role descr="thing organized" n="1">
+                    <vnrole vncls="26.4" vntheta="Product" />
+                    <vnrole vncls="55.5-1" vntheta="Theme" />
+                </role>
+                <role descr="previous state" n="2">
+                    <vnrole vncls="26.4" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.4" vntheta="Beneficiary" />
+                </role>
+                <role descr="end state" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1815:  Recentemente,  o Banco_  Mundial constituiu um grupo independente de inspeção para analisar queixas sobre seus projetos,  iniciou uma nova política de informações e o Gatt organizou o primeiro seminário com a participação de ONGs. 
+</text>
+                <arg f="" n="0">o Gatt
+</arg>
+                <rel f="">organizou</rel>
+                <arg f="" n="1">o primeiro seminário com a participação de ONGs
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1386:  A excursão está sendo organizada pelo clube More_  Fun,  que promove a troca de correspondências entre gays que não querem expor publicamente suas preferências sexuais. 
+</text>
+                <arg f="" n="1">A excursão
+</arg>
+                <rel f="">organizada</rel>
+                <arg f="" n="0">pelo clube More_  Fun,  que promove a troca de correspondências entre gays que não querem expor publicamente suas preferências sexuais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1069:  Querem organizar pacotes para visitas ao túmulo do tricampeão Ayrton_  Senna eternamente favorito de 10 entre 10 japoneses. 
+</text>
+                <rel f="">organizar</rel>
+                <arg f="" n="1">pacotes para visitas ao túmulo do tricampeão Ayrton_  Senna eternamente favorito de 10 entre 10 japoneses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s790:  O modelo de privatização previsto na MP foi organizado pelo presidente do BNDES,  Pérsio_  Arida. 
+</text>
+                <arg f="" n="1">O modelo de privatização previsto na MP
+</arg>
+                <rel f="">organizado</rel>
+                <arg f="" n="0">pelo presidente do BNDES,  Pérsio_  Arida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s323:  Interessado em organizar um livro de arte sobre viajantes,  Ronaldo_  Graça_  Couto,  da produtora Metavídeo/  Metalivros,  tomou conhecimento da pesquisa e procurou Belluzzo. 
+</text>
+                <rel f="">organizar</rel>
+                <arg f="" n="1">um livro de arte sobre viajantes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

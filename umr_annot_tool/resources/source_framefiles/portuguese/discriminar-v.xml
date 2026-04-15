@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="discriminar">
+        <note />
+    <roleset framnet="discriminate.02" id="discriminar.01" name="tratar de forma distinta" vncls="71">
+            <roles>
+                <role descr="bigot, agent" n="0">
+                    <vnrole vncls="71" vntheta="Actor1" />
+                </role>
+                <role descr="victim" n="1">
+                    <vnrole vncls="71" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3771:  Excetuada a educação básica de primeiro grau,  que deve ser gratuita e obrigatória,  para todo o resto é preciso discriminar quem pode pagar. 
+</text>
+                <rel f="">discriminar</rel>
+                <arg f="" n="1">quem pode pagar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

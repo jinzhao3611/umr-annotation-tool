@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="punir">
+        <note />
+    <roleset framnet="punish.01" id="punir.01" name="castigar; impor penalidade" vncls="-">
+            <roles>
+                <role descr="punisher, agent" n="0" />
+                <role descr="person punished" n="1" />
+                <role descr="punished for" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3876:  Fay foi punido com quatro vergastadas e agora cumpre pena de prisão. 
+</text>
+                <arg f="" n="1">Fay
+</arg>
+                <rel f="">punido</rel>
+                <arg f="mnr" n="m">com quatro vergastadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

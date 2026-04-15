@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="centralizar">
+        <note />
+    <roleset framnet="centralize.01" id="centralizar.01" name="reunir em um só lugar" vncls="45.4">
+            <roles>
+                <role descr="collector" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing(s) collected" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s64:  Dados sobre abuso sexual em bulímicas no Brasil,  Áustria e Estados_  Unidos foram centralizados por Harrison_  Pope,  da Escola_  de_  Medicina de Harvard. 
+</text>
+                <arg f="" n="1">Dados sobre abuso sexual em bulímicas no Brasil,  Áustria e Estados_  Unidos
+</arg>
+                <rel f="">centralizados</rel>
+                <arg f="" n="0">por Harrison_  Pope,  da Escola_  de_  Medicina de Harvard
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

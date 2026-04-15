@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ignorar">
+        <note />
+    <roleset framnet="ignore.01" id="ignorar.01" name="desconhecer; não dar atenção a" vncls="">
+            <roles>
+                <role descr="ignorer" n="0" />
+                <role descr="thing ignored" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2315:  Ninguém ignora os terríveis problemas que o país atravessa,  dos_  quais a corrupção policial e os níveis de violência são apenas uma faceta. 
+</text>
+                <arg f="" n="0">Ninguém
+</arg>
+                <rel f="">ignora</rel>
+                <arg f="" n="1">os terríveis problemas que o país atravessa,  dos_  quais a corrupção policial e os níveis de violência são apenas uma faceta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s959:  O presidente Miguel_  Kodja_  Neto ignorou a diplomacia que normalmente marca o futebol para acusar o ex-  jogador e empresário Pelé. 
+</text>
+                <arg f="" n="0">O presidente Miguel_  Kodja_  Neto
+</arg>
+                <rel f="">ignorou</rel>
+                <arg f="" n="1">a diplomacia que normalmente marca o futebol para acusar o ex-  jogador e empresário Pelé
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

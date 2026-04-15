@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="concluir">
+        <note />
+        <note />
+    <roleset framnet="conclude.01" id="concluir.01" name="decidir, tirar conclusão" vncls="97.2">
+            <roles>
+                <role descr="decider" n="0">
+                    <vnrole vncls="97.2" vntheta="Agent" />
+                </role>
+                <role descr="decision" n="1">
+                    <vnrole vncls="97.2" vntheta="Product" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3421:  Por_  que não publicar que o PT fez um seminário no Nordeste sobre ela e concluiu pela necessidade de sua construção? 
+</text>
+                <arg f="" n="0">o PT
+</arg>
+                <rel f="">concluiu</rel>
+                <arg f="" n="1">pela necessidade de sua construção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1527:  Pesquisadores dos Estados_  Unidos concluem que o medicamento consegue bons resultados a_  longo_  prazo
+</text>
+                <arg f="" n="0">os Estados_  Unidos
+</arg>
+                <rel f="">concluem</rel>
+                <arg f="" n="1">que o medicamento consegue bons resultados a_  longo_  prazo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1134:  Não estamos concluindo que este comportamento é intencional,  mas sim que há uma forte predisposição cultural(  preconceito)  em criticar o Legislativo antes mesmo de conhecer tudo que cerca algumas decisões. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">concluindo</rel>
+                <arg f="" n="1">que este comportamento é intencional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s916:  Um sínodo da Igreja Católica concluiu ontem que as freiras devem ter maior poder e responsabilidade. 
+</text>
+                <arg f="" n="0">Um sínodo da Igreja Católica
+</arg>
+                <rel f="">concluiu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">que as freiras devem ter maior poder e responsabilidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s859:  Aristides está esperando a publicação do texto do FSE aprovado pelo Congresso para concluir se a desvinculação dessas verbas atinge ou não direitos individuais. 
+</text>
+                <rel f="">concluir</rel>
+                <arg f="" n="1">se a desvinculação dessas verbas atinge ou não direitos individuais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="conclude.02" id="concluir.02" name="finalizar" vncls="">
+            <roles>
+                <role descr="Intentional agent" n="0" />
+                <role descr="Thing ending" n="1" />
+                <role descr="Explicit instrument, thing ended with" n="2" />
+                <role descr="point at which something ends" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3254:  Enfermeiro é uma designação válida apenas para quem concluiu o curso superior de enfermagem. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">concluiu</rel>
+                <arg f="" n="1">o curso superior de enfermagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1799:  Na delegacia de polícia,  a nova bandeira de seis cores está hasteada no mastro e o juiz David_  Postman acabou de concluir a contagem dos votos. 
+</text>
+                <arg f="" n="0">o juiz David_  Postman
+</arg>
+                <rel f="">concluir</rel>
+                <arg f="" n="1">a contagem dos votos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

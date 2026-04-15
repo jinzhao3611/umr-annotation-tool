@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="contabilizar">
+        <note />
+    <roleset framnet="record.01" id="contabilizar.01" name="registrar na contabilidade" vncls="25.4">
+            <roles>
+                <role descr="recorder" n="0">
+                    <vnrole vncls="25.4" vntheta="Agent" />
+                </role>
+                <role descr="record" n="1">
+                    <vnrole vncls="25.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1150:  Muitas empresas entraram na Justiça para obter o direito de contabilizar essa corrosão inflacionária em seus balanços,  e ganharam as ações em primeira instância. 
+</text>
+                <rel f="">contabilizar</rel>
+                <arg f="" n="1">essa corrosão inflacionária
+</arg>
+                <arg f="" n="2">em seus balanços
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

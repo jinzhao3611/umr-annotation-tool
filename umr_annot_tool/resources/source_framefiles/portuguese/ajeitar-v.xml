@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ajeitar-se">
+        <note />
+    <roleset framnet="settle.02" id="ajeitar.01" name="alternância incoativa de &quot;ajeitar&quot;: ficar resolvido" vncls="-">
+            <roles>
+                <role descr="entity making resolution" n="0" />
+                <role descr="thing being resolved" n="1" />
+                <role descr="comitative, resolved with" n="2" />
+                <role descr="attribute, resolved to or at" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s594:  Por_  que não ousar ainda_  que ingenuamente esperar que as coisas desta_  vez se ajeitem? 
+</text>
+                <arg f="" n="1">as coisas
+</arg>
+                <arg f="tmp" n="m">desta_  vez
+</arg>
+                <rel f="">ajeitem</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="municiar">
+        <note />
+    <roleset framnet="arm.01" id="municiar.01" name="dar municão" vncls="13.4.2">
+            <roles>
+                <role descr="equiper, provider, agent" n="0">
+                    <vnrole vncls="13.4.2" vntheta="Agent" />
+                </role>
+                <role descr="entity armed" n="1">
+                    <vnrole vncls="13.4.2" vntheta="Recipient" />
+                </role>
+                <role descr="equipment" n="2">
+                    <vnrole vncls="13.4.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3033:  Se a queda da inflação certamente produziria efeitos positivos na candidatura Fernando_  Henrique_  Cardoso,  as prateleiras vazias municiam os adversários. 
+</text>
+                <arg f="adv" n="m">Se a queda da inflação certamente produziria efeitos positivos na candidatura Fernando_  Henrique_  Cardoso
+</arg>
+                <arg f="" n="0">as prateleiras vazias
+</arg>
+                <rel f="">municiam</rel>
+                <arg f="" n="1">os adversários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2661:  Ele está me municiando e me dando o instrumental de que careço para imaginar a solução dos problemas do Estado. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">municiando</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

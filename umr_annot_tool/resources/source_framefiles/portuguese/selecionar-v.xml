@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="selecionar">
+        <note />
+    <roleset framnet="select.01" id="selecionar.01" name="escolher" vncls="13.5.2">
+            <roles>
+                <role descr="selector" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="entity selected" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="selected from" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="attribute, selected for/as" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2611:  Assim,  se você está usando uma planilha,  por_  exemplo,  pode selecionar parte(  ou todo)  e levar o_  que foi selecionado para outra planilha ou qualquer programa que estiver sendo usado. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">selecionado</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2611:  Assim,  se você está usando uma planilha,  por_  exemplo,  pode selecionar parte(  ou todo)  e levar o_  que foi selecionado para outra planilha ou qualquer programa que estiver sendo usado. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">selecionar</rel>
+                <arg f="" n="1">parte(  ou todo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2206:  Os responsáveis pelo programa vasculharam uma multidão de arquivos de filmes(  russos,  norte-  americanos,  franceses,  ingleses,  alemães)  e selecionaram imagens produzidas pelas agências oficiais desses países que compõem uma formidável ilustração da história do século 20,  tal_  como vista por seus protagonistas. 
+</text>
+                <arg f="" n="0">Os responsáveis pelo programa
+</arg>
+                <rel f="">selecionaram</rel>
+                <arg f="" n="1">imagens produzidas pelas agências oficiais desses países que compõem uma formidável ilustração da história do século 20,  tal_  como vista por seus protagonistas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s993:  A paralela « Um_  Certo_  Olhar » selecionou « Los_  Naufragos » do chileno Miguel_  Littin e « Sin_  Compassion » do peruano Francisco_  Lombardi. 
+</text>
+                <arg f="" n="0">A paralela « Um_  Certo_  Olhar »
+</arg>
+                <rel f="">selecionou</rel>
+                <arg f="" n="1">« Los_  Naufragos » do chileno Miguel_  Littin e « Sin_  Compassion » do peruano Francisco_  Lombardi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s326:  Entre 40 outras idéias,  « Brasil_  dos_  Viajantes » foi selecionado para comemorar os 75 anos de atividade do grupo empresarial. 
+</text>
+                <arg f="" n="2">Entre 40 outras idéias
+</arg>
+                <arg f="" n="1">Brasil_  dos_  Viajantes
+</arg>
+                <rel f="">selecionado</rel>
+                <arg f="pnc" n="m">para comemorar os 75 anos de atividade do grupo empresarial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

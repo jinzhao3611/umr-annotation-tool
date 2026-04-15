@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="examinar">
+        <note />
+    <roleset framnet="examine.01" id="examinar.01" name="analisar; verificar" vncls="30.2 35.4">
+            <roles>
+                <role descr="examiner" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                    <vnrole vncls="35.4" vntheta="Agent" />
+                </role>
+                <role descr="thing examined" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                    <vnrole vncls="35.4" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3581:  O ministro Ricupero ficou satisfeito com aprovação da MP da URV na comissão mista do Congresso que examinou a medida. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">examinou</rel>
+                <arg f="" n="1">a medida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s217:  O secretário do Tesouro,  Lloyd_  Bentsen,  disse que a questão ética vai ser examinada agora. 
+</text>
+                <arg f="" n="1">a questão ética
+</arg>
+                <rel f="">examinada</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="travar">
+        <note />
+    <roleset framnet="halt.01" id="travar.01" name="impedir o funcionamento; trancar; fechar" vncls="45.4 55.1">
+            <roles>
+                <role descr="causer of stopping" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="Theme (action or object being stopped)" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="Instrument, if separate from arg0" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2668:  « Todas as linhas foram travadas em três meses »,  disse Mário_  Luna,  gerente de Departamento_  de_  Crédito_  e_  Financiamento do Bradesco. 
+</text>
+                <arg f="" n="1">Todas as linhas
+</arg>
+                <rel f="">travadas</rel>
+                <arg f="tmp" n="m">em três meses
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

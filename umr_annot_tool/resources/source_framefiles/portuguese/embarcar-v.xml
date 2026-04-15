@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="embarcar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2233:  Quando astronautas embarcarem numa estação orbital ou,  eventualmente,  estiverem a caminho de Marte,  terão como companhia necessária alguns bilhões ou trilhões de micróbios comilões. 
+</text>
+                <arg f="" n="0">astronautas
+</arg>
+                <rel f="">embarcarem</rel>
+                <arg f="" n="1">numa estação orbital
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

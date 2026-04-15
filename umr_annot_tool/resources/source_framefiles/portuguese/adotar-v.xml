@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="adotar">
+        <note />
+    <roleset framnet="adopt.01" id="adotar.01" name="seguir" vncls="29.1">
+            <roles>
+                <role descr="adopter" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="thing adopted" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="secondary attibute" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3918:  Segundo o cônsul,  era crescente a pressão do Congresso norte-  americano sobre o Departamento_  de_  Estado para que se adotasse uma política idêntica ﻿à do Brasil. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">adotasse</rel>
+                <arg f="" n="1">uma política idêntica ﻿à do Brasil
+</arg>
+                <note>com SE apassivador: anotar o SE como arg0 para marcar a supressão do agente</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2205:  « Propaganda_ - _  O_  Poder_  da_  Imagem » é o tipo de série que poderia ser adotada com proveito nos currículos escolares. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">adotada</rel>
+                <arg f="mnr" n="m">com proveito
+</arg>
+                <arg f="loc" n="m">nos currículos escolares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1716:  Depois do tratado de paz de 1923,  aboliu o califato,  a poligamia,  substituiu práticas legais islâmicas por outras de inspiração européia,  adotou o alfabeto romano e o calendário gregoriano e concedeu às mulheres direito de voto. 
+</text>
+                <arg f="tmp" n="m">Depois do tratado de paz de 1923
+</arg>
+                <rel f="">adotou</rel>
+                <arg f="" n="1">o alfabeto romano e o calendário gregoriano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s473:  Flórida Adota Discurso ANTIIMIGRAÇÃO,  Carlos_  Eduardo_  Lins_  da_  Silva
+</text>
+                <arg f="" n="0">Flórida
+</arg>
+                <rel f="">Adota</rel>
+                <arg f="" n="1">Discurso ANTIIMIGRAÇÃO
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

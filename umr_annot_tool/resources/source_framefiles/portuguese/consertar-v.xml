@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="consertar">
+        <note />
+    <roleset framnet="fix.02" id="consertar.01" name="corrigir um problema" vncls="26.3-1">
+            <roles>
+                <role descr="fixer" n="0">
+                    <vnrole vncls="26.3-1" vntheta="Agent" />
+                </role>
+                <role descr="thing fixed" n="1">
+                    <vnrole vncls="26.3-1" vntheta="Product" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="26.3-1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1781:  Parte porque o tricolor entrou em campo mal escalado por Telê,  que tentou consertar logo após,  com a entrada de Vítor na lateral e a passagem de Cafu para o lugar de Jamelli. 
+</text>
+                <rel f="">consertar</rel>
+                <arg f="tmp" n="m">logo após
+</arg>
+                <arg f="mnr" n="m">a entrada de Vítor na lateral e a passagem de Cafu para o lugar de Jamelli
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

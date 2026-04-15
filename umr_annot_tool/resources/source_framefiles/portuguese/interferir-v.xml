@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="interferir">
+        <note />
+    <roleset framnet="interfere.01" id="interferir.01" name="intervir; afetar" vncls="-">
+            <roles>
+                <role descr="agent" n="0" />
+                <role descr="interfere with/in" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1645:  De_  acordo com o amassado,  sem que seja preciso interferir na pintura. 
+</text>
+                <rel f="">interferir</rel>
+                <arg f="" n="1">na pintura
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

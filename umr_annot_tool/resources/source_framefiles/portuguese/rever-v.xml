@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rever">
+        <note />
+        <note />
+    <roleset framnet="see.01" id="rever.01" name="reencontrar" vncls="29.2 30.1">
+            <roles>
+                <role descr="viewer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="thing viewed" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3524:  Lá,  os plínios fazem amigos,  influenciam pessoas,  revêem colegas,  contam as novidades- -  as últimas viagens para os Estados_  Unidos,  quem comprou carro novo,  quem « vai ter » que começar a trabalhar com o pai,  os que ainda não conseguiram telefone celular. 
+</text>
+                <arg f="" n="0">os plínios
+</arg>
+                <rel f="">revêem</rel>
+                <arg f="" n="1">colegas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="review.01" id="rever.02" name="revisar; reconsiderar" vncls="34">
+            <roles>
+                <role descr="reviewer" n="0">
+                    <vnrole vncls="34" vntheta="Agent" />
+                </role>
+                <role descr="thing reviewed" n="1">
+                    <vnrole vncls="34" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="34" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2598:  A Secretaria_  Municipal_  da_  Administração afirmou ontem que poderá rever o decreto do prefeito Paulo_  Maluf que proíbe a contratação de portadores de doenças com possibilidade de se tornarem incapazes no futuro. 
+</text>
+                <arg f="" n="0">A Secretaria_  Municipal_  da_  Administração
+</arg>
+                <rel f="">rever</rel>
+                <arg f="" n="1">o decreto do prefeito Paulo_  Maluf que proíbe a contratação de portadores de doenças com possibilidade de se tornarem incapazes no futuro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2597:  Secretaria admite rever decreto sobre contratação de funcionários
+</text>
+                <rel f="">rever</rel>
+                <arg f="" n="1">decreto sobre contratação de funcionários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2261:  Se o mínimo sofrer alteração,  a Constituição determina que as aposentadorias também sejam revistas. 
+</text>
+                <arg f="" n="1">as aposentadorias
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">revistas</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1467:  Apesar_  de seu discurso duro contra eventuais aumentos de preços,  Ciro admitiu,  pela_  primeira_  vez,  rever a estratégia de redução das alíquotas de importação. 
+</text>
+                <rel f="">rever</rel>
+                <arg f="" n="1">a estratégia de redução das alíquotas de importação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

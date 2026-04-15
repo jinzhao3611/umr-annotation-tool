@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acertar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="agree.01" id="acertar.02" name="fazer acordo" vncls="36.1">
+            <roles>
+                <role descr="agreer" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="proposition" n="1">
+                    <vnrole vncls="36.1" vntheta="Theme" />
+                </role>
+                <role descr="other entity agreeing" n="2">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3561:  « Como eles aumentaram 6,  28%  nas duas semanas,  acertamos que eles iriam parar os aumentos. 
+</text>
+                <arg f="cau" n="m">Como eles aumentaram 6,  28%  nas duas semanas
+</arg>
+                <rel f="">acertamos</rel>
+                <arg f="" n="1">que eles iriam parar os aumentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2836:  A cooperativa de Curaçá(  BA) ,  no Vale_  do_  São_  Francisco,  praticamente acertou uma joint_  venture com um empresário português para produzir melão e uva. 
+</text>
+                <arg f="" n="0">A cooperativa de Curaçá(  BA) ,  no Vale_  do_  São_  Francisco, 
+</arg>
+                <arg f="adv" n="m">praticamente
+</arg>
+                <rel f="">acertou</rel>
+                <arg f="" n="1">uma joint_  venture com um empresário português para produzir melão e uva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2299:  Os líderes acertaram que,  havendo quorum,  o Orçamento de 95 só não será votado hoje se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas. 
+</text>
+                <arg f="" n="0">Os líderes
+</arg>
+                <rel f="">acertaram</rel>
+                <arg f="" n="1">que,  havendo quorum,  o Orçamento de 95 só não será votado hoje se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1188:  O jogador contou o motivo que o obrigou a não acertar com o Everton. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">acertar</rel>
+                <arg f="" n="1">com o Everton
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s395:  Com a Servaz,  segundo o documento obtido pela Folha a Odebrecht acerta o pagamento de US$  110 mil mais uma porcentagem referente_  a obras de abastecimento de água em Roraima,  ainda a serem licitadas. 
+</text>
+                <arg f="" n="2">Com a Servaz
+</arg>
+                <arg f="dis" n="m">segundo o documento obtido pela Folha
+</arg>
+                <arg f="" n="0">a Odebrecht
+</arg>
+                <rel f="">acerta</rel>
+                <arg f="" n="1">o pagamento de US$  110 mil mais uma porcentagem referente_  a obras de abastecimento de água em Roraima ainda a serem licitadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="succeed.01" id="acertar.03" name="fazer a escolha certa" vncls="">
+            <roles>
+                <role descr="entity succeeding" n="0" />
+                <role descr="task" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3435:  O sétimo filme de Spike_  Lee acerta nos figurinos e trejeitos da época e resgata preciosidades do soul negro dos anos 70. 
+</text>
+                <arg f="" n="0">O sétimo filme de Spike_  Lee
+</arg>
+                <rel f="">acerta</rel>
+                <arg f="" n="1">nos figurinos e trejeitos da época
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s676:  Quando os dois acertavam juntos(  « Bonequinha_  de_  Luxo «,  « Vício_  Maldito »,  « A_  Pantera_  Cor-  de-  Rosa ») ,  era uma festa para todos os sentidos. 
+</text>
+                <arg f="tmp" n="m">Quando
+</arg>
+                <arg f="" n="0">os dois
+</arg>
+                <rel f="">acertavam</rel>
+                <arg f="mnr" n="m">juntos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="settle.02" id="acertar.04" name="resolver, ajustar" vncls="-">
+            <roles>
+                <role descr="entity making resolution" n="0" />
+                <role descr="thing being resolved" n="1" />
+                <role descr="comitative, resolved with" n="2" />
+                <role descr="attribute, resolved to or at" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2622:  Quando o secretário da Receita era Osires_  Lopes_  Filho,  várias cartas foram expedidas a profissionais liberais e empresas « convidando-  os » a acertar as contas com o leão. 
+</text>
+                <rel f="">acertar</rel>
+                <arg f="" n="1">as contas
+</arg>
+                <arg f="" n="2">com o leão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1912:  Agricultor acerta dívida
+</text>
+                <arg f="" n="0">Agricultor
+</arg>
+                <rel f="">acerta</rel>
+                <arg f="" n="1">dívida
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

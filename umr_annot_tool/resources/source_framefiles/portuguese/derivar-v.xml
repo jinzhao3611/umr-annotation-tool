@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="derivar">
+        <note />
+    <roleset framnet="derive.01" id="derivar.01" name="originar de" vncls="26.4 48.1.1">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                </role>
+                <role descr="thing created" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                    <vnrole vncls="26.4" vntheta="Product" />
+                </role>
+                <role descr="source" n="2">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                    <vnrole vncls="26.4" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.4" vntheta="Beneficiary" />
+                </role>
+                <role descr="attribute, secondary predication" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2362:  Esta vertente,  francamente conteudista,  derivava das experiências realizadas no período pré-  64 pelos Centros_  Populares_  de_  Cultura(  CPCs) ,  ligados ﻿à União_  Nacional_  dos_  Estudantes,  que privilegiavam a « mensagem » e procuravam falar uma idealizada linguagem do « povo ». 
+</text>
+                <arg f="" n="1">Esta vertente,  francamente conteudista, 
+</arg>
+                <rel f="">derivava</rel>
+                <arg f="" n="2">das experiências realizadas no período pré-  64 pelos Centros_  Populares_  de_  Cultura(  CPCs) ,  ligados ﻿à União_  Nacional_  dos_  Estudantes,  que privilegiavam a « mensagem » e procuravam falar uma idealizada linguagem do « povo »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

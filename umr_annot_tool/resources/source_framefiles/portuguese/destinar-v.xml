@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="destinar">
+        <note />
+    <roleset framnet="" id="destinar.01" name="dar destino para; atribuir finalidade" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1818:  Desse total,  CR$  127 milhões serão destinados ﻿à campanha de combate ﻿à dengue e ao pagamento dos 200 agentes de saúde contratados para a campanha. 
+</text>
+                <arg f="prd" n="m">Desse total
+</arg>
+                <arg f="" n="1">CR$  127 milhões
+</arg>
+                <rel f="">destinados</rel>
+                <arg f="" n="2">﻿à campanha de combate ﻿à dengue e ao pagamento dos 200 agentes de saúde contratados para a campanha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s862:  Os Estados e municípios têm que destinar 25%  desta receita. 
+</text>
+                <arg f="" n="0">Os Estados e municípios
+</arg>
+                <rel f="">destinar</rel>
+                <arg f="" n="1">25%  desta receita
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s810:  O governo concordou em incluir no Orçamento de 94 investimentos em educação nos mesmos níveis do ano passado e destinar para habitação três vezes mais do_  que o registrado em 1992. 
+</text>
+                <rel f="">destinar</rel>
+                <arg f="" n="2">para habitação
+</arg>
+                <arg f="" n="1">três vezes mais do_  que o registrado em 1992
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s28:  O projeto original do governo destinava ao TSE R$  334,  9 milhões. 
+</text>
+                <arg f="" n="0">O projeto original do governo
+</arg>
+                <rel f="">destinava</rel>
+                <arg f="" n="2">ao TSE
+</arg>
+                <arg f="" n="1">R$  334,  9 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s26:  Na época,  o então ministro da Fazenda,  Fernando_  Henrique_  Cardoso,  fez um pronunciamento em cadeia nacional para anunciar a intenção do governo de destinar o FSE a investimentos sociais. 
+</text>
+                <rel f="">destinar</rel>
+                <arg f="" n="1">o FSE
+</arg>
+                <arg f="" n="2">a investimentos sociais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

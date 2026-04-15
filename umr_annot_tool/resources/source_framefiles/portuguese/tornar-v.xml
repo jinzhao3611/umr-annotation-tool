@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tornar-se">
+        <note />
+    <roleset framnet="become.01" id="tornar.01" name="alternância incoativa de &quot;tornar&quot;; mudar (de estado); ser transformado em" vncls="-">
+            <roles>
+                <role descr="entity changing" n="1" />
+                <role descr="new state" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4206:  O cineasta italiano Franco_  Zefirelli revelou que,  para iludir o serviço militar durante o período fascista,  se tornou um partisan e acabou matando um soldado alemão. 
+</text>
+                <arg f="" n="1">O cineasta italiano Franco_  Zefirelli
+</arg>
+                <rel f="">tornou</rel>
+                <arg f="" n="2">um partisan
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3996:  O navio ancora numa praia,  Serena_  Cay,  que se torna exclusiva dos 1.  600 passageiros. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">torna</rel>
+                <arg f="" n="2">exclusiva dos 1.  600 passageiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3087:  Um caso típico foi o de « Someone_  to_  Watch_  Over_  Me »(  1926) ,  que nasceu « brejeira » e Ira recomendou que ela se tornasse uma balada romântica. 
+</text>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">tornasse</rel>
+                <arg f="" n="2">uma balada romântica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2760:  Ao_  mesmo_  tempo o atual papado esmagou a teologia da libertação,  teorias de concorrência feroz são implantadas em toda parte,  o fascismo está de_  volta,  Fidel_  Castro se tornou uma espécie de Somoza e até Martin_  Luther_  King,  ficou provado,  era plagiário. 
+</text>
+                <arg f="" n="1">Fidel_  Castro
+</arg>
+                <rel f="">tornou</rel>
+                <arg f="" n="2">uma espécie de Somoza
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2598:  A Secretaria_  Municipal_  da_  Administração afirmou ontem que poderá rever o decreto do prefeito Paulo_  Maluf que proíbe a contratação de portadores de doenças com possibilidade de se tornarem incapazes no futuro. 
+</text>
+                <rel f="">tornarem</rel>
+                <arg f="" n="2">incapazes
+</arg>
+                <arg f="tmp" n="m">no futuro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2577:  Se derrotar o candidato do PPR,  Roseana se tornará a primeira governadora eleita na história do país. 
+</text>
+                <arg f="adv" n="m">Se derrotar o candidato do PPR
+</arg>
+                <arg f="" n="1">Roseana
+</arg>
+                <rel f="">tornará</rel>
+                <arg f="" n="2">a primeira governadora eleita na história do país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2367:  Ora,  se o presidente chegar ﻿à posse sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas,  torna-  se muito mais difícil fazê-  los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC. 
+</text>
+                <arg f="dis" n="m">Ora
+</arg>
+                <arg f="adv" n="m">se o presidente chegar ﻿à posse sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas
+</arg>
+                <rel f="">torna-</rel>
+                <arg f="" n="2">muito mais difícil
+</arg>
+                <arg f="" n="1">fazê-  los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2101:  O delegado disse que têm se tornado frequentes os linchamentos na região. 
+</text>
+                <rel f="">tornado</rel>
+                <arg f="" n="2">frequentes
+</arg>
+                <arg f="" n="1">os linchamentos na região
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1714:  Já em Ancara que se tornaria capital Kemal presidiu a grande Assembléia_  Nacional. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">tornaria</rel>
+                <arg f="" n="2">capital
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s839:  Em 1962,  publica « Capitalismo_  e_  Escravidão_  no_  Brasil_  Meridional »,  primeira obra de sua autoria a se tornar referência nas ciências sociais do país. 
+</text>
+                <rel f="">tornar</rel>
+                <arg f="" n="2">referência
+</arg>
+                <arg f="loc" n="m">nas ciências sociais do país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s558:  O governador se convenceu ainda de que,  se abandonassse a candidatura,  poderia se tornar refém de Quércia e perderia o poder de influência na escolha do candidato do PMDB. 
+</text>
+                <arg f="" n="1">O governador
+</arg>
+                <rel f="">tornar</rel>
+                <arg f="" n="2">refém de Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s436:  O acordo não se tornou público,  mas,  agora,  se sabe que foram feitas muitas concessões políticas. 
+</text>
+                <arg f="" n="1">O acordo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">tornou</rel>
+                <arg f="" n="2">público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s419:  Simplesmente tornara-  se impossível,  por razões tecnológicas,  comerciais e financeiras,  estimular o desenvolvimento com base na substituição de importações. 
+</text>
+                <arg f="adv" n="m">Simplesmente
+</arg>
+                <rel f="">tornara-</rel>
+                <arg f="" n="2">impossível
+</arg>
+                <arg f="cau" n="m">por razões tecnológicas,  comerciais e financeiras
+</arg>
+                <arg f="" n="1">estimular o desenvolvimento com base na substituição de importações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="turn.01" id="tornar.02" name="" vncls="26.6 40.3.2 40.8.3-1 51.3.1">
+            <roles>
+                <role descr="turner" n="0">
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                    <vnrole vncls="40.8.3-1" vntheta="Experiencer" />
+                    <vnrole vncls="26.6" vntheta="Agent" />
+                    <vnrole vncls="51.3.1" vntheta="Agent" />
+                </role>
+                <role descr="thing turning" n="1">
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                    <vnrole vncls="40.8.3-1" vntheta="Patient" />
+                    <vnrole vncls="26.6" vntheta="Material" />
+                    <vnrole vncls="51.3.1" vntheta="Theme" />
+                </role>
+                <role descr="direction, location" n="m" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3126:  Tanto dinheiro parece tornar desprezível a ética do marketing:  a Delta recebe centenas de cartas de crianças denunciando pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce. 
+</text>
+                <arg f="" n="0">Tanto dinheiro
+</arg>
+                <rel f="">tornar</rel>
+                <arg f="" n="2">desprezível
+</arg>
+                <arg f="" n="1">a ética do marketing:  a Delta recebe centenas de cartas de crianças denunciando pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2880:  O beat de certas canções acaba tornando-  as filhotes das compostas pela banda de Athens,  como « Losing_  My_  Religion ». 
+</text>
+                <arg f="" n="0">O beat de certas canções
+</arg>
+                <rel f="">tornando-</rel>
+                <arg f="" n="1">as
+</arg>
+                <arg f="" n="2">filhotes das compostas pela banda de Athens,  como « Losing_  My_  Religion »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2432:  Por dois motivos:  primeiro,  a indisponibilidade do escritor,  que simplesmente não estava interessado em percorrer os Estados_  Unidos ou debater suas idéias ; segundo,  seus comentários sobre a « decadência moral » do Ocidente logo o tornaram inconveniente. 
+</text>
+                <arg f="" n="0">seus comentários sobre a « decadência moral » do Ocidente
+</arg>
+                <arg f="tmp" n="m">logo
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">tornaram</rel>
+                <arg f="" n="2">inconveniente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1955:  Inicialmente restrito ﻿à Europa,  a empresa o tornaria mais tarde disponível em todo o mundo. 
+</text>
+                <arg f="prd" n="m">Inicialmente restrito ﻿à Europa
+</arg>
+                <arg f="" n="0">a empresa
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">tornaria</rel>
+                <arg f="tmp" n="m">mais tarde
+</arg>
+                <arg f="" n="2">disponível
+</arg>
+                <arg f="loc" n="m">em todo o mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s667:  Um,  o convencional,  é o que o Plano_  Real contempla e tem como instrumentos essenciais a importação ﻿à taxa cambial fixa e baixa e quase sem tarifa aduaneira de mercadorias,  tornando impossível pela competição os produtores e comerciantes brasileiros aumentarem seus preços ; e a redução da demanda por bens de consumo e de investimento,  mediante juros altos e corte do gasto público,  impedindo as remarcações de preços pelo excesso de oferta suscitado. 
+</text>
+                <rel f="">tornando</rel>
+                <arg f="" n="2">impossível
+</arg>
+                <arg f="cau" n="m">pela competição
+</arg>
+                <arg f="" n="1">os produtores e comerciantes brasileiros aumentarem seus preços
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

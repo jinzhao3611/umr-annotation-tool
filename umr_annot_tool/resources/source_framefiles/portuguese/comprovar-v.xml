@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comprovar">
+        <note />
+    <roleset framnet="prove.01" id="comprovar.01" name="confirmar com provas" vncls="29.4">
+            <roles>
+                <role descr="prover" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="proposition" n="1">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <role descr="benefactive, proved-to" n="2">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3871:  A última delas,  com a participação de três cientistas,  comprovou superfaturamento de 343$ % . 
+</text>
+                <arg f="" n="0">delas
+</arg>
+                <arg f="mnr" n="m">com a participação de três cientistas
+</arg>
+                <rel f="">comprovou</rel>
+                <arg f="" n="1">superfaturamento de 343$ % 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3676:  E comprova que a Petroplastic recebeu US$  5 milhões para concordar com a transferência,  para a Dow,  do controle da Atochem(  fundadora da Triunfo) . 
+</text>
+                <rel f="">comprova</rel>
+                <arg f="" n="1">que a Petroplastic recebeu US$  5 milhões para concordar com a transferência,  para a Dow,  do controle da Atochem(  fundadora da Triunfo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3593:  Parece que a Universidade_  Yale,  aquela que nos deu o inesquecível George_  Bush,  comprovou a existência de « superdegustadores »,  ou_  seja pessoas que possuem um número de papilas gustativas muito além_  do normal. 
+</text>
+                <arg f="" n="0">a Universidade_  Yale,  aquela que nos deu o inesquecível George_  Bush, 
+</arg>
+                <rel f="">comprovou</rel>
+                <arg f="" n="1">a existência de « superdegustadores »,  ou_  seja pessoas que possuem um número de papilas gustativas muito além_  do normal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3362:  Pesquisas comprovam que quando o motorista vê a fiscalização ele reduz a velocidade por pelo_  menos três quilômetros »,  diz Lehfeld. 
+</text>
+                <arg f="" n="0">Pesquisas
+</arg>
+                <rel f="">comprovam</rel>
+                <arg f="" n="1">que quando o motorista vê a fiscalização ele reduz a velocidade por pelo_  menos três quilômetros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2849:  O resultado positivo da estratégia pode ser comprovado agora,  dizem os criadores,  uma_  vez_  que hoje são os EUA que estão buscando cavalo árabe no Brasil. 
+</text>
+                <arg f="" n="1">O resultado positivo da estratégia
+</arg>
+                <rel f="">comprovado</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2553:  Se o Ministério_  Público_  Estadual comprovar danos ao patrimônio público com as importações de Israel,  os responsáveis estarão sujeitos a ação de ressarcimento. 
+</text>
+                <arg f="" n="0">o Ministério_  Público_  Estadual
+</arg>
+                <rel f="">comprovar</rel>
+                <arg f="" n="1">danos ao patrimônio público com as importações de Israel
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1492:  Quem pensa o contrário,  que trate de comprovar que o raciocínio está furado. 
+</text>
+                <rel f="">comprovar</rel>
+                <arg f="" n="1">que o raciocínio está furado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s209:  Na sua opinião,  o Estado não pode continuar em setores onde a iniciativa privada já comprovou sua eficiência. 
+</text>
+                <arg f="" n="0">a iniciativa privada
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">comprovou</rel>
+                <arg f="" n="1">sua eficiência
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

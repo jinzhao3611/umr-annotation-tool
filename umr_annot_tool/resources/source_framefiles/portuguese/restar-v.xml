@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="restar">
+        <note />
+    <roleset framnet="remain.01" id="restar.01" name="sobrar" vncls="47.1-1">
+            <roles>
+                <role descr="Thing remaining" n="1">
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, entity who gets the remainder" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2747:  Resta um Gol. 
+</text>
+                <rel f="">Resta</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1207:  A única alternativa que resta a Sarney de_  fato é que o Superior_  Tribunal_  de_  Justiça acate a denúncia de estelionato apresentada pelo Ministério_  Público_  Federal contra Orestes_  Quércia e que,  neste caso,  o ex-  governador de São_  Paulo renuncie ﻿à candidatura do PMDB. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">resta</rel>
+                <arg f="" n="2">a Sarney
+</arg>
+                <arg f="adv" n="m">de_  fato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s425:  Resta portanto saber se as medidas anunciadas,  em_  tese adequadas,  terão na prática o efeito que se espera. 
+</text>
+                <rel f="">Resta</rel>
+                <arg f="dis" n="m">portanto
+</arg>
+                <arg f="" n="1">saber se as medidas anunciadas,  em_  tese adequadas,  terão na prática o efeito que se espera
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

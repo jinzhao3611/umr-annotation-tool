@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="trabalhar">
+        <note />
+    <roleset framnet="work.01" id="trabalhar.01" name="exercer atividade" vncls="-">
+            <roles>
+                <role descr="worker" n="0" />
+                <role descr="job, project" n="1" />
+                <role descr="employer" n="2" />
+                <role descr="coworker" n="3" />
+                <role descr="instrumental" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3937:  A República_  Movimento de Emaús trabalha há 20 anos com adolescentes carentes. 
+</text>
+                <arg f="" n="0">A República_  Movimento de Emaús
+</arg>
+                <rel f="">trabalha</rel>
+                <arg f="tmp" n="m">há 20 anos
+</arg>
+                <arg f="" n="1">com adolescentes carentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s3524:  Lá,  os plínios fazem amigos,  influenciam pessoas,  revêem colegas,  contam as novidades- -  as últimas viagens para os Estados_  Unidos,  quem comprou carro novo,  quem « vai ter » que começar a trabalhar com o pai,  os que ainda não conseguiram telefone celular. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">trabalhar</rel>
+                <arg f="" n="3">com o pai
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3387:  Basicamente,  é o que tenho feito com os músicos com os_  quais trabalho. 
+</text>
+                <arg f="" n="3">com os_  quais
+</arg>
+                <rel f="">trabalho</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3364:  Vai « trabalhar » das 7h às 17h30,  inclusive nos finais de semana. 
+</text>
+                <rel f="">trabalhar</rel>
+                <arg f="tmp" n="m">das 7h às 17h30 inclusive nos finais de semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3353:  Roman_  Jakobson trabalhou nessa direção. 
+</text>
+                <arg f="" n="0">Roman_  Jakobson
+</arg>
+                <rel f="">trabalhou</rel>
+                <arg f="" n="1">nessa direção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3228:  Agora estou trabalhando no desenvolvimento de um programa para aumentar a contribuição das políticas públicas para o capital social. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <rel f="">trabalhando</rel>
+                <arg f="" n="1">no desenvolvimento de um programa para aumentar a contribuição das políticas públicas para o capital social
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3227:  Já estou trabalhando com as principais figuras da vida política do país com senadores e secretários de governo. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">trabalhando</rel>
+                <arg f="" n="3">com as principais figuras da vida política do país com senadores e secretários de governo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3089:  George era rápido para trabalhar ; Ira era meticuloso e,  às_  vezes,  levava semanas numa letra,  trabalhando dia_  e_  noite
+</text>
+                <rel f="">trabalhando</rel>
+                <arg f="tmp" n="m">dia_  e_  noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2989:  « Trabalho com amendoim há 27 anos e sempre tive lucro. 
+</text>
+                <rel f="">Trabalho</rel>
+                <arg f="" n="1">com amendoim
+</arg>
+                <arg f="tmp" n="m">há 27 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2745:  Na delegacia,  que fica no Jardim_  Mutinga,  trabalham seis policiais com dois carros. 
+</text>
+                <arg f="loc" n="m">Na delegacia,  que fica no Jardim_  Mutinga, 
+</arg>
+                <rel f="">trabalham</rel>
+                <arg f="" n="0">seis policiais com dois carros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2625:  Todos trabalham com três cenários:  o provável,  o otimista e o pessimista. 
+</text>
+                <arg f="" n="0">Todos
+</arg>
+                <rel f="">trabalham</rel>
+                <arg f="" n="1">com três cenários:  o provável,  o otimista e o pessimista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2463:  O anúncio foi feito segunda-  feira pelo Instituto_  da_  Califórnia_  para_  Tecnologia_  Avançada(  Pasadena) ,  onde Sperry trabalhou até 1984. 
+</text>
+                <arg f="loc" n="m">onde
+</arg>
+                <arg f="" n="0">Sperry
+</arg>
+                <rel f="">trabalhou</rel>
+                <arg f="tmp" n="m">até 1984
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2438:  « Sei que jamais terei uma chance de trabalhar tão calmamente de_  novo. 
+</text>
+                <rel f="">trabalhar</rel>
+                <arg f="mnr" n="m">tão calmamente
+</arg>
+                <arg f="tmp" n="m">de_  novo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2284:  A gente pode trabalhar com atores de teatro,  crianças,  na prevenção de doenças ou no exame de trabalhadores expostos a ruídos. 
+</text>
+                <arg f="" n="0">A gente
+</arg>
+                <rel f="">trabalhar</rel>
+                <arg f="" n="1">com atores de teatro,  crianças na prevenção de doenças ou no exame de trabalhadores expostos a ruídos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2244:  O jornal kuaitiano diz que o governo do país fechou um salão de beleza por uma semana por infringir a lei que proíbe mulheres de trabalhar em salões para homens e vice-  versa. 
+</text>
+                <rel f="">trabalhar</rel>
+                <arg f="loc" n="m">em salões para homens e vice-  versa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2212:  Eu tento usar o processo de edição,  como se trabalha numa mesa de edição. 
+</text>
+                <arg f="mnr" n="m">como
+</arg>
+                <rel f="">trabalha</rel>
+                <arg f="loc" n="m">numa mesa de edição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2124:  Em consequência,  põe a nu uma crise dos próprios gêneros com que trabalha. 
+</text>
+                <arg f="" n="1">com que
+</arg>
+                <rel f="">trabalha</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1417:  Esse tá trabalhando. 
+</text>
+                <arg f="" n="0">Esse
+</arg>
+                <rel f="">trabalhando</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1200:  Os serviços de inteligência da Argentina que trabalham com a ajuda do Mossad(  serviço secreto de Israel)  e do FBI(  Polícia_  Federal dos EUA)  atribuem o atentado ao Hizbollah,  grupo muçulmano xiita pró-  Irã. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">trabalham</rel>
+                <arg f="" n="3">com a ajuda do Mossad(  serviço secreto de Israel)  e do FBI(  Polícia_  Federal dos EUA) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1176:  No Tatuapé,  onde a falta de atendimento é comum nos fins-  de-  semana,  havia ontem clínicos e cirurgiões trabalhando. 
+</text>
+                <arg f="loc" n="m">No Tatuapé,  onde a falta de atendimento é comum nos fins-  de-  semana, 
+</arg>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="0">clínicos e cirurgiões
+</arg>
+                <rel f="">trabalhando</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1147:  O mercado trabalhou com a expectativa de aprovação,  pelo Conselho_  Monetário_  Nacional,  de medidas de socorro a bancos em dificuldades. 
+</text>
+                <arg f="" n="0">O mercado
+</arg>
+                <rel f="">trabalhou</rel>
+                <arg f="mnr" n="m">com a expectativa de aprovação,  pelo Conselho_  Monetário_  Nacional,  de medidas de socorro a bancos em dificuldades
+</arg>
+                <note>"com a expectativa de" não é tema, é circunstância (argm-mnr)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1133:  Tal cobertura,  assistemática e voltada para buscar escândalos,  leva-  os,  também,  a trabalhar sobre fatos consumados. 
+</text>
+                <rel f="">trabalhar</rel>
+                <arg f="" n="1">sobre fatos consumados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1030:  Primogênito de Tsunezaemon_  Maeda,  Takayuki tinha três anos quando o pai,  a mãe e seis irmãos chegaram a Ituverava,  procedente de Sagaken,  no Japão,  para trabalhar como colonos na fazenda Santa_  Tereza. 
+</text>
+                <rel f="">trabalhar</rel>
+                <arg f="" n="1">como colonos
+</arg>
+                <arg f="" n="2">na fazenda Santa_  Tereza
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s347:  Agora,  os soldados e a polícia estão trabalhando juntos para prender os traficantes. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <arg f="" n="0">os soldados e a polícia
+</arg>
+                <rel f="">trabalhando</rel>
+                <arg f="mnr" n="m">juntos
+</arg>
+                <arg f="pnc" n="m">para prender os traficantes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

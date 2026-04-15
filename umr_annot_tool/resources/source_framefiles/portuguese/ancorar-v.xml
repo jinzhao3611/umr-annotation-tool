@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ancorar">
+        <note />
+    <roleset framnet="anchor.01" id="ancorar.01" name="prender ou ficar preso com âncora" vncls="22.4">
+            <roles>
+                <role descr="causer of anchorment, agent" n="0">
+                    <vnrole vncls="22.4" vntheta="Agent" />
+                </role>
+                <role descr="thing anchored" n="1">
+                    <vnrole vncls="22.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3996:  O navio ancora numa praia,  Serena_  Cay,  que se torna exclusiva dos 1.  600 passageiros. 
+</text>
+                <arg f="" n="1">O navio
+</arg>
+                <rel f="">ancora</rel>
+                <arg f="loc" n="m">numa praia,  Serena_  Cay,  que se torna exclusiva dos 1.  600 passageiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

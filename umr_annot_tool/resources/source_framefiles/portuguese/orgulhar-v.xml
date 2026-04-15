@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="orgulhar-se">
+        <note />
+    <roleset framnet="pride.01" id="orgulhar.01" name="alternância incoativa de &quot;orgulhar&quot;: ficar com orgulho de; sentir orgulho de" vncls="33">
+            <roles>
+                <role descr="proud one" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="proud of/about; congratulate on" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="grounds, reason for pride" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2514:  Há quem se orgulhe dos golpes que consegue imaginar e confunda artimanhas com estratégia. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">orgulhe</rel>
+                <arg f="" n="1">dos golpes que consegue imaginar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2389:  Se podemos nos orgulhar de nosso futebol,  não podemos dizer o mesmo dos nossos árbitros,  aqui representados exatamente por Marsiglia. 
+</text>
+                <rel f="">orgulhar</rel>
+                <arg f="" n="1">de nosso futebol
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="orgulhar">
+        <note />
+    <roleset framnet="pride.01" id="orgulhar.02" name="dar orgulho; fazer sentir orgulho" vncls="33">
+            <roles>
+                <role descr="proud one" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="proud of/about; congratulate on" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="grounds, reason for pride" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s557:  « Meu passado muito me orgulha »,  dá de ombros Maciel. 
+</text>
+                <arg f="" n="1">Meu passado
+</arg>
+                <arg f="" n="0">me
+</arg>
+                <rel f="">orgulha</rel>
+                <note>arg1 sujeito</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desejar">
+        <note />
+    <roleset framnet="wish.01" id="desejar.01" name="querer muito" vncls="32.2">
+            <roles>
+                <role descr="wisher" n="0">
+                    <vnrole vncls="32.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing wished for" n="1">
+                    <vnrole vncls="32.2" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2110:  Em sua avaliação,  a conversa com o deputado fluminense mostrou que ambos desejam a aproximação. 
+</text>
+                <arg f="" n="0">ambos
+</arg>
+                <rel f="">desejam</rel>
+                <arg f="" n="1">a aproximação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2097:  Isto não impede que,  no íntimo,  eu deseje alguma espécie de uma complexa,  delicada e difícil soberania para nós. 
+</text>
+                <arg f="loc" n="m">no íntimo
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">deseje</rel>
+                <arg f="" n="1">alguma espécie de uma complexa,  delicada e difícil soberania
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s294:  Cerca_  de 72%  dos empresários da construção querem que o próprio setor negocie a conversão dos contratos para a URV,  enquanto 28%  desejam que o governo estabeleça as regras. 
+</text>
+                <arg f="" n="0">28% 
+</arg>
+                <rel f="">desejam</rel>
+                <arg f="" n="1">que o governo estabeleça as regras
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

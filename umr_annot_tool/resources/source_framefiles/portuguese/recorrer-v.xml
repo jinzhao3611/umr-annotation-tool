@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recorrer">
+        <note />
+        <note />
+    <roleset framnet="use.01" id="recorrer.01" name="fazer uso de" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3763:  Para construir o ambiente futurista do filme,  Godard recorreu quase que totalmente ﻿à fotografia. 
+</text>
+                <arg f="" n="2">Para construir o ambiente futurista do filme
+</arg>
+                <arg f="" n="0">Godard
+</arg>
+                <rel f="">recorreu</rel>
+                <arg f="ext" n="m">quase que totalmente
+</arg>
+                <arg f="" n="1">﻿à fotografia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2038:  Quem ainda não escolheu sua carreira ou sonha dar uma guinada na vida profissional pode recorrer aos serviços de orientação vocacional oferecidos por algumas instituições em São_  Paulo. 
+</text>
+                <arg f="" n="0">Quem ainda não escolheu sua carreira ou sonha dar uma guinada na vida profissional
+</arg>
+                <rel f="">recorrer</rel>
+                <arg f="" n="1">aos serviços de orientação vocacional oferecidos por algumas instituições em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="appeal.02" id="recorrer.02" name="apelar judicialmente" vncls="31.4-3">
+            <roles>
+                <role descr="begger, appealer" n="0">
+                    <vnrole vncls="31.4-3" vntheta="Cause" />
+                </role>
+                <role descr="appealed to, begged from" n="1">
+                    <vnrole vncls="31.4-3" vntheta="Experiencer" />
+                </role>
+                <role descr="begged/appealed for" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3104:  A quem recorrer no caso de um descomprimento do que é prometido? 
+</text>
+                <arg f="" n="1">quem
+</arg>
+                <rel f="">recorrer</rel>
+                <arg f="tmp" n="m">no caso de um descomprimento do que é prometido
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

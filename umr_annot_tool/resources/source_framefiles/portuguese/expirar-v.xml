@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="expirar">
+        <note />
+    <roleset framnet="expire.01" id="expirar.01" name="findar; ter o tempo esgotado" vncls="48.2">
+            <roles>
+                <role descr="commodity, thing expiring" n="1">
+                    <vnrole vncls="48.2" vntheta="Theme" />
+                </role>
+                <role descr="expiration date" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1190:  O contrato,  diz ele,  expirou ano passado e só foi renovado em fevereiro. 
+</text>
+                <arg f="" n="1">O contrato
+</arg>
+                <rel f="">expirou</rel>
+                <arg f="tmp" n="m">ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

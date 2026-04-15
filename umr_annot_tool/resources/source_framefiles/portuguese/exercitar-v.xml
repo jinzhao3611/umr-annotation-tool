@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="exercitar">
+        <note />
+    <roleset framnet="exercise.01" id="exercitar.01" name="praticar" vncls="26.8">
+            <roles>
+                <role descr="user" n="0">
+                    <vnrole vncls="26.8" vntheta="Agent" />
+                </role>
+                <role descr="thing used, thing exercised" n="1">
+                    <vnrole vncls="26.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2513:  Imagino que para a grande maioria dos políticos este seja o momento de glória porque exercita o_  que considera uma virtude:  a arte da esperteza,  a política segundo os cânones herdados da velha tradição das raposas políticas. 
+</text>
+                <arg f="" n="0">este
+</arg>
+                <rel f="">exercita</rel>
+                <arg f="" n="1">o_  que considera uma virtude:  a arte da esperteza,  a política segundo os cânones herdados da velha tradição das raposas políticas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s77:  Romário não se exercitou nas cobranças de falta e pênalti. 
+</text>
+                <arg f="" n="0">Romário
+</arg>
+                <arg f="tmp" n="m">não
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">exercitou</rel>
+                <arg f="" n="2">nas cobranças de falta e pênalti
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

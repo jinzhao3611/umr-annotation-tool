@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="empurrar">
+        <note />
+    <roleset framnet="push.01" id="empurrar.01" name="fazer pressão para mover para a frente " vncls="9.3 12-1 11.4-1 23.2">
+            <roles>
+                <role descr="pusher" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                    <vnrole vncls="9.3" vntheta="Agent" />
+                    <vnrole vncls="11.4-1" vntheta="Agent" />
+                    <vnrole vncls="12-1" vntheta="Agent" />
+                </role>
+                <role descr="thing pushed" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient" />
+                    <vnrole vncls="9.3" vntheta="Theme" />
+                    <vnrole vncls="11.4-1" vntheta="Theme" />
+                    <vnrole vncls="12-1" vntheta="Theme" />
+                </role>
+                <role descr="direction" n="2">
+                    <vnrole vncls="9.3" vntheta="Destination" />
+                    <vnrole vncls="11.4-1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4029:  Na 22ª posição do ranking,  Halard foi empurrada pelo público no Madison_  Square_  Garden. 
+</text>
+                <arg f="prd" n="m">Na 22ª posição do ranking
+</arg>
+                <arg f="" n="1">Halard
+</arg>
+                <rel f="">empurrada</rel>
+                <arg f="" n="0">pelo público
+</arg>
+                <arg f="loc" n="m">no Madison_  Square_  Garden
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

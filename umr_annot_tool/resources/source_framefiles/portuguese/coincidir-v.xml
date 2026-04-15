@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="coincidir">
+        <note />
+    <roleset framnet="coincide.01" id="coincidir.01" name="ocorrer ao mesmo tempo ou da mesma forma" vncls="22.2">
+            <roles>
+                <role descr="thing(s) happening" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3709:  A escolha tão particular de Sobral,  que por « ser uma das principais cidades do Ceará » é também uma grande concentração eleitoral do Estado,  coincide com sua escolha para a ação de campanha que lá fez o candidato Fernando_  Henrique no fim-  de-  semana. 
+</text>
+                <arg f="" n="1">A escolha tão particular de Sobral,  que por « ser uma das principais cidades do Ceará » é também uma grande concentração eleitoral do Estado, 
+</arg>
+                <rel f="">coincide</rel>
+                <arg f="" n="1">com sua escolha para a ação de campanha que lá fez o candidato Fernando_  Henrique no fim-  de-  semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3568:  A boa performance de Maluf em março último coincidiu com a fase em que ele anunciava sua candidatura ﻿à presidência e investia em inaugurações de grandes obras,  como o túnel do rio Pinheiros. 
+</text>
+                <arg f="" n="1">A boa performance de Maluf em março último
+</arg>
+                <rel f="">coincidiu</rel>
+                <arg f="" n="2">com a fase em que ele anunciava sua candidatura ﻿à presidência e investia em inaugurações de grandes obras,  como o túnel do rio Pinheiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1024:  Essas mudanças geralmente coincidem com a « crise da meia idade »,  que é definida não pela faixa etária,  mas como um certo momento em que as pessoas reavaliam as escolhas feitas na sua vida. 
+</text>
+                <arg f="" n="1">Essas mudanças
+</arg>
+                <arg f="adv" n="m">geralmente
+</arg>
+                <rel f="">coincidem</rel>
+                <arg f="" n="2">com a « crise da meia idade »,  que é definida não pela faixa etária,  mas como um certo momento em que as pessoas reavaliam as escolhas feitas na sua vida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s784:  O caso Lima coincide com a prisão de 54 pessoas,  como parte de uma operação anti-  Máfia no oeste da ilha. 
+</text>
+                <arg f="" n="1">O caso Lima
+</arg>
+                <rel f="">coincide</rel>
+                <arg f="" n="2">com a prisão de 54 pessoas
+</arg>
+                <arg f="prd" n="m">como parte de uma operação anti-  Máfia no oeste da ilha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s7:  Muitas das prioridades do novo governo coincidem com as prioridades do PT. 
+</text>
+                <arg f="" n="1">Muitas das prioridades do novo governo
+</arg>
+                <rel f="">coincidem</rel>
+                <arg f="" n="2">com as prioridades do PT
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

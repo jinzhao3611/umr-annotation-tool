@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="optar">
+        <note />
+    <roleset framnet="opt.01" id="optar.01" name="escolher" vncls="">
+            <roles>
+                <role descr="chooser" n="0" />
+                <role descr="choice" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3256:  O técnico tem o segundo grau completo pode optar entre o curso técnico de enfermagem ou curso de formação de técnico. 
+</text>
+                <arg f="" n="0">O técnico
+</arg>
+                <rel f="">optar</rel>
+                <arg f="" n="1">entre o curso técnico de enfermagem ou curso de formação de técnico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2658:  O fazendeiro,  que cultiva também 1 hectare de rosas,  diz que optou pelo morango após experiências « nem sempre vantajosas » com outras culturas. 
+</text>
+                <arg f="" n="0">O fazendeiro,  que cultiva também 1 hectare de rosas, 
+</arg>
+                <rel f="">optou</rel>
+                <arg f="" n="1">pelo morango
+</arg>
+                <arg f="tmp" n="m">após experiências « nem sempre vantajosas » com outras culturas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2182:  Apenas para estadas mais breves,  de um a dois dias,  o preparador teria optado por manter o fuso de Los_  Gatos. 
+</text>
+                <arg f="" n="0">o preparador
+</arg>
+                <rel f="">optado</rel>
+                <arg f="" n="1">por manter o fuso de Los_  Gatos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1591:  Apesar_  de ter dito há dias que « entre o justo e legítimo e o legal »,  opta pelo justo e legítimo,  Lula disse que a reforma agrária,  em sua eventual governo,  será feito dentro_  da lei. 
+</text>
+                <rel f="">opta</rel>
+                <arg f="cau" n="m">pelo justo e legítimo
+</arg>
+                <arg f="" n="0">Lula
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1502:  Há ainda aqueles que optam pela locação de temporada. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">optam</rel>
+                <arg f="" n="1">pela locação de temporada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1425:  Brigada com o namorado,  Regina optou por estrear na São_  Silvestre. 
+</text>
+                <arg f="prd" n="m">Brigada com o namorado
+</arg>
+                <arg f="" n="0">Regina
+</arg>
+                <rel f="">optou</rel>
+                <arg f="" n="1">por estrear na São_  Silvestre
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1294:  Os que preferirem carne,  podem optar por um nhoque preparado ﻿à base de vitela. 
+</text>
+                <arg f="" n="0">Os que preferirem carne
+</arg>
+                <rel f="">optar</rel>
+                <arg f="" n="1">por um nhoque preparado ﻿à base de vitela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s123:  Optar entre um aparelho conjugado e outro simples é outro ponto que merece atenção. 
+</text>
+                <rel f="">Optar</rel>
+                <arg f="" n="1">entre um aparelho conjugado e outro simples
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

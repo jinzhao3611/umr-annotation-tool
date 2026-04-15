@@ -1,0 +1,729 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="chegar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="arrive.01" id="chegar.01" name="acabar de vir" vncls="51.1-2">
+            <roles>
+                <role descr="entity in motion / 'comer'" n="1">
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="extent -- rare)" n="2" />
+                <role descr="start point -- also rare)" n="3" />
+                <role descr="end point, destination" n="4">
+                    <vnrole vncls="51.1-2" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4002:  « Chegamos até aqui,  claro,  também graças_  a Cruyff ». 
+</text>
+                <rel f="">Chegamos</rel>
+                <arg f="" n="4">até aqui
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="cau" n="m">graças_  a Cruyff
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3994:  Já bastava,  para orgulho da Irlanda,  que a Inglaterra sequer tivesse chegado ﻿à Copa. 
+</text>
+                <arg f="" n="1">a Inglaterra
+</arg>
+                <arg f="neg" n="m">sequer
+</arg>
+                <rel f="">chegado</rel>
+                <arg f="" n="4">﻿à Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3983:  Chegou atrasado,  foi duro com seus críticos e saiu antes do fim. 
+</text>
+                <rel f="">Chegou</rel>
+                <arg f="mnr" n="m">atrasado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3916:  Caso isso ocorresse,  eles seriam colocados em liberdade tão_  logo chegassem no Canadá. 
+</text>
+                <arg f="" n="1">eles
+</arg>
+                <arg f="tmp" n="m">tão_  logo
+</arg>
+                <rel f="">chegassem</rel>
+                <arg f="" n="4">no Canadá
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3499:  O jogador chegou no clube há dez meses e,  em novembro,  foi para a equipe de juniores. 
+</text>
+                <arg f="" n="1">O jogador
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="" n="4">no clube
+</arg>
+                <arg f="tmp" n="m">há dez meses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3497:  O atacante Nílson e meia Anderson_  Leão chegaram agora ao time e o ponta-  direita Ricardinho,  o meia Juliano e o zagueiro Derlan foram promovidos no final de 93. 
+</text>
+                <arg f="" n="1">O atacante Nílson e meia Anderson_  Leão
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="" n="4">ao time
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2945:  Isso termina por arrastá-  la destestavelmente,  sem que se chegue a parte alguma. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">chegue</rel>
+                <arg f="" n="4">a parte alguma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2805:  Com essa constatação enviesada de que o alemão só chegou em primeiro porque o brasileiro cometeu uma bobagem,  a imprensa coroou o festival « sennista » da semana anterior,  quando todas- -  sem exceção,  todas- -  as coberturas apontavam a vitória de Ayrton_  Senna em Interlagos. 
+</text>
+                <arg f="" n="1">o alemão
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="mnr" n="m">em primeiro
+</arg>
+                <arg f="cau" n="m">porque o brasileiro cometeu uma bobagem
+</arg>
+                <note>com ordem de chegada </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2684:  O livro chega num momento em que a idéia de cinema engajado está meio por_  baixo. 
+</text>
+                <arg f="" n="1">O livro
+</arg>
+                <rel f="">chega</rel>
+                <arg f="tmp" n="m">num momento em que a idéia de cinema engajado está meio por_  baixo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2666:  « Não chegamos ao paraíso,  mas já conseguimos sair do inferno »,  disse Carlos_  Menem da tribuna de Palermo. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">chegamos</rel>
+                <arg f="" n="4">ao paraíso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2530:  Às 22h43,  o governador eleito de São_  Paulo,  Mário_  Covas,  e sua mulher Lila chegaram para o jantar. 
+</text>
+                <arg f="" n="1">o governador eleito de São_  Paulo,  Mário_  Covas,  e sua mulher Lila
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="pnc" n="m">para o jantar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2507:  O Chacal chegou ontem às 10h30(  5h30 no Brasil)  ao Palácio_  da_  Justiça,  usando algemas e cercado por um forte esquema de segurança. 
+</text>
+                <arg f="" n="1">O Chacal
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="tmp" n="m">às 10h30(  5h30 no Brasil) 
+</arg>
+                <arg f="" n="4">ao Palácio_  da_  Justiça
+</arg>
+                <arg f="mnr" n="m">usando algemas e cercado por um forte esquema de segurança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2367:  Ora,  se o presidente chegar ﻿à posse sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas,  torna-  se muito mais difícil fazê-  los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC. 
+</text>
+                <arg f="dis" n="m">Ora
+</arg>
+                <arg f="" n="1">o presidente
+</arg>
+                <rel f="">chegar</rel>
+                <arg f="" n="4">﻿à posse
+</arg>
+                <arg f="mnr" n="m">sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2336:  Foi justamente graças_  ﻿à arte de alguns de seus jogadores que equipes como a Bulgária,  a Romênia e a Nigéria chegaram muito mais longe do_  que jamais tinham conseguido. 
+</text>
+                <arg f="cau" n="m">graças_  ﻿à arte de alguns de seus jogadores
+</arg>
+                <arg f="" n="1">equipes como a Bulgária,  a Romênia e a Nigéria
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="" n="4">muito mais longe do_  que jamais tinham conseguido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2310:  Entre os exemplares destes vinhos que chegaram às nossas praias,  todos safra 92,  o « Bourgueil_  LÉchellerie »,  milita decididamente na primeira fila. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="" n="4">às nossas praias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1997:  Chegaram famintos e esfarrapados às cabeceiras do Purus após quatro meses de viagem. 
+</text>
+                <rel f="">Chegaram</rel>
+                <arg f="prd" n="m">famintos e esfarrapados
+</arg>
+                <arg f="" n="4">às cabeceiras do Purus
+</arg>
+                <arg f="tmp" n="m">após quatro meses de viagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1841:  O candidato do PMDB chegou a Bauru às 10h de ontem,  num jatinho fretado pelo partido. 
+</text>
+                <arg f="" n="1">O candidato do PMDB
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="" n="4">a Bauru
+</arg>
+                <arg f="tmp" n="m">às 10h de ontem
+</arg>
+                <arg f="mnr" n="m">num jatinho fretado pelo partido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1806:  Na loja de Nova_  York,  o Compaq_  Aero está por US$  996,  97(  se chegar às 9h da manhã,  ganha o cupom de desconto de US$  100) . 
+</text>
+                <rel f="">chegar</rel>
+                <arg f="tmp" n="m">às 9h da manhã
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1366:  Itamar e as autoridades que o acompanhavam chegaram ao cemitério ﻿à 1h50 de ontem. 
+</text>
+                <arg f="" n="1">Itamar e as autoridades que o acompanhavam
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="" n="4">ao cemitério
+</arg>
+                <arg f="tmp" n="m">﻿à 1h50 de ontem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1263:  Trezentos soldados de cinco países da região do Caribe também chegaram ontem ao Haiti com a mesma missão. 
+</text>
+                <arg f="" n="1">Trezentos soldados de cinco países da região do Caribe
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="4">ao Haiti
+</arg>
+                <arg f="mnr" n="m">com a mesma missão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1246:  A emoção cresce quando atravesso o salão de festas e chego às salas do museu,  do Memorial_  de_  Menininha_  do_  Gantois. 
+</text>
+                <rel f="">chego</rel>
+                <arg f="" n="4">às salas do museu,  do Memorial_  de_  Menininha_  do_  Gantois
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1187:  Muller chega às 5h25 de hoje a São_  Paulo,  vindo de Londres. 
+</text>
+                <arg f="" n="1">Muller
+</arg>
+                <rel f="">chega</rel>
+                <arg f="tmp" n="m">às 5h25 de hoje
+</arg>
+                <arg f="" n="4">a São_  Paulo
+</arg>
+                <arg f="" n="3">vindo de Londres
+</arg>
+                <note>com Arg3-local de procedência</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1186:  Muller chega às 5h25 em SP
+</text>
+                <arg f="" n="1">Muller
+</arg>
+                <rel f="">chega</rel>
+                <arg f="tmp" n="m">às 5h25
+</arg>
+                <arg f="" n="4">em SP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1171:  Vai ter real chegando de barco,  caminhão,  avião,  todos os meios de transporte. 
+</text>
+                <arg f="" n="1">real
+</arg>
+                <rel f="">chegando</rel>
+                <arg f="mnr" n="m">de barco,  caminhão,  avião,  todos os meios de transporte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1126:  Júlio(  Othon_  Bastos)  chega logo depois ﻿à casa de Emília e lá tem uma forte crise de úlcera,  sendo socorrido por Justina
+</text>
+                <arg f="" n="1">Júlio(  Othon_  Bastos) 
+</arg>
+                <rel f="">chega</rel>
+                <arg f="tmp" n="m">logo depois
+</arg>
+                <arg f="" n="4">﻿à casa de Emília
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s792:  Inicialmente,  a equipe econômica chegou a estudar a privatização das empresas do grupo Nuclebrás,  além_  de Angra 1 e 2,  mas não chegou ao fim. 
+</text>
+                <arg f="" n="1">a equipe econômica
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="" n="4">ao fim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s464:  Agora imagina que é chegado o momento. 
+</text>
+                <rel f="">chegado</rel>
+                <arg f="" n="1">o momento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s353:  Quando José_  Sarney começou a escrever semanalmente para a Folha,  chegaram protestos ﻿à redação. 
+</text>
+                <arg f="tmp" n="m">Quando José_  Sarney começou a escrever semanalmente para a Folha
+</arg>
+                <rel f="">chegaram</rel>
+                <arg f="" n="1">protestos
+</arg>
+                <arg f="" n="4">﻿à redação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s227:  Com Kina,  ele chegou bem perto_  da perfeição. 
+</text>
+                <arg f="cau" n="m">Com Kina
+</arg>
+                <arg f="" n="1">ele
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="" n="4">bem perto_  da perfeição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s8:  « Confissões » chega a Portugal
+</text>
+                <arg f="" n="1">Confissões
+</arg>
+                <rel f="">chega</rel>
+                <arg f="" n="4">a Portugal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="reach.01" id="chegar.02" name="alcançar" vncls="13.5.1">
+            <roles>
+                <role descr="thing striving" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="goal, end state" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4156:  Isto ocorre principalmente ﻿à noite e a visibilidade pode chegar a zero. 
+</text>
+                <arg f="" n="0">a visibilidade
+</arg>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">a zero
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3899:  A multa para lojistas que descumprirem a determinação pode chegar a R$  128 mil. 
+</text>
+                <arg f="" n="0">A multa para lojistas que descumprirem a determinação
+</arg>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">a R$  128 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3836:  O torcedor paulista sonhava com uma era futura,  em que São_  Paulo chegaria ﻿à supremacia,  se possível de forma arrasadora. 
+</text>
+                <arg f="" n="0">São_  Paulo
+</arg>
+                <rel f="">chegaria</rel>
+                <arg f="" n="1">﻿à supremacia,  se possível de forma arrasadora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3809:  Os clubes de futebol do Brasil estão valorizando cada_  vez_  mais a posse de bola e a utilização de lançamentos como armas para se chegar ao ataque. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">ao ataque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3535:  Segundo a previsão da Conab,  a produção nacional de arroz deve chegar a 10,  6 milhões de toneladas de grãos. 
+</text>
+                <arg f="dis" n="m">Segundo a previsão da Conab
+</arg>
+                <arg f="" n="0">a produção nacional de arroz
+</arg>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">a 10,  6 milhões de toneladas de grãos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3245:  « Já estamos contentes por ter chegado às oitavas-  de-  final »,  disse Phillip_  Trent,  24,  que assistiu o jogo ao_  lado_  do amigo Brian_  Fagerburg,  24. 
+</text>
+                <rel f="">chegado</rel>
+                <arg f="" n="1">às oitavas-  de-  final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3056:  « Se vencermos esses quatro jogos,  chegaremos a 80%  de aproveitamento dos pontos disputados. 
+</text>
+                <arg f="adv" n="m">Se vencermos esses quatro jogos
+</arg>
+                <rel f="">chegaremos</rel>
+                <arg f="" n="1">a 80%  de aproveitamento dos pontos disputados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2924:  Ele prevê,  contudo,  que o mercado acionário crescerá e a custódia de ações de investidores estrangeiros na instituição chegará a US$  5,  5 bilhões ao final de 1995. 
+</text>
+                <arg f="" n="0">a custódia de ações de investidores estrangeiros na instituição
+</arg>
+                <rel f="">chegará</rel>
+                <arg f="" n="1">a US$  5,  5 bilhões
+</arg>
+                <arg f="tmp" n="m">ao final de 1995
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2699:  Então,  os homens encontraram um lugar plano e resolveram construir uma torre que chegasse até o céu. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">chegasse</rel>
+                <arg f="" n="1">até o céu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2400:  Somando-  se os dois números,  chega-  se a 500 toneladas$ /  dia,  aproximadamente 50%  das 1.  100 toneladas de poluição orgânica diária jogadas no rio. 
+</text>
+                <arg f="mnr" n="m">Somando-  se os dois números
+</arg>
+                <rel f="">chega-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">a 500 toneladas$ /  dia,  aproximadamente 50%  das 1.  100 toneladas de poluição orgânica diária jogadas no rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2335:  Olhando com atenção os jogos da Copa é possível chegar a uma conclusão oposta ﻿à de Parreira. 
+</text>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">a uma conclusão oposta ﻿à de Parreira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2103:  Com esse caso em Caetité,  chega a 14 o número de linchamentos registrados na Bahia desde o início deste ano. 
+</text>
+                <arg f="cau" n="m">Com esse caso em Caetité
+</arg>
+                <rel f="">chega</rel>
+                <arg f="" n="1">a 14
+</arg>
+                <arg f="" n="0">o número de linchamentos registrados na Bahia desde o início deste ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2013:  Na sequência,  em 1498,  Vasco_  da_  Gama chegou às Índias e inaugurou uma nova era. 
+</text>
+                <arg f="tmp" n="m">Na sequência
+</arg>
+                <arg f="tmp" n="m">em 1498
+</arg>
+                <arg f="" n="0">Vasco_  da_  Gama
+</arg>
+                <rel f="">chegou</rel>
+                <arg f="" n="1">às Índias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1657:  Nas épocas de normalidade da economia inflacionária brasileira,  esse percentual ainda chega a 7,  5% ,  contra 2,  3%  do Chile,  país que já alcançou sua estabilização. 
+</text>
+                <arg f="tmp" n="m">Nas épocas de normalidade da economia inflacionária brasileira
+</arg>
+                <arg f="" n="0">esse percentual
+</arg>
+                <arg f="dis" n="m">ainda
+</arg>
+                <rel f="">chega</rel>
+                <arg f="" n="1">a 7,  5% 
+</arg>
+                <arg f="adv" n="m">contra 2,  3%  do Chile,  país que já alcançou sua estabilização
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1637:  Para chegar a suas conclusões,  Rosa entrevistou um grupo de funcionários públicos(  técnicos administrativos)  que trabalham e comem no centro velho da cidade de São_  Paulo(  ruas Líbero_  Badaró,  São_  Bento e adjacências) . 
+</text>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">a suas conclusões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1064:  A meta é chegar a 50% ,  diz Ferreira_  Jr. 
+</text>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">a 50% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s775:  E jamais chegará a isto se não tiver a total dedicação de alguém como Ricupero,  um excepcional « cadre »,  que em pouco tempo convenceu os brasileiros da sua inteligência e competência na vida pública. 
+</text>
+                <arg f="tmp" n="m">jamais
+</arg>
+                <rel f="">chegará</rel>
+                <arg f="" n="1">a isto
+</arg>
+                <arg f="adv" n="m">se não tiver a total dedicação de alguém como Ricupero,  um excepcional « cadre »,  que em pouco tempo convenceu os brasileiros da sua inteligência e competência na vida pública
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s746:  A expectativa do Sebrae era que o volume de negócios chegasse a US$  7 milhões na Fenit. 
+</text>
+                <arg f="" n="0">o volume de negócios
+</arg>
+                <rel f="">chegasse</rel>
+                <arg f="" n="1">a US$  7 milhões
+</arg>
+                <arg f="loc" n="m">na Fenit
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s717:  À_  primeira_  vista,  sim,  mas é aí que se chega ao verdadeiro nó da questão. 
+</text>
+                <arg f="tmp" n="m">À_  primeira_  vista
+</arg>
+                <arg f="loc" n="m">aí
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">chega</rel>
+                <arg f="loc" n="m">ao verdadeiro nó da questão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s497:  O advogado Mariano_  Gonçalves_  Neto,  autor da ação popular que se arrasta há 12 anos,  acusa os ex-  ministros de aprovarem uma superavaliação dos terrenos entregues pelo grupo Delfin como pagamento de uma dívida que,  em 1982,  chegava a Cr 70 milhões. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">em 1982, 
+</arg>
+                <rel f="">chegava</rel>
+                <arg f="" n="1">a Cr 70 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s478:  Chiles,  que pertence ao Partido_  Democrata e ao mesmo grupo neoconservador que ajudou Bill_  Clinton a chegar ﻿à Casa_  Branca,  vai tentar se reeleger em novembro deste ano. 
+</text>
+                <arg f="" n="0">Bill_  Clinton
+</arg>
+                <rel f="">chegar</rel>
+                <arg f="" n="1">﻿à Casa_  Branca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="chegar.03" name="bastar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2373:  « Chega de violência$ /  Quero ver é gol de placa$ /  Todo_  mundo se dá mal$ /  Por meia_  dúzia de babacas.  »
+</text>
+                <rel f="">Chega</rel>
+                <arg f="" n="1">de violência
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

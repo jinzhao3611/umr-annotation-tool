@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="piorar">
+        <note />
+    <roleset framnet="worsen.01" id="piorar.01" name="ficar pior ou tornar pior" vncls="45.4">
+            <roles>
+                <role descr="agent (rarely occuring)" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing getting worse" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument (preferable to agent)" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4198:  A relação entre os dois piorou quando Fishel arranjou uma amante,  no final dos anos 80. 
+</text>
+                <arg f="" n="1">A relação entre os dois
+</arg>
+                <rel f="">piorou</rel>
+                <arg f="tmp" n="m">quando Fishel arranjou uma amante,  no final dos anos 80
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

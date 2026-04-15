@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acatar">
+        <note />
+    <roleset framnet="abide.01" id="acatar.01" name="concordar em obedecer" vncls="-">
+            <roles>
+                <role descr="conformer" n="0" />
+                <role descr="thing conformed to" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2777:  Favoráveis ao pressuposto da integração,  devemos ser criteriosos,  não descartando e nem acatando,  de pronto,  tudo_  o_  que nos oferece o governo federal. 
+</text>
+                <arg f="neg" n="m">nem
+</arg>
+                <rel f="">acatando</rel>
+                <arg f="mnr" n="m">de pronto
+</arg>
+                <arg f="" n="1">tudo_  o_  que nos oferece o governo federal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1207:  A única alternativa que resta a Sarney de_  fato é que o Superior_  Tribunal_  de_  Justiça acate a denúncia de estelionato apresentada pelo Ministério_  Público_  Federal contra Orestes_  Quércia e que,  neste caso,  o ex-  governador de São_  Paulo renuncie ﻿à candidatura do PMDB. 
+</text>
+                <arg f="" n="0">o Superior_  Tribunal_  de_  Justiça
+</arg>
+                <rel f="">acate</rel>
+                <arg f="" n="1">a denúncia de estelionato apresentada pelo Ministério_  Público_  Federal contra Orestes_  Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s898:  Preocupado com a facilidade de comunicação de seu adversário,  Francisco_  Rossi,  Mário_  Covas acatou as recomendações de assessores do presidente eleito,  Fernando_  Henrique_  Cardoso,  e se submeteu às técnicas de marketing. 
+</text>
+                <arg f="cau" n="m">Preocupado com a facilidade de comunicação de seu adversário,  Francisco_  Rossi
+</arg>
+                <arg f="" n="0">Mário_  Covas
+</arg>
+                <rel f="">acatou</rel>
+                <arg f="" n="1">as recomendações de assessores do presidente eleito,  Fernando_  Henrique_  Cardoso, 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

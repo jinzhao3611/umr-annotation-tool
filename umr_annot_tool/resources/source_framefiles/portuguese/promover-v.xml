@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="promover">
+        <note />
+        <note />
+    <roleset framnet="foster.01" id="promover.01" name="incentivar" vncls="-">
+            <roles>
+                <role descr="promoter of growth, agent" n="0" />
+                <role descr="thing growing" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4112:  « Nossa preocupação é promover o desenvolvimento. 
+</text>
+                <rel f="">promover</rel>
+                <arg f="" n="1">o desenvolvimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4024:  Nossa preocupação é um projeto que estimule no jovem uma vida sem drogas,  promovendo-  se um comportamento construtivo. 
+</text>
+                <rel f="">promovendo-</rel>
+                <arg f="" n="1">um comportamento construtivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3824:  Diariamente,  está promovendo desfiles de moda para seus consumidores. 
+</text>
+                <arg f="tmp" n="m">Diariamente
+</arg>
+                <rel f="">promovendo</rel>
+                <arg f="" n="1">desfiles de moda
+</arg>
+                <arg f="" n="2">para seus consumidores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2943:  Ao_  contrário_  do que fez em campanhas anteriores,  Brizola quer promover comícios rápidos,  com três oradores. 
+</text>
+                <rel f="">promover</rel>
+                <arg f="" n="1">comícios rápidos,  com três oradores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1725:  Promovem safáris fotográficos,  focagem noturna de jacarés e outros passeios. 
+</text>
+                <rel f="">Promovem</rel>
+                <arg f="" n="1">safáris fotográficos,  focagem noturna de jacarés e outros passeios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1722:  Com diárias a_  partir_  de US$  50,  pousadas promovem safáris fotográficos,  focagem de jacarés e outros passeios
+</text>
+                <arg f="prd" n="m">Com diárias a_  partir_  de US$  50
+</arg>
+                <arg f="" n="0">pousadas
+</arg>
+                <rel f="">promovem</rel>
+                <arg f="" n="1">safáris fotográficos,  focagem de jacarés e outros passeios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1394:  Através da sua empresa,  a Hirano_  Design_  International_  Inc. ,  que tem sede no Japão e filial em Chicago,  eles promovem o casamento entre o design e a administração de empresas. 
+</text>
+                <arg f="mnr" n="m">Através da sua empresa,  a Hirano_  Design_  International_  Inc. ,  que tem sede no Japão e filial em Chicago, 
+</arg>
+                <arg f="" n="0">eles
+</arg>
+                <rel f="">promovem</rel>
+                <arg f="" n="1">o casamento entre o design e a administração de empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1386:  A excursão está sendo organizada pelo clube More_  Fun,  que promove a troca de correspondências entre gays que não querem expor publicamente suas preferências sexuais. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">promove</rel>
+                <arg f="" n="1">a troca de correspondências entre gays que não querem expor publicamente suas preferências sexuais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1382:  A Coordenadoria_  Especial_  da_  Mulher de Londrina(  PR)  promove debate,  às 20h30,  no Catuaí_  Shopping_  Center,  com a sexóloga Marta_  Suplicy. 
+</text>
+                <arg f="" n="0">A Coordenadoria_  Especial_  da_  Mulher de Londrina(  PR) 
+</arg>
+                <rel f="">promove</rel>
+                <arg f="" n="1">debate
+</arg>
+                <arg f="tmp" n="m">às 20h30
+</arg>
+                <arg f="loc" n="m">no Catuaí_  Shopping_  Center,  com a sexóloga Marta_  Suplicy
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1381:  O Conselho_  Municipal_  de_  Defesa_  dos_  Direitos_  das_  Mulheres_  e_  das_  Minorias promove hoje em Natal,  a_  partir_  das 14h,  no calçadão da rua_  João_  Pessoa(  centro) ,  um ato público. 
+</text>
+                <arg f="" n="0">O Conselho_  Municipal_  de_  Defesa_  dos_  Direitos_  das_  Mulheres_  e_  das_  Minorias
+</arg>
+                <rel f="">promove</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="loc" n="m">em Natal
+</arg>
+                <arg f="tmp" n="m">a_  partir_  das 14h
+</arg>
+                <arg f="loc" n="m">no calçadão da rua_  João_  Pessoa(  centro) 
+</arg>
+                <arg f="" n="1">um ato público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s647:  A fazenda de renas Napapiiri,  nas proximidades(  tel. _  38-  4048)  promove jantares com carne de rena e faz exibições folclóricas. 
+</text>
+                <arg f="" n="0">A fazenda de renas Napapiiri
+</arg>
+                <arg f="loc" n="m">nas proximidades(  tel. _  38-  4048) 
+</arg>
+                <rel f="">promove</rel>
+                <arg f="" n="1">jantares com carne de rena
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="promote.01" id="promover.02" name="elevar de cargo ou de posição" vncls="-">
+            <roles>
+                <role descr="causer of motion, employer" n="0" />
+                <role descr="thing in motion, employee" n="1" />
+                <role descr="destination, new job" n="2" />
+                <role descr="source, old job" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3497:  O atacante Nílson e meia Anderson_  Leão chegaram agora ao time e o ponta-  direita Ricardinho,  o meia Juliano e o zagueiro Derlan foram promovidos no final de 93. 
+</text>
+                <arg f="" n="1">o ponta-  direita Ricardinho,  o meia Juliano e o zagueiro Derlan
+</arg>
+                <rel f="">promovidos</rel>
+                <arg f="tmp" n="m">no final de 93
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1318:  O Classical_  Music_  Award é promovido pela « BBC_  Music_  Magazine » e pelo jornal « The_  Independent »,  e tem o patrocínio da empresa Kenwood. 
+</text>
+                <arg f="" n="1">O Classical_  Music_  Award
+</arg>
+                <rel f="">promovido</rel>
+                <arg f="" n="0">pela « BBC_  Music_  Magazine » e pelo jornal « The_  Independent »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

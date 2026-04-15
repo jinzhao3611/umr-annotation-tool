@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estranhar">
+        <note />
+    <roleset framnet="" id="estranhar.01" name="achar estranho" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2962:  Eles estranharam o fato dele não sair do barraco de_  manhã e chamaram a polícia. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">estranharam</rel>
+                <arg f="" n="1">o fato dele não sair do barraco de_  manhã
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="riscar">
+        <note />
+    <roleset framnet="scratch.02" id="riscar.01" name="riscar.01" vncls="21.1">
+            <roles>
+                <role descr="cutter" n="0">
+                    <vnrole vncls="21.1" vntheta="Agent" />
+                </role>
+                <role descr="thing cut" n="1">
+                    <vnrole vncls="21.1" vntheta="Patient" />
+                </role>
+                <role descr="medium, source" n="2" />
+                <role descr="instrument" n="3">
+                    <vnrole vncls="21.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s846:  Deve-  se usar pedras(  pedra goiás e ardósias) ,  madeiras não-  brilhantes(  que riscam facilmente)  e cerâmicas não-  esmaltadas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">riscam</rel>
+                <arg f="mnr" n="m">facilmente
+</arg>
+                <note>arg1 como sujeito</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

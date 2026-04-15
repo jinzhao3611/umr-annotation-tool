@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="excluir">
+        <note />
+    <roleset framnet="exclude.01" id="excluir.01" name="não incluir; desconsiderar" vncls="">
+            <roles>
+                <role descr="agent, excluder" n="0" />
+                <role descr="patient, thing excluded" n="1" />
+                <role descr="excluded-from" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1917:  A taxação de grandes fortunas e o dinheiro de privatização- -  de estatais não-  estratégicas(  exclui minérios,  petróleo e telecomunicações) ,  complementaria esses fundos. 
+</text>
+                <rel f="">exclui</rel>
+                <arg f="" n="1">minérios,  petróleo e telecomunicações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

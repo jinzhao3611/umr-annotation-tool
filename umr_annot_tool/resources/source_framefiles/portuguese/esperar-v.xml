@@ -1,0 +1,411 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esperar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="wait.01" id="esperar.01" name="aguardar" vncls="47.1-1">
+            <roles>
+                <role descr="wait-er (not waiter, that's the other sense)" n="1" />
+                <role descr="thing waited for" n="2">
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                </role>
+                <role descr="period of time waited through" n="m" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3859:  Encerrada a festa,  Maluly viu o rapaz esperando. 
+</text>
+                <rel f="">esperando</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3529:  Cursando economia na Faap,  Kiko espera ansioso o seu telefone celular,  que « está para sair ». 
+</text>
+                <arg f="adv" n="m">Cursando economia na Faap
+</arg>
+                <arg f="" n="0">Kiko
+</arg>
+                <rel f="">espera</rel>
+                <arg f="mnr" n="m">ansioso
+</arg>
+                <arg f="" n="1">o seu telefone celular,  que « está para sair »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3381:  O secretário espera a resposta do público. 
+</text>
+                <arg f="" n="0">O secretário
+</arg>
+                <rel f="">espera</rel>
+                <arg f="" n="1">a resposta do público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3029:  Ontem ﻿à tarde,  Pacheco disse que esperará até terça-  feira para que o clube carioca envie uma cópia do seguro de vida previsto no contrato de empréstimo do meia Dener,  morto terça-  feira. 
+</text>
+                <arg f="" n="0">Pacheco
+</arg>
+                <rel f="">esperará</rel>
+                <arg f="tmp" n="m">até terça-  feira
+</arg>
+                <arg f="" n="1">para que o clube carioca envie uma cópia do seguro de vida previsto no contrato de empréstimo do meia Dener,  morto terça-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2897:  « Espero quatro anos e volto a me apresentar »,  disse. 
+</text>
+                <rel f="">Espero</rel>
+                <arg f="tmp" n="m">quatro anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1664:  BC espera queda para comprar dólar
+</text>
+                <arg f="" n="0">BC
+</arg>
+                <rel f="">espera</rel>
+                <arg f="" n="1">queda
+</arg>
+                <arg f="pnc" n="m">para comprar dólar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1553:  Para entrar em ação,  a tropa de ciclistas está esperando apenas que aconteça o cerimonial de inauguração,  diz Santini. 
+</text>
+                <arg f="pnc" n="m">Para entrar em ação
+</arg>
+                <arg f="" n="0">a tropa de ciclistas
+</arg>
+                <rel f="">esperando</rel>
+                <arg f="adv" n="m">apenas
+</arg>
+                <arg f="" n="1">que aconteça o cerimonial de inauguração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1076:  Última dica:  não espere subir ao cesto do balão para iniciar suas fotos. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">espere</rel>
+                <arg f="" n="1">subir ao cesto do balão para iniciar suas fotos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s859:  Aristides está esperando a publicação do texto do FSE aprovado pelo Congresso para concluir se a desvinculação dessas verbas atinge ou não direitos individuais. 
+</text>
+                <arg f="" n="0">Aristides
+</arg>
+                <rel f="">esperando</rel>
+                <arg f="" n="1">a publicação do texto do FSE aprovado pelo Congresso para concluir se a desvinculação dessas verbas atinge ou não direitos individuais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s855:  Seu Sauber pode acabar trocando o certo pelo incerto ao esperar por Karl_  Wendlinger. 
+</text>
+                <rel f="">esperar</rel>
+                <arg f="" n="1">por Karl_  Wendlinger
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s574:  Ao_  mesmo_  tempo,  estamos esperando denúncias sobre a atuação dos bicheiros paulistas »,  disse Burle_  Filho. 
+</text>
+                <arg f="tmp" n="m">Ao_  mesmo_  tempo
+</arg>
+                <rel f="">esperando</rel>
+                <arg f="" n="1">denúncias sobre a atuação dos bicheiros paulistas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="expect.01" id="esperar.02" name="ter a expectativa de" vncls="62">
+            <roles>
+                <role descr="expecter" n="0">
+                    <vnrole vncls="62" vntheta="Experiencer" />
+                </role>
+                <role descr="thing expected" n="1">
+                    <vnrole vncls="62" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3627:  Esperamos uma mudança de atitude da polícia. 
+</text>
+                <rel f="">Esperamos</rel>
+                <arg f="" n="1">uma mudança de atitude da polícia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3500:  Derlan espera um grande jogo hoje contra o Corinthians: 
+</text>
+                <arg f="" n="0">Derlan
+</arg>
+                <rel f="">espera</rel>
+                <arg f="" n="1">um grande jogo
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="prd" n="m">contra o Corinthians
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3410:  Eduardo_  Lourenço- -  Não se deve esperar uma intervenção que tenha efeitos imediatos como a dos políticos. 
+</text>
+                <arg f="dis" n="m">Eduardo_  Lourenço
+</arg>
+                <arg f="neg" n="m">Não
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">esperar</rel>
+                <arg f="" n="1">uma intervenção que tenha efeitos imediatos como a dos políticos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3307:  Neste ano,  a secretaria espera vacinar cerca_  de 480 mil crianças. 
+</text>
+                <arg f="tmp" n="m">Neste ano
+</arg>
+                <arg f="" n="0">a secretaria
+</arg>
+                <rel f="">espera</rel>
+                <arg f="" n="1">vacinar cerca_  de 480 mil crianças
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2891:  Afinal,  por_  mais_  que tentem matar o craque,  ele sempre sobrevive,  aqui ou ali,  onde menos se espera. 
+</text>
+                <arg f="loc" n="m">onde
+</arg>
+                <arg f="ext" n="m">menos
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">espera</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2431:  Ao_  contrário_  do que poderia esperar a direita norte-  americana na vigência da Guerra_  Fria,  a vinda de Soljenitsin não pôde ser capitalizada em discursos e aparições públicas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">esperar</rel>
+                <arg f="" n="0">a direita norte-  americana
+</arg>
+                <arg f="loc" n="m">na vigência da Guerra_  Fria
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2171:  Confio na nossa equipe e espero sair do Parque_  Antarctica com a vitória. 
+</text>
+                <rel f="">espero</rel>
+                <arg f="" n="1">sair do Parque_  Antarctica com a vitória
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2008:  A família do bicheiro José_  Scafura,  o « Piruínha »,  espera para qualquer momento a libertação de André,  15,  sequestrado na noite de terça-  feira. 
+</text>
+                <arg f="" n="0">A família do bicheiro José_  Scafura,  o « Piruínha », 
+</arg>
+                <rel f="">espera</rel>
+                <arg f="tmp" n="m">para qualquer momento
+</arg>
+                <arg f="" n="1">a libertação de André,  15,  sequestrado na noite de terça-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1962:  Pesquisa Update,  da Câmara_  Americana,  revela que os empresários esperam queda na inflação com o real. 
+</text>
+                <arg f="" n="0">os empresários
+</arg>
+                <rel f="">esperam</rel>
+                <arg f="" n="1">queda na inflação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1857:  Esperava aparecer como o único responsável pelo plano de estabilização. 
+</text>
+                <rel f="">Esperava</rel>
+                <arg f="" n="1">aparecer como o único responsável pelo plano de estabilização
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1345:  São esperados cerca_  de 60 mil visitantes. 
+</text>
+                <rel f="">esperados</rel>
+                <arg f="" n="1">cerca_  de 60 mil visitantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1271:  Com a desclassificação,  Jack_  Girafa não teve o comportamento pacato que se espera da gigante das savanas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">espera</rel>
+                <arg f="" n="2">da gigante das savanas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1136:  Que a democracia contemporânea é fortemente corporativa o sabemos,  mas esperamos que não continue a ser tão cheia de particularismos! 
+</text>
+                <rel f="">esperamos</rel>
+                <arg f="" n="1">que não continue a ser tão cheia de particularismos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1005:  Esta armação dá ﻿à equipe um caráter excessivamente defensivo,  o_  que desagrada àqueles que esperam da seleção brasileira um futebol alegre,  sempre visando ao gol. 
+</text>
+                <rel f="">esperam</rel>
+                <arg f="" n="2">da seleção brasileira
+</arg>
+                <arg f="" n="1">um futebol alegre
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s594:  Por_  que não ousar ainda_  que ingenuamente esperar que as coisas desta_  vez se ajeitem? 
+</text>
+                <arg f="mnr" n="m">ingenuamente
+</arg>
+                <rel f="">esperar</rel>
+                <arg f="" n="1">que as coisas desta_  vez se ajeitem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s150:  Murici espera que o Inter não tenha a mesma atitude. 
+</text>
+                <arg f="" n="0">Murici
+</arg>
+                <rel f="">espera</rel>
+                <arg f="" n="1">que o Inter não tenha a mesma atitude
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="hope.01" id="esperar.03" name="ter esperança" vncls="32.2 62">
+            <roles>
+                <role descr="hoper" n="0">
+                    <vnrole vncls="32.2" vntheta="Experiencer" />
+                    <vnrole vncls="62" vntheta="Experiencer" />
+                </role>
+                <role descr="thing hoped (for)" n="1">
+                    <vnrole vncls="32.2" vntheta="Theme" />
+                    <vnrole vncls="62" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3072:  « É uma obra que fala de fé e eu espero que possibilite ao público uma compreensão direta do gospel,  uma música de palavras simples e profundas.  »
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">espero</rel>
+                <arg f="" n="1">que possibilite ao público uma compreensão direta do gospel,  uma música de palavras simples e profundas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2442:  Não é a primeira vez,  e espero não ser a última,  que Fernando_  Henrique e esta coluna se atritam pelo mesmo motivo. 
+</text>
+                <rel f="">espero</rel>
+                <arg f="" n="1">não ser a última
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1983:  Espero que possa voltar lá e dizer às crianças que elas não precisam ficar presas lá,  que existe todo um outro mundo fora dali. 
+</text>
+                <rel f="">Espero</rel>
+                <arg f="" n="1">que possa voltar lá e dizer às crianças que elas não precisam ficar presas lá,  que existe todo um outro mundo fora dali
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

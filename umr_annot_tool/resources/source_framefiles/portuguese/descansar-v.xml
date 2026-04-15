@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="descansar">
+        <note />
+    <roleset framnet="rest.01" id="descansar.01" name="recuperar-se da fadiga e do cansaço" vncls="47.6 9.2-1">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="47.6" vntheta="Agent" />
+                    <vnrole vncls="9.2-1" vntheta="Agent" />
+                </role>
+                <role descr="entity resting" n="1">
+                    <vnrole vncls="47.6" vntheta="Theme" />
+                    <vnrole vncls="9.2-1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1367:  Ele permaneceu no velório por aproximadamente uma hora e seguiu para descansar no hotel Glória até o horário do enterro. 
+</text>
+                <rel f="">descansar</rel>
+                <arg f="loc" n="m">no hotel Glória
+</arg>
+                <arg f="tmp" n="m">até o horário do enterro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="convidar">
+        <note />
+    <roleset framnet="invite.01" id="convidar.01" name="chamar alguém para fazer alguma coisa" vncls="">
+            <roles>
+                <role descr="inviter" n="0" />
+                <role descr="invited" n="1" />
+                <role descr="invited-to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4205:  Nessa época,  Fishel teria conhecido o ginecologista britânico Robert_  Winston,  a quem convidou para um encontro científico promovido por Antinori. 
+</text>
+                <arg f="" n="0">Fishel
+</arg>
+                <arg f="" n="1">a quem
+</arg>
+                <rel f="">convidou</rel>
+                <arg f="" n="2">para um encontro científico promovido por Antinori
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3659:  Cerca_  de 300 pessoas foram convidadas para a cerimônia. 
+</text>
+                <arg f="" n="1">Cerca_  de 300 pessoas
+</arg>
+                <rel f="">convidadas</rel>
+                <arg f="" n="2">para a cerimônia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3140:  Fomos convidados a fazer um minitreking,  ou_  seja,  caminhar claçando « crampones »(  sapatos com pregos de ferro)  sobre o glaciar. 
+</text>
+                <rel f="">convidados</rel>
+                <arg f="" n="2">a fazer um minitreking,  ou_  seja,  caminhar claçando « crampones »(  sapatos com pregos de ferro)  sobre o glaciar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2973:  O Fernando_  Collor,  evidentemente,  não foi convidado para a posse. 
+</text>
+                <arg f="" n="1">O Fernando_  Collor
+</arg>
+                <arg f="adv" n="m">evidentemente
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">convidado</rel>
+                <arg f="" n="2">para a posse
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2951:  A constatação é do jurista Saulo_  Ramos,  ex-  consultor Geral da República e ex-  ministro da Justiça,  que foi convidado a analisar o rascunho das medidas e na ocasião alertou para dois problemas:  o artigo primeiro e o parágrafo primeiro da MP 433 praticamente instituem duas moedas no país,  o_  que é proibido. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">convidado</rel>
+                <arg f="" n="2">a analisar o rascunho das medidas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2622:  Quando o secretário da Receita era Osires_  Lopes_  Filho,  várias cartas foram expedidas a profissionais liberais e empresas « convidando-  os » a acertar as contas com o leão. 
+</text>
+                <rel f="">convidando-</rel>
+                <arg f="" n="1">os
+</arg>
+                <arg f="" n="2">a acertar as contas com o leão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

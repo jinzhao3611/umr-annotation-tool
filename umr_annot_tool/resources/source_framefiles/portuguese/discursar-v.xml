@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="discursar">
+        <note />
+    <roleset framnet="speak.01" id="discursar.01" name="falar ao público; fazer discurso" vncls="37.5">
+            <roles>
+                <role descr="talker" n="0">
+                    <vnrole vncls="37.5" vntheta="Actor1" />
+                </role>
+                <role descr="subject/language" n="1">
+                    <vnrole vncls="37.5" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.5" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4032:  O candidato tucano a presidente deu essa declaração ontem ﻿à tarde,  depois de discursar para cerca_  de 550 empresários na hora do almoço(  leia texto nesta página) . 
+</text>
+                <rel f="">discursar</rel>
+                <arg f="" n="2">para cerca_  de 550 empresários
+</arg>
+                <arg f="tmp" n="m">na hora do almoço
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

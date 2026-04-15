@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="juntar">
+        <note />
+    <roleset framnet="join.01" id="juntar.01" name="unir" vncls="22.1-2">
+            <roles>
+                <role descr="agent, entity doing the tying" n="0">
+                    <vnrole vncls="22.1-2" vntheta="Agent" />
+                </role>
+                <role descr="patient, thing(s) being tied" n="1">
+                    <vnrole vncls="22.1-2" vntheta="Patient1" />
+                </role>
+                <role descr="instrument, string" n="2">
+                    <vnrole vncls="22.1-2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2529:  Às 21h15,  o tucano José_  Serra,  recém-  eleito senador,  juntou-  se ao casal presidencial. 
+</text>
+                <arg f="tmp" n="m">Às 21h15
+</arg>
+                <arg f="" n="0">o tucano José_  Serra,  recém-  eleito senador, 
+</arg>
+                <rel f="">juntou-</rel>
+                <arg f="" n="1">se
+</arg>
+                <arg f="" n="2">ao casal presidencial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

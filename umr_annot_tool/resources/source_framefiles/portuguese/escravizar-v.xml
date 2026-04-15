@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="escravizar">
+        <note />
+    <roleset framnet="enslave.01" id="escravizar.01" name="tornar escravo " vncls="45.4">
+            <roles>
+                <role descr="causer, agent" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="entity enslaved" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3645:  A questão que enfrentaram era retomar a arte intensamente dramática de sua tradição sem se escravizar a ela. 
+</text>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">escravizar</rel>
+                <arg f="" n="0">a ela
+</arg>
+                <note>o verbo prevê dois argumentos: arg0 é quem escraviza e arg1 é o escravo; esta construção pronominal é atípica</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

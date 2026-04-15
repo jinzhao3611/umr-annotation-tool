@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="averiguar">
+        <note />
+    <roleset framnet="investigate.01" id="averiguar.01" name="investigar" vncls="30.2 35.4">
+            <roles>
+                <role descr="examiner" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                    <vnrole vncls="35.4" vntheta="Agent" />
+                </role>
+                <role descr="examined" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                    <vnrole vncls="35.4" vntheta="Location" />
+                </role>
+                <role descr="examined for" n="2">
+                    <vnrole vncls="35.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2130:  A organização também iniciou um inquérito para averiguar o massacre de cerca_  de 500 mil pessoas. 
+</text>
+                <rel f="">averiguar</rel>
+                <arg f="" n="1">o massacre de cerca_  de 500 mil pessoas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

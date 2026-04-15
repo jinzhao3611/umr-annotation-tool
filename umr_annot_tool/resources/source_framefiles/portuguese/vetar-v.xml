@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vetar">
+        <note />
+    <roleset framnet="veto.01" id="vetar.01" name="não autorizar; proibir" vncls="-">
+            <roles>
+                <role descr="agent, causer" n="0" />
+                <role descr="entity vetoed" n="1" />
+                <role descr="attribute" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3923:  Um jogador que estava nos planos de Pepe era o meia Carlos_  Alberto_  Dias,  que acabou indo para o Flamengo,  já_  que a diretoria do Santos vetou o seu nome. 
+</text>
+                <arg f="" n="0">a diretoria do Santos
+</arg>
+                <rel f="">vetou</rel>
+                <arg f="" n="1">o seu nome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3310:  A Rússia vetou documento da Conferência_  sobre_  Segurança_  e_  Cooperação_  na_  Europa sobre a ex-  república iugoslava da Bósnia. 
+</text>
+                <arg f="" n="0">A Rússia
+</arg>
+                <rel f="">vetou</rel>
+                <arg f="" n="1">documento da Conferência_  sobre_  Segurança_  e_  Cooperação_  na_  Europa sobre a ex-  república iugoslava da Bósnia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3308:  Rússia veta documento sobre a Bósnia
+</text>
+                <arg f="" n="0">Rússia
+</arg>
+                <rel f="">veta</rel>
+                <arg f="" n="1">documento sobre a Bósnia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2791:  Deputados ligados a ACM diziam ontem,  em conversas com colegas,  que Benito_  Gama(  PFL-  BA)  foi vetado para ser vice de FHC porque o grupo avalia que são cada_  vez_  mais reduzidas as chances de vitória do tucano. 
+</text>
+                <arg f="" n="1">Benito_  Gama(  PFL-  BA) 
+</arg>
+                <rel f="">vetado</rel>
+                <arg f="" n="2">para ser vice de FHC
+</arg>
+                <arg f="cau" n="m">porque o grupo avalia que são cada_  vez_  mais reduzidas as chances de vitória do tucano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2220:  Seus programas de rádio terão reportagens de rua,  vetadas na TV. 
+</text>
+                <rel f="">vetadas</rel>
+                <arg f="loc" n="m">na TV
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

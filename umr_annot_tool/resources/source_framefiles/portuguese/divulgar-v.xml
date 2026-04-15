@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="divulgar">
+        <note />
+    <roleset framnet="divulge.01" id="divulgar.01" name="tornar público" vncls="37.7">
+            <roles>
+                <role descr="Sayer" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="Utterance" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="Hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3931:  O deputado Aloizio_  Mercadante(  PT/  SP)  divulgou ontem números do Tesouro sobre a execução orçamentária de janeiro a novembro de 1993,  demonstrando que o governo conseguiu um superávit operacional de US$  9,  2 bilhões neste período. 
+</text>
+                <arg f="" n="0">O deputado Aloizio_  Mercadante(  PT/  SP) 
+</arg>
+                <rel f="">divulgou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">números do Tesouro sobre a execução orçamentária de janeiro a novembro de 1993
+</arg>
+                <arg f="prd" n="m">demonstrando que o governo conseguiu um superávit operacional de US$  9,  2 bilhões neste período
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3376:  A AI,  organismo internacional com mais_  de 1,  1 milhão de membros,  divulgou o documento ontem em São_  Paulo. 
+</text>
+                <arg f="" n="0">A AI,  organismo internacional com mais_  de 1,  1 milhão de membros, 
+</arg>
+                <rel f="">divulgou</rel>
+                <arg f="" n="1">o documento
+</arg>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3174: . . .  casos positivos de dengue em Monte_  Aprazível(  38 km de Rio_  Preto-  SP)  foram divulgados ontem pelo Ersa(  Escritório_  Regional_  de_  Saúde)  de Rio_  Preto. 
+</text>
+                <arg f="" n="1">casos positivos de dengue em Monte_  Aprazível(  38 km de Rio_  Preto-  SP) 
+</arg>
+                <rel f="">divulgados</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="0">pelo Ersa(  Escritório_  Regional_  de_  Saúde)  de Rio_  Preto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2503:  O percurso,  que será divulgado momentos antes da prova,  deve incluir a avenida Bandeirantes,  via Anchieta,  represa Billings e chegada na av. _  Nove_  de_  Julho,  em_  frente ao Banana_  Banana. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">divulgado</rel>
+                <arg f="tmp" n="m">momentos antes da prova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2346:  O objetivo é divulgar as técnicas mais modernas de tratamento das deformidades congênitas nas diversas regiões do país. 
+</text>
+                <rel f="">divulgar</rel>
+                <arg f="" n="1">as técnicas mais modernas de tratamento das deformidades congênitas
+</arg>
+                <arg f="loc" n="m">nas diversas regiões do país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1838:  O IBGE divulgou também ontem a inflação registrada no Rio e São_  Paulo entre os dias 9 de março e 7 de abril. 
+</text>
+                <arg f="" n="0">O IBGE
+</arg>
+                <rel f="">divulgou</rel>
+                <arg f="tmp" n="m">também ontem
+</arg>
+                <arg f="" n="1">a inflação registrada no Rio e São_  Paulo entre os dias 9 de março e 7 de abril
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1547:  Enquanto isso(  outra_  vez a vontade de escrever entrementes) ,  a Receita_  Federal divulga a lista dos devedores do Imposto_  de_  Renda que nada pagarão. 
+</text>
+                <arg f="dis" n="m">Enquanto isso
+</arg>
+                <arg f="" n="0">a Receita_  Federal
+</arg>
+                <rel f="">divulga</rel>
+                <arg f="" n="1">a lista dos devedores do Imposto_  de_  Renda que nada pagarão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s715:  Ainda_  assim,  foi a mídia que amplificou as acusações,  Ao divulgá-  las sem uma checagem mais aprofundada. 
+</text>
+                <rel f="">divulgá-</rel>
+                <arg f="" n="1">las
+</arg>
+                <arg f="mnr" n="m">sem uma checagem mais aprofundada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s370:  O número final do total de declarações entregues só deve ser divulgado na próxima semana. 
+</text>
+                <arg f="" n="1">O número final do total de declarações entregues
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">divulgado</rel>
+                <arg f="tmp" n="m">na próxima semana
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

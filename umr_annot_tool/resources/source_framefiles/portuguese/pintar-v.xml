@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pintar">
+        <note />
+    <roleset framnet="paint.01" id="pintar.01" name="cobrir com tinta; fazer arte com tintas" vncls="25.1">
+            <roles>
+                <role descr="agent, painter" n="0">
+                    <vnrole vncls="25.1" vntheta="Agent" />
+                </role>
+                <role descr="surface" n="1">
+                    <vnrole vncls="25.1" vntheta="Destination" />
+                </role>
+                <role descr="explicit mention of paint" n="2">
+                    <vnrole vncls="25.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s329:  Ele era tão bom artista,  que muitos pintores quiseram aprender a pintar com ele. 
+</text>
+                <rel f="">pintar</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

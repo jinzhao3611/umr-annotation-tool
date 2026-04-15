@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="combater">
+        <note />
+    <roleset framnet="combat.01" id="combater.01" name="lutar contra" vncls="36.1">
+            <roles>
+                <role descr="first fighter" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="second fighter, if separate" n="1">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <role descr="spoils" n="2">
+                    <vnrole vncls="36.1" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2491:  « Os negros,  as minorias,  têm que viver como as comunidades de insetos,  como as colméias,  os formigueiros,  para combater o poder.  »
+</text>
+                <rel f="">combater</rel>
+                <arg f="" n="1">o poder
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1526:  Nova droga combate asma,  diz estudo
+</text>
+                <arg f="" n="0">Nova droga
+</arg>
+                <rel f="">combate</rel>
+                <arg f="" n="1">asma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s922:  A polícia do Mato_  Grosso_  do_  Sul vai combater a pesca predatória durante a piracema(  época de reprodução dos peixes) ,  que termina no dia 31 de janeiro. 
+</text>
+                <arg f="" n="0">A polícia do Mato_  Grosso_  do_  Sul
+</arg>
+                <rel f="">combater</rel>
+                <arg f="" n="1">a pesca predatória durante a piracema(  época de reprodução) ,  que termina no dia 31 de janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s921:  Polícia vai combater pesca predatória no MS
+</text>
+                <arg f="" n="0">Polícia
+</arg>
+                <rel f="">combater</rel>
+                <arg f="" n="1">pesca predatória
+</arg>
+                <arg f="loc" n="m">no MS
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s764:  Um programa capaz de combater a inflação,  o desemprego e que abra uma corrente de investimentos para o país »,  disse Maluf. 
+</text>
+                <rel f="">combater</rel>
+                <arg f="" n="1">a inflação,  o desemprego
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s345:  Exército e polícia combatem as drogas no Rio
+</text>
+                <arg f="" n="0">Exército e polícia
+</arg>
+                <rel f="">combatem</rel>
+                <arg f="" n="1">as drogas
+</arg>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s6:  Eles se dizem oposição,  mas ainda não informaram o_  que vão combater. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">combater</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

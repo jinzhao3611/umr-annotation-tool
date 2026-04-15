@@ -1,0 +1,2442 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estar">
+        <note />
+    <roleset framnet="be.01" id="estar.01" name="verbo de cópula (liga um tópico a um comentário)" vncls="-">
+            <roles>
+                <role descr="topic" n="1" />
+                <role descr="comment" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4193:  A população mundial está em_  torno_  de 5,  66 bilhões. 
+</text>
+                <arg f="" n="1">A população mundial
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">em_  torno_  de 5,  66 bilhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4127:  O técnico da Coréia,  Kim_  Ho,  afirmou que,  no primeiro tempo,  a equipe estava « intimidada pela Alemanha,  o_  que é natural,  pois eles são campeões do mundo ». 
+</text>
+                <arg f="tmp" n="m">no primeiro tempo
+</arg>
+                <arg f="" n="1">a equipe
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">intimidada pela Alemanha
+</arg>
+                <arg f="prd" n="m">o_  que é natural,  pois eles são campeões do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4099:  Está tudo na sua cabeça. 
+</text>
+                <rel f="">Está</rel>
+                <arg f="" n="1">tudo
+</arg>
+                <arg f="" n="2">na sua cabeça
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4093:  Entre as mais_  de 140 participantes da feira,  estavam presentes companhias como a Xerox,  Kodak,  QMS,  Digital e Pennant,  empresa da IBM para a área de impressão. 
+</text>
+                <arg f="loc" n="m">Entre as mais_  de 140 participantes da feira
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">presentes
+</arg>
+                <arg f="" n="1">companhias como a Xerox,  Kodak,  QMS,  Digital e Pennant,  empresa da IBM para a área de impressão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4089:  Segundo Formaggio,  estão em estudo outras formas de obter a produtividade das culturas. 
+</text>
+                <arg f="dis" n="m">Segundo Formaggio
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">em estudo
+</arg>
+                <arg f="" n="1">outras formas de obter a produtividade das culturas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4023:  Eu estou muito preocupado em estimular as atividades preventivas. 
+</text>
+                <arg f="" n="1">Eu
+</arg>
+                <rel f="">estou</rel>
+                <arg f="" n="2">muito preocupado em estimular as atividades preventivas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4006:  Todos eles estarão esta noite em Minneapolis. 
+</text>
+                <arg f="" n="1">Todos eles
+</arg>
+                <rel f="">estarão</rel>
+                <arg f="tmp" n="m">esta noite
+</arg>
+                <arg f="" n="2">em Minneapolis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3990:  Eddie também está em crise com sua mulher(  interpretada pela mulher de Abel_  Ferrara)  e não resiste ﻿à tentação da atriz,  que paga para ele filmar(  Madonna é produtora de « Olhos_  de_  Serpente ») . 
+</text>
+                <arg f="" n="1">Eddie
+</arg>
+                <arg f="adv" n="m">também
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">em crise com sua mulher(  interpretada pela mulher de Abel_  Ferrara) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3985:  Em « Olhos_  de_  Serpente »(  Snake_  Eyes)  de Abel_  Ferrara,  Madonna faz o papel dela mesma:  uma falsa atriz,  falsa loira,  que paga para estar num filme. 
+</text>
+                <rel f="">estar</rel>
+                <arg f="" n="2">num filme
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3979:  Está em estudo no Ministério_  da_  Previdência um conjunto de medidas para desestimular o aumento de aposentadorias no próximo ano. 
+</text>
+                <rel f="">Está</rel>
+                <arg f="" n="2">em estudo
+</arg>
+                <arg f="loc" n="m">no Ministério_  da_  Previdência
+</arg>
+                <arg f="" n="1">um conjunto de medidas para desestimular o aumento de aposentadorias no próximo ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3968:  Filha do touro Chummak,  ela está prenha e foi comercializada com uma bezerra ao pé. 
+</text>
+                <arg f="prd" n="m">Filha do touro Chummak
+</arg>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">prenha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3947:  A reprodução assistida está regulamentada no Brasil desde novembro de 1992,  embora sua prática tenha sido iniciada oito anos antes. 
+</text>
+                <arg f="" n="1">A reprodução assistida
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">regulamentada no Brasil desde novembro de 1992
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3932:  Embora esteja a quase 40 km do estádio,  o hotel foi escolhido porque está próximo_  da California_  State_  University,  onde o Brasil treinará durante esta semana. 
+</text>
+                <arg f="" n="1">o hotel
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">próximo_  da California_  State_  University,  onde o Brasil treinará durante esta semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3932:  Embora esteja a quase 40 km do estádio,  o hotel foi escolhido porque está próximo_  da California_  State_  University,  onde o Brasil treinará durante esta semana. 
+</text>
+                <rel f="">esteja</rel>
+                <arg f="" n="2">a quase 40 km do estádio
+</arg>
+                <arg f="" n="1">o hotel
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3925:  Durante esta semana,  o agora dirigente esteve no Japão,  em busca de uma empresa que,  no futuro,  invista no Santos. 
+</text>
+                <arg f="tmp" n="m">Durante esta semana
+</arg>
+                <arg f="" n="1">o agora dirigente
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">no Japão
+</arg>
+                <arg f="pnc" n="m">em busca de uma empresa que,  no futuro,  invista no Santos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3923:  Um jogador que estava nos planos de Pepe era o meia Carlos_  Alberto_  Dias,  que acabou indo para o Flamengo,  já_  que a diretoria do Santos vetou o seu nome. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">nos planos de Pepe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3826:  Estilistas estarão ﻿à disposição dos clientes. 
+</text>
+                <arg f="" n="1">Estilistas
+</arg>
+                <rel f="">estarão</rel>
+                <arg f="" n="2">﻿à disposição dos clientes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3817:  Na campanha eleitoral,  Alencar e Nilo estiveram em lados opostos quanto_  ﻿à ação das Forças_  Armadas no combate ao crime. 
+</text>
+                <arg f="loc" n="m">Na campanha eleitoral
+</arg>
+                <arg f="" n="1">Alencar e Nilo
+</arg>
+                <rel f="">estiveram</rel>
+                <arg f="" n="2">em lados opostos quanto_  ﻿à ação das Forças_  Armadas no combate ao crime
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3813:  Chris_  Columbus está ligado ﻿à adaptação dos super-  heróis « Quarteto_  Fantástico »,  que inauguraram a era Marvel nos gibis há 30 anos. 
+</text>
+                <arg f="" n="1">Chris_  Columbus
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">ligado ﻿à adaptação dos super-  heróis « Quarteto_  Fantástico »,  que inauguraram a era Marvel nos gibis há 30 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3802:  « As pessoas estão cansadas do hype que se cria em_  torno_  das roupas,  dos estilistas e do luxo abusivo. 
+</text>
+                <arg f="" n="1">As pessoas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">cansadas do hype que se cria em_  torno_  das roupas,  dos estilistas e do luxo abusivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3791:  Esses aspectos podem ser observados nos relatos das pacientes:  « quando tenho que arrumar a casa e não estou com_  vontade,  escuto vozes que me incentivam a começar a tarefa. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estou</rel>
+                <arg f="" n="2">com_  vontade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3789:  Nicolau diz que hoje o produtor de leite C recebe US$  0,  22,  enquanto o custo está em US$  0,  24. 
+</text>
+                <arg f="" n="1">o custo
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">em US$  0,  24
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3749:  Os documentos indicam que a primeira-  dama dos EUA estava mais envolvida no dia-  a-  dia da administração da firma do_  que fora admitido até agora. 
+</text>
+                <arg f="" n="1">a primeira-  dama dos EUA
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">mais envolvida no dia-  a-  dia da administração da firma do_  que fora admitido até agora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3703:  O acidente causou a morte do menino René_  Scorsa,  que estava no Logus dirigido por Sérgio_  Duran,  33,  que bateu no caminhão. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">no Logus dirigido por Sérgio_  Duran,  33,  que bateu no caminhão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3700:  As outras três pessoas que estavam no carro conseguiram se salvar. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">no carro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3698:  Vera_  Lúcia_  Barbosa,  40,  morreu na última quarta presa pelo cinto de segurança ao carro em que estava,  que caiu no rio Tietê. 
+</text>
+                <arg f="" n="1">Vera_  Lúcia_  Barbosa,  40, 
+</arg>
+                <arg f="" n="2">em que
+</arg>
+                <rel f="">estava</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3687:  A federação das pequenas e médias empresas revelou numa pesquisa que seus filiados estão próximos do pânico em_  relação_  ﻿à situação econômica. 
+</text>
+                <arg f="" n="1">seus filiados
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">próximos do pânico
+</arg>
+                <arg f="cau" n="m">em_  relação_  ﻿à situação econômica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3668:  As questões colocadas pela « body_  art » nos anos 60 foram retomadas agora como reflexão sobre uma realidade em que os corpos estão submetidos a um trabalho de transformação que realça o sentido trágico. 
+</text>
+                <arg f="" n="1">os corpos
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">submetidos a um trabalho de transformação que realça o sentido trágico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3661:  Entre os convidados estão o « rei da soja »,  Olacyr_  de_  Moraes,  o empresário Alfredo_  Saad e o comandante Rolim_  Amaro,  dono da empresa aérea TAM. 
+</text>
+                <arg f="" n="2">Entre os convidados
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">o « rei da soja »,  Olacyr_  de_  Moraes,  o empresário Alfredo_  Saad e o comandante Rolim_  Amaro,  dono da empresa aérea TAM
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3654:  Estão nesse grupo Ricardo_  Fiuza(  PFL-  PE) ,  João_  Alves(  sem partido-  BA) ,  Cid_  Carvalho(  PMDB-  MA) ,  José_  Geraldo(  PMDB-  MG) ,  Manoel_  Moreira(  PMDB-  SP) ,  Fábio_  Raunheitti(  PTB-  RJ) ,  Ézio_  Ferreira(  PFL-  AM)  e Paulo_  Portugal(  PP-  RJ) . 
+</text>
+                <rel f="">Estão</rel>
+                <arg f="" n="2">nesse grupo
+</arg>
+                <arg f="" n="1">Ricardo_  Fiuza(  PFL-  PE) ,  João_  Alves(  sem partido-  BA) ,  Cid_  Carvalho(  PMDB-  MA) ,  José_  Geraldo(  PMDB-  MG) ,  Manoel_  Moreira(  PMDB-  SP) ,  Fábio_  Raunheitti(  PTB-  RJ) ,  Ézio_  Ferreira(  PFL-  AM)  e Paulo_  Portugal(  PP-  RJ) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3634:  Animado com um teste de vestiário,  o tcheco Zdenek_  Zeman,  técnico da Lazio,  colocou em campo o atacante croata Alan_  Boksic,  cuja volta ao time estava prevista para a próxima semana. 
+</text>
+                <rel f="">estava</rel>
+                <arg f="" n="2">prevista para a próxima semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3577:  Os preços estiveram praticamente estáveis nas últimas semanas. 
+</text>
+                <arg f="" n="1">Os preços
+</arg>
+                <rel f="">estiveram</rel>
+                <arg f="adv" n="m">praticamente
+</arg>
+                <arg f="" n="2">estáveis
+</arg>
+                <arg f="tmp" n="m">nas últimas semanas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3516:  Além_  de dominar esta habilidade,  as duas únicas coisas realmente necessárias para se viajar de trenó pelo Alasca eram estar em razoável boa forma física e ter mais_  de 13 anos de idade. 
+</text>
+                <arg f="" n="1">as duas únicas coisas realmente necessárias para se viajar de trenó pelo Alasca
+</arg>
+                <rel f="">estar</rel>
+                <arg f="" n="2">em razoável boa forma física
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3502:  A casa vai estar cheia e nós vamos mostrar porque viemos disputar a Copa »,  afirma. 
+</text>
+                <arg f="" n="1">A casa
+</arg>
+                <rel f="">estar</rel>
+                <arg f="" n="2">cheia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3501:  « Estamos muito motivados. 
+</text>
+                <rel f="">Estamos</rel>
+                <arg f="" n="2">muito motivados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3446:  A polícia anunciou a libertação de seis homens que estavam trancados no porão de um prédio do CNA em Johannesburgo. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">trancados no porão de um prédio do CNA em Johannesburgo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3430:  Entre os denunciados por corrupção passiva estão o procurador de Justiça aposentado Aldegy_  do_  Nascimento,  26 delegados,  inspetores e peritos da Polícia_  Civil e Ary_  Chagas_  de_  Aguiar,  assessor da promotora Lúcia_  Atalla. 
+</text>
+                <arg f="" n="2">Entre os denunciados por corrupção passiva
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">o procurador de Justiça aposentado Aldegy_  do_  Nascimento,  26 delegados,  inspetores e peritos da Polícia_  Civil e Ary_  Chagas_  de_  Aguiar,  assessor da promotora Lúcia_  Atalla
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3417:  Não sei se os jornalistas estão conscientes da grande responsabilidade que têm. 
+</text>
+                <arg f="" n="1">os jornalistas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">conscientes da grande responsabilidade que têm
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3403:  Na madrugada de ontem,  os prédios foram vigiados a distância por homens da Rota,  que estavam sem farda. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">sem farda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3400:  A dimensão do fato está na relatividade da sua importância para cada leitor e não no espaço narcísico que ocupa sob uma assinatura. 
+</text>
+                <arg f="" n="1">A dimensão do fato
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">na relatividade da sua importância para cada leitor e não no espaço narcísico que ocupa sob uma assinatura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3388:  o_  que mudou talvez seja meu vocabulário,  que está menos estruturado. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">menos estruturado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3360:  Maria_  Elisa_  Flora_  Demarchi,  15,  está internada em estado grave no Hospital_  do_  Mandaqui. 
+</text>
+                <arg f="" n="1">Maria_  Elisa_  Flora_  Demarchi
+</arg>
+                <arg f="prd" n="m">15
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">internada em estado grave no Hospital_  do_  Mandaqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3349:  A própria psicanálise está baseada numa concepção tropológica da consciência humana. 
+</text>
+                <arg f="" n="1">A própria psicanálise
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">baseada numa concepção tropológica da consciência humana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3321:  A estratégia de Gibson consiste em projetar no futuro o_  que já está latente no mundo contemporâneo. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">latente
+</arg>
+                <arg f="loc" n="m">no mundo contemporâneo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3314:  As tabelas das montadoras,  segundo ele,  estão 40%  acima_  do preço de mercado. 
+</text>
+                <arg f="" n="1">As tabelas das montadoras
+</arg>
+                <arg f="dis" n="m">segundo ele
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">40%  acima_  do preço de mercado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3306:  A Secretaria_  de_  Saúde da Paraíba informou que João_  Pessoa está entre as cinco capitais brasileiras que atingiram 90%  de cobertura vacinal na última campanha de multivacinação,  realizada em 90. 
+</text>
+                <arg f="" n="1">João_  Pessoa
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">entre as cinco capitais brasileiras que atingiram 90%  de cobertura vacinal na última campanha de multivacinação,  realizada em 90
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3245:  « Já estamos contentes por ter chegado às oitavas-  de-  final »,  disse Phillip_  Trent,  24,  que assistiu o jogo ao_  lado_  do amigo Brian_  Fagerburg,  24. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">estamos</rel>
+                <arg f="" n="2">contentes por ter chegado às oitavas-  de-  final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3181:  Em Mato_  Grosso,  a paralisação está prevista para começar hoje. 
+</text>
+                <arg f="loc" n="m">Em Mato_  Grosso
+</arg>
+                <arg f="" n="1">a paralisação
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">prevista para começar hoje
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3171:  Seleção é isso,  joga quem está melhor,  não tem esse negócio de nome. 
+</text>
+                <arg f="" n="1">quem
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">melhor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3159:  O cantor não esteve livre do assédio e do culto de seus fãs nem_  mesmo durante os dois anos em que esteve ligado ao exército. 
+</text>
+                <arg f="" n="1">O cantor
+</arg>
+                <arg f="tmp" n="m">que
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">ligado ao exército
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3159:  O cantor não esteve livre do assédio e do culto de seus fãs nem_  mesmo durante os dois anos em que esteve ligado ao exército. 
+</text>
+                <arg f="" n="1">O cantor
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">livre do assédio e do culto de seus fãs
+</arg>
+                <arg f="tmp" n="m">nem_  mesmo durante os dois anos em que esteve ligado ao exército
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3136:  O Brasil « nunca esteve em apuros »,  segundo o técnico. 
+</text>
+                <arg f="" n="1">O Brasil
+</arg>
+                <arg f="tmp" n="m">nunca
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">em apuros
+</arg>
+                <arg f="dis" n="m">segundo o técnico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3131:  Estou aqui a trabalho »,  disse. 
+</text>
+                <rel f="">Estou</rel>
+                <arg f="" n="2">aqui
+</arg>
+                <arg f="cau" n="m">a trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3125:  Todos os anunciantes que aderiram ﻿à idéia dos clubes infantis estão atrás_  de um mercado de dimensões gigantescas:  os miniconsumidores americanos na faixa de idade entre 4 e 12 anos gastaram no ano passado US$  7,  3 bilhões das suas próprias mesadas e influenciaram suas famílias a comprar mais US$  130 bilhões. 
+</text>
+                <arg f="" n="1">Todos os anunciantes que aderiram ﻿à idéia dos clubes infantis
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">atrás_  de um mercado de dimensões gigantescas:  os miniconsumidores americanos na faixa de idade entre 4 e 12 anos gastaram no ano passado US$  7,  3 bilhões das suas próprias mesadas e influenciaram suas famílias a comprar mais US$  130 bilhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3121:  Com_  efeito,  os estudiosos da matéria afirmam que a negociação coletiva de trabalho está diretamente relacionada com o modelo de organização sindical(  cf.  Amauri_  Mascaro_  Nascimento,  em « Direito_  Sindical »,  editora Saraiva,  1989,  pág.  313) . 
+</text>
+                <arg f="" n="1">a negociação coletiva de trabalho
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">diretamente relacionada com o modelo de organização sindical(  cf.  Amauri_  Mascaro_  Nascimento,  em « Direito_  Sindical »,  editora Saraiva,  1989,  pág.  313) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3120:  A notícia veiculada por esta Folha(  em 10/  10/  1994)  de que o presidente eleito Fernando_  Henrique_  Cardoso pretende propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988)  juntamente com o contrato coletivo de trabalho,  demonstra sua coerência com a modernização das relações sociais. 
+</text>
+                <rel f="">está</rel>
+                <arg f="" n="2">previsto no artigo 8º,  II da Constituição_  Federal de 1988
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3062:  Pelo grupo brazuca,  ainda estarão presentes Tyes e Caio(  Rio_  de_  Janeiro)  e o especialista em « body_  piercing »,  André_  Meyer(  São_  Paulo) . 
+</text>
+                <arg f="pnc" n="m">Pelo grupo brazuca
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">estarão</rel>
+                <arg f="" n="2">presentes
+</arg>
+                <arg f="" n="1">Tyes e Caio(  Rio_  de_  Janeiro)  e o especialista em « body_  piercing »,  André_  Meyer(  São_  Paulo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3060:  Freddy_  Tatoo vive atualmente em Bolonha e já está acostumado ao circuito internacional da tatuagem. 
+</text>
+                <arg f="" n="1">Freddy_  Tatoo
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">acostumado ao circuito internacional da tatuagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3034:  É certo que,  desta_  vez,  o governo está mais atento do_  que no Plano_  Cruzado e vai usar,  segundo o ministro Rubens_  Ricupero,  todos os artifícios para evitar uma febre de consumo. 
+</text>
+                <arg f="" n="1">o governo
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">mais atento do_  que no Plano_  Cruzado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3017:  Esteve assim com o astro da conferência,  lorde Keynes « um sujeito sutil,  bom expositor,  muito persuasivo »,  conta Campos. 
+</text>
+                <rel f="">Esteve</rel>
+                <arg f="mnr" n="m">assim
+</arg>
+                <arg f="" n="2">com o astro da conferência,  lorde Keynes « um sujeito sutil,  bom expositor,  muito persuasivo »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3009:  É como_  se estivesse lá »,  acrescenta Rodrigo. 
+</text>
+                <rel f="">estivesse</rel>
+                <arg f="" n="2">lá
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2948:  Yasuhi_  Akashi,  reprsentante da organização,  argumentou que os sérvios estavam em meio ao processo de retirada. 
+</text>
+                <arg f="" n="1">os sérvios
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">em meio ao processo de retirada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2915:  Orestes_  Quércia e Luiz_  Antonio_  Fleury_  Filho não estiveram na sede da entidade. 
+</text>
+                <arg f="" n="1">Orestes_  Quércia e Luiz_  Antonio_  Fleury_  Filho
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estiveram</rel>
+                <arg f="" n="2">na sede da entidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2901:  A eísfora incidia sobre o valor das propriedades,  as_  quais estavam devidamente registradas nos « diagramas » públicos. 
+</text>
+                <arg f="" n="1">as_  quais
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="mnr" n="m">devidamente
+</arg>
+                <arg f="" n="2">registradas nos « diagramas » públicos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2890:  Enfim,  nem tudo está perdido neste futebol automatizado e excessivamnete defensivo que a Copa está consagrando. 
+</text>
+                <arg f="tmp" n="m">Enfim
+</arg>
+                <arg f="" n="1">nem tudo
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">perdido neste futebol automatizado e excessivamnete defensivo que a Copa está consagrando
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2833:  Khalil e Mustafa,  disfarçados,  tentaram matar Mahfouz um dia antes,  mas ele não estava em casa. 
+</text>
+                <arg f="" n="1">ele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">em casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2821:  Entre os corpos mais feios está o da top-  model Kate_  Moss,  que segundo o jornal tem ombros caídos e o peito liso. 
+</text>
+                <arg f="" n="2">Entre os corpos mais feios
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="1">o da top-  model Kate_  Moss,  que segundo o jornal tem ombros caídos e o peito liso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2813:  O assunto saiu da pauta,  ainda_  que esteja dentro_  do bolso do leitor. 
+</text>
+                <arg f="" n="1">O assunto
+</arg>
+                <rel f="">esteja</rel>
+                <arg f="" n="2">dentro_  do bolso do leitor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2808:  Senna,  todo mundo viu,  rodou quando estava em segundo lugar e com poucas chances de recuperar o primeiro. 
+</text>
+                <arg f="" n="1">Senna
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">em segundo lugar e com poucas chances de recuperar o primeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2760:  Ao_  mesmo_  tempo o atual papado esmagou a teologia da libertação,  teorias de concorrência feroz são implantadas em toda parte,  o fascismo está de_  volta,  Fidel_  Castro se tornou uma espécie de Somoza e até Martin_  Luther_  King,  ficou provado,  era plagiário. 
+</text>
+                <arg f="" n="1">o fascismo
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">de_  volta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2755:  Por isso está como cego em tiroteio. 
+</text>
+                <arg f="cau" n="m">Por isso
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">como cego em tiroteio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2685:  Cuba também está com a imagem um_  tanto abalada(  crise,  êxodo por_  mar etc) . 
+</text>
+                <arg f="" n="1">Cuba
+</arg>
+                <arg f="adv" n="m">também
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">com a imagem um_  tanto abalada(  crise,  êxodo por_  mar etc) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2684:  O livro chega num momento em que a idéia de cinema engajado está meio por_  baixo. 
+</text>
+                <arg f="" n="1">a idéia de cinema engajado
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">meio por_  baixo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2656:  A maior parte da produção(  250 t)  já está comprometida com uma indústria de processamento da polpa. 
+</text>
+                <arg f="" n="1">A maior parte da produção(  250 t) 
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">comprometida com uma indústria de processamento da polpa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2653:  « Through_  the_  Woods » é voltado para crianças que estão no primeiro ano do 1º grau. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">no primeiro ano do 1º grau
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2642:  Estiveram presentes dirigentes do futebol,  e autoridades policiais civis e militares. 
+</text>
+                <rel f="">Estiveram</rel>
+                <arg f="" n="2">presentes
+</arg>
+                <arg f="" n="1">dirigentes do futebol,  e autoridades policiais civis e militares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2628:  Uma resposta está numa palavra:  tranquilidade. 
+</text>
+                <arg f="" n="1">Uma resposta
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">numa palavra:  tranquilidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2608:  Cabe perguntar:  Se o Supremo não está de_  acordo com a suposta falta de regra das duas moedas,  que existem de_  fato desde a emissão da última medida provisória,  por_  que não a proclamou imediatamente inconstitucional e se serviu dela privadamente? 
+</text>
+                <arg f="" n="1">o Supremo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">de_  acordo com a suposta falta de regra das duas moedas,  que existem de_  fato desde a emissão da última medida provisória, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2601:  Os fatos estão aí e são estarrecedores. 
+</text>
+                <arg f="" n="1">Os fatos
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">aí
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2592:  Entre elas,  estão as reformas e ampliações dos hospitais do Tatuapé(  US$  7,  4 milhões) ,  Vila_  Nova_  Cachoeirinha(  US$  17 milhões)  e Tide_  Setubal(  US$  9,  4 milhões) . 
+</text>
+                <arg f="" n="2">Entre elas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">as reformas e ampliações dos hospitais do Tatuapé(  US$  7,  4 milhões) ,  Vila_  Nova_  Cachoeirinha(  US$  17 milhões)  e Tide_  Setubal(  US$  9,  4 milhões) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2565:  « Sei que não estou rendendo tudo que posso,  mas estou em evolução »,  disse. 
+</text>
+                <rel f="">estou</rel>
+                <arg f="" n="2">em evolução
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2553:  Se o Ministério_  Público_  Estadual comprovar danos ao patrimônio público com as importações de Israel,  os responsáveis estarão sujeitos a ação de ressarcimento. 
+</text>
+                <arg f="adv" n="m">Se o Ministério_  Público_  Estadual comprovar danos ao patrimônio público com as importações de Israel
+</arg>
+                <arg f="" n="1">os responsáveis
+</arg>
+                <rel f="">estarão</rel>
+                <arg f="" n="2">sujeitos a ação de ressarcimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2528:  Para governador ele ainda está indeciso. 
+</text>
+                <arg f="prd" n="m">Para governador
+</arg>
+                <arg f="" n="1">ele
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">indeciso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2516:  Agora ela está de_  volta. 
+</text>
+                <arg f="tmp" n="m">Agora
+</arg>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">de_  volta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2510:  São_  Paulo A eleição presidencial está na sua pior fase,  que é aquela das articulações políticas de bastidores,  da costura sigilosa de alianças,  das rasteiras e baixarias entre adversários e correligionários. 
+</text>
+                <arg f="loc" n="m">São_  Paulo
+</arg>
+                <arg f="" n="1">A eleição presidencial
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">na sua pior fase,  que é aquela das articulações políticas de bastidores,  da costura sigilosa de alianças,  das rasteiras e baixarias entre adversários e correligionários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2478:  O bom é que o Fernando_  Henrique não estava presente e não se comportou como o Maurício_  Corrêa. 
+</text>
+                <arg f="" n="1">o Fernando_  Henrique
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">presente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2468:  A Super-  301,  que já foi aplicada contra o Brasil quando esteve em vigor em 1989 e 1990,  estabelece um prazo de 18 meses para que as negociações bilaterais levem ﻿à eliminação do que os EUA consideram barreiras ao comércio. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">em vigor
+</arg>
+                <arg f="tmp" n="m">em 1989 e 1990
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2432:  Por dois motivos:  primeiro,  a indisponibilidade do escritor,  que simplesmente não estava interessado em percorrer os Estados_  Unidos ou debater suas idéias ; segundo,  seus comentários sobre a « decadência moral » do Ocidente logo o tornaram inconveniente. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">interessado em percorrer os Estados_  Unidos ou debater suas idéias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2425:  Quando jovem,  esteve engajado na Marinha grega. 
+</text>
+                <arg f="tmp" n="m">Quando jovem
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">engajado na Marinha grega
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2397:  Entre eles estavam a empresa Óticas_  Trevo,  terrenos e pontos comerciais em Salvador. 
+</text>
+                <arg f="" n="2">Entre eles
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="1">a empresa Óticas_  Trevo,  terrenos e pontos comerciais em Salvador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2367:  Ora,  se o presidente chegar ﻿à posse sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas,  torna-  se muito mais difícil fazê-  los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC. 
+</text>
+                <rel f="">estejam</rel>
+                <arg f="" n="2">no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade
+</arg>
+                <arg f="" n="1">os projetos que consubstanciem tais reformas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2366:  Elas dependem em boa parte de emendas constitucionais,  o_  que está longe de ser simples de fazer. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">longe de ser simples de fazer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2328:  « Tudo leva a crer que estamos num processo de endemia »,  sustenta o patologista Bruce_  Mendes_  Campos,  responsável pela análise do sangue. 
+</text>
+                <rel f="">estamos</rel>
+                <arg f="" n="2">num processo de endemia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2324:  Talvez preferíssemos que o comércio estivesse totalmente liberalizado,  sem as listas de produto em regime de adequação(  sobre os_  quais são mantidos os impostos alfandegários)  que afetam de 5%  a 8%  do comércio regional. 
+</text>
+                <arg f="" n="1">o comércio
+</arg>
+                <rel f="">estivesse</rel>
+                <arg f="" n="2">totalmente liberalizado
+</arg>
+                <arg f="mnr" n="m">sem as listas de produto em regime de adequação(  sobre os_  quais são mantidos os impostos alfandegários)  que afetam de 5%  a 8%  do comércio regional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2295:  « Eu estou igualzinho ao presidente Itamar,  igualzinho ao ministério,  igualzinho a 150 milhões de brasileiros,  que não sabem coisa alguma sobre este plano ». 
+</text>
+                <arg f="" n="1">Eu
+</arg>
+                <rel f="">estou</rel>
+                <arg f="" n="2">igualzinho ao presidente Itamar,  igualzinho ao ministério,  igualzinho a 150 milhões de brasileiros,  que não sabem coisa alguma sobre este plano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2283:  « O fonoaudiólogo tem uma área vasta de atuação,  apesar_  de estar muito concorrida. 
+</text>
+                <rel f="">estar</rel>
+                <arg f="" n="2">muito concorrida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2269:  Na lista dos assuntos estão a campanha contra a fome,  racismo,  imigração nordestina,  aborto,  corrupção política e aborto. 
+</text>
+                <arg f="" n="2">Na lista dos assuntos
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">a campanha contra a fome,  racismo,  imigração nordestina,  aborto,  corrupção política e aborto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2259:  O resultado dessa tentativa de metempsicose está no recém-  lançado CD « Isso_  é_  Bossa_  Nova »(  EMI-  Odeon) ,  sétimo disco em 12 Anos de sua carreira. 
+</text>
+                <arg f="" n="1">O resultado dessa tentativa de metempsicose
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">no recém-  lançado CD « Isso_  é_  Bossa_  Nova »(  EMI-  Odeon) ,  sétimo disco em 12 Anos de sua carreira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2233:  Quando astronautas embarcarem numa estação orbital ou,  eventualmente,  estiverem a caminho de Marte,  terão como companhia necessária alguns bilhões ou trilhões de micróbios comilões. 
+</text>
+                <arg f="" n="1">astronautas
+</arg>
+                <arg f="adv" n="m">eventualmente
+</arg>
+                <rel f="">estiverem</rel>
+                <arg f="" n="2">a caminho de Marte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2223:  Em junho,  Christensen esteve no Brasil a convite da Fundação_  Dom_  Cabral de Belo_  Horizonte,  para acompanhar a segunda etapa do curso STC-  Executivo. 
+</text>
+                <arg f="tmp" n="m">Em junho
+</arg>
+                <arg f="" n="1">Christensen
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">no Brasil
+</arg>
+                <arg f="mnr" n="m">a convite da Fundação_  Dom_  Cabral de Belo_  Horizonte
+</arg>
+                <arg f="pnc" n="m">para acompanhar a segunda etapa do curso STC-  Executivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2210:  Os funcionários da universidade estão em greve desde o último dia 19. 
+</text>
+                <arg f="" n="1">Os funcionários da universidade
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">em greve
+</arg>
+                <arg f="tmp" n="m">desde o último dia 19
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2135:  Lessa disse que está disposto a ouvir uma proposta formal do governador. 
+</text>
+                <arg f="" n="1">Lessa
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">disposto a ouvir uma proposta formal do governador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2093:  Entre os clips que o programa exibe estão « Blitzkrieg_  Bop »,  « I_  Wanna_  Live » e « Poison_  Heart ». 
+</text>
+                <arg f="" n="2">Entre os clips que o programa exibe
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">« Blitzkrieg_  Bop »,  « I_  Wanna_  Live » e « Poison_  Heart »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2011:  Segundo o pai de André,  Luis_  Carlos_  Scafura,  os sequestradores provaram que ele está vivo,  ao responder corretamente algumas perguntas sobre a vida do rapaz. 
+</text>
+                <arg f="" n="1">ele
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">vivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1984:  Hoje as coisas estão melhores para a comunidade latina nos EUA. 
+</text>
+                <arg f="tmp" n="m">Hoje
+</arg>
+                <arg f="" n="1">as coisas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">melhores
+</arg>
+                <arg f="prd" n="m">para a comunidade latina
+</arg>
+                <arg f="loc" n="m">nos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1980:  Quando se está num ambiente como o que eu vivia,  você não sabe que existe todo um mundo diferente fora dali. 
+</text>
+                <arg f="tmp" n="m">Quando
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">num ambiente como o que eu vivia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1956:  Entre os teens,  os triângulos estão em alta com direito a formação de casais « a três ». 
+</text>
+                <arg f="loc" n="m">Entre os teens
+</arg>
+                <arg f="" n="1">os triângulos
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">em alta
+</arg>
+                <arg f="mnr" n="m">com direito a formação de casais « a três »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1943:  Um amigo da família ligou para informar sobre o estado de saúde do irmão do ex-  presidente,  Pedro_  Collor,  que está sob tratamento nos Estados_  Unidos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">sob tratamento
+</arg>
+                <arg f="loc" n="m">nos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1941:  Também esteve na Casa_  da_  Dinda Eunícia_  Guimarães,  amiga de Rosane. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">na Casa_  da_  Dinda
+</arg>
+                <arg f="" n="1">Eunícia_  Guimarães,  amiga de Rosane
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1940:  Segundo Luiz_  Estevão,  Collor,  vestido com uma calça marinho e camisa de algodão branca,  sem mangas,  estava « confiante no trabalho dos advogados ». 
+</text>
+                <arg f="dis" n="m">Segundo Luiz_  Estevão
+</arg>
+                <arg f="" n="1">Collor,  vestido com uma calça marinho e camisa de algodão branca,  sem mangas, 
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">confiante
+</arg>
+                <arg f="prd" n="m">no trabalho dos advogados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1921:  Durante o jantar,  pessoas que estavam numa mesa próxima ﻿à de Collor e Rosane tiraram fotos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">numa mesa próxima ﻿à de Collor e Rosane
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1864:  Do contrário,  todo o esforço feito estará destinado ao fracasso. 
+</text>
+                <arg f="" n="1">todo o esforço feito
+</arg>
+                <rel f="">estará</rel>
+                <arg f="" n="2">destinado ao fracasso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1806:  Na loja de Nova_  York,  o Compaq_  Aero está por US$  996,  97(  se chegar às 9h da manhã,  ganha o cupom de desconto de US$  100) . 
+</text>
+                <arg f="loc" n="m">Na loja de Nova_  York
+</arg>
+                <arg f="" n="1">o Compaq_  Aero
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">por US$  996,  97
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1799:  Na delegacia de polícia,  a nova bandeira de seis cores está hasteada no mastro e o juiz David_  Postman acabou de concluir a contagem dos votos. 
+</text>
+                <arg f="loc" n="m">Na delegacia de polícia
+</arg>
+                <arg f="" n="1">a nova bandeira de seis cores
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">hasteada no mastro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1758:  Entre as maiores variações da semana estão a sardinha em lata(  30,  52% )  e papel higiênico(  28,  18% ) . 
+</text>
+                <arg f="" n="2">Entre as maiores variações da semana
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">a sardinha em lata(  30,  52% )  e papel higiênico(  28,  18% ) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1743:  O comerciante Albano_  Miguel_  Ferreira,  37,  disse que estava na área de serviço de seu apartamento,  no primeiro andar,  e viu o fogo começar num barracão nos fundos da loja. 
+</text>
+                <arg f="" n="1">O comerciante Albano_  Miguel_  Ferreira,  37
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">na área de serviço de seu apartamento
+</arg>
+                <arg f="tmp" n="m">no primeiro andar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1719:  O carro-  forte do Banespa estava estacionado no pátio interno quando um caminhão basculante.  com homens armados na traseira.  bloqueou o portão. 
+</text>
+                <arg f="" n="1">O carro-  forte do Banespa
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">estacionado no pátio interno
+</arg>
+                <arg f="tmp" n="m">quando um caminhão basculante.  com homens armados na traseira.  bloqueou o portão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1706:  Está longe de ser o melhor de Tchaikovski,  mas o diabolismo da parte solista não deixa nunca de impressionar. 
+</text>
+                <rel f="">Está</rel>
+                <arg f="" n="2">longe de ser o melhor de Tchaikovski
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1695:  Os policiais foram a uma casa,  indicada pelas duas mulheres,  onde estariam outros integrantes da quadrilha,  mas nada foi encontrado ali. 
+</text>
+                <arg f="" n="2">onde
+</arg>
+                <rel f="">estariam</rel>
+                <arg f="" n="1">outros integrantes da quadrilha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1691:  Os três primeiros estão voltados para a TV a cabo,  onde atuam como operadores em vários Estados e como sócios da maior empresa de distribuição de programação:  a Net_  Brasil
+</text>
+                <arg f="" n="1">Os três primeiros
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">voltados para a TV a cabo,  onde atuam como operadores em vários Estados e como sócios da maior empresa de distribuição de programação:  a Net_  Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1682:  O Palmeiras/  Parmalat que está em terceiro lugar na classificação geral,  tenta defender sua invencibilidade no torneio diante_  do Flamengo,  no Rio. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">em terceiro lugar na classificação geral
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1670:  Por isso,  estando o « demos » na recepção e não na produção do discurso político,  é melhor dizer regime demótico que democrático. 
+</text>
+                <arg f="cau" n="m">Por isso
+</arg>
+                <rel f="">estando</rel>
+                <arg f="" n="1">o « demos »
+</arg>
+                <arg f="" n="2">na recepção e não na produção do discurso político
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1665:  Diretor do Banco_  Central não acredita que o real esteja valorizado porque « tem gente comprando e vendendo »
+</text>
+                <arg f="" n="1">o real
+</arg>
+                <rel f="">esteja</rel>
+                <arg f="" n="2">valorizado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1618:  Estou surpreso »,  foi o que Franco disse a sobre as declarações da mãe. 
+</text>
+                <rel f="">Estou</rel>
+                <arg f="" n="2">surpreso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1614:  Atrás_  de Buenos_  Aires,  estão duas cidades asiáticas(  Hong_  Kong e Taipé)  e duas européias(  Zurique e Genebra,  ambas na Suíça) . 
+</text>
+                <arg f="" n="2">Atrás_  de Buenos_  Aires
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">duas cidades asiáticas(  Hong_  Kong e Taipé)  e duas européias(  Zurique e Genebra,  ambas na Suíça) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1600:  Além_  de Serpa e Teixeira,  já estavam sob investigação judicial eleitoral os candidatos Márcia_  Cibilis_  Viana(  federal,  PDT) ,  Paulo_  de_  Almeida(  federal,  PSD)  e Aluizio_  de_  Castro(  estadual,  PPR) . 
+</text>
+                <arg f="" n="1">Além_  de Serpa e Teixeira os candidatos Márcia_  Cibilis_  Viana(  federal,  PDT) ,  Paulo_  de_  Almeida(  federal,  PSD)  e Aluizio_  de_  Castro(  estadual,  PPR) 
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">sob investigação judicial eleitoral
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1524:  O governo não está errado em formular regras que possibilitem o alongamento. 
+</text>
+                <arg f="" n="1">O governo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">errado em formular regras que possibilitem o alongamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1520:  Estamos na transição. 
+</text>
+                <rel f="">Estamos</rel>
+                <arg f="" n="2">na transição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1506:  Segundo o diretor de Assuntos_  Internacionais do Banco_  Central,  Gustavo_  Franco,  as emissões de reais cresceram bastante na primeira semana de julho,  mas estão estáveis desde_  então. 
+</text>
+                <arg f="" n="1">as emissões de reais
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">estáveis
+</arg>
+                <arg f="tmp" n="m">desde_  então
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1492:  Quem pensa o contrário,  que trate de comprovar que o raciocínio está furado. 
+</text>
+                <arg f="" n="1">o raciocínio
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">furado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1487:  Freddy está na rabeira,  com 37. 
+</text>
+                <arg f="" n="1">Freddy
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">na rabeira
+</arg>
+                <arg f="mnr" n="m">com 37
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1482:  Entre as modificações,  está a construção de um anfiteatro ao_  ar_  livre. 
+</text>
+                <arg f="" n="2">Entre as modificações
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="1">a construção de um anfiteatro ao_  ar_  livre
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1473:  Francisco_  Lafayette,  administrador do Banco_  Banorte,  diz as cadernetas estão com rendimento atraente,  mas que os fundos de commodities dão a vantagem adicional do resgate diário com rentabilidade a_  partir_  da carência de 30 dias. 
+</text>
+                <arg f="" n="1">as cadernetas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">com rendimento atraente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1471:  Os juros estão em alta. 
+</text>
+                <arg f="" n="1">Os juros
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">em alta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1456:  Os distribuidores Ford estão exultantes. 
+</text>
+                <arg f="" n="1">Os distribuidores Ford
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">exultantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1448:  Falando aos membros da Comissão_  de_  Assuntos_  Econômicos do Senado,  o ministro disse estar feliz por não haver,  até agora,  sentenças judiciais contrárias às medidas do plano econômico. 
+</text>
+                <rel f="">estar</rel>
+                <arg f="" n="2">feliz
+</arg>
+                <arg f="cau" n="m">por não haver,  até agora,  sentenças judiciais contrárias às medidas do plano econômico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1446:  Pelo que a Folha apurou,  a equipe econômica não está disposta a aceitar modificações nos dispositivos sobre salários da medida provisória que instituiu a URV. 
+</text>
+                <arg f="dis" n="m">Pelo que a Folha apurou
+</arg>
+                <arg f="" n="1">a equipe econômica
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">disposta a aceitar modificações nos dispositivos sobre salários da medida provisória que instituiu a URV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1444:  FHC ressalvou que não conhecia a proposta com detalhes e que o governo está aberto a negociações. 
+</text>
+                <arg f="" n="1">o governo
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">aberto a negociações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1397:  June não respondeu se também estava apaixonada. 
+</text>
+                <arg f="" n="1">June
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">apaixonada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1395:  Presidente diz estar apaixonado por June
+</text>
+                <rel f="">estar</rel>
+                <arg f="" n="2">apaixonado por June
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1336:  Sampras esteve irreconhecível. 
+</text>
+                <arg f="" n="1">Sampras
+</arg>
+                <rel f="">esteve</rel>
+                <arg f="" n="2">irreconhecível
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1317:  Entre as mulheres,  estão Cecilia_  Bartoli,  Jessye_  Norman,  Anne_  Sofie_  von_  Otter,  Dawn_  Upshaw e Galina_  Gorchakova. 
+</text>
+                <arg f="" n="2">Entre as mulheres
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">Cecilia_  Bartoli,  Jessye_  Norman,  Anne_  Sofie_  von_  Otter,  Dawn_  Upshaw e Galina_  Gorchakova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1288:  Dos 133 passageiros e tripulantes que estavam na aeronave,  55 morreram. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">na aeronave
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1239:  Quem está duas horas mais cedo que Brasília mudará o horário duas horas antes,  portanto. 
+</text>
+                <arg f="" n="1">Quem
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">duas horas mais cedo que Brasília
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1220:  O acantonamento Itereí oferece futebol,  vôlei,  caminhadas,  brincadeiras,  e está com vagas para as temporadas de 17 a 23 e de 24 a 30 de julho. 
+</text>
+                <arg f="" n="1">O acantonamento Itereí
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">com vagas para as temporadas de 17 a 23 e de 24 a 30 de julho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1218:  Para se ter uma idéia da importância da InterNet,  a Casa_  Branca está conectada a essa rede,  disponibilizando publicações e documentos para qualquer pessoa do mundo. 
+</text>
+                <arg f="dis" n="m">Para se ter uma idéia da importância da InterNet
+</arg>
+                <arg f="" n="1">a Casa_  Branca
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">conectada a essa rede,  disponibilizando publicações e documentos para qualquer pessoa do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1139:  Do movimento underground estão presentes Anderson_  Rubbo,  Cacá_  di_  Guglielmo,  Divas e Alessandro_  Tierni. 
+</text>
+                <arg f="loc" n="m">Do movimento underground
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">presentes
+</arg>
+                <arg f="" n="1">Anderson_  Rubbo,  Cacá_  di_  Guglielmo,  Divas e Alessandro_  Tierni
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1131:  Os três cortadores de cana eram de Alagoas e estavam na cidade havia 15 dias. 
+</text>
+                <arg f="" n="1">Os três cortadores de cana eram de Alagoas
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">na cidade
+</arg>
+                <arg f="tmp" n="m">havia 15 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1100:  Que o faça,  no_  entanto,  todos os dias do ano,  não apenas quando o país está ﻿à boca da urna,  e nos limites da lei. 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <arg f="" n="1">o país
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">﻿à boca da urna
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1037:  Os de maior porte estão nos TREs(  Tribunais_  Regionais_  Eleitorais)  e no TSE. 
+</text>
+                <arg f="" n="1">Os de maior porte
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">nos TREs(  Tribunais_  Regionais_  Eleitorais)  e no TSE
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1035:  A operação é uma garantia de que todo o sistema estará vazio para receber os números oficiais da apuração. 
+</text>
+                <arg f="" n="1">todo o sistema
+</arg>
+                <rel f="">estará</rel>
+                <arg f="" n="2">vazio
+</arg>
+                <arg f="pnc" n="m">para receber os números oficiais da apuração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s992:  Na competição estará o mexicano « La_  Reina_  de_  La_  Noche » de Arturo_  Ripstein. 
+</text>
+                <arg f="" n="2">Na competição
+</arg>
+                <rel f="">estará</rel>
+                <arg f="" n="1">o mexicano « La_  Reina_  de_  La_  Noche » de Arturo_  Ripstein
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s989:  O Brasil está assim fora_  das seleções de Cannes-  94. 
+</text>
+                <arg f="" n="1">O Brasil
+</arg>
+                <rel f="">está</rel>
+                <arg f="dis" n="m">assim
+</arg>
+                <arg f="" n="2">fora_  das seleções de Cannes-  94
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s977:  As mulheres jornalistas que estão na tela têm inúmeros problemas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">na tela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s927:  Renato_  Batista_  Pedroso,  21,  Douglas_  José_  da_  Silva,  21,  e A.  L.  F. ,  16,  estão incomunicáveis. 
+</text>
+                <arg f="" n="1">Renato_  Batista_  Pedroso,  21,  Douglas_  José_  da_  Silva,  21,  e A.  L.  F. ,  16, 
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">incomunicáveis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s877:  Estou certo de que isso tem muito a ver com a preponderância da eleição presidencial sobre as demais,  sobretudo com a despolitização da campanha provocada pela força arrebatadora do Plano_  Real
+</text>
+                <rel f="">Estou</rel>
+                <arg f="" n="2">certo de que isso tem muito a ver com a preponderância da eleição presidencial sobre as demais,  sobretudo com a despolitização da campanha provocada pela força arrebatadora do Plano_  Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s853:  Está com quilos de sobra. 
+</text>
+                <rel f="">Está</rel>
+                <arg f="" n="2">com quilos de sobra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s837:  Entre eles estavam figuras hoje conhecidas,  como o filósofo José_  Arthur_  Giannotti,  o crítico literário Roberto_  Schwarz e o economista Paul_  Singer. 
+</text>
+                <arg f="" n="2">Entre eles
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="1">figuras hoje conhecidas,  como o filósofo José_  Arthur_  Giannotti,  o crítico literário Roberto_  Schwarz e o economista Paul_  Singer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s808:  Na ocasião,  o PMDB apoiou o governo,  mas agora não estaria totalmente unido para repetir a dose. 
+</text>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estaria</rel>
+                <arg f="" n="2">totalmente unido para repetir a dose
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s770:  O livro está em toda parte e eu sou daqueles que não conseguem ver a imagem noutra dimensão. 
+</text>
+                <arg f="" n="1">O livro
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">em toda parte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s756:  Também em isto Bôscoli estava em seu elemento:  poucos podiam ser mais hilariantemente viperinos desde_  que a piada não fosse dirigida contra você. 
+</text>
+                <arg f="dis" n="m">Também em isto
+</arg>
+                <arg f="" n="1">Bôscoli
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">em seu elemento:  poucos podiam ser mais hilariantemente viperinos desde_  que a piada não fosse dirigida contra você
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s744:  « Há dois meses que a coisa está pior. 
+</text>
+                <arg f="tmp" n="m">Há dois meses
+</arg>
+                <arg f="" n="1">a coisa
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">pior
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s727:  Os grevistas estão irredutíveis. 
+</text>
+                <arg f="" n="1">Os grevistas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">irredutíveis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s685:  No centro de todos esses nossos esforços de qualidade está o nosso cliente. 
+</text>
+                <arg f="" n="2">No centro de todos esses nossos esforços de qualidade
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="1">o nosso cliente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s658:  Segundo Milton_  Julio_  Zanluqui,  da Paraklin_  Pára-  raios,  entre os tipos mais comuns(  veja exemplos ao lado)  estão o sistema de gaiola(  Gaiola_  de_  Faraday) ,  composto de seis partes principais:  captador do tipo terminal aéreo,  cabo de cobre,  suportes isoladores,  tubo de proteção,  malha de aterramento e conector de medição. 
+</text>
+                <arg f="" n="2">entre os tipos mais comuns(  veja exemplos ao lado) 
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="1">o sistema de gaiola(  Gaiola_  de_  Faraday) ,  composto de seis partes principais:  captador do tipo terminal aéreo,  cabo de cobre,  suportes isoladores,  tubo de proteção,  malha de aterramento e conector de medição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s642:  No Brasil nós já estamos com oito tipos de opção sexual:  perua,  bofe,  bofeca,  boneca,  traveca,  hermafrodita,  drag_  queen e drag_  king. 
+</text>
+                <arg f="loc" n="m">No Brasil
+</arg>
+                <arg f="" n="1">nós
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">estamos</rel>
+                <arg f="" n="2">com oito tipos de opção sexual:  perua,  bofe,  bofeca,  boneca,  traveca,  hermafrodita,  drag_  queen e drag_  king
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s591:  Exercendo o direito de não estar a_  favor_  ou_  contra ninguém,  gostaria aqui de remar contra a maré e pasmem manifestar meu otimismo. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estar</rel>
+                <arg f="" n="2">a_  favor_  ou_  contra ninguém
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s553:  Folha- -  Em_  torno_  dele não estavam pessoas que hoje estão na sua candidatura? 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">na sua candidatura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s553:  Folha- -  Em_  torno_  dele não estavam pessoas que hoje estão na sua candidatura? 
+</text>
+                <arg f="dis" n="m">Folha
+</arg>
+                <arg f="" n="2">Em_  torno_  dele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="1">pessoas que hoje estão na sua candidatura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s539:  Estamos num ciclo de expansão. 
+</text>
+                <rel f="">Estamos</rel>
+                <arg f="" n="2">num ciclo de expansão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s491:  « Ele está perdido na China »,  disse Itamar,  com bom humor. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">perdido na China
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s479:  Sua popularidade está mais baixa do_  que nunca e um de seus possíveis oponentes é filho de George_  Bush. 
+</text>
+                <arg f="" n="1">Sua popularidade
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">mais baixa do_  que nunca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s431:  Estava vivo o sentimento étnico e nativista. 
+</text>
+                <rel f="">Estava</rel>
+                <arg f="" n="2">vivo
+</arg>
+                <arg f="" n="1">o sentimento étnico e nativista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s429:  No Rio,  Lula está em 2º,  com 25% .  das intenções de voto,  segundo o Datafolha
+</text>
+                <arg f="loc" n="m">No Rio
+</arg>
+                <arg f="" n="1">Lula
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">em 2º
+</arg>
+                <arg f="mnr" n="m">com 25% .  das intenções de voto
+</arg>
+                <arg f="dis" n="m">segundo o Datafolha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s387:  Seu sucesso estava,  essencialmente,  sustentado no fracasso. 
+</text>
+                <arg f="" n="1">Seu sucesso
+</arg>
+                <rel f="">estava</rel>
+                <arg f="adv" n="m">essencialmente
+</arg>
+                <arg f="" n="2">sustentado no fracasso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s386:  Fácil subir nos palanques,  defendendo que é necessário « mudar tudo o que está aí ». 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">aí
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s373:  Para os menores,  estão disponíveis o Pense_  Bem,  o PC_  1.  000,  o Telepapo e o Tá_  Na_  Hora
+</text>
+                <arg f="pnc" n="m">Para os menores
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">disponíveis
+</arg>
+                <arg f="" n="1">o Pense_  Bem,  o PC_  1.  000,  o Telepapo e o Tá_  Na_  Hora
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s343:  Segundo eles,  casos de doenças de pele em índios estariam relacionados ﻿à contaminação. 
+</text>
+                <arg f="dis" n="m">Segundo eles
+</arg>
+                <arg f="" n="1">casos de doenças de pele em índios
+</arg>
+                <rel f="">estariam</rel>
+                <arg f="" n="2">relacionados ﻿à contaminação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s322:  Depois do treino,  os jogadores voltam ao Lord_  Hotel,  onde estão concentrados desde a noite de ontem. 
+</text>
+                <arg f="" n="1">os jogadores
+</arg>
+                <arg f="loc" n="m">onde
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">concentrados
+</arg>
+                <arg f="tmp" n="m">desde a noite de ontem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s292:  Quarenta por_  cento dos gerentes japoneses estão insatisfeitos com os salários recebidos,  segundo pesquisa divulgada por um instituto privado em Tóquio. 
+</text>
+                <arg f="" n="1">Quarenta por_  cento dos gerentes japoneses
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">insatisfeitos com os salários recebidos
+</arg>
+                <arg f="dis" n="m">segundo pesquisa divulgada por um instituto privado em Tóquio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s230:  Próximo_  ﻿à praça da alimentação,  um sushiman estará preparando pratos típicos,  como sashimis e o sushi,  que estarão ﻿à venda. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">estarão</rel>
+                <arg f="" n="2">﻿à venda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s149:  Pereira levou um pisão na cabeça,  mesmo estando caído no chão. 
+</text>
+                <arg f="adv" n="m">mesmo
+</arg>
+                <rel f="">estando</rel>
+                <arg f="" n="2">caído no chão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s122:  Veículos de resgate estavam a apenas 500 metros do Aibus_  300. 
+</text>
+                <arg f="" n="1">Veículos de resgate
+</arg>
+                <rel f="">estavam</rel>
+                <arg f="" n="2">a apenas 500 metros do Aibus_  300
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s113:  Elas estão separadas por espaços de 80 km a 100 km. 
+</text>
+                <arg f="" n="1">Elas
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">separadas por espaços de 80 km a 100 km
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s105:  Eles tiveram que fazer isso se os escravos fossem superiores em qualidades que os próprios brancos valorizavam,  onde estaria a justificativa moral para mantê-  los escravizados? 
+</text>
+                <arg f="" n="2">onde
+</arg>
+                <rel f="">estaria</rel>
+                <arg f="" n="1">a justificativa moral para mantê-  los escravizados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s58:  Os três estão presos desde 30 de julho de 93. 
+</text>
+                <arg f="" n="1">Os três
+</arg>
+                <rel f="">estão</rel>
+                <arg f="" n="2">presos
+</arg>
+                <arg f="tmp" n="m">desde 30 de julho de 93
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s54:  Schwarzenegger está no HBO
+</text>
+                <arg f="" n="1">Schwarzenegger
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">no HBO
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s36:  Ele só não jogava porque não estava bem. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">estava</rel>
+                <arg f="" n="2">bem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s34:  Aqui só joga quem está bem. 
+</text>
+                <arg f="" n="1">quem
+</arg>
+                <rel f="">está</rel>
+                <arg f="" n="2">bem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

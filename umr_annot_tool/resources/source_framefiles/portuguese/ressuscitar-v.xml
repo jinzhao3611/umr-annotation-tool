@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ressuscitar">
+        <note />
+    <roleset framnet="revive.01" id="ressuscitar.01" name="fazer voltar à vida; voltar à vida" vncls="">
+            <roles>
+                <role descr="The Reanimator" n="0" />
+                <role descr="thing brought back to life" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3358:  Tampouco passa por FHC,  representante da contemporização bem explicada,  ou por Antonio_  Britto cujo voto,  em_  favor_  da anistia total aos agricultores,  semana passada,  ressuscitou os piores prognósticos sobre seu estilo. 
+</text>
+                <arg f="" n="0">cujo voto
+</arg>
+                <arg f="prd" n="m">em_  favor_  da anistia total aos agricultores
+</arg>
+                <arg f="tmp" n="m">semana passada
+</arg>
+                <rel f="">ressuscitou</rel>
+                <arg f="" n="1">os piores prognósticos sobre seu estilo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s681:  O baiano Dias_  Gomes,  70,  está se preparando para ressuscitar um clássico da teledramaturgia brasileira. 
+</text>
+                <rel f="">ressuscitar</rel>
+                <arg f="" n="1">um clássico da teledramaturgia brasileira
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

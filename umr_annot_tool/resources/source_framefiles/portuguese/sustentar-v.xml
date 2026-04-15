@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sustentar">
+        <note />
+        <note />
+    <roleset framnet="state.01" id="sustentar.01" name="defender; afirmar" vncls="37.7">
+            <roles>
+                <role descr="announcer" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <role descr="attributive" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2328:  « Tudo leva a crer que estamos num processo de endemia »,  sustenta o patologista Bruce_  Mendes_  Campos,  responsável pela análise do sangue. 
+</text>
+                <arg f="" n="1">« Tudo leva a crer que estamos num processo de endemia »
+</arg>
+                <rel f="">sustenta</rel>
+                <arg f="" n="0">o patologista Bruce_  Mendes_  Campos,  responsável pela análise do sangue
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1224:  Vera_  Lucia_  Vassouras,  que é negra e se diz militante do PDT,  sustenta que os autores do livro « em nenhum momento afirmaram que os negros são geneticamente inferiores ao brancos ». 
+</text>
+                <arg f="" n="0">Vera_  Lucia_  Vassouras,  que é negra e se diz militante do PDT, 
+</arg>
+                <rel f="">sustenta</rel>
+                <arg f="" n="1">que os autores do livro « em nenhum momento afirmaram que os negros são geneticamente inferiores ao brancos »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s200:  Eles sustentaram que a renúncia interrompeu o processo de impeachment. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">sustentaram</rel>
+                <arg f="" n="1">que a renúncia interrompeu o processo de impeachment
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="sustain.01" id="sustentar.02" name="alimentar; manter; dar sustentação" vncls="">
+            <roles>
+                <role descr="Intentional agent (often inanimate, though)" n="0" />
+                <role descr="thing continuing" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1933:  A cidade tem uma larga população de origem japonesa e isso sustenta a proliferação e a qualidade de seus restaurantes. 
+</text>
+                <arg f="" n="0">isso
+</arg>
+                <rel f="">sustenta</rel>
+                <arg f="" n="1">a proliferação e a qualidade de seus restaurantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s388:  No clima de sinistrose,  as fragilidades do PT não ficaram tão visíveis ﻿à opinião_  pública:  a dificuldade de se fazerem alianças capazes de sustentar Lula quando virasse presidente ; os aloprados que conquistaram posições estratégicas no partido ; a falta de generalizada convicção sobre o valor da democracia. 
+</text>
+                <rel f="">sustentar</rel>
+                <arg f="" n="1">Lula
+</arg>
+                <arg f="tmp" n="m">quando virasse presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s265:  É um grande pintor,  e sua última fase é o que mais sustenta a afirmação ; mas é irregular,  tem fracassos evidentes. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="ext" n="m">mais
+</arg>
+                <rel f="">sustenta</rel>
+                <arg f="" n="1">a afirmação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

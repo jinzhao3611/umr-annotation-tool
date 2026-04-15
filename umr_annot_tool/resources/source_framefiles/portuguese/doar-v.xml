@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="doar">
+        <note />
+    <roleset framnet="donate.01" id="doar.01" name="dar por caridade ou altruísmo" vncls="13.2">
+            <roles>
+                <role descr="giver" n="0">
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="thing given" n="1">
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="entity given to" n="2">
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2114:  A renda da noite de inauguração será doada ao Fundo_  Social_  de_  Solidariedade do Estado. 
+</text>
+                <arg f="" n="1">A renda da noite de inauguração
+</arg>
+                <rel f="">doada</rel>
+                <arg f="" n="2">ao Fundo_  Social_  de_  Solidariedade do Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1552:  A Asuapi doou 10 bicicletas para a guarda municipal fazer o policiamento do parque. 
+</text>
+                <arg f="" n="0">A Asuapi
+</arg>
+                <rel f="">doou</rel>
+                <arg f="" n="1">10 bicicletas
+</arg>
+                <arg f="" n="2">para a guarda municipal fazer o policiamento do parque
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

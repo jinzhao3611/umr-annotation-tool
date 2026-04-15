@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="contratar">
+        <note />
+    <roleset framnet="hire.01" id="contratar.01" name="empregar pessoas para determinada tarefa" vncls="13.5.1 29.2">
+            <roles>
+                <role descr="employer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="new employee" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="job" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4077:  Os candidatos da Bahia estão encontrando certa dificuldade em contratar cantores para animar suas campanhas. 
+</text>
+                <rel f="">contratar</rel>
+                <arg f="" n="1">cantores
+</arg>
+                <arg f="" n="2">para animar suas campanhas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2429:  O motivo é que ele obriga a empresa que contratar jovens a manter um tutor para ensinar o trabalho aos novos empregados. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">contratar</rel>
+                <arg f="" n="1">jovens
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s632:  Antes o Scala e o Monte_  líbano só contratavam peladas. 
+</text>
+                <arg f="tmp" n="m">Antes
+</arg>
+                <arg f="" n="0">o Scala e o Monte_  líbano
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">contratavam</rel>
+                <arg f="" n="1">peladas
+</arg>
+                <note>imagino que "peladas" se refira a pessoas...</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s508:  Contratou a empresa Winfreys,  a maior especialista em atividades de lobby,  em todo o Canadá. 
+</text>
+                <rel f="">Contratou</rel>
+                <arg f="" n="1">a empresa Winfreys,  a maior especialista em atividades de lobby, 
+</arg>
+                <arg f="prd" n="m">em todo o Canadá
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

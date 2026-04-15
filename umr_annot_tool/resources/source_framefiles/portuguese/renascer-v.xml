@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="renascer">
+        <note />
+    <roleset framnet="revive.01" id="renascer.01" name="tornar-se vivo novamente" vncls="">
+            <roles>
+                <role descr="The Reanimator" n="0" />
+                <role descr="thing brought back to life" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2762:  Os outrora odiosos valores de família,  sucesso e consumo renascem,  sobretudo entre a população jovem. 
+</text>
+                <arg f="" n="1">Os outrora odiosos valores de família,  sucesso e consumo
+</arg>
+                <rel f="">renascem</rel>
+                <arg f="loc" n="m">sobretudo entre a população jovem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desempenhar">
+        <note />
+    <roleset framnet="perform.01" id="desempenhar.01" name="exercer" vncls="26.7-1">
+            <roles>
+                <role descr="performer" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="performance, thing performed" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s124:  Para fazer uma boa compra,  a técnica do Procon recomenda ao consumidor que verifique se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">desempenham</rel>
+                <arg f="" n="1">as mesmas funções do conjugado
+</arg>
+                <arg f="adv" n="m">separadamente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

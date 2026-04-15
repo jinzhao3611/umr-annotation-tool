@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="descuidar">
+        <note />
+    <roleset framnet="neglect.01" id="descuidar.01" name="negligenciar" vncls="75-1-1">
+            <roles>
+                <role descr="ignorer" n="0">
+                    <vnrole vncls="75-1-1" vntheta="Agent" />
+                </role>
+                <role descr="thing ignored" n="1">
+                    <vnrole vncls="75-1-1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4114:  Claro sem descuidar de tudo mais,  mas vendo com clareza a questão das prioridades »,  declara Brizola. 
+</text>
+                <rel f="">descuidar</rel>
+                <arg f="" n="1">de tudo mais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

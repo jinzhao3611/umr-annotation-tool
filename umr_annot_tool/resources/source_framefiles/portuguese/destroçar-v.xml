@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="destroçar">
+        <note />
+    <roleset framnet="raze.01" id="destroçar.01" name="destruir em pedaços" vncls="">
+            <roles>
+                <role descr="destroyer" n="0" />
+                <role descr="thing destroyed" n="1" />
+                <role descr="instrument of destruction" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2630:  A tranquilidade pode levar uma equipe ao título ou pode destroçar-  la no caminho. 
+</text>
+                <arg f="" n="0">A tranquilidade
+</arg>
+                <rel f="">destroçar-</rel>
+                <arg f="" n="1">la
+</arg>
+                <arg f="loc" n="m">no caminho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

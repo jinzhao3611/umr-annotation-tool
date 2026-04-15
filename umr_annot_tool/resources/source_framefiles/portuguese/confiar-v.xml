@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confiar">
+        <note />
+    <roleset framnet="trust.02" id="confiar.01" name="acreditar, ter confiança" vncls="31.2">
+            <roles>
+                <role descr="truster" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="thing trusted" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2171:  Confio na nossa equipe e espero sair do Parque_  Antarctica com a vitória. 
+</text>
+                <rel f="">Confio</rel>
+                <arg f="" n="1">na nossa equipe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

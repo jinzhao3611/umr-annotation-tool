@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="corrigir">
+        <note />
+    <roleset framnet="adjust.01" id="corrigir.01" name="atualizar um valor" vncls="26.9">
+            <roles>
+                <role descr="causer of transformation" n="0">
+                    <vnrole vncls="26.9" vntheta="Agent" />
+                </role>
+                <role descr="thing changing" n="1">
+                    <vnrole vncls="26.9" vntheta="Patient" />
+                </role>
+                <role descr="end state" n="2">
+                    <vnrole vncls="26.9" vntheta="Destination" />
+                </role>
+                <role descr="start state" n="3" />
+                <role descr="purpose, reason for adjustment" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3846:  O governo vai usar a URV para corrigir impostos,  garantiu FHC. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">corrigir</rel>
+                <arg f="" n="1">impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1347:  Prefeitura paulista corrige a UFM
+</text>
+                <arg f="" n="0">Prefeitura paulista
+</arg>
+                <rel f="">corrige</rel>
+                <arg f="" n="1">a UFM
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s361:  Ciro não quis confirmar se a TR(  Taxa_  Referencial)  deixará de corrigir esses financiamentos. 
+</text>
+                <arg f="" n="0">a TR(  Taxa_  Referencial) 
+</arg>
+                <rel f="">corrigir</rel>
+                <arg f="" n="1">esses financiamentos
+</arg>
+                <note>a taxa de correção com sujeito; não é agente (talvez instrumento), mas o PB não prevê papel para taxa</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

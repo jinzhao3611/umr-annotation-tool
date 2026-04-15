@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cansar">
+        <note />
+    <roleset framnet="tire.03" id="cansar.01" name="alternância incoativa de &quot;cansar&quot;: ficar fatigado ou entediado  " vncls="-">
+            <roles>
+                <role descr="tired entity" n="0">
+                    <vnrole vncls="31.3" vntheta="Experiencer" />
+                </role>
+                <role descr="cause of weariness" n="1">
+                    <vnrole vncls="31.3" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s511:  Para isso,  a comissão técnica não se cansa de estudar os outros times. 
+</text>
+                <arg f="dis" n="m">Para isso
+</arg>
+                <arg f="" n="0">a comissão técnica
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">cansa</rel>
+                <arg f="" n="1">de estudar os outros times
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

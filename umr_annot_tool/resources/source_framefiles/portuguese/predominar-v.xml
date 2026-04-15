@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="predominar">
+        <note />
+    <roleset framnet="prevail.02" id="predominar.01" name="ter mais domínio ou mais presença " vncls="47.1-1">
+            <roles>
+                <role descr="thing that exists" n="1">
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2337:  Num campeonato em que predominaram as defesas fechadas,  o_  que fez a diferença foi a imaginação ouso dizer,  para horror de Parreira,  a « magia » de um punhado de craques:  Romário,  Baggio,  Stoichkov,  Hagi,  Brolin. . . 
+</text>
+                <arg f="loc" n="m">em que
+</arg>
+                <rel f="">predominaram</rel>
+                <arg f="" n="1">as defesas fechadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

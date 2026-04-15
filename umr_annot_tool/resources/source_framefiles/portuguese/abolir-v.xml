@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abolir">
+        <note />
+    <roleset framnet="abolish.01" id="abolir.01" name="tornar nulo, excluir" vncls="10.1">
+            <roles>
+                <role descr="entity getting rid of, outlawing something" n="0">
+                    <vnrole vncls="10.1" vntheta="Agent" />
+                </role>
+                <role descr="thing abolished" n="1">
+                    <vnrole vncls="10.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2847:  Decidimos então,  por uma questão de economia cênica,  abolir uma das casas e só insinuar as outras duas,  fazendo apenas suas entradas,  que parecem as de um templo. 
+</text>
+                <arg f="cau" n="m">por uma questão de economia cênica
+</arg>
+                <rel f="">abolir</rel>
+                <arg f="" n="1">uma das casas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1716:  Depois do tratado de paz de 1923,  aboliu o califato,  a poligamia,  substituiu práticas legais islâmicas por outras de inspiração européia,  adotou o alfabeto romano e o calendário gregoriano e concedeu às mulheres direito de voto. 
+</text>
+                <arg f="tmp" n="m">Depois do tratado de paz de 1923
+</arg>
+                <rel f="">aboliu</rel>
+                <arg f="" n="1">o califato,  a poligamia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="prosseguir">
+        <note />
+    <roleset framnet="proceed.01" id="prosseguir.01" name="continuar" vncls="55.1">
+            <roles>
+                <role descr="causer of continuing event" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                </role>
+                <role descr="thing continuing" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1681:  A quinta rodada da Superliga_  Nacional_  Masculina de Vôlei da temporada 94/  95 prossegue hoje com mais quatro jogos. 
+</text>
+                <arg f="" n="1">A quinta rodada da Superliga_  Nacional_  Masculina de Vôlei da temporada 94/  95
+</arg>
+                <rel f="">prossegue</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="mnr" n="m">com mais quatro jogos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

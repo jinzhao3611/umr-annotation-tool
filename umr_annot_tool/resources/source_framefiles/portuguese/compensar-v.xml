@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="compensar">
+        <note />
+    <roleset framnet="offset.01" id="compensar.01" name="oferecer o oposto para equilibrar" vncls="">
+            <roles>
+                <role descr="intentional agent" n="0" />
+                <role descr="thing whose impact we want to lessen" n="1" />
+                <role descr="balanced by" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3939:  Cheia de energia,  a interpretação da Orquestra_  Estadual da Hungria vem amortecida um_  pouco pela artificialidade da gravação,  de quase 15 anos atrás,  mas compensa a sonoridade de estúdio com o vigor. 
+</text>
+                <arg f="" n="0">a interpretação da Orquestra_  Estadual da Hungria
+</arg>
+                <rel f="">compensa</rel>
+                <arg f="" n="1">a sonoridade de estúdio
+</arg>
+                <arg f="" n="2">com o vigor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2975:  Ele compensou em Aspen,  dando um malho naquela flor de nome Rosane,  casualmente,  na_  frente_  de fotógrafos. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">compensou</rel>
+                <arg f="loc" n="m">em Aspen
+</arg>
+                <arg f="mnr" n="m">dando um malho naquela flor de nome Rosane,  casualmente,  na_  frente_  de fotógrafos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1679:  há mais_  de um ano,  o México encontra-  se numa situação de desequilíbrio potencial permanente no balanço de transações correntes e no orçamento fiscal,  que foi compensado mais recentemente por um endividamento crescente do setor público nas praças financeiras internacionais,  em_  particular na Bolsa de Nova_  York. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">compensado</rel>
+                <arg f="tmp" n="m">mais recentemente
+</arg>
+                <arg f="" n="2">por um endividamento crescente do setor público nas praças financeiras internacionais,  em_  particular na Bolsa de Nova_  York
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1577:  O governo teve que elevar de 15%  para 20%  o percentual dos recursos dos tributos que vão fazer parte do FSE para compensar a perda de recursos do Fundo_  de_  Participação_  dos_  Estados_  e_  municípios. 
+</text>
+                <rel f="">compensar</rel>
+                <arg f="" n="1">a perda de recursos do Fundo_  de_  Participação_  dos_  Estados_  e_  municípios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1537:  Sequer lhe ocorreu que em fevereiro o « excesso » de aumento poderia ser compensado. 
+</text>
+                <arg f="tmp" n="m">em fevereiro
+</arg>
+                <arg f="" n="1">o « excesso » de aumento
+</arg>
+                <rel f="">compensado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

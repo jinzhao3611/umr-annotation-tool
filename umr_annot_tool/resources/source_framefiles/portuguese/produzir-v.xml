@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="produzir">
+        <note />
+    <roleset framnet="produce.01" id="produzir.01" name="fabricar; fazer" vncls="26.4 26.7-2">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.7-2" vntheta="Agent" />
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                </role>
+                <role descr="creation" n="1">
+                    <vnrole vncls="26.7-2" vntheta="Theme" />
+                    <vnrole vncls="26.4" vntheta="Product" />
+                </role>
+                <role descr="created-from, thing changed" n="2">
+                    <vnrole vncls="26.4" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.7-2" vntheta="Beneficiary" />
+                    <vnrole vncls="26.4" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4095:  Podem produzir pequenas brochuras,  mala direta,  folhetos,  realizando até sete impressões por minuto. 
+</text>
+                <rel f="">produzir</rel>
+                <arg f="" n="1">pequenas brochuras,  mala direta,  folhetos
+</arg>
+                <arg f="mnr" n="m">realizando até sete impressões por minuto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3901:  Mercedes produzirá carro na França
+</text>
+                <arg f="" n="0">Mercedes
+</arg>
+                <rel f="">produzirá</rel>
+                <arg f="" n="1">carro
+</arg>
+                <arg f="loc" n="m">na França
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3847:  « A URV é produzida por três índices,  e um dos índices é o mesmo da Ufir. 
+</text>
+                <arg f="" n="1">A URV
+</arg>
+                <rel f="">produzida</rel>
+                <arg f="" n="2">por três índices
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3033:  Se a queda da inflação certamente produziria efeitos positivos na candidatura Fernando_  Henrique_  Cardoso,  as prateleiras vazias municiam os adversários. 
+</text>
+                <arg f="" n="0">a queda da inflação
+</arg>
+                <rel f="">produziria</rel>
+                <arg f="" n="1">efeitos positivos na candidatura Fernando_  Henrique_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2996:  Existe ambiente político,  social e econômico para se produzir automóveis no Brasil? 
+</text>
+                <rel f="">produzir</rel>
+                <arg f="" n="1">automóveis
+</arg>
+                <arg f="loc" n="m">no Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2836:  A cooperativa de Curaçá(  BA) ,  no Vale_  do_  São_  Francisco,  praticamente acertou uma joint_  venture com um empresário português para produzir melão e uva. 
+</text>
+                <rel f="">produzir</rel>
+                <arg f="" n="1">melão e uva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2607:  A primeira varia tanto,  dia-  a-  dia,  que uma semana é suficiente para produzir um aumento de mais_  de 10%  nos vencimentos antecipados dos congressistas e dos magistrados. 
+</text>
+                <rel f="">produzir</rel>
+                <arg f="" n="1">um aumento de mais_  de 10%  nos vencimentos antecipados dos congressistas e dos magistrados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1515:  Para ela,  a máquina produz « música enlatada,  desprovida de força viva ». 
+</text>
+                <arg f="dis" n="m">Para ela
+</arg>
+                <arg f="" n="0">a máquina
+</arg>
+                <rel f="">produz</rel>
+                <arg f="" n="1">« música enlatada,  desprovida de força viva »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1072:  Argentina produz mais petróleo
+</text>
+                <arg f="" n="0">Argentina
+</arg>
+                <rel f="">produz</rel>
+                <arg f="" n="1">mais petróleo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s414:  O fato é que o caos sangrento de nossas ruas é o resultado conjunto de nossas próprias ações,  embora ninguém individualmente tenha a intenção de produzi-  lo ou sequer tenha poder para isso. 
+</text>
+                <rel f="">produzi-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s272:  Resposta- -  Já pedimos a criação de um conselho para produzir essa definição. 
+</text>
+                <rel f="">produzir</rel>
+                <arg f="" n="1">essa definição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s43:  A maioria das empresas que produzem leite das marcas interditadas não tinha sido comunicada ontem sobre a liberação do produto. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">produzem</rel>
+                <arg f="" n="1">leite das marcas interditadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

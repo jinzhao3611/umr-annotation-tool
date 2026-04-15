@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reativar">
+        <note />
+    <roleset framnet="reactivate.01" id="reativar.01" name="fazer voltar à atividade" vncls="-">
+            <roles>
+                <role descr="reactivator" n="0" />
+                <role descr="thing now active" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2140:  O Congresso_  Internacional_  de_  Direitos_  Autorais enviou,  na última sexta,  uma recomendação ao ministro da Cultura,  Luiz_  Roberto_  Nascimento_  Silva,  para reativar o órgão governamental que cuidava da área da propriedade intelectual. 
+</text>
+                <rel f="">reativar</rel>
+                <arg f="" n="1">o órgão governamental que cuidava da área da propriedade intelectual
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

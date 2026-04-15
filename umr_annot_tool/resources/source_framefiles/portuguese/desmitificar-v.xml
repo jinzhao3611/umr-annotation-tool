@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desmitificar">
+        <note />
+    <roleset framnet="" id="desmitificar.01" name="fazer perder o caráter de mito; simplificar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s255:  Kumon'  desmitifica'  a matemática
+</text>
+                <arg f="" n="0">Kumon
+</arg>
+                <rel f="">desmitifica</rel>
+                <arg f="" n="1">a matemática
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="basear">
+        <note />
+    <roleset framnet="base.02" id="basear.01" name="tomar como base" vncls="97.1">
+            <roles>
+                <role descr="justifier, agent (rarely seen)" n="0">
+                    <vnrole vncls="97.1" vntheta="Agent" />
+                </role>
+                <role descr="decision" n="1">
+                    <vnrole vncls="97.1" vntheta="Theme1" />
+                </role>
+                <role descr="justification" n="2">
+                    <vnrole vncls="97.1" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1916:  O financiamento público seria baseado em fundos sociais(  FGTS,  FAT) ,  na atração de recursos de pensão e nas parcerias com a iniciativa privada. 
+</text>
+                <arg f="" n="1">O financiamento público
+</arg>
+                <rel f="">baseado</rel>
+                <arg f="" n="2">em fundos sociais(  FGTS,  FAT) ,  na atração de recursos de pensão e nas parcerias com a iniciativa privada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s802:  O grupo suíço baseia sua música na combinação de barulhentas guitarras sampleadas,  vocais guturais e pesadas batidas dançantes. 
+</text>
+                <arg f="" n="0">O grupo suíço
+</arg>
+                <rel f="">baseia</rel>
+                <arg f="" n="1">sua música
+</arg>
+                <arg f="" n="2">na combinação de barulhentas guitarras sampleadas,  vocais guturais e pesadas batidas dançantes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="basear-se">
+        <note />
+    <roleset framnet="base.02" id="basear.02" name="tomar ou ter por base" vncls="97.1">
+            <roles>
+                <role descr="justifier, agent (rarely seen)" n="0">
+                    <vnrole vncls="97.1" vntheta="Agent" />
+                </role>
+                <role descr="decision" n="1">
+                    <vnrole vncls="97.1" vntheta="Theme1" />
+                </role>
+                <role descr="justification" n="2">
+                    <vnrole vncls="97.1" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1212:  O cálculo baseia-  se na comparação dos preços brasileiros com o americano. 
+</text>
+                <arg f="" n="1">O cálculo
+</arg>
+                <rel f="">baseia-</rel>
+                <arg f="" n="2">na comparação dos preços brasileiros com o americano
+</arg>
+                <note>arg1 sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

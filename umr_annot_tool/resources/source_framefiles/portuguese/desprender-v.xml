@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desprender">
+        <note />
+    <roleset framnet="detach.01" id="desprender.01" name="soltar-se" vncls="23.3">
+            <roles>
+                <role descr="entity removing, agent" n="0">
+                    <vnrole vncls="23.3" vntheta="Agent" />
+                </role>
+                <role descr="thing removed" n="1">
+                    <vnrole vncls="23.3" vntheta="Patient1" />
+                </role>
+                <role descr="whole, source" n="2">
+                    <vnrole vncls="23.3" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3138:  A frente do glaciar,  que fica na beira do rio,  desprende blocos de gelo do tamanho de um prédio de 30 andares. 
+</text>
+                <rel f="">desprende</rel>
+                <arg f="" n="1">blocos de gelo do tamanho de um prédio de 30 andares
+</arg>
+                <note>com sujeito oculto</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

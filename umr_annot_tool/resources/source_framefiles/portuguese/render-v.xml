@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="render">
+        <note />
+    <roleset framnet="yield.01" id="render.01" name="dar resultado" vncls="13.3">
+            <roles>
+                <role descr="thing yielding" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                </role>
+                <role descr="thing yielded" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3242:  Por_  enquanto,  este indexador projeta variação de 1% ,  com o que os fundos de commodities renderiam 3,  03% . 
+</text>
+                <arg f="" n="0">os fundos de commodities
+</arg>
+                <rel f="">renderiam</rel>
+                <arg f="" n="1">3,  03% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2725:  Nos EUA,  os CDBs,  até antes da alta dos juros,  rendiam 3%  ao ano para uma inflação de 2,  5% . 
+</text>
+                <arg f="loc" n="m">Nos EUA
+</arg>
+                <arg f="" n="0">os CDBs
+</arg>
+                <arg f="tmp" n="m">até antes da alta dos juros
+</arg>
+                <rel f="">rendiam</rel>
+                <arg f="" n="1">3%  ao ano para uma inflação de 2,  5% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2565:  « Sei que não estou rendendo tudo que posso,  mas estou em evolução »,  disse. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">rendendo</rel>
+                <arg f="" n="1">tudo que posso
+</arg>
+                <note>uso figurativo</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s317:  O « caso Paubrasil » já rendeu ﻿à Receita_  Federal,  segundo o coordenador-  geral de fiscalização do órgão,  Luiz_  Henrique_  Barros_  de_  Arruda,  cerca_  de US$  1,  5 milhão em crédito tributário- -  a soma do imposto devido,  multas,  correção monetária e juros de mora- -  de cerca_  de 20 empresas envolvidas no escândalo que procuraram a Receita espontaneamente. 
+</text>
+                <arg f="" n="0">O « caso Paubrasil »
+</arg>
+                <rel f="">rendeu</rel>
+                <arg f="" n="2">﻿à Receita_  Federal
+</arg>
+                <arg f="dis" n="m">segundo o coordenador-  geral de fiscalização do órgão,  Luiz_  Henrique_  Barros_  de_  Arruda, 
+</arg>
+                <arg f="" n="1">cerca_  de US$  1,  5 milhão em crédito tributário- -  a soma do imposto devido,  multas,  correção monetária e juros de mora- -  de cerca_  de 20 empresas envolvidas no escândalo que procuraram a Receita espontaneamente
+</arg>
+                <note>este exemplo traz um beneficiário, mostrando a necessidade de um arg2 no roleset</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="render-se">
+        <note />
+    <roleset framnet="surrender.01" id="render.02" name="entregar-se (à polícia ou ao inimigo); desistir de lutar" vncls="13.2">
+            <roles>
+                <role descr="one surrendering" n="0">
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="fight" n="1">
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="victor" n="2">
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1642:  Nunca vi um partido render-  se tão rápida e incondicionalmente como o PT está fazendo. 
+</text>
+                <arg f="" n="0">um partido
+</arg>
+                <rel f="">render-</rel>
+                <arg f="mnr" n="m">tão rápida e incondicionalmente como o PT está fazendo. 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

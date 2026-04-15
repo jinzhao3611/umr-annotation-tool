@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="hospedar">
+        <note />
+    <roleset framnet="house.01" id="hospedar.01" name="receber como hóspede" vncls="9.10 54.3">
+            <roles>
+                <role descr="provider of housing" n="0">
+                    <vnrole vncls="9.10" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Agent" />
+                </role>
+                <role descr="entity housed" n="1">
+                    <vnrole vncls="9.10" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="location" n="2">
+                    <vnrole vncls="9.10" vntheta="Location" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1610:  O hotel Deville,  perto_  do aeroporto de Guarulhos,  diz que,  além_  de executivos,  tem hospedado muitos turistas,  principalmente com destino ao Caribe e ﻿à Disney. 
+</text>
+                <arg f="" n="0">O hotel Deville
+</arg>
+                <arg f="loc" n="m">perto_  do aeroporto de Guarulhos
+</arg>
+                <arg f="" n="1">além_  de executivos muitos turistas,  principalmente com destino ao Caribe e ﻿à Disney
+</arg>
+                <rel f="">hospedado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

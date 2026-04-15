@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="encarar">
+        <note />
+    <roleset framnet="see.01" id="encarar.01" name="ver" vncls="29.2 30.1">
+            <roles>
+                <role descr="viewer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="30.1" vntheta="Experiencer" />
+                </role>
+                <role descr="thing viewed" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="30.1" vntheta="Stimulus" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1787:  Costuma encarar a tecnologia como a solução milagrosa para todos os problemas. 
+</text>
+                <rel f="">encarar</rel>
+                <arg f="" n="1">a tecnologia
+</arg>
+                <arg f="" n="2">como a solução milagrosa para todos os problemas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

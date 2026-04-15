@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="minimizar">
+        <note />
+    <roleset framnet="minimize.01" id="minimizar.01" name="tornar menor" vncls="">
+            <roles>
+                <role descr="causer of smallness, agent" n="0" />
+                <role descr="thing which is being the least" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s362:  Ciro minimizou a estimativa de inflação de 3%  em outubro,  de_  acordo com a Fipe. 
+</text>
+                <arg f="" n="0">Ciro
+</arg>
+                <rel f="">minimizou</rel>
+                <arg f="" n="1">a estimativa de inflação de 3%  em outubro
+</arg>
+                <arg f="dis" n="m">de_  acordo com a Fipe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="chefiar">
+        <note />
+    <roleset framnet="lead.02" id="chefiar.01" name="liderar; ser o chefe de" vncls="51.7">
+            <roles>
+                <role descr="leader" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="project or group" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2502:  Foi substituído como candidato por Ernesto_  Zedillo,  que chefiava sua campanha. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">chefiava</rel>
+                <arg f="" n="1">sua campanha
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

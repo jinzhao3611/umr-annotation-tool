@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="digerir">
+        <note />
+    <roleset framnet="digest.01" id="digerir.01" name="fazer digestão; processar o que foi ingerido" vncls="-">
+            <roles>
+                <role descr="eater" n="0" />
+                <role descr="nutrients" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1635:  Segundo Rosa,  nutricionista e professora da PUC de Campinas,  junto_  com os alimentos « se ingerem e digerem afetos ». 
+</text>
+                <arg f="dis" n="m">Segundo Rosa,  nutricionista e professora da PUC de Campinas
+</arg>
+                <arg f="mnr" n="m">junto_  com os alimentos
+</arg>
+                <rel f="">digerem</rel>
+                <arg f="" n="1">afetos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

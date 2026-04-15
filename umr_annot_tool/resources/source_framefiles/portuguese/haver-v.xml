@@ -1,0 +1,1087 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="haver">
+        <note />
+        <note />
+    <roleset framnet="be.02" id="haver.01" name="existir" vncls="-">
+            <roles>
+                <role descr="thing that is" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4142:  Entre cada parte do submarino há isolamento,  evitando que acidentes numa parte atinjam as outras. 
+</text>
+                <arg f="loc" n="m">Entre cada parte do submarino
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">isolamento
+</arg>
+                <arg f="adv" n="m">evitando que acidentes numa parte atinjam as outras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4136:  Haverá mais e melhores escolas,  laboratórios,  universidades e bolsas de estudo. 
+</text>
+                <rel f="">Haverá</rel>
+                <arg f="" n="1">mais e melhores escolas,  laboratórios,  universidades e bolsas de estudo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4113:  E como não há crescimento sem educação,  a causa das causas para nós é a elevação do nível educacional do povo brasileiro. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">crescimento
+</arg>
+                <arg f="adv" n="m">sem educação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4110:  No projeto não há definição de quantos podem ser construídos. 
+</text>
+                <arg f="loc" n="m">No projeto
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">definição de quantos podem ser construídos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4017:  Há cidades que enfrentam programas de racionamento de água. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">cidades que enfrentam programas de racionamento de água
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3997:  Na areia há apenas espreguiçadeiras,  coqueiros e barraquinhas de artesanato. 
+</text>
+                <arg f="loc" n="m">Na areia
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">apenas espreguiçadeiras,  coqueiros e barraquinhas de artesanato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3942:  Não poderia haver realização maior para um compositor:  substituir Beethoven,  ou ter pelo_  menos a ilusão de ser um novo ponto de partida. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">haver</rel>
+                <arg f="" n="1">realização maior para um compositor:  substituir Beethoven,  ou ter pelo_  menos a ilusão de ser um novo ponto de partida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3915:  Há uma trama paralela,  com Ramon e Esperanza,  casal que após a greve se separa. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">uma trama paralela,  com Ramon e Esperanza,  casal que após a greve se separa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3839:  Já_  não há o império do mal para combater. 
+</text>
+                <arg f="neg" n="m">Já_  não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">o império do mal
+</arg>
+                <arg f="pnc" n="m">para combater
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3831:  Não houve acordo para uma trégua durante a Copa. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">acordo para uma trégua
+</arg>
+                <arg f="tmp" n="m">durante a Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3623:  Segundo o professor Vicente_  Amato_  Neto,  66,  « há informações que todos ouvem,  no sentido de fazer o estacionamento ». 
+</text>
+                <arg f="dis" n="m">Segundo o professor Vicente_  Amato_  Neto,  66
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">informações que todos ouvem,  no sentido de fazer o estacionamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3551:  Para o diretor de crédito da Febraban,  Christoph_  Heinrich_  Von_  Beackedorff,  « não há novos tomadores,  só estão sendo rolados os empréstimos que estão vencendo ». 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">novos tomadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3533:  Entretanto,  há possibilidade de queda nas cotações externas nos próximos meses,  em especial no segundo semestre,  quando se verifica a colheita de arroz no hemisfério Norte. 
+</text>
+                <arg f="dis" n="m">Entretanto
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">possibilidade de queda nas cotações externas
+</arg>
+                <arg f="tmp" n="m">nos próximos meses
+</arg>
+                <arg f="tmp" n="m">em especial no segundo semestre,  quando se verifica a colheita de arroz no hemisfério Norte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3508:  Parágrafo 3º. - -  Nos contratos celebrados ou convertidos em URV,  em que haja cláusula de reajuste de valor por índice de preços ou por índice que reflita a variação ponderada dos custos dos insumos utilizados,  o cálculo desses índices,  para efeitos de reajuste,  deverá ser nesta moeda até a emissão do real e,  daí_  em_  diante,  em real,  observado o art.  38 da lei nº.  8.  880 de 27.  05.  94. 
+</text>
+                <arg f="loc" n="m">em que
+</arg>
+                <rel f="">haja</rel>
+                <arg f="" n="1">cláusula de reajuste por índice de preços ou por índice que reflita a variação ponderada dos custos dos insumos utilizados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3440:  Em algumas passagens,  há diálogos intermináveis e vazios. 
+</text>
+                <arg f="loc" n="m">Em algumas passagens
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">diálogos intermináveis e vazios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3407:  Não houve tiroteio. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">tiroteio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3122:  Não houve mortos. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">mortos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3059:  « Me parece que há um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa.  »
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3040:  « A gente não pode pensar em jogar a mulher no mercado de trabalho enquanto houver excesso de mão-  de-  obra ». 
+</text>
+                <rel f="">houver</rel>
+                <arg f="" n="1">excesso de mão-  de-  obra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3010:  Há outros apelos da fita que seduzem os « gamemaníacos »,  especialmente os fãs de Ayrton_  Senna. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">outros apelos da fita que seduzem os « gamemaníacos »,  especialmente os fãs de Ayrton_  Senna
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2922:  Nos últimos dias,  houve uma saída de US$  100 milhões da custódia da instituição,  por_  causa_  da crise do México. 
+</text>
+                <arg f="tmp" n="m">Nos últimos dias
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">uma saída de US$  100 milhões da custódia da instituição
+</arg>
+                <arg f="cau" n="m">por_  causa_  da crise do México
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2861:  Não deve haver segundo turno no Estado. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">haver</rel>
+                <arg f="" n="1">segundo turno
+</arg>
+                <arg f="loc" n="m">no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2706:  Não há diferença essencial entre as armas individuais do tráfico e as do Exército. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">diferença essencial entre as armas individuais do tráfico e as do Exército
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2696:  Na Bíblia,  há duas histórias que tentam explicar a origem de tantas línguas. 
+</text>
+                <arg f="loc" n="m">Na Bíblia
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">duas histórias que tentam explicar a origem de tantas línguas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2680:  O trabalho da publicação inglesa,  divulgado pelo « Financial_  Times »,  indica que há menos preocupação com riscos políticos e econômicos do_  que com a falta de liquidez e diversificação. 
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">menos preocupação com riscos políticos e econômicos do_  que com a falta de liquidez e diversificação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2639:  Se não fizermos nada,  pode haver uma tragédia. 
+</text>
+                <arg f="adv" n="m">Se não fizermos nada
+</arg>
+                <rel f="">haver</rel>
+                <arg f="" n="1">uma tragédia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2514:  Há quem se orgulhe dos golpes que consegue imaginar e confunda artimanhas com estratégia. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">quem se orgulhe dos golpes que consegue imaginar e confunda artimanhas com estratégia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2365:  O fato de haver razoável consenso acerca desses temas não significa,  porém,  que seja fácil ou rápido aprovar tais reformas no Congresso. 
+</text>
+                <rel f="">haver</rel>
+                <arg f="" n="1">razoável consenso acerca desses temas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2299:  Os líderes acertaram que,  havendo quorum,  o Orçamento de 95 só não será votado hoje se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas. 
+</text>
+                <rel f="">havendo</rel>
+                <arg f="" n="1">quorum
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2266:  Há pontos de concentração de lojas que facilitam a pesquisa de preços. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">pontos de concentração de lojas que facilitam a pesquisa de preços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2258:  Se não há mais bossa_  nova realmente nova,  o melhor é mimetizar o criador do estilo,  o cantor João_  Gilberto. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">há</rel>
+                <arg f="adv" n="m">mais
+</arg>
+                <arg f="" n="1">bossa_  nova realmente nova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2098:  Na hora da invasão da delegacia,  só havia um motorista no plantão. 
+</text>
+                <arg f="tmp" n="m">Na hora da invasão da delegacia
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">havia</rel>
+                <arg f="" n="1">um motorista
+</arg>
+                <arg f="loc" n="m">no plantão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2084:  Em comparação ﻿à quadrissemana anterior,  quando o IPCA ficou em 3,  28% ,  houve redução. 
+</text>
+                <arg f="prd" n="m">Em comparação ﻿à quadrissemana anterior,  quando o IPCA ficou em 3,  28% , 
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">redução
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1990:  « Quando viajar pela Europa de carro,  prefira as estradas secundárias às auto-  estradas,  pois nelas não há cobrança de pedágio e você poderá conhecer pequenas cidades,  lugarejos,  sítios e plantações de uvas com degustação de vinhos.  »
+</text>
+                <arg f="loc" n="m">nelas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">cobrança de pedágio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1985:  Até em Hollywood,  há pessoas como Sonia_  Braga e Andy_  Garcia. 
+</text>
+                <arg f="loc" n="m">Até em Hollywood
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">pessoas como Sonia_  Braga e Andy_  Garcia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1910:  Há uma boa dose de realismo também. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">uma boa dose de realismo
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1801:  Há,  com_  efeito,  um « poetismo » em seus poemas. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="adv" n="m">com_  efeito
+</arg>
+                <arg f="" n="1">um « poetismo »
+</arg>
+                <arg f="loc" n="m">em seus poemas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1800:  Creio que essa vocação de poeta determinou um dos maiores problemas(  há vários)  na realização da obra de Murilo_  Mendes. 
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">vários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1753:  Apesar_  de ser a primeira área no Brasil a ser incluída,  em 1991,  ﻿à rede hemisférica de reservas para aves migratórias na categoria de reserva internacional,  o Parque_  Nacional_  da_  Lagoa_  do_  Peixe,  criado em 1986,  não existe de_  fato,  pois ainda não há um plano de manejo e de desenvolvimento. 
+</text>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">um plano de manejo e de desenvolvimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1745:  « Há uma busca frenética por eletrônicos que facilitem o dia-  a-  dia do cidadão em casa e no escritório »,  afirma Quintana. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">uma busca frenética por eletrônicos que facilitem o dia-  a-  dia do cidadão em casa e no escritório
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1727:  Há opções mais econômicas,  como os campings,  por US$  5(  CR$  2.  200,  00)  por_  pessoa. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">opções mais econômicas
+</arg>
+                <arg f="prd" n="m">como os campings
+</arg>
+                <arg f="ext" n="m">por US$  5(  CR$  2.  200,  00) 
+</arg>
+                <arg f="prd" n="m">por_  pessoa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1718:  Houve tiroteio. 
+</text>
+                <rel f="">Houve</rel>
+                <arg f="" n="1">tiroteio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1535:  Em_  relação_  aos remédios,  houve um aumento abusivo,  perto_  dos 60%  em janeiro. 
+</text>
+                <arg f="adv" n="m">Em_  relação_  aos remédios
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">um aumento abusivo
+</arg>
+                <arg f="prd" n="m">perto_  dos 60% 
+</arg>
+                <arg f="tmp" n="m">em janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1502:  Há ainda aqueles que optam pela locação de temporada. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="dis" n="m">ainda
+</arg>
+                <arg f="" n="1">aqueles que optam pela locação de temporada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1491:  Como não se pretende o monopólio da verdade,  apresento o raciocínio(  e as contas)  que fundamentam a tese de que não haverá perdas. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">haverá</rel>
+                <arg f="" n="1">perdas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1449:  Ele disse que a Justiça_  do_  Trabalho em São_  Paulo havia decidido que não havia perdas salariais para os metalúrgicos do Estado. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">havia</rel>
+                <arg f="" n="1">perdas salariais para os metalúrgicos do Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1448:  Falando aos membros da Comissão_  de_  Assuntos_  Econômicos do Senado,  o ministro disse estar feliz por não haver,  até agora,  sentenças judiciais contrárias às medidas do plano econômico. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">haver</rel>
+                <arg f="tmp" n="m">até agora
+</arg>
+                <arg f="" n="1">sentenças judiciais contrárias às medidas do plano econômico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1384:  Em Salvador,  haverá hoje a inauguração na estação da Lapa(  centro)  de um balcão de informações sobre as questões da mulher. 
+</text>
+                <arg f="loc" n="m">Em Salvador
+</arg>
+                <rel f="">haverá</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="loc" n="m">na estação da Lapa(  centro) 
+</arg>
+                <arg f="" n="1">a inauguração de um balcão de informações sobre as questões da mulher
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1228:  « Há exceções. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">exceções
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1209:  Não só a expectativa é de uma tramitação demorada até a decisão do STJ o_  que pode inviabilizar uma eventual candidatura Sarney por falta de tempo até as eleições,  como também há informações dando conta de que o ex-  presidente poderá em_  breve anunciar seu apoio a Fernando_  Henrique_  Cardoso,  do PSDB. 
+</text>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">informações dando conta de que o ex-  presidente poderá em_  breve anunciar seu apoio a Fernando_  Henrique_  Cardoso,  do PSDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1134:  Não estamos concluindo que este comportamento é intencional,  mas sim que há uma forte predisposição cultural(  preconceito)  em criticar o Legislativo antes mesmo de conhecer tudo que cerca algumas decisões. 
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">uma forte predisposição cultural(  preconceito) 
+</arg>
+                <arg f="prd" n="m">em criticar o Legislativo antes mesmo de conhecer tudo que cerca algumas decisões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1066:  No caso do autor de « O_  Amanuense_  Belmiro »(  recomendo a leitura de um dos inaugurais romances urbanos brasileiros)  não havia nada especial a demandar a pergunta feita através do Alcino. 
+</text>
+                <arg f="loc" n="m">No caso do autor de « O_  Amanuense_  Belmiro »
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">havia</rel>
+                <arg f="" n="1">nada especial a demandar a pergunta feita através do Alcino
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1060:  Há algo de novo nestes quatro filmes que Cacá_  Diegues fez para a TV_  Cultura,  em_  cima_  de quatro canções de Gil,  Caetano,  Chico e Jorge_  Ben_  Jor. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">algo de novo
+</arg>
+                <arg f="loc" n="m">nestes quatro filmes que Cacá_  Diegues fez para a TV_  Cultura,  em_  cima_  de quatro canções de Gil,  Caetano,  Chico e Jorge_  Ben_  Jor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1019:  Segundo os organizadores,  havia 6.  000 pessoas no comício às 21h,  quando Brizola começou a falar. 
+</text>
+                <arg f="dis" n="m">Segundo os organizadores
+</arg>
+                <rel f="">havia</rel>
+                <arg f="" n="1">6.  000 pessoas
+</arg>
+                <arg f="loc" n="m">no comício
+</arg>
+                <arg f="tmp" n="m">às 21h
+</arg>
+                <arg f="tmp" n="m">quando Brizola começou a falar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s944:  Não há hipótese do Plano ser lançado antes do Congresso votar,  primeiro,  a emenda constitucional que cria o Fundo_  Social_  de_  Emergência e,  em_  seguida,  o Orçamento federal para 1994 com deficit zero. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">hipótese do Plano ser lançado antes do Congresso votar,  primeiro,  a emenda constitucional que cria o Fundo_  Social_  de_  Emergência e,  em_  seguida,  o Orçamento federal para 1994 com deficit zero
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s816:  O presidente disse que pediu ao ministro das Minas_  e_  Energia,  Alexis_  Stepanenko,  que cheque também as estatais ligadas a ele para saber se também houve desobediência. 
+</text>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">desobediência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s814:  Itamar disse que até agora poucas demissões foram efetivadas porque « há sempre um processo legal e burocrático que precisar ser cumprido ». 
+</text>
+                <rel f="">há</rel>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <arg f="" n="1">um processo legal e burocrático que precisar ser cumprido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s758:  Cite uma cantora da bossa_  nova ou estrela da televisão dos anos 60 e há poucas chances de que ele não a tenha namorado sempre dando a impressão de que fazia isto por tarefa. 
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">poucas chances de que ele não a tenha namorado sempre dando a impressão de que fazia isto por tarefa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s757:  E havia outro motivo para_  que ele atraísse a ira de tantos:  seu sucesso com as mulheres. 
+</text>
+                <rel f="">havia</rel>
+                <arg f="" n="1">outro motivo para_  que ele atraísse a ira de tantos:  seu sucesso com as mulheres
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s700:  Ainda há muito o que fazer para desgravar completamente as exportações de impostos indiretos,  conforme permitem as regras do Gatt e impõe a realidade de um ambiente internacional competitivo. 
+</text>
+                <arg f="adv" n="m">Ainda
+</arg>
+                <rel f="">há</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="" n="1">o que fazer
+</arg>
+                <arg f="pnc" n="m">para desgravar completamente as exportações de impostos indiretos,  conforme permitem as regras do Gatt e impõe a realidade de um ambiente internacional competitivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s586:  Nos fundos de commodities há liquidez diária após 30 dias. 
+</text>
+                <arg f="loc" n="m">Nos fundos de commodities
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">liquidez diária após 30 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s570:  Para outros 9% ,  haverá resistências mas não a_  ponto_  de inviabilizar a posse. 
+</text>
+                <arg f="dis" n="m">Para outros 9% 
+</arg>
+                <rel f="">haverá</rel>
+                <arg f="" n="1">resistências
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s568:  Há uma pequena parcela,  no_  entanto,  que é catastrofista ao ponto de afirmar que Lula sequer conseguirá tomar posse. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="dis" n="m">no_  entanto
+</arg>
+                <arg f="" n="1">uma pequena parcela que é catastrofista ao ponto de afirmar que Lula sequer conseguirá tomar posse
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s536:  FHC- -  Não há temor de recessão. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">temor de recessão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s454:  « Se sentir que há um desejo coletivo,  ele vai encaminhar as emendas constitucionais »,  disse Luiz_  Henrique após uma hora de conversa com Itamar,  ontem,  no Planalto. 
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">um desejo coletivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s449:  Em nível internacional,  há um processo de conglomerização de empresas que,  ao permitir a integração de softwares,  conferiu aos grandes grupos vantagens expressivas sobre os independentes. 
+</text>
+                <arg f="loc" n="m">Em nível internacional
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">um processo de conglomerização de empresas que,  ao permitir a integração de softwares,  conferiu aos grandes grupos vantagens expressivas sobre os independentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s426:  Com o dólar comercial já a R$  0,  85 e o governo dizendo que não há limite para baixo,  a necessária abertura pode involuntariamente desaguar num arriscado escancaramento. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">limite
+</arg>
+                <arg f="dir" n="m">para baixo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s423:  De_  um_  lado reforça a estabilização,  pois qualquer eventual aumento irresponsável de preços depara-  se agora mais rapidamente com a concorrência de similares importados ; doutro,  ajuda a aliviar a supervalorização do real,  pois quanto_  mais importações houver,  maior será a procura por dólares. 
+</text>
+                <arg f="" n="1">importações
+</arg>
+                <rel f="">houver</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s409:  Depois,  haverá campanha de fiscalização e aplicação de multas para quem for pego em_  flagrante. 
+</text>
+                <arg f="tmp" n="m">Depois
+</arg>
+                <rel f="">haverá</rel>
+                <arg f="" n="1">campanha de fiscalização e aplicação de multas para quem for pego em_  flagrante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s401:  Há a necessidade de uma representação permanente do trabalhador que converse com o empregador e signifique garantia de que não haverá perseguição aos negociadores,  diz Siqueira. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">haverá</rel>
+                <arg f="" n="1">perseguição aos negociadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s401:  Há a necessidade de uma representação permanente do trabalhador que converse com o empregador e signifique garantia de que não haverá perseguição aos negociadores,  diz Siqueira. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">a necessidade de uma representação permanente do trabalhador que converse com o empregador e signifique garantia de que não haverá perseguição aos negociadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s393:  Além_  do contrato com a Servaz,  há outros do mesmo tipo,  envolvendo mais empreiteiras. 
+</text>
+                <arg f="" n="1">Além_  do contrato com a Servaz outros do mesmo tipo
+</arg>
+                <rel f="">há</rel>
+                <arg f="prd" n="m">envolvendo mais empreiteiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s375:  Caso não haja fila,  o período de uso pode ser maior. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">haja</rel>
+                <arg f="" n="1">fila
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s372:  No estande da Tec_  Toy há três consoles Mega_  Drive,  além_  de um Master_  System e quinze cartuchos de jogos. 
+</text>
+                <arg f="loc" n="m">No estande da Tec_  Toy
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">três consoles Mega_  Drive,  além_  de um Master_  System e quinze cartuchos de jogos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s349:  Só quando há problemas muito graves,  como o do Rio,  o Exército é chamado para ajudar. 
+</text>
+                <arg f="tmp" n="m">Só quando
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">problemas muito graves
+</arg>
+                <arg f="prd" n="m">como o do Rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s303:  Há uma esquerda reformista no PSDB. 
+</text>
+                <rel f="">Há</rel>
+                <arg f="" n="1">uma esquerda reformista
+</arg>
+                <arg f="loc" n="m">no PSDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s274:  Deve haver,  no mínimo,  uma linha digital chegando a cada casa,  mas acho que serviço universal deveria significar muito mais do_  que isso,  mais do_  que o fio. 
+</text>
+                <rel f="">haver</rel>
+                <arg f="adv" n="m">no mínimo
+</arg>
+                <arg f="" n="1">uma linha digital chegando a cada casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s253:  Não há nenhuma ênfase na melodia. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">nenhuma ênfase
+</arg>
+                <arg f="loc" n="m">na melodia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s228:  Em todo o shopping,  que está decorado com lanternas,  leques e até um portal japonês,  há exposições de iquebana(  arranjos florais) ,  bonecas,  cerâmicas,  armaduras,  máscaras,  quimonos e espadas. 
+</text>
+                <arg f="loc" n="m">Em todo o shopping,  que está decorado com lanternas,  leques e até um portal japonês
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">exposições de iquebana(  arranjos florais) ,  bonecas,  cerâmicas,  armaduras,  máscaras,  quimonos e espadas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s191:  « Em 79 houve uma leve reabertura de crédito,  mas nada significativo »,  afirma. 
+</text>
+                <arg f="tmp" n="m">Em 79
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">uma leve reabertura de crédito
+</arg>
+                <arg f="prd" n="m">nada significativo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s137:  Haverá oficinas e um concurso. 
+</text>
+                <rel f="">Haverá</rel>
+                <arg f="" n="1">oficinas e um concurso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s124:  Para fazer uma boa compra,  a técnica do Procon recomenda ao consumidor que verifique se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente. 
+</text>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">há</rel>
+                <arg f="loc" n="m">dentro_  de casa
+</arg>
+                <arg f="" n="1">os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s88:  « Não está havendo cancelamento de pedidos. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">havendo</rel>
+                <arg f="" n="1">cancelamento de pedidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s35:  Ninguém força sua escalação porque há quem escale o time no São_  Paulo. 
+</text>
+                <rel f="">há</rel>
+                <arg f="" n="1">quem escale o time no São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s29:  Como não houve acordo entre governo e tribunal quanto_  ao volume de recursos,  a dotação foi incluída na reserva de contingência sem especificação de despesa. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="1">acordo entre governo e tribunal quanto_  ao volume de recursos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="happen.01" id="haver.02" name="acontecer" vncls="48.3">
+            <roles>
+                <role descr="event" n="1">
+                    <vnrole vncls="48.3" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3562:  Vamos verificar o_  que houve com essas matérias-  primas.  »
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">houve</rel>
+                <arg f="" n="2">com essas matérias-  primas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s229:  Noutro espaço,  há exibição de vídeos que demonstram,  por_  exemplo,  a cerimônia do chá e o teatro kabuki,  além_  de pontos turísticos do Japão. 
+</text>
+                <arg f="loc" n="m">Noutro espaço
+</arg>
+                <rel f="">há</rel>
+                <arg f="" n="1">exibição de vídeos que demonstram,  por_  exemplo,  a cerimônia do chá e o teatro kabuki,  além_  de pontos turísticos do Japão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

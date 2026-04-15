@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abordar">
+        <note />
+    <roleset framnet="address.01" id="abordar.01" name="falar a respeito de, referir-se a" vncls="25.3">
+            <roles>
+                <role descr="caller" n="0">
+                    <vnrole vncls="25.3" vntheta="Agent" />
+                </role>
+                <role descr="item being labelled" n="1">
+                    <vnrole vncls="25.3" vntheta="Destination" />
+                </role>
+                <role descr="recipient" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s878:  Se abordo este tema aqui não é para arriscar-  me na análise política,  coisa que outros farão melhor do_  que eu. 
+</text>
+                <rel f="">abordo</rel>
+                <arg f="" n="1">este tema
+</arg>
+                <arg f="loc" n="m">aqui
+</arg>
+                <arg f="pnc" n="m">não é para arriscar-  me na análise política,  coisa que outros farão melhor do_  que eu
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

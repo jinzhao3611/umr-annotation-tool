@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="anular">
+        <note />
+    <roleset framnet="annul.01" id="anular.01" name="tornar nulo" vncls="106">
+            <roles>
+                <role descr="entity making void or null" n="0">
+                    <vnrole vncls="10.1" vntheta="Agent" />
+                </role>
+                <role descr="thing made void" n="1">
+                    <vnrole vncls="10.1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4067:  O técnico da Holanda,  Dick_  Advocaat,  disse que sua preocupação é anular o esquema defensivo da Irlanda. 
+</text>
+                <rel f="">anular</rel>
+                <arg f="" n="1">o esquema defensivo da Irlanda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2829:  A_  partir_  dos 22 min,  o São_  Paulo passou a marcar sob pressão e anulou o adversário. 
+</text>
+                <arg f="tmp" n="m">A_  partir_  dos 22 min
+</arg>
+                <arg f="" n="0">o São_  Paulo
+</arg>
+                <rel f="">anulou</rel>
+                <arg f="" n="1">o adversário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1604:  Também foram anuladas duas urnas em Barra_  Mansa. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <rel f="">anuladas</rel>
+                <arg f="" n="1">duas urnas
+</arg>
+                <arg f="loc" n="m">em Barra_  Mansa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1602:  O tribunal anulou 108 votos de Nilton_  Cerqueira(  federal,  PP)  e 93 de Emir_  Larangeira(  estadual,  PFL)  na 113ª zona(  Niterói) . 
+</text>
+                <arg f="" n="0">O tribunal
+</arg>
+                <rel f="">anulou</rel>
+                <arg f="" n="1">108 votos de Nilton_  Cerqueira(  federal,  PP)  e 93 de Emir_  Larangeira(  estadual,  PFL) 
+</arg>
+                <arg f="loc" n="m">na 113ª zona(  Niterói) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

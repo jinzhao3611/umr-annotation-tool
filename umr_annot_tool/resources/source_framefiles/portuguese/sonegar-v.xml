@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sonegar">
+        <note />
+    <roleset framnet="evade.01" id="sonegar.01" name="esconder; deixar de pagar" vncls="52">
+            <roles>
+                <role descr="avoider" n="0">
+                    <vnrole vncls="52" vntheta="Agent" />
+                </role>
+                <role descr="thing avoided" n="1">
+                    <vnrole vncls="52" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3284:  Farina acusou os clubes de sonegarem impostos com a cumplicidade da federação. 
+</text>
+                <rel f="">sonegarem</rel>
+                <arg f="" n="1">impostos
+</arg>
+                <arg f="mnr" n="m">com a cumplicidade da federação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

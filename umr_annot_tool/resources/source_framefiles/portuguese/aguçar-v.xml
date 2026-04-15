@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aguçar">
+        <note />
+    <roleset framnet="sharpen.01" id="aguçar.01" name="apurar" vncls="45.4">
+            <roles>
+                <role descr="sharpener" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing getting sharper" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument, if agent is also present" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3591:  Então me deparei com um estudo que afirma que algumas pessoas realmente têm um paladar mais aguçado do_  que outras. 
+</text>
+                <rel f="">aguçado</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="interessar">
+        <note />
+    <roleset framnet="concern.01" id="interessar.01" name="causar interesse" vncls="31.1">
+            <roles>
+                <role descr="causer of concern" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="worried entity" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2317:  É particularmente a estes bem_  como a toda a sociedade que interessa a apuração completa e rigorosa dos massacres. 
+</text>
+                <arg f="adv" n="m">particularmente
+</arg>
+                <arg f="" n="1">a estes bem_  como a toda a sociedade
+</arg>
+                <rel f="">interessa</rel>
+                <arg f="" n="0">a apuração completa e rigorosa dos massacres
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1508:  « Também não nos interessa se o jogador estava internado ou não. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="1">nos
+</arg>
+                <rel f="">interessa</rel>
+                <arg f="" n="0">se o jogador estava internado ou não
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

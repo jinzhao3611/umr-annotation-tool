@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="escapar">
+        <note />
+    <roleset framnet="escape.01" id="escapar.01" name="fugir; não se deixar capturar" vncls="51.1-1">
+            <roles>
+                <role descr="entity escaping" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="place or thing escaped" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3333:  « Vicentico » havia escapado do cerco da PF,  no domingo,  quando foram apreendidas 7,  5 toneladas de cocaína em Guaraí(  TO) . 
+</text>
+                <arg f="" n="0">Vicentico
+</arg>
+                <rel f="">escapado</rel>
+                <arg f="" n="1">do cerco da PF
+</arg>
+                <arg f="tmp" n="m">no domingo,  quando foram apreendidas 7,  5 toneladas de cocaína em Guaraí(  TO) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

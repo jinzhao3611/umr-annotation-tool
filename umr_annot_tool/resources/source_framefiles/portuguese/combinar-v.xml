@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="combinar">
+        <note />
+        <note />
+    <roleset framnet="combine.01" id="combinar.01" name="misturar" vncls="22.1-1">
+            <roles>
+                <role descr="agent, mixer" n="0">
+                    <vnrole vncls="22.1-1" vntheta="Agent" />
+                </role>
+                <role descr="ingredient one" n="1">
+                    <vnrole vncls="22.1-1" vntheta="Patient1" />
+                </role>
+                <role descr="ingredient two" n="2">
+                    <vnrole vncls="22.1-1" vntheta="Patient2" />
+                </role>
+                <role descr="end product" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3350:  « A_  Interpretação_  dos_  Sonhos »,  um dos textos fundadores da psicanálise,  apresenta toda uma tropologia do ato de sonhar e dá a base para uma poética que combina a teoria da tropologia com a noção da invenção poética. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">combina</rel>
+                <arg f="" n="1">a teoria da tropologia
+</arg>
+                <arg f="" n="2">com a noção da invenção poética
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="agree.01" id="combinar.02" name="fazer arranjos em comum acordo com alguém" vncls="36.1">
+            <roles>
+                <role descr="agreer" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="proposition" n="1">
+                    <vnrole vncls="36.1" vntheta="Theme" />
+                </role>
+                <role descr="other entity agreeing" n="2">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s571:  Burle_  Filho disse que combinou a ida de seu auxiliar após telefonar para seu colega carioca,  Antônio_  Carlos_  Biscaia. 
+</text>
+                <arg f="" n="0">Burle_  Filho
+</arg>
+                <rel f="">combinou</rel>
+                <arg f="" n="1">a ida de seu auxiliar
+</arg>
+                <arg f="tmp" n="m">após telefonar para seu colega carioca,  Antônio_  Carlos_  Biscaia
+</arg>
+                <note>a melhor tradução seria "to arrange", mas arrange.01 não tem esse sentido</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

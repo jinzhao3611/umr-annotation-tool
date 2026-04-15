@@ -53,6 +53,7 @@ FRAME_FILE_CHINESE = 'umr_annot_tool/resources/frames_chinese.json'
 # FRAME_FILE_ARABIC = 'umr_annot_tool/resources/frames_arabic.json'
 FRAME_FILE_ARABIC = 'umr_annot_tool/resources/arabic-propbank1.json'
 FRAME_FILE_UZBEK = 'umr_annot_tool/resources/frames_uzbek.json'
+FRAME_FILE_PORTUGUESE = 'umr_annot_tool/resources/frames_portuguese.json'
 LEMMA_DICT_ARABIC = 'umr_annot_tool/resources/arabic_lemma_dict.json'
 lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 
@@ -471,6 +472,7 @@ def sentlevel(doc_version_id, sent_id):
                 'chinese': FRAME_FILE_CHINESE,
                 'arabic': FRAME_FILE_ARABIC,
                 'uzbek': FRAME_FILE_UZBEK,
+                'portuguese': FRAME_FILE_PORTUGUESE,
             }
             frame_file = frame_files.get(lang)
             if frame_file:
@@ -2238,6 +2240,7 @@ def download_frames():
             'chinese': FRAME_FILE_CHINESE,
             'arabic': FRAME_FILE_ARABIC,
             'uzbek': FRAME_FILE_UZBEK,
+            'portuguese': FRAME_FILE_PORTUGUESE,
         }
         frame_file = frame_files.get(lang)
         if not frame_file:
@@ -2561,6 +2564,15 @@ def lemmatize():
                 logger.warning("lemminflect not installed, using original word")
             except Exception as e:
                 logger.error(f"Error lemmatizing English word: {e}")
+        elif language == 'portuguese':
+            try:
+                import simplemma
+                lemma = simplemma.lemmatize(word, lang='pt')
+                logger.info(f"Portuguese lemmatization: '{word}' -> '{lemma}'")
+            except ImportError:
+                logger.warning("simplemma not installed, using lowercase")
+            except Exception as e:
+                logger.error(f"Error lemmatizing Portuguese word '{word}': {e}")
         # For other languages, just return lowercase
 
         return jsonify({'success': True, 'lemma': lemma, 'original': word, 'language': language})

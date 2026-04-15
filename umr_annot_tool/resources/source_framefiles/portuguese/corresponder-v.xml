@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="corresponder">
+        <note />
+    <roleset framnet="correspond.02" id="corresponder.01" name="equivaler" vncls="47.2">
+            <roles>
+                <role descr="topic, theme" n="1">
+                    <vnrole vncls="47.2" vntheta="Theme" />
+                </role>
+                <role descr="compared with" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3234:  Corresponde a duas vezes e meia o patrimonio liquido da instituição. 
+</text>
+                <rel f="">Corresponde</rel>
+                <arg f="" n="2">a duas vezes e meia o patrimonio liquido da instituição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2976:  Na alquimia medieval,  a árvore simbolizava a transformação,  sempre cercada de globos reluzentes que corresponderiam aos planetas. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">corresponderiam</rel>
+                <arg f="" n="2">aos planetas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2842:  Tudo_  isso deve ser considerado para que se entenda que uma exata transposição do aluguel praticado em cruzeiros reais para o sistema da URV só é possível se os contratantes procederem a uma extração da média dos aluguéis nos últimos meses que corresponderem a periodicidade de reajustamento do contrato,  para,  só então,  transformar tal média em URVs. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">corresponderem</rel>
+                <arg f="" n="2">a periodicidade de reajustamento do contrato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2340:  No final é feita uma auditoria para ver se a auto-  avaliação feita pela fábrica corresponde ﻿à realidade. 
+</text>
+                <arg f="" n="1">a auto-  avaliação feita pela fábrica
+</arg>
+                <rel f="">corresponde</rel>
+                <arg f="" n="2">﻿à realidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1773:  O_  que corresponde a 3,  65%  sobre o patrimônio líquido. 
+</text>
+                <arg f="" n="1">O_  que
+</arg>
+                <rel f="">corresponde</rel>
+                <arg f="" n="2">a 3,  65%  sobre o patrimônio líquido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1265:  Esse colégio foi multado semana passada em 2 milhões de Ufir quase R$  1 milhão,  valor que corresponde ao II(  Imposto_  de_  Importação)  e IPI(  Imposto_  sobre_  Produtos_  Industrializados)  sonegados por_  meio_  da fraude. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">corresponde</rel>
+                <arg f="" n="2">ao II(  Imposto_  de_  Importação)  e IPI(  Imposto_  sobre_  Produtos_  Industrializados)  sonegados por_  meio_  da fraude
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1197:  O_  que corresponde a uma rentabilidade de 13,  03%  sobre o patrimônio líquido. 
+</text>
+                <arg f="" n="1">O_  que
+</arg>
+                <rel f="">corresponde</rel>
+                <arg f="" n="2">a uma rentabilidade de 13,  03%  sobre o patrimônio líquido
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

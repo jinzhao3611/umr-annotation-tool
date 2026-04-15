@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="alagar">
+        <note />
+    <roleset framnet="flood.01" id="alagar.01" name="inundar" vncls="45.4 9.8">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="theme" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <role descr="liquid" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3706:  O projeto de canalização de um córrego no município de Contagem( . . . )  é indispensável para os moradores porque,  durante o período de chuvas,  o rio transborda e alaga alguns bairros de Contagem ». 
+</text>
+                <arg f="tmp" n="m">durante o período de chuvas
+</arg>
+                <arg f="" n="0">o rio
+</arg>
+                <rel f="">alaga</rel>
+                <arg f="" n="1">alguns bairros de Contagem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

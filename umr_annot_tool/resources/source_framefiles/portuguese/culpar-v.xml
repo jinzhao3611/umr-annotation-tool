@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="culpar">
+        <note />
+    <roleset framnet="blame.01" id="culpar.01" name="atribuir culpa" vncls="33">
+            <roles>
+                <role descr="blamer" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="entity blamed" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="blamed for what?" n="2">
+                    <vnrole vncls="33" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s207:  Michael_  Schumacher culpou um degrau existente nas zebras do circuito de Adelaide por seu acidente ontem no final da primeira sessão de treinos oficiais. 
+</text>
+                <arg f="" n="0">Michael_  Schumacher
+</arg>
+                <rel f="">culpou</rel>
+                <arg f="" n="1">um degrau existente nas zebras do circuito de Adelaide
+</arg>
+                <arg f="" n="2">por seu acidente
+</arg>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="tmp" n="m">no final da primeira sessão de treinos oficiais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

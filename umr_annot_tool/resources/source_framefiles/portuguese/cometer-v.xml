@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cometer">
+        <note />
+    <roleset framnet="commit.02" id="cometer.01" name="fazer (normalmente coisas reprováveis)" vncls="-">
+            <roles>
+                <role descr="criminal" n="0" />
+                <role descr="crime" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3641:  « As empresas notaram que sua imagem é a maior prejudicada quando um funcionário comete uma indelicadeza em_  público e diante_  de um cliente ou subordinado »,  afirma o consultor de marketing pessoal Otto_  Reiter,  69. 
+</text>
+                <arg f="" n="0">um funcionário
+</arg>
+                <rel f="">comete</rel>
+                <arg f="" n="1">uma indelicadeza
+</arg>
+                <arg f="mnr" n="m">em_  público e diante_  de um cliente ou subordinado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2805:  Com essa constatação enviesada de que o alemão só chegou em primeiro porque o brasileiro cometeu uma bobagem,  a imprensa coroou o festival « sennista » da semana anterior,  quando todas- -  sem exceção,  todas- -  as coberturas apontavam a vitória de Ayrton_  Senna em Interlagos. 
+</text>
+                <arg f="" n="0">o brasileiro
+</arg>
+                <rel f="">cometeu</rel>
+                <arg f="" n="1">uma bobagem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2675:  O ex-  jogador defendeu também a adoção de penas para menores de 18 anos que cometam crimes. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">cometam</rel>
+                <arg f="" n="1">crimes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1099:  Também não lhe pede que cometa o maior pecado de um governante,  que é não governar e não servir ao público. 
+</text>
+                <rel f="">cometa</rel>
+                <arg f="" n="1">o maior pecado de um governante,  que é não governar e não servir ao público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s543:  Na sua defesa encaminhada ontem ao TSE,  ela admitiu ter cometido um « erro de interpretação » na produção da reportagem na_  qual Franco afirma que o PT,  caso ganhe as eleições presidenciais,  pode dar « um calote na dívida interna ». 
+</text>
+                <rel f="">cometido</rel>
+                <arg f="" n="1">um « erro de interpretação »
+</arg>
+                <arg f="loc" n="m">na produção da reportagem na_  qual Franco afirma que o PT,  caso ganhe as eleições presidenciais,  pode dar « um calote na dívida interna »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s541:  Agência tucana reconhece ter cometido erro
+</text>
+                <arg f="" n="0">Agência tucana
+</arg>
+                <rel f="">cometido</rel>
+                <arg f="" n="1">erro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

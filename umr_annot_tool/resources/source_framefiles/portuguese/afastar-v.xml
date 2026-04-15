@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="afastar">
+        <note />
+    <roleset framnet="" id="afastar.01" name="mover para longe" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4107:  Os dirigentes da seleção pediram aos seguranças da universidade que afastassem o público,  composto em sua maior parte por jovens,  que já se preparava para acompanhar os treinos. 
+</text>
+                <arg f="" n="0">os seguranças da universidade
+</arg>
+                <rel f="">afastassem</rel>
+                <arg f="" n="1">o público,  composto em sua maior parte por jovens,  que já se preparava para acompanhar os treinos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4105:  Seleção afasta os torcedores
+</text>
+                <arg f="" n="0">Seleção
+</arg>
+                <rel f="">afasta</rel>
+                <arg f="" n="1">os torcedores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2740:  Como melhorar o ensino superior sem transformar as universidades em « escolões »,  onde os professores só repetem e se afastam da pesquisa? 
+</text>
+                <arg f="" n="0">os professores
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">afastam</rel>
+                <arg f="" n="2">da pesquisa
+</arg>
+                <note>reflexivo: afastar-se</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2174:  Uma nova escalada obscurantista na China afastou ontem de Cannes o cineasta Zhang_  Yimou,  diretor do célebre « Lanternas_  Vermelhas ». 
+</text>
+                <arg f="" n="0">Uma nova escalada obscurantista na China
+</arg>
+                <rel f="">afastou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="2">de Cannes
+</arg>
+                <arg f="" n="1">o cineasta Zhang_  Yimou,  diretor do célebre « Lanternas_  Vermelhas »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

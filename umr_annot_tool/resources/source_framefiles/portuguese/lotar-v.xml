@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="lotar">
+        <note />
+    <roleset framnet="crowd.01" id="lotar.01" name="encher" vncls="9.7-2">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="9.7-2" vntheta="Agent" />
+                </role>
+                <role descr="container" n="1">
+                    <vnrole vncls="9.7-2" vntheta="Destination" />
+                </role>
+                <role descr="substance" n="2">
+                    <vnrole vncls="9.7-2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1388:  « Queremos lotar dois ônibus com a 80 pessoas e fechar o hotel »,  disse o administrador de empresas E. ,  31,  um dos organizadores. 
+</text>
+                <rel f="">lotar</rel>
+                <arg f="" n="1">dois ônibus
+</arg>
+                <arg f="" n="2">com a 80 pessoas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,159 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estudar">
+        <note />
+        <note />
+    <roleset framnet="study.01" id="estudar.01" name="aplicar-se a aprender e compreender algo" vncls="14 30.2 34">
+            <roles>
+                <role descr="student" n="0">
+                    <vnrole vncls="30.2" vntheta="Experiencer" />
+                    <vnrole vncls="14" vntheta="Agent" />
+                    <vnrole vncls="34" vntheta="Agent" />
+                </role>
+                <role descr="subject" n="1">
+                    <vnrole vncls="30.2" vntheta="Stimulus" />
+                    <vnrole vncls="14" vntheta="Topic" />
+                    <vnrole vncls="34" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3352:  Uma das coisas que os linguistas ainda precisam estudar é a teoria dos tropos. 
+</text>
+                <arg f="" n="0">os linguistas
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">estudar</rel>
+                <arg f="" n="1">a teoria dos tropos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2128:  O programa sobre a 2ª_  Guerra_  Mundial traz informações sobre 2.  100 eventos,  tem 900 fotos e 140 mapas de batalhas,  permitindo estudar as táticas usadas na guerra,  além_  de textos e vídeos de gravações originais. 
+</text>
+                <rel f="">estudar</rel>
+                <arg f="" n="1">as táticas usadas na guerra,  além_  de textos e vídeos de gravações originais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1966:  Tenho que estudar muito. 
+</text>
+                <rel f="">estudar</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s581:  Outro lado de Lara:  ela estudou canto lírico,  adora música e costuma cantar em shows e jam_  sessions com amigos. 
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">estudou</rel>
+                <arg f="" n="1">canto lírico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s511:  Para isso,  a comissão técnica não se cansa de estudar os outros times. 
+</text>
+                <rel f="">estudar</rel>
+                <arg f="" n="1">os outros times
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s252:  As letras irônicas,  eruditas,  denunciando que os músicos talvez tenham estudado um_  pouco demais são gritadas. 
+</text>
+                <arg f="" n="0">os músicos
+</arg>
+                <arg f="adv" n="m">talvez
+</arg>
+                <rel f="">estudado</rel>
+                <arg f="ext" n="m">um_  pouco demais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s93:  Pocock,  que publicou os resultados no último número da revista « British_  Medical_  Journal »,  do Reino_  Unido,  estudou a influência do chumbo desde a gestação. 
+</text>
+                <arg f="" n="0">Pocock,  que publicou os resultados no último número da revista « British_  Medical_  Journal »,  do Reino_  Unido, 
+</arg>
+                <rel f="">estudou</rel>
+                <arg f="" n="1">a influência do chumbo desde a gestação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="consider.02" id="estudar.02" name="cogitar; pensar em fazer" vncls="29.1">
+            <roles>
+                <role descr="agent" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="entity under consideration" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="for what/secondary predicate" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1422:  A American_  Express estuda também lançar cartões de afinidade. 
+</text>
+                <arg f="" n="0">A American_  Express
+</arg>
+                <rel f="">estuda</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">lançar cartões de afinidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1329:  Antonio_  Jorge,  diretor técnico da Amil,  diz que a empresa ainda estuda a conversão,  mas que os carnês de junho já serão emitidos em URV. 
+</text>
+                <arg f="" n="0">a empresa
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">estuda</rel>
+                <arg f="" n="1">a conversão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s792:  Inicialmente,  a equipe econômica chegou a estudar a privatização das empresas do grupo Nuclebrás,  além_  de Angra 1 e 2,  mas não chegou ao fim. 
+</text>
+                <arg f="tmp" n="m">Inicialmente
+</arg>
+                <arg f="" n="0">a equipe econômica
+</arg>
+                <rel f="">estudar</rel>
+                <arg f="" n="1">a privatização das empresas do grupo Nuclebrás,  além_  de Angra 1 e 2
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

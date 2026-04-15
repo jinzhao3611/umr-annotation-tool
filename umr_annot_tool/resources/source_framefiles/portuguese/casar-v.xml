@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="casar">
+        <note />
+    <roleset framnet="marry.01" id="casar.01" name="unir em matrimônio" vncls="22.2 36.2">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="22.2" vntheta="Agent" />
+                </role>
+                <role descr="one half" n="1">
+                    <vnrole vncls="22.2" vntheta="Patient1" />
+                    <vnrole vncls="36.2" vntheta="Actor1" />
+                </role>
+                <role descr="second half" n="2">
+                    <vnrole vncls="22.2" vntheta="Patient2" />
+                    <vnrole vncls="36.2" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3793:  Estes problemas não são frequentes nos homens,  pois além_  de terem uma possibilidade menor de casarem e terem filhos,  esses não são os tipos de papéis socialmente esperados para o sexo masculino. 
+</text>
+                <rel f="">casarem</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1391:  Designers querem casar tecnologia e espírito
+</text>
+                <arg f="" n="0">Designers
+</arg>
+                <rel f="">casar</rel>
+                <arg f="" n="1">tecnologia
+</arg>
+                <arg f="" n="2">espírito
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

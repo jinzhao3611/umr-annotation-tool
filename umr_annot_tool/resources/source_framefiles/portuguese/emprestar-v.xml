@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="emprestar">
+        <note />
+    <roleset framnet="lend.01" id="emprestar.01" name="ceder a posse temporariamente" vncls="13.1-1">
+            <roles>
+                <role descr="lender" n="0">
+                    <vnrole vncls="13.1-1" vntheta="Agent" />
+                </role>
+                <role descr="thing lent" n="1">
+                    <vnrole vncls="13.1-1" vntheta="Theme" />
+                </role>
+                <role descr="lent-to" n="2">
+                    <vnrole vncls="13.1-1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1532:  Após fazer uma única volta rápida,  Schumacher emprestou seu carro para o companheiro Jos_  Verstappen,  que havia rodado nos treinos da manhã. 
+</text>
+                <arg f="tmp" n="m">Após fazer uma única volta rápida
+</arg>
+                <arg f="" n="0">Schumacher
+</arg>
+                <rel f="">emprestou</rel>
+                <arg f="" n="1">seu carro
+</arg>
+                <arg f="" n="2">para o companheiro Jos_  Verstappen,  que havia rodado nos treinos da manhã
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

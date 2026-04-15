@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sumir">
+        <note />
+    <roleset framnet="vanish.01" id="sumir.01" name="desaparecer" vncls="48.2">
+            <roles>
+                <role descr="thing disappearing" n="1">
+                    <vnrole vncls="48.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s189:  Crédito de usados'  sumiu'  nos anos 70
+</text>
+                <arg f="" n="1">Crédito de usados
+</arg>
+                <rel f="">sumiu</rel>
+                <arg f="tmp" n="m">nos anos 70
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

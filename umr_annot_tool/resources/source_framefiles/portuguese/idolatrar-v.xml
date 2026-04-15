@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="idolatrar">
+        <note />
+    <roleset framnet="idolize.01" id="idolatrar.01" name="admirar como um ídolo" vncls="31.2">
+            <roles>
+                <role descr="admirer" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="admired" n="1">
+                    <vnrole vncls="31.2" vntheta="Theme" />
+                </role>
+                <role descr="reason" n="2">
+                    <vnrole vncls="31.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1234:  A comédia romântica « Suburbano_  Coração » conta a história de Lovemar(  Andréa_  Beltrão) ,  uma sonhadora costureira do subúrbio que idolatra o locutor de rádio Rogério(  Marco_  Nanini) . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">idolatra</rel>
+                <arg f="" n="1">o locutor de rádio Rogério(  Marco_  Nanini) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="libertar">
+        <note />
+    <roleset framnet="free.01" id="libertar.01" name="tornar livre" vncls="10.6">
+            <roles>
+                <role descr="entity providing freedom, agent" n="0">
+                    <vnrole vncls="10.6" vntheta="Agent" />
+                </role>
+                <role descr="entity made free" n="1">
+                    <vnrole vncls="10.6" vntheta="Source" />
+                </role>
+                <role descr="freed from" n="2">
+                    <vnrole vncls="10.6" vntheta="Theme" />
+                </role>
+                <role descr="beneficiary/purpose" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3434:  Abalado,  o jogador ameaçou não disputar a Copa_  do_  Mundo,  em junho e julho,  nos EUA,  caso o pai não seja libertado. 
+</text>
+                <arg f="" n="1">o pai
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">libertado</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3433:  Os sequestradores estariam exigindo US$  7 milhões(  cerca_  de CR$  9,  6 bilhões)  para libertá-  lo. 
+</text>
+                <rel f="">libertá-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

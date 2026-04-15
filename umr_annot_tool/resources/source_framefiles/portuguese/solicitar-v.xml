@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="solicitar">
+        <note />
+    <roleset framnet="request.01" id="solicitar.01" name="pedir" vncls="">
+            <roles>
+                <role descr="asker" n="0" />
+                <role descr="favor" n="1" />
+                <role descr="hearer" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2047:  Um consumidor que tivesse apenas uma nota de CR$  50.  000,  00 para fazer uma compra de valor menor tinha de solicitar um cheque de conversão no valor aproximado da mercadoria e receber o troco em cruzeiros reais. 
+</text>
+                <arg f="" n="0">Um consumidor que tivesse apenas uma nota de CR$  50.  000,  00 para fazer uma compra de valor menor
+</arg>
+                <rel f="">solicitar</rel>
+                <arg f="" n="1">um cheque de conversão no valor aproximado da mercadoria
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

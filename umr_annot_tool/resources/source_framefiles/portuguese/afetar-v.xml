@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="afetar">
+        <note />
+    <roleset framnet="affect.01" id="afetar.01" name="atingir" vncls="31.1">
+            <roles>
+                <role descr="thing affecting--animate only!" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="thing affected" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4031:  Aí,  poderia afetar o Lula,  não a mim »,  disse FHC. 
+</text>
+                <rel f="">afetar</rel>
+                <arg f="" n="1">o Lula
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3866:  Segundo eles,  os laços com a aliança não vão afetar as relações com a Rússia. 
+</text>
+                <arg f="dis" n="m">Segundo eles
+</arg>
+                <arg f="" n="0">os laços com a aliança
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">afetar</rel>
+                <arg f="" n="1">as relações com a Rússia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2324:  Talvez preferíssemos que o comércio estivesse totalmente liberalizado,  sem as listas de produto em regime de adequação(  sobre os_  quais são mantidos os impostos alfandegários)  que afetam de 5%  a 8%  do comércio regional. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">afetam</rel>
+                <arg f="" n="1">de 5%  a 8%  do comércio regional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1243:  O metrô Paulista continua fechando às 20h30 e,  portanto,  não será afetado pela mudança ; as outras linhas do metrô funciona das 5h00 às 24h00. 
+</text>
+                <arg f="" n="1">O metrô Paulista
+</arg>
+                <arg f="dis" n="m">portanto
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">afetado</rel>
+                <arg f="" n="0">pela mudança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s90:  Seca afeta pouco a produção de grãos
+</text>
+                <arg f="" n="0">Seca
+</arg>
+                <rel f="">afeta</rel>
+                <arg f="ext" n="m">pouco
+</arg>
+                <arg f="" n="1">a produção de grãos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

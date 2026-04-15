@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conservar">
+        <note />
+    <roleset framnet="conserve.01" id="conservar.01" name="manter, preservar" vncls="13.5.1">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="entity conserved" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2710:  Nesta ala merece menção o seu Bruto_  Rosé,  um espumante elaborado com uva Baga(  100% )  que conserva um_  pouco da cor e muito de frutado desta variedade típica da região. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">conserva</rel>
+                <arg f="" n="1">um_  pouco da cor e muito de frutado desta variedade típica da região
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

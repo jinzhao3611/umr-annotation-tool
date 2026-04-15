@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ruir">
+        <note />
+    <roleset framnet="crumble.01" id="ruir.01" name="cair por terra; desmoronar" vncls="45.4 21.2">
+            <roles>
+                <role descr="causer of crumbling" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                    <vnrole vncls="21.2" vntheta="Agent" />
+                </role>
+                <role descr="thing crumbling" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                    <vnrole vncls="21.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s302:  O castelo de cartas ruiu logo. 
+</text>
+                <arg f="" n="1">O castelo de cartas
+</arg>
+                <rel f="">ruiu</rel>
+                <arg f="tmp" n="m">logo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

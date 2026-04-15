@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="caracterizar">
+        <note />
+    <roleset framnet="characterize.01" id="caracterizar.01" name="atribuir características; descrever" vncls="29.2">
+            <roles>
+                <role descr="describer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing described" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute, described-as" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3354:  Lacan desenvolveu os conceitos de metáfora e metonímia para caracterizar certos modos de consciência. 
+</text>
+                <rel f="">caracterizar</rel>
+                <arg f="" n="1">certos modos de consciência
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="caracterizar-se">
+        <note />
+    <roleset framnet="" id="caracterizar.02" name="ser caracterizado por" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1673:  Os discursos da frugalidade,  da austeridade ficaram para as repúblicas gregas e romanas,  aquelas que Montesquieu ainda celebrava,  em meados do século 18,  quando dizia que o regime republicano se caracteriza pela disposição de seus cidadãos a renunciar ao bem privado em_  favor_  do bem comum e por isso,  acrescentava ele,  trata-  se de regime impossível na modernidade,  na_  qual se busca a vantagem pessoal. 
+</text>
+                <arg f="" n="1">o regime republicano
+</arg>
+                <rel f="">caracteriza</rel>
+                <arg f="" n="2">pela disposição de seus cidadãos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

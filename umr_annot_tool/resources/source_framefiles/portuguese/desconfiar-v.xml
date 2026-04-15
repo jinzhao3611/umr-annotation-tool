@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desconfiar">
+        <note />
+    <roleset framnet="distrust.01" id="desconfiar.01" name="não ter confiança em" vncls="31.2">
+            <roles>
+                <role descr="distruster, Experiencer" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="something" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <role descr="attribute" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3221:  No Departamento_  de_  Estado,  em Washington,  desconfiava-  se de Getúlio,  ditador com uma política em certos momentos próxima ao fascismo mussoliniano. 
+</text>
+                <arg f="loc" n="m">No Departamento_  de_  Estado
+</arg>
+                <arg f="loc" n="m">em Washington
+</arg>
+                <rel f="">desconfiava-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">de Getúlio,  ditador com uma política em certos momentos próxima ao fascismo mussoliniano
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

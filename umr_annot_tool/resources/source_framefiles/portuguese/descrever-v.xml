@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="descrever">
+        <note />
+    <roleset framnet="describe.01" id="descrever.01" name="fazer descrição" vncls="29.2">
+            <roles>
+                <role descr="describer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing described" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute, described-as" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3366:  Perry descreveu três fases para a operação:  a entrada no Haiti e a conquista de todas as posições estratégicas(  com duração de seis a_  horas a dois dias) ,  a criação de « um ambiente seguro »(  de três a seis meses)  e a transferência do controle da situação para a ONU. 
+</text>
+                <arg f="" n="0">Perry
+</arg>
+                <rel f="">descreveu</rel>
+                <arg f="" n="1">três fases para a operação:  a entrada no Haiti e a conquista de todas as posições estratégicas(  com duração de seis a_  horas a dois dias) ,  a criação de « um ambiente seguro »(  de três a seis meses)  e a transferência do controle da situação para a ONU
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s975:  Muitos,  no_  entanto,  preferem descrever em detalhes toda sua trajetória educacional e profissional o_  que acaba deixando o currículo extenso e de difícil leitura. 
+</text>
+                <rel f="">descrever</rel>
+                <arg f="mnr" n="m">em detalhes
+</arg>
+                <arg f="" n="1">toda sua trajetória educacional e profissional
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

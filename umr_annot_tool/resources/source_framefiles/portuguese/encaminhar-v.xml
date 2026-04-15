@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="encaminhar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2817:  Suas atribuições são criticar o jornal sob a perspectiva do leitor recebendo e checando as reclamações que ele encaminha ﻿à Redação e comentar,  aos domingos,  o noticiário dos meios de comunicação. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">encaminha</rel>
+                <arg f="" n="2">﻿à Redação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2165:  A definição do tempo no horário eleitoral gratuito foi encaminhada pela corregedoria a todos os partidos que disputam a sucessão do governador Luiz_  Antonio_  Fleury_  Filho. 
+</text>
+                <arg f="" n="1">A definição do tempo no horário eleitoral gratuito
+</arg>
+                <rel f="">encaminhada</rel>
+                <arg f="" n="0">pela corregedoria
+</arg>
+                <arg f="" n="2">a todos os partidos que disputam a sucessão do governador Luiz_  Antonio_  Fleury_  Filho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s454:  « Se sentir que há um desejo coletivo,  ele vai encaminhar as emendas constitucionais »,  disse Luiz_  Henrique após uma hora de conversa com Itamar,  ontem,  no Planalto. 
+</text>
+                <arg f="adv" n="m">Se sentir que há um desejo coletivo
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">encaminhar</rel>
+                <arg f="" n="1">as emendas constitucionais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

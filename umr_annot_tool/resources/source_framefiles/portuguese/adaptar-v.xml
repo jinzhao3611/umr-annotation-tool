@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="adaptar">
+        <note />
+    <roleset framnet="adapt.01" id="adaptar.01" name="tornar compatível ou adequado" vncls="26.9">
+            <roles>
+                <role descr="agent, adaptor" n="0">
+                    <vnrole vncls="26.9" vntheta="Agent" />
+                </role>
+                <role descr="thing adapted" n="1">
+                    <vnrole vncls="26.9" vntheta="Patient" />
+                </role>
+                <role descr="adapted to" n="2">
+                    <vnrole vncls="26.9" vntheta="Destination" />
+                </role>
+                <role descr="adapted from" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2181:  Os horários das refeições foram adaptados ao fuso local »,  disse Sant'  Anna. 
+</text>
+                <arg f="" n="1">Os horários das refeições
+</arg>
+                <rel f="">adaptados</rel>
+                <arg f="" n="2">ao fuso local
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1400:  Com cinco livros publicados,  e um sexto em preparação,  o escritor aguarda apenas,  para a definitiva consagração,  que Hollywood consiga adaptar alguma de suas histórias malucas para as telas. 
+</text>
+                <arg f="" n="0">Hollywood
+</arg>
+                <rel f="">adaptar</rel>
+                <arg f="" n="1">alguma de suas histórias malucas
+</arg>
+                <arg f="" n="2">para as telas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s942:  Uma proposta plausível é a de se fixar um prazo determinado,  três ou quatro meses,  para que a sociedade se adapte voluntariamente ﻿à URV,  estabelecendo regras privadas de conversão. 
+</text>
+                <arg f="" n="0">a sociedade
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">adapte</rel>
+                <arg f="mnr" n="m">voluntariamente
+</arg>
+                <arg f="" n="2">﻿à URV
+</arg>
+                <note>se o sujeito é animado, o SE é reflexivo e não marca de alternância incoativa</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

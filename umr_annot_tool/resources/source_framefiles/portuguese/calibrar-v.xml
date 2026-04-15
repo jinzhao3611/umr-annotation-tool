@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="calibrar">
+        <note />
+    <roleset framnet="calibrate.01" id="calibrar.01" name="ajustar" vncls="54.4">
+            <roles>
+                <role descr="calibrator, agent" n="0">
+                    <vnrole vncls="54.4" vntheta="Agent" />
+                </role>
+                <role descr="thing calibrated" n="1">
+                    <vnrole vncls="54.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s424:  Fazer avançar uma reforma estrutural(  como a abertura da economia)  e,  ao_  mesmo_  tempo,  calibrar um processo de estabilização não é porém uma tarefa fácil. 
+</text>
+                <arg f="tmp" n="m">ao_  mesmo_  tempo
+</arg>
+                <rel f="">calibrar</rel>
+                <arg f="" n="1">um processo de estabilização
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

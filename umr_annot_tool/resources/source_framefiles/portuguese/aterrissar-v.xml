@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aterrissar">
+        <note />
+    <roleset framnet="land.01" id="aterrissar.01" name="vir ou trazer para a terra" vncls="9.10">
+            <roles>
+                <role descr="bringer, captain, pilot, agent" n="0">
+                    <vnrole vncls="9.10" vntheta="Agent" />
+                </role>
+                <role descr="thing landing" n="1">
+                    <vnrole vncls="9.10" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1285:  24 de novembro de 92- -  Um Boeing_  737,  da China_  Southern_  Airlines,  bate num morro pouco antes de aterrissar na cidade turística de Guilin,  causando a morte de 141 pessoas. 
+</text>
+                <rel f="">aterrissar</rel>
+                <arg f="loc" n="m">na cidade turística de Guilin
+</arg>
+                <arg f="adv" n="m">causando a morte de 141 pessoas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

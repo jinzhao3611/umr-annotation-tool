@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abusar">
+        <note />
+    <roleset framnet="abuse.01" id="abusar.01" name="exceder no uso" vncls="33">
+            <roles>
+                <role descr="abuser, agent" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="entity abused" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3003:  O governo promete ﻿à sociedade que,  de_  agora_  em_  diante,  vai mudar de vida,  vai garantir o equilíbrio das contas públicas e vai parar de abusar do seu monopólio de criação de moeda. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <arg f="tmp" n="m">de_  agora_  em_  diante
+</arg>
+                <rel f="">abusar</rel>
+                <arg f="" n="1">do seu monopólio de criação de moeda
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

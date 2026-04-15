@@ -1,0 +1,254 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mudar">
+        <note />
+        <note />
+    <roleset framnet="change.01" id="mudar.01" name="alterar" vncls="26.6 45.4">
+            <roles>
+                <role descr="causer of transformation" n="0">
+                    <vnrole vncls="26.6" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing changing" n="1">
+                    <vnrole vncls="26.6" vntheta="Patient" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="end state" n="2">
+                    <vnrole vncls="26.6" vntheta="Product" />
+                </role>
+                <role descr="start state" n="3">
+                    <vnrole vncls="26.6" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4106:  Apesar_  de haver anunciado que o treino da Bulgária seria aberto ao público,  os dirigentes mudaram de idéia pouco antes do início do treinamento e proibiram a presença de torcedores no campo da Southern_  Methodist_  University,  em Dallas. 
+</text>
+                <arg f="" n="0">os dirigentes
+</arg>
+                <rel f="">mudaram</rel>
+                <arg f="" n="1">de idéia
+</arg>
+                <arg f="tmp" n="m">pouco antes do início do treinamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3977:  O momento e a forma escolhidos para mudar o sistema financeiro,  entretanto,  dependem fortemente de variáveis políticas. 
+</text>
+                <rel f="">mudar</rel>
+                <arg f="" n="1">o sistema financeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3750:  Depois de uma disputa acirrada entre as indústrias para conquistar os melhores mercados,  o ranking das gigantes multinacionais que dividem o bolo mudou. 
+</text>
+                <arg f="tmp" n="m">Depois de uma disputa acirrada entre as indústrias para conquistar os melhores mercados
+</arg>
+                <arg f="" n="1">o ranking das gigantes multinacionais que dividem o bolo
+</arg>
+                <rel f="">mudou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3388:  o_  que mudou talvez seja meu vocabulário,  que está menos estruturado. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">mudou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3045:  Acho importante notar que a Bienal mudou a maneira de conseguir patrocínio cultural no país,  que antes era feito ﻿à base do « me_  dá_  um_  dinheiro_  aí ». 
+</text>
+                <arg f="" n="0">a Bienal
+</arg>
+                <rel f="">mudou</rel>
+                <arg f="" n="1">a maneira de conseguir patrocínio cultural no país,  que antes era feito ﻿à base do « me_  dá_  um_  dinheiro_  aí »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3003:  O governo promete ﻿à sociedade que,  de_  agora_  em_  diante,  vai mudar de vida,  vai garantir o equilíbrio das contas públicas e vai parar de abusar do seu monopólio de criação de moeda. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <arg f="tmp" n="m">de_  agora_  em_  diante
+</arg>
+                <rel f="">mudar</rel>
+                <arg f="" n="1">de vida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1278:  Visconde_  da_  Luz muda de sentido
+</text>
+                <arg f="" n="0">Visconde_  da_  Luz
+</arg>
+                <rel f="">muda</rel>
+                <arg f="" n="1">de sentido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s933:  O que ele pensa em_  relação_  a educação muda a educação no Estado e muda o Estado de São_  Paulo.  »
+</text>
+                <arg f="" n="0">O que ele pensa em_  relação_  a educação
+</arg>
+                <rel f="">muda</rel>
+                <arg f="" n="1">o Estado de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s933:  O que ele pensa em_  relação_  a educação muda a educação no Estado e muda o Estado de São_  Paulo.  »
+</text>
+                <arg f="" n="0">O que ele pensa em_  relação_  a educação
+</arg>
+                <rel f="">muda</rel>
+                <arg f="" n="1">a educação
+</arg>
+                <arg f="loc" n="m">no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s897:  Covas muda seu programa de TV a conselho dos assessores de FHC
+</text>
+                <arg f="" n="0">Covas
+</arg>
+                <rel f="">muda</rel>
+                <arg f="" n="1">seu programa de TV
+</arg>
+                <arg f="cau" n="m">a conselho dos assessores de FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s652:  A gente precisa de reciclagem em geografia,  pois tudo muda muito rápido. 
+</text>
+                <arg f="" n="1">tudo
+</arg>
+                <rel f="">muda</rel>
+                <arg f="mnr" n="m">muito rápido
+</arg>
+                <note>arg1 na posição de sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s538:  Não estamos diminuindo investimentos do setor privado e,  no setor público,  o BNDES está mudando a orientação de investimentos do Nordeste. 
+</text>
+                <arg f="loc" n="m">no setor público
+</arg>
+                <arg f="" n="0">o BNDES
+</arg>
+                <rel f="">mudando</rel>
+                <arg f="" n="1">a orientação de investimentos do Nordeste
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s386:  Fácil subir nos palanques,  defendendo que é necessário « mudar tudo o que está aí ». 
+</text>
+                <rel f="">mudar</rel>
+                <arg f="" n="1">tudo o que está aí
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s289:  A intervenção militar « localizada »,  que pode imediatamente oferecer algum alívio,  tem como efeito principal o seguinte:  o crime só muda de lugar. 
+</text>
+                <arg f="" n="0">o crime
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">muda</rel>
+                <arg f="" n="1">de lugar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s109:  Pela segunda vez desde quando começou a coordenar as ações no Rio,  há duas semanas,  o Exército mudou o nome das operações. 
+</text>
+                <arg f="tmp" n="m">há duas semanas
+</arg>
+                <arg f="" n="0">o Exército
+</arg>
+                <rel f="">mudou</rel>
+                <arg f="" n="1">o nome das operações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="move.01" id="mudar.02" name="trocar de endereço" vncls="11.2 51.3.1">
+            <roles>
+                <role descr="mover" n="0">
+                    <vnrole vncls="11.2" vntheta="Agent" />
+                    <vnrole vncls="51.3.1" vntheta="Agent" />
+                </role>
+                <role descr="moved" n="1">
+                    <vnrole vncls="11.2" vntheta="Theme" />
+                    <vnrole vncls="51.3.1" vntheta="Theme" />
+                </role>
+                <role descr="destination" n="2">
+                    <vnrole vncls="11.2" vntheta="Destination" />
+                    <vnrole vncls="51.3.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2759:  A empresa,  com sede em Caieiras(  35 km a norte de SP) ,  pretende se mudar para o Empresarial_  Jaraguá,  onde adquiriu 6.  000 m2. 
+</text>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">mudar</rel>
+                <arg f="" n="2">para o Empresarial_  Jaraguá,  onde adquiriu 6.  000 m2
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1102:  « Nossa vontade era mudar antes. 
+</text>
+                <rel f="">mudar</rel>
+                <arg f="tmp" n="m">antes
+</arg>
+                <note>contexto insuficiente, poderia ser também mudar.03 (com omissão do clítico)</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

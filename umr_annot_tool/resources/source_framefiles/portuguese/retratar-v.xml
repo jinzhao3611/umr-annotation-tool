@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="retratar">
+        <note />
+    <roleset framnet="portray.01" id="retratar.01" name="mostrar; fazer retrato de" vncls="29.2">
+            <roles>
+                <role descr="labeller" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="item being labelled" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4154:  bastidores dos museus- -  O trabalho feito pelos fotógrafos Eduardo_  Castanho,  Saul_  Queiroz,  Rogério_  Voltan,  Ricardo_  Hantzchel,  Fausto_  Chermont e Eliana_  Lopes retrata o_  que as pessoas não vêem ao visitar um museu. 
+</text>
+                <arg f="" n="0">O trabalho feito pelos fotógrafos Eduardo_  Castanho,  Saul_  Queiroz,  Rogério_  Voltan,  Ricardo_  Hantzchel,  Fausto_  Chermont e Eliana_  Lopes
+</arg>
+                <rel f="">retrata</rel>
+                <arg f="" n="1">o_  que as pessoas não vêem ao visitar um museu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4149:  Angola,  uma tragédia esquecida- -  O fotógrafo André_  Penner expõe 29 fotos coloridas que retratam o cotidiano da guerra civil em Angola. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">retratam</rel>
+                <arg f="" n="1">o cotidiano da guerra civil em Angola
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

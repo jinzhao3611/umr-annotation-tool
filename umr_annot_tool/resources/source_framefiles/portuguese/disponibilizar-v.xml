@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="disponibilizar">
+        <note />
+    <roleset framnet="provide.01" id="disponibilizar.01" name="tornar disponível, por à disposição" vncls="13.4.1">
+            <roles>
+                <role descr="provider" n="0">
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing provided" n="1">
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="entity provided for (benefactive)" n="2">
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1218:  Para se ter uma idéia da importância da InterNet,  a Casa_  Branca está conectada a essa rede,  disponibilizando publicações e documentos para qualquer pessoa do mundo. 
+</text>
+                <rel f="">disponibilizando</rel>
+                <arg f="" n="1">publicações e documentos
+</arg>
+                <arg f="" n="2">para qualquer pessoa do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

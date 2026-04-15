@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="indiciar">
+        <note />
+    <roleset framnet="indict.01" id="indiciar.01" name="denunciar; acusar judicialmente" vncls="33">
+            <roles>
+                <role descr="accuser" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="accused" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="crime" n="2">
+                    <vnrole vncls="33" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4073:  Me indiciaram precipitadamente,  açodadamente. 
+</text>
+                <arg f="" n="1">Me
+</arg>
+                <rel f="">indiciaram</rel>
+                <arg f="mnr" n="m">precipitadamente
+</arg>
+                <arg f="mnr" n="m">açodadamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4069:  Folha- -  O senhor foi indiciado em inquérito da Polícia_  Federal por manipulação de arbitragem,  estelionato e formação de quadrilha. 
+</text>
+                <arg f="" n="1">O senhor
+</arg>
+                <rel f="">indiciado</rel>
+                <arg f="loc" n="m">em inquérito da Polícia_  Federal
+</arg>
+                <arg f="" n="2">por manipulação de arbitragem,  estelionato e formação de quadrilha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3778:  Foram indiciados o dono da revendedora 3.  000_  Automóveis(  Leonardo_  Romanioli_  Filho)  e o vendedor Luís_  Silveira,  da concessionária Frame. 
+</text>
+                <rel f="">indiciados</rel>
+                <arg f="" n="1">o dono da revendedora 3.  000_  Automóveis(  Leonardo_  Romanioli_  Filho)  e o vendedor Luís_  Silveira,  da concessionária Frame
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3777:  A PF(  Polícia_  Federal)  indiciou ontem duas pessoas por vender carro com ágio. 
+</text>
+                <arg f="" n="0">A PF(  Polícia_  Federal) 
+</arg>
+                <rel f="">indiciou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">duas pessoas
+</arg>
+                <arg f="" n="2">por vender carro com ágio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3063:  Eles vão ser indiciados por suposta corrupção de menores,  favorecimento ﻿à prostituição e cárcere privado. 
+</text>
+                <arg f="" n="1">Eles
+</arg>
+                <rel f="">indiciados</rel>
+                <arg f="" n="2">por suposta corrupção de menores,  favorecimento ﻿à prostituição e cárcere privado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

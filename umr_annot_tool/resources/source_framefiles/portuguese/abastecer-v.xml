@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="abastecer">
+        <note />
+    <roleset framnet="supply.01" id="abastecer.01" name="prover de mercadorias " vncls="13.4.1">
+            <roles>
+                <role descr="provider" n="0">
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing provided" n="1">
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="entity provided for (benefactive)" n="2">
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4016:  « O número é mais alarmante se pensarmos que daria para abastecer toda a população brasileira por oito meses »,  diz Dalmo_  Rosalen,  da Secretaria_  do_  Meio_  Ambiente. 
+</text>
+                <rel f="">abastecer</rel>
+                <arg f="" n="2">toda a população brasileira
+</arg>
+                <arg f="tmp" n="m">por oito meses
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

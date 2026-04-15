@@ -1,0 +1,210 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="bater">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="beat.01" id="bater.01" name="agredir, surrar" vncls="18.1">
+            <roles>
+                <role descr="agent, hitter - animate only!" n="0">
+                    <vnrole vncls="18.1" vntheta="Agent" />
+                </role>
+                <role descr="thing hit" n="1">
+                    <vnrole vncls="18.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument, thing hit by or with" n="2">
+                    <vnrole vncls="18.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4134:  Se você bate nele,  o revide vem forte,  pode apostar. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">bate</rel>
+                <arg f="" n="1">nele
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s147:  « Eles bateram muito. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">bateram</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="beat.03" id="bater.02" name="derrotar" vncls="-">
+            <roles>
+                <role descr="winner" n="0" />
+                <role descr="loser" n="1" />
+                <role descr="competition" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3962:  Feminino bate Cuba e fica com título em PE
+</text>
+                <arg f="" n="0">Feminino
+</arg>
+                <rel f="">bate</rel>
+                <arg f="" n="1">Cuba
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s938:  Nigéria é campeã ao bater Zâmbia por 2 a 1
+</text>
+                <arg f="" n="0">Nigéria
+</arg>
+                <rel f="">bater</rel>
+                <arg f="" n="1">Zâmbia
+</arg>
+                <arg f="ext" n="m">por 2 a 1
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="hit.01" id="bater.03" name="chocar-se contra" vncls="18.1 18.4">
+            <roles>
+                <role descr="agent, hitter - animate only!" n="0">
+                    <vnrole vncls="18.1" vntheta="Agent" />
+                </role>
+                <role descr="thing hit" n="1">
+                    <vnrole vncls="18.4" vntheta="Theme" />
+                    <vnrole vncls="18.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument, thing hit by or with" n="2">
+                    <vnrole vncls="18.4" vntheta="Location" />
+                    <vnrole vncls="18.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3703:  O acidente causou a morte do menino René_  Scorsa,  que estava no Logus dirigido por Sérgio_  Duran,  33,  que bateu no caminhão. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">bateu</rel>
+                <arg f="" n="2">no caminhão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3539:  Ele dirigia sozinho um Santana 90 em alta velocidade na avenida_  do_  Estado,  no Cambuci(  região central) ,  quando,  provavelmente,  perdeu o controle do carro e bateu num poste. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">bateu</rel>
+                <arg f="" n="1">num poste
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1406:  Goleiro morre após bater a cabeça
+</text>
+                <rel f="">bater</rel>
+                <arg f="" n="1">a cabeça
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1285:  24 de novembro de 92- -  Um Boeing_  737,  da China_  Southern_  Airlines,  bate num morro pouco antes de aterrissar na cidade turística de Guilin,  causando a morte de 141 pessoas. 
+</text>
+                <arg f="" n="1">Um Boeing_  737,  da China_  Southern_  Airlines, 
+</arg>
+                <rel f="">bate</rel>
+                <arg f="" n="2">num morro
+</arg>
+                <arg f="tmp" n="m">pouco antes de aterrissar na cidade turística de Guilin
+</arg>
+                <arg f="adv" n="m">causando a morte de 141 pessoas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s463:  O candidato do PT bateu na trave em 89. 
+</text>
+                <arg f="" n="1">O candidato do PT
+</arg>
+                <rel f="">bateu</rel>
+                <arg f="" n="2">na trave
+</arg>
+                <arg f="tmp" n="m">em 89
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="bater_palma">
+        <note />
+    <roleset framnet="clap, applaud" id="bater.04" name="aplaudir, bater as mãos" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1923:  Na sua avaliação,  a oposição sabe que o plano é bom,  « mas não quer aprová-  lo agora,  pois seria bater palma para o adversário ». 
+</text>
+                <rel f="">bater</rel>
+                <arg f="" n="1">para o adversário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="reach.01" id="bater.05" name="atingir, alcançar" vncls="13.5.1">
+            <roles>
+                <role descr="thing striving" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="goal, end state" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1581:  É quando o rastreamento das pistas da contravenção começa a bater em personalidades acima_  de qualquer suspeita,  dentro_  do pequeno círculo íntimo da elite cosmopolita brasileira um amálgama que reúne intelectuais de esquerda e direita,  eleitores de Lula a Maluf,  passando por todo o espectro intermediário,  empresários,  profissionais liberais,  jornalistas e membros do judiciário. 
+</text>
+                <arg f="" n="0">o rastreamento das pistas da contravenção
+</arg>
+                <rel f="">bater</rel>
+                <arg f="" n="1">em personalidades acima_  de qualquer suspeita
+</arg>
+                <arg f="loc" n="m">dentro_  do pequeno círculo íntimo da elite cosmopolita brasileira um amálgama que reúne intelectuais de esquerda e direita,  eleitores de Lula a Maluf,  passando por todo o espectro intermediário,  empresários,  profissionais liberais,  jornalistas e membros do judiciário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

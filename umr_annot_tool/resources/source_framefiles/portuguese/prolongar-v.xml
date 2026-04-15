@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="prolongar">
+        <note />
+    <roleset framnet="extend.01" id="prolongar.01" name="estender" vncls="-">
+            <roles>
+                <role descr="agent, entity making something be longer" n="0" />
+                <role descr="patient, thing getting longer" n="1" />
+                <role descr="EXT or TMP, by how much or until when" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2873:  As negociações com os petebistas se prolongaram até o início da madrugada de ontem. 
+</text>
+                <arg f="" n="1">As negociações com os petebistas
+</arg>
+                <rel f="">prolongaram</rel>
+                <arg f="" n="4">até o início da madrugada de ontem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

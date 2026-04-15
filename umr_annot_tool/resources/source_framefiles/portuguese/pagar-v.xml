@@ -1,0 +1,338 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pagar">
+        <note />
+    <roleset framnet="pay.01" id="pagar.01" name="compensar dívida ou pecado" vncls="13.1-1">
+            <roles>
+                <role descr="payer or buyer" n="0">
+                    <vnrole vncls="13.1-1" vntheta="Agent" />
+                </role>
+                <role descr="money or attention" n="1">
+                    <vnrole vncls="13.1-1" vntheta="Theme" />
+                </role>
+                <role descr="person being paid, destination of attention" n="2">
+                    <vnrole vncls="13.1-1" vntheta="Recipient" />
+                </role>
+                <role descr="commodity, paid for what" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4082:  A intenção de Fleury é vender as ações para equilibrar as finanças e começar a pagar a dívida do Estado,  estimada em R$  31 bilhões. 
+</text>
+                <rel f="">pagar</rel>
+                <arg f="" n="1">a dívida do Estado,  estimada em R$  31 bilhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3990:  Eddie também está em crise com sua mulher(  interpretada pela mulher de Abel_  Ferrara)  e não resiste ﻿à tentação da atriz,  que paga para ele filmar(  Madonna é produtora de « Olhos_  de_  Serpente ») . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">paga</rel>
+                <arg f="" n="3">para ele filmar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3985:  Em « Olhos_  de_  Serpente »(  Snake_  Eyes)  de Abel_  Ferrara,  Madonna faz o papel dela mesma:  uma falsa atriz,  falsa loira,  que paga para estar num filme. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">paga</rel>
+                <arg f="" n="3">para estar num filme
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3771:  Excetuada a educação básica de primeiro grau,  que deve ser gratuita e obrigatória,  para todo o resto é preciso discriminar quem pode pagar. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">pagar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3233:  Conforme acordo autorizado pelo BC,  o saldo da dívida do Estado com a « Nossa_  Caixa » de US$  1 bilhão terá que ser pago este ano,  em doze parcelas mensais,  atualizadas e com encargos. 
+</text>
+                <arg f="adv" n="m">Conforme acordo autorizado pelo BC
+</arg>
+                <arg f="" n="1">o saldo da dívida do Estado com a « Nossa_  Caixa » de US$  1 bilhão
+</arg>
+                <rel f="">pago</rel>
+                <arg f="tmp" n="m">este ano
+</arg>
+                <arg f="mnr" n="m">em doze parcelas mensais,  atualizadas e com encargos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3133:  « Acho absurdo um político pagar alguém para gritar seu nome »,  reclama. 
+</text>
+                <arg f="" n="0">um político
+</arg>
+                <rel f="">pagar</rel>
+                <arg f="" n="2">alguém
+</arg>
+                <arg f="" n="3">para gritar seu nome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3021:  « Ele reclamou de que não lhe pagariam o prometido,  não lhe dariam um carro e que só bancariam seis meses de aluguel de sua casa e não os quatro anos,  como esperava »,  disse o dirigente. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="2">lhe
+</arg>
+                <rel f="">pagariam</rel>
+                <arg f="" n="1">o prometido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2550:  O Banespa ainda não esclareceu as supostas dificuldades de uma agência no exterior por haver pago parte das importações sem licitação de equipamentos israelenses no governo Quércia. 
+</text>
+                <rel f="">pago</rel>
+                <arg f="" n="1">parte das importações
+</arg>
+                <arg f="mnr" n="m">sem licitação de equipamentos israelenses
+</arg>
+                <arg f="loc" n="m">no governo Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2421:  Eles terão ainda de pagar multa equivalente a R$  647,  90. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <arg f="dis" n="m">ainda
+</arg>
+                <rel f="">pagar</rel>
+                <arg f="" n="1">multa equivalente a R$  647,  90
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2416:  Ou do dono da escola com seu pai,  que paga a mensalidade. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">paga</rel>
+                <arg f="" n="1">a mensalidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2415:  É mais_  ou_  menos o que está acontecendo na discussão de quem tem imóvel com quem paga o aluguel,  por_  exemplo. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">paga</rel>
+                <arg f="" n="1">o aluguel
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2414:  Para quem paga,  pode não ser um grande negócio ter de pagar mais dinheiro todos_  os_  dias. 
+</text>
+                <rel f="">pagar</rel>
+                <arg f="" n="1">mais dinheiro
+</arg>
+                <arg f="tmp" n="m">todos_  os_  dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2414:  Para quem paga,  pode não ser um grande negócio ter de pagar mais dinheiro todos_  os_  dias. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">paga</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2271:  São as mesmas pessoas que acham que sua responsabilidade social se limita a pagar impostos »,  diz Letícia_  Zioni_  Gomes,  16. 
+</text>
+                <rel f="">pagar</rel>
+                <arg f="" n="1">impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2007:  Família de bicheiro diz que vai pagar resgate
+</text>
+                <arg f="" n="0">Família de bicheiro
+</arg>
+                <rel f="">pagar</rel>
+                <arg f="" n="1">resgate
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1901:  Pago CR$  1.  000 pra quem assistir o vídeo até o fim. 
+</text>
+                <rel f="">Pago</rel>
+                <arg f="" n="1">CR$  1.  000
+</arg>
+                <arg f="" n="2">pra quem assistir o vídeo até o fim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1626:  A restituição do IRPF poderá ser feita a terceiros,  desde_  que:  se de valor até 80 Ufir,  mediante simples autorização por_  escrito do beneficiário,  acompanhada de cédula de identidade e CPF do representante e do representado,  para verificação das assinaturas ; e se de valor acima_  de 80 Ufir só poderá ser paga a procurador(  Fund. :  instrução normativa DRF nº.  38/  92) . 
+</text>
+                <arg f="" n="1">A restituição do IRPF
+</arg>
+                <arg f="adv" n="m">de valor acima_  de 80 Ufir
+</arg>
+                <rel f="">paga</rel>
+                <arg f="" n="2">a procurador(  Fund. :  instrução normativa DRF nº.  38/  92) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1573:  Bancos Vão Pagar 73%  Mais(  Da Sucursal de Brasília) 
+</text>
+                <arg f="" n="0">Bancos
+</arg>
+                <rel f="">Pagar</rel>
+                <arg f="" n="1">73% 
+</arg>
+                <arg f="ext" n="m">Mais
+</arg>
+                <arg f="dis" n="m">Da Sucursal de Brasília
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1547:  Enquanto isso(  outra_  vez a vontade de escrever entrementes) ,  a Receita_  Federal divulga a lista dos devedores do Imposto_  de_  Renda que nada pagarão. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">nada
+</arg>
+                <rel f="">pagarão</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1516:  Os paulistanos estão pagando menos também pelos produtos da cesta básica. 
+</text>
+                <arg f="" n="0">Os paulistanos
+</arg>
+                <rel f="">pagando</rel>
+                <arg f="ext" n="m">menos
+</arg>
+                <arg f="" n="3">também pelos produtos da cesta básica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1350:  Os contribuintes que pagarem seus tributos(  IPTU,  ISS etc. )  hoje sairão ganhando,  pois o cálculo será feito pela UFM de R$  26,  54. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">pagarem</rel>
+                <arg f="" n="1">seus tributos(  IPTU,  ISS etc. ) 
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1244:  A proliferação nessa área é maior pelo fato dos indígenas não pagarem impostos com a atividade,  mas apenas taxas. 
+</text>
+                <arg f="" n="0">os indígenas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">pagarem</rel>
+                <arg f="" n="1">impostos
+</arg>
+                <arg f="" n="3">com a atividade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1071:  Montoro disse que sobre esses US$  15 bilhões o governo deixa de pagar US$  1,  5 bilhão$ /  ano de juros anuais,  mais US$  1,  5 bilhão$ /  ano em amortizações de dívidas e mais US$  2 bilhões$ /  ano em aportes de capitais às empresas. 
+</text>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">pagar</rel>
+                <arg f="" n="1">US$  1,  5 bilhão$ /  ano de juros anuais,  mais US$  1,  5 bilhão$ /  ano em amortizações de dívidas e mais US$  2 bilhões$ /  ano em aportes de capitais às empresas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s738:  O artista,  cujo nome de batismo é Luís_  Carlos_  dos_  Santos,  pagou uma fiança de CR$  100 mil e foi liberado. 
+</text>
+                <arg f="" n="0">O artista,  cujo nome de batismo é Luís_  Carlos_  dos_  Santos, 
+</arg>
+                <rel f="">pagou</rel>
+                <arg f="" n="1">uma fiança de CR$  100 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s577:  Infante- -  E pagaram as passagens. 
+</text>
+                <rel f="">pagaram</rel>
+                <arg f="" n="1">as passagens
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

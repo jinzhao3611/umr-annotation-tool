@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aplicar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="impose.01" id="aplicar.01" name="atribuir, impor" vncls="63">
+            <roles>
+                <role descr="imposer (not imposter)" n="0">
+                    <vnrole vncls="63" vntheta="Agent" />
+                </role>
+                <role descr="thing imposed" n="1">
+                    <vnrole vncls="63" vntheta="Theme" />
+                </role>
+                <role descr="imposed on" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3900:  Segundo Eduardo_  Lago,  superintendente do orgão,  já foram aplicadas 400 multas em todo o país desde o início do mês. 
+</text>
+                <arg f="dis" n="m">Segundo Eduardo_  Lago,  superintendente do orgão, 
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">aplicadas</rel>
+                <arg f="" n="1">400 multas
+</arg>
+                <arg f="loc" n="m">em todo o país
+</arg>
+                <arg f="tmp" n="m">desde o início do mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2468:  A Super-  301,  que já foi aplicada contra o Brasil quando esteve em vigor em 1989 e 1990,  estabelece um prazo de 18 meses para que as negociações bilaterais levem ﻿à eliminação do que os EUA consideram barreiras ao comércio. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">aplicada</rel>
+                <arg f="" n="2">contra o Brasil
+</arg>
+                <arg f="tmp" n="m">quando esteve em vigor em 1989 e 1990
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s260:  Na semana passada,  a Secretaria_  Nacional_  de_  Direito_  Econômico baixou uma portaria,  que aplica uma multa de 250 Ufirs(  R$  170)  aos seis colégios por cada matrícula recusada. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">aplica</rel>
+                <arg f="" n="1">uma multa de 250 Ufirs(  R$  170) 
+</arg>
+                <arg f="" n="2">aos seis colégios
+</arg>
+                <arg f="prd" n="m">por cada matrícula recusada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="apply.02" id="aplicar.02" name="atuar sobre" vncls="105">
+            <roles>
+                <role descr="applier" n="0">
+                    <vnrole vncls="105" vntheta="Agent" />
+                </role>
+                <role descr="thing applied, associated, worked" n="1">
+                    <vnrole vncls="105" vntheta="Theme" />
+                </role>
+                <role descr="applied to" n="2">
+                    <vnrole vncls="105" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1847:  O modo de escapar disse é simples:  aplica-  se um reajuste de,  digamos,  40%  ; em_  seguida,  avalia-  se qual a inflação diária,  digamos de 1,  5% ,  e aí se aplica ao preço cheio um desconto decrescente. 
+</text>
+                <arg f="loc" n="m">aí
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">aplica</rel>
+                <arg f="" n="2">ao preço cheio
+</arg>
+                <arg f="" n="1">um desconto decrescente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1847:  O modo de escapar disse é simples:  aplica-  se um reajuste de,  digamos,  40%  ; em_  seguida,  avalia-  se qual a inflação diária,  digamos de 1,  5% ,  e aí se aplica ao preço cheio um desconto decrescente. 
+</text>
+                <rel f="">aplica-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">um reajuste de,  digamos,  40% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s261:  « A Justiça foi aplicada porque o Estatuto_  da_  Criança_  e_  do_  Adolescente garante o direito de escolas a todas as crianças »,  disse Márcia_  Mendes,  presidente da Associaçãos_  dos_  Pais_  de_  Alunos do Pitágoras,  um dos seis colégios acusados de recusar as matrículas. 
+</text>
+                <arg f="" n="1">A Justiça
+</arg>
+                <rel f="">aplicada</rel>
+                <arg f="cau" n="m">porque o Estatuto_  da_  Criança_  e_  do_  Adolescente garante o direito de escolas a todas as crianças
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="invest.01" id="aplicar.03" name="investir" vncls="13.4.2">
+            <roles>
+                <role descr="investor" n="0">
+                    <vnrole vncls="13.4.2" vntheta="Agent" />
+                </role>
+                <role descr="thing invested" n="1">
+                    <vnrole vncls="13.4.2" vntheta="Theme" />
+                </role>
+                <role descr="invested in" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s860:  Pela desvinculação,  o governo fica desobrigado de cumprir os artigos da Constituição que mandam aplicar percentuais fixos do Orçamento em educação e habitação. 
+</text>
+                <rel f="">aplicar</rel>
+                <arg f="" n="1">percentuais fixos do Orçamento
+</arg>
+                <arg f="" n="2">em educação e habitação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s444:  A MIT brasileira não aplicava o dinheiro. 
+</text>
+                <arg f="" n="0">A MIT brasileira
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">aplicava</rel>
+                <arg f="" n="1">o dinheiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

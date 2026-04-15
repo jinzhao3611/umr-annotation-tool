@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aprofundar">
+        <note />
+    <roleset framnet="deepen.01" id="aprofundar.01" name="fazer ir mais fundo" vncls="45.4">
+            <roles>
+                <role descr="agent, causer of deepening" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing getting deeper" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2602:  Já passou da hora de governo,  prestadores de serviços e usuários se empenharem para não só aprofundar as discussões sobre a ineficácia do sistema de saúde,  como também para buscar alternativas e soluções viáveis,  a_  fim_  de proporcionar um atendimento mais digno ﻿à população em_  geral. 
+</text>
+                <rel f="">aprofundar</rel>
+                <arg f="" n="1">as discussões sobre a ineficácia do sistema de saúde
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2257:  Aprofundando as dúvidas,  Leila se deixou cair na tentação do duplo. 
+</text>
+                <rel f="">Aprofundando</rel>
+                <arg f="" n="1">as dúvidas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="aprofundar-se">
+        <note />
+    <roleset framnet="deepen.01" id="aprofundar.02" name="alternância incoativa de &quot;aprofundar&quot;: tornar-se mais profundo" vncls="45.4">
+            <roles>
+                <role descr="agent, causer of deepening" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing getting deeper" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2163:  A crise no MG aprofundou-  se no início de dezembro com o declínio nos preços internacionais do petróleo. 
+</text>
+                <arg f="" n="1">A crise no MG
+</arg>
+                <rel f="">aprofundou-</rel>
+                <arg f="tmp" n="m">no início de dezembro
+</arg>
+                <arg f="cau" n="m">com o declínio nos preços internacionais do petróleo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

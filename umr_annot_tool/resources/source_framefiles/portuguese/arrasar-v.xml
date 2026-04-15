@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="arrasar">
+        <note />
+    <roleset framnet="destroy.01" id="arrasar.01" name="destruir" vncls="44">
+            <roles>
+                <role descr="destroyer" n="0">
+                    <vnrole vncls="44" vntheta="Agent" />
+                </role>
+                <role descr="thing destroyed" n="1">
+                    <vnrole vncls="44" vntheta="Patient" />
+                </role>
+                <role descr="instrument of destruction" n="2">
+                    <vnrole vncls="44" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1335:  O único favorito a vencer foi Stefan_  Edberg,  que arrasou o também sueco Anders_  Jarryd por 6/  1 e 6/  1. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">arrasou</rel>
+                <arg f="" n="1">o também sueco Anders_  Jarryd
+</arg>
+                <arg f="ext" n="m">por 6/  1 e 6/  1
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

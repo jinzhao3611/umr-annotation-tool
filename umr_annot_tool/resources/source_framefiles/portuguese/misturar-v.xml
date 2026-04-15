@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="misturar">
+        <note />
+    <roleset framnet="mix.01" id="misturar.01" name="mesclar; unir para formar uma coisa só" vncls="22.1-1">
+            <roles>
+                <role descr="agent, mixer" n="0">
+                    <vnrole vncls="22.1-1" vntheta="Agent" />
+                </role>
+                <role descr="ingredient one" n="1">
+                    <vnrole vncls="22.1-1" vntheta="Patient1" />
+                </role>
+                <role descr="ingredient two" n="2">
+                    <vnrole vncls="22.1-1" vntheta="Patient2" />
+                </role>
+                <role descr="end product" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2523:  Futebol e política não se misturam. 
+</text>
+                <arg f="" n="1">Futebol e política
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="rec" n="m">se
+</arg>
+                <rel f="">misturam</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

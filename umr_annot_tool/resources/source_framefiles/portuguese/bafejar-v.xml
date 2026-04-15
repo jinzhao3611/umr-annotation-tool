@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="bafejar">
+        <note />
+    <roleset framnet="waft, breathe" id="bafejar.01" name="soprar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s465:  Sente o bafejar da sorte a acariciar-  lhe a cara. 
+</text>
+                <rel f="">bafejar</rel>
+                <note>verbo usado como substantivo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="romper">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="break.14" id="romper.01" name="romper com = abandonar" vncls="23.2">
+            <roles>
+                <role descr="breaker" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                </role>
+                <role descr="break from" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3320:  De_  fato,  a maioria de suas histórias acontece num tempo algo ﻿à frente do presente,  mas Gibson rompe completamente com a idéia fundadora da FC no cinema ou na literatura de « futuro » como evolução. 
+</text>
+                <arg f="" n="0">Gibson
+</arg>
+                <rel f="">rompe</rel>
+                <arg f="mnr" n="m">completamente
+</arg>
+                <arg f="" n="1">com a idéia fundadora da FC no cinema ou na literatura de « futuro » como evolução
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="break.01" id="romper.02" name="separar; dividir; causar não ser mais um todo" vncls="23.2 45.1 40.8.3-1">
+            <roles>
+                <role descr="breaker" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                    <vnrole vncls="40.8.3-1" vntheta="Experiencer" />
+                    <vnrole vncls="45.1" vntheta="Agent" />
+                </role>
+                <role descr="thing broken" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient1" />
+                    <vnrole vncls="40.8.3-1" vntheta="Patient" />
+                    <vnrole vncls="45.1" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="45.1" vntheta="Instrument" />
+                </role>
+                <role descr="pieces" n="3">
+                    <vnrole vncls="23.2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1434:  As chibatadas rompem a pele e as cicatrizes ficam por toda a vida. 
+</text>
+                <arg f="" n="2">As chibatadas
+</arg>
+                <rel f="">rompem</rel>
+                <arg f="" n="1">a pele
+</arg>
+                <note>neste exemplo, "hurt.01" traduziria melhor a colocação</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="break.03" id="romper.03" name="por fim a; interromper" vncls="45.1">
+            <roles>
+                <role descr="causer, agent" n="0">
+                    <vnrole vncls="45.1" vntheta="Agent" />
+                </role>
+                <role descr="thing stopping" n="1">
+                    <vnrole vncls="45.1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s467:  Os metalúrgicos do Estado de São_  Paulo da base da Força_  Sindical(  data-  base em novembro)  romperam negociação com os setores de autopeças,  forjaria e parafusos e preparam greve. 
+</text>
+                <arg f="" n="0">Os metalúrgicos do Estado de São_  Paulo da base da Força_  Sindical(  data-  base em novembro) 
+</arg>
+                <rel f="">romperam</rel>
+                <arg f="" n="1">negociação com os setores de autopeças,  forjaria e parafusos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s466:  Metalúrgico rompe negociação
+</text>
+                <arg f="" n="0">Metalúrgico
+</arg>
+                <rel f="">rompe</rel>
+                <arg f="" n="1">negociação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

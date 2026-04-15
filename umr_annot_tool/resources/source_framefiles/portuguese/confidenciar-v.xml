@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confidenciar">
+        <note />
+    <roleset framnet="confide.01" id="confidenciar.01" name="contar em segredo" vncls="37.7">
+            <roles>
+                <role descr="speaker, agent" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="person confided to" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2690:  Nela,  o presidente confidenciou não acreditar mais que terminaria o seu mandato. 
+</text>
+                <arg f="loc" n="m">Nela
+</arg>
+                <arg f="" n="0">o presidente
+</arg>
+                <rel f="">confidenciou</rel>
+                <arg f="" n="1">não acreditar mais que terminaria o seu mandato
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

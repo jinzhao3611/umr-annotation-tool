@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="retardar">
+        <note />
+    <roleset framnet="slow.01" id="retardar.01" name="atrasar" vncls="45.4">
+            <roles>
+                <role descr="causer of deceleration" n="0">
+                    <vnrole vncls="45.4" vntheta="agent" />
+                </role>
+                <role descr="entity in motion" n="1">
+                    <vnrole vncls="45.4" vntheta="patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1627:  Segundo ele,  o que retardou o trabalho da equipe foram as contusões de alguns jogadores importantes,  como Marcelo_  Negrão e Giovane. 
+</text>
+                <arg f="dis" n="m">Segundo ele
+</arg>
+                <rel f="">retardou</rel>
+                <arg f="" n="1">o trabalho da equipe
+</arg>
+                <arg f="" n="0">as contusões de alguns jogadores importantes,  como Marcelo_  Negrão e Giovane
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

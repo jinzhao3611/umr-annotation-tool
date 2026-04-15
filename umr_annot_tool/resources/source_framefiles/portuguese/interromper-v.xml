@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="interromper">
+        <note />
+    <roleset framnet="interrupt" id="interromper.01" name="parar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2929:  Segundo a nota,  « as providências capazes de alterar o quadro atual de combate aos traficantes dizem respeito ﻿à Polícia_  Federal e às Forças_  Armadas,  com o objetivo de interromper o fluxo de armas proibidas e cocaína no Rio ». 
+</text>
+                <rel f="">interromper</rel>
+                <arg f="" n="1">o fluxo de armas proibidas e cocaína
+</arg>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s200:  Eles sustentaram que a renúncia interrompeu o processo de impeachment. 
+</text>
+                <arg f="" n="0">a renúncia
+</arg>
+                <rel f="">interrompeu</rel>
+                <arg f="" n="1">o processo de impeachment
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

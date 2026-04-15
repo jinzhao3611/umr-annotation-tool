@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acionar">
+        <note />
+    <roleset framnet="activate.01" id="acionar.01" name="por para funcionar" vncls="45.4">
+            <roles>
+                <role descr="activator" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing now active" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2909:  O Folha_  Informações atendeu no último fim-  de-  semana 3.  978 pessoas,  que acionaram o serviço para saber o resultado de Guarani e Palmeiras. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">acionaram</rel>
+                <arg f="" n="1">o serviço
+</arg>
+                <arg f="pnc" n="m">para saber o resultado de Guarani e Palmeiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2388:  As bombas não chegaram a ser acionadas. 
+</text>
+                <arg f="" n="1">As bombas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">acionadas</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

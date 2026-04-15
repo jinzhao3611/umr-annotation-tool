@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cruzar">
+        <note />
+        <note />
+    <roleset framnet="" id="cruzar.01" name="chutar a bola para outro jogador ou para área do campo (futebol)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2199:  Magno desceu pela direita e cruzou para a área. 
+</text>
+                <arg f="" n="0">Magno
+</arg>
+                <rel f="">cruzou</rel>
+                <arg f="" n="2">para a área
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="cross.02" id="cruzar.02" name="ultrapassar" vncls="51.1-1">
+            <roles>
+                <role descr="entity in motion" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="barrier" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1426:  « Foi ótimo,  você fez um minuto melhor do_  que o esperado »,  disse a Medeiros ao cruzar a linha de chegada. 
+</text>
+                <rel f="">cruzar</rel>
+                <arg f="" n="1">a linha de chegada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

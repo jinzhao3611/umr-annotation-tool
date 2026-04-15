@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="obter">
+        <note />
+    <roleset framnet="obtain.01, achieve.01" id="obter.01" name="conseguir" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4089:  Segundo Formaggio,  estão em estudo outras formas de obter a produtividade das culturas. 
+</text>
+                <rel f="">obter</rel>
+                <arg f="" n="1">a produtividade das culturas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3200:  Têm resolução de 600x600 pontos por polegada(  dpi) ,  o_  que permite obter imagens com mais definição. 
+</text>
+                <rel f="">obter</rel>
+                <arg f="" n="1">imagens com mais definição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3192:  A taxa de serviço da Brasoftware é coberta pelo desconto que obtém junto ao fornecedor. 
+</text>
+                <arg f="" n="0">a Brasoftware
+</arg>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">obtém</rel>
+                <arg f="loc" n="m">junto ao fornecedor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2286:  O atacante do Barcelona obteve o « Onze_  de_  Ouro »,  distinção outorgada por leitores da revista francesa « Onze_  Mundial ». 
+</text>
+                <arg f="" n="0">O atacante do Barcelona
+</arg>
+                <rel f="">obteve</rel>
+                <arg f="" n="1">o « Onze_  de_  Ouro »,  distinção outorgada por leitores da revista francesa « Onze_  Mundial »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2245:  Houston obtém sua 27.  ª vitória
+</text>
+                <arg f="" n="0">Houston
+</arg>
+                <rel f="">obtém</rel>
+                <arg f="" n="1">sua 27.  ª vitória
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2041:  Uma das novidades é a permissão para a polícia se infiltrar em quadrilhas para obter provas. 
+</text>
+                <rel f="">obter</rel>
+                <arg f="" n="1">provas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1213:  A Folha procurou a Petrobrás mas não obteve retorno. 
+</text>
+                <arg f="" n="0">A Folha
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">obteve</rel>
+                <arg f="" n="1">retorno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1150:  Muitas empresas entraram na Justiça para obter o direito de contabilizar essa corrosão inflacionária em seus balanços,  e ganharam as ações em primeira instância. 
+</text>
+                <rel f="">obter</rel>
+                <arg f="" n="1">o direito de contabilizar essa corrosão inflacionária em seus balanços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s688:  É o cliente quem define os requisitos que teremos cumprir e,  até_  mesmo,  superar,  praticando qualidade em sua plenitude e obtendo,  assim,  seus benefícios,  que são competitividade,  lucratividade e satisfação. 
+</text>
+                <rel f="">obtendo</rel>
+                <arg f="mnr" n="m">assim
+</arg>
+                <arg f="" n="1">seus benefícios,  que são competitividade,  lucratividade e satisfação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s162:  Diniz começou sua carreira automobilística em 1989,  no Brasileiro_  de_  Fórmula_  Ford,  campeonato em que obteve a sexta posição na classificação final. 
+</text>
+                <arg f="" n="0">Diniz
+</arg>
+                <rel f="">obteve</rel>
+                <arg f="" n="1">a sexta posição
+</arg>
+                <arg f="loc" n="m">na classificação final
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

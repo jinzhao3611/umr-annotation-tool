@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="transferir">
+        <note />
+    <roleset framnet="transfer.01" id="transferir.01" name="" vncls="11.1 13.2">
+            <roles>
+                <role descr="sender" n="0">
+                    <vnrole vncls="11.1" vntheta="Agent" />
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="sent" n="1">
+                    <vnrole vncls="11.1" vntheta="Theme" />
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="sent-to" n="2">
+                    <vnrole vncls="11.1" vntheta="Destination" />
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <role descr="sent-from" n="3">
+                    <vnrole vncls="11.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3679:  « Mas a Dow dos EUA não quis cumprir o contrato e transferir tecnologia a uma concorrente »,  diz. 
+</text>
+                <rel f="">transferir</rel>
+                <arg f="" n="1">tecnologia
+</arg>
+                <arg f="" n="2">a uma concorrente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2002:  A tarefa foi transferida a Falcão. 
+</text>
+                <arg f="" n="1">A tarefa
+</arg>
+                <rel f="">transferida</rel>
+                <arg f="" n="2">a Falcão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s869:  O material será transferido para a memória de computadores. 
+</text>
+                <arg f="" n="1">O material
+</arg>
+                <rel f="">transferido</rel>
+                <arg f="" n="2">para a memória de computadores
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

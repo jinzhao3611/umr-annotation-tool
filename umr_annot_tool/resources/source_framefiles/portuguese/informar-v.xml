@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="informar">
+        <note />
+    <roleset framnet="inform.01" id="informar.01" name="dar informação " vncls="37.2 37.9">
+            <roles>
+                <role descr="informer" n="0">
+                    <vnrole vncls="37.2" vntheta="Agent" />
+                    <vnrole vncls="37.9" vntheta="Agent" />
+                </role>
+                <role descr="informed" n="1">
+                    <vnrole vncls="37.2" vntheta="Recipient" />
+                    <vnrole vncls="37.9" vntheta="Recipient" />
+                </role>
+                <role descr="information" n="2">
+                    <vnrole vncls="37.2" vntheta="Topic" />
+                    <vnrole vncls="37.9" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4197:  O banco não informou porque o sigilo não foi mantido também para os grupos estrangeiros. 
+</text>
+                <arg f="" n="0">O banco
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="2">porque o sigilo não foi mantido também para os grupos estrangeiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3449:  Britto já informou a Streck que é favorável,  mas ficou de discutir a questão com o PMDB gaúcho. 
+</text>
+                <arg f="" n="0">Britto
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="1">a Streck
+</arg>
+                <arg f="" n="2">que é favorável
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3306:  A Secretaria_  de_  Saúde da Paraíba informou que João_  Pessoa está entre as cinco capitais brasileiras que atingiram 90%  de cobertura vacinal na última campanha de multivacinação,  realizada em 90. 
+</text>
+                <arg f="" n="0">A Secretaria_  de_  Saúde da Paraíba
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="2">que João_  Pessoa está entre as cinco capitais brasileiras que atingiram 90%  de cobertura vacinal na última campanha de multivacinação,  realizada em 90
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3273:  Antes,  informou sobre a proibição da Justiça num comunicado de 15 segundos. 
+</text>
+                <arg f="tmp" n="m">Antes
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="2">sobre a proibição da Justiça
+</arg>
+                <arg f="loc" n="m">num comunicado de 15 segundos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3212:  Apenas na Bahia,  por_  exemplo,  o comando da Polícia_  Militar estadual informa que foram 350 casos nos últimos quatro anos. 
+</text>
+                <arg f="loc" n="m">Apenas na Bahia
+</arg>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <arg f="" n="0">o comando da Polícia_  Militar estadual
+</arg>
+                <rel f="">informa</rel>
+                <arg f="" n="2">que foram 350 casos nos últimos quatro anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2928:  O governo do Estado informou,  através de nota de sua assessoria de imprensa,  que as declarações do presidente Itamar_  Franco e do presidente eleito Fernando_  Henrique_  Cardoso sobre medidas federais de combate ao tráfico de drogas « configuram posições análogas às que o governador do Estado vem defendendo ». 
+</text>
+                <arg f="" n="0">O governo do Estado
+</arg>
+                <rel f="">informou</rel>
+                <arg f="mnr" n="m">através de nota de sua assessoria de imprensa
+</arg>
+                <arg f="" n="2">que as declarações do presidente Itamar_  Franco e do presidente eleito Fernando_  Henrique_  Cardoso sobre medidas federais de combate ao tráfico de drogas « configuram posições análogas às que o governador do Estado vem defendendo »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2803:  Os quatro grandes jornais deram,  na segunda-  feira,  a mesma manchete para informar como acabou o Grande_  Prêmio do Brasil,  que aconteceu domingo passado. 
+</text>
+                <rel f="">informar</rel>
+                <arg f="" n="2">como acabou o Grande_  Prêmio do Brasil,  que aconteceu domingo passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2719:  A diretoria do Banerj responsabilizou o Banco_  Central pela perda de liquidez do banco e informou que o Banerj tem dinheiro para receber do BC:  R$  100 milhões pagos a mais desde 1992,  R$  30 milhões de multa e mais R$  600 milhões recolhidos como depósito compulsório,  depois do Plano_  Real
+</text>
+                <arg f="" n="0">A diretoria do Banerj
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="2">que o Banerj tem dinheiro para receber do BC:  R$  100 milhões pagos a mais desde 1992,  R$  30 milhões de multa e mais R$  600 milhões recolhidos como depósito compulsório,  depois do Plano_  Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2623:  O delegado informa que foi aberta sindicância interna no ministério para tentar apurar o caso e que a Polícia_  Federal deverá também abrir um inquérito. 
+</text>
+                <arg f="" n="0">O delegado
+</arg>
+                <rel f="">informa</rel>
+                <arg f="" n="2">que foi aberta sindicância interna no ministério para tentar apurar o caso e que a Polícia_  Federal deverá também abrir um inquérito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2392:  As empresas Tejofran e Power informaram ontem,  em nota enviada ao TRE(  Tribunal_  Regional_  Eleitoral) ,  que prestam serviços aos comitês do PSDB e PMDB. 
+</text>
+                <arg f="" n="0">As empresas Tejofran e Power
+</arg>
+                <rel f="">informaram</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em nota enviada ao TRE(  Tribunal_  Regional_  Eleitoral) 
+</arg>
+                <arg f="" n="2">que prestam serviços aos comitês do PSDB e PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1943:  Um amigo da família ligou para informar sobre o estado de saúde do irmão do ex-  presidente,  Pedro_  Collor,  que está sob tratamento nos Estados_  Unidos. 
+</text>
+                <rel f="">informar</rel>
+                <arg f="" n="2">sobre o estado de saúde do irmão do ex-  presidente,  Pedro_  Collor,  que está sob tratamento nos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1564:  Em Nova_  York,  o FBI(  Federal_  Bureau_  Investigation,  a polícia federal dos Estados_  Unidos)  recebeu uma ligação anônima no final da noite de anteontem informando que o Consulado de Israel sofreria um atentado a bomba. 
+</text>
+                <rel f="">informando</rel>
+                <arg f="" n="2">que o Consulado de Israel sofreria um atentado a bomba
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1348:  A Secretaria_  das_  Finanças da Prefeitura_  de_  São_  Paulo informou ontem que a_  partir_  de segunda-  feira,  dia 8,  a UFM(  Unidade_  Fiscal_  do_  Município)  valerá R$  28,  15. 
+</text>
+                <arg f="" n="0">A Secretaria_  das_  Finanças da Prefeitura_  de_  São_  Paulo
+</arg>
+                <rel f="">informou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="2">que a_  partir_  de segunda-  feira,  dia 8,  a UFM(  Unidade_  Fiscal_  do_  Município)  valerá R$  28,  15
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1000:  O próprio agredido informou ﻿à polícia de que não se tratava dos agressores. 
+</text>
+                <arg f="" n="0">O próprio agredido
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="1">﻿à polícia
+</arg>
+                <arg f="" n="2">de que não se tratava dos agressores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s969:  Sem acesso às contas do grupo,  elas informam que não assinaram o balanço. 
+</text>
+                <arg f="adv" n="m">Sem acesso às contas do grupo
+</arg>
+                <arg f="" n="0">elas
+</arg>
+                <rel f="">informam</rel>
+                <arg f="" n="2">que não assinaram o balanço
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s968:  O balanço do Eldorado_  S/  A informa que as irmãs Veríssimo,  filhas do fundador,  ocupam cargos na vice-  presidência e diretoria do grupo. 
+</text>
+                <arg f="" n="0">O balanço do Eldorado_  S/  A
+</arg>
+                <rel f="">informa</rel>
+                <arg f="" n="2">que as irmãs Veríssimo,  filhas do fundador,  ocupam cargos na vice-  presidência e diretoria do grupo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s834:  O objetivo é informar sobre a importância da amamentação. 
+</text>
+                <rel f="">informar</rel>
+                <arg f="" n="2">sobre a importância da amamentação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s830:  A Divisão_  de_  Vigilância_  Sanitária informou que foram registrados 402 casos de cólera,  com quatro mortes,  este ano no Estado. 
+</text>
+                <arg f="" n="0">A Divisão_  de_  Vigilância_  Sanitária
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="2">que foram registrados 402 casos de cólera,  com quatro mortes,  este ano no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s443:  A empresa norte-  americana informou ﻿à PF que não tem filiais ou representantes no Brasil. 
+</text>
+                <arg f="" n="0">A empresa norte-  americana
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="1">﻿à PF
+</arg>
+                <arg f="" n="2">que não tem filiais ou representantes no Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s344:  O Centro_  para_  Direitos_  Econômicos_  e_  Sociais e médicos da Universidade_  Harvard informaram que amostras de água têm níveis entre 10 e 1.  000 vezes maiores que os recomendados pela Agência_  de_  Proteção_  Ambiental dos EUA. 
+</text>
+                <arg f="" n="0">O Centro_  para_  Direitos_  Econômicos_  e_  Sociais e médicos da Universidade_  Harvard
+</arg>
+                <rel f="">informaram</rel>
+                <arg f="" n="2">que amostras de água têm níveis entre 10 e 1.  000 vezes maiores que os recomendados pela Agência_  de_  Proteção_  Ambiental dos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s196:  A empresa informou que a roupa era de Marinko_  Gagro,  soldado croata-  bósnio morto em julho do ano passado. 
+</text>
+                <arg f="" n="0">A empresa
+</arg>
+                <rel f="">informou</rel>
+                <arg f="" n="2">que a roupa era de Marinko_  Gagro,  soldado croata-  bósnio morto em julho do ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s6:  Eles se dizem oposição,  mas ainda não informaram o_  que vão combater. 
+</text>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">informaram</rel>
+                <arg f="" n="2">o_  que vão combater
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

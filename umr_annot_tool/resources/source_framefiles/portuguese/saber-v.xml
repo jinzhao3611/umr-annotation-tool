@@ -1,0 +1,471 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="saber">
+        <note />
+    <roleset framnet="know.01" id="saber.01" name="ter conhecimento" vncls="29.5 29.9-1-1 29.2-1">
+            <roles>
+                <role descr="knower" n="0">
+                    <vnrole vncls="29.5" vntheta="Agent" />
+                    <vnrole vncls="29.9-1-1" vntheta="Agent" />
+                    <vnrole vncls="29.2-1" vntheta="Agent" />
+                </role>
+                <role descr="thing known or thought" n="1">
+                    <vnrole vncls="29.5" vntheta="Theme" />
+                    <vnrole vncls="29.9-1-1" vntheta="Theme" />
+                    <vnrole vncls="29.2-1" vntheta="Theme" />
+                </role>
+                <role descr="attribute of arg1" n="2">
+                    <vnrole vncls="29.5" vntheta="Predicate" />
+                    <vnrole vncls="29.9-1-1" vntheta="Predicate" />
+                    <vnrole vncls="29.2-1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4072:  Não sei em_  relação_  aos outros indiciados. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">sei</rel>
+                <arg f="" n="1">em_  relação_  aos outros indiciados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4001:  Quando os jogadores souberam da investida de Clemente,  o ala Goicoechea se aprestou a defender o seu patrono: 
+</text>
+                <arg f="" n="0">os jogadores
+</arg>
+                <rel f="">souberam</rel>
+                <arg f="" n="1">da investida de Clemente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3890:  Saiba quem é Barrichello
+</text>
+                <rel f="">Saiba</rel>
+                <arg f="" n="1">quem é Barrichello
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3737:  « Sou uma estrangeira na França e você sabe como são as coisas aqui.  »
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">como são as coisas aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3690:  Não preciso,  governador,  porque,  sabendo da hospitalidade paranaense,  eu nem trouxe carteira. 
+</text>
+                <rel f="">sabendo</rel>
+                <arg f="" n="1">da hospitalidade paranaense
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3613:  Sabe por_  que eu amo tanto você,  querido? 
+</text>
+                <rel f="">Sabe</rel>
+                <arg f="" n="1">por_  que eu amo tanto você
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3443:  Não se sabe ainda como Oosterbroek morreu. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="adv" n="m">ainda
+</arg>
+                <arg f="" n="1">como Oosterbroek morreu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3417:  Não sei se os jornalistas estão conscientes da grande responsabilidade que têm. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">sei</rel>
+                <arg f="" n="1">se os jornalistas estão conscientes da grande responsabilidade que têm
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3395:  Um(  mecenas)  nobre que deifica o saber antes e mistifica o dar depois ou ele deve ser um iconoclasta,  espalhar o_  que sabe enquanto o tempo faz das novidades fatos descartáveis. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="tmp" n="m">enquanto o tempo faz das novidades fatos descartáveis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3095:  O jogador,  sabendo que ganharia mais_  de US$  250 mil,  fez o_  que a voz ordenou. 
+</text>
+                <rel f="">sabendo</rel>
+                <arg f="" n="1">que ganharia mais_  de US$  250 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2909:  O Folha_  Informações atendeu no último fim-  de-  semana 3.  978 pessoas,  que acionaram o serviço para saber o resultado de Guarani e Palmeiras. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">o resultado de Guarani e Palmeiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2594:  Ao saber que os militares pretendiam a democracia e o fim da guerra colonial,  os portugueses começaram a dar cravos aos soldados,  que os colocavam na ponta dos seus fuzis- -  daí o nome Revolução_  dos_  Cravos. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">que os militares pretendiam a democracia e o fim da guerra colonial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2565:  « Sei que não estou rendendo tudo que posso,  mas estou em evolução »,  disse. 
+</text>
+                <rel f="">Sei</rel>
+                <arg f="" n="1">que não estou rendendo tudo que posso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2438:  « Sei que jamais terei uma chance de trabalhar tão calmamente de_  novo. 
+</text>
+                <rel f="">Sei</rel>
+                <arg f="" n="1">que jamais terei uma chance de trabalhar tão calmamente de_  novo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2295:  « Eu estou igualzinho ao presidente Itamar,  igualzinho ao ministério,  igualzinho a 150 milhões de brasileiros,  que não sabem coisa alguma sobre este plano ». 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">sabem</rel>
+                <arg f="" n="1">coisa alguma sobre este plano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2170:  Sandoval- -  Vou entrar com determinação,  sabendo que vai ser difícil. 
+</text>
+                <rel f="">sabendo</rel>
+                <arg f="" n="1">que vai ser difícil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1980:  Quando se está num ambiente como o que eu vivia,  você não sabe que existe todo um mundo diferente fora dali. 
+</text>
+                <arg f="tmp" n="m">Quando se está num ambiente como o que eu vivia
+</arg>
+                <arg f="" n="0">você
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">que existe todo um mundo diferente fora dali
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1967:  Este foi meu primeiro filme,  mas sei que posso ser uma grande atriz. 
+</text>
+                <rel f="">sei</rel>
+                <arg f="" n="1">que posso ser uma grande atriz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1965:  Sei que agora tenho um longo caminho a percorrer. 
+</text>
+                <rel f="">Sei</rel>
+                <arg f="" n="1">que agora tenho um longo caminho a percorrer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1923:  Na sua avaliação,  a oposição sabe que o plano é bom,  « mas não quer aprová-  lo agora,  pois seria bater palma para o adversário ». 
+</text>
+                <arg f="dis" n="m">Na sua avaliação
+</arg>
+                <arg f="" n="0">a oposição
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">que o plano é bom
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1873:  Segundo Nujud,  as contas do Corinthians ainda não foram fechadas,  para se saber se o clube teve lucro ou prejuízo. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">se o clube teve lucro ou prejuízo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1663:  A polícia ainda não sabe qual foi a causa do acidente. 
+</text>
+                <arg f="" n="0">A polícia
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">qual foi a causa do acidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1653:  Nos EUA,  o Museu da OEA(  Organização_  dos_  Estados_  Americanos)  já tem agendada uma exposição de Amélia,  mas ela não sabe se instala lá suas « Sete_  Ondas ». 
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">se instala lá suas « Sete_  Ondas »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1459:  Todos sabem que as reformas na agricultura foram a locomotiva que levou a China a seu estado atual. 
+</text>
+                <arg f="" n="0">Todos
+</arg>
+                <rel f="">sabem</rel>
+                <arg f="" n="1">que as reformas na agricultura foram a locomotiva que levou a China a seu estado atual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1445:  Entretanto,  disse não saber « que perdas são essas »,  e que « até agora todo mundo está ganhando com a URV ». 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">saber</rel>
+                <arg f="" n="1">« que perdas são essas »,  e que « até agora todo mundo está ganhando com a URV »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1414:  E sabe quem eu ainda não vi? 
+</text>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">quem eu ainda não vi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1364:  « Não sei se ele vai querer meu apoio,  mas farei tudo que puder por ele.  »
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">sei</rel>
+                <arg f="" n="1">se ele vai querer meu apoio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1136:  Que a democracia contemporânea é fortemente corporativa o sabemos,  mas esperamos que não continue a ser tão cheia de particularismos! 
+</text>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">sabemos</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1112:  « Procure saber se você se entrega,  ou se você foge de suas emoções. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">se você se entrega,  ou se você foge de suas emoções
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1110:  « Sei disso. 
+</text>
+                <rel f="">Sei</rel>
+                <arg f="" n="1">disso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1053:  Isso porque ninguém sabe quais serão os critérios da conversão automática,  explica. 
+</text>
+                <arg f="" n="0">ninguém
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">quais serão os critérios da conversão automática
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s873:  A Mocotex vai sofrer análise para saber onde ocorre a contaminação. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">onde ocorre a contaminação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s816:  O presidente disse que pediu ao ministro das Minas_  e_  Energia,  Alexis_  Stepanenko,  que cheque também as estatais ligadas a ele para saber se também houve desobediência. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">se também houve desobediência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s637:  E eu sei que é tudo bofe mas parece tudo gay. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">sei</rel>
+                <arg f="" n="1">que é tudo bofe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s573:  « Queremos saber se o bicho de São_  Paulo e o do Rio são ramificações de uma grande organização criminosa. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">se o bicho de São_  Paulo e o do Rio são ramificações de uma grande organização criminosa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s459:  Não sei se fui claro:  seria mais fácil um pinguim cruzar três Saaras do_  que FHC comer carne de bode espremido a um magote de sertanejos suados. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">sei</rel>
+                <arg f="" n="1">se fui claro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s436:  O acordo não se tornou público,  mas,  agora,  se sabe que foram feitas muitas concessões políticas. 
+</text>
+                <arg f="tmp" n="m">agora
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">que foram feitas muitas concessões políticas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s425:  Resta portanto saber se as medidas anunciadas,  em_  tese adequadas,  terão na prática o efeito que se espera. 
+</text>
+                <rel f="">saber</rel>
+                <arg f="" n="1">se as medidas anunciadas,  em_  tese adequadas,  terão na prática o efeito que se espera
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s78:  Toda a comissão técnica sabe que Romário é de treinar pouco,  geralmente se poupando entre dois jogos difíceis. 
+</text>
+                <arg f="" n="0">Toda a comissão técnica
+</arg>
+                <rel f="">sabe</rel>
+                <arg f="" n="1">que Romário é de treinar pouco,  geralmente se poupando entre dois jogos difíceis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="disputar">
+        <note />
+    <roleset framnet="compete.01" id="disputar.01" name="concorrer; lutar por (posse de algo ou prêmio em competição)" vncls="36.1">
+            <roles>
+                <role descr="competitor" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="opponent" n="1">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <role descr="prize" n="2">
+                    <vnrole vncls="36.1" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3892:  Em 1989,  após ganhar diversos títulos paulistas e brasileiros no kart,  Barrichello disputou o Campeonato_  Brasileiro_  de_  Fórmula_  Ford,  terminando em quarto lugar. 
+</text>
+                <arg f="tmp" n="m">Em 1989
+</arg>
+                <arg f="tmp" n="m">após ganhar diversos títulos paulistas e brasileiros no kart
+</arg>
+                <arg f="" n="0">Barrichello
+</arg>
+                <rel f="">disputou</rel>
+                <arg f="" n="2">o Campeonato_  Brasileiro_  de_  Fórmula_  Ford
+</arg>
+                <arg f="adv" n="m">terminando em quarto lugar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3502:  A casa vai estar cheia e nós vamos mostrar porque viemos disputar a Copa »,  afirma. 
+</text>
+                <arg f="" n="0">nós
+</arg>
+                <rel f="">disputar</rel>
+                <arg f="" n="2">a Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3434:  Abalado,  o jogador ameaçou não disputar a Copa_  do_  Mundo,  em junho e julho,  nos EUA,  caso o pai não seja libertado. 
+</text>
+                <rel f="">disputar</rel>
+                <arg f="" n="2">a Copa_  do_  Mundo
+</arg>
+                <arg f="tmp" n="m">em junho e julho
+</arg>
+                <arg f="loc" n="m">nos EUA
+</arg>
+                <arg f="adv" n="m">caso o pai não seja libertado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2889:  Requião é um dos mais ferrenhos adversários de Orestes_  Quércia,  que disputa a Presidência da República pelo partido. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">disputa</rel>
+                <arg f="" n="2">a Presidência da República
+</arg>
+                <arg f="" n="3">pelo partido
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2823:  Os deputados que negociam o plano de estabilização econômica do governo criticaram o ministro Fernando_  Henrique_  Cardoso,  que admitiu ontem a possibilidade de disputar a Presidência da República. 
+</text>
+                <rel f="">disputar</rel>
+                <arg f="" n="2">a Presidência da República
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2795:  Dois continentes disputam estas três graças de Canova
+</text>
+                <arg f="" n="0">Dois continentes
+</arg>
+                <rel f="">disputam</rel>
+                <arg f="" n="2">estas três graças de Canova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2309:  A equipe entra na quadra amanhã às 20h30(  15h30 de Brasília)  para disputar com o Canadá,  no chamado « grupo da morte »,  um lugar na próxima fase do Mundial(  leia matéria nesta página) . 
+</text>
+                <rel f="">disputar</rel>
+                <arg f="" n="1">com o Canadá
+</arg>
+                <arg f="loc" n="m">no chamado « grupo da morte »
+</arg>
+                <arg f="" n="2">um lugar na próxima fase do Mundial
+</arg>
+                <note>com Arg2</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2165:  A definição do tempo no horário eleitoral gratuito foi encaminhada pela corregedoria a todos os partidos que disputam a sucessão do governador Luiz_  Antonio_  Fleury_  Filho. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">disputam</rel>
+                <arg f="" n="2">a sucessão do governador Luiz_  Antonio_  Fleury_  Filho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1629:  Já pensando no Mundial da Grécia,  que será disputado em setembro em Atenas,  o técnico brasileiro retoma o comando dos treinos da equipe a_  partir_  da próxima segunda-  feira. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">disputado</rel>
+                <arg f="tmp" n="m">em setembro
+</arg>
+                <arg f="loc" n="m">em Atenas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1433:  Na chegada do ano em que disputará uma vaga no Senado pelo PP-  SP,  deu mais_  de duas dezenas de entrevistas,  posou para fotos,  e deixou 1993 nas emissoras de rádio e TV. 
+</text>
+                <arg f="tmp" n="m">que
+</arg>
+                <rel f="">disputará</rel>
+                <arg f="" n="2">uma vaga no Senado
+</arg>
+                <arg f="" n="3">pelo PP-  SP
+</arg>
+                <note>Arg3 = quem está sendo representado por quem disputa</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1029:  Ele afirmou que os atacantes Magno e Sávio,  do Fla,  podem disputar o torneio pré-  Olímpico,  em março de 1996 na Argentina. 
+</text>
+                <arg f="" n="0">os atacantes Magno e Sávio,  do Fla, 
+</arg>
+                <rel f="">disputar</rel>
+                <arg f="" n="2">o torneio pré-  Olímpico
+</arg>
+                <arg f="tmp" n="m">em março de 1996
+</arg>
+                <arg f="loc" n="m">na Argentina
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s885:  15 de maio- -  Sarney desiste de disputar a prévia do PMDB contra Requião e Quércia. 
+</text>
+                <rel f="">disputar</rel>
+                <arg f="" n="2">a prévia do PMDB
+</arg>
+                <arg f="" n="1">contra Requião e Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s883:  Decisão do Supremo_  Tribunal_  Federal permite aos micropartidos disputar a Presidência. 
+</text>
+                <rel f="">disputar</rel>
+                <arg f="" n="2">a Presidência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s712:  Nunca havia disputado mandatos eletivos. 
+</text>
+                <arg f="tmp" n="m">Nunca
+</arg>
+                <rel f="">disputado</rel>
+                <arg f="" n="2">mandatos eletivos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s704:  Reginaldo_  Duarte pertence a uma família de políticos de Juazeiro_  do_  Norte(  CE) ,  mas nunca havia disputado eleição. 
+</text>
+                <arg f="" n="0">Reginaldo_  Duarte
+</arg>
+                <arg f="tmp" n="m">nunca
+</arg>
+                <rel f="">disputado</rel>
+                <arg f="" n="2">eleição
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

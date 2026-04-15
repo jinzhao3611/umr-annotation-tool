@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="resgatar">
+        <note />
+    <roleset framnet="rescue.01" id="resgatar.01" name="recuperar; salvar; tirar do esquecimento" vncls="10.5">
+            <roles>
+                <role descr="rescuer, agent" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                </role>
+                <role descr="entity rescued" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                </role>
+                <role descr="rescued from" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3435:  O sétimo filme de Spike_  Lee acerta nos figurinos e trejeitos da época e resgata preciosidades do soul negro dos anos 70. 
+</text>
+                <arg f="" n="0">O sétimo filme de Spike_  Lee
+</arg>
+                <rel f="">resgata</rel>
+                <arg f="" n="1">preciosidades do soul negro dos anos 70
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3238:  Segundo o detetive,  eles ameaçaram invadir a delegacia,  no horário de visita,  para resgatar dez companheiros. 
+</text>
+                <rel f="">resgatar</rel>
+                <arg f="" n="1">dez companheiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3150:  Caixa resgata a década perdida de Elvis
+</text>
+                <arg f="" n="0">Caixa
+</arg>
+                <rel f="">resgata</rel>
+                <arg f="" n="1">a década perdida de Elvis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

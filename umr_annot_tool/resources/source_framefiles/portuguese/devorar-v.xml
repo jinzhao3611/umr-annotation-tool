@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="devorar">
+        <note />
+    <roleset framnet="devour.01" id="devorar.01" name="comer vorazmente até acabar" vncls="39.4">
+            <roles>
+                <role descr="eater" n="0">
+                    <vnrole vncls="39.4" vntheta="Agent" />
+                </role>
+                <role descr="thing eaten" n="1">
+                    <vnrole vncls="39.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2234:  A Nasa(  agência espacial dos EUA)  encomendou ﻿à empresa Micro-  Bac o desenvolvimento de um sistema de purificação de esgoto utilizando bactérias conhecidas por devorarem material orgânico. 
+</text>
+                <rel f="">devorarem</rel>
+                <arg f="" n="1">material orgânico
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="engolir">
+        <note />
+    <roleset framnet="swallow.01" id="engolir.01" name="colocar goela abaixo; ingerir" vncls="-">
+            <roles>
+                <role descr="swallower" n="0" />
+                <role descr="thing swallowed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s62:  Havelange aceitaria engolir o italiano Antonio_  Matarrese como o seu vice-  executivo e,  além_  disso,  esqueceria os seus modos autoritários,  coordenando a entidade de maneira colegiada. 
+</text>
+                <rel f="">engolir</rel>
+                <arg f="" n="1">o italiano Antonio_  Matarrese
+</arg>
+                <note>uso metafórico </note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

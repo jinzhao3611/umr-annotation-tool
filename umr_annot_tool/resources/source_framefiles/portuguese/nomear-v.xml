@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="nomear">
+        <note />
+    <roleset framnet="nominate.01" id="nomear.01" name="designar alguém para uma função" vncls="29.1">
+            <roles>
+                <role descr="nominator" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="candidate" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="role of arg1" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3074:  Agora,  além_  de dirigir seu grupo sediado em Nova_  York,  ele também vai atuar como coreógrafo-  residente do Ballet_  da_  Ópera_  de_  Lyon,  que acaba de nomear-  lo para o cargo,  antes ocupado por Maguy_  Marin. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">nomear-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="" n="2">para o cargo,  antes ocupado por Maguy_  Marin
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

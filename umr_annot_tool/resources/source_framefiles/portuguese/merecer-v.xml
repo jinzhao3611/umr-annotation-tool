@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="merecer">
+        <note />
+    <roleset framnet="merit.01" id="merecer.01" name="ser digno de" vncls="-">
+            <roles>
+                <role descr="thing worthy" n="0" />
+                <role descr="thing worthy of" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3024:  Merecia coisa melhor. 
+</text>
+                <rel f="">Merecia</rel>
+                <arg f="" n="1">coisa melhor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2710:  Nesta ala merece menção o seu Bruto_  Rosé,  um espumante elaborado com uva Baga(  100% )  que conserva um_  pouco da cor e muito de frutado desta variedade típica da região. 
+</text>
+                <arg f="loc" n="m">Nesta ala
+</arg>
+                <rel f="">merece</rel>
+                <arg f="" n="1">menção
+</arg>
+                <arg f="" n="0">o seu Bruto_  Rosé,  um espumante elaborado com uva Baga(  100% )  que conserva um_  pouco da cor e muito de frutado desta variedade típica da região
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s123:  Optar entre um aparelho conjugado e outro simples é outro ponto que merece atenção. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">merece</rel>
+                <arg f="" n="1">atenção
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

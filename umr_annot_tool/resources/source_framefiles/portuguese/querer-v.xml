@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="querer">
+        <note />
+    <roleset framnet="want.01" id="querer.01" name="desejar" vncls="29.1 32.1">
+            <roles>
+                <role descr="Wanter" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                    <vnrole vncls="32.1" vntheta="Experiencer" />
+                </role>
+                <role descr="thing wanted" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                    <vnrole vncls="32.1" vntheta="Theme" />
+                </role>
+                <role descr="beneficiary" n="2" />
+                <role descr="in-exchange-for" n="3" />
+                <role descr="from" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4011:  Em_  torno_  do gabinete presidencial no Planalto ele quer os dois maiores colaboradores na campanha eleitoral:  o amigo,  empresário e secretário-  geral do PSDB Sérgio_  Motta e o ex-  reitor da Unicamp e coordenador do programa de governo Paulo_  Renato_  de_  Souza. 
+</text>
+                <arg f="loc" n="m">Em_  torno_  do gabinete presidencial no Planalto
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">quer</rel>
+                <arg f="" n="1">os dois maiores colaboradores na campanha eleitoral:  o amigo,  empresário e secretário-  geral do PSDB Sérgio_  Motta e o ex-  reitor da Unicamp e coordenador do programa de governo Paulo_  Renato_  de_  Souza
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3999:  Quem quiser,  vai em excursão até o resort local,  Casa_  de_  Campo. 
+</text>
+                <arg f="" n="0">Quem
+</arg>
+                <rel f="">quiser</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3911:  « Beckenbauer tem o direito de dizer o_  que quiser ». 
+</text>
+                <arg f="" n="0">Beckenbauer
+</arg>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">quiser</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2672:  « Quero todos totalmente recuperados para as quartas-  de-  final,  afirmou o treinador corintiano. 
+</text>
+                <rel f="">Quero</rel>
+                <arg f="" n="1">todos
+</arg>
+                <arg f="prd" n="m">totalmente recuperados
+</arg>
+                <arg f="prd" n="m">para as quartas-  de-  final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1364:  « Não sei se ele vai querer meu apoio,  mas farei tudo que puder por ele.  »
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">querer</rel>
+                <arg f="" n="1">meu apoio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1210:  Cut quer menor preço da gasolina
+</text>
+                <arg f="" n="0">Cut
+</arg>
+                <rel f="">quer</rel>
+                <arg f="" n="1">menor preço da gasolina
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s960:  « Ele foi um ótimo jogador,  mas é um péssimo dirigente »,  disse Kodja,  que quer o afastamento de Pelé,  assessor de assuntos internacionais,  e do vice Samir_  Abdul_  Hack. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">quer</rel>
+                <arg f="" n="1">o afastamento de Pelé,  assessor de assuntos internacionais,  e do vice Samir_  Abdul_  Hack
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s548:  Junto_  com seu guapo Luiz_  Zerbini,  foi até Muir_  Woods um bosque nas imediações da cidade,  onde só queria era abraçar árvores de preferência,  enormes sequóias. 
+</text>
+                <arg f="loc" n="m">onde
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">queria</rel>
+                <arg f="" n="1">abraçar árvores de preferência,  enormes sequóias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s294:  Cerca_  de 72%  dos empresários da construção querem que o próprio setor negocie a conversão dos contratos para a URV,  enquanto 28%  desejam que o governo estabeleça as regras. 
+</text>
+                <arg f="" n="0">Cerca_  de 72%  dos empresários da construção
+</arg>
+                <rel f="">querem</rel>
+                <arg f="" n="1">que o próprio setor negocie a conversão dos contratos para a URV
+</arg>
+                <arg f="tmp" n="m">enquanto 28%  desejam que o governo estabeleça as regras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2:  Brasília Pesquisa_  Datafolha publicada hoje revela um dado supreendente:  recusando uma postura radical,  a esmagadora maioria(  77% )  dos eleitores quer o PT participando do Governo Fernando_  Henrique_  Cardoso. 
+</text>
+                <arg f="adv" n="m">recusando uma postura radical
+</arg>
+                <arg f="" n="0">a esmagadora maioria(  77% )  dos eleitores
+</arg>
+                <rel f="">quer</rel>
+                <arg f="" n="1">o PT
+</arg>
+                <arg f="loc" n="m">participando do Governo Fernando_  Henrique_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

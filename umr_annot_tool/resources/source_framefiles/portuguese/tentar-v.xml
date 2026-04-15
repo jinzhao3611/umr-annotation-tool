@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tentar">
+        <note />
+    <roleset framnet="try.01" id="tentar.01" name="empenhar-se para conseguir" vncls="-">
+            <roles>
+                <role descr="Agent/Entity Trying" n="0" />
+                <role descr="thing tried" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s507:  A família de Christiane já gastou aproximadamente US$  1 milhão para tentar a sua libertação. 
+</text>
+                <rel f="">tentar</rel>
+                <arg f="" n="1">a sua libertação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

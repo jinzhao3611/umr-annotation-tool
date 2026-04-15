@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="impetrar">
+        <note />
+    <roleset framnet="file.01" id="impetrar.01" name="pedir; pedir em juízo; interpor" vncls="9.10">
+            <roles>
+                <role descr="filer" n="0">
+                    <vnrole vncls="9.10" vntheta="Agent" />
+                </role>
+                <role descr="file" n="1">
+                    <vnrole vncls="9.10" vntheta="Theme" />
+                </role>
+                <role descr="filed-with" n="2" />
+                <role descr="filed against" n="3" />
+                <role descr="purpose of filing" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4196:  O chefe da gerência jurídica do BNDES,  em São_  Paulo,  Arnaldo_  Montenegro,  43,  disse que será impetrada uma ação de agravo de instrumento com pedido de reconsideração ao juiz Andrade_  Martins. 
+</text>
+                <rel f="">impetrada</rel>
+                <arg f="" n="1">uma ação de agravo de instrumento com pedido de reconsideração ao juiz Andrade_  Martins
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

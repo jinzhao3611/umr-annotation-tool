@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pretender">
+        <note />
+    <roleset framnet="intend.01" id="pretender.01" name="ter a intenção de; tencionar" vncls="61 62">
+            <roles>
+                <role descr="planner" n="0">
+                    <vnrole vncls="61" vntheta="Agent" />
+                    <vnrole vncls="62" vntheta="Experiencer" />
+                </role>
+                <role descr="intent, thing planned" n="1">
+                    <vnrole vncls="61" vntheta="Theme" />
+                    <vnrole vncls="62" vntheta="Theme" />
+                </role>
+                <role descr="extracted subject" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4068:  Ele afirmou que pretende reforçar seu meio-  campo,  mas não adiantou a escalação da equipe. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">reforçar seu meio-  campo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3411:  Os escritores aqui reunidos pretendem alertar a comunidade internacional sobre os ataques sofridos pela liberdade de pensar e de escrever em vários países do mundo. 
+</text>
+                <arg f="" n="0">Os escritores aqui reunidos
+</arg>
+                <rel f="">pretendem</rel>
+                <arg f="" n="1">alertar a comunidade internacional sobre os ataques sofridos pela liberdade de pensar e de escrever em vários países do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3279:  O empresário disse que pretende ver também outros jogadores brasileiros,  entre eles Cafu,  do São_  Paulo,  Mirandinha,  do Paysandu,  e Claudinho,  da Ponte_  Preta. 
+</text>
+                <arg f="" n="0">O empresário
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">ver também outros jogadores brasileiros,  entre eles Cafu,  do São_  Paulo,  Mirandinha,  do Paysandu,  e Claudinho,  da Ponte_  Preta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3120:  A notícia veiculada por esta Folha(  em 10/  10/  1994)  de que o presidente eleito Fernando_  Henrique_  Cardoso pretende propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988)  juntamente com o contrato coletivo de trabalho,  demonstra sua coerência com a modernização das relações sociais. 
+</text>
+                <arg f="" n="0">o presidente eleito Fernando_  Henrique_  Cardoso
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2759:  A empresa,  com sede em Caieiras(  35 km a norte de SP) ,  pretende se mudar para o Empresarial_  Jaraguá,  onde adquiriu 6.  000 m2. 
+</text>
+                <arg f="" n="0">A empresa,  com sede em Caieiras(  35 km a norte de SP) , 
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">se mudar para o Empresarial_  Jaraguá,  onde adquiriu 6.  000 m2
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2594:  Ao saber que os militares pretendiam a democracia e o fim da guerra colonial,  os portugueses começaram a dar cravos aos soldados,  que os colocavam na ponta dos seus fuzis- -  daí o nome Revolução_  dos_  Cravos. 
+</text>
+                <arg f="" n="0">os militares
+</arg>
+                <rel f="">pretendiam</rel>
+                <arg f="" n="1">a democracia e o fim da guerra colonial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2570:  A polícia pretende localizar todos os envolvidos na briga até o dia 21 de outubro. 
+</text>
+                <arg f="" n="0">A polícia
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">localizar todos os envolvidos na briga até o dia 21 de outubro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2526:  Gilmar pretende votar no senador Esperidião_  Amin(  PPR-  SC) . 
+</text>
+                <arg f="" n="0">Gilmar
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">votar no senador Esperidião_  Amin(  PPR-  SC) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2032:  Convencido de que Munhoz tem uma boa retórica,  o publicitário pretende deixar o candidato « falar o que quiser » para,  antes da gravação final,  decidir o que irá ao ar. 
+</text>
+                <arg f="" n="0">o publicitário
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">deixar o candidato « falar o que quiser » para,  antes da gravação final,  decidir o que irá ao ar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1954:  A Reuters_  Holdings,  baseada em Londres,  pretende lançar um serviço financeiro por TV em meados do ano. 
+</text>
+                <arg f="" n="0">A Reuters_  Holdings,  baseada em Londres, 
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">lançar um serviço financeiro por TV em meados do ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1543:  A Fenasoft deixou de ser um reduto de especialistas em informática para atrair também quem pretendia comprar o primeiro computador. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">pretendia</rel>
+                <arg f="" n="1">comprar o primeiro computador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1491:  Como não se pretende o monopólio da verdade,  apresento o raciocínio(  e as contas)  que fundamentam a tese de que não haverá perdas. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">o monopólio da verdade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1353:  Autor da proposta do Imposto_  Único,  que pretende reduzir a enorme gama de tributos a um,  Marcos_  Cintra fará uma palestra sobre o assunto. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">reduzir a enorme gama de tributos a um
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s800:  O PDT pretende reduzir os impostos federais a quatro. 
+</text>
+                <arg f="" n="0">O PDT
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">reduzir os impostos federais a quatro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s683:  A emissora pretende lançar o « remake » em janeiro de 95,  às 18h,  no lugar de « Tropicaliente ». 
+</text>
+                <arg f="" n="0">A emissora
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">lançar o « remake » em janeiro de 95,  às 18h,  no lugar de « Tropicaliente »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s440:  Mesmo asim,  Van_  Himst pretende surpreender a defesa saudita,  colocando dois atacantes velozes. 
+</text>
+                <arg f="dis" n="m">Mesmo asim
+</arg>
+                <arg f="" n="0">Van_  Himst
+</arg>
+                <rel f="">pretende</rel>
+                <arg f="" n="1">surpreender a defesa saudita
+</arg>
+                <arg f="mnr" n="m">colocando dois atacantes velozes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s231:  Para isso,  ele afirma pretender inaugurar uma câmara setorial para discutir as questões específicas da economia no Estado. 
+</text>
+                <rel f="">pretender</rel>
+                <arg f="" n="1">inaugurar uma câmara setorial para discutir as questões específicas da economia no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s44:  O presidente da Cooper,  Benedito_  Vieira_  Pereira,  49,  afirmou que pretendia distribuir leite C nos postos de venda hoje. 
+</text>
+                <arg f="" n="0">O presidente da Cooper,  Benedito_  Vieira_  Pereira,  49, 
+</arg>
+                <rel f="">pretendia</rel>
+                <arg f="" n="1">distribuir leite C nos postos de venda hoje
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="partir">
+        <note />
+        <note />
+    <roleset framnet="come.03" id="partir.01" name="surgir; sair de" vncls="48.1.1">
+            <roles>
+                <role descr="thing (state) arising" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <role descr="source (from or in or of)" n="2">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3490:  Só poderia ter partido de uma cabeça de merda ». 
+</text>
+                <arg f="adv" n="m">Só
+</arg>
+                <rel f="">partido</rel>
+                <arg f="" n="2">de uma cabeça de merda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3107:  Como partiu do PT o pedido de encontro com o presidente Nelson_  Mandela,  o próprio partido assumiu os custos do trecho da viagem que inclui a África_  do_  Sul. 
+</text>
+                <rel f="">partiu</rel>
+                <arg f="" n="1">do PT
+</arg>
+                <arg f="" n="0">o pedido de encontro com o presidente Nelson_  Mandela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1164:  Essa permissão de entrada de brasileiros,  sem o visto,  partiu de uma negociação entre Portugal e a União_  Européia. 
+</text>
+                <arg f="" n="0">Essa permissão de entrada de brasileiros,  sem o visto, 
+</arg>
+                <rel f="">partiu</rel>
+                <arg f="" n="1">de uma negociação entre Portugal e a União_  Européia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="depart.01" id="partir.02" name="deixar um lugar para ir a outro; ir embora" vncls="51.1-1">
+            <roles>
+                <role descr="entity leaving, agent" n="0">
+                    <vnrole vncls="51.1-1" vntheta="theme" />
+                </role>
+                <role descr="departed from" n="1">
+                    <vnrole vncls="51.1-1" vntheta="location" />
+                </role>
+                <role descr="departed for, destination" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3487:  Todos,  contra ou a_  favor,  partem do princípio de que aquele foi um gesto de « protesto ». 
+</text>
+                <arg f="" n="0">Todos,  contra ou a_  favor, 
+</arg>
+                <rel f="">partem</rel>
+                <arg f="" n="1">do princípio de que aquele foi um gesto de « protesto »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3426:  « As torcidas partem para_  cima da PM a_  fim_  de_  que nos concentremos num só local. 
+</text>
+                <arg f="" n="0">As torcidas
+</arg>
+                <rel f="">partem</rel>
+                <arg f="" n="2">para_  cima da PM
+</arg>
+                <note>"partir_para_cima_de" é "atacar", poderia ter um roleset separado, mas o sintático não se adequaria</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3053:  A saída,  diz,  « é partir para o ataque ». 
+</text>
+                <rel f="">partir</rel>
+                <arg f="" n="2">para o ataque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3051:  Dinho aconselha time a partir para o ataque
+</text>
+                <rel f="">partir</rel>
+                <arg f="" n="2">para o ataque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2127:  Ambos partem numa fuga para o norte(  rumo_  ao pai de Haynes,  que mora no Alasca) . 
+</text>
+                <arg f="" n="0">Ambos
+</arg>
+                <rel f="">partem</rel>
+                <arg f="" n="2">numa fuga para o norte(  rumo_  ao pai de Haynes,  que mora no Alasca) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1802:  Murilo sempre está partindo do pressuposto de que ele é poeta. 
+</text>
+                <arg f="" n="0">Murilo
+</arg>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">partindo</rel>
+                <arg f="" n="1">do pressuposto de que ele é poeta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1649:  « Sete_  Ondas » não está partindo do marco zero. 
+</text>
+                <arg f="" n="0">Sete_  Ondas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">partindo</rel>
+                <arg f="" n="1">do marco zero
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s365:  A distribuição acontecerá até o final do mês,  partindo das capitais para o interior do país. 
+</text>
+                <rel f="">partindo</rel>
+                <arg f="" n="1">das capitais
+</arg>
+                <arg f="" n="2">para o interior do país
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confessar">
+        <note />
+    <roleset framnet="confess.01" id="confessar.01" name="revelar o que ainda não havia sido admitido" vncls="37.3">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="37.3" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="37.3" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.3" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4173:  Eu adoro política »,  confessa Mercedes_  Rossi_  de_  Almeida,  73,  a mãe do candidato ao governo de São_  Paulo Francisco_  Rossi(  PDT) . 
+</text>
+                <arg f="" n="1">Eu adoro política »
+</arg>
+                <rel f="">confessa</rel>
+                <arg f="" n="0">Mercedes_  Rossi_  de_  Almeida,  73,  a mãe do candidato ao governo de São_  Paulo Francisco_  Rossi(  PDT) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s928:  Segundo o delegado Roberto_  Ilhesca,  Silva teria confessado do crime. 
+</text>
+                <arg f="dis" n="m">Segundo o delegado Roberto_  Ilhesca
+</arg>
+                <arg f="" n="0">Silva
+</arg>
+                <rel f="">confessado</rel>
+                <arg f="" n="1">do crime
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s165:  O delegado Celso_  Antonio_  Borlina,  38,  disse que Rúbio confessou o crime. 
+</text>
+                <arg f="" n="0">Rúbio
+</arg>
+                <rel f="">confessou</rel>
+                <arg f="" n="1">o crime
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

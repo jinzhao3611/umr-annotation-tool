@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tomar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="take.01" id="tomar.01" name="Verbo suporte: adotar (providência, decisão, precaução, cuidado, medidas  etc)" vncls="10.5 11.3">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from, or prepositional complement of arg1" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3903:  A decisão foi tomada pelo conselho da montadora alemã,  na última sexta-  feira. 
+</text>
+                <arg f="" n="1">A decisão
+</arg>
+                <rel f="">tomada</rel>
+                <arg f="" n="0">pelo conselho da montadora alemã
+</arg>
+                <arg f="tmp" n="m">na última sexta-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3629:  Se o sr. _  Cedras não tomar os passos apropriados,  nós vamos dizer num clima de respeito que passos ele deve dar. 
+</text>
+                <arg f="" n="0">o sr. _  Cedras
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">tomar</rel>
+                <arg f="" n="1">os passos apropriados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2770:  A decisão foi anunciada na tarde de ontem pelo presidente da revisão constitucional,  senador Humberto_  Lucena(  PMDB-  PB) ,  que tomou a decisão mesmo tendo em mãos parecer contrário da sua assessoria jurídica. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">tomou</rel>
+                <arg f="" n="1">a decisão
+</arg>
+                <arg f="adv" n="m">mesmo tendo em mãos parecer contrário da sua assessoria jurídica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2029:  Entre os católicos que se intitulam « não-  praticantes »,  94%  não tomam decisão baseado nos conselhos religiosos. 
+</text>
+                <arg f="prd" n="m">Entre os católicos que se intitulam « não-  praticantes »
+</arg>
+                <arg f="" n="0">94% 
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">tomam</rel>
+                <arg f="" n="1">decisão baseado nos conselhos religiosos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s568:  Há uma pequena parcela,  no_  entanto,  que é catastrofista ao ponto de afirmar que Lula sequer conseguirá tomar posse. 
+</text>
+                <rel f="">tomar</rel>
+                <arg f="" n="1">posse
+</arg>
+                <note>em inglês, "tomar posse (de cargo)" = "take office"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s567:  Apesar_  de todas as restrições,  a esmagadora maioria dos consultados(  86% )  acredita que Lula tomará posse sem resistência de qualquer setor da sociedade. 
+</text>
+                <arg f="" n="0">Lula
+</arg>
+                <rel f="">tomará</rel>
+                <arg f="" n="1">posse
+</arg>
+                <arg f="mnr" n="m">sem resistência de qualquer setor da sociedade
+</arg>
+                <note>tomar posse de cargo = "to take office"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s482:  Depois será a vez dos financiamentos rurais e,  no início de junho,  acenará os rumos que poderão tomar os pontos fundamentais do plano a política monetária e a política cambial. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">tomar</rel>
+                <arg f="" n="0">os pontos fundamentais do plano a política monetária e a política cambial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s356:  Como cronista,  Sarney toma o cuidado de não indignar ninguém,  e é difícil antipatizar com ele. 
+</text>
+                <arg f="prd" n="m">Como cronista
+</arg>
+                <arg f="" n="0">Sarney
+</arg>
+                <rel f="">toma</rel>
+                <arg f="" n="1">o cuidado de não indignar ninguém
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s323:  Interessado em organizar um livro de arte sobre viajantes,  Ronaldo_  Graça_  Couto,  da produtora Metavídeo/  Metalivros,  tomou conhecimento da pesquisa e procurou Belluzzo. 
+</text>
+                <arg f="prd" n="m">Interessado em organizar um livro de arte sobre viajantes
+</arg>
+                <arg f="" n="0">Ronaldo_  Graça_  Couto,  da produtora Metavídeo/  Metalivros, 
+</arg>
+                <rel f="">tomou</rel>
+                <arg f="" n="1">conhecimento da pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="take.12" id="tomar.02" name="dominar; assumir o poder sobre algo pela força" vncls="-">
+            <roles>
+                <role descr="entity becoming dominant" n="0" />
+                <role descr="entity being taken over" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3877:  Norte-  iemenitas tomam base do sul
+</text>
+                <arg f="" n="0">Norte-  iemenitas
+</arg>
+                <rel f="">tomam</rel>
+                <arg f="" n="1">base do sul
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="tomar.03" name="pegar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2126:  No Texas,  em 1963,  um menino sem pai,  Philip_  Perry(  T.  J. _  Lowther) ,  é tomado como refém por um criminoso fugitivo,  Butch_  Haynes(  Kevin_  Costner) . 
+</text>
+                <arg f="loc" n="m">No Texas
+</arg>
+                <arg f="tmp" n="m">em 1963
+</arg>
+                <arg f="" n="1">um menino sem pai,  Philip_  Perry(  T.  J. _  Lowther) , 
+</arg>
+                <rel f="">tomado</rel>
+                <arg f="prd" n="m">como refém
+</arg>
+                <arg f="" n="0">por um criminoso fugitivo,  Butch_  Haynes(  Kevin_  Costner) 
+</arg>
+                <note>em inglês, "tomar como refém" = "to take hostage"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1797:  Tome-  se o caso de Ventersdorp,  200 km a oeste de Johannesburgo,  uma das 14 cidades declaradas pelo governo « áreas de turbulência »,  estágio suave do estado de emergência. 
+</text>
+                <rel f="">Tome-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">o caso de Ventersdorp,  200 km a oeste de Johannesburgo,  uma das 14 cidades declaradas pelo governo « áreas de turbulência »,  estágio suave do estado de emergência
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="tomar_conta">
+        <note />
+    <roleset framnet="undergo.01" id="tomar.04" name="receber (surra, lição, etc.) de alguém (contrário de &quot;dar&quot;)" vncls="">
+            <roles>
+                <role descr="experiencer" n="1" />
+                <role descr="experienced" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1778:  Na quarta-  feira,  o São_  Paulo tomou um vareio do Palmeiras. 
+</text>
+                <arg f="tmp" n="m">Na quarta-  feira
+</arg>
+                <arg f="" n="1">o São_  Paulo
+</arg>
+                <rel f="">tomou</rel>
+                <arg f="" n="2">um vareio do Palmeiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1598:  O talento de Barros continua lá,  apesar_  de Marilia_  Pêra se empenhar em tomar conta do filme com um histrionismo fora_  de lugar. 
+</text>
+                <rel f="">tomar</rel>
+                <arg f="" n="1">do filme
+</arg>
+                <arg f="" n="2">com um histrionismo fora_  de lugar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1175:  Silvia tomou anestesia peridural(  aplicada na região da coluna)  e pôde retornar para sua casa no mesmo dia. 
+</text>
+                <arg f="" n="1">Silvia
+</arg>
+                <rel f="">tomou</rel>
+                <arg f="" n="2">anestesia peridural(  aplicada na região da coluna) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

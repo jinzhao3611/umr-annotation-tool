@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="repercutir">
+        <note />
+    <roleset framnet="impact.01" id="repercutir.01" name="soar; ter repercussão" vncls="">
+            <roles>
+                <role descr="thing affecting" n="0" />
+                <role descr="thing affected" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2824:  A declaração do ministro repercutiu mal também entre os líderes políticos no Congresso. 
+</text>
+                <arg f="" n="1">A declaração do ministro
+</arg>
+                <rel f="">repercutiu</rel>
+                <arg f="mnr" n="m">mal
+</arg>
+                <arg f="loc" n="m">também entre os líderes políticos
+</arg>
+                <arg f="loc" n="m">no Congresso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

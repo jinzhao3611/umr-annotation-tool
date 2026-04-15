@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="debochar">
+        <note />
+    <roleset framnet="mock.01" id="debochar.01" name="rir de alguém " vncls="33">
+            <roles>
+                <role descr="mocker" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="mocked" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="reason, what's so funny" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3018:  A delegação britânica era a mais forte em termos intelectuais,  embora outros participantes tivessem dela uma opinião algo debochada. 
+</text>
+                <rel f="">debochada</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

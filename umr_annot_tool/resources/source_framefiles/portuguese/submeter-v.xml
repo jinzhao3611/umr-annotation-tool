@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="submeter">
+        <note />
+        <note />
+    <roleset framnet="subject.01" id="submeter.01" name="sujeitar" vncls="-">
+            <roles>
+                <role descr="causer" n="0" />
+                <role descr="induced experiencer" n="1" />
+                <role descr="procedure" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3584:  Também serão submetidas ao mesmo processo as 28 lojas da Body_  for_  Sure,  a grife esportiva do grupo. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <rel f="">submetidas</rel>
+                <arg f="" n="2">ao mesmo processo
+</arg>
+                <arg f="" n="1">as 28 lojas da Body_  for_  Sure,  a grife esportiva do grupo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3453:  Dalva seria submetida ontem a cirurgia no hospital de São_  Paulo. 
+</text>
+                <arg f="" n="1">Dalva
+</arg>
+                <rel f="">submetida</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="2">a cirurgia
+</arg>
+                <arg f="loc" n="m">no hospital de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1359:  A modelo Monique_  Evans,  um dos destaques do Carnaval carioca deste ano,  vai submeter-  se a uma tomografia computadorizada na próxima semana para verificar a origem de « um pontinho » que apareceu em seu rim. 
+</text>
+                <arg f="" n="0">A modelo Monique_  Evans,  um dos destaques do Carnaval carioca deste ano, 
+</arg>
+                <rel f="">submeter-</rel>
+                <arg f="" n="1">se
+</arg>
+                <arg f="" n="2">a uma tomografia computadorizada
+</arg>
+                <arg f="tmp" n="m">na próxima semana
+</arg>
+                <arg f="pnc" n="m">para verificar a origem de « um pontinho » que apareceu em seu rim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1358:  MONIQUE_  EVANS SE Submeterá A Exames(  Da Sucursal do Rio) 
+</text>
+                <arg f="" n="0">MONIQUE_  EVANS
+</arg>
+                <arg f="" n="1">SE
+</arg>
+                <rel f="">Submeterá</rel>
+                <arg f="" n="2">A Exames
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s898:  Preocupado com a facilidade de comunicação de seu adversário,  Francisco_  Rossi,  Mário_  Covas acatou as recomendações de assessores do presidente eleito,  Fernando_  Henrique_  Cardoso,  e se submeteu às técnicas de marketing. 
+</text>
+                <arg f="cau" n="m">Preocupado com a facilidade de comunicação de seu adversário,  Francisco_  Rossi
+</arg>
+                <arg f="" n="0">Mário_  Covas
+</arg>
+                <arg f="rec" n="m">se
+</arg>
+                <rel f="">submeteu</rel>
+                <arg f="" n="2">às técnicas de marketing
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="submit.01" id="submeter.02" name="apresentar à apreciação (de alguém)" vncls="13.2">
+            <roles>
+                <role descr="giver" n="0">
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="given" n="1">
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="given-to" n="2">
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <role descr="purpose" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1814:  O Banco_  Mundial,  o FMI e o Gatt são instituições públicas que deveriam ter suas políticas submetidas a esferas públicas de decisão e ter a transparência necessária para serem avaliadas e monitoradas pelos cidadãos. 
+</text>
+                <rel f="">submetidas</rel>
+                <arg f="" n="2">a esferas públicas de decisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1483:  O sindicato fundamenta o pedido de embargo da obra com a omissão da prefeitura,  que não submeteu o projeto de reurbanização da praça ao Condephaat. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">submeteu</rel>
+                <arg f="" n="1">o projeto de reurbanização da praça
+</arg>
+                <arg f="" n="2">ao Condephaat
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

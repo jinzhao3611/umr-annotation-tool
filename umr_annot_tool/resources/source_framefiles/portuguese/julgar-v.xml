@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="julgar">
+        <note />
+    <roleset framnet="judge.01" id="julgar.01" name="fazer julgamento; avaliar" vncls="29.4 29.2 34.2">
+            <roles>
+                <role descr="judge" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="34.2" vntheta="Agent" />
+                </role>
+                <role descr="judged" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="34.2" vntheta="Theme" />
+                </role>
+                <role descr="judgement, attribute of arg1" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <role descr="on what grounds" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2606:  Como julgar em consciência contratos escritos ou implícitos que dependem de uma moeda como meio de pagamento e doutra como unidade de conta? 
+</text>
+                <rel f="">julgar</rel>
+                <arg f="mnr" n="m">em consciência
+</arg>
+                <arg f="" n="1">contratos escritos ou implícitos que dependem de uma moeda como meio de pagamento e doutra como unidade de conta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2301:  O STJ decide que Halpern e Decaro,  indiciados pelo MPF sob a acusação de fraude processual,  devem ser julgados pela Justiça_  Federal em São_  Paulo. 
+</text>
+                <arg f="" n="1">Halpern e Decaro,  indiciados pelo MPF sob a acusação de fraude processual, 
+</arg>
+                <rel f="">julgados</rel>
+                <arg f="" n="0">pela Justiça_  Federal
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2131:  Encarregado do caso,  o marfinense Rene_  Degni-  Segui se disse favorável a um tribunal internacional para julgar os acusados. 
+</text>
+                <rel f="">julgar</rel>
+                <arg f="" n="1">os acusados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

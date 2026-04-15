@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="almoçar">
+        <note />
+    <roleset framnet="lunch.01" id="almoçar.01" name="tomar a principal refeição diurna" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3518:  Todos os plínios costumam almoçar no Esplanada_  Grill,  refeições de US$  40,  em média. 
+</text>
+                <arg f="" n="0">Todos os plínios
+</arg>
+                <rel f="">almoçar</rel>
+                <arg f="loc" n="m">no Esplanada_  Grill,  refeições de US$  40,  em média
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1638:  Observou também os lugares onde essas pessoas almoçam. 
+</text>
+                <arg f="loc" n="m">onde
+</arg>
+                <arg f="" n="0">essas pessoas
+</arg>
+                <rel f="">almoçam</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s298:  Lula e outros 20 convidados almoçaram a convite do cônsul-  geral do Brasil em NY,  Marco_  Cesar_  Meira_  Naslausky,  no restaurante Peter_  Luger_  Steak_  House,  tradicional no bairro do Brooklin. 
+</text>
+                <arg f="" n="0">Lula e outros 20 convidados
+</arg>
+                <rel f="">almoçaram</rel>
+                <arg f="cau" n="m">a convite do cônsul-  geral do Brasil em NY,  Marco_  Cesar_  Meira_  Naslausky, 
+</arg>
+                <arg f="loc" n="m">no restaurante Peter_  Luger_  Steak_  House,  tradicional no bairro do Brooklin
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

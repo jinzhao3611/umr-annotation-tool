@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="concordar">
+        <note />
+    <roleset framnet="agree.01" id="concordar.01" name="estar em acordo" vncls="36.1">
+            <roles>
+                <role descr="agreer" n="0">
+                    <vnrole vncls="36.1" vntheta="Actor1" />
+                </role>
+                <role descr="proposition" n="1">
+                    <vnrole vncls="36.1" vntheta="Theme" />
+                </role>
+                <role descr="other entity agreeing" n="2">
+                    <vnrole vncls="36.1" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3676:  E comprova que a Petroplastic recebeu US$  5 milhões para concordar com a transferência,  para a Dow,  do controle da Atochem(  fundadora da Triunfo) . 
+</text>
+                <rel f="">concordar</rel>
+                <arg f="" n="1">com a transferência,  para a Dow,  do controle da Atochem(  fundadora da Triunfo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2031:  Indagados sobre se concordavam com a posição da Igreja com_  relação_  ao uso de camisinha,  74%  discordaram totalmente e 13%  discordaram em_  parte. 
+</text>
+                <rel f="">concordavam</rel>
+                <arg f="" n="1">com a posição da Igreja com_  relação_  ao uso de camisinha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s810:  O governo concordou em incluir no Orçamento de 94 investimentos em educação nos mesmos níveis do ano passado e destinar para habitação três vezes mais do_  que o registrado em 1992. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">concordou</rel>
+                <arg f="" n="1">em incluir no Orçamento de 94 investimentos em educação nos mesmos níveis do ano passado e destinar para habitação três vezes mais do_  que o registrado em 1992
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

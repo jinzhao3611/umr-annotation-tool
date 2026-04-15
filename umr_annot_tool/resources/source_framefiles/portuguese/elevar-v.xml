@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="elevar">
+        <note />
+    <roleset framnet="raise.01" id="elevar.01" name="aumentar para o alto; subir" vncls="9.4 40.3.2">
+            <roles>
+                <role descr="Agent" n="0">
+                    <vnrole vncls="9.4" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                </role>
+                <role descr="Logical subject, patient, thing rising" n="1">
+                    <vnrole vncls="9.4" vntheta="Theme" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                </role>
+                <role descr="EXT, amount risen" n="2" />
+                <role descr="Start point" n="3" />
+                <role descr="End point" n="4" />
+                <role descr="Medium" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3929:  No Planejamento,  o crescimento é de 33,  19$ % ,  elevando as despesas de US$  87,  6 milhões em 93 para US$  116,  69 milhões em 94. 
+</text>
+                <rel f="">elevando</rel>
+                <arg f="" n="1">as despesas
+</arg>
+                <arg f="" n="3">de US$  87,  6 milhões em 93
+</arg>
+                <arg f="" n="4">para US$  116,  69 milhões em 94
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3541:  O levantamento mostra que a Constituição de 1988 elevou de 15,  27%  para 20,  53%  a alíquota média sobre o consumo no Brasil em 1989. 
+</text>
+                <arg f="" n="0">a Constituição de 1988
+</arg>
+                <rel f="">elevou</rel>
+                <arg f="" n="3">de 15,  27% 
+</arg>
+                <arg f="" n="4">para 20,  53% 
+</arg>
+                <arg f="" n="1">a alíquota média sobre o consumo no Brasil em 1989
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2800:  Segundo os produtores,  o incentivo ﻿à pesquisa elevará este desempenho para 2.  400 kg$ /  ha. 
+</text>
+                <arg f="dis" n="m">Segundo os produtores
+</arg>
+                <arg f="" n="0">o incentivo ﻿à pesquisa
+</arg>
+                <rel f="">elevará</rel>
+                <arg f="" n="1">este desempenho
+</arg>
+                <arg f="" n="4">para 2.  400 kg$ /  ha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2143:  Ainda_  assim,  só o anúncio de que as garantias serão adquiridas junto ao mercado poderá elevar os gastos com as futuras compras,  raciocinam senadores como Espiridião_  Amin(  PPR-  SC) ,  Ronan_  Tito(  PMDB-  MG)  e Gilberto_  Miranda(  PMDB-  AM) . 
+</text>
+                <arg f="dis" n="m">Ainda_  assim
+</arg>
+                <arg f="" n="0">só o anúncio de que as garantias serão adquiridas junto ao mercado
+</arg>
+                <rel f="">elevar</rel>
+                <arg f="" n="1">os gastos com as futuras compras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1577:  O governo teve que elevar de 15%  para 20%  o percentual dos recursos dos tributos que vão fazer parte do FSE para compensar a perda de recursos do Fundo_  de_  Participação_  dos_  Estados_  e_  municípios. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">elevar</rel>
+                <arg f="" n="3">de 15% 
+</arg>
+                <arg f="" n="4">para 20% 
+</arg>
+                <arg f="" n="1">o percentual dos recursos dos tributos que vão fazer parte do FSE para compensar a perda de recursos do Fundo_  de_  Participação_  dos_  Estados_  e_  municípios
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

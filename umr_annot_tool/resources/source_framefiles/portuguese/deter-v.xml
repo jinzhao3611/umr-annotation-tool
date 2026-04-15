@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="deter">
+        <note />
+        <note />
+    <roleset framnet="hold.01" id="deter.01" name="possuir; concentrar" vncls="15.1">
+            <roles>
+                <role descr="holder" n="0">
+                    <vnrole vncls="15.1" vntheta="Agent" />
+                </role>
+                <role descr="thing held" n="1">
+                    <vnrole vncls="15.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <role descr="secondary attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3658:  A_  partir_  da próxima semana,  vão viajar para os Estados os membros da coordenação que não pertenceram ao núcleo que passa a deter as decisões. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">deter</rel>
+                <arg f="" n="1">as decisões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2022:  Durante a apresentação do balanço,  Míton_  Cabral disse que a empresa reagiu no final do ano,  voltando a deter mais_  de 80%  do mercado,  graças_  ao sucesso da marca Derby. 
+</text>
+                <rel f="">deter</rel>
+                <arg f="" n="1">mais_  de 80%  do mercado
+</arg>
+                <arg f="cau" n="m">graças_  ao sucesso da marca Derby
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="detain.01" id="deter.02" name="prender; apreender; tirar a liberdade" vncls="-">
+            <roles>
+                <role descr="police, etc." n="0" />
+                <role descr="entity detained" n="1" />
+                <role descr="detained for what?" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3492:  O jurista Miguel_  Reale_  Jr.  prefere um « pessedebismo » pedagógico,  ao aprovar a atitude da polícia em detê-  lo como exemplo para a juventude. 
+</text>
+                <rel f="">detê-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="prd" n="m">como exemplo para a juventude
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1860:  Foram detidas 25 pessoas no escritório e noutros cinco endereços ligados a Castor_  de_  Andrade. 
+</text>
+                <rel f="">detidas</rel>
+                <arg f="" n="1">25 pessoas
+</arg>
+                <arg f="loc" n="m">no escritório e noutros cinco endereços ligados a Castor_  de_  Andrade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

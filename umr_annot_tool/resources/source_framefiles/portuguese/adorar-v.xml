@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="adorar">
+        <note />
+        <note />
+    <roleset framnet="love.01" id="adorar.01" name="gostar muito" vncls="31.2">
+            <roles>
+                <role descr="lover" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="loved" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4173:  Eu adoro política »,  confessa Mercedes_  Rossi_  de_  Almeida,  73,  a mãe do candidato ao governo de São_  Paulo Francisco_  Rossi(  PDT) . 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <rel f="">adoro</rel>
+                <arg f="" n="1">política
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1303:  Adoro Ella_  Fitzgerald »
+</text>
+                <rel f="">Adoro</rel>
+                <arg f="" n="1">Ella_  Fitzgerald
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s581:  Outro lado de Lara:  ela estudou canto lírico,  adora música e costuma cantar em shows e jam_  sessions com amigos. 
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">adora</rel>
+                <arg f="" n="1">música
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="love.02" id="adorar.02" name="apreciar " vncls="">
+            <roles>
+                <role descr="subject" n="0" />
+                <role descr="phrasal complement" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4171:  « Adoraria ser candidata. 
+</text>
+                <rel f="">Adoraria</rel>
+                <arg f="" n="1">ser candidata
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2056:  Adoraria se vocês « engordassem » um_  pouco mais o Folhateen. 
+</text>
+                <rel f="">Adoraria</rel>
+                <arg f="" n="1">se vocês « engordassem » um_  pouco mais o Folhateen
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

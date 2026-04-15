@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aprender">
+        <note />
+    <roleset framnet="learn.01" id="aprender.01" name="adquirir conhecimento sobre" vncls="14">
+            <roles>
+                <role descr="student" n="0">
+                    <vnrole vncls="14" vntheta="Agent" />
+                </role>
+                <role descr="subject" n="1">
+                    <vnrole vncls="14" vntheta="Topic" />
+                </role>
+                <role descr="teacher" n="2">
+                    <vnrole vncls="14" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3598:  « Journey_  in_  the_  Universe » é um programa em inglês,  voltado para crianças que querem aprender noções de astronomia. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">aprender</rel>
+                <arg f="" n="1">noções de astronomia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3594:  « Adventure_  in_  Castle » é um programa para aprender matemática. 
+</text>
+                <rel f="">aprender</rel>
+                <arg f="" n="1">matemática
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3515:  Precisei cair mais algumas vezes até aprender a usar o breque. 
+</text>
+                <rel f="">aprender</rel>
+                <arg f="" n="1">a usar o breque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3304:  Crianças de 11 a 14 anos vão aprender a transformar sucatas em brinquedos educativos. 
+</text>
+                <arg f="" n="0">Crianças de 11 a 14 anos
+</arg>
+                <rel f="">aprender</rel>
+                <arg f="" n="1">a transformar sucatas em brinquedos educativos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1979:  Aprendi a falar direito e tentei fazer minha vida melhor para mim. 
+</text>
+                <rel f="">Aprendi</rel>
+                <arg f="" n="1">a falar direito
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1251:  Aqui,  neste espaço onde se reverencia sua memória,  eu a recordo amiga de toda uma vida,  nossas longas vidas vividas na intensidade da paixão:  com ela aprendi a bondade e o povo. 
+</text>
+                <arg f="" n="2">com ela
+</arg>
+                <rel f="">aprendi</rel>
+                <arg f="" n="1">a bondade e o povo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s495:  Ir a uma feira livre serve de aula para os principiantes aprenderem a comprar frutas,  legumes e verduras mais baratos e de melhor qualidade. 
+</text>
+                <arg f="" n="0">os principiantes
+</arg>
+                <rel f="">aprenderem</rel>
+                <arg f="" n="1">a comprar frutas,  legumes e verduras mais baratos e de melhor qualidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s329:  Ele era tão bom artista,  que muitos pintores quiseram aprender a pintar com ele. 
+</text>
+                <arg f="" n="0">muitos pintores
+</arg>
+                <rel f="">aprender</rel>
+                <arg f="" n="1">a pintar com ele
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="crescer">
+        <note />
+    <roleset framnet="increase.01" id="crescer.01" name="aumentar" vncls="45.4 45.6">
+            <roles>
+                <role descr="causer of increase" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing increasing" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                    <vnrole vncls="45.6" vntheta="Patient" />
+                </role>
+                <role descr="amount increased by, EXT or MNR" n="2">
+                    <vnrole vncls="45.6" vntheta="Extent" />
+                </role>
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3928:  No Ministério_  da_  Fazenda,  as despesas crescerão de US$  1,  13 bilhões em 93 para US$  1,  36 bilhões em 94(  ou mais 20,  07$ % ) . 
+</text>
+                <arg f="loc" n="m">No Ministério_  da_  Fazenda
+</arg>
+                <arg f="" n="1">as despesas
+</arg>
+                <rel f="">crescerão</rel>
+                <arg f="" n="3">de US$  1,  13 bilhões em 93
+</arg>
+                <arg f="" n="4">para US$  1,  36 bilhões em 94
+</arg>
+                <arg f="" n="2">mais 20,  07$ % 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1607:  O lucro cresceu 24%  para US$  51 milhões e as vendas,  18% ,  para US$  776 milhões. 
+</text>
+                <arg f="" n="1">O lucro
+</arg>
+                <rel f="">cresceu</rel>
+                <arg f="" n="2">24% 
+</arg>
+                <arg f="" n="4">para US$  51 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1506:  Segundo o diretor de Assuntos_  Internacionais do Banco_  Central,  Gustavo_  Franco,  as emissões de reais cresceram bastante na primeira semana de julho,  mas estão estáveis desde_  então. 
+</text>
+                <arg f="" n="1">as emissões de reais
+</arg>
+                <rel f="">cresceram</rel>
+                <arg f="ext" n="m">bastante
+</arg>
+                <arg f="tmp" n="m">na primeira semana de julho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1504:  Volume do dinheiro em circulação não cresce mais
+</text>
+                <arg f="" n="1">Volume do dinheiro em circulação
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">cresce</rel>
+                <arg f="neg" n="m">mais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1246:  A emoção cresce quando atravesso o salão de festas e chego às salas do museu,  do Memorial_  de_  Menininha_  do_  Gantois. 
+</text>
+                <arg f="" n="1">A emoção
+</arg>
+                <rel f="">cresce</rel>
+                <arg f="tmp" n="m">quando atravesso o salão de festas e chego às salas do museu,  do Memorial_  de_  Menininha_  do_  Gantois
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1142:  Cresce o volume de negócios na Bovespa
+</text>
+                <rel f="">Cresce</rel>
+                <arg f="" n="1">o volume de negócios na Bovespa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="" id="crescer.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2924:  Ele prevê,  contudo,  que o mercado acionário crescerá e a custódia de ações de investidores estrangeiros na instituição chegará a US$  5,  5 bilhões ao final de 1995. 
+</text>
+                <arg f="" n="1">o mercado acionário
+</arg>
+                <rel f="">crescerá</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2920:  Ele acredita,  no_  entanto,  que o mercado acionário brasileiro deve crescer em 1995. 
+</text>
+                <arg f="" n="1">o mercado acionário brasileiro
+</arg>
+                <rel f="">crescer</rel>
+                <arg f="tmp" n="m">em 1995
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sucumbir">
+        <note />
+    <roleset framnet="succumb.01" id="sucumbir.01" name="render-se a" vncls="-">
+            <roles>
+                <role descr="entity giving in" n="0" />
+                <role descr="succumbed to" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3158:  Também nesse período Elvis_  Aaron_  Presley sucumbiu ao monstro chamado Elvis_  Presley. 
+</text>
+                <arg f="tmp" n="m">Também nesse período
+</arg>
+                <arg f="" n="0">Elvis_  Aaron_  Presley
+</arg>
+                <rel f="">sucumbiu</rel>
+                <arg f="" n="1">ao monstro chamado Elvis_  Presley
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2732:  Ricupero,  na verdade,  foi o último do grupo que o acompanhava familiares e assessores a sucumbir ﻿à emoção,  pelo_  menos publicamente. 
+</text>
+                <rel f="">sucumbir</rel>
+                <arg f="" n="1">﻿à emoção
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

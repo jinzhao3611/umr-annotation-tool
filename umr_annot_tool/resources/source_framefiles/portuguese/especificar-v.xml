@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="especificar">
+        <note />
+    <roleset framnet="specify.01" id="especificar.01" name="detalhar; dar informações precisas" vncls="">
+            <roles>
+                <role descr="decider, specifier" n="0" />
+                <role descr="thing specified" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4146:  As emissoras se negaram a se retratar e o juiz ameaçou « terminar com a cobertura do julgamento »,  sem especificar como. 
+</text>
+                <rel f="">especificar</rel>
+                <arg f="tmp" n="m">como
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

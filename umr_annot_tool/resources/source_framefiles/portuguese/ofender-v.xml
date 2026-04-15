@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ofender">
+        <note />
+    <roleset framnet="offend.01" id="ofender.01" name="ferir moralmente" vncls="31.1">
+            <roles>
+                <role descr="offender" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="offended" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument, if separate from arg0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2452:  Pois experimente ir a um show de música,  por_  exemplo,  ofender Tim_  Maia ou João_  Gilberto na boca do palco,  e você verá que a atitude de Edmundo foi,  no mínimo,  compreensível. 
+</text>
+                <rel f="">ofender</rel>
+                <arg f="" n="1">Tim_  Maia ou João_  Gilberto
+</arg>
+                <arg f="loc" n="m">na boca do palco
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s413:  A verdade ofende « somos uns boçais ». 
+</text>
+                <arg f="" n="0">A verdade
+</arg>
+                <rel f="">ofende</rel>
+                <arg f="" n="1">somos uns boçais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

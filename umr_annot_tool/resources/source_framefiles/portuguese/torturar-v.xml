@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="torturar">
+        <note />
+    <roleset framnet="torture.01" id="torturar.01" name="submeter alguém à tortura; fazer sofrer dor física ou emocional" vncls="-">
+            <roles>
+                <role descr="torturer" n="0" />
+                <role descr="tortured" n="1" />
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3447:  Segundo o porta-  voz da polícia,  Dave_  Bruce,  os seis foram torturados. 
+</text>
+                <arg f="dis" n="m">Segundo o porta-  voz da polícia,  Dave_  Bruce, 
+</arg>
+                <arg f="" n="1">os seis
+</arg>
+                <rel f="">torturados</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2216:  O inglês John_  Ritchings vai escrever um livro sobre os meses que foi torturado pelo galo da vizinha,  diz o jornal. 
+</text>
+                <arg f="" n="1">O inglês John_  Ritchings
+</arg>
+                <arg f="tmp" n="m">que
+</arg>
+                <rel f="">torturado</rel>
+                <arg f="" n="0">pelo galo da vizinha
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

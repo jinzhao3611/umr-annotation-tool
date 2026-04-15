@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apressar">
+        <note />
+    <roleset framnet="hurry.01" id="apressar.01" name="fazer mais rápido" vncls="53.2 51.3.2">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="53.2" vntheta="Agent" />
+                    <vnrole vncls="51.3.2" vntheta="Agent" />
+                </role>
+                <role descr="entity in motion" n="1">
+                    <vnrole vncls="53.2" vntheta="Theme" />
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary predicate, purpose" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2649:  De_  acordo com a assessoria,  o secretário dos Transportes,  Márcio_  Ribeiro,  determinou que os engenheiros do Departamento_  de_  Estradas_  de_  Rodagem(  DER)  apressassem os estudos para a duplicação. 
+</text>
+                <arg f="" n="0">os engenheiros do Departamento_  de_  Estradas_  de_  Rodagem(  DER) 
+</arg>
+                <rel f="">apressassem</rel>
+                <arg f="" n="1">os estudos para a duplicação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="apressar-se">
+        <note />
+    <roleset framnet="hurry.01" id="apressar.02" name="agir com grande rapidez " vncls="53.2 51.3.2">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="53.2" vntheta="Agent" />
+                    <vnrole vncls="51.3.2" vntheta="Agent" />
+                </role>
+                <role descr="entity in motion" n="1">
+                    <vnrole vncls="53.2" vntheta="Theme" />
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary predicate, purpose" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4001:  Quando os jogadores souberam da investida de Clemente,  o ala Goicoechea se aprestou a defender o seu patrono: 
+</text>
+                <arg f="" n="1">Goicoechea
+</arg>
+                <rel f="">aprestou</rel>
+                <arg f="" n="2">a defender o seu patrono
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

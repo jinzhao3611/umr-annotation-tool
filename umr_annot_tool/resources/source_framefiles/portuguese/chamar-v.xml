@@ -1,0 +1,265 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="chamar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="call.01" id="chamar.01" name="atribuir nome" vncls="29.3">
+            <roles>
+                <role descr="caller" n="0">
+                    <vnrole vncls="29.3" vntheta="Agent" />
+                </role>
+                <role descr="item being labelled" n="1">
+                    <vnrole vncls="29.3" vntheta="Theme" />
+                </role>
+                <role descr="attribute of arg1" n="2">
+                    <vnrole vncls="29.3" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3361:  « O boneco servirá para criar o_  que chamamos de'  efeito auréola'  no motorista. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">chamamos</rel>
+                <arg f="" n="2">de'  efeito auréola' 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2721:  É o que se chama de « alavancagem » com um empréstimo de US$  10,  por_  exemplo,  pode-  se entrar num jogo de US$  100 ou mais. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">chama</rel>
+                <arg f="" n="2">de « alavancagem »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2697:  Essas histórias são chamadas de mitos. 
+</text>
+                <arg f="" n="1">Essas histórias
+</arg>
+                <rel f="">chamadas</rel>
+                <arg f="" n="2">de mitos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2648:  Um acidente envolvendo um caminhão e um ônibus,  na última sexta-  feira,  matou 16 estudantes,  três motoristas e deixou nove feridos no km 5,  4 da estrada,  que é chamada de « rodovia da morte ». 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">chamada</rel>
+                <arg f="" n="2">de « rodovia da morte »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s561:  Fleury aproveitou a viagem para responder ao ex-  secretário José_  Machado_  de_  Campos_  Filho,  que o chamara de traidor por não apoiar Quércia. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">chamara</rel>
+                <arg f="" n="2">de traidor
+</arg>
+                <arg f="cau" n="m">por não apoiar Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s70:  Abstratos entre medianos e medíocres,  como Fukushima,  Pérsio,  Raimo e Douchez,  têm o mesmo ou maior destaque que Volpi e nada que se possa chamar de autonomia para oferecer como lenitivo. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">chamar</rel>
+                <arg f="" n="2">de autonomia
+</arg>
+                <arg f="pnc" n="m">para oferecer como lenitivo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="call.02" id="chamar.02" name="convocar" vncls="13.5.1">
+            <roles>
+                <role descr="caller" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing being summoned" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3556:  A família foi alertada mas não chamou nenhum médico e fez o enterro depois de dez horas de velório. 
+</text>
+                <arg f="" n="0">A família
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">chamou</rel>
+                <arg f="" n="1">nenhum médico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2962:  Eles estranharam o fato dele não sair do barraco de_  manhã e chamaram a polícia. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">chamaram</rel>
+                <arg f="" n="1">a polícia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s346:  Para tentar resolver o problema do tráfico de drogas e da violência no Rio_  de_  Janeiro,  o governador do Rio e o Presidente_  da_  República chamaram o Exército. 
+</text>
+                <arg f="pnc" n="m">Para tentar resolver o problema do tráfico de drogas e da violência no Rio_  de_  Janeiro
+</arg>
+                <arg f="" n="0">o governador do Rio e o Presidente_  da_  República
+</arg>
+                <rel f="">chamaram</rel>
+                <arg f="" n="1">o Exército
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s220:  Com medo de perder poderes,  Modiano chamou Mourão e,  numa atitude mesquinha,  comunicou-  lhe que,  como o financiamento do projeto seria bancado pelo BNDES,  ele iria para lá,  mas na qualidade de representante do banco. 
+</text>
+                <arg f="" n="0">Modiano
+</arg>
+                <rel f="">chamou</rel>
+                <arg f="" n="1">Mourão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="draw.02" id="chamar.04" name="atrair " vncls="10.1 12 23.2">
+            <roles>
+                <role descr="puller" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                    <vnrole vncls="12" vntheta="Agent" />
+                    <vnrole vncls="10.1" vntheta="Agent" />
+                </role>
+                <role descr="thing pulled" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient1" />
+                    <vnrole vncls="12" vntheta="Theme" />
+                    <vnrole vncls="10.1" vntheta="Theme" />
+                </role>
+                <role descr="source" n="2">
+                    <vnrole vncls="23.2" vntheta="Patient2" />
+                    <vnrole vncls="10.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2418:  Entre os itens importados,  devem chamar atenção na Feicon os revestimentos de cerâmica para piso trazidos da Itália. 
+</text>
+                <arg f="loc" n="m">Entre os itens importados
+</arg>
+                <rel f="">chamar</rel>
+                <arg f="" n="1">atenção
+</arg>
+                <arg f="loc" n="m">na Feicon
+</arg>
+                <arg f="" n="0">os revestimentos de cerâmica para piso trazidos da Itália
+</arg>
+                <note>tradução da colocação: "to draw attention"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s671:  O impacto provocado pela jazzística trilha de « A_  Marca_  da_  Maldade »,  com temas influenciados por Stan_  Kenton e até por pianistas de bordel,  chamou a atenção de Edwards,  que em 1958 procurava um músico novo,  talentoso e barato para compor o prefixo da telessérie « Peter_  Gunn ». 
+</text>
+                <arg f="" n="0">O impacto provocado pela jazzística trilha de « A_  Marca_  da_  Maldade »,  com temas influenciados por Stan_  Kenton e até por pianistas de bordel, 
+</arg>
+                <rel f="">chamou</rel>
+                <arg f="" n="1">a atenção de Edwards,  que em 1958 procurava um músico novo,  talentoso e barato para compor o prefixo da telessérie « Peter_  Gunn »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="chamar-se">
+        <note />
+    <roleset framnet="" id="chamar.03" name="ser chamado de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3077:  A coreografia de Susan_  Marshall que o Ballet_  de_  Lyon dança hoje chama-  se « Central_  Figure »,  com música de Philip_  Glass. 
+</text>
+                <arg f="" n="1">A coreografia de Susan_  Marshall que o Ballet_  de_  Lyon dança hoje
+</arg>
+                <rel f="">chama-</rel>
+                <arg f="" n="2">« Central_  Figure »,  com música de Philip_  Glass
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3070:  A coreografia criada por Bil_  T. _  Jones para « An_  American_  Evening » chama-  se « I_  Want_  to_  Cross_  Over »,  com música gospel cantada por Liz_  McComb. 
+</text>
+                <arg f="" n="1">A coreografia criada por Bil_  T. _  Jones para « An_  American_  Evening »
+</arg>
+                <rel f="">chama-</rel>
+                <arg f="" n="2">« I_  Want_  to_  Cross_  Over »,  com música gospel cantada por Liz_  McComb
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2542:  Arrelia se chama Valdemar e tem 87 anos. 
+</text>
+                <arg f="" n="1">Arrelia
+</arg>
+                <rel f="">chama</rel>
+                <arg f="" n="2">Valdemar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

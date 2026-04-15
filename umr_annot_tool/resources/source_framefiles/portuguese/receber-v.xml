@@ -1,0 +1,814 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="receber">
+        <note />
+        <note />
+    <roleset framnet="welcome.01" id="receber.01" name="recepcionar" vncls="">
+            <roles>
+                <role descr="welcomer" n="0" />
+                <role descr="thing welcomed" n="1" />
+                <role descr="welcomed to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4164:  Mexicanos são recebidos com ovos
+</text>
+                <arg f="" n="1">Mexicanos
+</arg>
+                <rel f="">recebidos</rel>
+                <arg f="mnr" n="m">com ovos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3957:  Fiscais do Tribunal_  Regional_  Eleitoral e PMs do Batalhão_  de_  Choque foram recebidos a tiros ontem ﻿à tarde na Vila_  do_  João,  Manguinhos(  zona norte do Rio) . 
+</text>
+                <arg f="" n="1">Fiscais do Tribunal_  Regional_  Eleitoral e PMs do Batalhão_  de_  Choque
+</arg>
+                <rel f="">recebidos</rel>
+                <arg f="mnr" n="m">a tiros
+</arg>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="tmp" n="m">﻿à tarde
+</arg>
+                <arg f="loc" n="m">na Vila_  do_  João,  Manguinhos(  zona norte do Rio) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3956:  Fiscais são recebidos a tiros em favela do Rio
+</text>
+                <arg f="" n="1">Fiscais
+</arg>
+                <rel f="">recebidos</rel>
+                <arg f="mnr" n="m">a tiros
+</arg>
+                <arg f="loc" n="m">em favela do Rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3563:  Dallari recebeu também a Associação_  Brasileira_  da_  Indústria_  de_  Máquinas. 
+</text>
+                <arg f="" n="0">Dallari
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">a Associação_  Brasileira_  da_  Indústria_  de_  Máquinas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3475:  Bancos e financeiras receberam bem a resolução 2.  071 do Conselho_  Monetário_  Nacional. 
+</text>
+                <arg f="" n="0">Bancos e financeiras
+</arg>
+                <rel f="">receberam</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <arg f="" n="1">a resolução 2.  071 do Conselho_  Monetário_  Nacional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1842:  Foi recebido no aeroporto por militantes,  prefeitos e vereadores. 
+</text>
+                <rel f="">recebido</rel>
+                <arg f="loc" n="m">no aeroporto
+</arg>
+                <arg f="" n="0">por militantes,  prefeitos e vereadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1457:  Foram recebidos na semana passada em Detroit por Alex_  Trotman,  principal executivo da Ford norte-  americana. 
+</text>
+                <rel f="">recebidos</rel>
+                <arg f="tmp" n="m">na semana passada
+</arg>
+                <arg f="loc" n="m">em Detroit
+</arg>
+                <arg f="" n="0">por Alex_  Trotman,  principal executivo da Ford norte-  americana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s580:  Pensavam que meu livro « Três_  Tristes_  Tigres » seria recebido sem grande estardalhaço. 
+</text>
+                <arg f="" n="1">meu livro « Três_  Tristes_  Tigres »
+</arg>
+                <rel f="">recebido</rel>
+                <arg f="mnr" n="m">sem grande estardalhaço
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="receive.01" id="receber.02" name="ganhar" vncls="13.5.2">
+            <roles>
+                <role descr="receiver" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="thing gotten" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="received from" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="price, in exchange for" n="3" />
+                <role descr="attribute of arg1" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3858:  « As pessoas pensam que recebem US$  80,  mas 30 dias depois esse valor é muito menor ». 
+</text>
+                <arg f="" n="0">As pessoas
+</arg>
+                <rel f="">recebem</rel>
+                <arg f="" n="1">US$  80
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3853:  Serão beneficiados porque hoje demoram até 12 dias para receber seus benefícios,  vinculados ao salário mínimo: 
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="1">seus benefícios,  vinculados ao salário mínimo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3789:  Nicolau diz que hoje o produtor de leite C recebe US$  0,  22,  enquanto o custo está em US$  0,  24. 
+</text>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="0">o produtor de leite C
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">US$  0,  22
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3676:  E comprova que a Petroplastic recebeu US$  5 milhões para concordar com a transferência,  para a Dow,  do controle da Atochem(  fundadora da Triunfo) . 
+</text>
+                <arg f="" n="0">a Petroplastic
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">US$  5 milhões
+</arg>
+                <arg f="pnc" n="m">para concordar com a transferência,  para a Dow,  do controle da Atochem(  fundadora da Triunfo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3566:  Recebeu 27%  de ótimo e bom,  30%  de ruim e péssimo e 42%  de avaliação regular. 
+</text>
+                <rel f="">Recebeu</rel>
+                <arg f="" n="1">27%  de ótimo e bom,  30%  de ruim e péssimo e 42%  de avaliação regular
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3392:  Desanima o leitor,  que recebe dezenas deles por dia
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">dezenas deles
+</arg>
+                <arg f="tmp" n="m">por dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3237:  Segundo o detetive Paulo_  Araújo,  a delegacia recebeu um telefonema de homens que se identificaram como traficantes do morro Azul(  no Flamengo) . 
+</text>
+                <arg f="dis" n="m">Segundo o detetive Paulo_  Araújo
+</arg>
+                <arg f="" n="0">a delegacia
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">um telefonema de homens que se identificaram como traficantes do morro Azul(  no Flamengo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3182:  Todas receberam beijos de Itamar. 
+</text>
+                <arg f="" n="0">Todas
+</arg>
+                <rel f="">receberam</rel>
+                <arg f="" n="1">beijos
+</arg>
+                <arg f="" n="2">de Itamar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3169:  Folha- -  Como você recebeu a notícia de que seria substituído? 
+</text>
+                <arg f="mnr" n="m">Como
+</arg>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">a notícia de que seria substituído
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3128:  Fabiane recebeu CR$  35 mil para usar camiseta da candidata e gritar o nome de Quércia. 
+</text>
+                <arg f="" n="0">Fabiane
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">CR$  35 mil para usar camiseta da candidata e gritar o nome de Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3126:  Tanto dinheiro parece tornar desprezível a ética do marketing:  a Delta recebe centenas de cartas de crianças denunciando pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce. 
+</text>
+                <arg f="" n="0">a Delta
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">centenas de cartas de crianças denunciando pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s3106:  Ou_  seja,  se tal procedimento não for ocasional e tiver realmente a conivência das transportadoras aéreas,  estas estão expressamente contribuindo para a concorrência desleal e ilícita perante os agentes de viagens além_  de não preservar seus clientes,  que não são consultados sobre se querem ou não receber tais propostas ou se autorizam a divulgação de seus nomes e endereços. 
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="1">tais propostas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3105:  Notamos ainda que,  quando um passageiro brasileiro se inscreve num programa de milhagem de uma companhia aérea internacional que serve o Brasil,  passados 30 dias,  recebe a proposta da Iapa. 
+</text>
+                <arg f="" n="0">um passageiro brasileiro
+</arg>
+                <arg f="tmp" n="m">passados 30 dias
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">a proposta da Iapa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3044:  Pela lei,  os partidos recebem recursos do governo de_  acordo com os resultados da última eleição. 
+</text>
+                <arg f="adv" n="m">Pela lei
+</arg>
+                <arg f="" n="0">os partidos
+</arg>
+                <rel f="">recebem</rel>
+                <arg f="" n="1">recursos do governo
+</arg>
+                <arg f="mnr" n="m">de_  acordo com os resultados da última eleição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3038:  Recebi ontem por fax entrevista que ele concedeu em 1979 para a revista « Especial »,  onde expõe sua visão sobre a mulher. 
+</text>
+                <rel f="">Recebi</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="mnr" n="m">por fax
+</arg>
+                <arg f="" n="1">entrevista que ele concedeu em 1979 para a revista « Especial »,  onde expõe sua visão sobre a mulher
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2987:  Com o dinheiro do amendoim Guidi conseguiu comprar duas camionetes e um trator de 150 Hp,  está construindo uma casa em Pontal e ainda tem para receber US$  470 mil referente_  ﻿à venda de 49,  4 mil sacas. 
+</text>
+                <rel f="">receber</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2958:  As negociações para a volta de Mansell ﻿à F-  1 tiveram início logo após as 500 Milhas de Indianápolis,  realizada no mês passado,  e continuaram durante as 200 Milhas de Milwaukee,  disputada no último dia 5,  quando recebeu a visita de alguns engenheiros da Williams. 
+</text>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">a visita de alguns engenheiros da Williams
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2919:  A crise no México deve fazer com que todos os países emergentes recebam um menor volume de capitais externos de renda fixa(  aplicados,  por_  exemplo,  em eurobônus) . 
+</text>
+                <arg f="" n="0">todos os países emergentes
+</arg>
+                <rel f="">recebam</rel>
+                <arg f="" n="1">um menor volume de capitais externos de renda fixa(  aplicados,  por_  exemplo,  em eurobônus) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2839:  Portanto,  na primeira metade,  o locador sai ganhando,  pois recebe mais aluguel do_  que vale a locação. 
+</text>
+                <arg f="" n="0">o locador
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">mais aluguel do_  que vale a locação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2817:  Suas atribuições são criticar o jornal sob a perspectiva do leitor recebendo e checando as reclamações que ele encaminha ﻿à Redação e comentar,  aos domingos,  o noticiário dos meios de comunicação. 
+</text>
+                <rel f="">recebendo</rel>
+                <arg f="" n="1">as reclamações que ele encaminha ﻿à Redação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2767:  Corte dos salários dos deputados depende da Câmara ; congressistas recebem CR$  83 mil por dia de trabaho
+</text>
+                <arg f="" n="0">congressistas
+</arg>
+                <rel f="">recebem</rel>
+                <arg f="" n="1">CR$  83 mil por dia de trabaho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2719:  A diretoria do Banerj responsabilizou o Banco_  Central pela perda de liquidez do banco e informou que o Banerj tem dinheiro para receber do BC:  R$  100 milhões pagos a mais desde 1992,  R$  30 milhões de multa e mais R$  600 milhões recolhidos como depósito compulsório,  depois do Plano_  Real
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="2">do BC
+</arg>
+                <arg f="prd" n="m">R$  100 milhões pagos a mais desde 1992,  R$  30 milhões de multa e mais R$  600 milhões recolhidos como depósito compulsório
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2614:  O operário da construção civil negro e desempregado Rodney_  King,  28,  vai receber US$  3,  8 milhões da Prefeitura de Los_  Angeles como compensação pelos efeitos da surra que levou de quatro policiais brancos em março de 1991. 
+</text>
+                <arg f="" n="0">O operário da construção civil negro e desempregado Rodney_  King,  28, 
+</arg>
+                <rel f="">receber</rel>
+                <arg f="" n="1">US$  3,  8 milhões
+</arg>
+                <arg f="" n="2">da Prefeitura de Los_  Angeles
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2566:  Folha- -  o_  que você acha das críticas que vem recebendo da torcida e da imprensa? 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">recebendo</rel>
+                <arg f="" n="2">da torcida e da imprensa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2428:  O governo recebeu ontem outra má notícia:  empresários se declararam contrários ao CIP. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">outra má notícia:  empresários se declararam contrários ao CIP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2413:  Para quem recebe em URV,  é ótimo. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="mnr" n="m">em URV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2343:  As fábricas que atingiram receberam uma placa e,  em alguns casos,  um veículo é sorteado para seus funcionários. 
+</text>
+                <arg f="" n="0">As fábricas que atingiram
+</arg>
+                <rel f="">receberam</rel>
+                <arg f="" n="1">uma placa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2333:  « Qualquer doação seria muito bem recebida »,  diz madre Maria. 
+</text>
+                <arg f="" n="1">Qualquer doação
+</arg>
+                <arg f="mnr" n="m">muito bem
+</arg>
+                <rel f="">recebida</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2287:  Recebeu 13.  576 votos(  33,  94% )  em 40 mil respostas. 
+</text>
+                <rel f="">Recebeu</rel>
+                <arg f="" n="1">13.  576 votos(  33,  94% ) 
+</arg>
+                <arg f="loc" n="m">em 40 mil respostas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2167:  A escolha dos técnicos Johan_  Cruyff,  do Barcelona da Espanha,  e Telê_  Santana,  bicampeão mundial pelo São_  Paulo,  como colunistas da Folha durante a Copa dos EUA recebeu elogios de ex-  jogadores da seleção brasileira. 
+</text>
+                <arg f="" n="0">A escolha dos técnicos Johan_  Cruyff,  do Barcelona da Espanha,  e Telê_  Santana,  bicampeão mundial pelo São_  Paulo,  como colunistas da Folha durante a Copa dos EUA
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">elogios de ex-  jogadores da seleção brasileira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2077:  Os integrantes dos movimentos Pinheiros_  Vivo e Vila_  Olímpia_  Viva receberam com alegria a notícia. 
+</text>
+                <arg f="" n="0">Os integrantes dos movimentos Pinheiros_  Vivo e Vila_  Olímpia_  Viva
+</arg>
+                <rel f="">receberam</rel>
+                <arg f="mnr" n="m">com alegria
+</arg>
+                <arg f="" n="1">a notícia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2047:  Um consumidor que tivesse apenas uma nota de CR$  50.  000,  00 para fazer uma compra de valor menor tinha de solicitar um cheque de conversão no valor aproximado da mercadoria e receber o troco em cruzeiros reais. 
+</text>
+                <arg f="" n="0">Um consumidor que tivesse apenas uma nota de CR$  50.  000,  00 para fazer uma compra de valor menor
+</arg>
+                <rel f="">receber</rel>
+                <arg f="" n="1">o troco
+</arg>
+                <arg f="mnr" n="m">em cruzeiros reais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1942:  Collor recebia telefonemas o tempo inteiro,  dos advogados,  de políticos amigos e de pessoas que prestavam solidariedade. 
+</text>
+                <arg f="" n="0">Collor
+</arg>
+                <rel f="">recebia</rel>
+                <arg f="tmp" n="m">o tempo inteiro
+</arg>
+                <arg f="" n="1">telefonemas,  dos advogados,  de políticos amigos e de pessoas que prestavam solidariedade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1844:  « Mas vou receber atestado de idoneidade moral.  »
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="1">atestado de idoneidade moral
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1817:  A Secretaria_  da_  Saúde de Goiânia recebeu ontem CR$  163,  7 milhões,  através de convênio assinado com a Fundação_  Nacional_  de_  Saúde. 
+</text>
+                <arg f="" n="0">A Secretaria_  da_  Saúde de Goiânia
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">CR$  163,  7 milhões
+</arg>
+                <arg f="mnr" n="m">através de convênio assinado com a Fundação_  Nacional_  de_  Saúde
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1615:  As declarações foram recebidas por Maradona como « uma tacada de beisebol na cabeça »,  como o próprio meia definiu. 
+</text>
+                <arg f="" n="1">As declarações
+</arg>
+                <rel f="">recebidas</rel>
+                <arg f="" n="0">por Maradona
+</arg>
+                <arg f="" n="4">como « uma tacada de beisebol na cabeça »
+</arg>
+                <arg f="dis" n="m">como o próprio meia definiu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1564:  Em Nova_  York,  o FBI(  Federal_  Bureau_  Investigation,  a polícia federal dos Estados_  Unidos)  recebeu uma ligação anônima no final da noite de anteontem informando que o Consulado de Israel sofreria um atentado a bomba. 
+</text>
+                <arg f="loc" n="m">Em Nova_  York
+</arg>
+                <arg f="" n="0">o FBI(  Federal_  Bureau_  Investigation,  a polícia federal dos Estados_  Unidos) 
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">uma ligação anônima
+</arg>
+                <arg f="tmp" n="m">no final da noite de anteontem
+</arg>
+                <arg f="prd" n="m">informando que o Consulado de Israel sofreria um atentado a bomba
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1512:  Uma hora após a morte de Colosio- -  na realidade minutos depois do público receber a trágica notícia,  Octavio_  Paz pedia um « basta aos excessos verbais e ideológicos de alguns intelectuais e jornalistas » e às « numerosas e irresponsáveis apologias da violência ». 
+</text>
+                <arg f="" n="0">o público
+</arg>
+                <rel f="">receber</rel>
+                <arg f="" n="1">a trágica notícia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1503:  Ou_  seja,  alugam o imóvel por um prazo máximo de 90 dias e ainda podem receber o valor adiantado. 
+</text>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">receber</rel>
+                <arg f="" n="1">o valor adiantado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1474:  Cada modelo de fac-  símile,  com suas especificações técnicas peculiares,  recebe uma patente do tipo MI(  modelo industrial) . 
+</text>
+                <arg f="" n="0">Cada modelo de fac-  símile,  com suas especificações técnicas peculiares, 
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">uma patente do tipo MI(  modelo industrial) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1438:  Na discussão com a bancada,  FHC deve tratar da revisão constitucional e da delegação que recebeu do partido para negociar as alianças eleitorais. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="2">do partido
+</arg>
+                <arg f="pnc" n="m">para negociar as alianças eleitorais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1390:  Hoje_  em_  dia,  qualquer americano medianamente equipado pode fazer diante_  do teclado tarefas que antes exigiam que ele tirasse o bumbum da cadeira:  mandar e receber fax e mensagens eletrônicas,  reservar passagens aéreas,  controlar a conta bancária,  acessar bancos de dados e dezenas_  doutros serviços. 
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="1">fax e mensagens eletrônicas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1314:  Comandantes militares voltaram a receber comunicado esta semana,  destinado ﻿à tropa,  dizendo que o reajuste do soldo sairá este mês. 
+</text>
+                <arg f="" n="0">Comandantes militares
+</arg>
+                <rel f="">receber</rel>
+                <arg f="tmp" n="m">esta semana
+</arg>
+                <arg f="" n="1">comunicado destinado ﻿à tropa,  dizendo que o reajuste do soldo sairá este mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1199:  O grupo Votorantim recebeu o ISO-  9002 para o cimento Votoran,  produzido em Volta_  Redonda. 
+</text>
+                <arg f="" n="0">O grupo Votorantim
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">o ISO-  9002
+</arg>
+                <arg f="" n="4">para o cimento Votoran,  produzido em Volta_  Redonda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1035:  A operação é uma garantia de que todo o sistema estará vazio para receber os números oficiais da apuração. 
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="1">os números oficiais da apuração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s957:  O diretor-  geral da PF,  coronel Wilson_  Romão,  disse que recebeu « recomendações expressas para investigar tudo a_  fundo ». 
+</text>
+                <arg f="" n="0">O diretor-  geral da PF,  coronel Wilson_  Romão, 
+</arg>
+                <rel f="">recebeu</rel>
+                <arg f="" n="1">« recomendações expressas para investigar tudo a_  fundo »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s694:  Como nas outras escolas,  ali os alunos recebem gratuitamente o ensino,  o material didático,  o uniforme,  a alimentação e tratamento médico e odontológico. 
+</text>
+                <arg f="adv" n="m">Como nas outras escolas
+</arg>
+                <arg f="loc" n="m">ali
+</arg>
+                <arg f="" n="0">os alunos
+</arg>
+                <rel f="">recebem</rel>
+                <arg f="mnr" n="m">gratuitamente
+</arg>
+                <arg f="" n="1">o ensino,  o material didático,  o uniforme,  a alimentação e tratamento médico e odontológico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s502:  Ele receberá o valor ﻿à vista após 30 dias. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">receberá</rel>
+                <arg f="" n="1">o valor ﻿à vista
+</arg>
+                <arg f="tmp" n="m">após 30 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s369:  A estimativa da Receita_  Federal era receber 7 milhões de declarações. 
+</text>
+                <rel f="">receber</rel>
+                <arg f="" n="1">7 milhões de declarações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s316:  Receita Recebe US$  1,  5 Milhão De Envolvidos,  EDNA_  Dantas(  Da Sucursal do Rio) 
+</text>
+                <arg f="" n="0">Receita
+</arg>
+                <rel f="">Recebe</rel>
+                <arg f="" n="1">US$  1,  5 Milhão De Envolvidos
+</arg>
+                <arg f="dis" n="m">EDNA_  Dantas(  Da Sucursal do Rio) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s75:  Recebeu a denúncia. 
+</text>
+                <rel f="">Recebeu</rel>
+                <arg f="" n="1">a denúncia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s66:  Um dos injustiçados é Alfredo_  Volpi,  que recebe apenas um painel,  com cinco telas que servem para ilustrar sua « evolução » de figurativo a abstrato. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">recebe</rel>
+                <arg f="" n="1">apenas um painel,  com cinco telas que servem para ilustrar sua « evolução » de figurativo a abstrato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s51:  « Na Vila,  quando recebo a bola,  tenho que ficar olhando sua trajetória,  para não ser surpreendido. 
+</text>
+                <rel f="">recebo</rel>
+                <arg f="" n="1">a bola
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

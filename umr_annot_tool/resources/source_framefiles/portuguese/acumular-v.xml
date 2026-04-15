@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acumular">
+        <note />
+    <roleset framnet="accumulate.01" id="acumular.01" name="amontoar" vncls="13.5.2 47.5.2">
+            <roles>
+                <role descr="entity accumulating something" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                    <vnrole vncls="47.5.2" vntheta="Agent" />
+                </role>
+                <role descr="thing/stuff accumulated" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                    <vnrole vncls="47.5.2" vntheta="Theme" />
+                </role>
+                <role descr="price" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1757:  Em 94 acumula alta de 701,  5% . 
+</text>
+                <arg f="tmp" n="m">Em 94
+</arg>
+                <rel f="">acumula</rel>
+                <arg f="" n="1">alta de 701,  5% 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

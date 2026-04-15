@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="deslocar">
+        <note />
+    <roleset framnet="" id="deslocar.01" name="mover-se de um local para outro" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2265:  Em São_  Paulo,  não é necessário deslocar-  se muito ﻿à procura de artigos de segunda mão. 
+</text>
+                <arg f="loc" n="m">Em São_  Paulo
+</arg>
+                <rel f="">deslocar-</rel>
+                <arg f="ext" n="m">muito
+</arg>
+                <arg f="pnc" n="m">﻿à procura de artigos de segunda mão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s25:  Parte dos recursos para a formação do FSE foi deslocado do orçamento da saúde e educação. 
+</text>
+                <arg f="" n="1">Parte dos recursos para a formação do FSE
+</arg>
+                <rel f="">deslocado</rel>
+                <arg f="" n="3">do orçamento da saúde e educação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

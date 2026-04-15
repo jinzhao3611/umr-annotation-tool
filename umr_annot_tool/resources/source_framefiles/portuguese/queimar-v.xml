@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="queimar">
+        <note />
+    <roleset framnet="burn.01" id="queimar.01" name="ser consumido pelo fogo" vncls="43.1 45.4">
+            <roles>
+                <role descr="pyromaniac" n="0">
+                    <vnrole vncls="43.1" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing burning" n="1">
+                    <vnrole vncls="43.1" vntheta="Theme" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3268:  Segundo ele,  o alvará foi queimado,  com tudo_  o_  que se perdeu. 
+</text>
+                <arg f="" n="1">Segundo ele
+</arg>
+                <rel f="">queimado</rel>
+                <arg f="mnr" n="m">com tudo_  o_  que se perdeu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2746:  A Caravan foi queimada. 
+</text>
+                <arg f="" n="1">A Caravan
+</arg>
+                <rel f="">queimada</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

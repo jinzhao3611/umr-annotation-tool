@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="menosprezar">
+        <note />
+    <roleset framnet="belittle.01" id="menosprezar.01" name="depreciar; não dar valor" vncls="33">
+            <roles>
+                <role descr="causer of apparent insignificance, agent" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="apparently insignificant thing" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s106:  E,  assim,  tudo o que os afro-  americanos faziam bem teve de ser colocado em termos que menosprezassem a qualidade em_  questão. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">menosprezassem</rel>
+                <arg f="" n="1">a qualidade em_  questão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s67:  Afora historicismo,  isso é menosprezar um fator interno ﻿à arte brasileira,  que independe de contexto internacional. 
+</text>
+                <rel f="">menosprezar</rel>
+                <arg f="" n="1">um fator interno ﻿à arte brasileira,  que independe de contexto internacional
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

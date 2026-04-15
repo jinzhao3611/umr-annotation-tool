@@ -1,0 +1,182 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="votar">
+        <note />
+    <roleset framnet="vote.01" id="votar.01" name="escolher em processo de votação" vncls="-">
+            <roles>
+                <role descr="proxy voter" n="A" />
+                <role descr="voter" n="0" />
+                <role descr="candidate or ballot issue" n="1" />
+                <role descr="numerical count of vote, margin" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3130:  Não voto em Quércia de jeito nenhum. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">voto</rel>
+                <arg f="" n="1">em Quércia
+</arg>
+                <arg f="adv" n="m">de jeito nenhum
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3069:  « Voto no Fernando_  Henrique porque ele fez o Plano_  Real »,  afirmou o vice-  prefeito,  Manoel_  Lopes_  Duarte,  do PPR. 
+</text>
+                <rel f="">Voto</rel>
+                <arg f="" n="1">no Fernando_  Henrique
+</arg>
+                <arg f="cau" n="m">porque ele fez o Plano_  Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3068:  Quatro vereadores na cidade e o vice-  prefeito afirmaram que votarão em Fernando_  Henrique_  Cardoso,  embora seus partidos(  PMDB e PPR)  tenham candidatos próprios a presidente. 
+</text>
+                <arg f="" n="0">Quatro vereadores na cidade e o vice-  prefeito
+</arg>
+                <rel f="">votarão</rel>
+                <arg f="" n="1">em Fernando_  Henrique_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2547:  Para ele,  a próxima semana será decisiva para o governo,  quando as MPs que tratam do aumento de impostos terão de ser necessariamente votadas. 
+</text>
+                <arg f="" n="1">as MPs que tratam do aumento de impostos
+</arg>
+                <arg f="adv" n="m">necessariamente
+</arg>
+                <rel f="">votadas</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2527:  « No quadro de hoje »,  voto nele,  disse o goleiro do Flamengo. 
+</text>
+                <arg f="loc" n="m">No quadro de hoje
+</arg>
+                <rel f="">voto</rel>
+                <arg f="" n="1">nele
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2526:  Gilmar pretende votar no senador Esperidião_  Amin(  PPR-  SC) . 
+</text>
+                <rel f="">votar</rel>
+                <arg f="" n="1">no senador Esperidião_  Amin(  PPR-  SC) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2299:  Os líderes acertaram que,  havendo quorum,  o Orçamento de 95 só não será votado hoje se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas. 
+</text>
+                <arg f="adv" n="m">havendo quorum
+</arg>
+                <arg f="" n="1">o Orçamento de 95
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">votado</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="adv" n="m">se não ficar pronta a publicação do parecer aprovado na Comissão_  Mista_  de_  Orçamento,  acolhendo cerca_  de R$  2,  5 bilhões em emendas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2298:  O acordo inclui votar,  sem novas emendas,  o projeto de Orçamento para 95. 
+</text>
+                <rel f="">votar</rel>
+                <arg f="mnr" n="m">sem novas emendas
+</arg>
+                <arg f="" n="1">o projeto de Orçamento para 95
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2116:  33. . .  dias serão completados na próxima segunda-  feira,  dia de eleição,  sem que os vereadores da Câmara de São_  Paulo votem algum projeto importante. 
+</text>
+                <arg f="" n="0">os vereadores da Câmara de São_  Paulo
+</arg>
+                <rel f="">votem</rel>
+                <arg f="" n="1">algum projeto importante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1924:  Votar contra seria perigoso porque o plano tem apoio popular. 
+</text>
+                <rel f="">Votar</rel>
+                <arg f="mnr" n="m">contra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s944:  Não há hipótese do Plano ser lançado antes do Congresso votar,  primeiro,  a emenda constitucional que cria o Fundo_  Social_  de_  Emergência e,  em_  seguida,  o Orçamento federal para 1994 com deficit zero. 
+</text>
+                <arg f="" n="0">o Congresso
+</arg>
+                <rel f="">votar</rel>
+                <arg f="" n="1">,  primeiro,  a emenda constitucional que cria o Fundo_  Social_  de_  Emergência e,  em_  seguida,  o Orçamento federal para 1994 com deficit zero
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s201:  Moreira_  Alves também votou a_  favor_  de Collor noutros dois mandatos de segurança,  mas foi vencido nos dois julgamentos. 
+</text>
+                <arg f="" n="0">Moreira_  Alves
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">votou</rel>
+                <arg f="" n="1">a_  favor_  de Collor
+</arg>
+                <arg f="loc" n="m">noutros dois mandatos de segurança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s199:  Ilmar_  Galvão e Moreira_  Alves votaram pela concessão do mandato de segurança. 
+</text>
+                <arg f="" n="0">Ilmar_  Galvão e Moreira_  Alves
+</arg>
+                <rel f="">votaram</rel>
+                <arg f="" n="1">pela concessão do mandato de segurança
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

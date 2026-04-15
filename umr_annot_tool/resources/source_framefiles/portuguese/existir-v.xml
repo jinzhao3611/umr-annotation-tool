@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="existir">
+        <note />
+    <roleset framnet="exist.01" id="existir.01" name="estar vivo; ter existência; haver" vncls="39.6 47.1-1">
+            <roles>
+                <role descr="thing existing" n="1">
+                    <vnrole vncls="39.6" vntheta="Agent" />
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4008:  A NBA nem existia e o profissionalismo no esporte apenas engatinhava quando apareceu o primeiro gigante do basquete norte-  americano. 
+</text>
+                <arg f="" n="1">A NBA
+</arg>
+                <arg f="neg" n="m">nem
+</arg>
+                <rel f="">existia</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3736:  Segundo Conceição,  tem existido certa indiferença da polícia local em_  relação_  ao caso. 
+</text>
+                <arg f="dis" n="m">Segundo Conceição
+</arg>
+                <rel f="">existido</rel>
+                <arg f="" n="1">certa indiferença da polícia local em_  relação_  ao caso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3264:  Fernando_  Henrique apareceu no rádio e na televisão dizendo que não existe nada contra o seu vice. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">existe</rel>
+                <arg f="" n="1">nada
+</arg>
+                <arg f="" n="2">contra o seu vice
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3190:  Se não quiser se aventurar pela importação direta,  existem empresas,  como a Brasoftware(  tel.  011/  253-  1588)  que importam programas sob encomenda. 
+</text>
+                <arg f="adv" n="m">Se não quiser se aventurar pela importação direta
+</arg>
+                <rel f="">existem</rel>
+                <arg f="prd" n="m">como a Brasoftware(  tel.  011/  253-  1588) 
+</arg>
+                <arg f="" n="1">empresas que importam programas sob encomenda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2996:  Existe ambiente político,  social e econômico para se produzir automóveis no Brasil? 
+</text>
+                <rel f="">Existe</rel>
+                <arg f="" n="1">ambiente político,  social e econômico para se produzir automóveis no Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2944:  O filme passa como vento pelas questões,  nada pequenas,  dos tratamentos psiquiátricos contemporâneos e se fixa no que existe de mais óbvio na história. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">existe</rel>
+                <arg f="" n="2">de mais óbvio
+</arg>
+                <arg f="loc" n="m">na história
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2608:  Cabe perguntar:  Se o Supremo não está de_  acordo com a suposta falta de regra das duas moedas,  que existem de_  fato desde a emissão da última medida provisória,  por_  que não a proclamou imediatamente inconstitucional e se serviu dela privadamente? 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">existem</rel>
+                <arg f="mnr" n="m">de_  fato
+</arg>
+                <arg f="tmp" n="m">desde a emissão da última medida provisória
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2605:  Como poderá fazer-  lo,  porém,  respeitando ele próprio a lei,  quando existem legalmente duas moedas? 
+</text>
+                <rel f="">existem</rel>
+                <arg f="mnr" n="m">legalmente
+</arg>
+                <arg f="" n="1">duas moedas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2316:  Ainda_  assim,  é de se supor que existam bons agentes de polícia. 
+</text>
+                <rel f="">existam</rel>
+                <arg f="" n="1">bons agentes de polícia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2053:  « Existem algumas opções de como fazer isso »,  disse Sérgio_  Amaral,  chefe de gabinete do ministro Rubens_  Ricupero. 
+</text>
+                <rel f="">Existem</rel>
+                <arg f="" n="1">algumas opções de como fazer isso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1983:  Espero que possa voltar lá e dizer às crianças que elas não precisam ficar presas lá,  que existe todo um outro mundo fora dali. 
+</text>
+                <rel f="">existe</rel>
+                <arg f="" n="1">todo um outro mundo
+</arg>
+                <arg f="loc" n="m">fora dali
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1980:  Quando se está num ambiente como o que eu vivia,  você não sabe que existe todo um mundo diferente fora dali. 
+</text>
+                <rel f="">existe</rel>
+                <arg f="" n="1">todo um mundo diferente
+</arg>
+                <arg f="loc" n="m">fora dali
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1753:  Apesar_  de ser a primeira área no Brasil a ser incluída,  em 1991,  ﻿à rede hemisférica de reservas para aves migratórias na categoria de reserva internacional,  o Parque_  Nacional_  da_  Lagoa_  do_  Peixe,  criado em 1986,  não existe de_  fato,  pois ainda não há um plano de manejo e de desenvolvimento. 
+</text>
+                <arg f="adv" n="m">Apesar_  de ser a primeira área no Brasil a ser incluída,  em 1991,  ﻿à rede hemisférica de reservas para aves migratórias na categoria de reserva internacional
+</arg>
+                <arg f="" n="1">o Parque_  Nacional_  da_  Lagoa_  do_  Peixe,  criado em 1986, 
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">existe</rel>
+                <arg f="mnr" n="m">de_  fato
+</arg>
+                <arg f="cau" n="m">pois ainda não há um plano de manejo e de desenvolvimento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1499:  Existem outras formas de burlar o reajuste anual. 
+</text>
+                <rel f="">Existem</rel>
+                <arg f="" n="1">outras formas de burlar o reajuste anual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s791:  No Planalto,  não existe consenso sobre a MP. 
+</text>
+                <arg f="loc" n="m">No Planalto
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">existe</rel>
+                <arg f="" n="1">consenso sobre a MP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s327:  Como naquela época ainda não existia a fotografia,  eram os pintores que faziam os retratos das famílias. 
+</text>
+                <arg f="tmp" n="m">naquela época
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">existia</rel>
+                <arg f="" n="1">a fotografia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

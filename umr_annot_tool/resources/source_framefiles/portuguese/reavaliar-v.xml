@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reavaliar">
+        <note />
+    <roleset framnet="reassess.01" id="reavaliar.01" name="fazer nova avaliação" vncls="-">
+            <roles>
+                <role descr="thinker" n="0" />
+                <role descr="subject of thought" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3478:  O juro flutante permite reavaliar periodicamente as taxas de juros das aplicações e empréstimos. 
+</text>
+                <rel f="">reavaliar</rel>
+                <arg f="tmp" n="m">periodicamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1024:  Essas mudanças geralmente coincidem com a « crise da meia idade »,  que é definida não pela faixa etária,  mas como um certo momento em que as pessoas reavaliam as escolhas feitas na sua vida. 
+</text>
+                <arg f="" n="0">as pessoas
+</arg>
+                <rel f="">reavaliam</rel>
+                <arg f="" n="1">as escolhas feitas na sua vida
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="consumir">
+        <note />
+    <roleset framnet="consume.01" id="consumir.01" name="comer, absorver, usar" vncls="39.4 66">
+            <roles>
+                <role descr="consumer" n="0">
+                    <vnrole vncls="39.4" vntheta="Agent" />
+                    <vnrole vncls="66" vntheta="Agent" />
+                </role>
+                <role descr="consumed" n="1">
+                    <vnrole vncls="39.4" vntheta="Patient" />
+                    <vnrole vncls="66" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1856:  As reformas no mosteiro e a colocação de um novo calçamento no largo de São_  Bento devem consumir US$  200 mil. 
+</text>
+                <arg f="" n="0">As reformas no mosteiro e a colocação de um novo calçamento no largo de São_  Bento
+</arg>
+                <rel f="">consumir</rel>
+                <arg f="" n="1">US$  200 mil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1647:  Cada obra consome 1,  5 tonelada de aço(  US$  6 mil)  mais US$  10 mil de mão-  de-  obra. 
+</text>
+                <arg f="" n="0">Cada obra
+</arg>
+                <rel f="">consome</rel>
+                <arg f="" n="1">1,  5 tonelada de aço(  US$  6 mil)  mais US$  10 mil de mão-  de-  obra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1465:  Uma das consequências disso é outra aberração na saúde brasileira:  em 1991,  os hospitais psiquiátricos cadastrados ﻿à rede federal consumiam 7,  5%  das despesas com internações realizadas pelo SUS e representavam o equivalente a 18%  dos leitos. 
+</text>
+                <arg f="" n="0">os hospitais psiquiátricos cadastrados ﻿à rede federal
+</arg>
+                <rel f="">consumiam</rel>
+                <arg f="" n="1">7,  5%  das despesas
+</arg>
+                <arg f="" n="2">com internações realizadas pelo SUS
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

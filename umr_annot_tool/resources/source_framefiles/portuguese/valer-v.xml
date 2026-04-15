@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="valer">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="" id="valer.01" name="ter valor ou validade" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3926:  Recentemente,  o time firmou um contrato de US$  50 mil mensais com a Lousano,  que vale até o fim do Campeonato_  Paulista. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vale</rel>
+                <arg f="tmp" n="m">até o fim do Campeonato_  Paulista
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="valer.03" name="ser permitido (pelas regras do jogo)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1902:  O Roberto_  Dávila não vale! 
+</text>
+                <arg f="" n="1">O Roberto_  Dávila
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">vale</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1242:  Isso vale para os trens das linhas Norte-  Sul e Leste-  Oeste. 
+</text>
+                <arg f="" n="1">Isso
+</arg>
+                <rel f="">vale</rel>
+                <arg f="" n="2">para os trens das linhas Norte-  Sul e Leste-  Oeste
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="valer.04" name="compensar; convir (com arg2 = &quot;a pena&quot;, constitui expressão idiomática)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1560:  Vale a pena conferir os produtos e comparar a qualidade de impressão dos modelos jato de tinta. 
+</text>
+                <rel f="">Vale</rel>
+                <arg f="" n="2">a pena
+</arg>
+                <arg f="" n="1">conferir os produtos e comparar a qualidade de impressão dos modelos jato de tinta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s20:  Na volta de uma viagem ao exterior,  vale a pena trazer uma impressora matricial. 
+</text>
+                <arg f="tmp" n="m">Na volta de uma viagem ao exterior
+</arg>
+                <rel f="">vale</rel>
+                <arg f="" n="2">a pena
+</arg>
+                <arg f="" n="1">trazer uma impressora matricial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="" id="valer.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2839:  Portanto,  na primeira metade,  o locador sai ganhando,  pois recebe mais aluguel do_  que vale a locação. 
+</text>
+                <rel f="">vale</rel>
+                <arg f="" n="1">a locação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2810:  O compromisso com a precisão(  e,  por extensão,  com o leitor)  vale menos do_  que a torcida da imprensa nessas horas. 
+</text>
+                <arg f="" n="1">O compromisso com a precisão(  e,  por extensão,  com o leitor) 
+</arg>
+                <rel f="">vale</rel>
+                <arg f="" n="2">menos do_  que a torcida da imprensa
+</arg>
+                <arg f="tmp" n="m">nessas horas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2496:  Mesa do século 18 vale dois Fuscas em SP
+</text>
+                <arg f="" n="1">Mesa do século 18
+</arg>
+                <rel f="">vale</rel>
+                <arg f="" n="2">dois Fuscas
+</arg>
+                <arg f="loc" n="m">em SP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1348:  A Secretaria_  das_  Finanças da Prefeitura_  de_  São_  Paulo informou ontem que a_  partir_  de segunda-  feira,  dia 8,  a UFM(  Unidade_  Fiscal_  do_  Município)  valerá R$  28,  15. 
+</text>
+                <arg f="tmp" n="m">a_  partir_  de segunda-  feira,  dia 8, 
+</arg>
+                <arg f="" n="0">a UFM(  Unidade_  Fiscal_  do_  Município) 
+</arg>
+                <rel f="">valerá</rel>
+                <arg f="" n="2">R$  28,  15
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

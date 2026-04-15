@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="firmar">
+        <note />
+        <note />
+    <roleset framnet="sign.02" id="firmar.01" name="assinar (contrato, acordo)" vncls="37.4">
+            <roles>
+                <role descr="signer, agreer" n="0">
+                    <vnrole vncls="37.4" vntheta="Agent" />
+                </role>
+                <role descr="agreement" n="1">
+                    <vnrole vncls="37.4" vntheta="Topic" />
+                </role>
+                <role descr="co-signer" n="2">
+                    <vnrole vncls="37.4" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3926:  Recentemente,  o time firmou um contrato de US$  50 mil mensais com a Lousano,  que vale até o fim do Campeonato_  Paulista. 
+</text>
+                <arg f="tmp" n="m">Recentemente
+</arg>
+                <arg f="" n="0">o time
+</arg>
+                <rel f="">firmou</rel>
+                <arg f="" n="1">um contrato de US$  50 mil mensais com a Lousano,  que vale até o fim do Campeonato_  Paulista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3165:  Se Roseana,  os senadores,  deputados e prefeitos estão me apoiando não é porque tenhamos firmado qualquer compromisso pessoal. 
+</text>
+                <rel f="">firmado</rel>
+                <arg f="" n="1">qualquer compromisso pessoal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="firm.02" id="firmar.02" name="tornar firme" vncls="45.4">
+            <roles>
+                <role descr="agent, entity making something else become firm" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing becoming firm" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2731:  Tentava,  a_  custo,  firmar a voz,  sob flashes dos fotógrafos. 
+</text>
+                <rel f="">firmar</rel>
+                <arg f="" n="1">a voz
+</arg>
+                <arg f="mnr" n="m">sob flashes dos fotógrafos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1869:  Alkimin achou que também era hora de firmar namoro e pediu a JK que o apresentasse às amigas da namorada. 
+</text>
+                <rel f="">firmar</rel>
+                <arg f="" n="1">namoro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

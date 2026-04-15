@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="eleger-se">
+        <note />
+    <roleset framnet="elect.01" id="eleger.01" name="alternância incoativa de &quot;eleger&quot;: tornar-se eleito; ser escolhido por meio de voto" vncls="29.1">
+            <roles>
+                <role descr="voters" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="candidate" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="office or position" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4172:  Tenho certeza de que se pudesse concorrer a algum cargo,  me elegeria. 
+</text>
+                <arg f="adv" n="m">se pudesse concorrer a algum cargo
+</arg>
+                <rel f="">elegeria</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="eleger">
+        <note />
+    <roleset framnet="elect.01" id="eleger.02" name="escolher por meio de voto" vncls="29.1">
+            <roles>
+                <role descr="voters" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="candidate" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="office or position" n="2">
+                    <vnrole vncls="29.1" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2895:  O presidente argentino,  Carlos_  Menem,  disse que lançará sua candidatura para a eleição de 2003 se for eleito em 1995. 
+</text>
+                <arg f="" n="1">O presidente argentino,  Carlos_  Menem, 
+</arg>
+                <rel f="">eleito</rel>
+                <arg f="tmp" n="m">em 1995
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2118:  Se todos conseguirem ser eleitos,  quase metade(  43% )  dos vereadores paulistanos vão trocar de Casa_  Legislativa. 
+</text>
+                <arg f="" n="1">todos
+</arg>
+                <rel f="">eleitos</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s532:  Ronald_  Reagan não poupou esforços para eleger seu vice,  George_  Bush,  presidente dos Estados_  Unidos,  em 1988. 
+</text>
+                <rel f="">eleger</rel>
+                <arg f="" n="1">seu vice,  George_  Bush,  presidente dos Estados_  Unidos, 
+</arg>
+                <arg f="tmp" n="m">em 1988
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

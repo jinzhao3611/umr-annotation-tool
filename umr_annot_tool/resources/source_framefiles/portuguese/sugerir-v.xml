@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sugerir">
+        <note />
+    <roleset framnet="suggest.01" id="sugerir.01" name="recomendar; dar sugestão ou conselho" vncls="37.7">
+            <roles>
+                <role descr="Sayer" n="0">
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="Utterance (suggestion)" n="1">
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="Hearer" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3652:  Além_  da proposta de 18 cassações,  o relatório final da CPI sugere que oito deles sejam objeto de processo criminal. 
+</text>
+                <arg f="" n="1">Além_  da proposta de 18 cassações que oito deles sejam objeto de processo criminal
+</arg>
+                <arg f="" n="0">o relatório final da CPI
+</arg>
+                <rel f="">sugere</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3491:  Um psicanalista(  sic) ,  José_  Nazar,  sugere,  acreditem se quiser,  nada_  mais_  nada_  menos do_  que linchamento como punição. 
+</text>
+                <arg f="" n="0">Um psicanalista(  sic) ,  José_  Nazar, 
+</arg>
+                <rel f="">sugere</rel>
+                <arg f="dis" n="m">acreditem se quiser
+</arg>
+                <arg f="" n="1">nada_  mais_  nada_  menos do_  que linchamento como punição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3149:  O documento também sugere a criação de uma sistemática mensal de acompanhamento. 
+</text>
+                <arg f="" n="0">O documento
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">sugere</rel>
+                <arg f="" n="1">a criação de uma sistemática mensal de acompanhamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3086:  Às_  vezes sugeria a George uma mudança no andamento,  para que este se adequasse melhor ﻿à letra. 
+</text>
+                <arg f="tmp" n="m">Às_  vezes
+</arg>
+                <rel f="">sugeria</rel>
+                <arg f="" n="2">a George
+</arg>
+                <arg f="" n="1">uma mudança no andamento
+</arg>
+                <arg f="pnc" n="m">para que este se adequasse melhor ﻿à letra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s102:  A aplicação dessas observações ao caso americano e às relações entre negros e brancos sugere uma nova maneira de conceituar os argumentos já conhecidos do « legado da escravidão ». 
+</text>
+                <arg f="" n="0">A aplicação dessas observações ao caso americano e às relações entre negros e brancos
+</arg>
+                <rel f="">sugere</rel>
+                <arg f="" n="1">uma nova maneira de conceituar os argumentos já conhecidos do « legado da escravidão »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

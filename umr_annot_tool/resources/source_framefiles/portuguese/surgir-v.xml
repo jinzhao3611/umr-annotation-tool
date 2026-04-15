@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="surgir">
+        <note />
+    <roleset framnet="arise.01" id="surgir.01" name="aparecer" vncls="48.1.1">
+            <roles>
+                <role descr="thing (state) arising" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <role descr="source (from or in or of)" n="2">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2853:  Trata-  se do conselho de franqueados,  que começa a surgir em algumas redes como McDonald'  s,  Água_  de_  Cheiro,  Multicoisas e Localiza. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">surgir</rel>
+                <arg f="" n="2">em algumas redes como McDonald'  s,  Água_  de_  Cheiro,  Multicoisas e Localiza
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2631:  Num grupo de 30 pessoas,  entre jogadores,  técnicos,  médicos e massagistas,  que devem conviver durante tanto tempo,  surgem problemas diariamente. 
+</text>
+                <arg f="" n="2">Num grupo de 30 pessoas,  entre jogadores,  técnicos,  médicos e massagistas,  que devem conviver durante tanto tempo
+</arg>
+                <rel f="">surgem</rel>
+                <arg f="" n="1">problemas
+</arg>
+                <arg f="tmp" n="m">diariamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2323:  Amorim- -  Não posso dizer que algo me frustre,  levando em_  conta que há três anos a idéia do Mercosul surgia no Tratado_  de_  Assunção. 
+</text>
+                <arg f="tmp" n="m">há três anos
+</arg>
+                <arg f="" n="1">a idéia do Mercosul
+</arg>
+                <rel f="">surgia</rel>
+                <arg f="" n="2">no Tratado_  de_  Assunção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1763:  Essas dificuldades,  que surgiram desde o lançamento da idéia,  estimularam economistas e governo a buscar caminhos mais rápidos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">surgiram</rel>
+                <arg f="tmp" n="m">desde o lançamento da idéia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s583:  A idéia para o livro surgiu após uma entrevista que Andréa fez em meados de 93 para o « Tokyo_  Journal » com o jogador Zico,  ﻿à época atuando no Kashima. 
+</text>
+                <arg f="" n="1">A idéia para o livro
+</arg>
+                <rel f="">surgiu</rel>
+                <arg f="tmp" n="m">após uma entrevista que Andréa fez em meados de 93 para o « Tokyo_  Journal » com o jogador Zico,  ﻿à época atuando no Kashima
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

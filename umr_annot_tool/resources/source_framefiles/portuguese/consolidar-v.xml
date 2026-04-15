@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="consolidar">
+        <note />
+    <roleset framnet="solidify.01" id="consolidar.01" name="tornar sólido, fortalecer" vncls="45.4">
+            <roles>
+                <role descr="cause of solidification" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="entity made strong" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3807:  Desorganização e violência marcam torneio que consolida o'  efeito Copa' . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">consolida</rel>
+                <arg f="" n="1">o'  efeito Copa' 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3572:  O objetivo é consolidar a marca. 
+</text>
+                <rel f="">consolidar</rel>
+                <arg f="" n="1">a marca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosG.  s2364:  Já assessores do federalista Delors,  que em dez anos na presidência da CE aumentou os poderes do cargo e entrou em conflito com Margaret_  Thatcher(  antecessora de Major) ,  temem que a escolha de Santer sirva para enfraquecer os poderes do presidente,  o_  que abriria caminho para o eixo Alemanha-  França consolidar o seu domínio. 
+</text>
+                <arg f="" n="0">o eixo Alemanha-  França
+</arg>
+                <rel f="">consolidar</rel>
+                <arg f="" n="1">o seu domínio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2280:  O brasileiro João_  Havelange consolidou ontem,  em Nova_  York,  a sua candidatura para o sexto mandato consecutivo como presidente da Fifa. 
+</text>
+                <arg f="" n="0">O brasileiro João_  Havelange
+</arg>
+                <rel f="">consolidou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em Nova_  York
+</arg>
+                <arg f="" n="1">a sua candidatura para o sexto mandato consecutivo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

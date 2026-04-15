@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="defender">
+        <note />
+    <roleset framnet="defend.01" id="defender.01" name="defender" vncls="85">
+            <roles>
+                <role descr="defender" n="0">
+                    <vnrole vncls="85" vntheta="Agent" />
+                </role>
+                <role descr="defended" n="1">
+                    <vnrole vncls="85" vntheta="Theme" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4055:  Mesmo criticado,  ele defende sua posição claramente em_  favor_  dos evangélicos e de seu ponto de vista religioso. 
+</text>
+                <arg f="adv" n="m">Mesmo criticado
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">defende</rel>
+                <arg f="" n="1">sua posição
+</arg>
+                <arg f="prd" n="m">claramente em_  favor_  dos evangélicos e de seu ponto de vista religioso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4001:  Quando os jogadores souberam da investida de Clemente,  o ala Goicoechea se aprestou a defender o seu patrono: 
+</text>
+                <rel f="">defender</rel>
+                <arg f="" n="1">o seu patrono
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3818:  Alencar defendeu a adoção do estado de defesa,  que prevê a suspensão de garantias individuais. 
+</text>
+                <arg f="" n="0">Alencar
+</arg>
+                <rel f="">defendeu</rel>
+                <arg f="" n="1">a adoção do estado de defesa,  que prevê a suspensão de garantias individuais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3413:  O nosso protesto é de ordem moral,  temos a obrigação de defender uma das grandes tradições da nossa civilização,  que é a da liberdade de expressão. 
+</text>
+                <rel f="">defender</rel>
+                <arg f="" n="1">uma das grandes tradições da nossa civilização,  que é a da liberdade de expressão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3064:  O advogado José_  Carlo_  Dri,  que defende os responsáveis pela boate,  se recusou a falar. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">defende</rel>
+                <arg f="" n="1">os responsáveis pela boate
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3041:  Aliás,  nessa entrevista ele,  corretamente,  defende a legalização do aborto com argumentos razoáveis e,  agora,  por motivos eleitoreiros,  cedeu ﻿à pressão da Igreja_  Católica. 
+</text>
+                <arg f="dis" n="m">Aliás
+</arg>
+                <arg f="loc" n="m">nessa entrevista
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="mnr" n="m">corretamente
+</arg>
+                <rel f="">defende</rel>
+                <arg f="" n="1">a legalização do aborto
+</arg>
+                <arg f="" n="2">com argumentos razoáveis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2928:  O governo do Estado informou,  através de nota de sua assessoria de imprensa,  que as declarações do presidente Itamar_  Franco e do presidente eleito Fernando_  Henrique_  Cardoso sobre medidas federais de combate ao tráfico de drogas « configuram posições análogas às que o governador do Estado vem defendendo ». 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o governador do Estado
+</arg>
+                <rel f="">defendendo</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2907:  Comandado pelo advogado Luiz_  Antonio_  Siqueira_  Dias,  o grupo defendeu as obras,  que foram iniciadas recentemente. 
+</text>
+                <arg f="prd" n="m">Comandado pelo advogado Luiz_  Antonio_  Siqueira_  Dias
+</arg>
+                <arg f="" n="0">o grupo
+</arg>
+                <rel f="">defendeu</rel>
+                <arg f="" n="1">as obras,  que foram iniciadas recentemente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2750:  Ele é desenvolvimentista,  defende a nação soberana contra o imperialismo,  representa as forças populares. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">defende</rel>
+                <arg f="" n="1">a nação soberana
+</arg>
+                <arg f="" n="2">contra o imperialismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2675:  O ex-  jogador defendeu também a adoção de penas para menores de 18 anos que cometam crimes. 
+</text>
+                <arg f="" n="0">O ex-  jogador
+</arg>
+                <rel f="">defendeu</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">a adoção de penas para menores de 18 anos que cometam crimes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2145:  FHC e Malan deverão defender que o uso das reservas foi necessário para salvar o acordo da dívida,  sem o_  qual o país não normalizará suas relações financeiras internacionais. 
+</text>
+                <arg f="" n="0">FHC e Malan
+</arg>
+                <rel f="">defender</rel>
+                <arg f="" n="1">que o uso das reservas foi necessário para salvar o acordo da dívida,  sem o_  qual o país não normalizará suas relações financeiras internacionais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2109:  Goldman defendeu a necessidade de novas negociações. 
+</text>
+                <arg f="" n="0">Goldman
+</arg>
+                <rel f="">defendeu</rel>
+                <arg f="" n="1">a necessidade de novas negociações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2088:  Teremos o balanço entre defesa e ataque que tanto Zagalo e Parreira defendem,  mas que o time não revela em campo. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">tanto Zagalo e Parreira
+</arg>
+                <rel f="">defendem</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1885:  Que defendeu os três pênaltis do São_  Paulo. 
+</text>
+                <arg f="" n="0">Que
+</arg>
+                <rel f="">defendeu</rel>
+                <arg f="" n="1">os três pênaltis do São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s861:  Aristides tem defendido junto ao governo a aplicação do art.  212 da Constituição,  que prevê que União deve destinar pelo_  menos 18%  da receita de impostos ﻿à educação. 
+</text>
+                <arg f="" n="0">Aristides
+</arg>
+                <rel f="">defendido</rel>
+                <arg f="" n="2">junto ao governo
+</arg>
+                <arg f="" n="1">a aplicação do art.  212 da Constituição,  que prevê que União deve destinar pelo_  menos 18%  da receita de impostos ﻿à educação
+</arg>
+                <note>arg2 aqui é a entidade com quem se luta para fazer a defesa</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s731:  O texto defende o voto para a Presidência baseado em programas de governo. 
+</text>
+                <arg f="" n="0">O texto
+</arg>
+                <rel f="">defende</rel>
+                <arg f="" n="1">o voto para a Presidência baseado em programas de governo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s386:  Fácil subir nos palanques,  defendendo que é necessário « mudar tudo o que está aí ». 
+</text>
+                <rel f="">defendendo</rel>
+                <arg f="" n="1">que é necessário « mudar tudo o que está aí »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s270:  Os empresários abriram mão de posições históricas,  eventualmente visando sua proteção,  para construir e defender idéias exclusivamente de interesse coletivo para o desenvolvimento global. 
+</text>
+                <rel f="">defender</rel>
+                <arg f="" n="1">idéias exclusivamente de interesse coletivo para o desenvolvimento global
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

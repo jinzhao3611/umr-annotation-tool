@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="chocar-se">
+        <note />
+    <roleset framnet="crash.01" id="chocar.01" name="colidir; bater violentamente contra outro corpo ou barreira" vncls="18.4-1 45.1">
+            <roles>
+                <role descr="causer of damage, agent" n="0">
+                    <vnrole vncls="45.1" vntheta="Agent" />
+                </role>
+                <role descr="entity crashed" n="1">
+                    <vnrole vncls="18.4-1" vntheta="Theme" />
+                    <vnrole vncls="45.1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1660:  Um Gol e um Voyage se chocaram. 
+</text>
+                <arg f="" n="1">Um Gol e um Voyage
+</arg>
+                <rel f="">chocaram</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1408:  Wator se chocou com um companheiro de equipe. 
+</text>
+                <arg f="" n="0">Wator
+</arg>
+                <rel f="">chocou</rel>
+                <arg f="" n="1">com um companheiro de equipe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="chocar">
+        <note />
+    <roleset framnet="shock.01" id="chocar.02" name="surpreender" vncls="31.1">
+            <roles>
+                <role descr="surpriser" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="person surprised" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s193:  Benetton volta a chocar com cartaz
+</text>
+                <arg f="" n="0">Benetton
+</arg>
+                <rel f="">chocar</rel>
+                <arg f="" n="2">com cartaz
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

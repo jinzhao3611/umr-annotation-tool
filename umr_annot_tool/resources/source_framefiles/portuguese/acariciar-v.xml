@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acariciar">
+        <note />
+    <roleset framnet="caress.01" id="acariciar.01" name="fazer carícia" vncls="20-1">
+            <roles>
+                <role descr="caresser" n="0">
+                    <vnrole vncls="20-1" vntheta="Agent" />
+                </role>
+                <role descr="caressed" n="1">
+                    <vnrole vncls="20-1" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s465:  Sente o bafejar da sorte a acariciar-  lhe a cara. 
+</text>
+                <arg f="" n="0">o bafejar da sorte
+</arg>
+                <rel f="">acariciar-</rel>
+                <arg f="" n="1">lhe
+</arg>
+                <arg f="" n="2">a cara
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

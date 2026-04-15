@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="levantar">
+        <note />
+        <note />
+    <roleset framnet="raise.01" id="levantar.01" name="trazer para cima (fisica ou metaforicamente)" vncls="9.4 40.3.2">
+            <roles>
+                <role descr="Agent" n="0">
+                    <vnrole vncls="9.4" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                </role>
+                <role descr="Logical subject, patient, thing rising" n="1">
+                    <vnrole vncls="9.4" vntheta="Theme" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                </role>
+                <role descr="EXT, amount risen" n="2" />
+                <role descr="Start point" n="3" />
+                <role descr="End point" n="4" />
+                <role descr="Medium" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4145:  A possibilidade foi levantada em encontro do governador eleito,  Marcello_  Alencar(  PSDB) ,  com oficiais do CML. 
+</text>
+                <arg f="" n="1">A possibilidade
+</arg>
+                <rel f="">levantada</rel>
+                <arg f="loc" n="m">em encontro do governador eleito,  Marcello_  Alencar(  PSDB) ,  com oficiais do CML
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4046:  « O importante é levantar bem o joelho,  manter o ritmo e encostar o calcanhar no chão a cada movimento »,  diz. 
+</text>
+                <rel f="">levantar</rel>
+                <arg f="ext" n="m">bem
+</arg>
+                <arg f="" n="1">o joelho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2275:  Ele levanta a discussão e deixa o conflito de idéias rolar »,  diz Manoela_  Nicoletti,  15. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">levanta</rel>
+                <arg f="" n="1">a discussão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s52:  Só depois é_  que levanto a cabeça para fazer um lançamento »,  reclama Neto. 
+</text>
+                <arg f="tmp" n="m">Só depois
+</arg>
+                <rel f="">levanto</rel>
+                <arg f="" n="1">a cabeça para fazer um lançamento
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="find.01" id="levantar.02 " name="identificar por meio de pesquisa" vncls="13.5.1">
+            <roles>
+                <role descr="finder" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing found" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, found for" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3869:  As evidências de superfaturamento foram levantadas pelos professores Armando_  Laganá e Márcio_  Rillo,  da USP,  a_  pedido da Folha. 
+</text>
+                <arg f="" n="1">As evidências de superfaturamento
+</arg>
+                <rel f="">levantadas</rel>
+                <arg f="" n="0">pelos professores Armando_  Laganá e Márcio_  Rillo,  da USP,  a_  pedido da Folha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2593:  Raia disse ainda que sua equipe levantou as necessidades de material de consumo da rede e que US$  3 milhões estão sendo liberados agora para gastos do primeiro trimestre. 
+</text>
+                <arg f="" n="0">sua equipe
+</arg>
+                <rel f="">levantou</rel>
+                <arg f="" n="1">as necessidades de material de consumo da rede
+</arg>
+                <note>esse exemplo seria melhor traduzido por "to survey"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s448:  A PF ainda não levantou os números exatos do golpe,  mas acredita que pelo_  menos cem pessoas tenham perdido seu dinheiro. 
+</text>
+                <arg f="" n="0">A PF
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">levantou</rel>
+                <arg f="" n="1">os números exatos do golpe
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

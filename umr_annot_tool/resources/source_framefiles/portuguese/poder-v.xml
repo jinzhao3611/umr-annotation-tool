@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="poder">
+        <note />
+    <roleset framnet="" id="poder.01" name="verbo auxiliar de modo (poder + infinitivo) =  ter condições de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s809:  A equipe econômica considera que cedeu tudo o que podia durante a votação da emenda no primeiro turno. 
+</text>
+                <rel f="">podia</rel>
+                <arg f="tmp" n="m">durante a votação da emenda no primeiro turno
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

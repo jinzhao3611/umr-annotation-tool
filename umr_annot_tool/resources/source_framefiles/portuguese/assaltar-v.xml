@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="assaltar">
+        <note />
+    <roleset framnet="rob.01" id="assaltar.01" name="roubar uma pessoa ou um estabelecimento à força (não especifica o que é roubado)" vncls="10.6">
+            <roles>
+                <role descr="robber, thief" n="0">
+                    <vnrole vncls="10.6" vntheta="Agent" />
+                </role>
+                <role descr="person robbed" n="1">
+                    <vnrole vncls="10.6" vntheta="Source" />
+                </role>
+                <role descr="money or valuables, thing taken" n="2">
+                    <vnrole vncls="10.6" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2728:  No último dia 11,  Frank_  Kerr,  53,  foi morto com um tiro na cabeça quando três homens assaltaram um posto do correio. 
+</text>
+                <arg f="" n="0">três homens
+</arg>
+                <rel f="">assaltaram</rel>
+                <arg f="" n="2">um posto do correio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

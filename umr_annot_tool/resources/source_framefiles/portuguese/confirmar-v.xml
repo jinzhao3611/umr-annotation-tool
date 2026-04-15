@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confirmar">
+        <note />
+        <note />
+    <roleset framnet="confirm.01" id="confirmar.01" name="atestar a veracidade de algo" vncls="29.2">
+            <roles>
+                <role descr="confirmer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing confirmed, statement or proposition" n="1">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <role descr="benefactive, hearer" n="2">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3991:  Caso o tetracampeão seja o Brasil(  seja feita a vossa vontade assim na Terra como nos gramados) ,  confirma-  se que os últimos serão os primeiros. 
+</text>
+                <arg f="adv" n="m">Caso o tetracampeão seja o Brasil
+</arg>
+                <rel f="">confirma-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">que os últimos serão os primeiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3870:  Sustentadas em depoimentos ﻿à PF,  foram confirmadas em três perícias. 
+</text>
+                <arg f="prd" n="m">Sustentadas em depoimentos ﻿à PF
+</arg>
+                <rel f="">confirmadas</rel>
+                <arg f="loc" n="m">em três perícias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3810:  É o que confirmam as estatísticas do Campeonato_  Brasileiro,  encerrado ontem com o novo título palmeirense. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">confirmam</rel>
+                <arg f="" n="0">as estatísticas do Campeonato_  Brasileiro,  encerrado ontem com o novo título palmeirense
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3146:  A presença deve ser confirmada até o próximo dia 5,  pelo tel.  221-  2155. 
+</text>
+                <arg f="" n="1">A presença
+</arg>
+                <rel f="">confirmada</rel>
+                <arg f="tmp" n="m">até o próximo dia 5
+</arg>
+                <arg f="mnr" n="m">pelo tel.  221-  2155
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2448:  O professor Leitão_  de_  Abreu,  que era ministro do Gabinete_  Civil,  não vive para confirmar as visitas ofertantes de Fernando_  Henrique. 
+</text>
+                <rel f="">confirmar</rel>
+                <arg f="" n="1">as visitas ofertantes de Fernando_  Henrique
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1192:  Gazeta_  Filho confirmou que os dormentes se deterioraram muito antes do previsto. 
+</text>
+                <arg f="" n="0">Gazeta_  Filho
+</arg>
+                <rel f="">confirmou</rel>
+                <arg f="" n="1">que os dormentes se deterioraram muito antes do previsto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s931:  « Ele confirmou as idéias que eu já tinha,  um candidato sério,  responsável. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">confirmou</rel>
+                <arg f="" n="1">as idéias que eu já tinha,  um candidato sério,  responsável
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s361:  Ciro não quis confirmar se a TR(  Taxa_  Referencial)  deixará de corrigir esses financiamentos. 
+</text>
+                <arg f="" n="0">Ciro
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">confirmar</rel>
+                <arg f="" n="1">se a TR(  Taxa_  Referencial)  deixará de corrigir esses financiamentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s342:  Cientistas dos EUA confirmaram ontem em Quito(  Equador)  a contaminação causada por atividades petrolíferas na Amazônia equatoriana. 
+</text>
+                <arg f="" n="0">Cientistas dos EUA
+</arg>
+                <rel f="">confirmaram</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">em Quito(  Equador) 
+</arg>
+                <arg f="" n="1">a contaminação causada por atividades petrolíferas na Amazônia equatoriana
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="confirmar.02" name="obter confirmação" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3448:  O deputado Adroaldo_  Streck(  PSDB-  RS)  ficou encarregado de confirmar com Britto o encontro. 
+</text>
+                <rel f="">confirmar</rel>
+                <arg f="" n="2">com Britto
+</arg>
+                <arg f="" n="1">o encontro
+</arg>
+                <note>o arg2 aqui não é beneficiário e sim o confirmador</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s551:  A Folha confirmou os entendimentos junto a empresários do setor de eletrodomésticos e a funcionários do Pão-  de-  açúcar. 
+</text>
+                <arg f="" n="0">A Folha
+</arg>
+                <rel f="">confirmou</rel>
+                <arg f="" n="1">os entendimentos
+</arg>
+                <arg f="" n="2">junto a empresários do setor de eletrodomésticos e a funcionários do Pão-  de-  açúcar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

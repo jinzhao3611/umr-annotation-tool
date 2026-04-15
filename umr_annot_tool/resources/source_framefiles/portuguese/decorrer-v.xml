@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="decorrer">
+        <note />
+    <roleset framnet="result.01" id="decorrer.01" name="ser resultado de; resultar de" vncls="48.1.1">
+            <roles>
+                <role descr="Theme, prior condition" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <role descr="Goal, end condition" n="2">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3144:  Amaral disse ainda que esse aumento de importações decorre do aumento da demanda que se exerce sobre toda a oferta de produtos. 
+</text>
+                <arg f="" n="1">esse aumento de importações
+</arg>
+                <rel f="">decorre</rel>
+                <arg f="" n="2">do aumento da demanda que se exerce sobre toda a oferta de produtos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1096:  Em respeito ﻿à história,  diga-  se que o mal que a UDN fez ao país não decorreu de seu moralismo,  mas de sua amoralidade. 
+</text>
+                <arg f="" n="1">o mal que a UDN fez ao país
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">decorreu</rel>
+                <arg f="" n="2">de seu moralismo,  mas de sua amoralidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s734:  Mesmo quando a gravidez decorre de estupro ou quando o feto não tem chances de sobrevivência,  o aborto é visto como crime. 
+</text>
+                <arg f="" n="1">a gravidez
+</arg>
+                <rel f="">decorre</rel>
+                <arg f="" n="2">de estupro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

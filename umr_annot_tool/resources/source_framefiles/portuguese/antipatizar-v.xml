@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="antipatizar">
+        <note />
+    <roleset framnet="dislike.01" id="antipatizar.01" name="não sentir simpatia" vncls="31.2">
+            <roles>
+                <role descr="disliker" n="0">
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="object of disaffection" n="1">
+                    <vnrole vncls="31.2" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s356:  Como cronista,  Sarney toma o cuidado de não indignar ninguém,  e é difícil antipatizar com ele. 
+</text>
+                <rel f="">antipatizar</rel>
+                <arg f="" n="1">com ele
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

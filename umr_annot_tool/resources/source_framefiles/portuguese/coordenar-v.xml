@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="coordenar">
+        <note />
+    <roleset framnet="coordinate.01" id="coordenar.01" name="gerenciar" vncls="-">
+            <roles>
+                <role descr="organizer, agent" n="0" />
+                <role descr="entity coordinated" n="1" />
+                <role descr="entity coordinated with" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s760:  De_  acordo_  com Maluf,  a equipe de elaboração do programa terá 30 dias para trabalhar e o nome mais cotado para coordená-  la é o do presidente nacional do PFL,  Jorge_  Bornhausen. 
+</text>
+                <rel f="">coordená-</rel>
+                <arg f="" n="1">la
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s109:  Pela segunda vez desde quando começou a coordenar as ações no Rio,  há duas semanas,  o Exército mudou o nome das operações. 
+</text>
+                <rel f="">coordenar</rel>
+                <arg f="" n="1">as ações no Rio
+</arg>
+                <arg f="tmp" n="m">há duas semanas
+</arg>
+                <arg f="" n="0">o Exército
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s62:  Havelange aceitaria engolir o italiano Antonio_  Matarrese como o seu vice-  executivo e,  além_  disso,  esqueceria os seus modos autoritários,  coordenando a entidade de maneira colegiada. 
+</text>
+                <arg f="" n="0">Havelange
+</arg>
+                <rel f="">coordenando</rel>
+                <arg f="" n="1">a entidade de maneira colegiada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

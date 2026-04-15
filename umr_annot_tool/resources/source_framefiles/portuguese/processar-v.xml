@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="processar">
+        <note />
+    <roleset framnet="sue.01" id="processar.01" name="acusar judicialmente" vncls="-">
+            <roles>
+                <role descr="litigant" n="0" />
+                <role descr="defender" n="1" />
+                <role descr="crime" n="2" />
+                <role descr="intended prize" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s475:  O governador da Flórida,  Lawton_  Chiles,  63,  resolveu processar o governo dos EUA para recuperar os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado. 
+</text>
+                <rel f="">processar</rel>
+                <arg f="" n="1">o governo dos EUA
+</arg>
+                <arg f="pnc" n="m">para recuperar os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

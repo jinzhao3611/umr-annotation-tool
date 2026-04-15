@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="participar">
+        <note />
+    <roleset framnet="participate.01" id="participar.01" name="tomar parte (de um evento)" vncls="">
+            <roles>
+                <role descr="agent, entity participating" n="0" />
+                <role descr="participating in what?" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4091:  O prefeito de Juazeiro,  Manoel_  Salviano(  PSDB) ,  disse que qualquer funcionário que tenha participado da recepção « foi espontaneamente,  sem nenhuma pressão da prefeitura ». 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">participado</rel>
+                <arg f="" n="2">da recepção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4062:  Apesar_  disso,  a entrevista propiciou ao eleitor comum participar da vida política,  o_  que é ótimo.  »
+</text>
+                <arg f="" n="0">o eleitor comum
+</arg>
+                <rel f="">participar</rel>
+                <arg f="" n="1">da vida política
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3966:  Além_  da fazenda do Sabiá,  participaram do leilão a Terra_  Boa e a Mata_  Velha,  tradicionais criadoras de nelore. 
+</text>
+                <arg f="" n="0">Além_  da fazenda do Sabiá a Terra_  Boa e a Mata_  Velha,  tradicionais criadoras de nelore
+</arg>
+                <rel f="">participaram</rel>
+                <arg f="" n="1">do leilão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3545:  Brasil participa de coletânea em homenagem a Frank_  Zappa
+</text>
+                <arg f="" n="0">Brasil
+</arg>
+                <rel f="">participa</rel>
+                <arg f="" n="1">de coletânea em homenagem a Frank_  Zappa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3454:  A famíla voltava para casa,  em Americanópolis,  depois de participar de casamento na Barra_  Funda e deu carona a amigos. 
+</text>
+                <rel f="">participar</rel>
+                <arg f="" n="1">de casamento
+</arg>
+                <arg f="loc" n="m">na Barra_  Funda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3317:  Antes do Mundial,  a delegação brasileira participa dos Jogos_  da_  Amizade que têm início dia 23,  na Rússia. 
+</text>
+                <arg f="tmp" n="m">Antes do Mundial
+</arg>
+                <arg f="" n="0">a delegação brasileira
+</arg>
+                <rel f="">participa</rel>
+                <arg f="" n="1">dos Jogos_  da_  Amizade que têm início dia 23,  na Rússia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3205:  Convidada para participar da passarela,  Rita_  Lee declinou por ter sido convocada apenas na véspera
+</text>
+                <rel f="">participar</rel>
+                <arg f="" n="1">da passarela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2689:  Serra- -  Seria e o foi apresentado assim,  numa reunião da_  qual participei. 
+</text>
+                <arg f="" n="1">da_  qual
+</arg>
+                <rel f="">participei</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2226:  « É bonito isto daqui »,  dizia admirado um pescador nativo,  que participava de uma gravação como figurante no último dia 30. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">participava</rel>
+                <arg f="" n="1">de uma gravação
+</arg>
+                <arg f="" n="2">como figurante
+</arg>
+                <arg f="tmp" n="m">no último dia 30
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2024:  A Ensec,  brasileira,  foi uma das cinco empresas pré-  qualificadas para participar de concorrência de US$  11 milhões para reconstruir o sistema de segurança do estacionamento do World_  Trade_  Center,  em Nova_  York,  destruído com a explosão de um carro-  bomba. 
+</text>
+                <rel f="">participar</rel>
+                <arg f="" n="1">de concorrência de US$  11 milhões para reconstruir o sistema de segurança do estacionamento do World_  Trade_  Center,  em Nova_  York,  destruído com a explosão de um carro-  bomba
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1813:  Reynaldo_  de_  Barros,  secretário de Vias_  Públicas,  participou de uma cerimônia pela_  manhã e depois não pôde mais ser encontrado em seu gabinete. 
+</text>
+                <arg f="" n="0">Reynaldo_  de_  Barros,  secretário de Vias_  Públicas, 
+</arg>
+                <rel f="">participou</rel>
+                <arg f="" n="1">de uma cerimônia
+</arg>
+                <arg f="tmp" n="m">pela_  manhã
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1080:  A ex-  prefeita Luiza_  Erundina participa hoje da divulgação de um balanço comparativo entre sua administração 89 a 92 e o primeiro ano da gestão Paulo_  Maluf ﻿à frente da Prefeitura de São_  Paulo. 
+</text>
+                <arg f="" n="0">A ex-  prefeita Luiza_  Erundina
+</arg>
+                <rel f="">participa</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="1">da divulgação de um balanço comparativo entre sua administração 89 a 92 e o primeiro ano da gestão Paulo_  Maluf ﻿à frente da Prefeitura de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s822:  A a noite vem a São_  Paulo para participar do programa « Fogo_  Cruzado ». 
+</text>
+                <rel f="">participar</rel>
+                <arg f="" n="1">do programa « Fogo_  Cruzado »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s818:  Participa de reunião partidária em Maravilha(  Santa_  Catarina) . 
+</text>
+                <rel f="">Participa</rel>
+                <arg f="" n="1">de reunião partidária
+</arg>
+                <arg f="loc" n="m">em Maravilha(  Santa_  Catarina) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s144:  Ontem pela_  manhã,  os atletas que não atuaram contra o Vitória,  participaram de um coletivo com a equipe principal. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="tmp" n="m">pela_  manhã
+</arg>
+                <arg f="" n="0">os atletas que não atuaram contra o Vitória
+</arg>
+                <rel f="">participaram</rel>
+                <arg f="" n="1">de um coletivo com a equipe principal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s140:  Outros profissionais brasileiros,  que atuam nos EUA,  também participam. 
+</text>
+                <arg f="" n="0">Outros profissionais brasileiros,  que atuam nos EUA, 
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">participam</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2:  Brasília Pesquisa_  Datafolha publicada hoje revela um dado supreendente:  recusando uma postura radical,  a esmagadora maioria(  77% )  dos eleitores quer o PT participando do Governo Fernando_  Henrique_  Cardoso. 
+</text>
+                <arg f="" n="0">o PT
+</arg>
+                <rel f="">participando</rel>
+                <arg f="" n="1">do Governo Fernando_  Henrique_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

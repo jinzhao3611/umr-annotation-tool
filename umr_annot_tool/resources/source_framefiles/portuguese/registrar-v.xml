@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="registrar">
+        <note />
+        <note />
+    <roleset framnet="record.01" id="registrar.01" name="anotar; fazer registro de; gravar" vncls="25.4">
+            <roles>
+                <role descr="recorder" n="0">
+                    <vnrole vncls="25.4" vntheta="Agent" />
+                </role>
+                <role descr="record" n="1">
+                    <vnrole vncls="25.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4081:  De 140.  518 inscritos,  a Fuvest registrou 139.  369. 
+</text>
+                <arg f="" n="1">De 140.  518 inscritos 139.  369
+</arg>
+                <arg f="" n="0">a Fuvest
+</arg>
+                <rel f="">registrou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2154:  Álvaro_  Vidigal,  da Bovespa,  registra a « prudência » dos candidatos às eleições de hoje,  « que estão sabendo preservar a instituição acima_  dos interesses pessoais ». 
+</text>
+                <arg f="" n="0">Álvaro_  Vidigal,  da Bovespa, 
+</arg>
+                <rel f="">registra</rel>
+                <arg f="" n="1">a « prudência » dos candidatos às eleições de hoje,  « que estão sabendo preservar a instituição acima_  dos interesses pessoais »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2014:  Em « Os_  Lusíadas »,  Luís_  de_  Camões cantou a maior epopéia portuguesa e a registrou em versos: 
+</text>
+                <arg f="loc" n="m">Em « Os_  Lusíadas »
+</arg>
+                <arg f="" n="0">Luís_  de_  Camões
+</arg>
+                <arg f="" n="1">a
+</arg>
+                <rel f="">registrou</rel>
+                <arg f="mnr" n="m">em versos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="register.01" id="registrar.02" name="aferir; fazer medição" vncls="54.1">
+            <roles>
+                <role descr="measurer" n="0">
+                    <vnrole vncls="54.1" vntheta="Agent" />
+                </role>
+                <role descr="thing measured" n="1">
+                    <vnrole vncls="54.1" vntheta="Theme" />
+                </role>
+                <role descr="yardstick, standard of measurement" n="2" />
+                <role descr="measurement" n="3">
+                    <vnrole vncls="54.1" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1839:  O IPC-  amplo(  cesta de consumo de famílias com renda de até quarenta salários_  mínimos)  registrou 42,  65%  em São_  Paulo e 41,  96%  no Rio. 
+</text>
+                <arg f="" n="1">O IPC-  amplo(  cesta de consumo de famílias com renda de até quarenta salários_  mínimos) 
+</arg>
+                <rel f="">registrou</rel>
+                <arg f="" n="3">42,  65%  em São_  Paulo e 41,  96%  no Rio
+</arg>
+                <note>com arg1 na posição de sujeito</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1658:  Estradas de São_  Paulo registram duas mortes
+</text>
+                <arg f="" n="1">Estradas de São_  Paulo
+</arg>
+                <rel f="">registram</rel>
+                <arg f="" n="3">duas mortes
+</arg>
+                <note>com arg1 na posição de sujeito</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1083:  Para o presidente da Abav,  Sérgio_  Nogueira,  a expectativa é que o mercado de viagens e turismo recupere este ano os mesmos índices favoráveis de 1990,  ano em que foi registrado o maior volume de vendas em passagens aéreas. 
+</text>
+                <arg f="tmp" n="m">que
+</arg>
+                <rel f="">registrado</rel>
+                <arg f="" n="1">o maior volume de vendas em passagens aéreas
+</arg>
+                <note>nesse exemplo, seria adequado também "report.01"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1043:  Elas registraram uma produção por hora de trabalho 43%  superior às demais »,  afirma o relatório. 
+</text>
+                <arg f="" n="1">Elas
+</arg>
+                <rel f="">registraram</rel>
+                <arg f="" n="3">uma produção por hora de trabalho 43%  superior às demais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s857:  A Divisão_  de_  Vigilância_  Sanitária de Sergipe registrou nos primeiros 115 dias deste ano 87 casos de cólera com uma morte. 
+</text>
+                <arg f="" n="0">A Divisão_  de_  Vigilância_  Sanitária de Sergipe
+</arg>
+                <rel f="">registrou</rel>
+                <arg f="tmp" n="m">nos primeiros 115 dias deste ano
+</arg>
+                <arg f="" n="3">87 casos de cólera com uma morte
+</arg>
+                <note>nesse exemplo seria adequado também "report.01"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s856:  Sergipe registrou 87 casos de cólera em 94
+</text>
+                <arg f="" n="1">Sergipe
+</arg>
+                <rel f="">registrou</rel>
+                <arg f="" n="3">87 casos de cólera
+</arg>
+                <arg f="tmp" n="m">em 94
+</arg>
+                <note>"Sergipe", neste exemplo, foi a coisa medida e não o agente da medição</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s830:  A Divisão_  de_  Vigilância_  Sanitária informou que foram registrados 402 casos de cólera,  com quatro mortes,  este ano no Estado. 
+</text>
+                <rel f="">registrados</rel>
+                <arg f="" n="3">402 casos de cólera,  com quatro mortes,  este ano no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

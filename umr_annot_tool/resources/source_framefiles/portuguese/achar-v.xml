@@ -1,0 +1,430 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="achar">
+        <note />
+        <note />
+    <roleset framnet="find.01" id="achar.01" name="encontrar" vncls="13.5.1">
+            <roles>
+                <role descr="finder" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing found" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, found for" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3953:  Homens são achados amordaçados no Rio
+</text>
+                <arg f="" n="1">Homens
+</arg>
+                <rel f="">achados</rel>
+                <arg f="mnr" n="m">amordaçados
+</arg>
+                <arg f="loc" n="m">no Rio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3519:  Os motivos vão do « bom atendimento » ﻿à certeza de achar ali « pessoas como nós ». 
+</text>
+                <rel f="">achar</rel>
+                <arg f="loc" n="m">ali
+</arg>
+                <arg f="" n="1">« pessoas como nós »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3405:  Esse carro foi achado no início da tarde em Engenheiro_  Marsilac)  zona sul) . 
+</text>
+                <arg f="" n="1">Esse carro
+</arg>
+                <rel f="">achado</rel>
+                <arg f="tmp" n="m">no início da tarde
+</arg>
+                <arg f="loc" n="m">em Engenheiro_  Marsilac)  zona sul) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2900:  Não foram apontados suspeitos pelo atentado embora tenha sido dito que a polícia achou pistas dos terroristas. 
+</text>
+                <arg f="" n="0">a polícia
+</arg>
+                <rel f="">achou</rel>
+                <arg f="" n="1">pistas dos terroristas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s722:  « Vamos com calma achar o substituto do Éder »,  disse. 
+</text>
+                <arg f="mnr" n="m">com calma
+</arg>
+                <rel f="">achar</rel>
+                <arg f="" n="1">o substituto do Éder
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="think.01" id="achar.02" name="considerar" vncls="29.4">
+            <roles>
+                <role descr="Thinker" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="Thought" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <role descr="Attributive" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4148:  A lei do Estado da Califórnia dá ao juiz de cada caso autoridade para impedir a presença de câmaras no tribunal Se achar que ela prejudica a Justiça. 
+</text>
+                <rel f="">achar</rel>
+                <arg f="" n="1">que ela prejudica a Justiça
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4132:  Gilbert- -  Acho que Andre usou essa mesma pressão a seu favor. 
+</text>
+                <arg f="dis" n="m">Gilbert
+</arg>
+                <rel f="">Acho</rel>
+                <arg f="" n="1">que Andre usou essa mesma pressão a seu favor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4021:  Folha- -  O senhor acha que o usuário é questão de saúde,  de educação ou de polícia? 
+</text>
+                <arg f="dis" n="m">Folha
+</arg>
+                <arg f="" n="0">O senhor
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="1">que o usuário é questão de saúde,  de educação ou de polícia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3348:  White- -  Acho que sim. 
+</text>
+                <arg f="dis" n="m">White
+</arg>
+                <rel f="">Acho</rel>
+                <arg f="" n="1">que sim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3133:  « Acho absurdo um político pagar alguém para gritar seu nome »,  reclama. 
+</text>
+                <rel f="">Acho</rel>
+                <arg f="" n="2">absurdo
+</arg>
+                <arg f="" n="1">um político pagar alguém para gritar seu nome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3050:  O Sr.  acha um bom resultado? 
+</text>
+                <arg f="" n="0">O Sr. 
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="1">um bom resultado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3045:  Acho importante notar que a Bienal mudou a maneira de conseguir patrocínio cultural no país,  que antes era feito ﻿à base do « me_  dá_  um_  dinheiro_  aí ». 
+</text>
+                <rel f="">Acho</rel>
+                <arg f="" n="2">importante
+</arg>
+                <arg f="" n="1">notar que a Bienal mudou a maneira de conseguir patrocínio cultural no país,  que antes era feito ﻿à base do « me_  dá_  um_  dinheiro_  aí »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2846:  Como a peça trata de religião,  de misticismo,  achamos que devíamos usar muitos troncos,  dar uma verticalidade,  o_  que tem a ver com a ascensão etc. 
+</text>
+                <arg f="cau" n="m">Como a peça trata de religião,  de misticismo
+</arg>
+                <rel f="">achamos</rel>
+                <arg f="" n="1">que devíamos usar muitos troncos,  dar uma verticalidade,  o_  que tem a ver com a ascensão etc
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2566:  Folha- -  o_  que você acha das críticas que vem recebendo da torcida e da imprensa? 
+</text>
+                <arg f="dis" n="m">Folha
+</arg>
+                <arg f="" n="2">o_  que
+</arg>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="1">das críticas que vem recebendo da torcida e da imprensa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2271:  São as mesmas pessoas que acham que sua responsabilidade social se limita a pagar impostos »,  diz Letícia_  Zioni_  Gomes,  16. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">acham</rel>
+                <arg f="" n="1">que sua responsabilidade social se limita a pagar impostos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2270:  « Tem gente que acha a aula inútil. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="1">a aula
+</arg>
+                <arg f="" n="2">inútil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2078:  « Acho que o Consema foi sensível ao que está acontecendo. 
+</text>
+                <rel f="">Acho</rel>
+                <arg f="" n="1">que o Consema foi sensível ao que está acontecendo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2004:  « Nós não vamos dar corda ao debate rasteiro »,  acrescentou o presidente do PT,  que acha improvável o STF permitir a candidatura de José_  Sarney por um partido que não seja o PMDB. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="2">improvável
+</arg>
+                <arg f="" n="1">o STF permitir a candidatura de José_  Sarney por um partido que não seja o PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1904:  Acho que o único que viu até o fim! 
+</text>
+                <rel f="">Acho</rel>
+                <arg f="" n="1">que o único que viu até o fim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1869:  Alkimin achou que também era hora de firmar namoro e pediu a JK que o apresentasse às amigas da namorada. 
+</text>
+                <arg f="" n="0">Alkimin
+</arg>
+                <rel f="">achou</rel>
+                <arg f="" n="1">que também era hora de firmar namoro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1641:  Eu também acho,  mas é preciso avisar o pessoal do PT. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">acho</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1360:  « Não acho que seja câncer,  pode ser algo relacionado aos meus medos e angústias »,  afirmou. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">acho</rel>
+                <arg f="" n="1">que seja câncer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1304:  Você se acha louca? 
+</text>
+                <arg f="" n="0">Você
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="2">louca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1173:  Achei que a'  lipo'  seria uma boa alternativa ». 
+</text>
+                <rel f="">Achei</rel>
+                <arg f="" n="1">que a'  lipo'  seria uma boa alternativa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1167:  Às 11h30 de ontem,  no escritório da Fittipaldi_  Promoções,  empresa da família,  Christian afirmou que,  enquanto estiver motivado e achar boas as condições de segurança,  continuará na Fórmula_  1. 
+</text>
+                <arg f="" n="0">Christian
+</arg>
+                <rel f="">achar</rel>
+                <arg f="" n="2">boas
+</arg>
+                <arg f="" n="1">as condições de segurança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s723:  Culpi,  no_  entanto,  acha que o time pode suportar a e « confirmar a vantagem » em São_  Paulo. 
+</text>
+                <arg f="" n="0">Culpi
+</arg>
+                <arg f="dis" n="m">no_  entanto
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="1">que o time pode suportar a e « confirmar a vantagem » em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s713:  Acha que foi escolhido como suplente pela sua imagem empresarial formada em mais_  de 50 anos. 
+</text>
+                <rel f="">Acha</rel>
+                <arg f="" n="1">que foi escolhido como suplente pela sua imagem empresarial formada em mais_  de 50 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s706:  Achava que não tinha vocação política »,  explica. 
+</text>
+                <rel f="">Achava</rel>
+                <arg f="" n="1">que não tinha vocação política
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s651:  « Achei a idéia muito interessante e educativa. 
+</text>
+                <rel f="">Achei</rel>
+                <arg f="" n="1">a idéia
+</arg>
+                <arg f="" n="2">muito interessante e educativa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s158:  Segundo o BC,  mais_  da metade dos recursos da caderneta são de poupadores de médio e grande porte em_  tese,  menos sujeitos a achar que o dinheiro perdeu rendimento com a queda da inflação. 
+</text>
+                <rel f="">achar</rel>
+                <arg f="" n="1">que o dinheiro perdeu rendimento com a queda da inflação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s115:  Pesquisadores acham que as linhas podem ser falhas geológicas. 
+</text>
+                <arg f="" n="0">Pesquisadores
+</arg>
+                <rel f="">acham</rel>
+                <arg f="" n="1">que as linhas podem ser falhas geológicas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s37:  Folha- -  E o_  que o senhor acha do escândalo da arbitragem carioca? 
+</text>
+                <arg f="dis" n="m">Folha
+</arg>
+                <arg f="" n="2">o_  que
+</arg>
+                <arg f="" n="0">o senhor
+</arg>
+                <rel f="">acha</rel>
+                <arg f="" n="1">do escândalo da arbitragem carioca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conceder">
+        <note />
+    <roleset framnet="concede.03" id="conceder.01" name="dar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3038:  Recebi ontem por fax entrevista que ele concedeu em 1979 para a revista « Especial »,  onde expõe sua visão sobre a mulher. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">concedeu</rel>
+                <arg f="tmp" n="m">em 1979
+</arg>
+                <arg f="" n="2">para a revista « Especial »,  onde expõe sua visão sobre a mulher
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2160:  Além_  disso,  a companhia pede que os bancos aumentem suas linhas de crédito em 500 milhões de marcos(  US$  287,  1 milhões)  e concedam uma moratória de três meses no pagamento das dívidas. 
+</text>
+                <arg f="" n="0">os bancos
+</arg>
+                <rel f="">concedam</rel>
+                <arg f="" n="1">uma moratória de três meses
+</arg>
+                <arg f="prd" n="m">no pagamento das dívidas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1716:  Depois do tratado de paz de 1923,  aboliu o califato,  a poligamia,  substituiu práticas legais islâmicas por outras de inspiração européia,  adotou o alfabeto romano e o calendário gregoriano e concedeu às mulheres direito de voto. 
+</text>
+                <rel f="">concedeu</rel>
+                <arg f="" n="2">às mulheres
+</arg>
+                <arg f="" n="1">direito de voto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s310:  O tancredismo concedeu ao seu principal teórico,  professor e senador Fernando_  Henrique_  Cardoso,  a oportunidade de esboçar a filosofia política do mudancismo. 
+</text>
+                <arg f="" n="0">O tancredismo
+</arg>
+                <rel f="">concedeu</rel>
+                <arg f="" n="2">ao seu principal teórico,  professor e senador Fernando_  Henrique_  Cardoso, 
+</arg>
+                <arg f="" n="1">a oportunidade de esboçar a filosofia política do mudancismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

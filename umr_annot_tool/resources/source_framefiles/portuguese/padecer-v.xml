@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="padecer">
+        <note />
+    <roleset framnet="suffer.01" id="padecer.01" name="sofrer" vncls="31.3">
+            <roles>
+                <role descr="entity suffering" n="0">
+                    <vnrole vncls="31.3" vntheta="Experiencer" />
+                </role>
+                <role descr="malady" n="1">
+                    <vnrole vncls="31.3" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s751:  O IPMF padece de males profundos. 
+</text>
+                <arg f="" n="0">O IPMF
+</arg>
+                <rel f="">padece</rel>
+                <arg f="" n="1">de males profundos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

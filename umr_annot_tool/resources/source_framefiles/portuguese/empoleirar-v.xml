@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="empoleirar">
+        <note />
+    <roleset framnet="perch.01" id="empoleirar.01" name="subir no poleiro ou em lugar elevado" vncls="47.6 9.2 50">
+            <roles>
+                <role descr="placer, agent" n="0">
+                    <vnrole vncls="47.6" vntheta="Agent" />
+                    <vnrole vncls="9.2" vntheta="Agent" />
+                    <vnrole vncls="50" vntheta="Agent" />
+                </role>
+                <role descr="thing perched" n="1">
+                    <vnrole vncls="47.6" vntheta="Theme" />
+                    <vnrole vncls="9.2" vntheta="Theme" />
+                </role>
+                <role descr="perched on, location" n="2">
+                    <vnrole vncls="47.6" vntheta="Location" />
+                    <vnrole vncls="9.2" vntheta="Destination" />
+                    <vnrole vncls="50" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s461:  Não fosse a eleição,  d. _  Luciano_  Mendes teria de negar Cristo três vezes para que nosso senador empuleirasse no lombo de um cavalo,  envergando aquele chapéu de cangaceiro. 
+</text>
+                <arg f="" n="0">nosso senador
+</arg>
+                <rel f="">empuleirasse</rel>
+                <arg f="loc" n="m">no lombo de um cavalo
+</arg>
+                <arg f="mnr" n="m">envergando aquele chapéu de cangaceiro
+</arg>
+                <note>o verbo está erroneamente grafado com "u" ao invés de "o"</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

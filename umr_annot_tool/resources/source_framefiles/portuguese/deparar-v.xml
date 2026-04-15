@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="deparar-se">
+        <note />
+    <roleset framnet="come.26" id="deparar.01" name="encontrar; ficar frente a frente com" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3591:  Então me deparei com um estudo que afirma que algumas pessoas realmente têm um paladar mais aguçado do_  que outras. 
+</text>
+                <arg f="tmp" n="m">Então
+</arg>
+                <rel f="">deparei</rel>
+                <arg f="" n="1">com um estudo que afirma que algumas pessoas realmente têm um paladar mais aguçado do_  que outras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s423:  De_  um_  lado reforça a estabilização,  pois qualquer eventual aumento irresponsável de preços depara-  se agora mais rapidamente com a concorrência de similares importados ; doutro,  ajuda a aliviar a supervalorização do real,  pois quanto_  mais importações houver,  maior será a procura por dólares. 
+</text>
+                <arg f="" n="0">qualquer eventual aumento irresponsável de preços
+</arg>
+                <rel f="">depara-</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="mnr" n="m">mais rapidamente
+</arg>
+                <arg f="" n="1">com a concorrência de similares importados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

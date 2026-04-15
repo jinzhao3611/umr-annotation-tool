@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aliciar">
+        <note />
+    <roleset framnet="entice.01" id="aliciar.01" name="atrair" vncls="31.1">
+            <roles>
+                <role descr="attractor" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="thing attracted" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="thing attracted to, if separate from attractor" n="2" />
+                <role descr="instrument, if separate from attractor" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3833:  A CBD aliciou Leônidas(  Vasco) ,  Luizinho e Waldemar_  de_  Brito(  São_  Paulo) ,  entre outros. 
+</text>
+                <arg f="" n="0">A CBD
+</arg>
+                <rel f="">aliciou</rel>
+                <arg f="" n="1">Leônidas(  Vasco) ,  Luizinho e Waldemar_  de_  Brito(  São_  Paulo)  entre outros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

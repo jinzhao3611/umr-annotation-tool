@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="regulamentar">
+        <note />
+    <roleset framnet="regulate.01" id="regulamentar.01" name="ditar regra" vncls="-">
+            <roles>
+                <role descr="regulator" n="0" />
+                <role descr="thing regulated" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3530:  « É imprescindível hoje_  em_  dia »,  regulamenta. 
+</text>
+                <arg f="" n="1">É imprescindível hoje_  em_  dia
+</arg>
+                <rel f="">regulamenta</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

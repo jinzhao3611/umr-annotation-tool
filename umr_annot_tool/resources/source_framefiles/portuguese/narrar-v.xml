@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="narrar">
+        <note />
+    <roleset framnet="tell.01" id="narrar.01" name="contar" vncls="37.1-1 37.2">
+            <roles>
+                <role descr="Speaker" n="0">
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                    <vnrole vncls="37.2" vntheta="Agent" />
+                </role>
+                <role descr="Utterance" n="1">
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                    <vnrole vncls="37.2" vntheta="Topic" />
+                </role>
+                <role descr="Hearer" n="2">
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                    <vnrole vncls="37.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3914:  O filme narra uma greve de mineiros numa cidade do Novo_  México,  nos EUA. 
+</text>
+                <arg f="" n="0">O filme
+</arg>
+                <rel f="">narra</rel>
+                <arg f="" n="1">uma greve de mineiros numa cidade do Novo_  México,  nos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3762:  A história narra a ida de um agente secreto ﻿à desumana cidade futurista de Alphaville,  controlada por um cérebro eletrônico que baniu totalmente os conceitos de amor e solidariedade. 
+</text>
+                <arg f="" n="0">A história
+</arg>
+                <rel f="">narra</rel>
+                <arg f="" n="1">a ida de um agente secreto
+</arg>
+                <arg f="prd" n="m">﻿à desumana cidade futurista de Alphaville,  controlada por um cérebro eletrônico que baniu totalmente os conceitos de amor e solidariedade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

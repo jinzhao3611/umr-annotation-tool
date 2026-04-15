@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tardar">
+        <note />
+    <roleset framnet="?? " id="tardar.01" name="demorar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2778:  Os exemplos de Simon e Brizola revelam que a precipitação e a busca de resultados políticos imediatos constróem o pior caminho para o desenvolvimento e são vícios que o curso da história não tarda a desnudar. 
+</text>
+                <arg f="" n="0">a história
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">tarda</rel>
+                <arg f="" n="1">a desnudar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

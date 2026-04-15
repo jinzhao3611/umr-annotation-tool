@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="orientar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="inform.01" id="orientar.01" name="informar; dar conselho a respeito de algo" vncls="37.2 37.9">
+            <roles>
+                <role descr="informer" n="0">
+                    <vnrole vncls="37.2" vntheta="Agent" />
+                    <vnrole vncls="37.9" vntheta="Agent" />
+                </role>
+                <role descr="informed" n="1">
+                    <vnrole vncls="37.2" vntheta="Recipient" />
+                    <vnrole vncls="37.9" vntheta="Recipient" />
+                </role>
+                <role descr="information" n="2">
+                    <vnrole vncls="37.2" vntheta="Topic" />
+                    <vnrole vncls="37.9" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3825:  Os desfiles,  com roupas a venda no próprio shopping,  visam orientar o consumidor a_  respeito_  da moda. 
+</text>
+                <rel f="">orientar</rel>
+                <arg f="" n="1">o consumidor
+</arg>
+                <arg f="" n="2">a_  respeito_  da moda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2411:  Policiais orientarão os motoristas com placas educativas que indicarão os cuidados básicos contra acidentes. 
+</text>
+                <arg f="" n="0">Policiais
+</arg>
+                <rel f="">orientarão</rel>
+                <arg f="" n="1">os motoristas
+</arg>
+                <arg f="mnr" n="m">com placas educativas que indicarão os cuidados básicos contra acidentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1259:  O autor do projeto,  vereador Isaac_  Ainhorn(  PDT) ,  disse que o objetivo é orientar os estudantes sobre segurança pessoal,  no segurança no trânsito e prevenção contra as drogas. 
+</text>
+                <rel f="">orientar</rel>
+                <arg f="" n="1">os estudantes
+</arg>
+                <arg f="" n="2">sobre segurança pessoal no segurança no trânsito e prevenção contra as drogas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="instruct.01" id="orientar.02" name="instruir alguém a fazer alguma coisa" vncls="37.9-1">
+            <roles>
+                <role descr="instructor" n="0">
+                    <vnrole vncls="37.9-1" vntheta="Agent" />
+                </role>
+                <role descr="impelled agent" n="1">
+                    <vnrole vncls="37.9-1" vntheta="Recipient" />
+                </role>
+                <role descr="impelled action" n="2">
+                    <vnrole vncls="37.9-1" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3790:  Dallari orientou os produtores a negociarem com a indústria. 
+</text>
+                <arg f="" n="0">Dallari
+</arg>
+                <rel f="">orientou</rel>
+                <arg f="" n="1">os produtores
+</arg>
+                <arg f="" n="2">a negociarem com a indústria
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="guide.01" id="orientar.03" name="guiar" vncls="51.7">
+            <roles>
+                <role descr="guide, agent" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="entity guided" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <role descr="guided in/through" n="2">
+                    <vnrole vncls="51.7" vntheta="Destination" />
+                </role>
+                <role descr="signposts along the way" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2059:  Eles devem ter informações para orientar você. 
+</text>
+                <rel f="">orientar</rel>
+                <arg f="" n="1">você
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,416 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sair">
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="leave.01" id="sair.01" name="partir; deixar um lugar" vncls="51.1-1 51.2">
+            <roles>
+                <role descr="entity leaving" n="0">
+                    <vnrole vncls="51.2" vntheta="Theme" />
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="place, person, or thing left" n="1">
+                    <vnrole vncls="51.2" vntheta="Source" />
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <role descr="attribute of arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3983:  Chegou atrasado,  foi duro com seus críticos e saiu antes do fim. 
+</text>
+                <rel f="">saiu</rel>
+                <arg f="tmp" n="m">antes do fim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3816:  Arnold_  Schwarzenegger deu entrevistas como ator principal,  foi substituído por Bruce_  Willis há dois anos,  mas o projeto nunca saiu do papel. 
+</text>
+                <arg f="" n="0">o projeto
+</arg>
+                <arg f="tmp" n="m">nunca
+</arg>
+                <rel f="">saiu</rel>
+                <arg f="" n="1">do papel
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3684:  Divulgado na semana passada,  o fraco resultado em novembro da produção industrial e das novas encomendas às indústrias acabou com as esperanças de que a Alemanha tivesse saído da pior recessão do pós-  guerra no último trimestre do ano. 
+</text>
+                <arg f="" n="0">a Alemanha
+</arg>
+                <rel f="">saído</rel>
+                <arg f="" n="1">da pior recessão do pós-  guerra
+</arg>
+                <arg f="tmp" n="m">no último trimestre do ano
+</arg>
+                <note>nesta colocação, "overcome.01" seria mais adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3375:  O aposentado Eliseu_  Francisco_  de_  Lyra(  na época com 44 anos) ,  depois de discutir com o irmão,  saiu do carro,  subiu no capô,  tirou as roupas e sapateou. 
+</text>
+                <arg f="" n="1">O aposentado Eliseu_  Francisco_  de_  Lyra(  na época com 44 anos) 
+</arg>
+                <rel f="">saiu</rel>
+                <arg f="" n="2">do carro
+</arg>
+                <note>nesta colocação, "get.05" seria mais adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2962:  Eles estranharam o fato dele não sair do barraco de_  manhã e chamaram a polícia. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">sair</rel>
+                <arg f="" n="1">do barraco
+</arg>
+                <arg f="tmp" n="m">de_  manhã
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2744:  Todos os fax/  modem saem de fábrica com dois programas um para gerenciamento das transmissões dfa e outro para gerenciamento das transmissões de dados. 
+</text>
+                <arg f="" n="0">Todos os fax/  modem
+</arg>
+                <rel f="">saem</rel>
+                <arg f="" n="1">de fábrica
+</arg>
+                <arg f="mnr" n="m">com dois programas um para gerenciamento das transmissões dfa e outro para gerenciamento das transmissões de dados
+</arg>
+                <note>"to come out" traduz melhor "sair de fábrica", mas nenhum dos dois sentidos de "come_out" do PB é adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2666:  « Não chegamos ao paraíso,  mas já conseguimos sair do inferno »,  disse Carlos_  Menem da tribuna de Palermo. 
+</text>
+                <rel f="">sair</rel>
+                <arg f="" n="1">do inferno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2410:  Ela está alertando os motoristas que saem de Manaus pela rodovia AM-  10. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">saem</rel>
+                <arg f="" n="1">de Manaus
+</arg>
+                <arg f="mnr" n="m">pela rodovia AM-  10
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2171:  Confio na nossa equipe e espero sair do Parque_  Antarctica com a vitória. 
+</text>
+                <rel f="">sair</rel>
+                <arg f="" n="1">do Parque_  Antarctica
+</arg>
+                <arg f="mnr" n="m">com a vitória
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1918:  Collor sai para jantar e se assusta com flashes
+</text>
+                <arg f="" n="0">Collor
+</arg>
+                <rel f="">sai</rel>
+                <arg f="pnc" n="m">para jantar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1866:  Jovens estudantes na Belo_  Horizonte dos anos 20,  o futuro médico Juscelino_  Kubitschek e o futuro advogado José_  Maria_  Alkimin costumavam sair juntos em busca de moças namoradeiras. 
+</text>
+                <arg f="" n="0">o futuro médico Juscelino_  Kubitschek e o futuro advogado José_  Maria_  Alkimin
+</arg>
+                <rel f="">sair</rel>
+                <arg f="mnr" n="m">juntos
+</arg>
+                <arg f="pnc" n="m">em busca de moças namoradeiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1270:  Acabou saindo nas oitavas. 
+</text>
+                <rel f="">saindo</rel>
+                <arg f="loc" n="m">nas oitavas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1125:  Adelaide critica Emília por esta sair pouco de casa e,  em_  seguida,  deixa a sala irritada pela pouca atenção que lhe é dispensada pela mãe. 
+</text>
+                <arg f="" n="1">esta
+</arg>
+                <rel f="">sair</rel>
+                <arg f="ext" n="m">pouco
+</arg>
+                <arg f="" n="2">de casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s893:  Saem os megas e entram os micros,  minis e mídis. 
+</text>
+                <rel f="">Saem</rel>
+                <arg f="" n="1">os megas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s774:  O Brasil só sairá da sua mediocridade se se deixar incorporar ﻿à Amazônia. 
+</text>
+                <arg f="" n="0">O Brasil
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">sairá</rel>
+                <arg f="" n="1">da sua mediocridade
+</arg>
+                <arg f="adv" n="m">se se deixar incorporar ﻿à Amazônia
+</arg>
+                <note>nas colocações que significam "sair de um problema", é mais adequado "overcome.01"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s437:  Nas grandes cidades,  multidões imensas saíram às ruas em apoio aos rebeldes. 
+</text>
+                <arg f="tmp" n="m">Nas grandes cidades
+</arg>
+                <rel f="">saíram</rel>
+                <arg f="tmp" n="m">em apoio aos rebeldes
+</arg>
+                <note>a colocação "sair às ruas" é traduzida por "take to the streets"</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.07" id="sair.02" name="ser vendido" vncls="-">
+            <roles>
+                <role descr="commodity" n="1" />
+                <role descr="buyer" n="2" />
+                <role descr="price" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3600:  Sai de US$  79 por US$  49. 
+</text>
+                <rel f="">Sai</rel>
+                <arg f="" n="3">de US$  79 por US$  49
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3191:  Segundo Ricardo_  Jordão,  gerente de marketing da Brasoftware,  o produto- -  entregue no máximo em 15 dias- -  sai por um preço similar ﻿à importação feita pelo usuário. 
+</text>
+                <arg f="dis" n="m">Segundo Ricardo_  Jordão,  gerente de marketing da Brasoftware
+</arg>
+                <arg f="" n="1">o produto- -  entregue no máximo em 15 dias- - 
+</arg>
+                <rel f="">sai</rel>
+                <arg f="" n="3">por um preço similar ﻿à importação feita pelo usuário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3036:  Mais_  uma_  vez,  se vê que a deseducação é o problema que mais sai caro ao Brasil. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="adv" n="m">mais
+</arg>
+                <rel f="">sai</rel>
+                <arg f="" n="3">caro
+</arg>
+                <arg f="" n="2">ao Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s909:  Na locadora Clean_  Car a diária do mesmo carro sai por R$  72 com limite de 200 quilômetros por dia. 
+</text>
+                <arg f="loc" n="m">Na locadora Clean_  Car
+</arg>
+                <arg f="" n="1">a diária do mesmo carro
+</arg>
+                <rel f="">sai</rel>
+                <arg f="" n="3">por R$  72
+</arg>
+                <arg f="mnr" n="m">com limite de 200 quilômetros por dia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s908:  A diária do aluguel de um Uno_  Mille sai por R$  63,  com quilometragem livre,  na Avis. 
+</text>
+                <arg f="" n="1">A diária do aluguel de um Uno_  Mille
+</arg>
+                <rel f="">sai</rel>
+                <arg f="" n="3">por R$  63
+</arg>
+                <arg f="mnr" n="m">com quilometragem livre
+</arg>
+                <arg f="loc" n="m">na Avis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="emerge.01" id="sair.03" name="chegar ao fim de" vncls="48.1.1">
+            <roles>
+                <role descr="thing exiting" n="0">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <role descr="thing/place exited from" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2998:  Em termos políticos,  o país saiu das eleições com um Estado mais vigoroso e democrático,  em melhores condições de enfrentar a inflação e o desemprego. 
+</text>
+                <arg f="adv" n="m">Em termos políticos
+</arg>
+                <arg f="" n="0">o país
+</arg>
+                <rel f="">saiu</rel>
+                <arg f="" n="1">das eleições
+</arg>
+                <arg f="" n="2">com um Estado mais vigoroso e democrático em melhores condições de enfrentar a inflação e o desemprego
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="pull.02" id="sair.04" name="deixar de participar; deixar de fazer parte" vncls="">
+            <roles>
+                <role descr="causal agent" n="0" />
+                <role descr="entity leaving" n="1" />
+                <role descr="place left" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2813:  O assunto saiu da pauta,  ainda_  que esteja dentro_  do bolso do leitor. 
+</text>
+                <arg f="" n="1">O assunto
+</arg>
+                <rel f="">saiu</rel>
+                <arg f="" n="2">da pauta
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="go.01" id="sair.05" name="sair de um lugar ou posição para outro" vncls="47.7 51.1-2">
+            <roles>
+                <role descr="entity in motion/goer" n="1">
+                    <vnrole vncls="47.7" vntheta="Theme" />
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="extent" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point, end state of arg1" n="4" />
+                <role descr="medium" n="M" />
+                <role descr="direction (usually up or down)" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1472:  O rendimento projetado das cadernetas saiu de um patamar de 42%  nos depósitos na semana passada para 46%  nas aplicações nos próximos dias. 
+</text>
+                <arg f="" n="1">O rendimento projetado das cadernetas
+</arg>
+                <rel f="">saiu</rel>
+                <arg f="" n="3">de um patamar de 42%  nos depósitos na semana passada
+</arg>
+                <arg f="" n="4">para 46%  nas aplicações nos próximos dias
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="come.09" id="sair.06" name="ser divulgado ou implementado" vncls="48.1.1">
+            <roles>
+                <role descr="thing appearing" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <role descr="attribute of arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1314:  Comandantes militares voltaram a receber comunicado esta semana,  destinado ﻿à tropa,  dizendo que o reajuste do soldo sairá este mês. 
+</text>
+                <arg f="" n="1">o reajuste do soldo
+</arg>
+                <rel f="">sairá</rel>
+                <arg f="tmp" n="m">este mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s175:  Saem bases de novo pacto internacional
+</text>
+                <rel f="">Saem</rel>
+                <arg f="" n="1">bases de novo pacto internacional
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="resolver">
+        <note />
+        <note />
+    <roleset framnet="decide.01" id="resolver.01" name="decidir" vncls="">
+            <roles>
+                <role descr="decider" n="0" />
+                <role descr="decision" n="1" />
+                <role descr="benefactive" n="2" />
+                <role descr="instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3972:  Gostamos da idéia,  resolvemos pegar velhos sucessos e fazer neste formato. 
+</text>
+                <rel f="">resolvemos</rel>
+                <arg f="" n="1">pegar velhos sucessos e fazer neste formato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2699:  Então,  os homens encontraram um lugar plano e resolveram construir uma torre que chegasse até o céu. 
+</text>
+                <arg f="" n="0">os homens
+</arg>
+                <rel f="">resolveram</rel>
+                <arg f="" n="1">construir uma torre que chegasse até o céu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1854:  Uma semana depois,  três organizações paulistas resolveram contestar a informação na Justiça_  Federal. 
+</text>
+                <arg f="tmp" n="m">Uma semana depois
+</arg>
+                <arg f="" n="0">três organizações paulistas
+</arg>
+                <rel f="">resolveram</rel>
+                <arg f="" n="1">contestar a informação na Justiça_  Federal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s475:  O governador da Flórida,  Lawton_  Chiles,  63,  resolveu processar o governo dos EUA para recuperar os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado. 
+</text>
+                <arg f="" n="0">O governador da Flórida,  Lawton_  Chiles,  63, 
+</arg>
+                <rel f="">resolveu</rel>
+                <arg f="" n="1">processar o governo dos EUA para recuperar os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s219:  Só o procurou tempos depois,  quando o secretário de Assuntos_  Especiais,  Eliezer_  Baptista,  resolveu preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor e convocou Mourão para sua equipe. 
+</text>
+                <arg f="" n="0">o secretário de Assuntos_  Especiais,  Eliezer_  Baptista, 
+</arg>
+                <rel f="">resolveu</rel>
+                <arg f="" n="1">preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s126:  Como a idéia de enxugar a Constituição enfrenta resistência inclusive nos partidos que apóiam o governo,  a equipe de FHC resolveu fazer as reformas por partes. 
+</text>
+                <arg f="" n="0">a equipe de FHC
+</arg>
+                <rel f="">resolveu</rel>
+                <arg f="" n="1">fazer as reformas por partes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s39:  Apenas dois árbitros resolveram contar todos os podres,  enquanto a federação tem mais_  de 70. 
+</text>
+                <arg f="" n="0">Apenas dois árbitros
+</arg>
+                <rel f="">resolveram</rel>
+                <arg f="" n="1">contar todos os podres
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="solve.01" id="resolver.02" name="solucionar" vncls="-">
+            <roles>
+                <role descr="solver" n="0" />
+                <role descr="the problem" n="1" />
+                <role descr="manner/instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2387:  Em Miami,  duas bombas caseiras(  coquetéis Molotov)  foram encontradas ontem em_  frente ﻿à revista cubana « Replica »,  que apóia as negociações entre Cuba e EUA para tentar resolver a crise. 
+</text>
+                <rel f="">resolver</rel>
+                <arg f="" n="1">a crise
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s451:  « A minha situação é diferente da de Romário porque no Deportivo eu resolvo tudo com diálogo.  »
+</text>
+                <arg f="loc" n="m">no Deportivo
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">resolvo</rel>
+                <arg f="" n="1">tudo
+</arg>
+                <arg f="" n="2">com diálogo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s400:  A Justiça do Trabalho passaria a tratar apenas dos conflitos individuais,  que não sejam resolvidos no próprio ambiente de trabalho. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">resolvidos</rel>
+                <arg f="loc" n="m">no próprio ambiente de trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s346:  Para tentar resolver o problema do tráfico de drogas e da violência no Rio_  de_  Janeiro,  o governador do Rio e o Presidente_  da_  República chamaram o Exército. 
+</text>
+                <rel f="">resolver</rel>
+                <arg f="" n="1">o problema do tráfico de drogas e da violência no Rio_  de_  Janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s234:  Segundo ele,  « nem os grandes países souberam resolver o problema do desemprego ». 
+</text>
+                <rel f="">resolver</rel>
+                <arg f="" n="1">o problema do desemprego
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

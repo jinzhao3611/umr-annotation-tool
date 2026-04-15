@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="prever">
+        <note />
+    <roleset framnet="foresee.01" id="prever.01" name="fazer previsão; antever; colocar no planejamento" vncls="29.5-1">
+            <roles>
+                <role descr="seer" n="0">
+                    <vnrole vncls="29.5-1" vntheta="Agent" />
+                </role>
+                <role descr="thing seen" n="1">
+                    <vnrole vncls="29.5-1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4108:  A a noite,  o projeto prevê aulas de alfabetização para jovens de 14 a 22 anos nos Cieps. 
+</text>
+                <arg f="tmp" n="m">A a noite
+</arg>
+                <arg f="" n="0">o projeto
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">aulas de alfabetização para jovens de 14 a 22 anos
+</arg>
+                <arg f="loc" n="m">nos Cieps
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3865:  Lituânia e Ucrânia elogiam a Otan os presidentes da Lituânia,  Algirdas_  Zebrauskas,  e da Ucrânia,  Leonid_  Kravtchuk,  elogiaram ontem o programa de « Parceria_  pela_  Paz » da Otan(  aliança militar ocidental,  liderada pelos EUA) ,  que prevê operações conjuntas com países do Leste_  Europeu. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">operações conjuntas com países do Leste_  Europeu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3818:  Alencar defendeu a adoção do estado de defesa,  que prevê a suspensão de garantias individuais. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">a suspensão de garantias individuais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3686:  Os economistas afirmam que a recuperação puxada pelas exportações que o governo previa para o segundo semestre de 1993 não aconteceu. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">previa</rel>
+                <arg f="" n="2">para o segundo semestre de 1993
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3618:  Com base nesta projeção,  o estudo prevê uma inflação com a nova moeda de 30%  em 94. 
+</text>
+                <arg f="cau" n="m">Com base nesta projeção
+</arg>
+                <arg f="" n="0">o estudo
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">uma inflação com a nova moeda de 30%  em 94
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3616:  Estudo prevê inflação de 2,  3$ %  com o real
+</text>
+                <arg f="" n="0">Estudo
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">inflação de 2,  3$ % 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3578:  Juarez_  Rizzieri,  coordenador do Índice_  de_  Preços_  ao_  Consumidor da Fipe,  prevê para agosto uma taxa entre 1%  e 2% . 
+</text>
+                <arg f="" n="0">Juarez_  Rizzieri,  coordenador do Índice_  de_  Preços_  ao_  Consumidor da Fipe, 
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="2">para agosto
+</arg>
+                <arg f="" n="1">uma taxa entre 1%  e 2% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3347:  « No próximo ano serão mais 15%  »,  prevê. 
+</text>
+                <arg f="" n="1">« No próximo ano serão mais 15%  »
+</arg>
+                <rel f="">prevê</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2980:  Para 94,  a indústria de máquinas agrícolas prevê crescimento de 10% . 
+</text>
+                <arg f="" n="2">Para 94
+</arg>
+                <arg f="" n="0">a indústria de máquinas agrícolas
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">crescimento de 10% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2844:  Serroni- -  A peça previa três casas numa clareira de uma floresta. 
+</text>
+                <arg f="" n="0">A peça
+</arg>
+                <rel f="">previa</rel>
+                <arg f="" n="1">três casas numa clareira de uma floresta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2260:  A lei também prevê que até o final de junho o governo enviará ao Congresso um projeto sobre a elevação do valor real do salário mínimo. 
+</text>
+                <arg f="" n="0">A lei
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">que até o final de junho o governo enviará ao Congresso um projeto sobre a elevação do valor real do salário mínimo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2066:  O técnico Carlos_  Alberto_  Parreira afirmou ontem que a seleção brasileira precisará tocar mais a bola contra um adversário que ele prevê muito defensivo. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="prd" n="m">muito defensivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2028:  A segunda fase do projeto prevê a construção(  para 1995)  do All-  Star_  Music_  Resort,  no mesmo estilo e com mesma capacidade,  que homenageará os estilos musicais do country,  jazz,  rock,  calypso e musicais da Broadway. 
+</text>
+                <arg f="" n="0">A segunda fase do projeto
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">a construção(  para 1995)  do All-  Star_  Music_  Resort,  no mesmo estilo e com mesma capacidade,  que homenageará os estilos musicais do country,  jazz,  rock,  calypso e musicais da Broadway
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1585:  Prevê que isso aconteça em dez dias,  quando seu pai voltar a São_  Paulo. 
+</text>
+                <rel f="">Prevê</rel>
+                <arg f="" n="1">que isso aconteça em dez dias,  quando seu pai voltar a São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s999:  A tabela da primeira fase prevê uma viagem Los_  AngelesDetroitLos_  Angeles para a seleção romena,  num espaço de oito dias,  na primeira fase. 
+</text>
+                <arg f="" n="0">A tabela da primeira fase
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">uma viagem Los_  AngelesDetroitLos_  Angeles
+</arg>
+                <arg f="" n="3">para a seleção romena
+</arg>
+                <arg f="" n="2">num espaço de oito dias
+</arg>
+                <arg f="pnc" n="m">na primeira fase
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s924:  Os pescadores detidos em_  flagrante usando tarrafas(  redes de pesca)  serão acusados de crime contra fauna,  que prevê de um a três anos de prisão. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">de um a três anos de prisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s861:  Aristides tem defendido junto ao governo a aplicação do art.  212 da Constituição,  que prevê que União deve destinar pelo_  menos 18%  da receita de impostos ﻿à educação. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">que União deve destinar pelo_  menos 18%  da receita de impostos ﻿à educação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s801:  Sobre reforma agrária,  o projeto prevê terra para 20 milhões de pessoas com assentamento de comunidades em áreas vizinhas a estradas vicinais. 
+</text>
+                <arg f="" n="0">o projeto
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">terra para 20 milhões de pessoas
+</arg>
+                <arg f="prd" n="m">com assentamento de comunidades em áreas vizinhas a estradas vicinais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s408:  A legislação prevê multa de 300%  sobre o valor da venda para quem se recusar a emitir a nota. 
+</text>
+                <arg f="" n="0">A legislação
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">multa de 300%  sobre o valor da venda
+</arg>
+                <arg f="" n="3">para quem se recusar a emitir a nota
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s363:  « A própria Fipe prevê que em novembro isso tudo passa e a inflação cai »,  disse. 
+</text>
+                <arg f="" n="0">A própria Fipe
+</arg>
+                <rel f="">prevê</rel>
+                <arg f="" n="1">que em novembro isso tudo passa e a inflação cai
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

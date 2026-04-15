@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="irritar-se">
+        <note />
+    <roleset framnet="" id="irritar.01" name="alternância incoativa de &quot;irritar&quot;: ficar irritado" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3134:  O técnico irritou-  se com uma pergunta e não a respondeu. 
+</text>
+                <arg f="" n="0">O técnico
+</arg>
+                <rel f="">irritou-</rel>
+                <arg f="" n="2">com uma pergunta
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="irritar">
+        <note />
+    <roleset framnet="irritate.01" id="irritar.02" name="provocar irritação; causar ficar irritado" vncls="31.1">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="experiencer" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s691:  A nova reivindicação irritou os partidos favoráveis ﻿à revisão,  que criticaram a proposta. 
+</text>
+                <arg f="" n="0">A nova reivindicação
+</arg>
+                <rel f="">irritou</rel>
+                <arg f="" n="1">os partidos favoráveis ﻿à revisão,  que criticaram a proposta
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="integrar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3583:  Os novos proprietários serão integrados ﻿à rede de franquia da Pakalolo,  que conta atualmente com 76 pontos de venda. 
+</text>
+                <arg f="" n="1">Os novos proprietários
+</arg>
+                <rel f="">integrados</rel>
+                <arg f="" n="2">﻿à rede de franquia da Pakalolo,  que conta atualmente com 76 pontos de venda
+</arg>
+                <note>passiva</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2133:  A surpresa descrita por Pedro_  Collor atingiu todos os partidos que integram a chamada « Nova_  Força » da política local,  liderada por Lessa. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">integram</rel>
+                <arg f="" n="2">a chamada « Nova_  Força » da política local,  liderada por Lessa
+</arg>
+                <note>arg1 sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2035:  A Folha realizou um teste num dos ônibus que integram a nova linha Penha-  Lapa,  acompanhando a décima viagem de ontem. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">integram</rel>
+                <arg f="" n="2">a nova linha Penha-  Lapa
+</arg>
+                <note>arg1 sujeito (alternância incoativa)</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

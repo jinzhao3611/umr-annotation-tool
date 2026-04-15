@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="contar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="count.03" id="contar.01" name="ter algo (ou alguém)  para um propósito; ter algo como parte de um plano" vncls="70">
+            <roles>
+                <role descr="depender" n="0">
+                    <vnrole vncls="70" vntheta="Agent" />
+                </role>
+                <role descr="depended on" n="1">
+                    <vnrole vncls="70" vntheta="Theme" />
+                </role>
+                <role descr="secondary predication on arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4181:  Pior,  o mister sueco Sven-  Goran_  Eriksson também não poderá contar com o garoto Bertarelli,  contratura na coxa direita. 
+</text>
+                <arg f="adv" n="m">Pior
+</arg>
+                <arg f="" n="0">o mister sueco Sven-  Goran_  Eriksson
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">contar</rel>
+                <arg f="" n="1">com o garoto Bertarelli,  contratura na coxa direita
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3963:  A seleção brasileira feminina de basquete é a campeã do Torneio_  Internacional_  de_  Basquete,  um quadrangular amistoso disputado em Recife(  PE)  e que contou com a participação das seleções de Cuba,  Argentina e Eslovênia. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">contou</rel>
+                <arg f="" n="1">com a participação das seleções de Cuba,  Argentina e Eslovênia
+</arg>
+                <note>Dúvida: o jogo "quadrangular amistoso" é Arg0 ou Arg2? </note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s18:  Além_  de Maurício,  Carlão e Paulão,  a seleção deve contar hoje com Giovane. 
+</text>
+                <arg f="" n="0">a seleção
+</arg>
+                <rel f="">contar</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="1">com Giovane
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="count.02" id="contar.02" name="incluir, levar em conta, considerar" vncls="-">
+            <roles>
+                <role descr="agent, entity causing some grouping" n="0" />
+                <role descr="theme, thing being included in some group" n="1" />
+                <role descr="group" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3764:  A câmera de Raoul_  Coutard conseguiu transformar Paris numa cidade gélida,  sem contar a ousadia de montar sequências inteiras em negativo. 
+</text>
+                <rel f="">contar</rel>
+                <arg f="" n="1">a ousadia de montar sequências inteiras em negativo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="have.03" id="contar.03" name="ter, possuir" vncls="100">
+            <roles>
+                <role descr="owner" n="0">
+                    <vnrole vncls="100" vntheta="Theme1" />
+                </role>
+                <role descr="possession" n="1">
+                    <vnrole vncls="100" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3602:  Conta com recursos de figuras e sons,  que mostram o significado das palavras. 
+</text>
+                <rel f="">Conta</rel>
+                <arg f="" n="1">com recursos de figuras e sons,  que mostram o significado das palavras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3583:  Os novos proprietários serão integrados ﻿à rede de franquia da Pakalolo,  que conta atualmente com 76 pontos de venda. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">conta</rel>
+                <arg f="tmp" n="m">atualmente
+</arg>
+                <arg f="" n="1">com 76 pontos de venda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1216:  Essa rede,  criada há 20 anos pelo Departamento_  de_  Defesa dos Estados_  Unidos para conectar os seus vários centros de pesquisa,  é considerada a maior rede de comunicação entre computadores,  contando com milhões de usuários espalhados por várias cidades do mundo. 
+</text>
+                <rel f="">contando</rel>
+                <arg f="" n="1">com milhões de usuários espalhados por várias cidades do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="tell.01" id="contar.04" name="relatar, comunicar uma história ou fato" vncls="37.1-1 37.2">
+            <roles>
+                <role descr="Speaker" n="0">
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                    <vnrole vncls="37.2" vntheta="Agent" />
+                </role>
+                <role descr="Utterance" n="1">
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                    <vnrole vncls="37.2" vntheta="Topic" />
+                </role>
+                <role descr="Hearer" n="2">
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                    <vnrole vncls="37.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3550:  Lutava contra a bestialidade das pessoas e sempre mostrou isso de uma forma bizarra »,  conta Mano_  Bap,  29,  vocalista da The_  Central_  Scrutinizer. 
+</text>
+                <arg f="" n="1">Lutava contra a bestialidade das pessoas e sempre mostrou isso de uma forma bizarra
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="0">Mano_  Bap,  29,  vocalista da The_  Central_  Scrutinizer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3524:  Lá,  os plínios fazem amigos,  influenciam pessoas,  revêem colegas,  contam as novidades- -  as últimas viagens para os Estados_  Unidos,  quem comprou carro novo,  quem « vai ter » que começar a trabalhar com o pai,  os que ainda não conseguiram telefone celular. 
+</text>
+                <arg f="loc" n="m">Lá
+</arg>
+                <arg f="" n="0">os plínios
+</arg>
+                <rel f="">contam</rel>
+                <arg f="" n="1">as novidades- -  as últimas viagens para os Estados_  Unidos,  quem comprou carro novo,  quem « vai ter » que começar a trabalhar com o pai,  os que ainda não conseguiram telefone celular
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3017:  Esteve assim com o astro da conferência,  lorde Keynes « um sujeito sutil,  bom expositor,  muito persuasivo »,  conta Campos. 
+</text>
+                <arg f="" n="1">Esteve assim com o astro da conferência,  lorde Keynes « um sujeito sutil,  bom expositor,  muito persuasivo »
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="0">Campos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2273:  Fanizzi conta que antes das discussões em aula era uma pessoa de « extrema direita »,  que não pensava nas suas opiniões. 
+</text>
+                <arg f="" n="0">Fanizzi
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="1">que antes das discussões em aula era uma pessoa de « extrema direita »,  que não pensava nas suas opiniões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1362:  « Senti dores e,  como tenho uns casos de câncer na família,  decidi fazer o exame »,  contou a modelo. 
+</text>
+                <arg f="" n="1">« Senti dores e,  como tenho uns casos de câncer na família,  decidi fazer o exame »
+</arg>
+                <rel f="">contou</rel>
+                <arg f="" n="0">a modelo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1234:  A comédia romântica « Suburbano_  Coração » conta a história de Lovemar(  Andréa_  Beltrão) ,  uma sonhadora costureira do subúrbio que idolatra o locutor de rádio Rogério(  Marco_  Nanini) . 
+</text>
+                <arg f="" n="0">A comédia romântica « Suburbano_  Coração »
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="1">a história de Lovemar(  Andréa_  Beltrão) ,  uma sonhadora costureira do subúrbio que idolatra o locutor de rádio Rogério(  Marco_  Nanini) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1188:  O jogador contou o motivo que o obrigou a não acertar com o Everton. 
+</text>
+                <arg f="" n="0">O jogador
+</arg>
+                <rel f="">contou</rel>
+                <arg f="" n="1">o motivo que o obrigou a não acertar com o Everton
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1124:  Emília conta a Adelaide,  também,  sobre o livro que está escrevendo,  que trata da famílias mais importantes de São_  Paulo. 
+</text>
+                <arg f="" n="0">Emília
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="2">a Adelaide
+</arg>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">sobre o livro que está escrevendo,  que trata da famílias mais importantes de São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1003:  « Foram reabilitados 65 pontos da cidades,  usados como pontos de venda de drogas e que viraram quiosques de flores »,  conta Maia. 
+</text>
+                <arg f="" n="1">« Foram reabilitados 65 pontos da cidades,  usados como pontos de venda de drogas e que viraram quiosques de flores »
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="0">Maia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s330:  O livro « Apresentando_  Rembrandt_ - _  Pintor, _  Gravador, _  Professor »(  editora Klick) ,  de Alexander_  Sturgis,  conta muitas outras coisas sobre a vida e as obras do pintor. 
+</text>
+                <arg f="" n="0">O livro « Apresentando_  Rembrandt_ - _  Pintor, _  Gravador, _  Professor »(  editora Klick) ,  de Alexander_  Sturgis, 
+</arg>
+                <rel f="">conta</rel>
+                <arg f="" n="1">muitas outras coisas
+</arg>
+                <arg f="prd" n="m">sobre a vida e as obras do pintor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s39:  Apenas dois árbitros resolveram contar todos os podres,  enquanto a federação tem mais_  de 70. 
+</text>
+                <rel f="">contar</rel>
+                <arg f="" n="1">todos os podres
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

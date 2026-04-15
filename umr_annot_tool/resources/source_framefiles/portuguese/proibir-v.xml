@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="proibir">
+        <note />
+    <roleset framnet="forbid.01" id="proibir.01" name="declarar não permitido" vncls="67">
+            <roles>
+                <role descr="disallower, agent" n="0">
+                    <vnrole vncls="67" vntheta="Agent" />
+                </role>
+                <role descr="forbidden action" n="1">
+                    <vnrole vncls="67" vntheta="Theme" />
+                </role>
+                <role descr="recipient" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4106:  Apesar_  de haver anunciado que o treino da Bulgária seria aberto ao público,  os dirigentes mudaram de idéia pouco antes do início do treinamento e proibiram a presença de torcedores no campo da Southern_  Methodist_  University,  em Dallas. 
+</text>
+                <arg f="" n="0">os dirigentes
+</arg>
+                <rel f="">proibiram</rel>
+                <arg f="" n="1">a presença de torcedores no campo da Southern_  Methodist_  University,  em Dallas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3945:  Lei brasileira não proíbe a gravidez pós-  menopausa
+</text>
+                <arg f="" n="0">Lei brasileira
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">proíbe</rel>
+                <arg f="" n="1">a gravidez pós-  menopausa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3031:  Segundo Miranda,  a legislação brasileira proíbe que um seguro desta natureza tenha como beneficiário uma empresa ou associação. 
+</text>
+                <arg f="dis" n="m">Segundo Miranda
+</arg>
+                <arg f="" n="0">a legislação brasileira
+</arg>
+                <rel f="">proíbe</rel>
+                <arg f="" n="1">que um seguro desta natureza tenha como beneficiário uma empresa ou associação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s2951:  A constatação é do jurista Saulo_  Ramos,  ex-  consultor Geral da República e ex-  ministro da Justiça,  que foi convidado a analisar o rascunho das medidas e na ocasião alertou para dois problemas:  o artigo primeiro e o parágrafo primeiro da MP 433 praticamente instituem duas moedas no país,  o_  que é proibido. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">proibido</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2633:  O McDonald'  s proibiu o cigarro nos 1.  400 restaurantes de sua propriedade nos Estados_  Unidos. 
+</text>
+                <arg f="" n="0">O McDonald'  s
+</arg>
+                <rel f="">proibiu</rel>
+                <arg f="" n="1">o cigarro
+</arg>
+                <arg f="loc" n="m">nos 1.  400 restaurantes de sua propriedade
+</arg>
+                <arg f="loc" n="m">nos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2598:  A Secretaria_  Municipal_  da_  Administração afirmou ontem que poderá rever o decreto do prefeito Paulo_  Maluf que proíbe a contratação de portadores de doenças com possibilidade de se tornarem incapazes no futuro. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">proíbe</rel>
+                <arg f="" n="1">a contratação de portadores de doenças com possibilidade de se tornarem incapazes no futuro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2244:  O jornal kuaitiano diz que o governo do país fechou um salão de beleza por uma semana por infringir a lei que proíbe mulheres de trabalhar em salões para homens e vice-  versa. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">proíbe</rel>
+                <arg f="" n="2">mulheres
+</arg>
+                <arg f="" n="1">de trabalhar em salões para homens e vice-  versa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3635:  No mercado futuro do índice Bovespa,  a cotação para maio ficou em 20.  000 pontos,  projetando rentabilidade de 66,  78$ %  ao mês. 
+</text>
+                <rel f="">projetando</rel>
+                <arg f="" n="1">rentabilidade de 66,  78$ %  ao mês
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

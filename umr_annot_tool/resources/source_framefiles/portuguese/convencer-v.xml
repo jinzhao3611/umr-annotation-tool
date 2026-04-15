@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="convencer">
+        <note />
+    <roleset framnet="convince.01" id="convencer.01" name="fazer alguém fazer alguma coisa" vncls="31.1 58.1">
+            <roles>
+                <role descr="convincer" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                    <vnrole vncls="58.1" vntheta="Agent" />
+                </role>
+                <role descr="impelled agent" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                    <vnrole vncls="58.1" vntheta="Patient" />
+                </role>
+                <role descr="impelled action" n="2">
+                    <vnrole vncls="58.1" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3829:  A Guarda_  Nacional da Venezuela passou a conversar com os índios e a convencê-  los de fazer o papel dela,  ou_  seja,  reprimir os garimpeiros »,  diz Altino. 
+</text>
+                <arg f="" n="0">A Guarda_  Nacional da Venezuela
+</arg>
+                <rel f="">convencê-</rel>
+                <arg f="" n="1">los
+</arg>
+                <arg f="" n="2">de fazer o papel dela, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2700:  Trata-  se de uma estratégia de inflação reprimida,  pronta para rebelar-  se pela via da explosão cambial no momento em que os agentes econômicos se convencem de que não é sustentável,  e em que os capitais começam a fugir. 
+</text>
+                <arg f="loc" n="m">em que
+</arg>
+                <arg f="" n="0">os agentes econômicos
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">convencem</rel>
+                <arg f="" n="2">de que não é sustentável
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s775:  E jamais chegará a isto se não tiver a total dedicação de alguém como Ricupero,  um excepcional « cadre »,  que em pouco tempo convenceu os brasileiros da sua inteligência e competência na vida pública. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">em pouco tempo
+</arg>
+                <rel f="">convenceu</rel>
+                <arg f="" n="1">os brasileiros
+</arg>
+                <arg f="" n="2">da sua inteligência e competência na vida pública
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s559:  A declaração de Fleury de que continua candidato não convenceu alguns prefeitos que o acompanhavam. 
+</text>
+                <arg f="" n="0">A declaração de Fleury de que continua candidato
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">convenceu</rel>
+                <arg f="" n="1">alguns prefeitos que o acompanhavam
+</arg>
+                <note>sem Arg2 (na verdade arg0 e arg2 estão mesclados)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s558:  O governador se convenceu ainda de que,  se abandonassse a candidatura,  poderia se tornar refém de Quércia e perderia o poder de influência na escolha do candidato do PMDB. 
+</text>
+                <arg f="" n="0">O governador
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">convenceu</rel>
+                <arg f="adv" n="m">ainda
+</arg>
+                <arg f="" n="2">de que,  se abandonassse a candidatura,  poderia se tornar refém de Quércia e perderia o poder de influência na escolha do candidato do PMDB
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

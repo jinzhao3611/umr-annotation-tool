@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="alcançar">
+        <note />
+    <roleset framnet="reach.01" id="alcançar.01" name="atingir" vncls="13.5.1">
+            <roles>
+                <role descr="thing striving" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="goal, end state" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2990:  Nos primeiros dez anos,  o lucro por safra alcançava 40% . 
+</text>
+                <arg f="tmp" n="m">Nos primeiros dez anos
+</arg>
+                <arg f="" n="0">o lucro por safra
+</arg>
+                <rel f="">alcançava</rel>
+                <arg f="" n="1">40% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2982:  Em_  contrapartida,  a proporção de empresários no partido,  que era de 22% ,  hoje alcança a marca de 54% . 
+</text>
+                <arg f="dis" n="m">Em_  contrapartida
+</arg>
+                <arg f="" n="0">a proporção de empresários no partido,  que era de 22% , 
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">alcança</rel>
+                <arg f="" n="1">a marca de 54% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1657:  Nas épocas de normalidade da economia inflacionária brasileira,  esse percentual ainda chega a 7,  5% ,  contra 2,  3%  do Chile,  país que já alcançou sua estabilização. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">alcançou</rel>
+                <arg f="" n="1">sua estabilização
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

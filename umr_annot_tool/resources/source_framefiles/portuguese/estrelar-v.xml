@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estrelar">
+        <note />
+    <roleset framnet="star.01" id="estrelar.01" name="protagonizar, ser artista principal (filme, peça teatral)" vncls="29.8">
+            <roles>
+                <role descr="actor" n="1">
+                    <vnrole vncls="29.8" vntheta="Agent" />
+                </role>
+                <role descr="production" n="2">
+                    <vnrole vncls="29.8" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1276:  Há um mês,  estrelou « Salomé »,  de Richard_  Strauss. 
+</text>
+                <arg f="tmp" n="m">Há um mês
+</arg>
+                <rel f="">estrelou</rel>
+                <arg f="" n="2">« Salomé »,  de Richard_  Strauss
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

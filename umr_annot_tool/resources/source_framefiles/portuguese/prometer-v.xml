@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="prometer">
+        <note />
+    <roleset framnet="promise.01" id="prometer.01" name="fazer promessa; comprometer-se a fazer" vncls="13.3">
+            <roles>
+                <role descr="promiser" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                </role>
+                <role descr="person promised to" n="1">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                </role>
+                <role descr="promised action" n="2">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4109:  Na eleição de 89,  Leonel_  Brizola prometia a construção de 10 mil Cieps. 
+</text>
+                <arg f="loc" n="m">Na eleição de 89
+</arg>
+                <arg f="" n="0">Leonel_  Brizola
+</arg>
+                <rel f="">prometia</rel>
+                <arg f="" n="2">a construção de 10 mil Cieps
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3003:  O governo promete ﻿à sociedade que,  de_  agora_  em_  diante,  vai mudar de vida,  vai garantir o equilíbrio das contas públicas e vai parar de abusar do seu monopólio de criação de moeda. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <rel f="">promete</rel>
+                <arg f="" n="1">﻿à sociedade
+</arg>
+                <arg f="" n="2">que,  de_  agora_  em_  diante,  vai mudar de vida,  vai garantir o equilíbrio das contas públicas e vai parar de abusar do seu monopólio de criação de moeda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3001:  Prometer inflação zero extrapola o domínio daquilo que a autoridade monetária pode se comprometer a fazer
+</text>
+                <rel f="">Prometer</rel>
+                <arg f="" n="2">inflação zero
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s850:  Rubens_  Barrichello promete um anúncio nos próximos dias. 
+</text>
+                <arg f="" n="0">Rubens_  Barrichello
+</arg>
+                <rel f="">promete</rel>
+                <arg f="" n="2">um anúncio
+</arg>
+                <arg f="prd" n="m">nos próximos dias
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

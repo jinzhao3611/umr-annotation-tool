@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="projetar">
+        <note />
+        <note />
+    <roleset framnet="project.02" id="projetar.01" name="fazer projeção; prever" vncls="-">
+            <roles>
+                <role descr="fortune teller" n="0" />
+                <role descr="prediction" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3617:  Um estudo do Corecon(  Conselho_  Regional_  de_  Economia) ,  do Rio_  de_  Janeiro,  divulgado ontem,  está projetando,  na hipótese de adoção do real em abril,  uma inflação de 2,  3$ % . 
+</text>
+                <arg f="" n="0">Um estudo do Corecon(  Conselho_  Regional_  de_  Economia) ,  do Rio_  de_  Janeiro,  divulgado ontem, 
+</arg>
+                <rel f="">projetando</rel>
+                <arg f="adv" n="m">na hipótese de adoção do real em abril
+</arg>
+                <arg f="" n="1">uma inflação de 2,  3$ % 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3321:  A estratégia de Gibson consiste em projetar no futuro o_  que já está latente no mundo contemporâneo. 
+</text>
+                <rel f="">projetar</rel>
+                <arg f="" n="2">no futuro
+</arg>
+                <arg f="" n="1">o_  que já está latente no mundo contemporâneo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3242:  Por_  enquanto,  este indexador projeta variação de 1% ,  com o que os fundos de commodities renderiam 3,  03% . 
+</text>
+                <arg f="tmp" n="m">Por_  enquanto
+</arg>
+                <arg f="" n="0">este indexador
+</arg>
+                <rel f="">projeta</rel>
+                <arg f="" n="1">variação de 1% ,  com o que os fundos de commodities renderiam 3,  03% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3240:  Os fundos de commodities projetam para este mês,  na média,  rentabilidade bruta de 3,  72% ,  segundo a Anbid. 
+</text>
+                <arg f="" n="0">Os fundos de commodities
+</arg>
+                <rel f="">projetam</rel>
+                <arg f="" n="1">para este mês na média rentabilidade bruta de 3,  72% 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="design.01" id="projetar.02" name="fazer projeto;  planejar" vncls="26.4-1">
+            <roles>
+                <role descr="designer" n="0">
+                    <vnrole vncls="26.4-1" vntheta="Agent" />
+                </role>
+                <role descr="thing designed" n="1">
+                    <vnrole vncls="26.4-1" vntheta="Product" />
+                </role>
+                <role descr="benefactive" n="2">
+                    <vnrole vncls="26.4-1" vntheta="Beneficiary" />
+                </role>
+                <role descr="purpose" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s174:  O tomate foi projetado para manter o sabor que tem depois de colhido durante tempo prolongado na prateleira dos supermercados. 
+</text>
+                <arg f="" n="1">O tomate
+</arg>
+                <rel f="">projetado</rel>
+                <arg f="" n="3">para manter o sabor que tem depois de colhido durante tempo prolongado na prateleira dos supermercados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

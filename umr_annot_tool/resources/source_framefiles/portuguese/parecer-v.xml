@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="parecer">
+        <note />
+        <note />
+    <roleset framnet="seem.01" id="parecer.01" name="aparentar; ser percebido" vncls="">
+            <roles>
+                <role descr="thing seeming" n="1" />
+                <role descr="seeming to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3593:  Parece que a Universidade_  Yale,  aquela que nos deu o inesquecível George_  Bush,  comprovou a existência de « superdegustadores »,  ou_  seja pessoas que possuem um número de papilas gustativas muito além_  do normal. 
+</text>
+                <rel f="">Parece</rel>
+                <arg f="" n="1">a Universidade_  Yale,  aquela que nos deu o inesquecível George_  Bush, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3059:  « Me parece que há um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa.  »
+</text>
+                <arg f="" n="2">Me
+</arg>
+                <rel f="">parece</rel>
+                <arg f="" n="1">que há um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1911:  Os personagens de « Cerimônia_  de_  Casamento » parecem saídos das páginas de « recém-  casados » do « The_  New_  York_  Times »,  uma das seções mais provincianas da imprensa mundial e de maior leitura num jornal que vende a imagem de um dos mais cosmopolitas do mundo. 
+</text>
+                <arg f="" n="1">Os personagens de « Cerimônia_  de_  Casamento »
+</arg>
+                <rel f="">parecem</rel>
+                <arg f="" n="1">saídos das páginas de « recém-  casados » do « The_  New_  York_  Times »,  uma das seções mais provincianas da imprensa mundial e de maior leitura num jornal que vende a imagem de um dos mais cosmopolitas do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s637:  E eu sei que é tudo bofe mas parece tudo gay. 
+</text>
+                <rel f="">parece</rel>
+                <arg f="" n="1">tudo gay
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s300:  A lição parece clara em ambos os casos:  não será um artifício legal nem a boa_  vontade dos governos que protegerão a riqueza dos poupadores ou o poder de compra dos assalariados,  mas sim um ambiente de estabilidade econômica consistente. 
+</text>
+                <arg f="" n="1">A lição
+</arg>
+                <rel f="">parece</rel>
+                <arg f="" n="1">clara
+</arg>
+                <arg f="loc" n="m">em ambos os casos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="look.02" id="parecer.02" name="assemelhar-se a" vncls="-">
+            <roles>
+                <role descr="seemer" n="0" />
+                <role descr="seemed like, attribute of arg0" n="1" />
+                <role descr="seemed to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3139:  Dá para sentir a terra estremecer e o barulho parece o de um trovão. 
+</text>
+                <arg f="" n="1">o barulho
+</arg>
+                <rel f="">parece</rel>
+                <arg f="" n="1">o de um trovão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2847:  Decidimos então,  por uma questão de economia cênica,  abolir uma das casas e só insinuar as outras duas,  fazendo apenas suas entradas,  que parecem as de um templo. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">parecem</rel>
+                <arg f="" n="1">as de um templo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2225:  Perto_  de qualquer uma,  o cenário de « Tropicaliente » parece uma grande aldeia de milionários. 
+</text>
+                <arg f="loc" n="m">Perto_  de qualquer uma
+</arg>
+                <arg f="" n="1">o cenário de « Tropicaliente »
+</arg>
+                <rel f="">parece</rel>
+                <arg f="" n="1">uma grande aldeia de milionários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1597:  Talvez por isso a São_  Paulo de « Anjos_  da_  Noite » pareça com qualquer lugar do mundo. 
+</text>
+                <arg f="adv" n="m">Talvez
+</arg>
+                <arg f="cau" n="m">por isso
+</arg>
+                <arg f="" n="1">a São_  Paulo de « Anjos_  da_  Noite »
+</arg>
+                <rel f="">pareça</rel>
+                <arg f="" n="1">com qualquer lugar do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1301:  Parecia concurso de perguntas idiotas a cobertura do carnaval nos salões,  terça. 
+</text>
+                <rel f="">Parecia</rel>
+                <arg f="" n="1">concurso de perguntas idiotas
+</arg>
+                <arg f="" n="1">a cobertura do carnaval
+</arg>
+                <arg f="tmp" n="m">nos salões,  terça
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s978:  Alguns até se parecem com os meus. 
+</text>
+                <arg f="" n="1">Alguns
+</arg>
+                <arg f="adv" n="m">até
+</arg>
+                <rel f="">parecem</rel>
+                <arg f="" n="1">com os meus
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s741:  « Foi barra_  pesada,  pelo som pareciam armas superpotentes,  não foi um tiroteio qualquer »,  afirmou Tatiana_  Marques_  Pedrosa,  24,  estudante de psicologia. 
+</text>
+                <arg f="cau" n="m">pelo som
+</arg>
+                <rel f="">pareciam</rel>
+                <arg f="" n="1">armas superpotentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s635:  Parece remador de porta_  avião! 
+</text>
+                <rel f="">Parece</rel>
+                <arg f="" n="1">remador de porta_  avião
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s615:  E entrevista em baile de Carnaval parece diálogo de surdo: 
+</text>
+                <arg f="" n="1">entrevista em baile de Carnaval
+</arg>
+                <rel f="">parece</rel>
+                <arg f="" n="1">diálogo de surdo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

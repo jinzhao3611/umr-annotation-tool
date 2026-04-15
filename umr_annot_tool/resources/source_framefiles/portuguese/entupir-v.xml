@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="entupir">
+        <note />
+    <roleset framnet="fill.01" id="entupir.01" name="encher até não caber mais nada" vncls="9.8 45.4">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="container" n="1">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="substance" n="2">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2972:  É bom ela entupir a nécessaire de Engov,  que a festa vai ser chata para_  caramba
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">entupir</rel>
+                <arg f="" n="1">a nécessaire
+</arg>
+                <arg f="" n="2">de Engov
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

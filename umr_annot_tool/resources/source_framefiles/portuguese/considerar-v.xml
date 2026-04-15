@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="considerar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="think.01" id="considerar.01" name="achar algo sobre algo (julgamento, opinião)" vncls="29.4">
+            <roles>
+                <role descr="Thinker" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="Thought" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <role descr="Attributive" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3675:  A ação alega que a Petroplastic não considera a Dow acionista da Triunfo. 
+</text>
+                <arg f="" n="0">a Petroplastic
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">considera</rel>
+                <arg f="" n="1">a Dow
+</arg>
+                <arg f="" n="2">acionista da Triunfo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2933:  Os tucanos consideram perigoso deixar um possível governo de FHC sujeito às manobras dos deputados e senadores pefelistas. 
+</text>
+                <arg f="" n="0">Os tucanos
+</arg>
+                <rel f="">consideram</rel>
+                <arg f="" n="2">perigoso
+</arg>
+                <arg f="" n="1">deixar um possível governo de FHC sujeito às manobras dos deputados e senadores pefelistas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2674:  Ele considerou surpreendente o desempenho do russo Alexander_  Popov. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">considerou</rel>
+                <arg f="" n="2">surpreendente
+</arg>
+                <arg f="" n="1">o desempenho do russo Alexander_  Popov
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2513:  Imagino que para a grande maioria dos políticos este seja o momento de glória porque exercita o_  que considera uma virtude:  a arte da esperteza,  a política segundo os cânones herdados da velha tradição das raposas políticas. 
+</text>
+                <arg f="" n="0">a grande maioria dos políticos
+</arg>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">considera</rel>
+                <arg f="" n="2">uma virtude:  a arte da esperteza,  a política segundo os cânones herdados da velha tradição das raposas políticas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2468:  A Super-  301,  que já foi aplicada contra o Brasil quando esteve em vigor em 1989 e 1990,  estabelece um prazo de 18 meses para que as negociações bilaterais levem ﻿à eliminação do que os EUA consideram barreiras ao comércio. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">os EUA
+</arg>
+                <rel f="">consideram</rel>
+                <arg f="" n="2">barreiras ao comércio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1409:  Cerca_  de 80%  da área do município é considerada de preservação ambiental. 
+</text>
+                <arg f="" n="1">Cerca_  de 80%  da área do município
+</arg>
+                <rel f="">considerada</rel>
+                <arg f="" n="2">de preservação ambiental
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1216:  Essa rede,  criada há 20 anos pelo Departamento_  de_  Defesa dos Estados_  Unidos para conectar os seus vários centros de pesquisa,  é considerada a maior rede de comunicação entre computadores,  contando com milhões de usuários espalhados por várias cidades do mundo. 
+</text>
+                <arg f="" n="1">Essa rede,  criada há 20 anos pelo Departamento_  de_  Defesa dos Estados_  Unidos para conectar os seus vários centros de pesquisa, 
+</arg>
+                <rel f="">considerada</rel>
+                <arg f="" n="2">a maior rede de comunicação entre computadores
+</arg>
+                <arg f="prd" n="m">contando com milhões de usuários espalhados por várias cidades do mundo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1148:  O índice Bovespa operou em alta durante toda a manhã e início da tarde,  mas fechou em baixa de 0,  34% ,  considerando as medidas do CMN como restritivas ao funcionamento do sistema financeiro. 
+</text>
+                <rel f="">considerando</rel>
+                <arg f="" n="1">as medidas do CMN
+</arg>
+                <arg f="" n="2">como restritivas ao funcionamento do sistema financeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1033:  De_  acordo com Leite,  o Tc considerou desnecessárias as licitações nas operações do programa porque o Sebrae é uma entidade civil sem fins lucrativos. 
+</text>
+                <arg f="dis" n="m">De_  acordo com Leite
+</arg>
+                <arg f="" n="0">o Tc
+</arg>
+                <rel f="">considerou</rel>
+                <arg f="" n="2">desnecessárias
+</arg>
+                <arg f="" n="1">as licitações nas operações do programa
+</arg>
+                <arg f="cau" n="m">porque o Sebrae é uma entidade civil sem fins lucrativos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s794:  Não é apenas Marluce_  Dias_  da_  Silva a poderosa superintendente da Globo que é considerada gênio em casa. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">considerada</rel>
+                <arg f="" n="2">gênio
+</arg>
+                <arg f="loc" n="m">em casa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s456:  A aprovação das emendas é considerada essencial para o Plano_  Real. 
+</text>
+                <arg f="" n="1">A aprovação das emendas
+</arg>
+                <rel f="">considerada</rel>
+                <arg f="" n="2">essencial
+</arg>
+                <arg f="prd" n="m">para o Plano_  Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s161:  « Às_  vezes peco por falta de experiência,  mas me considero um piloto rápido »,  afirmou ontem o brasileiro,  em entrevista ﻿à Folha por telefone,  da Itália. 
+</text>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">considero</rel>
+                <arg f="" n="2">um piloto rápido
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="consider.02" id="considerar.02" name="levar em consideração, " vncls="29.1">
+            <roles>
+                <role descr="agent" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="entity under consideration" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="for what/secondary predicate" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3575:  É sempre considerada a média de quatro semanas em_  relação_  às quatro anteriores. 
+</text>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">considerada</rel>
+                <arg f="" n="1">a média de quatro semanas
+</arg>
+                <arg f="prd" n="m">em_  relação_  às quatro anteriores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2842:  Tudo_  isso deve ser considerado para que se entenda que uma exata transposição do aluguel praticado em cruzeiros reais para o sistema da URV só é possível se os contratantes procederem a uma extração da média dos aluguéis nos últimos meses que corresponderem a periodicidade de reajustamento do contrato,  para,  só então,  transformar tal média em URVs. 
+</text>
+                <arg f="" n="1">Tudo_  isso
+</arg>
+                <rel f="">considerado</rel>
+                <arg f="pnc" n="m">para que se entenda que uma exata transposição do aluguel praticado em cruzeiros reais para o sistema da URV só é possível se os contratantes procederem a uma extração da média dos aluguéis nos últimos meses que corresponderem a periodicidade de reajustamento do contrato,  para,  só então,  transformar tal média em URVs
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="consider.01" id="considerar.03" name="acreditar" vncls="29.1">
+            <roles>
+                <role descr="thinker" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="object, thing under consideration" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2704:  O partido expulsou ontem Walter_  Queiroz por considerar que ele « faltou com a verdade » no episódio da dupla declaração de renda. 
+</text>
+                <rel f="">considerar</rel>
+                <arg f="" n="1">que ele « faltou com a verdade » no episódio da dupla declaração de renda
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="consider.02" id="considerar.04" name="cogitar" vncls="29.1">
+            <roles>
+                <role descr="agent" n="0">
+                    <vnrole vncls="29.1" vntheta="Agent" />
+                </role>
+                <role descr="entity under consideration" n="1">
+                    <vnrole vncls="29.1" vntheta="Theme" />
+                </role>
+                <role descr="for what/secondary predicate" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2282:  « Deixamos claro a Havelange que a Uefa só consideraria a possibilidade de lançar um candidato se ele declinasse de sua candidatura.  »
+</text>
+                <arg f="" n="0">a Uefa
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">consideraria</rel>
+                <arg f="" n="1">a possibilidade de lançar um candidato
+</arg>
+                <arg f="adv" n="m">se ele declinasse de sua candidatura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s809:  A equipe econômica considera que cedeu tudo o que podia durante a votação da emenda no primeiro turno. 
+</text>
+                <arg f="" n="0">A equipe econômica
+</arg>
+                <rel f="">considera</rel>
+                <arg f="" n="1">que cedeu tudo o que podia durante a votação da emenda no primeiro turno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s389:  No final da reunião,  o premiê italiano,  Silvio_  Berlusconi,  leu um documento de 45 parágrafos,  pelo_  qual 140 países consideram que o crime organizado é o maior inimigo das democracias. 
+</text>
+                <arg f="" n="0">140 países
+</arg>
+                <rel f="">consideram</rel>
+                <arg f="" n="1">que o crime organizado é o maior inimigo das democracias
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

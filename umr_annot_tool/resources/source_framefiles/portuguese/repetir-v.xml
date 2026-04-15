@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="repetir">
+        <note />
+    <roleset framnet="repeat.01" id="repetir.01" name="dizer ou fazer de novo" vncls="37.7 55.1">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="55.1" vntheta="Agent" />
+                    <vnrole vncls="37.7" vntheta="Agent" />
+                </role>
+                <role descr="utterance or action" n="1">
+                    <vnrole vncls="55.1" vntheta="Theme" />
+                    <vnrole vncls="37.7" vntheta="Topic" />
+                </role>
+                <role descr="listener" n="2">
+                    <vnrole vncls="37.7" vntheta="Recipient" />
+                </role>
+                <role descr="number of repetitions" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3656:  Lula tem repetido uma frase nas conversas com amigos: 
+</text>
+                <arg f="" n="0">Lula
+</arg>
+                <rel f="">repetido</rel>
+                <arg f="" n="1">uma frase
+</arg>
+                <arg f="loc" n="m">nas conversas com amigos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2447:  Não preciso repetir,  agora,  quem era o homem que Fernando_  Henrique apresentava como adequado ao plano,  sob o argumento de que tinha trânsito nas esquerdas para encabeçar um pacto conciliador. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">repetir</rel>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="" n="1">quem era o homem que Fernando_  Henrique apresentava como adequado ao plano,  sob o argumento de que tinha trânsito nas esquerdas para encabeçar um pacto conciliador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1368:  Segundo amigos do presidente,  ele repetiu várias vezes que Ariosto era o filho homem que nunca teve. 
+</text>
+                <arg f="dis" n="m">Segundo amigos do presidente
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">repetiu</rel>
+                <arg f="" n="3">várias vezes
+</arg>
+                <arg f="" n="1">que Ariosto era o filho homem que nunca teve
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s808:  Na ocasião,  o PMDB apoiou o governo,  mas agora não estaria totalmente unido para repetir a dose. 
+</text>
+                <rel f="">repetir</rel>
+                <arg f="" n="1">a dose
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

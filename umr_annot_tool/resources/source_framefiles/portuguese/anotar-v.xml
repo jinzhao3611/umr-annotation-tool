@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="anotar">
+        <note />
+    <roleset framnet="write.03" id="anotar.01" name="tomar nota" vncls="-">
+            <roles>
+                <role descr="writer" n="0" />
+                <role descr="written, recorded" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2868:  Em várias ocasiões eu me vi,  como anotei em meu diário,  ﻿à beira das lágrimas. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">anotei</rel>
+                <arg f="loc" n="m">em meu diário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

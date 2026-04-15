@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="consumar">
+        <note />
+    <roleset framnet="consummate.01" id="consumar.01" name="realizar, tornar realidade" vncls="-">
+            <roles>
+                <role descr="entity/entities completing something" n="0" />
+                <role descr="thing consumated" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s753:  Analisado isoladamente,  é um imposto democrático e que,  se levado ﻿à sua consequência lógica,  o Imposto_  Único,  poderia consumar a revolução tributária que o país deseja e precisa. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="adv" n="m">se levado ﻿à sua consequência lógica,  o Imposto_  Único, 
+</arg>
+                <rel f="">consumar</rel>
+                <arg f="" n="1">a revolução tributária que o país deseja e precisa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="proclamar">
+        <note />
+    <roleset framnet="judge.01" id="proclamar.01" name="declarar" vncls="29.4 29.2 34.2">
+            <roles>
+                <role descr="judge" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="34.2" vntheta="Agent" />
+                </role>
+                <role descr="judged" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="34.2" vntheta="Theme" />
+                </role>
+                <role descr="judgement, attribute of arg1" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <role descr="on what grounds" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2608:  Cabe perguntar:  Se o Supremo não está de_  acordo com a suposta falta de regra das duas moedas,  que existem de_  fato desde a emissão da última medida provisória,  por_  que não a proclamou imediatamente inconstitucional e se serviu dela privadamente? 
+</text>
+                <arg f="" n="0">o Supremo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="1">a
+</arg>
+                <rel f="">proclamou</rel>
+                <arg f="tmp" n="m">imediatamente
+</arg>
+                <arg f="" n="2">inconstitucional
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

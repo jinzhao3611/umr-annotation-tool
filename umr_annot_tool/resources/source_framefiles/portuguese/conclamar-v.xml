@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conclamar">
+        <note />
+    <roleset framnet="urge.01" id="conclamar.01" name="impelir alguém a fazer algo" vncls="">
+            <roles>
+                <role descr="urger" n="0" />
+                <role descr="impelled agent" n="1" />
+                <role descr="impelled action" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s986:  Em discurso feito na semana passada em Johannesburgo,  Arafat conclamou os muçulmanos a uma « jihad » pela cidade de Jerusalém. 
+</text>
+                <arg f="loc" n="m">Em discurso feito na semana passada em Johannesburgo
+</arg>
+                <arg f="" n="0">Arafat
+</arg>
+                <rel f="">conclamou</rel>
+                <arg f="" n="1">os muçulmanos
+</arg>
+                <arg f="" n="2">a uma « jihad » pela cidade de Jerusalém
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

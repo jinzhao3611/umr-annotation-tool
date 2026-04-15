@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="engatinhar">
+        <note />
+    <roleset framnet="crawl.01" id="engatinhar.01" name="andar de gatinhas (de joelhos, pés e mãos no chão); andar devagar (inclusive metaforicamente)" vncls="47.7">
+            <roles>
+                <role descr="agent, entity crawling" n="0">
+                    <vnrole vncls="47.7" vntheta="Theme" />
+                </role>
+                <role descr="direction" n="1">
+                    <vnrole vncls="47.7" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4008:  A NBA nem existia e o profissionalismo no esporte apenas engatinhava quando apareceu o primeiro gigante do basquete norte-  americano. 
+</text>
+                <arg f="" n="0">o profissionalismo no esporte
+</arg>
+                <arg f="adv" n="m">apenas
+</arg>
+                <rel f="">engatinhava</rel>
+                <arg f="tmp" n="m">quando apareceu o primeiro gigante do basquete norte-  americano
+</arg>
+                <note>uso metafórico</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

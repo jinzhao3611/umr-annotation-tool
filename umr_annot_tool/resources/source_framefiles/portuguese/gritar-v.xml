@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="gritar">
+        <note />
+    <roleset framnet="scream.01" id="gritar.01" name="falar alto; berrar" vncls="37.3 38 43.2">
+            <roles>
+                <role descr="screamer" n="0">
+                    <vnrole vncls="43.2" vntheta="Agent" />
+                    <vnrole vncls="38" vntheta="Agent" />
+                    <vnrole vncls="37.3" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="43.2" vntheta="Theme" />
+                    <vnrole vncls="38" vntheta="Theme" />
+                    <vnrole vncls="37.3" vntheta="Topic" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="38" vntheta="Recipient" />
+                    <vnrole vncls="37.3" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3133:  « Acho absurdo um político pagar alguém para gritar seu nome »,  reclama. 
+</text>
+                <rel f="">gritar</rel>
+                <arg f="" n="1">seu nome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3128:  Fabiane recebeu CR$  35 mil para usar camiseta da candidata e gritar o nome de Quércia. 
+</text>
+                <rel f="">gritar</rel>
+                <arg f="" n="1">o nome de Quércia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s252:  As letras irônicas,  eruditas,  denunciando que os músicos talvez tenham estudado um_  pouco demais são gritadas. 
+</text>
+                <arg f="" n="1">As letras irônicas,  eruditas,  denunciando que os músicos talvez tenham estudado um_  pouco demais
+</arg>
+                <rel f="">gritadas</rel>
+                <note>uso adjetival</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

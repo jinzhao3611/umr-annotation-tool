@@ -1,0 +1,513 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pedir">
+        <note />
+        <note />
+    <roleset framnet="ask.02" id="pedir.01" name="solicitar" vncls="37.1-1 58.2 58.1">
+            <roles>
+                <role descr="asker" n="0">
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                    <vnrole vncls="58.2" vntheta="Agent" />
+                    <vnrole vncls="58.1" vntheta="Agent" />
+                </role>
+                <role descr="favor" n="1">
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                    <vnrole vncls="58.2" vntheta="Proposition" />
+                    <vnrole vncls="58.1" vntheta="Proposition" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                    <vnrole vncls="58.2" vntheta="Recipient" />
+                    <vnrole vncls="58.1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4129:  O secretário-  geral do Conselho_  de_  Segurança da ONU,  Boutros_  Boutros-  Ghali,  pediu que as potências que negociam um tratado de paz com as facções em luta na Bósnia formem uma força-  tarefa para agir na região. 
+</text>
+                <arg f="" n="0">O secretário-  geral do Conselho_  de_  Segurança da ONU,  Boutros_  Boutros-  Ghali, 
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="1">que as potências que negociam um tratado de paz com as facções em luta na Bósnia formem uma força-  tarefa para agir na região
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4128:  ONU pede tropas na Bósnia
+</text>
+                <arg f="" n="0">ONU
+</arg>
+                <rel f="">pede</rel>
+                <arg f="" n="1">tropas
+</arg>
+                <arg f="loc" n="m">na Bósnia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4126:  Na semana passada,  o jogador Buchwald criticou a escalação de Matthaeus como líbero,  pedindo que ele jogasse no meio-  campo. 
+</text>
+                <rel f="">pedindo</rel>
+                <arg f="" n="1">que ele jogasse no meio-  campo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4107:  Os dirigentes da seleção pediram aos seguranças da universidade que afastassem o público,  composto em sua maior parte por jovens,  que já se preparava para acompanhar os treinos. 
+</text>
+                <arg f="" n="0">Os dirigentes da seleção
+</arg>
+                <rel f="">pediram</rel>
+                <arg f="" n="2">aos seguranças da universidade
+</arg>
+                <arg f="" n="1">que afastassem o público,  composto em sua maior parte por jovens,  que já se preparava para acompanhar os treinos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4084:  Segundo a assessoria de imprensa do governador,  Fleury já pediu um levantamento de preço das ações,  junto a consultores especializados,  para estabelecer o valor mínimo das ações,  que vão ser levadas a leilão. 
+</text>
+                <arg f="" n="0">Fleury
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="1">um levantamento de preço das ações
+</arg>
+                <arg f="" n="2">junto a consultores especializados
+</arg>
+                <arg f="pnc" n="m">para estabelecer o valor mínimo das ações,  que vão ser levadas a leilão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3843:  Os bombeiros pediram ajuda ao Cebimar(  Centro_  de_  Biologia_  Marinha)  da USP para apurar as causas da morte do golfinho. 
+</text>
+                <arg f="" n="0">Os bombeiros
+</arg>
+                <rel f="">pediram</rel>
+                <arg f="" n="1">ajuda
+</arg>
+                <arg f="" n="2">ao Cebimar(  Centro_  de_  Biologia_  Marinha)  da USP
+</arg>
+                <arg f="prd" n="m">para apurar as causas da morte do golfinho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3663:  Eles tentaram agendar um encontro com Lula para pedir que ele ajudasse na negociação. 
+</text>
+                <rel f="">pedir</rel>
+                <arg f="" n="1">que ele ajudasse na negociação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3580:  O próprio presidente Itamar_  Franco pedirá empenho de todos os ministros para mobilizar os seus partidos para a votação. 
+</text>
+                <arg f="" n="0">O próprio presidente Itamar_  Franco
+</arg>
+                <rel f="">pedirá</rel>
+                <arg f="" n="1">empenho de todos os ministros para mobilizar os seus partidos para a votação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3468:  O presidente articulou,  então,  lobby certeiro em_  direção_  ao Sebrae(  Serviço_  de_  Apoio_  à_  Pequena_  e_  Média_  Empresa)  e ainda pediu a FHC que o ajudasse a pôr Durante na presidência da entidade. 
+</text>
+                <arg f="" n="0">O presidente
+</arg>
+                <arg f="dis" n="m">ainda
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="2">a FHC
+</arg>
+                <arg f="" n="1">que o ajudasse a pôr Durante na presidência da entidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3311:  O veto impediu a declaração que pedia aos sérvios da Bósnia que parassem ataques no encrave muçulmano de Bihac. 
+</text>
+                <rel f="">pedia</rel>
+                <arg f="" n="2">aos sérvios da Bósnia
+</arg>
+                <arg f="" n="1">que parassem ataques no encrave muçulmano de Bihac
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3269:  Taranto não soube dizer se os parentes das vítimas poderão pedir alguma indenização. 
+</text>
+                <arg f="" n="0">os parentes das vítimas
+</arg>
+                <rel f="">pedir</rel>
+                <arg f="" n="1">alguma indenização
+</arg>
+                <note>em inglês, "to claim" (claim.01) seria melhor</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3248:  O desembargador Doreste_  Batista,  convidado pelo governador do Rio,  Nilo_  Batista,  para ser o supersecretário de Segurança do Estado,  disse ontem que,  se confirmado,  vai pedir apoio do Exército para subir morros e colocar policiamento ostensivo nas ruas. 
+</text>
+                <arg f="" n="0">O desembargador Doreste_  Batista,  convidado pelo governador do Rio,  Nilo_  Batista,  para ser o supersecretário de Segurança do Estado, 
+</arg>
+                <arg f="adv" n="m">confirmado
+</arg>
+                <rel f="">pedir</rel>
+                <arg f="" n="1">apoio do Exército para subir morros e colocar policiamento ostensivo nas ruas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3204:  Enquanto Gloria_  Pires ficou nervosa em sua estréia como modette,  o marido Orlando_  Moraes amou e pediu bis. 
+</text>
+                <arg f="" n="0">o marido Orlando_  Moraes
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="1">bis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3166:  Jamais ninguém me pediu nada. 
+</text>
+                <arg f="tmp" n="m">Jamais
+</arg>
+                <arg f="" n="0">ninguém
+</arg>
+                <arg f="" n="2">me
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="1">nada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2765:  O substitutivo dá aos ministérios da Fazenda e Justiça poder de pedir intervenção judicial nas empresas acusadas de praticar aumento injustificado de preços. 
+</text>
+                <rel f="">pedir</rel>
+                <arg f="" n="1">intervenção judicial nas empresas acusadas de praticar aumento injustificado de preços
+</arg>
+                <note>em inglês, "to determine" (determine.01) seria mais adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2587:  Em junho foram pedidas 145 ações revisionais de aluguel. 
+</text>
+                <arg f="tmp" n="m">Em junho
+</arg>
+                <rel f="">pedidas</rel>
+                <arg f="" n="1">145 ações revisionais de aluguel
+</arg>
+                <note>em inglês "to claim" (claim.01) seria mais apropriado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2304:  Os deputados petistas Luiz_  Gushiken(  federal)  e Luiz_  Azevedo(  estadual)  pedem que o Ministério_  Público estadual reabra processo sobre as importações. 
+</text>
+                <arg f="" n="0">Os deputados petistas Luiz_  Gushiken(  federal)  e Luiz_  Azevedo(  estadual) 
+</arg>
+                <rel f="">pedem</rel>
+                <arg f="" n="1">que o Ministério_  Público estadual reabra processo sobre as importações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2297:  O governador acrescentou que pedirá ao Nosso_  Senhor_  do_  Bonfim para que o plano dê certo. 
+</text>
+                <arg f="" n="0">O governador
+</arg>
+                <rel f="">pedirá</rel>
+                <arg f="" n="2">ao Nosso_  Senhor_  do_  Bonfim
+</arg>
+                <arg f="" n="1">para que o plano dê certo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2160:  Além_  disso,  a companhia pede que os bancos aumentem suas linhas de crédito em 500 milhões de marcos(  US$  287,  1 milhões)  e concedam uma moratória de três meses no pagamento das dívidas. 
+</text>
+                <arg f="dis" n="m">Além_  disso
+</arg>
+                <arg f="" n="0">a companhia
+</arg>
+                <rel f="">pede</rel>
+                <arg f="" n="1">que os bancos aumentem suas linhas de crédito em 500 milhões de marcos(  US$  287,  1 milhões) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2139:  Congresso pede volta de órgão do governo
+</text>
+                <arg f="" n="0">Congresso
+</arg>
+                <rel f="">pede</rel>
+                <arg f="" n="1">volta de órgão do governo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1869:  Alkimin achou que também era hora de firmar namoro e pediu a JK que o apresentasse às amigas da namorada. 
+</text>
+                <arg f="" n="0">Alkimin
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="2">a JK
+</arg>
+                <arg f="" n="1">que o apresentasse às amigas da namorada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1512:  Uma hora após a morte de Colosio- -  na realidade minutos depois do público receber a trágica notícia,  Octavio_  Paz pedia um « basta aos excessos verbais e ideológicos de alguns intelectuais e jornalistas » e às « numerosas e irresponsáveis apologias da violência ». 
+</text>
+                <arg f="tmp" n="m">Uma hora após a morte de Colosio- -  na realidade minutos depois do público receber a trágica notícia
+</arg>
+                <arg f="" n="0">Octavio_  Paz
+</arg>
+                <rel f="">pedia</rel>
+                <arg f="" n="1">um « basta aos excessos verbais e ideológicos de alguns intelectuais e jornalistas » e às « numerosas e irresponsáveis apologias da violência »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1099:  Também não lhe pede que cometa o maior pecado de um governante,  que é não governar e não servir ao público. 
+</text>
+                <arg f="dis" n="m">Também
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="2">lhe
+</arg>
+                <rel f="">pede</rel>
+                <arg f="" n="1">que cometa o maior pecado de um governante,  que é não governar e não servir ao público
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1045:  O ex-  auxiliar de produção em cervejarias Joilson_  da_  Silva,  23,  casado com um filho,  pedia mais informações sobre o abrigo. 
+</text>
+                <arg f="" n="0">O ex-  auxiliar de produção em cervejarias Joilson_  da_  Silva,  23,  casado com um filho, 
+</arg>
+                <rel f="">pedia</rel>
+                <arg f="" n="1">mais informações sobre o abrigo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s872:  A Otker e a Somel vão pedir contraprova. 
+</text>
+                <arg f="" n="0">A Otker e a Somel
+</arg>
+                <rel f="">pedir</rel>
+                <arg f="" n="1">contraprova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s816:  O presidente disse que pediu ao ministro das Minas_  e_  Energia,  Alexis_  Stepanenko,  que cheque também as estatais ligadas a ele para saber se também houve desobediência. 
+</text>
+                <arg f="" n="0">O presidente
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="2">ao ministro das Minas_  e_  Energia,  Alexis_  Stepanenko, 
+</arg>
+                <arg f="" n="1">que cheque também as estatais ligadas a ele para saber se também houve desobediência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s782:  Promotores da Sicília pediram ﻿à Justiça local o julgamento de 23 pessoas,  acusadas de conspirarem para assassinar Salvo_  Lima,  político democrata-  cristão morto pela Máfia pouco antes das eleições de 1992. 
+</text>
+                <arg f="" n="0">Promotores da Sicília
+</arg>
+                <rel f="">pediram</rel>
+                <arg f="" n="2">﻿à Justiça local
+</arg>
+                <arg f="" n="1">o julgamento de 23 pessoas,  acusadas de conspirarem para assassinar Salvo_  Lima,  político democrata-  cristão morto pela Máfia pouco antes das eleições de 1992
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s708:  « O Tasso_  Jereissati quis homenagear a minha região e pediu um nome. 
+</text>
+                <arg f="" n="0">O Tasso_  Jereissati
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="1">um nome
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s490:  O presidente Itamar_  Franco disse ontem que o ministro Alexis_  Stepanenko(  Minas_  e_  Energia)  autor de vários bilhetes pedindo apoio ao candidato Fernando_  Henrique_  Cardoso « está perdido ». 
+</text>
+                <rel f="">pedindo</rel>
+                <arg f="" n="1">apoio ao candidato Fernando_  Henrique_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s471:  O sindicato pede 99%  e os empresários oferecem 13,  56% . 
+</text>
+                <arg f="" n="0">O sindicato
+</arg>
+                <rel f="">pede</rel>
+                <arg f="" n="1">99% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s469:  A categoria pede 69,  69% . 
+</text>
+                <arg f="" n="0">A categoria
+</arg>
+                <rel f="">pede</rel>
+                <arg f="" n="1">69,  69% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s272:  Resposta- -  Já pedimos a criação de um conselho para produzir essa definição. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">pedimos</rel>
+                <arg f="" n="1">a criação de um conselho para produzir essa definição
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s208:  « Quando analisei a pista na quinta-  feira,  pedi ﻿à FIA que melhorasse as condições daquele ponto »,  disse o alemão. 
+</text>
+                <arg f="tmp" n="m">Quando analisei a pista na quinta-  feira
+</arg>
+                <rel f="">pedi</rel>
+                <arg f="" n="2">﻿à FIA
+</arg>
+                <arg f="" n="1">que melhorasse as condições daquele ponto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s19:  O atacante,  que deveria ter se apresentado anteontem ﻿à noite,  pediu mais um dia de folga ao treinador. 
+</text>
+                <arg f="" n="0">O atacante,  que deveria ter se apresentado anteontem ﻿à noite
+</arg>
+                <rel f="">pediu</rel>
+                <arg f="" n="1">mais um dia de folga
+</arg>
+                <arg f="" n="2">ao treinador
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="order.02" id="pedir.02" name="encomendar; fazer pedido (restaurante, bar)" vncls="13.5.1">
+            <roles>
+                <role descr="orderer" n="0">
+                    <vnrole vncls="13.5.1" vntheta="Agent" />
+                </role>
+                <role descr="thing ordered" n="1">
+                    <vnrole vncls="13.5.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, ordered-for" n="2">
+                    <vnrole vncls="13.5.1" vntheta="Beneficiary" />
+                </role>
+                <role descr="source" n="3">
+                    <vnrole vncls="13.5.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3525:  Pedem cerveja,  tequila e batidas,  num gasto médio de US$  30 por noite,  e falam mal dos mauricinhos que,  como diz Rubinho_  Gimenes,  são « cheios de querer ser ». 
+</text>
+                <rel f="">Pedem</rel>
+                <arg f="" n="1">cerveja,  tequila e batidas
+</arg>
+                <arg f="adv" n="m">num gasto médio de US$  30 por noite
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3188:  Se o valor da compra for baixo,  é melhor pedir encomenda por correio normal. 
+</text>
+                <rel f="">pedir</rel>
+                <arg f="" n="1">encomenda
+</arg>
+                <arg f="mnr" n="m">por correio normal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

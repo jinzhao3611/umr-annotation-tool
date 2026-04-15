@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recomendar">
+        <note />
+    <roleset framnet="recommend.01" id="recomendar.01" name="aconselhar" vncls="29.2 48.1.2">
+            <roles>
+                <role descr="recommender" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="thing recommended" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <role descr="recommended to" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                    <vnrole vncls="48.1.2" vntheta="Recipient" />
+                </role>
+                <role descr="secondary attribute" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4045:  A professora Cláudia_  Morgado,  25,  da academia Competition,  recomenda exercícios leves,  como a corrida. 
+</text>
+                <arg f="" n="0">A professora Cláudia_  Morgado,  25,  da academia Competition, 
+</arg>
+                <rel f="">recomenda</rel>
+                <arg f="" n="1">exercícios leves
+</arg>
+                <arg f="" n="3">como a corrida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3087:  Um caso típico foi o de « Someone_  to_  Watch_  Over_  Me »(  1926) ,  que nasceu « brejeira » e Ira recomendou que ela se tornasse uma balada romântica. 
+</text>
+                <arg f="" n="0">Ira
+</arg>
+                <rel f="">recomendou</rel>
+                <arg f="" n="1">que ela se tornasse uma balada romântica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1066:  No caso do autor de « O_  Amanuense_  Belmiro »(  recomendo a leitura de um dos inaugurais romances urbanos brasileiros)  não havia nada especial a demandar a pergunta feita através do Alcino. 
+</text>
+                <rel f="">recomendo</rel>
+                <arg f="" n="1">a leitura de um dos inaugurais romances urbanos brasileiros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s178:  Pode-  se agora recomendar um texto definitivo para o conselho da organização »,  disse o porta-  voz. 
+</text>
+                <arg f="tmp" n="m">agora
+</arg>
+                <rel f="">recomendar</rel>
+                <arg f="" n="1">um texto definitivo para o conselho da organização
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s124:  Para fazer uma boa compra,  a técnica do Procon recomenda ao consumidor que verifique se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente. 
+</text>
+                <arg f="pnc" n="m">Para fazer uma boa compra
+</arg>
+                <arg f="" n="0">a técnica do Procon
+</arg>
+                <rel f="">recomenda</rel>
+                <arg f="" n="2">ao consumidor
+</arg>
+                <arg f="" n="1">que verifique se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

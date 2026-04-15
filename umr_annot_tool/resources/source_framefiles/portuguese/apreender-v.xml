@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apreender">
+        <note />
+    <roleset framnet="confiscate.01" id="apreender.01" name="confiscar" vncls="10.5">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4120:  Prenderam todos e apreenderam a mercadoria. 
+</text>
+                <rel f="">apreenderam</rel>
+                <arg f="" n="1">a mercadoria
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3333:  « Vicentico » havia escapado do cerco da PF,  no domingo,  quando foram apreendidas 7,  5 toneladas de cocaína em Guaraí(  TO) . 
+</text>
+                <arg f="tmp" n="m">quando
+</arg>
+                <rel f="">apreendidas</rel>
+                <arg f="" n="1">7,  5 toneladas de cocaína
+</arg>
+                <arg f="loc" n="m">em Guaraí(  TO) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

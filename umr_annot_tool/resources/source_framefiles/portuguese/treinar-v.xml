@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="treinar">
+        <note />
+    <roleset framnet="train.01" id="treinar.01" name="praticar; exercitar; habilitar (alguém) para alguma atividade" vncls="-">
+            <roles>
+                <role descr="trainer" n="0" />
+                <role descr="skill" n="1" />
+                <role descr="trainee" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3932:  Embora esteja a quase 40 km do estádio,  o hotel foi escolhido porque está próximo_  da California_  State_  University,  onde o Brasil treinará durante esta semana. 
+</text>
+                <arg f="" n="2">o Brasil
+</arg>
+                <rel f="">treinará</rel>
+                <arg f="tmp" n="m">durante esta semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s371:  Os 12 computadores da Future_  Kids oferecem jogos educativos que treinam o raciocínio lógico. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">treinam</rel>
+                <arg f="" n="1">o raciocínio lógico
+</arg>
+                <note>com arg0 (treinador)</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s320:  Os jogadores do Palmeiras treinam às 9h,  no Centro de Treinamento. 
+</text>
+                <arg f="" n="2">Os jogadores do Palmeiras
+</arg>
+                <rel f="">treinam</rel>
+                <arg f="tmp" n="m">às 9h
+</arg>
+                <arg f="loc" n="m">no Centro de Treinamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s319:  Palmeiras e Corinthians treinam hoje
+</text>
+                <arg f="" n="2">Palmeiras e Corinthians
+</arg>
+                <rel f="">treinam</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s78:  Toda a comissão técnica sabe que Romário é de treinar pouco,  geralmente se poupando entre dois jogos difíceis. 
+</text>
+                <arg f="" n="2">Romário
+</arg>
+                <rel f="">treinar</rel>
+                <arg f="ext" n="m">pouco
+</arg>
+                <note>ser de + infinitivo = estar acostumado a + infinitivo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

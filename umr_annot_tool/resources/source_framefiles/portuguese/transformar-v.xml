@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="transformar">
+        <note />
+    <roleset framnet="transform.01" id="transformar.01" name="tornar" vncls="26.6">
+            <roles>
+                <role descr="causer of transformation" n="0">
+                    <vnrole vncls="26.6" vntheta="Agent" />
+                </role>
+                <role descr="thing changing" n="1">
+                    <vnrole vncls="26.6" vntheta="Patient" />
+                </role>
+                <role descr="end state" n="2">
+                    <vnrole vncls="26.6" vntheta="Product" />
+                </role>
+                <role descr="start state" n="3">
+                    <vnrole vncls="26.6" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3764:  A câmera de Raoul_  Coutard conseguiu transformar Paris numa cidade gélida,  sem contar a ousadia de montar sequências inteiras em negativo. 
+</text>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">Paris
+</arg>
+                <arg f="" n="2">numa cidade gélida,  sem contar a ousadia de montar sequências inteiras em negativo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3304:  Crianças de 11 a 14 anos vão aprender a transformar sucatas em brinquedos educativos. 
+</text>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">sucatas
+</arg>
+                <arg f="" n="2">em brinquedos educativos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s2842:  Tudo_  isso deve ser considerado para que se entenda que uma exata transposição do aluguel praticado em cruzeiros reais para o sistema da URV só é possível se os contratantes procederem a uma extração da média dos aluguéis nos últimos meses que corresponderem a periodicidade de reajustamento do contrato,  para,  só então,  transformar tal média em URVs. 
+</text>
+                <arg f="tmp" n="m">só então
+</arg>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">tal média
+</arg>
+                <arg f="" n="2">em URVs
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2740:  Como melhorar o ensino superior sem transformar as universidades em « escolões »,  onde os professores só repetem e se afastam da pesquisa? 
+</text>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">as universidades
+</arg>
+                <arg f="" n="2">em « escolões »,  onde os professores só repetem e se afastam da pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1122:  Esse quadro de inseguranças e de incertezas que já dura há duas décadas contribui para transformar o integrismo,  o racismo,  a intolerância política num formidável desafio ao sistema democrático neste nosso fim de século. 
+</text>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">o integrismo,  o racismo,  a intolerância política
+</arg>
+                <arg f="" n="2">num formidável desafio ao sistema democrático
+</arg>
+                <arg f="tmp" n="m">neste nosso fim de século
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s913:  Um advogado nova-  iorquino transformou seu apartamento no Brooklyn num paraíso tropical,  com árvores,  um sol artificial e pelo_  menos cinco jacarés na foto,  os policiais no momento da retirada de um deles. 
+</text>
+                <arg f="" n="0">Um advogado nova-  iorquino
+</arg>
+                <rel f="">transformou</rel>
+                <arg f="" n="1">seu apartamento no Brooklyn
+</arg>
+                <arg f="" n="2">num paraíso tropical,  com árvores,  um sol artificial e pelo_  menos cinco jacarés na foto,  os policiais no momento da retirada de um deles
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s398:  Todo esforço deve ser no sentido de transformar o local do trabalho em primeira instância do processo trabalhista,  com o poder de compor conflitos. 
+</text>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">o local do trabalho
+</arg>
+                <arg f="" n="2">em primeira instância do processo trabalhista,  com o poder de compor conflitos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s324:  Ficou então sabendo de sua intenção ou sonho de transformar o resultado numa exposição,  inclusive dos primeiros contatos nesse sentido com a Pinacoteca_  de_  São_  Paulo
+</text>
+                <rel f="">transformar</rel>
+                <arg f="" n="1">o resultado numa exposição,  inclusive dos primeiros contatos nesse sentido com a Pinacoteca_  de_  São_  Paulo
+</arg>
+                <note>arg1 e arg2 no mesmo constituinte sintático</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="transformar-se">
+        <note />
+    <roleset framnet="transfer.01" id="transformar.02" name="alternância incoativa de &quot;transformar&quot;; ser transformado em; tornar-se" vncls="11.1 13.2">
+            <roles>
+                <role descr="sender" n="0">
+                    <vnrole vncls="11.1" vntheta="Agent" />
+                    <vnrole vncls="13.2" vntheta="Agent" />
+                </role>
+                <role descr="sent" n="1">
+                    <vnrole vncls="11.1" vntheta="Theme" />
+                    <vnrole vncls="13.2" vntheta="Theme" />
+                </role>
+                <role descr="sent-to" n="2">
+                    <vnrole vncls="11.1" vntheta="Destination" />
+                    <vnrole vncls="13.2" vntheta="Recipient" />
+                </role>
+                <role descr="sent-from" n="3">
+                    <vnrole vncls="11.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3023:  Foi nesse papel que,  encarnada por outra Jacqueline(  Bisset) ,  Jackie_  O.  debutou na tela,  15 anos depois de ter-  se transformado na mais pranteada e sedutora viúva deste século. 
+</text>
+                <rel f="">transformado</rel>
+                <arg f="" n="2">na mais pranteada e sedutora viúva deste século
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

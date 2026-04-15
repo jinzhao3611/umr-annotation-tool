@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="coletar">
+        <note />
+    <roleset framnet="collect.01" id="coletar.01" name="recolher" vncls="13.5.2 22.3-2 45.4">
+            <roles>
+                <role descr="agent, entity acquiring something" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                    <vnrole vncls="22.3-2" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing acquired" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                    <vnrole vncls="22.3-2" vntheta="Patient" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="seller" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="benefactive" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3288:  Gloria_  Attanasio,  magistrada da capital,  meramente decidiu o_  que a sua função lhe exigia,  e enviou 250 detetives às sedes dos tais 34 clubes para,  lá,  coletarem os livros contábeis e os recibos correspondentes ao versamento dos impostos. 
+</text>
+                <rel f="">coletarem</rel>
+                <arg f="" n="1">os livros contábeis
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

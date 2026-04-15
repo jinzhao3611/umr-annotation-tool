@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="incluir.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3753:  A NEC tem mais_  de 55$ % (  US$  455 milhões)  dos contratos assinados pelas concessionárias da Telebrás,  incluindo aí a segunda fase da implantação do sistema móvel em São_  Paulo e a terceira no Rio,  previstas para 94. 
+</text>
+                <rel f="">incluindo</rel>
+                <arg f="" n="2">aí
+</arg>
+                <arg f="" n="1">a segunda fase da implantação do sistema móvel em São_  Paulo e a terceira no Rio,  previstas para 94
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3436:  As músicas incluem The_  Jackson_  5,  Stevie_  Wonder,  Jimi_  Hendrix,  James_  Brown e outros 18 bons nomes. 
+</text>
+                <arg f="" n="2">As músicas
+</arg>
+                <rel f="">incluem</rel>
+                <arg f="" n="1">The_  Jackson_  5,  Stevie_  Wonder,  Jimi_  Hendrix,  James_  Brown e outros 18 bons nomes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3219:  O chamado « mundo livre »(  que então incluía também a URSS)  unia-  se contra o nazi-  fascismo. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <arg f="tmp" n="m">então
+</arg>
+                <rel f="">incluía</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">a URSS
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3107:  Como partiu do PT o pedido de encontro com o presidente Nelson_  Mandela,  o próprio partido assumiu os custos do trecho da viagem que inclui a África_  do_  Sul. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">inclui</rel>
+                <arg f="" n="1">a África_  do_  Sul
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2655:  Incluem ainda um outro CD,  que serve como guia para uso em sala de aula. 
+</text>
+                <rel f="">Incluem</rel>
+                <arg f="dis" n="m">ainda
+</arg>
+                <arg f="" n="1">um outro CD,  que serve como guia para uso em sala de aula
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2503:  O percurso,  que será divulgado momentos antes da prova,  deve incluir a avenida Bandeirantes,  via Anchieta,  represa Billings e chegada na av. _  Nove_  de_  Julho,  em_  frente ao Banana_  Banana. 
+</text>
+                <arg f="" n="2">O percurso,  que será divulgado momentos antes da prova, 
+</arg>
+                <rel f="">incluir</rel>
+                <arg f="" n="1">a avenida Bandeirantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2298:  O acordo inclui votar,  sem novas emendas,  o projeto de Orçamento para 95. 
+</text>
+                <arg f="" n="2">O acordo
+</arg>
+                <rel f="">inclui</rel>
+                <arg f="" n="1">votar,  sem novas emendas,  o projeto de Orçamento para 95
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2159:  Neukirchen disse que a proposta apresentada aos bancos inclui uma injeção de 2,  7 bilhões de marcos(  US$  1,  55 bilhões)  para aumento do capital acionário. 
+</text>
+                <arg f="" n="2">a proposta apresentada aos bancos
+</arg>
+                <rel f="">inclui</rel>
+                <arg f="" n="1">uma injeção de 2,  7 bilhões de marcos(  US$  1,  55 bilhões)  para aumento do capital acionário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2129:  Quem prefere as missões espaciais tem ﻿à disposição cerca_  de oito horas de informações sobre 1.  600 missões,  incluindo o programa Apollo e o passeio do astronauta Neil_  Armstrong na Lua. 
+</text>
+                <rel f="">incluindo</rel>
+                <arg f="" n="1">o programa Apollo e o passeio do astronauta Neil_  Armstrong na Lua
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1795:  Inclui disquete de atualização do 6.  0 para 6.  2. 
+</text>
+                <rel f="">Inclui</rel>
+                <arg f="" n="1">disquete de atualização do 6.  0 para 6.  2
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1753:  Apesar_  de ser a primeira área no Brasil a ser incluída,  em 1991,  ﻿à rede hemisférica de reservas para aves migratórias na categoria de reserva internacional,  o Parque_  Nacional_  da_  Lagoa_  do_  Peixe,  criado em 1986,  não existe de_  fato,  pois ainda não há um plano de manejo e de desenvolvimento. 
+</text>
+                <rel f="">incluída</rel>
+                <arg f="tmp" n="m">em 1991
+</arg>
+                <arg f="" n="2">﻿à rede hemisférica de reservas para aves migratórias na categoria de reserva internacional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1730:  Os pacotes,  com pensão completa,  incluindo passeios,  vão de US$  150(  CR$  68,  8 mil) ,  dois dias,  a US$  300(  CR$  137,  7 mil) ,  cinco dias. 
+</text>
+                <rel f="">incluindo</rel>
+                <arg f="" n="1">passeios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1519:  Este levantamento de preços que inclui também produtos de higiene e de limpeza mostra recuo de 1,  58%  em_  relação_  ﻿à sexta-  feira anterior. 
+</text>
+                <arg f="" n="2">que
+</arg>
+                <rel f="">inclui</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <arg f="" n="1">produtos de higiene e de limpeza
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1440:  No PPR,  a discussão será sobre a política de alianças e se ela inclui o PSDB,  além_  dos novos candidatos do partido a presidente. 
+</text>
+                <arg f="" n="2">ela
+</arg>
+                <rel f="">inclui</rel>
+                <arg f="" n="1">o PSDB,  além_  dos novos candidatos do partido a presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1383:  Em Curitiba,  as comemorações vão incluir envio de fax,  plantio de árvores e passeatas. 
+</text>
+                <arg f="loc" n="m">Em Curitiba
+</arg>
+                <arg f="" n="2">as comemorações
+</arg>
+                <rel f="">incluir</rel>
+                <arg f="" n="1">envio de fax,  plantio de árvores e passeatas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1319:  Outros prêmios incluem personalidade do ano,  melhor produção de ópera,  melhor transmissão de TV,  melhor grupo de música antiga,  entre outros. 
+</text>
+                <arg f="" n="2">Outros prêmios
+</arg>
+                <rel f="">incluem</rel>
+                <arg f="" n="1">personalidade do ano,  melhor produção de ópera,  melhor transmissão de TV,  melhor grupo de música antiga
+</arg>
+                <arg f="loc" n="m">entre outros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1196:  Foi possível cumprir os 13,  4 quilômetros do percurso numa velocidade média de 40 km/  h,  incluindo-  se a espera nos semáforos. 
+</text>
+                <rel f="">incluindo-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">a espera nos semáforos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s810:  O governo concordou em incluir no Orçamento de 94 investimentos em educação nos mesmos níveis do ano passado e destinar para habitação três vezes mais do_  que o registrado em 1992. 
+</text>
+                <rel f="">incluir</rel>
+                <arg f="" n="2">no Orçamento de 94
+</arg>
+                <arg f="" n="1">investimentos em educação
+</arg>
+                <arg f="ext" n="m">nos mesmos níveis do ano passado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s689:  Entendemos que palavras como respeito,  atenção e ética,  incluindo a eficiência na prestação dos serviços,  devem mais do_  que nunca,  nortear nossa conduta nas relações com nossos clientes. 
+</text>
+                <rel f="">incluindo</rel>
+                <arg f="" n="1">a eficiência na prestação dos serviços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s98:  Foi utilizada técnica mista,  incluindo desenho,  pastel,  ceragrafia e fotografismo. 
+</text>
+                <rel f="">incluindo</rel>
+                <arg f="" n="1">desenho,  pastel,  ceragrafia e fotografismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s29:  Como não houve acordo entre governo e tribunal quanto_  ao volume de recursos,  a dotação foi incluída na reserva de contingência sem especificação de despesa. 
+</text>
+                <arg f="cau" n="m">Como não houve acordo entre governo e tribunal quanto_  ao volume de recursos
+</arg>
+                <arg f="" n="1">a dotação
+</arg>
+                <rel f="">incluída</rel>
+                <arg f="" n="2">na reserva de contingência
+</arg>
+                <arg f="mnr" n="m">sem especificação de despesa. 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

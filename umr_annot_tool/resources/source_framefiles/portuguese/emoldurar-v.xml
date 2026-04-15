@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="emoldurar">
+        <note />
+    <roleset framnet="frame.01" id="emoldurar.01" name="colocar em moldura" vncls="9.8 9.9">
+            <roles>
+                <role descr="decorator" n="0">
+                    <vnrole vncls="9.9" vntheta="Agent" />
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="thing decorated" n="1">
+                    <vnrole vncls="9.9" vntheta="Destination" />
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                </role>
+                <role descr="decorations" n="2">
+                    <vnrole vncls="9.9" vntheta="Theme" />
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2877:  Uma melodia melancólica emoldura a canção. 
+</text>
+                <arg f="" n="0">Uma melodia melancólica
+</arg>
+                <rel f="">emoldura</rel>
+                <arg f="" n="1">a canção
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2219:  A estrela símbolo do PT vai emoldurar com destaque o cenário dos programas do candidato Luiz_  Inácio_  Lula_  da_  Silva. 
+</text>
+                <arg f="" n="0">A estrela símbolo do PT
+</arg>
+                <rel f="">emoldurar</rel>
+                <arg f="mnr" n="m">com destaque
+</arg>
+                <arg f="" n="1">o cenário dos programas do candidato Luiz_  Inácio_  Lula_  da_  Silva
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="programar">
+        <note />
+    <roleset framnet="plan.01" id="programar.01" name="planejar" vncls="">
+            <roles>
+                <role descr="planner" n="0" />
+                <role descr="thing planned" n="1" />
+                <role descr="grounds for planning" n="2" />
+                <role descr="beneficiary" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3559:  O 9º Free_  Jazz_  Festival ampliou seu leque e programou uma noite trepidante sob o comando do « godfather_  of_  soul » James_  Brown e cedeu espaço para a modernidade de Guru,  US3 e dos Digable_  Planets. 
+</text>
+                <arg f="" n="0">O 9º Free_  Jazz_  Festival
+</arg>
+                <rel f="">programou</rel>
+                <arg f="" n="1">uma noite trepidante sob o comando do « godfather_  of_  soul » James_  Brown
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

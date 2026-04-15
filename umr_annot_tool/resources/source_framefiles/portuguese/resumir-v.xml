@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="resumir-se">
+        <note />
+    <roleset framnet="limit.01" id="resumir.01" name="incoativo de &quot;resumir&quot;: ficar restrito a" vncls="76">
+            <roles>
+                <role descr="agent, limiter" n="0">
+                    <vnrole vncls="76" vntheta="Cause" />
+                </role>
+                <role descr="thing limited" n="1">
+                    <vnrole vncls="76" vntheta="Patient" />
+                </role>
+                <role descr="limit" n="2">
+                    <vnrole vncls="76" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3108:  Segundo a tesoureira da campanha de Lula,  Tatau_  Godinho,  os custos se resumem ﻿à passagem aérea,  já_  que o candidato ficou hospedado na casa do embaixador do Brasil na África_  do_  Sul,  Antônio_  Amaral_  de_  Sampaio. 
+</text>
+                <arg f="dis" n="m">Segundo a tesoureira da campanha de Lula,  Tatau_  Godinho, 
+</arg>
+                <arg f="" n="1">os custos
+</arg>
+                <rel f="">resumem</rel>
+                <arg f="" n="2">﻿à passagem aérea
+</arg>
+                <arg f="cau" n="m">já_  que o candidato ficou hospedado na casa do embaixador do Brasil na África_  do_  Sul,  Antônio_  Amaral_  de_  Sampaio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="sum.01" id="resumir.02" name="" vncls="-">
+            <roles>
+                <role descr="summarizer" n="0" />
+                <role descr="thing summarized" n="1" />
+                <role descr="as, if syntactically neat" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1016:  As duas palavras não chegaram a ser ditas,  mas resumem o consenso:  investir em treinamento nas empresas é bom,  mas não basta. 
+</text>
+                <arg f="" n="0">As duas palavras
+</arg>
+                <rel f="">resumem</rel>
+                <arg f="" n="1">o consenso:  investir em treinamento nas empresas é bom,  mas não basta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s974:  Profissionais com longa experiência em cargos gerenciais e administrativos devem se preocupar,  ao fazer o currículo,  em mostrar a essência da carreira,  resumindo suas conquistas e realizações. 
+</text>
+                <rel f="">resumindo</rel>
+                <arg f="" n="1">suas conquistas e realizações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

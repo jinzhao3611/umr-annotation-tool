@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="preparar">
+        <note />
+    <roleset framnet="prepare.02" id="preparar.01" name="arrumar" vncls="">
+            <roles>
+                <role descr="preparer" n="0" />
+                <role descr="thing made ready" n="1" />
+                <role descr="ready for" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4107:  Os dirigentes da seleção pediram aos seguranças da universidade que afastassem o público,  composto em sua maior parte por jovens,  que já se preparava para acompanhar os treinos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">preparava</rel>
+                <arg f="" n="2">para acompanhar os treinos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3357:  Teses modernas e sociais como o controle civil sobre o sistema de saúde esbarram em resistências enormes dos setores hegemônicos do PT,  sob o argumento de que amarrariam a atuação do governo,  logo agora que o partido se prepara para assumir o poder. 
+</text>
+                <arg f="" n="0">o partido
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">prepara</rel>
+                <arg f="" n="2">para assumir o poder
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3160:  E é justamente por isso que não se deve parar,  preparando terreno ao futuro presidente. 
+</text>
+                <rel f="">preparando</rel>
+                <arg f="" n="1">terreno
+</arg>
+                <arg f="" n="2">ao futuro presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3101:  Com direção de Roberto_  de_  Oliveira,  a Bandeirantes prepara um documentário sobre a Campanha_  Contra_  a_  Fome e o trabalho do rapaz. 
+</text>
+                <arg f="adv" n="m">Com direção de Roberto_  de_  Oliveira
+</arg>
+                <arg f="" n="0">a Bandeirantes
+</arg>
+                <rel f="">prepara</rel>
+                <arg f="" n="1">um documentário sobre a Campanha_  Contra_  a_  Fome e o trabalho do rapaz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2971:  Então é bom a Joyce_  Pascowitch ir se preparando. 
+</text>
+                <arg f="" n="0">a Joyce_  Pascowitch
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">preparando</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2867:  Nada_  do_  que eu havia lido ou ouvido antes de vir para cá me preparara para as emoções que eu iria viver e várias vezes me senti numa montanha-  russa emocional. 
+</text>
+                <arg f="" n="0">Nada_  do_  que eu havia lido ou ouvido antes de vir para cá
+</arg>
+                <arg f="" n="1">me
+</arg>
+                <rel f="">preparara</rel>
+                <arg f="" n="2">para as emoções que eu iria viver
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2737:  Caciques do PFL já preparam o discurso para rebater uma possível tentativa tucana de atrair apoios doutros partidos para « diluir » a influência pefelista num eventual governo FHC: 
+</text>
+                <arg f="" n="0">Caciques do PFL
+</arg>
+                <rel f="">preparam</rel>
+                <arg f="" n="1">o discurso
+</arg>
+                <arg f="pnc" n="m">para rebater uma possível tentativa tucana de atrair apoios doutros partidos para « diluir » a influência pefelista num eventual governo FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2236:  Os testes de laboratório deram certo,  e agora a empresa se prepara para comercializar essa « mini-  usina tratadora de esgotos ». 
+</text>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="" n="0">a empresa
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">prepara</rel>
+                <arg f="" n="2">para comercializar essa « mini-  usina tratadora de esgotos »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1999:  De_  volta ao Rio_  de_  Janeiro,  Euclides preparou alguns dos mapas que serviram de base para o tratado de fronteiras entre o Brasil e o Peru. 
+</text>
+                <arg f="tmp" n="m">De_  volta ao Rio_  de_  Janeiro
+</arg>
+                <arg f="" n="0">Euclides
+</arg>
+                <rel f="">preparou</rel>
+                <arg f="" n="1">alguns dos mapas que serviram de base para o tratado de fronteiras entre o Brasil e o Peru
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1960:  A Eufrasio_  Veículos,  revendedora Ford,  aposta no showroom sazonal e se prepara para começar a atuar em Campos_  do_  Jordão por dois meses. 
+</text>
+                <arg f="" n="0">A Eufrasio_  Veículos,  revendedora Ford, 
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">prepara</rel>
+                <arg f="" n="2">para começar a atuar em Campos_  do_  Jordão por dois meses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s681:  O baiano Dias_  Gomes,  70,  está se preparando para ressuscitar um clássico da teledramaturgia brasileira. 
+</text>
+                <arg f="" n="0">O baiano Dias_  Gomes,  70, 
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">preparando</rel>
+                <arg f="" n="2">para ressuscitar um clássico da teledramaturgia brasileira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s467:  Os metalúrgicos do Estado de São_  Paulo da base da Força_  Sindical(  data-  base em novembro)  romperam negociação com os setores de autopeças,  forjaria e parafusos e preparam greve. 
+</text>
+                <arg f="" n="0">Os metalúrgicos do Estado de São_  Paulo da base da Força_  Sindical(  data-  base em novembro) 
+</arg>
+                <rel f="">preparam</rel>
+                <arg f="" n="1">greve
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s458:  O escritório de Júlio_  Neves já começa a preparar novos estudos para o prolongamento deste corredor além_  do shopping Morumbi,  em_  direção_  ﻿à ponte do Socorro. 
+</text>
+                <arg f="" n="0">O escritório de Júlio_  Neves
+</arg>
+                <rel f="">preparar</rel>
+                <arg f="" n="1">novos estudos
+</arg>
+                <arg f="" n="3">para o prolongamento deste corredor além_  do shopping Morumbi em_  direção_  ﻿à ponte do Socorro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s230:  Próximo_  ﻿à praça da alimentação,  um sushiman estará preparando pratos típicos,  como sashimis e o sushi,  que estarão ﻿à venda. 
+</text>
+                <arg f="loc" n="m">Próximo_  ﻿à praça da alimentação
+</arg>
+                <arg f="" n="0">um sushiman
+</arg>
+                <rel f="">preparando</rel>
+                <arg f="" n="1">pratos típicos
+</arg>
+                <arg f="prd" n="m">como sashimis e o sushi,  que estarão ﻿à venda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s219:  Só o procurou tempos depois,  quando o secretário de Assuntos_  Especiais,  Eliezer_  Baptista,  resolveu preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor e convocou Mourão para sua equipe. 
+</text>
+                <rel f="">preparar</rel>
+                <arg f="" n="1">o macroplanejamento do país
+</arg>
+                <arg f="prd" n="m">uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s168:  Zanini diz que está preparando a fundação de um novo partido,  que trará explícito em seu programa a ressalva de que é contra o racismo. 
+</text>
+                <arg f="" n="0">Zanini
+</arg>
+                <rel f="">preparando</rel>
+                <arg f="" n="1">a fundação de um novo partido,  que trará explícito em seu programa a ressalva de que é contra o racismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

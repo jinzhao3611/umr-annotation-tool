@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="avançar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="progress.01" id="avançar.01" name="progredir" vncls="-">
+            <roles>
+                <role descr="thing moving" n="1" />
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2837:  Empresários alemães avançaram nas negociações para instalar unidades de beneficiamento de polpas de frutas. 
+</text>
+                <arg f="" n="1">Empresários alemães
+</arg>
+                <rel f="">avançaram</rel>
+                <arg f="" n="2">nas negociações para instalar unidades de beneficiamento de polpas de frutas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s424:  Fazer avançar uma reforma estrutural(  como a abertura da economia)  e,  ao_  mesmo_  tempo,  calibrar um processo de estabilização não é porém uma tarefa fácil. 
+</text>
+                <rel f="">avançar</rel>
+                <arg f="" n="1">uma reforma estrutural(  como a abertura da economia) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s377:  Quatro meses depois do atentado,  o governo argentino ainda não conseguiu avançar nas investigações sobre o atentado. 
+</text>
+                <arg f="" n="1">o governo argentino
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">avançar</rel>
+                <arg f="" n="2">nas investigações sobre o atentado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="encroach.01" id="avançar.02" name="invadir" vncls="-">
+            <roles>
+                <role descr="encroacher" n="0" />
+                <role descr="encroached-(up)on" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2016:  Um cabo,  ensinam os dicionários,  é uma faixa de terra que entra pelo mar o oposto de fiorde,  que é uma porção de mar que avança pelo continente,  como acontece na Noruega e Suécia. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">avança</rel>
+                <arg f="" n="1">pelo continente
+</arg>
+                <note>uso metafórico de "avançar"</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="move.04" id="avançar.03" name="atacar" vncls="-">
+            <roles>
+                <role descr="attacker" n="0" />
+                <role descr="attacked" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1325:  Aldair e Márcio_  Santos avançaram pouco e neutralizaram Dahlin e Kennet_  Andersson
+</text>
+                <arg f="" n="0">Aldair e Márcio_  Santos
+</arg>
+                <rel f="">avançaram</rel>
+                <arg f="ext" n="m">pouco
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

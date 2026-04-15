@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="posar">
+        <note />
+    <roleset framnet="pose.01" id="posar.01" name="fazer pose (para fotografia); adotar atitude de" vncls="29.6">
+            <roles>
+                <role descr="player" n="0">
+                    <vnrole vncls="29.6" vntheta="Agent" />
+                </role>
+                <role descr="role" n="1">
+                    <vnrole vncls="29.6" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2483:  O fato do presidente ter posado ao_  lado_  daquela atriz foi um vexame para toda a nação brasileira. 
+</text>
+                <arg f="" n="0">o presidente
+</arg>
+                <rel f="">posado</rel>
+                <arg f="" n="1">ao_  lado_  daquela atriz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1919:  Ex-  presidente não fala ﻿à imprensa,  mas posa para fotos
+</text>
+                <arg f="" n="0">Ex-  presidente não fala ﻿à imprensa, 
+</arg>
+                <rel f="">posa</rel>
+                <arg f="" n="2">para fotos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1433:  Na chegada do ano em que disputará uma vaga no Senado pelo PP-  SP,  deu mais_  de duas dezenas de entrevistas,  posou para fotos,  e deixou 1993 nas emissoras de rádio e TV. 
+</text>
+                <rel f="">posou</rel>
+                <arg f="" n="2">para fotos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

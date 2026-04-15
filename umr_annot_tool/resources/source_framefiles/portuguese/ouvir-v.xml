@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ouvir">
+        <note />
+    <roleset framnet="" id="ouvir.01" name="escutar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3623:  Segundo o professor Vicente_  Amato_  Neto,  66,  « há informações que todos ouvem,  no sentido de fazer o estacionamento ». 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">todos
+</arg>
+                <rel f="">ouvem</rel>
+                <arg f="prd" n="m">no sentido de fazer o estacionamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3336:  Documentos reservados da segurança da Presidência da República alertavam,  na semana anterior,  para a possibilidade do presidente ouvir vaias. 
+</text>
+                <arg f="" n="0">o presidente
+</arg>
+                <rel f="">ouvir</rel>
+                <arg f="" n="1">vaias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2624:  Para avaliar as perspectivas deste ano,  a Folha ouviu economistas e consultores que têm entre seus clientes muitas das principais empresas brasileiras. 
+</text>
+                <arg f="pnc" n="m">Para avaliar as perspectivas deste ano
+</arg>
+                <arg f="" n="0">a Folha
+</arg>
+                <rel f="">ouviu</rel>
+                <arg f="" n="1">economistas e consultores que têm entre seus clientes muitas das principais empresas brasileiras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2381:  Não ouvi falar nada sobre arbitragens. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">ouvi</rel>
+                <arg f="" n="1">falar nada sobre arbitragens
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2135:  Lessa disse que está disposto a ouvir uma proposta formal do governador. 
+</text>
+                <rel f="">ouvir</rel>
+                <arg f="" n="1">uma proposta formal do governador
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1436:  Ao ouvir a negativa a seu recurso,  Fay não demonstrou reação. 
+</text>
+                <rel f="">ouvir</rel>
+                <arg f="" n="1">a negativa a seu recurso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1376:  O TJM(  Tribunal_  de_  Justiça_  Militar)  vai começar a ouvir neste mês as testemunhas de acusação do processo contra os 120 Policiais Militares denunciados pelo massacre de 111 presos no pavilhão 9 da Casa_  de_  Detenção,  no Carandiru(  zona norte de São_  Paulo) . 
+</text>
+                <arg f="" n="0">O TJM(  Tribunal_  de_  Justiça_  Militar) 
+</arg>
+                <rel f="">ouvir</rel>
+                <arg f="tmp" n="m">neste mês
+</arg>
+                <arg f="" n="1">as testemunhas de acusação do processo contra os 120 Policiais Militares denunciados pelo massacre de 111 presos no pavilhão 9 da Casa_  de_  Detenção,  no Carandiru(  zona norte de São_  Paulo) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

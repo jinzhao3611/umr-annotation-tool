@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="antecipar">
+        <note />
+    <roleset framnet="advance.01" id="antecipar.01" name="adiantar" vncls="45.4">
+            <roles>
+                <role descr="agent, causing advance" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing advancing" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="EXT, amount advanced by" n="2" />
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2978:  E,  para Bruno_  Bettelheim,  as pequenas velas e lâmpadas que a iluminam seriam vestígios das antigas fogueiras que os pagãos do norte da Europa ateavam no alto das montanhas para antecipar a chegada do Sol e o fim do inverno. 
+</text>
+                <rel f="">antecipar</rel>
+                <arg f="" n="1">a chegada do Sol e o fim do inverno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s421:  O governo agora apenas antecipou uma rodada de redução de tarifas prevista para janeiro de 95. 
+</text>
+                <arg f="" n="0">O governo
+</arg>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="adv" n="m">apenas
+</arg>
+                <rel f="">antecipou</rel>
+                <arg f="" n="1">uma rodada de redução de tarifas prevista para janeiro de 95
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

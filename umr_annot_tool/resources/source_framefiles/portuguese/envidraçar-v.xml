@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="envidraçar">
+        <note />
+    <roleset framnet="" id="envidraçar.01" name="colocar vidro, revestir de vidro" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s881:  Se depender de assinatura,  terá longa vida o bar-  café todo envidraçado que estréia este mês dentro_  da Livraria_  da_  Vila
+</text>
+                <rel f="">envidraçado</rel>
+                <note>como adjetivo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

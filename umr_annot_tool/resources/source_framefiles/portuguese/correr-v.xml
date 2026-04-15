@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="correr">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="run.10" id="correr.01" name="verbo suporte" vncls="-">
+            <roles>
+                <role descr="runner, agent" n="0" />
+                <role descr="idiom; deficit, risk, etc." n="1" />
+                <role descr="attribute of arg 1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3116:  Quando a gente se diz engajado,  corre o risco de evocar modelos anteriores e o engajamento hoje deve encontrar formas novas. 
+</text>
+                <arg f="" n="0">a gente
+</arg>
+                <arg f="tmp" n="m">Quando a gente se diz engajado
+</arg>
+                <rel f="">corre</rel>
+                <arg f="" n="1">o risco de evocar modelos anteriores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1430:  O sindicalista Luiz_  Antônio_  de_  Medeiros correu a São_  Silvestre em busca de resultados. 
+</text>
+                <arg f="" n="0">O sindicalista Luiz_  Antônio_  de_  Medeiros
+</arg>
+                <rel f="">correu</rel>
+                <arg f="" n="1">a São_  Silvestre
+</arg>
+                <arg f="cau" n="m">em busca de resultados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="correr.02" name="ser transmitido entre pessoas" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3019:  Corria uma piada segundo a_  qual Keynes era inteligente demais para ser consistente ; Dennis_  Robertson,  outra estrela,  era consistente demais para ser inteligente ; e Lionel_  Robbins,  o terceiro nome de prestígio,  não era nem inteligente nem consistente. 
+</text>
+                <rel f="">Corria</rel>
+                <arg f="" n="0">uma piada segundo a_  qual Keynes era inteligente demais para ser consistente
+</arg>
+                <note>Sujeito posposto é frequente</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="hurry.01" id="correr.04" name="apressar-se" vncls="53.2 51.3.2">
+            <roles>
+                <role descr="causer" n="0">
+                    <vnrole vncls="53.2" vntheta="Agent" />
+                    <vnrole vncls="51.3.2" vntheta="Agent" />
+                </role>
+                <role descr="entity in motion" n="1">
+                    <vnrole vncls="53.2" vntheta="Theme" />
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary predicate, purpose" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2561:  Por isso,  você não precisa correr para trocar o seu dinheiro ». 
+</text>
+                <arg f="cau" n="m">Por isso
+</arg>
+                <arg f="" n="1">você
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">correr</rel>
+                <arg f="" n="2">para trocar o seu dinheiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="correr.05" name="circular (movimento dos veículos de transporte coletivo: metrô, ônibus, trem)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1241:  Os relógios serão atrasados ﻿à meia-  noite para 23h,  e os trens continuarão a correr até a « segunda meia-  noite ». 
+</text>
+                <arg f="" n="0">os trens
+</arg>
+                <rel f="">correr</rel>
+                <arg f="tmp" n="m">até a « segunda meia-  noite »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="correr por conta">
+        <note />
+    <roleset framnet="" id="correr.03" name="ser suportado por (Arg1 normalmente refere-se a custos ou riscos)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2905:  Tanto a construção quanto_  a manutenção da equipagem corria por_  conta dos que tinham mais recursos. 
+</text>
+                <arg f="" n="1">a construção quanto_  a manutenção da equipagem
+</arg>
+                <rel f="">corria</rel>
+                <arg f="" n="2">dos que tinham mais recursos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

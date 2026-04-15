@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dobrar">
+        <note />
+    <roleset framnet="" id="dobrar.01" name="sobrepor as partes" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1991:  « Dobrando pelo vinco a calça jeans ou a calça de veludo,  e estendendo-  a sobre o carpete do quarto do hotel,  ela fica como_  se tivesse sido passada a ferro.  »
+</text>
+                <rel f="">Dobrando</rel>
+                <arg f="mnr" n="m">pelo vinco
+</arg>
+                <arg f="" n="1">a calça jeans ou a calça de veludo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="resistir">
+        <note />
+    <roleset framnet="resist.01" id="resistir.01" name="não se submeter" vncls="-">
+            <roles>
+                <role descr="resister" n="0" />
+                <role descr="thing resisted" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3990:  Eddie também está em crise com sua mulher(  interpretada pela mulher de Abel_  Ferrara)  e não resiste ﻿à tentação da atriz,  que paga para ele filmar(  Madonna é produtora de « Olhos_  de_  Serpente ») . 
+</text>
+                <arg f="" n="0">Eddie
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">resiste</rel>
+                <arg f="" n="1">﻿à tentação da atriz,  que paga para ele filmar(  Madonna é produtora de « Olhos_  de_  Serpente ») 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s219:  Só o procurou tempos depois,  quando o secretário de Assuntos_  Especiais,  Eliezer_  Baptista,  resolveu preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor e convocou Mourão para sua equipe. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="adv" n="m">infelizmente
+</arg>
+                <rel f="">resistiu</rel>
+                <arg f="" n="1">ao impeachment de Collor
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

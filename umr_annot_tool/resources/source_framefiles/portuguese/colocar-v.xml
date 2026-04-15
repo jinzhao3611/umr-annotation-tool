@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="colocar">
+        <note />
+        <note />
+    <roleset framnet="put.01" id="colocar.01" name="por em (lugar)" vncls="9.1">
+            <roles>
+                <role descr="putter" n="0">
+                    <vnrole vncls="9.1" vntheta="Agent" />
+                </role>
+                <role descr="thing put" n="1">
+                    <vnrole vncls="9.1" vntheta="Theme" />
+                </role>
+                <role descr="where put" n="2">
+                    <vnrole vncls="9.1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3634:  Animado com um teste de vestiário,  o tcheco Zdenek_  Zeman,  técnico da Lazio,  colocou em campo o atacante croata Alan_  Boksic,  cuja volta ao time estava prevista para a próxima semana. 
+</text>
+                <arg f="prd" n="m">Animado com um teste de vestiário
+</arg>
+                <arg f="" n="0">o tcheco Zdenek_  Zeman,  técnico da Lazio, 
+</arg>
+                <rel f="">colocou</rel>
+                <arg f="" n="2">em campo
+</arg>
+                <arg f="" n="1">o atacante croata Alan_  Boksic,  cuja volta ao time estava prevista para a próxima semana
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3363:  O boneco vai ser colocado em locais sem congestionamento. 
+</text>
+                <arg f="" n="1">O boneco
+</arg>
+                <rel f="">colocado</rel>
+                <arg f="" n="2">em locais sem congestionamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3248:  O desembargador Doreste_  Batista,  convidado pelo governador do Rio,  Nilo_  Batista,  para ser o supersecretário de Segurança do Estado,  disse ontem que,  se confirmado,  vai pedir apoio do Exército para subir morros e colocar policiamento ostensivo nas ruas. 
+</text>
+                <rel f="">colocar</rel>
+                <arg f="" n="1">policiamento ostensivo
+</arg>
+                <arg f="" n="2">nas ruas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2594:  Ao saber que os militares pretendiam a democracia e o fim da guerra colonial,  os portugueses começaram a dar cravos aos soldados,  que os colocavam na ponta dos seus fuzis- -  daí o nome Revolução_  dos_  Cravos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">os
+</arg>
+                <rel f="">colocavam</rel>
+                <arg f="" n="2">na ponta dos seus fuzis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2518:  « Nós vamos colocar a campanha na rua »,  dizia,  sorrindo. 
+</text>
+                <arg f="" n="0">Nós
+</arg>
+                <rel f="">colocar</rel>
+                <arg f="" n="1">a campanha
+</arg>
+                <arg f="" n="2">na rua
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2386:  Funcionários do escritório cubano tentaram abafar os protestos na rua colocando caixas de som nas janelas do prédio com música alta. 
+</text>
+                <rel f="">colocando</rel>
+                <arg f="" n="1">caixas de som
+</arg>
+                <arg f="" n="2">nas janelas do prédio
+</arg>
+                <arg f="mnr" n="m">com música alta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1957:  No filme,  uma garota(  Alex)  é colocada por engano no mesmo quarto de dois rapazes e se apaixona por Eddy. 
+</text>
+                <arg f="loc" n="m">No filme
+</arg>
+                <arg f="" n="1">uma garota(  Alex) 
+</arg>
+                <rel f="">colocada</rel>
+                <arg f="cau" n="m">por engano
+</arg>
+                <arg f="" n="2">no mesmo quarto de dois rapazes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1688:  O ator vive um sem-  teto,  que o acaso coloca diante_  do estudante. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o acaso
+</arg>
+                <rel f="">coloca</rel>
+                <arg f="" n="2">diante_  do estudante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s440:  Mesmo asim,  Van_  Himst pretende surpreender a defesa saudita,  colocando dois atacantes velozes. 
+</text>
+                <rel f="">colocando</rel>
+                <arg f="" n="1">dois atacantes velozes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s152:  A primeira missão lunar dos EUA em 21 anos teve início ontem,  quando um foguete Titã_  2 colocou no espaço a astronave não tripulada Clementine_  1,  que vai passar dois meses em duas órbitas da Lua para realizar completo mapeamento mineralógico e topográfico do satélite da Terra. 
+</text>
+                <arg f="" n="0">um foguete Titã_  2
+</arg>
+                <rel f="">colocou</rel>
+                <arg f="" n="2">no espaço
+</arg>
+                <arg f="" n="1">a astronave não tripulada Clementine_  1,  que vai passar dois meses em duas órbitas da Lua para realizar completo mapeamento mineralógico e topográfico do satélite da Terra
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="put.03" id="colocar.02" name="por em situação de" vncls="-">
+            <roles>
+                <role descr="putter" n="0" />
+                <role descr="thing put" n="1" />
+                <role descr="attribute of arg1" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3916:  Caso isso ocorresse,  eles seriam colocados em liberdade tão_  logo chegassem no Canadá. 
+</text>
+                <arg f="adv" n="m">Caso isso ocorresse
+</arg>
+                <arg f="" n="1">eles
+</arg>
+                <rel f="">colocados</rel>
+                <arg f="" n="2">em liberdade
+</arg>
+                <arg f="tmp" n="m">tão_  logo chegassem no Canadá
+</arg>
+                <note>a tradução dessa colocação seria "to make free"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3067:  O norte-  americano Evander_  Holyfield coloca o título mundial dos pesos-  pesados(  acima_  de 86,  183 quilos) ,  versão Associação_  Mundial(  AMB)  e Federação_  Internacional(  FIB) ,  hoje,  contra o seu compatriota Michael_  Moorer. 
+</text>
+                <arg f="" n="0">O norte-  americano Evander_  Holyfield
+</arg>
+                <rel f="">coloca</rel>
+                <arg f="" n="1">o título mundial dos pesos-  pesados(  acima_  de 86,  183 quilos) ,  versão Associação_  Mundial(  AMB)  e Federação_  Internacional(  FIB) 
+</arg>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="2">contra o seu compatriota Michael_  Moorer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2268:  Nas aulas,  Candelori usa reportagens de jornais para introduzir seus temas e colocar toda a classe para falar. 
+</text>
+                <rel f="">colocar</rel>
+                <arg f="" n="1">toda a classe
+</arg>
+                <arg f="" n="2">para falar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s987:  O discurso,  transmitido posteriormente por uma rádio israelense,  colocou o diálogo em perigo. 
+</text>
+                <arg f="" n="0">O discurso,  transmitido posteriormente por uma rádio israelense, 
+</arg>
+                <rel f="">colocou</rel>
+                <arg f="" n="1">o diálogo
+</arg>
+                <arg f="" n="2">em perigo
+</arg>
+                <note>tradução da colocação: "to put in danger" ou "to endanger"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s733:  A IRLF só aprova o aborto quando a gravidez coloca em risco a vida da mãe. 
+</text>
+                <arg f="" n="0">a gravidez
+</arg>
+                <rel f="">coloca</rel>
+                <arg f="" n="2">em risco
+</arg>
+                <arg f="" n="1">a vida da mãe
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s121:  Bombeiros e pessoal de resgate foram colocados em alerta máximo em Argel no final da tarde de ontem,  segundo a rádio estatal. 
+</text>
+                <arg f="" n="1">Bombeiros e pessoal de resgate
+</arg>
+                <rel f="">colocados</rel>
+                <arg f="" n="2">em alerta máximo
+</arg>
+                <arg f="loc" n="m">em Argel
+</arg>
+                <arg f="tmp" n="m">no final da tarde de ontem
+</arg>
+                <arg f="dis" n="m">segundo a rádio estatal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s106:  E,  assim,  tudo o que os afro-  americanos faziam bem teve de ser colocado em termos que menosprezassem a qualidade em_  questão. 
+</text>
+                <arg f="dis" n="m">assim
+</arg>
+                <arg f="" n="1">tudo o que os afro-  americanos faziam bem
+</arg>
+                <rel f="">colocado</rel>
+                <arg f="" n="2">em termos que menosprezassem a qualidade em_  questão
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

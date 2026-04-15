@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="trazer">
+        <note />
+    <roleset framnet="bring.01" id="trazer.01" name="transportar para cá (dêitico); ser acompanhado de" vncls="11.3">
+            <roles>
+                <role descr="bringer" n="0">
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing brought" n="1">
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="benefactive, brought-for, brought-to" n="2">
+                    <vnrole vncls="11.3" vntheta="Destination" />
+                </role>
+                <role descr="attribute" n="3" />
+                <role descr="ablative, brought-from" n="4">
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3868:  O relatório sigiloso não traz qualquer lista de preços. 
+</text>
+                <arg f="" n="0">O relatório sigiloso
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="1">qualquer lista de preços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3837:  Passaram-  se uns 50 anos e o sonho se realizou,  trazendo alegria e também,  inesperadamente,  frustração. 
+</text>
+                <rel f="">trazendo</rel>
+                <arg f="mnr" n="m">inesperadamente
+</arg>
+                <arg f="" n="1">alegria e também frustração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3690:  Não preciso,  governador,  porque,  sabendo da hospitalidade paranaense,  eu nem trouxe carteira. 
+</text>
+                <arg f="cau" n="m">sabendo da hospitalidade paranaense
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="neg" n="m">nem
+</arg>
+                <rel f="">trouxe</rel>
+                <arg f="" n="1">carteira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3595:  Em inglês,  traz noções sobre cálculos de soma,  subtração,  multiplicação e divisão. 
+</text>
+                <arg f="mnr" n="m">Em inglês
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="1">noções sobre cálculos de soma,  subtração,  multiplicação e divisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3161:  Além_  de aumentar o número de cassações,  deve-  se estimular as demais CPIs sobre Empreiteiras,  financiamentos eleitorais e CUT a CPI da CUT terá o dom de trazer ﻿à tona possíveis desvios da burocracia e da praga do corporativismo,  o_  que,  acreditem,  vai acabar ajudando não apenas o PT mas a democracia. 
+</text>
+                <rel f="">trazer</rel>
+                <arg f="loc" n="m">﻿à tona
+</arg>
+                <arg f="" n="1">possíveis desvios da burocracia e da praga do corporativismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3155:  O pacote traz as gravações essenciais do cantor na década de 60,  exatamente depois de sua baixa no exército norte-  americano,  em 6 de março de 1960. 
+</text>
+                <arg f="" n="0">O pacote
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="1">as gravações essenciais do cantor na década de 60,  exatamente depois de sua baixa no exército norte-  americano,  em 6 de março de 1960
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3151:  Os cinco CDs de « Elvis: _  From_  Nashville_  To_  Memphis » trazem o essencial do cantor na década de 60
+</text>
+                <arg f="" n="0">Os cinco CDs de « Elvis: _  From_  Nashville_  To_  Memphis »
+</arg>
+                <rel f="">trazem</rel>
+                <arg f="" n="1">o essencial do cantor na década de 60
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3098:  Dividido em seis partes,  o livro traz 32 capítulos que procuram abranger todos os recursos do programa. 
+</text>
+                <arg f="prd" n="m">Dividido em seis partes
+</arg>
+                <arg f="" n="0">o livro
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="1">32 capítulos que procuram abranger todos os recursos do programa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2349:  Um novo protocolo desenvolvido por um grupo de médicos de quatro instituições públicas de São_  Paulo está trazendo para o Brasil o Interferon_  Beta,  para o tratamento de pacientes com esclerose múltipla(  doença degenerativa que causa enrijecimento muscular,  debilidade das funções motoras e perda parcial da visão) . 
+</text>
+                <arg f="" n="0">Um novo protocolo desenvolvido por um grupo de médicos de quatro instituições públicas de São_  Paulo
+</arg>
+                <rel f="">trazendo</rel>
+                <arg f="" n="2">para o Brasil
+</arg>
+                <arg f="" n="1">o Interferon_  Beta
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2348:  Grupo traz para o país droga contra esclerose
+</text>
+                <arg f="" n="0">Grupo
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="2">para o país
+</arg>
+                <arg f="" n="1">droga contra esclerose
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2128:  O programa sobre a 2ª_  Guerra_  Mundial traz informações sobre 2.  100 eventos,  tem 900 fotos e 140 mapas de batalhas,  permitindo estudar as táticas usadas na guerra,  além_  de textos e vídeos de gravações originais. 
+</text>
+                <arg f="" n="0">O programa sobre a 2ª_  Guerra_  Mundial
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="1">informações sobre 2.  100 eventos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1791:  Traz dicas de produção gráfica,  como alinhamento. 
+</text>
+                <rel f="">Traz</rel>
+                <arg f="" n="1">dicas de produção gráfica
+</arg>
+                <arg f="prd" n="m">como alinhamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1633:  « Correção:  hoje trazemos as respostas das palavras cruzadas de sábado. 
+</text>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">trazemos</rel>
+                <arg f="" n="1">as respostas das palavras cruzadas de sábado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s501:  Para o lojista,  a nova modalidade não traz mudança alguma. 
+</text>
+                <arg f="" n="2">Para o lojista
+</arg>
+                <arg f="" n="0">a nova modalidade
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="1">mudança alguma
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s271:  Folha- -  Quais são as implicações que o encerramento da revisão traz para a economia? 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o encerramento da revisão
+</arg>
+                <rel f="">traz</rel>
+                <arg f="" n="2">para a economia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s168:  Zanini diz que está preparando a fundação de um novo partido,  que trará explícito em seu programa a ressalva de que é contra o racismo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">trará</rel>
+                <arg f="" n="3">explícito
+</arg>
+                <arg f="" n="2">em seu programa
+</arg>
+                <arg f="" n="1">a ressalva de que é contra o racismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s20:  Na volta de uma viagem ao exterior,  vale a pena trazer uma impressora matricial. 
+</text>
+                <rel f="">trazer</rel>
+                <arg f="" n="1">uma impressora matricial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

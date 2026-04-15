@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="consultar">
+        <note />
+    <roleset framnet="consult.01" id="consultar.01" name="pedir parecer ou informação a alguém" vncls="36.3">
+            <roles>
+                <role descr="consulter" n="0">
+                    <vnrole vncls="36.3" vntheta="Actor1" />
+                </role>
+                <role descr="consulted with" n="1">
+                    <vnrole vncls="36.3" vntheta="Actor2" />
+                </role>
+                <role descr="in regards to..." n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3106:  Ou_  seja,  se tal procedimento não for ocasional e tiver realmente a conivência das transportadoras aéreas,  estas estão expressamente contribuindo para a concorrência desleal e ilícita perante os agentes de viagens além_  de não preservar seus clientes,  que não são consultados sobre se querem ou não receber tais propostas ou se autorizam a divulgação de seus nomes e endereços. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">consultados</rel>
+                <arg f="" n="2">sobre se querem ou não receber tais propostas ou se autorizam a divulgação de seus nomes e endereços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2278:  Sobre o controle antidoping,  a Fifa estabelecerá uma « fax_  hotline »,  em operação 24 horas por dia,  para que os médicos das delegações consultem a organização da Copa antes de fornecer qualquer medicamento a seus jogadores. 
+</text>
+                <arg f="" n="0">os médicos das delegações
+</arg>
+                <rel f="">consultem</rel>
+                <arg f="" n="1">a organização da Copa
+</arg>
+                <arg f="tmp" n="m">antes de fornecer qualquer medicamento a seus jogadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s868:  As bibliotecas do Vaticano poderão ser consultadas em_  breve através da Internet,  rede de computadores com milhões de usuários. 
+</text>
+                <arg f="" n="1">As bibliotecas do Vaticano
+</arg>
+                <rel f="">consultadas</rel>
+                <arg f="tmp" n="m">em_  breve
+</arg>
+                <arg f="mnr" n="m">através da Internet,  rede de computadores com milhões de usuários
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

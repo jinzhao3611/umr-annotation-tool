@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="marchar">
+        <note />
+    <roleset framnet="march.01" id="marchar.01" name="andar padronizado" vncls="51.3.2">
+            <roles>
+                <role descr="causer" n="A" />
+                <role descr="agent walking" n="0">
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s481:  Estabeleceu que as tarifas públicas vão todas marchar ao_  compasso_  da URV até meados de maio. 
+</text>
+                <arg f="" n="0">todas
+</arg>
+                <rel f="">marchar</rel>
+                <arg f="mnr" n="m">ao_  compasso_  da URV
+</arg>
+                <arg f="tmp" n="m">até meados de maio
+</arg>
+                <note>uso metafórico (tarifas não "marcham")</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

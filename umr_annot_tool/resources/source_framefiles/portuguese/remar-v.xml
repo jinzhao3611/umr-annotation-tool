@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="remar">
+        <note />
+    <roleset framnet="row.01" id="remar.01" name="usar remos para fazer mover embarcação" vncls="51.4.2 11.5-1">
+            <roles>
+                <role descr="rower" n="0">
+                    <vnrole vncls="11.5-1" vntheta="Agent" />
+                    <vnrole vncls="51.4.2" vntheta="Agent" />
+                </role>
+                <role descr="boat" n="1">
+                    <vnrole vncls="11.5-1" vntheta="Theme" />
+                    <vnrole vncls="51.4.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s591:  Exercendo o direito de não estar a_  favor_  ou_  contra ninguém,  gostaria aqui de remar contra a maré e pasmem manifestar meu otimismo. 
+</text>
+                <rel f="">remar</rel>
+                <arg f="dir" n="m">contra a maré
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

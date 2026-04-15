@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="homenagear">
+        <note />
+    <roleset framnet="honor.01" id="homenagear.01" name="prestar homenagem" vncls="29.2 33">
+            <roles>
+                <role descr="honorer" n="0">
+                    <vnrole vncls="29.2" vntheta="agent" />
+                    <vnrole vncls="33" vntheta="agent" />
+                </role>
+                <role descr="person honored" n="1">
+                    <vnrole vncls="29.2" vntheta="theme" />
+                    <vnrole vncls="33" vntheta="theme" />
+                </role>
+                <role descr="for what, purpose, role" n="2">
+                    <vnrole vncls="29.2" vntheta="predicate" />
+                    <vnrole vncls="33" vntheta="cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2028:  A segunda fase do projeto prevê a construção(  para 1995)  do All-  Star_  Music_  Resort,  no mesmo estilo e com mesma capacidade,  que homenageará os estilos musicais do country,  jazz,  rock,  calypso e musicais da Broadway. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">homenageará</rel>
+                <arg f="" n="1">os estilos musicais do country,  jazz,  rock,  calypso e musicais da Broadway
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s708:  « O Tasso_  Jereissati quis homenagear a minha região e pediu um nome. 
+</text>
+                <rel f="">homenagear</rel>
+                <arg f="" n="1">a minha região
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

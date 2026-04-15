@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="afiar">
+        <note />
+    <roleset framnet="sharpen.01" id="afiar.01" name="fazer algo ficar afiado" vncls="45.4">
+            <roles>
+                <role descr="sharpener" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing getting sharper" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument, if agent is also present" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2682:  De certa forma,  afiou-  o para a luta em que se engajaria a_  partir_  dos anos 60. 
+</text>
+                <arg f="mnr" n="m">De certa forma
+</arg>
+                <rel f="">afiou-</rel>
+                <arg f="" n="1">o
+</arg>
+                <arg f="pnc" n="m">para a luta em que se engajaria a_  partir_  dos anos 60
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

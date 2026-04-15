@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="normalizar">
+        <note />
+    <roleset framnet="normalize.01" id="normalizar.01" name="tornar normal ou estável" vncls="45.4">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="entity normalized" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2145:  FHC e Malan deverão defender que o uso das reservas foi necessário para salvar o acordo da dívida,  sem o_  qual o país não normalizará suas relações financeiras internacionais. 
+</text>
+                <arg f="" n="0">o país
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">normalizará</rel>
+                <arg f="" n="1">suas relações financeiras internacionais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

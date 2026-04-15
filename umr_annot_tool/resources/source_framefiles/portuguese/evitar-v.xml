@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="evitar">
+        <note />
+    <roleset framnet="avoid.01" id="evitar.01" name="não deixar acontecer; desviar-se de" vncls="52">
+            <roles>
+                <role descr="avoider" n="0">
+                    <vnrole vncls="52" vntheta="Agent" />
+                </role>
+                <role descr="thing avoided" n="1">
+                    <vnrole vncls="52" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4142:  Entre cada parte do submarino há isolamento,  evitando que acidentes numa parte atinjam as outras. 
+</text>
+                <rel f="">evitando</rel>
+                <arg f="" n="1">que acidentes numa parte atinjam as outras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3849:  Quanto_  às tarifas públicas,  não serão fixadas em URV para evitar reajustes diários,  mas terão correções periódicas pelo indexador. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">reajustes diários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3626:  Para evitar distúrbios,  vamos distribuir às TVs uma fita para mostrar ﻿à população o_  que viemos fazer aqui. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">distúrbios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3480:  A intervenção diplomática russa foi decisiva para evitar o envolvimento ocidental na guerra civil na Bósnia. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">o envolvimento ocidental na guerra civil na Bósnia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3034:  É certo que,  desta_  vez,  o governo está mais atento do_  que no Plano_  Cruzado e vai usar,  segundo o ministro Rubens_  Ricupero,  todos os artifícios para evitar uma febre de consumo. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">uma febre de consumo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2925:  Apesar_  de evitar dar um não definitivo,  Marise deixou claro que deve recusar o convite de Brizola. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">dar um não definitivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2522:  Jogadores evitam a política
+</text>
+                <arg f="" n="0">Jogadores
+</arg>
+                <rel f="">evitam</rel>
+                <arg f="" n="1">a política
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2279:  As consultas serão feitas por_  escrito para evitar contestação. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">contestação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2146:  Para explicar as compras em sigilo,  o argumento é justamente a necessidade de evitar o encarecimento dos papéis. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">o encarecimento dos papéis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1451:  Ao_  contrário_  do que tem acontecido em suas últimas declarações públicas,  FHC evitou ontem fazer ataques aos chamados « aumentos abusivos de preços » por_  parte_  dos oligopólios grandes empresas que dominam determinados segmentos da economia. 
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <rel f="">evitou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">fazer ataques aos chamados « aumentos abusivos de preços » por_  parte_  dos oligopólios grandes empresas que dominam determinados segmentos da economia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s971:  O principal objetivo norte-  americano é evitar a repetição da fuga de mais_  de 125 mil cubanos em_  direção_  ﻿à Flórida ocorrida em 1980 a_  partir_  do porto de Mariel. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">a repetição da fuga de mais_  de 125 mil cubanos em_  direção_  ﻿à Flórida ocorrida em 1980 a_  partir_  do porto de Mariel
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s858:  A chefe da Vigilância,  Noélia_  Soares,  disse que,  apesar_  da existência de um surto da doença,  o controle da qualidade das águas dos rios,  poços e lagos tem evitado a propagação do vibrião. 
+</text>
+                <arg f="" n="0">o controle da qualidade das águas dos rios,  poços e lagos
+</arg>
+                <rel f="">evitado</rel>
+                <arg f="" n="1">a propagação do vibrião
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s840:  Para melhorar a ventilação,  podem ser criadas janelas nos telhados ou pequenos vãos.  com telas para evitar a entrada de insetos. 
+</text>
+                <rel f="">evitar</rel>
+                <arg f="" n="1">a entrada de insetos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s399:  Só assim se evitará a estratificação da legislação,  permitindo que o sistema acompanhe de maneira dinâmica as transformações na economia. 
+</text>
+                <arg f="mnr" n="m">Só assim
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">evitará</rel>
+                <arg f="" n="1">a estratificação da legislação
+</arg>
+                <arg f="adv" n="m">permitindo que o sistema acompanhe de maneira dinâmica as transformações na economia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s86:  Apesar_  de limitar a venda de quatro ingressos por pessoa,  a Mesbla não evitava ontem que uma mesma pessoa comprasse mais_  de uma vez. 
+</text>
+                <arg f="" n="0">a Mesbla
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">evitava</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">que uma mesma pessoa comprasse mais_  de uma vez
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

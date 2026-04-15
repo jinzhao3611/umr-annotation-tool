@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esfriar">
+        <note />
+    <roleset framnet="cool.01" id="esfriar.01" name="diminuir o calor; diminuir a intensidade (figurativo)" vncls="45.4">
+            <roles>
+                <role descr="person doing the cooling" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing cooling" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3828:  « Depois desse incidente,  as Forças_  Armadas venezuelanas tiveram de esfriar suas ações na fronteira com o Brasil. 
+</text>
+                <arg f="tmp" n="m">Depois desse incidente
+</arg>
+                <arg f="" n="0">as Forças_  Armadas venezuelanas
+</arg>
+                <rel f="">esfriar</rel>
+                <arg f="" n="1">suas ações na fronteira com o Brasil
+</arg>
+                <note>sentido figurativo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="saudar">
+        <note />
+    <roleset framnet="greet.01" id="saudar.01" name="fazer saudação; cumprimentar" vncls="33">
+            <roles>
+                <role descr="greeter" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="thing greeted" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute, greeted as" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <role descr="specific reaction" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2390:  Falando em futebol,  em bom futebol,  devemos saudar a chegada de Ronaldão aos Estados_  Unidos. 
+</text>
+                <arg f="adv" n="m">Falando em futebol,  em bom futebol
+</arg>
+                <rel f="">saudar</rel>
+                <arg f="" n="1">a chegada de Ronaldão aos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

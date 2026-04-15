@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pulverizar">
+        <note />
+    <roleset framnet="pulverize.01" id="pulverizar.01" name="borrifar veneno ou adubo " vncls="21.2-1 45.4">
+            <roles>
+                <role descr="destructor, agent" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                    <vnrole vncls="21.2-1" vntheta="Agent" />
+                </role>
+                <role descr="entity pulverized" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                    <vnrole vncls="21.2-1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1993:  Minutos antes,  tinha pulverizado a espanhola Arantxa_  Sanchez. 
+</text>
+                <arg f="tmp" n="m">Minutos antes
+</arg>
+                <rel f="">pulverizado</rel>
+                <arg f="" n="1">a espanhola Arantxa_  Sanchez
+</arg>
+                <note>uso metafórico: aniquilar</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

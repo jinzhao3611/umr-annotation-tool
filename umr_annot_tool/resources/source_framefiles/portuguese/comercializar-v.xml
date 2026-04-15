@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comercializar">
+        <note />
+    <roleset framnet="commercialize.01" id="comercializar.01" name="colocar uma mercadoria para compra e venda" vncls="45.4">
+            <roles>
+                <role descr="causer, agent" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing commercialized" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3968:  Filha do touro Chummak,  ela está prenha e foi comercializada com uma bezerra ao pé. 
+</text>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">comercializada</rel>
+                <arg f="mnr" n="m">com uma bezerra ao pé
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2657:  O restante será comercializado em supermercados,  feiras e indústrias de sorvetes do Paraná. 
+</text>
+                <arg f="" n="1">O restante
+</arg>
+                <rel f="">comercializado</rel>
+                <arg f="loc" n="m">em supermercados,  feiras e indústrias de sorvetes do Paraná
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2236:  Os testes de laboratório deram certo,  e agora a empresa se prepara para comercializar essa « mini-  usina tratadora de esgotos ». 
+</text>
+                <rel f="">comercializar</rel>
+                <arg f="" n="1">essa « mini-  usina tratadora de esgotos »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

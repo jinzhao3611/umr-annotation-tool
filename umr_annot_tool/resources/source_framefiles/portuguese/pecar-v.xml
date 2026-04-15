@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pecar">
+        <note />
+    <roleset framnet="sin.01" id="pecar.01" name="falhar; cometer pecado" vncls="">
+            <roles>
+                <role descr="Sinner, Agent" n="0" />
+                <role descr="Thing sinned against, law or command violated" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s256:  Método japonês exige calhamaços de exercícios ; opositores dizem que'  técnica peca pelo mecanicismo' . 
+</text>
+                <arg f="" n="0">técnica
+</arg>
+                <rel f="">peca</rel>
+                <arg f="cau" n="m">pelo mecanicismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s161:  « Às_  vezes peco por falta de experiência,  mas me considero um piloto rápido »,  afirmou ontem o brasileiro,  em entrevista ﻿à Folha por telefone,  da Itália. 
+</text>
+                <arg f="tmp" n="m">Às_  vezes
+</arg>
+                <rel f="">peco</rel>
+                <arg f="cau" n="m">por falta de experiência
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comer">
+        <note />
+    <roleset framnet="eat.01" id="comer.01" name="ingerir sólidos" vncls="39.1">
+            <roles>
+                <role descr="consumer, eater" n="0">
+                    <vnrole vncls="39.1" vntheta="Agent" />
+                </role>
+                <role descr="meal" n="1">
+                    <vnrole vncls="39.1" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2230:  Os adultos que voltam a comer proteínas podem ter piora da concentração e da memória e uma maior agitação. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">comer</rel>
+                <arg f="" n="1">proteínas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1637:  Para chegar a suas conclusões,  Rosa entrevistou um grupo de funcionários públicos(  técnicos administrativos)  que trabalham e comem no centro velho da cidade de São_  Paulo(  ruas Líbero_  Badaró,  São_  Bento e adjacências) . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">comem</rel>
+                <arg f="loc" n="m">no centro velho da cidade de São_  Paulo(  ruas Líbero_  Badaró,  São_  Bento e adjacências) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s459:  Não sei se fui claro:  seria mais fácil um pinguim cruzar três Saaras do_  que FHC comer carne de bode espremido a um magote de sertanejos suados. 
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <rel f="">comer</rel>
+                <arg f="" n="1">carne de bode espremido a um magote de sertanejos suados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

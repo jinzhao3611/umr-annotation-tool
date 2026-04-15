@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="denominar">
+        <note />
+    <roleset framnet="call.01" id="denominar.01" name="chamar, nomear" vncls="29.3">
+            <roles>
+                <role descr="caller" n="0">
+                    <vnrole vncls="29.3" vntheta="Agent" />
+                </role>
+                <role descr="item being labelled" n="1">
+                    <vnrole vncls="29.3" vntheta="Theme" />
+                </role>
+                <role descr="attribute of arg1" n="2">
+                    <vnrole vncls="29.3" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1088:  O tricolor,  após tantas decepções na temporada,  vai às finais da Conmebol,  caça-  níqueis tão inexpressivo que o próprio São_  Paulo inscreveu apenas jogadores jovens,  que se denominaram Leões,  ao_  invés_  do tradicional Expressinho. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">denominaram</rel>
+                <arg f="" n="2">Leões
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

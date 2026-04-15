@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="estourar">
+        <note />
+    <roleset framnet="burst.02" id="estourar.01" name="explodir " vncls="45.4">
+            <roles>
+                <role descr="causer of explosion" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing exploding" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1427:  Ganhou um abraço,  um beijo no rosto,  e foi para a Mooca estourar uma champanhe ﻿à meia-  noite. 
+</text>
+                <rel f="">estourar</rel>
+                <arg f="" n="1">uma champanhe
+</arg>
+                <arg f="tmp" n="m">﻿à meia-  noite
+</arg>
+                <note>em inglês não se diz "estourar champanhe", mas "open a champagne"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s677:  E faturamento em dobro para o compositor,  que não perdia uma chance de estourar no « hit_  parade » com uma canção. 
+</text>
+                <rel f="">estourar</rel>
+                <arg f="loc" n="m">no « hit_  parade »
+</arg>
+                <arg f="mnr" n="m">com uma canção
+</arg>
+                <note>sentido figurado: fazer sucesso estrondoso</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

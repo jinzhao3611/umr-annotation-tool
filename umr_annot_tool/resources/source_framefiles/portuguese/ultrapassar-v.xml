@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ultrapassar">
+        <note />
+    <roleset framnet="exceed.01" id="ultrapassar.01" name="exceder" vncls="90">
+            <roles>
+                <role descr="thing that's more" n="0">
+                    <vnrole vncls="90" vntheta="Theme1" />
+                </role>
+                <role descr="thing that's less" n="1">
+                    <vnrole vncls="90" vntheta="Theme2" />
+                </role>
+                <role descr="margin, difference" n="2">
+                    <vnrole vncls="90" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s299:  A conta,  paga pelo embaixador,  ultrapassou US$  1,  4 mil(  CR$  1,  8 milhão) . 
+</text>
+                <arg f="" n="0">A conta,  paga pelo embaixador, 
+</arg>
+                <rel f="">ultrapassou</rel>
+                <arg f="" n="1">US$  1,  4 mil(  CR$  1,  8 milhão) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

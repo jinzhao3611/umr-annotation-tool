@@ -1,0 +1,206 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="trocar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="replace.01" id="trocar.01" name="substituir uma coisa por outra" vncls="">
+            <roles>
+                <role descr="replacer" n="0" />
+                <role descr="old thing" n="1" />
+                <role descr="new thing" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3341:  Corrêa trocaria a preocupação pela descontração. 
+</text>
+                <arg f="" n="0">Corrêa
+</arg>
+                <rel f="">trocaria</rel>
+                <arg f="" n="1">a preocupação
+</arg>
+                <arg f="" n="2">pela descontração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1193:  Segundo ele,  os cerca_  de mil dormentes podres serão trocados em curto prazo. 
+</text>
+                <arg f="dis" n="m">Segundo ele
+</arg>
+                <arg f="" n="1">os cerca_  de mil dormentes podres
+</arg>
+                <rel f="">trocados</rel>
+                <arg f="tmp" n="m">em curto prazo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1104:  O casal quer trocar o piso do banheiro,  revestir o piso das áreas sociais com madeira e instalar armários. 
+</text>
+                <rel f="">trocar</rel>
+                <arg f="" n="1">o piso do banheiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s855:  Seu Sauber pode acabar trocando o certo pelo incerto ao esperar por Karl_  Wendlinger. 
+</text>
+                <arg f="" n="0">Seu Sauber
+</arg>
+                <rel f="">trocando</rel>
+                <arg f="" n="1">o certo
+</arg>
+                <arg f="" n="2">pelo incerto
+</arg>
+                <arg f="tmp" n="m">ao esperar por Karl_  Wendlinger
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="exchange.01" id="trocar.02" name="trocar algo com alguém por outra coisa" vncls="13.6">
+            <roles>
+                <role descr="agent, entity trading" n="0">
+                    <vnrole vncls="13.6" vntheta="Agent" />
+                </role>
+                <role descr="thing being traded (away)" n="1">
+                    <vnrole vncls="13.6" vntheta="Theme1" />
+                </role>
+                <role descr="other exchanger" n="2" />
+                <role descr="other item in exchange, price, or premium, traded for or at" n="3">
+                    <vnrole vncls="13.6" vntheta="Theme2" />
+                </role>
+                <role descr="benefactive" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2720:  Anteontem,  o Banerj,  que administra a dívida pública estadual,  não conseguiu que o Banco_  Central negociasse R$  84 milhões em títulos estaduais,  trocando-  os por títulos federais. 
+</text>
+                <rel f="">trocando-</rel>
+                <arg f="" n="1">os
+</arg>
+                <arg f="" n="3">por títulos federais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2561:  Por isso,  você não precisa correr para trocar o seu dinheiro ». 
+</text>
+                <rel f="">trocar</rel>
+                <arg f="" n="1">o seu dinheiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1496:  Ao desembarcar no Canadá,  troque a moeda norte-  americana por dólares canadenses. 
+</text>
+                <arg f="tmp" n="m">Ao desembarcar no Canadá
+</arg>
+                <rel f="">troque</rel>
+                <arg f="" n="1">a moeda norte-  americana
+</arg>
+                <arg f="" n="2">por dólares canadenses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s797:  Os papéis da dívida seriam obrigatoriamente trocados por outros de vencimento a_  longo_  prazo(  a_  partir_  de 15 anos,  segundo o documento) . 
+</text>
+                <arg f="" n="1">Os papéis da dívida
+</arg>
+                <arg f="adv" n="m">obrigatoriamente
+</arg>
+                <rel f="">trocados</rel>
+                <arg f="" n="3">por outros de vencimento a_  longo_  prazo(  a_  partir_  de 15 anos,  segundo o documento) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s222:  Uma sala tem como ícones uma pilha de discos,  um aparelho de som,  uma enciclopédia e uma janela que mostra a encruzilhada onde Robert_  Johnson teria feito um pacto com o diabo,  trocando a alma pelo sucesso. 
+</text>
+                <rel f="">trocando</rel>
+                <arg f="" n="1">a alma
+</arg>
+                <arg f="" n="3">pelo sucesso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s128:  O Pentágono usa a Internet,  que conecta computadores a sistemas telefônicos,  para que seus funcionários troquem informações. 
+</text>
+                <arg f="" n="0">seus funcionários
+</arg>
+                <rel f="">troquem</rel>
+                <arg f="" n="1">informações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="change.01" id="trocar.03" name="trocar de = mudar" vncls="26.6 45.4">
+            <roles>
+                <role descr="causer of transformation" n="0">
+                    <vnrole vncls="26.6" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing changing" n="1">
+                    <vnrole vncls="26.6" vntheta="Patient" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="end state" n="2">
+                    <vnrole vncls="26.6" vntheta="Product" />
+                </role>
+                <role descr="start state" n="3">
+                    <vnrole vncls="26.6" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2118:  Se todos conseguirem ser eleitos,  quase metade(  43% )  dos vereadores paulistanos vão trocar de Casa_  Legislativa. 
+</text>
+                <arg f="adv" n="m">Se todos conseguirem ser eleitos
+</arg>
+                <arg f="" n="0">quase metade(  43% )  dos vereadores paulistanos
+</arg>
+                <rel f="">trocar</rel>
+                <arg f="" n="1">de Casa_  Legislativa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s79:  Nem o PSB nem a coligação têm competência legal para trocar o vice da chapa sem a concordância de Bisol,  que teve o nome aprovado em convenção. 
+</text>
+                <rel f="">trocar</rel>
+                <arg f="" n="1">o vice da chapa
+</arg>
+                <arg f="mnr" n="m">sem a concordância de Bisol,  que teve o nome aprovado em convenção
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

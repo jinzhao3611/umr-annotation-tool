@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="permear">
+        <note />
+    <roleset framnet="permeate.01" id="permear.01" name="atravessar" vncls="-">
+            <roles>
+                <role descr="entity spreading" n="0" />
+                <role descr="entity permeated" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s203:  Não falei nada,  mas visualizei a Sra. _  oke,  sentada no salão amarelo,  o mesmo salão onde nenhum Oke de Okehurst exceto ela ousava permanecer sozinho,  envergando o vestido de sua antepassada e confrontando-  se,  por_  assim_  dizer,  com aquela coisa vaga,  plangente,  que parecia permear o aposento. . .  aquela vaga presença- -  assim me parecia do galante poeta assassinado. 
+</text>
+                <rel f="">permear</rel>
+                <arg f="" n="1">o aposento
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

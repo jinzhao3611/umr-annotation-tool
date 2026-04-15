@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="circular">
+        <note />
+    <roleset framnet="wander.01" id="circular.01" name="transitar" vncls="51.3.2 47.4">
+            <roles>
+                <role descr="entity in motion, wanderer" n="0">
+                    <vnrole vncls="47.4" vntheta="Theme" />
+                    <vnrole vncls="51.3.2" vntheta="Theme" />
+                </role>
+                <role descr="path, range" n="1">
+                    <vnrole vncls="47.4" vntheta="Location" />
+                    <vnrole vncls="51.3.2" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4177:  O público alvo são os três milhões de pedestres que circulam diariamente na região. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">circulam</rel>
+                <arg f="tmp" n="m">diariamente
+</arg>
+                <arg f="" n="1">na região
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

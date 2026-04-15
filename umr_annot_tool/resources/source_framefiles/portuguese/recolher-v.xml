@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recolher">
+        <note />
+    <roleset framnet="collect.01" id="recolher.01" name="reunir" vncls="13.5.2 22.3-2 45.4">
+            <roles>
+                <role descr="agent, entity acquiring something" n="0">
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                    <vnrole vncls="22.3-2" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="thing acquired" n="1">
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                    <vnrole vncls="22.3-2" vntheta="Patient" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="seller" n="2">
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <role descr="benefactive" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3486:  O jornal carioca « O_  Globo » recolheu depoimentos sobre a « pisada » não confirmada nem pela polícia e explicada por Cavalera como um simples tropeço,  normal na movimentação de palco,  em seu depoimento na delegacia. 
+</text>
+                <arg f="" n="0">O jornal carioca « O_  Globo »
+</arg>
+                <rel f="">recolheu</rel>
+                <arg f="" n="1">depoimentos sobre a « pisada » não confirmada nem pela polícia e explicada por Cavalera como um simples tropeço,  normal na movimentação de palco,  em seu depoimento na delegacia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1747:  No largo Santa_  Cecília,  funcionários da Administração_  Regional recolheram material acumulado pelos indigentes e desinfetaram bueiros. 
+</text>
+                <arg f="loc" n="m">No largo Santa_  Cecília
+</arg>
+                <arg f="" n="0">funcionários da Administração_  Regional
+</arg>
+                <rel f="">recolheram</rel>
+                <arg f="" n="1">material acumulado pelos indigentes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1575:  Mesmo_  assim os bancos continuam entre os setores da economia que recolhem menos tributos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">recolhem</rel>
+                <arg f="" n="1">menos tributos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="sound.01" id="soar.01" name="" vncls="30.4">
+            <roles>
+                <role descr="thing seeming" n="1">
+                    <vnrole vncls="30.4" vntheta="Stimulus" />
+                </role>
+                <role descr="attribute of arg1" n="2" />
+                <role descr="viewer" n="3">
+                    <vnrole vncls="30.4" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2379:  Seu silêncio soa a cumplicidade. 
+</text>
+                <arg f="" n="1">Seu silêncio
+</arg>
+                <rel f="">soa</rel>
+                <arg f="" n="2">a cumplicidade
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

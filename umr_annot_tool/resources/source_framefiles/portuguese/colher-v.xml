@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="colher">
+        <note />
+    <roleset framnet="harvest.01" id="colher.01" name="apanhar o produto das plantas (grãos, frutos)" vncls="-">
+            <roles>
+                <role descr="harvester" n="0" />
+                <role descr="substance harvested" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3536:  No ano passado,  o país colheu 9,  5 milhões de toneladas. 
+</text>
+                <arg f="loc" n="m">No ano passado
+</arg>
+                <arg f="" n="0">o país
+</arg>
+                <rel f="">colheu</rel>
+                <arg f="" n="1">9,  5 milhões de toneladas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="somar">
+        <note />
+        <note />
+    <roleset framnet="add.02" id="somar.01" name="fazer a soma" vncls="22.1-2">
+            <roles>
+                <role descr="adder" n="0">
+                    <vnrole vncls="22.1-2" vntheta="Agent" />
+                </role>
+                <role descr="thing being added" n="1">
+                    <vnrole vncls="22.1-2" vntheta="Patient1" />
+                </role>
+                <role descr="thing being added to" n="2">
+                    <vnrole vncls="22.1-2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2400:  Somando-  se os dois números,  chega-  se a 500 toneladas$ /  dia,  aproximadamente 50%  das 1.  100 toneladas de poluição orgânica diária jogadas no rio. 
+</text>
+                <rel f="">Somando-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">os dois números
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="total.01" id="somar.02" name="totalizar" vncls="54.1">
+            <roles>
+                <role descr="thing being counted" n="1">
+                    <vnrole vncls="54.1" vntheta="Theme" />
+                </role>
+                <role descr="count" n="2">
+                    <vnrole vncls="54.1" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2176:  Os negócios com ouro na BM&amp;F(  Bolsa_  de_  Mercadorias_  e_  Futuros)  somaram 54 toneladas em maio,  o_  que representa uma queda de 2,  70%  em comparação ao mês imediatamente anterior,  quando foram movimentadas 55,  5 toneladas,  de_  acordo com informações da entidade. 
+</text>
+                <arg f="" n="1">Os negócios com ouro na BM&amp;F(  Bolsa_  de_  Mercadorias_  e_  Futuros) 
+</arg>
+                <rel f="">somaram</rel>
+                <arg f="" n="2">54 toneladas
+</arg>
+                <arg f="tmp" n="m">em maio
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="intitular">
+        <note />
+    <roleset framnet="entitle.01" id="intitular.01" name="colocar nome; nomear" vncls="">
+            <roles>
+                <role descr="allower" n="0" />
+                <role descr="action allowed" n="1" />
+                <role descr="explicit allowed-agent" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2029:  Entre os católicos que se intitulam « não-  praticantes »,  94%  não tomam decisão baseado nos conselhos religiosos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">intitulam</rel>
+                <arg f="" n="2">não-  praticantes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s442:  Eles se intitulavam filiais da MIT_  Dealing_  Management_  Inc. ,  dos Estados_  Unidos. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">intitulavam</rel>
+                <arg f="" n="2">filiais da MIT_  Dealing_  Management_  Inc. ,  dos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conspirar.01">
+        <note />
+    <roleset framnet="conspire.01" id="conspirar.01" name="trabalhar junto em segredo contra algo ou alguém" vncls="71">
+            <roles>
+                <role descr="conspirato" n="0">
+                    <vnrole vncls="71" vntheta="Actor1" />
+                </role>
+                <role descr="job, project" n="1">
+                    <vnrole vncls="71" vntheta="Theme" />
+                </role>
+                <role descr="co-conspirator" n="2">
+                    <vnrole vncls="71" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1097:  O mal residia,  enfim,  no fato de que a política real da UDN se traduzia no que conspirava entre quatro paredes,  sem uma antena parabólica que lhe pusesse termo e sem uma imprensa independente que revelasse,  livre de paixões partidárias,  sua vocação para renunciar ao Estado de Direito ao toque da primeira corneta. 
+</text>
+                <arg f="" n="0">a UDN
+</arg>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">conspirava</rel>
+                <arg f="loc" n="m">entre quatro paredes
+</arg>
+                <arg f="adv" n="m">sem uma antena parabólica que lhe pusesse termo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s782:  Promotores da Sicília pediram ﻿à Justiça local o julgamento de 23 pessoas,  acusadas de conspirarem para assassinar Salvo_  Lima,  político democrata-  cristão morto pela Máfia pouco antes das eleições de 1992. 
+</text>
+                <rel f="">conspirarem</rel>
+                <arg f="" n="1">para assassinar Salvo_  Lima,  político democrata-  cristão morto pela Máfia pouco antes das eleições de 1992
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acordar">
+        <note />
+    <roleset framnet="wake.01" id="acordar.01" name="sair do estado de inconsciência" vncls="">
+            <roles>
+                <role descr="alarm clock, eg" n="0" />
+                <role descr="sleeper" n="1" />
+                <role descr="sleep (oft metaphorical)" n="2" />
+                <role descr="thing awoken to, outside reality" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2827:  O São_  Paulo começou o primeiro tempo apático,  mas acordou aos 10 min com uma falta não marcada do lateral Mac_  Allister em Euller,  quando este ia entrar na área. 
+</text>
+                <arg f="" n="1">O São_  Paulo
+</arg>
+                <rel f="">acordou</rel>
+                <arg f="tmp" n="m">aos 10 min
+</arg>
+                <arg f="" n="0">com uma falta não marcada do lateral Mac_  Allister em Euller quando este ia entrar na área
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

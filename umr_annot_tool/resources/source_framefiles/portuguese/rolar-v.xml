@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rolar">
+        <note />
+    <roleset framnet="" id="rolar.01" name="estender o vencimento (de dívidas)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3551:  Para o diretor de crédito da Febraban,  Christoph_  Heinrich_  Von_  Beackedorff,  « não há novos tomadores,  só estão sendo rolados os empréstimos que estão vencendo ». 
+</text>
+                <rel f="">rolados</rel>
+                <arg f="" n="1">os empréstimos que estão vencendo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="faltar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="lack.01" id="faltar.01" name="ser necessário mas não estar presente" vncls="">
+            <roles>
+                <role descr="(non)possessor" n="0" />
+                <role descr="thing lacked" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3887:  O técnico Pepe,  irritado com a atuação do time no empate em 1 a 1 com Ituano anteontem,  disse « que está faltando tranquilidade e talento aos jogadores ». 
+</text>
+                <rel f="">faltando</rel>
+                <arg f="" n="1">tranquilidade e talento
+</arg>
+                <arg f="" n="0">aos jogadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3885:  Técnico Pepe diz que falta talento ao Santos
+</text>
+                <rel f="">falta</rel>
+                <arg f="" n="1">talento
+</arg>
+                <arg f="" n="0">ao Santos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1707:  Diabolismo não falta ao solista Robert_  McDuffie:  é um violinista de mil dedos,  afinadíssimo e sem medo da música. 
+</text>
+                <arg f="" n="1">Diabolismo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">falta</rel>
+                <arg f="" n="2">ao solista Robert_  McDuffie:  é um violinista de mil dedos,  afinadíssimo e sem medo da música
+</arg>
+                <note>"o solista", na tradução para o inglês, ocuparia a posição de sujeito e receberia arg0.</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s562:  « Para quem quer ser candidato ao Senado,  faltou bom senso e juízo »,  disse. 
+</text>
+                <arg f="" n="2">Para quem quer ser candidato ao Senado
+</arg>
+                <rel f="">faltou</rel>
+                <arg f="" n="1">bom senso e juízo
+</arg>
+                <note>ironia "para quem..." = "para alguém que tem a pretensão de..."</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="miss.02" id="faltar.02" name="não comparecer (a um compromisso)" vncls="-">
+            <roles>
+                <role descr="misser" n="0" />
+                <role descr="missed" n="1" />
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2768:  Os senadores que faltarem às sessões do Congresso revisor,  a_  partir_  de hoje,  terão cortes no valor de um dia de trabalho por falta. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">faltarem</rel>
+                <arg f="" n="2">às sessões do Congresso revisor
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="misrepresent.01" id="faltar.03" name="falhar; não ser fiel a" vncls="-">
+            <roles>
+                <role descr="misrepresenter" n="0" />
+                <role descr="thing portrayed" n="1" />
+                <role descr="attribute" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2704:  O partido expulsou ontem Walter_  Queiroz por considerar que ele « faltou com a verdade » no episódio da dupla declaração de renda. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">faltou</rel>
+                <arg f="" n="1">com a verdade
+</arg>
+                <arg f="loc" n="m">no episódio da dupla declaração de renda
+</arg>
+                <note>"faltar com a verdade" é um eufemismo para "mentir", em inglês "to misrepresent the truth"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2563:  Para jogador,  falta entrosamento no grupo
+</text>
+                <arg f="dis" n="m">Para jogador
+</arg>
+                <rel f="">falta</rel>
+                <arg f="" n="1">entrosamento no grupo
+</arg>
+                <note>"o grupo", na tradução para o inglês, seria o sujeito e receberia arg0.</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="have.06" id="faltar.04" name="necessitar ser feito mas ainda não ter sido feito" vncls="-">
+            <roles>
+                <role descr="true subject" n="0" />
+                <role descr="true predicate" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1914:  Faltam serem renegociados mais R$  700 milhões. 
+</text>
+                <rel f="">Faltam</rel>
+                <arg f="" n="2">serem renegociados mais R$  700 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

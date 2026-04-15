@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ameaçar">
+        <note />
+    <roleset framnet="threaten.01" id="ameaçar.01" name="fazer ameaça" vncls="31.1">
+            <roles>
+                <role descr="agent, entity making a threat" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="threat" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="'benefactive', entity threatened" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1562:  Missão em NY é ameaçada
+</text>
+                <arg f="" n="2">Missão em NY
+</arg>
+                <rel f="">ameaçada</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

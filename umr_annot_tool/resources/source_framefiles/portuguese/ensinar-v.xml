@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ensinar">
+        <note />
+    <roleset framnet="teach.01" id="ensinar.01" name="fazer aprender; transferir conhecimento" vncls="37.1-1">
+            <roles>
+                <role descr="teacher" n="0">
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                </role>
+                <role descr="subject" n="1">
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                </role>
+                <role descr="student(s)" n="2">
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3081:  Patricia_  Wells ensinou o preparo de codornas marinadas e cuscuz marroquino e incentivava o público a repartir « food_  experiences »(  o nome moderno para receber amigos para comer)  como ela mesma faz em sua casa na Provence(  sul da França) ,  região em moda nos Estados_  Unidos. 
+</text>
+                <arg f="" n="0">Patricia_  Wells
+</arg>
+                <rel f="">ensinou</rel>
+                <arg f="" n="1">o preparo de codornas marinadas e cuscuz marroquino
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2429:  O motivo é que ele obriga a empresa que contratar jovens a manter um tutor para ensinar o trabalho aos novos empregados. 
+</text>
+                <rel f="">ensinar</rel>
+                <arg f="" n="1">o trabalho
+</arg>
+                <arg f="" n="2">aos novos empregados
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1252:  Me ensinou que só o povo constrói grandeza e o faz desinteressadamente,  no dia-  a-  dia da generosidade. 
+</text>
+                <arg f="" n="2">Me
+</arg>
+                <rel f="">ensinou</rel>
+                <arg f="" n="1">que só o povo constrói grandeza
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

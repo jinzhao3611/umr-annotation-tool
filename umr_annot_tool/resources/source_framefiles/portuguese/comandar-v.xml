@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="comandar">
+        <note />
+    <roleset framnet="lead.02" id="comandar.01" name="coordenar" vncls="51.7">
+            <roles>
+                <role descr="leader" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="project or group" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2641:  O secretário comandou ontem uma reunião sobre segurança nos estádios,  na sede da Federação_  Paulista_  de_  Futebol. 
+</text>
+                <arg f="" n="0">O secretário
+</arg>
+                <rel f="">comandou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">uma reunião sobre segurança nos estádios
+</arg>
+                <arg f="loc" n="m">na sede da Federação_  Paulista_  de_  Futebol
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s232:  Para atender ﻿à política desejada pelo governador eleito,  Barelli vai comandar uma revisão da antiga pasta(  Secretaria_  das_  Relações_  do_  Trabalho) . 
+</text>
+                <arg f="pnc" n="m">Para atender ﻿à política desejada pelo governador eleito
+</arg>
+                <arg f="" n="0">Barelli
+</arg>
+                <rel f="">comandar</rel>
+                <arg f="" n="2">uma revisão da antiga pasta(  Secretaria_  das_  Relações_  do_  Trabalho) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

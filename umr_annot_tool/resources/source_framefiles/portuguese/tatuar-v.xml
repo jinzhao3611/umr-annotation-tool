@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="tatuar">
+        <note />
+    <roleset framnet="tatoo.01" id="tatuar.01" name="fazer tatuagem" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3061:  Ele já tatuou,  pelo_  menos,  mil pessoas. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">tatuou</rel>
+                <arg f="ext" n="m">pelo_  menos
+</arg>
+                <arg f="" n="1">mil pessoas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

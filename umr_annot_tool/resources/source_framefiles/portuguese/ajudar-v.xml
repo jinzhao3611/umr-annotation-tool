@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ajudar">
+        <note />
+    <roleset framnet="help.01" id="ajudar.01" name="auxiliar" vncls="72-1">
+            <roles>
+                <role descr="helper" n="0">
+                    <vnrole vncls="72-1" vntheta="Agent" />
+                </role>
+                <role descr="project" n="1">
+                    <vnrole vncls="72-1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3820:  Ao_  contrário,  nesta situação econômica de extrema gravidade,  todos gostariam de ajudar o país. 
+</text>
+                <arg f="dis" n="m">Ao_  contrário
+</arg>
+                <arg f="" n="1">nesta situação econômica de extrema gravidade
+</arg>
+                <arg f="" n="0">todos
+</arg>
+                <rel f="">ajudar</rel>
+                <arg f="" n="2">o país
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3663:  Eles tentaram agendar um encontro com Lula para pedir que ele ajudasse na negociação. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">ajudasse</rel>
+                <arg f="" n="1">na negociação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3468:  O presidente articulou,  então,  lobby certeiro em_  direção_  ao Sebrae(  Serviço_  de_  Apoio_  à_  Pequena_  e_  Média_  Empresa)  e ainda pediu a FHC que o ajudasse a pôr Durante na presidência da entidade. 
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <arg f="" n="2">o
+</arg>
+                <rel f="">ajudasse</rel>
+                <arg f="" n="1">a pôr Durante na presidência da entidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1824:  Cores nos campos dos EUA,  conseguidas pelo corte na grama,  ajudam a esconder marcas do futebol americano
+</text>
+                <arg f="" n="0">Cores nos campos dos EUA,  conseguidas pelo corte na grama, 
+</arg>
+                <rel f="">ajudam</rel>
+                <arg f="" n="1">a esconder marcas do futebol americano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1576:  O ganho de arrecadação com o aumento da carga de impostos dos bancos vai ajudar a fechar em US$  16,  1 bilhões o FSE(  Fundo_  Social_  de_  Emergência) . 
+</text>
+                <arg f="" n="0">O ganho de arrecadação com o aumento da carga de impostos dos bancos
+</arg>
+                <rel f="">ajudar</rel>
+                <arg f="" n="1">a fechar em US$  16,  1 bilhões o FSE(  Fundo_  Social_  de_  Emergência) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1542:  Professor e livro ajudam a aprender
+</text>
+                <arg f="" n="0">Professor e livro
+</arg>
+                <rel f="">ajudam</rel>
+                <arg f="" n="1">a aprender
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s499:  O episódio é emblemático do tipo de política externa exercitada pelo governo Clinton e ajuda a explicar por_  que ela é tão mal avaliada. 
+</text>
+                <arg f="" n="0">O episódio
+</arg>
+                <rel f="">ajuda</rel>
+                <arg f="" n="1">a explicar por_  que ela é tão mal avaliada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s478:  Chiles,  que pertence ao Partido_  Democrata e ao mesmo grupo neoconservador que ajudou Bill_  Clinton a chegar ﻿à Casa_  Branca,  vai tentar se reeleger em novembro deste ano. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">ajudou</rel>
+                <arg f="" n="2">Bill_  Clinton
+</arg>
+                <arg f="" n="1">a chegar ﻿à Casa_  Branca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s423:  De_  um_  lado reforça a estabilização,  pois qualquer eventual aumento irresponsável de preços depara-  se agora mais rapidamente com a concorrência de similares importados ; doutro,  ajuda a aliviar a supervalorização do real,  pois quanto_  mais importações houver,  maior será a procura por dólares. 
+</text>
+                <rel f="">ajuda</rel>
+                <arg f="" n="1">a aliviar a supervalorização do real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s378:  No início do mês,  o presidente Carlos_  Menem criou um fundo especial de US$  1 milhão para recompensar quem fornecesse informações que ajudem nas investigações. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">ajudem</rel>
+                <arg f="" n="1">nas investigações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s157:  O atual perfil dos poupadores ajudará a manter o dinheiro aplicado. 
+</text>
+                <arg f="" n="0">O atual perfil dos poupadores
+</arg>
+                <rel f="">ajudará</rel>
+                <arg f="" n="1">a manter o dinheiro aplicado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

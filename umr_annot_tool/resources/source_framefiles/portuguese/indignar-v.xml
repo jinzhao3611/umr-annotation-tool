@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="indignar">
+        <note />
+    <roleset framnet="outrage.01" id="indignar.01" name="causar indignação a" vncls="31.1">
+            <roles>
+                <role descr="causer of anger" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="angry entity" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s356:  Como cronista,  Sarney toma o cuidado de não indignar ninguém,  e é difícil antipatizar com ele. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">indignar</rel>
+                <arg f="" n="1">ninguém
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

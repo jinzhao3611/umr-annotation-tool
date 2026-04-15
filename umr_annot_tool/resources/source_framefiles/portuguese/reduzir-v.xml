@@ -1,0 +1,208 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reduzir">
+        <note />
+    <roleset framnet="reduce.01" id="reduzir.01" name="diminuir; tornar menor" vncls="">
+            <roles>
+                <role descr="Agent" n="0" />
+                <role descr="Logical subject, patient, thing falling" n="1" />
+                <role descr="EXT, amount fallen" n="2" />
+                <role descr="Start point" n="3" />
+                <role descr="End point, end state of arg1" n="4" />
+                <role descr="Medium" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3921:  Estamos sendo forçados,  ao_  invés,  a reduzir o prazo para três meses. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">o prazo
+</arg>
+                <arg f="" n="2">para três meses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3362:  Pesquisas comprovam que quando o motorista vê a fiscalização ele reduz a velocidade por pelo_  menos três quilômetros »,  diz Lehfeld. 
+</text>
+                <arg f="tmp" n="m">quando o motorista vê a fiscalização
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">reduz</rel>
+                <arg f="" n="1">a velocidade
+</arg>
+                <arg f="" n="2">por pelo_  menos três quilômetros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2838:  Pode-  se dizer,  noutras palavras,  e a « grosso modo »,  que o aluguel do primeiro mês de reajuste sempre embute(  por estimativa)  uma inflação que reduzirá o aluguel nominal ao seu valor real na metade do período de reajuste subsequente. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">reduzirá</rel>
+                <arg f="" n="1">o aluguel nominal
+</arg>
+                <arg f="" n="2">ao seu valor real
+</arg>
+                <arg f="tmp" n="m">na metade do período de reajuste subsequente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2238:  A tecnologia pode reduzir a necessidade de rede de esgotos em determinados locais. 
+</text>
+                <arg f="" n="0">A tecnologia
+</arg>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">a necessidade de rede de esgotos
+</arg>
+                <arg f="loc" n="m">em determinados locais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1549:  Entrementes(  resistir três vezes quem há de? ) ,  o governo de FHC ameaça reduzir as aposentadorias para cinco mínimos. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">as aposentadorias
+</arg>
+                <arg f="" n="4">para cinco mínimos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1353:  Autor da proposta do Imposto_  Único,  que pretende reduzir a enorme gama de tributos a um,  Marcos_  Cintra fará uma palestra sobre o assunto. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">a enorme gama de tributos
+</arg>
+                <arg f="" n="4">a um
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1211:  Estudo da Associação_  dos_  Engenheiros da Petrobrás sobre a estrutura de preços dos combustíveis mostra que a Petrobrás tem uma margem de até 29%  no preço do combustível que poderia ser usada para reduzir o valor da gasolina. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">o valor da gasolina
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1009:  O objetivo é facilitar a vida dos clientes e reduzir os custos da instituição financeira. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">os custos da instituição financeira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s800:  O PDT pretende reduzir os impostos federais a quatro. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">os impostos federais
+</arg>
+                <arg f="" n="4">a quatro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s748:  « Vamos reduzir o número de expositores para cem. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">o número de expositores
+</arg>
+                <arg f="" n="4">para cem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s241:  Também é necessário alertar toda a sociedade para a importância de se reduzir as perdas de alimentos. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">as perdas de alimentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s188:  Pelo acordo,  são reduzidas de_  imediato todas as barreiras tributárias e alfandegárias relacionadas ﻿à importação por qualquer país do acordo,  de veículos automotores,  autopeças e acessórios fabricados nos demais países membros. 
+</text>
+                <arg f="dis" n="m">Pelo acordo
+</arg>
+                <rel f="">reduzidas</rel>
+                <arg f="tmp" n="m">de_  imediato
+</arg>
+                <arg f="" n="1">todas as barreiras tributárias e alfandegárias relacionadas ﻿à importação por qualquer país do acordo,  de veículos automotores,  autopeças e acessórios fabricados nos demais países membros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s31:  Essas medidas reduziram a disponibilidade de dinheiro no sistema bancário e os grandes bancos passaram a não fornecer recursos para as pequenas instituições. 
+</text>
+                <arg f="" n="0">Essas medidas
+</arg>
+                <rel f="">reduziram</rel>
+                <arg f="" n="1">a disponibilidade de dinheiro no sistema bancário
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="reduce.01" id="reduzir.01v" name="" vncls="">
+            <roles>
+                <role descr="Agent" n="0" />
+                <role descr="Logical subject, patient, thing falling" n="1" />
+                <role descr="EXT, amount fallen" n="2" />
+                <role descr="Start point" n="3" />
+                <role descr="End point, end state of arg1" n="4" />
+                <role descr="Medium" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s417:  É um equívoco reduzir a liberalização comercial ao neoliberalismo. 
+</text>
+                <rel f="">reduzir</rel>
+                <arg f="" n="1">a liberalização comercial
+</arg>
+                <arg f="" n="4">ao neoliberalismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

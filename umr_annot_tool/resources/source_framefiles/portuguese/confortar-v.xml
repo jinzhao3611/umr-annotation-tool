@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confortar">
+        <note />
+    <roleset framnet="comfort.01" id="confortar.01" name="alternância incoativa de &quot;confortar&quot;: ficar conformado;  sentir conforto" vncls="31.1">
+            <roles>
+                <role descr="comforter" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="patient, comforted" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument or manner" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4189:  A torcida da « Senhora » se conforta com a melhora de Roberto_  Baggio,  que não terá de operar o joelho. 
+</text>
+                <arg f="" n="0">A torcida da « Senhora »
+</arg>
+                <rel f="">conforta</rel>
+                <arg f="" n="2">com a melhora de Roberto_  Baggio,  que não terá de operar o joelho
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

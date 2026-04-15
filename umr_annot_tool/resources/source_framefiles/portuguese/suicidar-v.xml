@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="suicidar-se">
+        <note />
+    <roleset framnet="" id="suicidar.01" name="cometer suicídio; matar-se" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1404:  O ciclista espanhol,  48,  se suicidou em Caupenne_  d'  Armagnac,  no sul da França com um tiro. 
+</text>
+                <arg f="" n="0">O ciclista espanhol,  48, 
+</arg>
+                <rel f="">suicidou</rel>
+                <arg f="loc" n="m">em Caupenne_  d'  Armagnac
+</arg>
+                <arg f="loc" n="m">no sul da França
+</arg>
+                <arg f="mnr" n="m">com um tiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

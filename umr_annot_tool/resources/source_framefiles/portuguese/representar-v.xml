@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="representar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="mean.01" id="representar.01" name="significar" vncls="29.5">
+            <roles>
+                <role descr="agent, person doing explanation" n="0">
+                    <vnrole vncls="29.5" vntheta="Agent" />
+                </role>
+                <role descr="thing meant, explanation" n="1">
+                    <vnrole vncls="29.5" vntheta="Theme" />
+                </role>
+                <role descr="meant for" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3970:  Para Spinelli,  o espaço representa uma nova tendência para as áreas de conveniência dos shoppings. 
+</text>
+                <arg f="dis" n="m">Para Spinelli
+</arg>
+                <arg f="" n="0">o espaço
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">uma nova tendência para as áreas de conveniência dos shoppings
+</arg>
+                <note>arg1 e arg2 em um mesmo constituinte sintático</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3180:  A reivindicação é de equiparação salarial com a Polícia_  Civil do DF,  o_  que representaria um reajuste de 300% . 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <rel f="">representaria</rel>
+                <arg f="" n="1">um reajuste de 300% 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2466:  O relatório dedica 42 páginas ao Japão,  « cujas barreiras ﻿à importação de produtos e serviços são muito maiores do_  que as dos demais membros do Grupo_  dos_  Sete(  países mais industrializados)  e representam um entrave inaceitável ao sistema de comércio global ». 
+</text>
+                <arg f="" n="0">cujas barreiras ﻿à importação de produtos e serviços
+</arg>
+                <rel f="">representam</rel>
+                <arg f="" n="1">um entrave inaceitável ao sistema de comércio global
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2445:  Para isso,  a presidência não poderia ficar com o candidato óbvio na época,  Ulysses_  Guimarães,  que supostamente representava o risco de confronto com os militares. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="adv" n="m">supostamente
+</arg>
+                <rel f="">representava</rel>
+                <arg f="" n="1">o risco de confronto com os militares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2176:  Os negócios com ouro na BM&amp;F(  Bolsa_  de_  Mercadorias_  e_  Futuros)  somaram 54 toneladas em maio,  o_  que representa uma queda de 2,  70%  em comparação ao mês imediatamente anterior,  quando foram movimentadas 55,  5 toneladas,  de_  acordo com informações da entidade. 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">uma queda de 2,  70%  em comparação ao mês imediatamente anterior
+</arg>
+                <arg f="prd" n="m">quando foram movimentadas 55,  5 toneladas,  de_  acordo com informações da entidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2050:  Mesmo abstraindo-  se tudo o que a cidade representa como patrimônio cultural da humanidade,  ainda_  assim ela resulta « parisdisíaca »,  adornada de todo o sortilégio. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">a cidade
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="2">como patrimônio cultural da humanidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1273:  « Embora seja concorrente respeitado,  a Nielsen não representa uma ameaça real »,  diz Flávio_  Ferrari,  diretor da Ibope_  Mídia. 
+</text>
+                <arg f="" n="0">a Nielsen
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">uma ameaça real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s721:  Segundo ele,  a saída do meia-  ponta representa uma « perda importante » para o time. 
+</text>
+                <arg f="dis" n="m">Segundo ele
+</arg>
+                <arg f="" n="0">a saída do meia-  ponta
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">uma « perda importante »
+</arg>
+                <arg f="" n="2">para o time
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s94:  Segundo ele,  a exposição ao material durante a gravidez ou nos dois primeiros anos de vida não representa perigo. 
+</text>
+                <arg f="dis" n="m">Segundo ele
+</arg>
+                <arg f="" n="0">a exposição ao material durante a gravidez ou nos dois primeiros anos de vida
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">perigo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="represent.01" id="representar.02" name="equivaler a" vncls="29.2">
+            <roles>
+                <role descr="item / entity taking place of other" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="item / entity being substituted by the other" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3720:  O Estado de São_  Paulo representou 22,  8$ %  dos protestos. 
+</text>
+                <arg f="" n="0">O Estado de São_  Paulo
+</arg>
+                <rel f="">representou</rel>
+                <arg f="" n="1">22,  8$ %  dos protestos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3112:  Mais Retirados:  O número da esquerda representa a posição atual e o da direita,  a posição na quinzena anterior. 
+</text>
+                <arg f="" n="0">O número da esquerda
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">a posição atual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1465:  Uma das consequências disso é outra aberração na saúde brasileira:  em 1991,  os hospitais psiquiátricos cadastrados ﻿à rede federal consumiam 7,  5%  das despesas com internações realizadas pelo SUS e representavam o equivalente a 18%  dos leitos. 
+</text>
+                <arg f="tmp" n="m">em 1991
+</arg>
+                <arg f="" n="0">os hospitais psiquiátricos cadastrados ﻿à rede federal
+</arg>
+                <rel f="">representavam</rel>
+                <arg f="" n="1">o equivalente a 18%  dos leitos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="represent.01" id="representar.03" name="falar ou agir em nome de" vncls="29.2">
+            <roles>
+                <role descr="item / entity taking place of other" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="item / entity being substituted by the other" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3278:  Cristou representa os clubes alemães do Bayern_  Leverkusen e Shalk-  04. 
+</text>
+                <arg f="" n="0">Cristou
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">os clubes alemães do Bayern_  Leverkusen e Shalk-  04
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3120:  A notícia veiculada por esta Folha(  em 10/  10/  1994)  de que o presidente eleito Fernando_  Henrique_  Cardoso pretende propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988)  juntamente com o contrato coletivo de trabalho,  demonstra sua coerência com a modernização das relações sociais. 
+</text>
+                <rel f="">representando</rel>
+                <arg f="" n="1">a mesma categoria e na mesma base territorial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2750:  Ele é desenvolvimentista,  defende a nação soberana contra o imperialismo,  representa as forças populares. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">representa</rel>
+                <arg f="" n="1">as forças populares
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2482:  Todo presidente é uma autoridade pública e deve cuidar da imagem daquilo que ele representa. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">representa</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1268:  No segundo semestre,  o concurso escolherá um destes profissionais(  responsáveis pelo serviço de vinhos num restaurante)  para representar o Brasil no concurso mundial,  no Japão,  em 95. 
+</text>
+                <rel f="">representar</rel>
+                <arg f="" n="1">o Brasil
+</arg>
+                <arg f="" n="2">no concurso mundial
+</arg>
+                <arg f="loc" n="m">no Japão
+</arg>
+                <arg f="tmp" n="m">em 95
+</arg>
+                <note>esse exemplo mostra necessidade de arg2, que não tem no PB</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

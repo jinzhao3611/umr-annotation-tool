@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="demonstrar">
+        <note />
+    <roleset framnet="demonstrate.01" id="demonstrar.01" name="provar; mostrar" vncls="78-1 37.1.1">
+            <roles>
+                <role descr="demonstrator" n="0">
+                    <vnrole vncls="78-1" vntheta="Cause" />
+                    <vnrole vncls="37.1.1" vntheta="Agent" />
+                </role>
+                <role descr="thing demonstrated" n="1">
+                    <vnrole vncls="78-1" vntheta="Topic" />
+                    <vnrole vncls="37.1.1" vntheta="Topic" />
+                </role>
+                <role descr="watcher" n="2">
+                    <vnrole vncls="78-1" vntheta="Recipient" />
+                    <vnrole vncls="37.1.1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3931:  O deputado Aloizio_  Mercadante(  PT/  SP)  divulgou ontem números do Tesouro sobre a execução orçamentária de janeiro a novembro de 1993,  demonstrando que o governo conseguiu um superávit operacional de US$  9,  2 bilhões neste período. 
+</text>
+                <rel f="">demonstrando</rel>
+                <arg f="" n="1">que o governo conseguiu um superávit operacional de US$  9,  2 bilhões neste período
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3609:  Mayhew disse que o IRA poderia demonstrar que realmente não autorizou a operação de Newry devolvendo os US$  210 mil levados durante o assalto. 
+</text>
+                <arg f="" n="0">o IRA
+</arg>
+                <rel f="">demonstrar</rel>
+                <arg f="" n="1">que realmente não autorizou a operação de Newry
+</arg>
+                <arg f="mnr" n="m">devolvendo os US$  210 mil levados durante o assalto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3120:  A notícia veiculada por esta Folha(  em 10/  10/  1994)  de que o presidente eleito Fernando_  Henrique_  Cardoso pretende propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988)  juntamente com o contrato coletivo de trabalho,  demonstra sua coerência com a modernização das relações sociais. 
+</text>
+                <arg f="" n="0">A notícia veiculada por esta Folha(  em 10/  10/  1994)  de que o presidente eleito Fernando_  Henrique_  Cardoso pretende propor o fim da unicidade sindical(  sindicato único representando a mesma categoria e na mesma base territorial,  conforme está previsto no artigo 8º,  II da Constituição_  Federal de 1988) 
+</arg>
+                <arg f="prd" n="m">juntamente com o contrato coletivo de trabalho
+</arg>
+                <rel f="">demonstra</rel>
+                <arg f="" n="1">sua coerência com a modernização das relações sociais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2992:  O Banco apresentou em 1993 um nível de alavancagem alto,  demonstrando maior agressividade nas suas operações. 
+</text>
+                <rel f="">demonstrando</rel>
+                <arg f="" n="1">maior agressividade nas suas operações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1490:  Tem que se demonstrar através de contas e de raciocínios que o expurgo significará perda. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">demonstrar</rel>
+                <arg f="mnr" n="m">através de contas e de raciocínios
+</arg>
+                <arg f="" n="1">que o expurgo significará perda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1436:  Ao ouvir a negativa a seu recurso,  Fay não demonstrou reação. 
+</text>
+                <arg f="tmp" n="m">Ao ouvir a negativa a seu recurso
+</arg>
+                <arg f="" n="0">Fay
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">demonstrou</rel>
+                <arg f="" n="1">reação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s288:  A desgraça é que,  cientificamente,  como demonstra a moderna criminologia,  quase nada dessa política criminal « simbólica » serve para atenuar o gravíssimo problema da criminalidade. 
+</text>
+                <arg f="mnr" n="m">como
+</arg>
+                <rel f="">demonstra</rel>
+                <arg f="" n="0">a moderna criminologia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s229:  Noutro espaço,  há exibição de vídeos que demonstram,  por_  exemplo,  a cerimônia do chá e o teatro kabuki,  além_  de pontos turísticos do Japão. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">demonstram</rel>
+                <arg f="dis" n="m">por_  exemplo
+</arg>
+                <arg f="" n="1">a cerimônia do chá e o teatro kabuki
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

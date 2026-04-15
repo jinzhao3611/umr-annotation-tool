@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="evoluir">
+        <note />
+    <roleset framnet="evolve.01" id="evoluir.01" name="passar por processo de evolução; melhorar" vncls="26.2 48.1.1">
+            <roles>
+                <role descr="thing changing" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                    <vnrole vncls="26.2" vntheta="Agent" />
+                </role>
+                <role descr="end state" n="2">
+                    <vnrole vncls="26.2" vntheta="Product" />
+                </role>
+                <role descr="start state" n="3">
+                    <vnrole vncls="26.2" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2313:  O « Les_  Granges » tem aroma e sabor marcado por morangos e evolui bem na boca,  enquanto o Saumur,  também frutado,  é mais sério e(  levemente)  tânico. 
+</text>
+                <arg f="" n="1">O « Les_  Granges »
+</arg>
+                <rel f="">evolui</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <arg f="loc" n="m">na boca
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s273:  À_  medida_  que o grupo de serviços que entram nos lares e nas empresas evolui,  a definição de serviço universal vai evoluir também. 
+</text>
+                <arg f="" n="1">a definição de serviço universal
+</arg>
+                <rel f="">evoluir</rel>
+                <arg f="dis" n="m">também
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s273:  À_  medida_  que o grupo de serviços que entram nos lares e nas empresas evolui,  a definição de serviço universal vai evoluir também. 
+</text>
+                <arg f="" n="1">o grupo de serviços que entram nos lares e nas empresas
+</arg>
+                <rel f="">evolui</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

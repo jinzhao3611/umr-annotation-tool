@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="segurar">
+        <note />
+        <note />
+    <roleset framnet="hold.01" id="segurar.01" name="manter firme nas mãos" vncls="15.1">
+            <roles>
+                <role descr="holder" n="0">
+                    <vnrole vncls="15.1" vntheta="Agent" />
+                </role>
+                <role descr="thing held" n="1">
+                    <vnrole vncls="15.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <role descr="secondary attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3246:  Ambos seguraram uma bandeira dos Estados_  Unidos durante a partida. 
+</text>
+                <arg f="" n="0">Ambos
+</arg>
+                <rel f="">seguraram</rel>
+                <arg f="" n="1">uma bandeira dos Estados_  Unidos
+</arg>
+                <arg f="tmp" n="m">durante a partida
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="prevent.01" id="segurar.02" name="impedir; deter; conter" vncls="">
+            <roles>
+                <role descr="Agent" n="0" />
+                <role descr="Theme (action or object being prevented)" n="1" />
+                <role descr="secondary predication or action" n="2" />
+                <role descr="instrument" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3052:  Para o volante Dinho,  um dos jogadores responsáveis pelo setor de marcação do Santos,  é impossível segurar o ataque do São_  Paulo do técnico Telê_  Santana. 
+</text>
+                <rel f="">segurar</rel>
+                <arg f="" n="1">o ataque do São_  Paulo do técnico Telê_  Santana
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

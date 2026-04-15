@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="citar">
+        <note />
+    <roleset framnet="cite.01" id="citar.01" name="mencionar" vncls="29.2 37.1">
+            <roles>
+                <role descr="citer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="37.1" vntheta="Agent" />
+                </role>
+                <role descr="thing cited" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="37.1" vntheta="Topic" />
+                </role>
+                <role descr="secondary attribute, cited-as" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3542:  Ministro da Aeronáutica cita questão salarial
+</text>
+                <arg f="" n="0">Ministro da Aeronáutica
+</arg>
+                <rel f="">cita</rel>
+                <arg f="" n="1">questão salarial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3463:  E,  para um efeito extra,  cite Special_  Sauce. 
+</text>
+                <arg f="pnc" n="m">para um efeito extra
+</arg>
+                <rel f="">cite</rel>
+                <arg f="" n="1">Special_  Sauce
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3461:  Ou_  melhor,  não esqueça porque ainda se faz muita coisa boa,  mas deixe de querer ser bacana citando-  o como a última tendência. 
+</text>
+                <rel f="">citando-</rel>
+                <arg f="" n="1">o
+</arg>
+                <arg f="" n="2">como a última tendência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2464:  Na relação divulgada ontem em Washington,  o Brasil é citado com outros 34 países. 
+</text>
+                <arg f="loc" n="m">Na relação divulgada ontem em Washington
+</arg>
+                <arg f="" n="1">o Brasil
+</arg>
+                <rel f="">citado</rel>
+                <arg f="mnr" n="m">com outros 34 países
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2102:  Citou outros ocorridos recentemente em Carinhanha,  Santa_  Maria_  da_  Vitória,  Paratinga e Guanambi. 
+</text>
+                <rel f="">Citou</rel>
+                <arg f="" n="1">outros ocorridos recentemente em Carinhanha,  Santa_  Maria_  da_  Vitória,  Paratinga e Guanambi
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1002:  Como exemplo no combate ﻿à violência,  o prefeito carioca cita a criação da Guarda_  Municipal,  um grupo de atividades especiais que tem atuado mais na liberação de áreas tradicionalmente ocupadas por camelôs. 
+</text>
+                <arg f="prd" n="m">Como exemplo no combate ﻿à violência
+</arg>
+                <arg f="" n="0">o prefeito carioca
+</arg>
+                <rel f="">cita</rel>
+                <arg f="" n="1">a criação da Guarda_  Municipal,  um grupo de atividades especiais que tem atuado mais na liberação de áreas tradicionalmente ocupadas por camelôs
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s758:  Cite uma cantora da bossa_  nova ou estrela da televisão dos anos 60 e há poucas chances de que ele não a tenha namorado sempre dando a impressão de que fazia isto por tarefa. 
+</text>
+                <rel f="">Cite</rel>
+                <arg f="" n="1">uma cantora da bossa_  nova ou estrela da televisão dos anos 60
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

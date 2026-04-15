@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ordenar">
+        <note />
+    <roleset framnet="order.01" id="ordenar.01" name="mandar" vncls="60-1">
+            <roles>
+                <role descr="forcer" n="0">
+                    <vnrole vncls="60-1" vntheta="Agent" />
+                </role>
+                <role descr="impelled agent" n="1">
+                    <vnrole vncls="60-1" vntheta="Patient" />
+                </role>
+                <role descr="impelled action" n="2">
+                    <vnrole vncls="60-1" vntheta="Proposition" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3095:  O jogador,  sabendo que ganharia mais_  de US$  250 mil,  fez o_  que a voz ordenou. 
+</text>
+                <arg f="" n="2">o_  que
+</arg>
+                <arg f="" n="0">a voz
+</arg>
+                <rel f="">ordenou</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1563:  O Departamento_  de_  Estado dos Estados_  Unidos ordenou ontem reforços na segurança das representações diplomáticas de Israel no país para prevenir eventuais ataques terroristas. 
+</text>
+                <arg f="" n="0">O Departamento_  de_  Estado dos Estados_  Unidos
+</arg>
+                <rel f="">ordenou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="2">reforços na segurança das representações diplomáticas de Israel no país para prevenir eventuais ataques terroristas
+</arg>
+                <note>esse exemplo pode parecer com "encomendar" ("order.02"), porém está implícito que "ordenou a alguém que enviasse reforços..."</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

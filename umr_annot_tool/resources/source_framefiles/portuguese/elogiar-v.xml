@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="elogiar">
+        <note />
+    <roleset framnet="praise.01" id="elogiar.01" name="tecer elogios" vncls="">
+            <roles>
+                <role descr="praiser" n="0" />
+                <role descr="praised" n="1" />
+                <role descr="reason" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4143:  O relações_  públicas da corporação,  tenente-  coronel Fernando_  Belo,  disse que o encontro foi uma oportunidade para agradecer e elogiar a colaboração da PM. 
+</text>
+                <rel f="">elogiar</rel>
+                <arg f="" n="1">a colaboração da PM
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2166:  ex-  jogadores elogiam os colunistas Telê e Cruyff
+</text>
+                <arg f="" n="0">ex-  jogadores
+</arg>
+                <rel f="">elogiam</rel>
+                <arg f="" n="1">os colunistas Telê e Cruyff
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1028:  Elogiou dois jogadores flamenguistas e um corintiano. 
+</text>
+                <rel f="">Elogiou</rel>
+                <arg f="" n="1">dois jogadores flamenguistas e um corintiano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s714:  O técnico Sacchi elogiou ontem a « bravura » de seus jogadores,  especialmente de Baggio,  « com seu toque mágico para ganhar partidas ». 
+</text>
+                <arg f="" n="0">O técnico Sacchi
+</arg>
+                <rel f="">elogiou</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">a « bravura » de seus jogadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s664:  Scartezzini elogiou o trabalho do TRE fluminense e a população do Estado: 
+</text>
+                <arg f="" n="0">Scartezzini
+</arg>
+                <rel f="">elogiou</rel>
+                <arg f="" n="1">o trabalho do TRE fluminense e a população do Estado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s211:  Em entrevista ﻿à Folha,  Angarita elogiou a iniciativa do Sindicato dos Eletricitários de São_  Paulo,  que articulou uma ação judicial para tentar suspender a venda de ações da Eletropaulo. 
+</text>
+                <arg f="loc" n="m">Em entrevista ﻿à Folha
+</arg>
+                <arg f="" n="0">Angarita
+</arg>
+                <rel f="">elogiou</rel>
+                <arg f="" n="1">a iniciativa do Sindicato dos Eletricitários de São_  Paulo,  que articulou uma ação judicial para tentar suspender a venda de ações da Eletropaulo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

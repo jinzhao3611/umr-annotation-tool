@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="definir.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1024:  Essas mudanças geralmente coincidem com a « crise da meia idade »,  que é definida não pela faixa etária,  mas como um certo momento em que as pessoas reavaliam as escolhas feitas na sua vida. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">definida</rel>
+                <arg f="" n="2">não pela faixa etária,  mas como um certo momento em que as pessoas reavaliam as escolhas feitas na sua vida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s688:  É o cliente quem define os requisitos que teremos cumprir e,  até_  mesmo,  superar,  praticando qualidade em sua plenitude e obtendo,  assim,  seus benefícios,  que são competitividade,  lucratividade e satisfação. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">define</rel>
+                <arg f="" n="1">os requisitos que teremos cumprir e,  até_  mesmo,  superar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s254:  « O Helmet é uma grande seção rítmica »,  definiu o baixista da banda,  Henry_  Bogdan,  numa entrevista ﻿à « Spin ». 
+</text>
+                <arg f="" n="1">« O Helmet é uma grande seção rítmica »
+</arg>
+                <rel f="">definiu</rel>
+                <arg f="" n="0">o baixista da banda,  Henry_  Bogdan, 
+</arg>
+                <arg f="loc" n="m">numa entrevista ﻿à « Spin »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="definir">
+        <note />
+    <roleset framnet="determine.01" id="definir.02" name="determinar; estabelecer; decidir" vncls="84">
+            <roles>
+                <role descr="decider" n="0">
+                    <vnrole vncls="84" vntheta="Agent" />
+                </role>
+                <role descr="thing determined" n="1">
+                    <vnrole vncls="84" vntheta="Theme" />
+                </role>
+                <role descr="grounds" n="2" />
+                <role descr="attribute of arg1" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3738:  A estratégia montada por Quércia tem o objetivo de ganhar a prévia do PMDB que vai definir o candidato do partido ﻿à Presidência no próximo dia 15,  bem_  como manter o PMDB unido durante a campanha. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">definir</rel>
+                <arg f="" n="1">o candidato do partido ﻿à Presidência
+</arg>
+                <arg f="tmp" n="m">no próximo dia 15
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3365:  A permanência em cada cabine ainda não foi definida. 
+</text>
+                <arg f="" n="1">A permanência em cada cabine
+</arg>
+                <arg f="neg" n="m">ainda não
+</arg>
+                <rel f="">definida</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3249:  Até o meio-  dia de ontem,  o desembargador estava tentando um contato com o governador para definir se aceitava ou não o cargo. 
+</text>
+                <rel f="">definir</rel>
+                <arg f="" n="1">se aceitava ou não o cargo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1676:  « Nosso objetivo no campeonato,  portanto,  será definido depois do domingo,  quando enfrentamos o São_  Paulo »,  disse o volante. 
+</text>
+                <arg f="" n="1">Nosso objetivo no campeonato
+</arg>
+                <arg f="dis" n="m">portanto
+</arg>
+                <rel f="">definido</rel>
+                <arg f="tmp" n="m">depois do domingo,  quando enfrentamos o São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

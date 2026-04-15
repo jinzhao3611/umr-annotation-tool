@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desinfetar">
+        <note />
+    <roleset framnet="disinfest.01" id="desinfetar.01" name="destruir micróbios e outros agentes nocivos à saúde" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1747:  No largo Santa_  Cecília,  funcionários da Administração_  Regional recolheram material acumulado pelos indigentes e desinfetaram bueiros. 
+</text>
+                <arg f="loc" n="m">No largo Santa_  Cecília
+</arg>
+                <arg f="" n="0">funcionários da Administração_  Regional
+</arg>
+                <rel f="">desinfetaram</rel>
+                <arg f="" n="1">bueiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

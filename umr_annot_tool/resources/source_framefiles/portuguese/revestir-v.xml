@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="revestir">
+        <note />
+    <roleset framnet="cover.02" id="revestir.01" name="cobrir; fazer revestimento" vncls="9.8">
+            <roles>
+                <role descr="causer of covering" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="thing covered" n="1">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                </role>
+                <role descr="covered with" n="2">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1104:  O casal quer trocar o piso do banheiro,  revestir o piso das áreas sociais com madeira e instalar armários. 
+</text>
+                <rel f="">revestir</rel>
+                <arg f="" n="1">o piso das áreas sociais
+</arg>
+                <arg f="" n="2">com madeira
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

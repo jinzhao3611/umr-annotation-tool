@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="agir">
+        <note />
+    <roleset framnet="act.02" id="agir.01" name="atuar, operar" vncls="">
+            <roles>
+                <role descr="actor" n="0" />
+                <role descr="grounds for action" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4129:  O secretário-  geral do Conselho_  de_  Segurança da ONU,  Boutros_  Boutros-  Ghali,  pediu que as potências que negociam um tratado de paz com as facções em luta na Bósnia formem uma força-  tarefa para agir na região. 
+</text>
+                <rel f="">agir</rel>
+                <arg f="loc" n="m">na região
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2426:  Conhecia bem grandes embarcações e saberia como agir numa emergência. 
+</text>
+                <arg f="mnr" n="m">como
+</arg>
+                <rel f="">agir</rel>
+                <arg f="" n="1">numa emergência
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2378:  Aliás,  já poderia ter agido. 
+</text>
+                <arg f="dis" n="m">Aliás
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">agido</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vir">
+        <note />
+    <roleset framnet="come.01" id="vir.01" name="contrário de ir; movimento em direção do emissor (dêitico)" vncls="51.1-2">
+            <roles>
+                <role descr="entity in motion / 'comer'" n="1">
+                    <vnrole vncls="51.1-2" vntheta="Theme" />
+                </role>
+                <role descr="extent -- rare)" n="2" />
+                <role descr="start point -- also rare)" n="3" />
+                <role descr="end point" n="4" />
+                <role descr="medium" n="M" />
+                <role descr="direction (usually 'up' or 'down')" n="M" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4134:  Se você bate nele,  o revide vem forte,  pode apostar. 
+</text>
+                <arg f="adv" n="m">Se você bate nele
+</arg>
+                <arg f="" n="1">o revide
+</arg>
+                <rel f="">vem</rel>
+                <arg f="mnr" n="m">forte
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3939:  Cheia de energia,  a interpretação da Orquestra_  Estadual da Hungria vem amortecida um_  pouco pela artificialidade da gravação,  de quase 15 anos atrás,  mas compensa a sonoridade de estúdio com o vigor. 
+</text>
+                <arg f="prd" n="m">Cheia de energia
+</arg>
+                <arg f="" n="1">a interpretação da Orquestra_  Estadual da Hungria
+</arg>
+                <rel f="">vem</rel>
+                <arg f="mnr" n="m">amortecida um_  pouco pela artificialidade da gravação,  de quase 15 anos atrás
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3838:  Ficamos todos,  isto_  é,  os torcedores paulistas que vem dos idos de 1940,  como o americano médio,  no fim da Guerra_  Fria. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vem</rel>
+                <arg f="" n="3">dos idos de 1940
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3649:  Kirkeby,  que vem ao Brasil para a abertura,  também terá sala especial na 22ª Bienal,  a_  partir_  do dia 12. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vem</rel>
+                <arg f="" n="4">ao Brasil
+</arg>
+                <arg f="pnc" n="m">para a abertura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3626:  Para evitar distúrbios,  vamos distribuir às TVs uma fita para mostrar ﻿à população o_  que viemos fazer aqui. 
+</text>
+                <rel f="">viemos</rel>
+                <arg f="pnc" n="m">fazer
+</arg>
+                <arg f="" n="4">aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3502:  A casa vai estar cheia e nós vamos mostrar porque viemos disputar a Copa »,  afirma. 
+</text>
+                <arg f="" n="1">nós
+</arg>
+                <rel f="">viemos</rel>
+                <arg f="pnc" n="m">disputar a Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3198:  As novas impressoras a laser da HP vêm com um novo padrão de velocidade 12 páginas por minuto(  ppm)  e são de 30%  a 40%  mais rápidas que as da geração anterior. 
+</text>
+                <arg f="" n="1">As novas impressoras a laser da HP
+</arg>
+                <rel f="">vêm</rel>
+                <arg f="mnr" n="m">com um novo padrão de velocidade 12 páginas por minuto(  ppm) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2867:  Nada_  do_  que eu havia lido ou ouvido antes de vir para cá me preparara para as emoções que eu iria viver e várias vezes me senti numa montanha-  russa emocional. 
+</text>
+                <rel f="">vir</rel>
+                <arg f="" n="4">para cá
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2694:  O fato de que os bancos públicos venham a ser,  recorrentemente,  fontes de prejuízo vem só reforçar as desvantagens da atuação do Estado nesse setor. 
+</text>
+                <arg f="" n="1">O fato de que os bancos públicos venham a ser,  recorrentemente,  fontes de prejuízo
+</arg>
+                <rel f="">vem</rel>
+                <arg f="adv" n="m">só
+</arg>
+                <arg f="pnc" n="m">reforçar as desvantagens da atuação do Estado nesse setor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2664:  Depois,  com a morte de Senna,  vieram as exigências por medidas de segurança na F-  1. 
+</text>
+                <arg f="tmp" n="m">Depois
+</arg>
+                <arg f="cau" n="m">com a morte de Senna
+</arg>
+                <rel f="">vieram</rel>
+                <arg f="" n="1">as exigências por medidas de segurança na F-  1
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2636:  William_  Rhodes,  vice-  presidente mundial do Citibank,  veio ao Brasil para reunião com executivos do banco. 
+</text>
+                <arg f="" n="1">William_  Rhodes,  vice-  presidente mundial do Citibank, 
+</arg>
+                <rel f="">veio</rel>
+                <arg f="" n="4">ao Brasil
+</arg>
+                <arg f="pnc" n="m">para reunião com executivos do banco
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2487:  O próprio nome da banda,  segundo Ann_  Marie,  vem de « leituras sistemáticas de Sartre,  Marx,  Kafka ». 
+</text>
+                <arg f="" n="1">O próprio nome da banda
+</arg>
+                <arg f="dis" n="m">segundo Ann_  Marie
+</arg>
+                <rel f="">vem</rel>
+                <arg f="" n="3">de « leituras sistemáticas de Sartre,  Marx,  Kafka »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2404:  Eles vêm de trás com a bola e nos dificultam »,  disse. 
+</text>
+                <arg f="" n="1">Eles
+</arg>
+                <rel f="">vêm</rel>
+                <arg f="" n="3">de trás
+</arg>
+                <arg f="mnr" n="m">com a bola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2211:  Patrícia- -  Minha literatura vem da imagem,  da TV,  do cinema. 
+</text>
+                <arg f="" n="1">Minha literatura
+</arg>
+                <rel f="">vem</rel>
+                <arg f="" n="3">da imagem,  da TV,  do cinema
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2070:  « Senti que eu já conhecia o Brasil antes de ter vindo aqui ». 
+</text>
+                <rel f="">vindo</rel>
+                <arg f="" n="4">aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1976:  Eu venho de um bairro muito pobre,  muito pobre de Nova_  York. 
+</text>
+                <arg f="" n="1">Eu
+</arg>
+                <rel f="">venho</rel>
+                <arg f="" n="3">de um bairro muito pobre,  muito pobre de Nova_  York
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1853:  O assunto veio ﻿à tona durante conversa do advogado Osmar(  Nuno_  Leal_  Maia)  com o jardineiro Kennedy(  Alexandre_  Moreno) ,  jovem negro que sofrera insultos racistas do patrão,  o empresário Raul_  Pelegrini(  Tarcísio_  Meira) . 
+</text>
+                <arg f="" n="1">O assunto
+</arg>
+                <rel f="">veio</rel>
+                <arg f="" n="4">﻿à tona
+</arg>
+                <arg f="tmp" n="m">durante conversa do advogado Osmar(  Nuno_  Leal_  Maia)  com o jardineiro Kennedy(  Alexandre_  Moreno) ,  jovem negro que sofrera insultos racistas do patrão,  o empresário Raul_  Pelegrini(  Tarcísio_  Meira) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1587:  « Vim aqui descansar.  »
+</text>
+                <rel f="">Vim</rel>
+                <arg f="" n="4">aqui
+</arg>
+                <arg f="pnc" n="m">descansar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1510:  O desenlace,  porém,  não veio na forma do « golpe de timão » com reforma radical,  mas foi precipitado pelas duas balas que tiraram a vida de Colosio. 
+</text>
+                <arg f="" n="1">O desenlace
+</arg>
+                <arg f="tmp" n="m">porém
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">veio</rel>
+                <arg f="mnr" n="m">na forma do « golpe de timão »
+</arg>
+                <arg f="mnr" n="m">com reforma radical
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1393:  Takuo_  Hirano e Tetsuyuki_  Hirano,  pai e filho,  vieram falar sobre o novo conceito de design que estão desenvolvendo. 
+</text>
+                <arg f="" n="1">Takuo_  Hirano e Tetsuyuki_  Hirano,  pai e filho, 
+</arg>
+                <rel f="">vieram</rel>
+                <arg f="pnc" n="m">falar sobre o novo conceito de design que estão desenvolvendo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1187:  Muller chega às 5h25 de hoje a São_  Paulo,  vindo de Londres. 
+</text>
+                <rel f="">vindo</rel>
+                <arg f="" n="3">de Londres
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s564:  « Ele veio aqui e liberou US$  5 milhões,  1%  do valor da obra.  »,  declarou. 
+</text>
+                <arg f="" n="1">Ele
+</arg>
+                <rel f="">veio</rel>
+                <arg f="" n="4">aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s186:  Por_  exemplo:  o master-  franqueado da Arby'  s no México enfrentará menos problemas e menos burocracia para importar o rosbife(  que,  ao_  contrário_  do que ocorre com a Arby'  s Brasil,  vem dos EUA)  e as batatinhas(  canadenses)  que serve em seus restaurantes próprios e franqueados. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="adv" n="m">ao_  contrário_  do que ocorre com a Arby'  s Brasil
+</arg>
+                <rel f="">vem</rel>
+                <arg f="" n="3">dos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s55:  O destaque do HBO é o inédito « Exterminador_  do_  Futuro_  2_ - - _  O_  Julgamento_  Final »,  em que Schwarzenegger é um robô com aparência humana que vem do futuro para proteger um garoto. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">vem</rel>
+                <arg f="" n="3">do futuro para proteger um garoto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reunir">
+        <note />
+    <roleset framnet="assemble.01" id="reunir.01" name="juntar num só lugar" vncls="26.1">
+            <roles>
+                <role descr="builder" n="0">
+                    <vnrole vncls="26.1" vntheta="Agent" />
+                </role>
+                <role descr="construction" n="1">
+                    <vnrole vncls="26.1" vntheta="Product" />
+                </role>
+                <role descr="material, start state" n="2">
+                    <vnrole vncls="26.1" vntheta="Material" />
+                </role>
+                <role descr="end state" n="4">
+                    <vnrole vncls="26.1" vntheta="Product" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4063:  Congresso reúne 127 seminários e palestras
+</text>
+                <arg f="" n="0">Congresso
+</arg>
+                <rel f="">reúne</rel>
+                <arg f="" n="1">127 seminários e palestras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4027:  A espanhola Arantxa_  Sanchez,  tenista com mlehor desempenho nesta temporada,  foi eliminada na primeira rodad do Virginia_  Slims_  Masters em Nova_  York,  que reúne as 16 melhores jogadoras do ano. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">reúne</rel>
+                <arg f="" n="1">as 16 melhores jogadoras do ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2264:  Esse torneio reunirá os seis primeiros colocados da Série_  A-  1 e o campeão da A-  2 do Campeonato_  Paulista. 
+</text>
+                <arg f="" n="0">Esse torneio
+</arg>
+                <rel f="">reunirá</rel>
+                <arg f="" n="1">os seis primeiros colocados da Série_  A-  1 e o campeão da A-  2 do Campeonato_  Paulista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2074:  « Montes » reúne materiais e fotos
+</text>
+                <arg f="" n="0">Montes
+</arg>
+                <rel f="">reúne</rel>
+                <arg f="" n="1">materiais e fotos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2010:  A família diz estar reunindo os US$  100 mil do resgate. 
+</text>
+                <rel f="">reunindo</rel>
+                <arg f="" n="1">os US$  100 mil do resgate
+</arg>
+                <note>neste sentido de recolher dinheiro, "collect.01" é mais adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1581:  É quando o rastreamento das pistas da contravenção começa a bater em personalidades acima_  de qualquer suspeita,  dentro_  do pequeno círculo íntimo da elite cosmopolita brasileira um amálgama que reúne intelectuais de esquerda e direita,  eleitores de Lula a Maluf,  passando por todo o espectro intermediário,  empresários,  profissionais liberais,  jornalistas e membros do judiciário. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">reúne</rel>
+                <arg f="" n="1">intelectuais de esquerda e direita,  eleitores de Lula a Maluf, 
+</arg>
+                <arg f="mnr" n="m">passando por todo o espectro intermediário,  empresários,  profissionais liberais,  jornalistas e membros do judiciário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s97:  Os_  Papéis_  De_  FLAVIO-  SHIRÓ- -  A mostra,  que faz parte das comemorações dos 50 anos de pintura do artista japonês,  reúne 25 obras em pequenos formatos. 
+</text>
+                <arg f="" n="0">A mostra,  que faz parte das comemorações dos 50 anos de pintura do artista japonês
+</arg>
+                <rel f="">reúne</rel>
+                <arg f="" n="1">25 obras em pequenos formatos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="reunir-se">
+        <note />
+    <roleset framnet="meet.03" id="reunir.02" name="fazer reunião (as partes reunidas podem estar todas contidas no arg0)" vncls="36.3">
+            <roles>
+                <role descr="one party" n="0">
+                    <vnrole vncls="36.3" vntheta="Actor1" />
+                </role>
+                <role descr="other party" n="1">
+                    <vnrole vncls="36.3" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3624:  Ontem,  a diretoria da atlética e Amato_  Neto que iniciou a organização dos alunos para a preservação do clube se reuniram para discutir alternativas para a área. 
+</text>
+                <arg f="tmp" n="m">Ontem
+</arg>
+                <arg f="" n="0">a diretoria da atlética e Amato_  Neto que iniciou a organização dos alunos para a preservação do clube
+</arg>
+                <rel f="">reuniram</rel>
+                <arg f="pnc" n="m">para discutir alternativas para a área
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3244:  Os norte-  americanos que se reuniram ontem na Câmara_  de_  Comércio_  Brasil-  Estados_  Unidos,  em São_  Paulo,  ficaram conformados com a derrota de sua seleção. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">reuniram</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="loc" n="m">na Câmara_  de_  Comércio_  Brasil-  Estados_  Unidos
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1937:  Trinta empresários argentinos e 25 brasileiros se reúnem na próxima sexta-  feira em seminário da FGV para debater perspectivas do setor privado nos dois países com o Mercosul. 
+</text>
+                <arg f="" n="0">Trinta empresários argentinos e 25 brasileiros
+</arg>
+                <rel f="">reúnem</rel>
+                <arg f="tmp" n="m">na próxima sexta-  feira
+</arg>
+                <arg f="loc" n="m">em seminário da FGV para debater perspectivas do setor privado nos dois países com o Mercosul
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s470:  O Sindicato_  dos_  Metalúrgicos do Rio e do Grande_  Rio(  data-  base em outubro)  se reúne hoje com representantes da Firjan(  federação das indústrias do Rio)  pela_  primeira_  vez desde o início da greve da categoria,  na terça-  feira. 
+</text>
+                <arg f="" n="0">O Sindicato_  dos_  Metalúrgicos do Rio e do Grande_  Rio(  data-  base em outubro) 
+</arg>
+                <rel f="">reúne</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="1">com representantes da Firjan(  federação das indústrias do Rio) 
+</arg>
+                <arg f="tmp" n="m">pela_  primeira_  vez desde o início da greve da categoria
+</arg>
+                <arg f="prd" n="m">na terça-  feira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s135:  Quadrinhistas Do Brasil inteiro se reúnem entre sexta-  feira e domingo em Araxá(  MG) . 
+</text>
+                <arg f="" n="0">Quadrinhistas Do Brasil inteiro
+</arg>
+                <rel f="">reúnem</rel>
+                <arg f="tmp" n="m">entre sexta-  feira e domingo
+</arg>
+                <arg f="loc" n="m">em Araxá(  MG) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

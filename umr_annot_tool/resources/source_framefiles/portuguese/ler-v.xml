@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="ler">
+        <note />
+    <roleset framnet="read.01" id="ler.01" name="ler" vncls="14 37.1-1 54.1">
+            <roles>
+                <role descr="reader" n="0">
+                    <vnrole vncls="37.1-1" vntheta="Agent" />
+                    <vnrole vncls="14" vntheta="Agent" />
+                    <vnrole vncls="54.1" vntheta="Agent" />
+                </role>
+                <role descr="book" n="1">
+                    <vnrole vncls="37.1-1" vntheta="Topic" />
+                    <vnrole vncls="14" vntheta="Source" />
+                    <vnrole vncls="54.1" vntheta="Theme" />
+                </role>
+                <role descr="benefactive or direction" n="2">
+                    <vnrole vncls="37.1-1" vntheta="Recipient" />
+                    <vnrole vncls="54.1" vntheta="Attribute" />
+                </role>
+                <role descr="text, content" n="3">
+                    <vnrole vncls="14" vntheta="Topic" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4032:  O candidato tucano a presidente deu essa declaração ontem ﻿à tarde,  depois de discursar para cerca_  de 550 empresários na hora do almoço(  leia texto nesta página) . 
+</text>
+                <rel f="">leia</rel>
+                <arg f="" n="1">texto
+</arg>
+                <arg f="tmp" n="m">nesta página
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3396:  Será que já_  não nos basta a humilde compulsão passiva dos leitores que aceitam nos ler para serem informados? 
+</text>
+                <arg f="" n="1">nos
+</arg>
+                <rel f="">ler</rel>
+                <arg f="pnc" n="m">para serem informados
+</arg>
+                <note>"nos", aqui, são os autores no lugar de sua obra</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3393:  2.  Que o selecionador tenha que ler todo o currículo para descobrir o perfil do profissional. 
+</text>
+                <arg f="" n="0">o selecionador
+</arg>
+                <rel f="">ler</rel>
+                <arg f="" n="1">todo o currículo
+</arg>
+                <arg f="pnc" n="m">para descobrir o perfil do profissional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3323:  Leia a íntegra do convênio
+</text>
+                <rel f="">Leia</rel>
+                <arg f="" n="1">a íntegra do convênio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2309:  A equipe entra na quadra amanhã às 20h30(  15h30 de Brasília)  para disputar com o Canadá,  no chamado « grupo da morte »,  um lugar na próxima fase do Mundial(  leia matéria nesta página) . 
+</text>
+                <rel f="">leia</rel>
+                <arg f="" n="1">matéria
+</arg>
+                <arg f="loc" n="m">nesta página
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1464: (  leia texto ﻿à pág.  4) 
+</text>
+                <rel f="">leia</rel>
+                <arg f="" n="1">texto
+</arg>
+                <arg f="loc" n="m">﻿à pág.  4
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s389:  No final da reunião,  o premiê italiano,  Silvio_  Berlusconi,  leu um documento de 45 parágrafos,  pelo_  qual 140 países consideram que o crime organizado é o maior inimigo das democracias. 
+</text>
+                <arg f="tmp" n="m">No final da reunião
+</arg>
+                <arg f="" n="0">o premiê italiano,  Silvio_  Berlusconi, 
+</arg>
+                <rel f="">leu</rel>
+                <arg f="" n="1">um documento de 45 parágrafos,  pelo_  qual 140 países consideram que o crime organizado é o maior inimigo das democracias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s351:  O senador pode ser lido não como ex-  presidente,  mas como uma espécie de parente distante da família
+</text>
+                <arg f="" n="1">O senador
+</arg>
+                <rel f="">lido</rel>
+                <arg f="mnr" n="m">não como ex-  presidente,  mas como uma espécie de parente distante da família
+</arg>
+                <note>sentido figurado: "ser lido" = "ser interpretado"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s17:  « É uma coisa do Primeiro_  Mundo »,  afirmou o levantador Maurício(  leia matéria ao lado) . 
+</text>
+                <rel f="">leia</rel>
+                <arg f="" n="1">matéria
+</arg>
+                <arg f="loc" n="m">ao lado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

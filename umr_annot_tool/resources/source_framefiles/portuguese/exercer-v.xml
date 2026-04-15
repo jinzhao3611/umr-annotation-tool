@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="exercer">
+        <note />
+    <roleset framnet="exert.01" id="exercer.01" name="provocar; acarretar" vncls="-">
+            <roles>
+                <role descr="exerciser, agent" n="0" />
+                <role descr="entity exerted" n="1" />
+                <role descr="exerted over" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3144:  Amaral disse ainda que esse aumento de importações decorre do aumento da demanda que se exerce sobre toda a oferta de produtos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">exerce</rel>
+                <arg f="" n="2">sobre toda a oferta de produtos
+</arg>
+                <note>na voz passiva sintética</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1852:  A generalização dessa indexação diária não só acostuma a economia,  como passa a exercer pressão para que o governo oficialize e universalize a prática. 
+</text>
+                <arg f="" n="0">A generalização dessa indexação diária
+</arg>
+                <rel f="">exercer</rel>
+                <arg f="" n="1">pressão para que o governo oficialize e universalize a prática
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s103:  Não se trata simplesmente da questão da escravidão certamente ter tido efeitos duradouros sobre a cultura negra,  nem_  mesmo dela ter exercido um amplo efeito negativo sobre a auto-  confiança e auto-  estima dos negros,  mas mais especificamente da experiência da escravatura ter desvirtuado e tolhido a evolução do algoritmo etnocêntrico que os negros americanos teriam desenvolvido no decorrer normal dos acontecimentos. 
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">exercido</rel>
+                <arg f="" n="1">um amplo efeito negativo sobre a auto-  confiança e auto-  estima dos negros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="" id="exercer.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1846:  Testes periódicos e aleatórios com funcionários,  principalmente com os que exercem funções de risco e confiança
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">exercem</rel>
+                <arg f="" n="1">funções de risco e confiança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s591:  Exercendo o direito de não estar a_  favor_  ou_  contra ninguém,  gostaria aqui de remar contra a maré e pasmem manifestar meu otimismo. 
+</text>
+                <rel f="">Exercendo</rel>
+                <arg f="" n="1">o direito de não estar a_  favor_  ou_  contra ninguém
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

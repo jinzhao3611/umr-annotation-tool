@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cantar">
+        <note />
+    <roleset framnet="sing.01" id="cantar.01" name="entoar canção" vncls="26.7-1 37.3 43.2">
+            <roles>
+                <role descr="singer" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                    <vnrole vncls="43.2" vntheta="Agent" />
+                    <vnrole vncls="37.3" vntheta="Agent" />
+                </role>
+                <role descr="song" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                    <vnrole vncls="43.2" vntheta="Theme" />
+                    <vnrole vncls="37.3" vntheta="Topic" />
+                </role>
+                <role descr="audience" n="2">
+                    <vnrole vncls="26.7-1" vntheta="Beneficiary" />
+                    <vnrole vncls="37.3" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3458:  G. _  Love canta blues
+</text>
+                <arg f="" n="0">G. _  Love
+</arg>
+                <rel f="">canta</rel>
+                <arg f="" n="1">blues
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2217:  O galo,  Corky,  cantava das 3h às 7h diariamente e Ritchings não conseguia dormir. 
+</text>
+                <arg f="" n="0">O galo,  Corky, 
+</arg>
+                <rel f="">cantava</rel>
+                <arg f="tmp" n="m">das 3h às 7h diariamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2014:  Em « Os_  Lusíadas »,  Luís_  de_  Camões cantou a maior epopéia portuguesa e a registrou em versos: 
+</text>
+                <arg f="loc" n="m">Em « Os_  Lusíadas »
+</arg>
+                <arg f="" n="0">Luís_  de_  Camões
+</arg>
+                <rel f="">cantou</rel>
+                <arg f="" n="1">a maior epopéia portuguesa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s581:  Outro lado de Lara:  ela estudou canto lírico,  adora música e costuma cantar em shows e jam_  sessions com amigos. 
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">cantar</rel>
+                <arg f="loc" n="m">em shows e jam_  sessions
+</arg>
+                <arg f="mnr" n="m">com amigos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

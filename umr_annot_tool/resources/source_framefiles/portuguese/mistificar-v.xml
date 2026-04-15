@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="mistificar">
+        <note />
+    <roleset framnet="mystify.01" id="mistificar.01" name="criar ilusão a respeito de" vncls="31.1">
+            <roles>
+                <role descr="cause of mystification" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="entity mystified" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument or manner if separate from arg 0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3395:  Um(  mecenas)  nobre que deifica o saber antes e mistifica o dar depois ou ele deve ser um iconoclasta,  espalhar o_  que sabe enquanto o tempo faz das novidades fatos descartáveis. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">mistifica</rel>
+                <arg f="" n="1">o dar
+</arg>
+                <arg f="tmp" n="m">depois
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

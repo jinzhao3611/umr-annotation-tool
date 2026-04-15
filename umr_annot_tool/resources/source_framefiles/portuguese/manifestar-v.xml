@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="manifestar-se">
+        <note />
+    <roleset framnet="express.01" id="manifestar.01" name="expressar" vncls="48.1.2">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="48.1.2" vntheta="Agent" />
+                </role>
+                <role descr="utterance" n="1">
+                    <vnrole vncls="48.1.2" vntheta="Theme" />
+                </role>
+                <role descr="hearer" n="2">
+                    <vnrole vncls="48.1.2" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3379:  Ohtake diz que até o compositor e cantor baiano Caetano_  Veloso manifestou desejo de assistir ao show de Nusrat,  nesta segunda-  feira,  em São_  Paulo. 
+</text>
+                <arg f="" n="0">até o compositor e cantor baiano Caetano_  Veloso
+</arg>
+                <rel f="">manifestou</rel>
+                <arg f="" n="1">desejo de assistir ao show de Nusrat,  nesta segunda-  feira,  em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2134:  Até o final da tarde de ontem,  nenhum dos partidos da « Nova_  Força » havia se manifestado sobre o assunto. 
+</text>
+                <arg f="tmp" n="m">Até o final da tarde de ontem
+</arg>
+                <arg f="" n="0">nenhum dos partidos da « Nova_  Força »
+</arg>
+                <rel f="">manifestado</rel>
+                <arg f="" n="1">sobre o assunto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1310:  De seu lado,  a Rússia manifestava preocupações semelhantes diante_  da aproximação da Otan em_  relação_  aos antigos membros do Pacto_  de_  Varsóvia(  a aliança militar pró-  URSS,  extinta em 1990) . 
+</text>
+                <arg f="loc" n="m">De seu lado
+</arg>
+                <arg f="" n="0">a Rússia
+</arg>
+                <rel f="">manifestava</rel>
+                <arg f="" n="1">preocupações semelhantes
+</arg>
+                <arg f="tmp" n="m">diante_  da aproximação da Otan em_  relação_  aos antigos membros do Pacto_  de_  Varsóvia(  a aliança militar pró-  URSS,  extinta em 1990) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="" id="manifestar.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1484:  A assessoria de imprensa da Secretaria_  de_  Vias_  Públicas disse ontem que a prefeitura só vai se manifestar depois que for notificada pela Justiça. 
+</text>
+                <arg f="" n="0">a prefeitura
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">manifestar</rel>
+                <arg f="tmp" n="m">depois que for notificada pela Justiça
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

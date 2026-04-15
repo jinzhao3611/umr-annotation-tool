@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aguardar">
+        <note />
+        <note />
+    <roleset framnet="wait.01" id="aguardar.01" name="esperar" vncls="47.1-1">
+            <roles>
+                <role descr="wait-er (not waiter, that's the other sense)" n="1" />
+                <role descr="thing waited for" n="2">
+                    <vnrole vncls="47.1-1" vntheta="Theme" />
+                </role>
+                <role descr="period of time waited through" n="m" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3168:  Às 16h,  antes de embarcar para a cidade de Codó(  MA) ,  onde seria realizado um comício às 18h de ontem,  Fernando_  Henrique afirmou que vai aguardar o posicionamento do senador José_  Sarney(  PMDB-  AP)  em_  relação_  às eleições presidenciais. 
+</text>
+                <arg f="" n="1">Fernando_  Henrique
+</arg>
+                <rel f="">aguardar</rel>
+                <arg f="" n="2">o posicionamento do senador José_  Sarney(  PMDB-  AP)  em_  relação_  às eleições presidenciais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1992:  Ali,  no torneio que encerrava a temporada 93,  Steffi aguardava mais um troféu,  olhando para o chão,  sem ligar para as 12 mil pessoas em volta da quadra. 
+</text>
+                <arg f="loc" n="m">Ali
+</arg>
+                <arg f="loc" n="m">no torneio que encerrava a temporada 93
+</arg>
+                <arg f="" n="0">Steffi
+</arg>
+                <rel f="">aguardava</rel>
+                <arg f="" n="1">mais um troféu
+</arg>
+                <arg f="mnr" n="m">olhando para o chão,  sem ligar para as 12 mil pessoas em volta da quadra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1565:  O secretário disse que aguardava apenas uma definição de Paulo_  Maluf quanto_  a seu futuro político para anunciar medidas de base. 
+</text>
+                <arg f="" n="0">O secretário
+</arg>
+                <rel f="">aguardava</rel>
+                <arg f="" n="1">apenas uma definição de Paulo_  Maluf quanto_  a seu futuro político para anunciar medidas de base
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="expect.01" id="aguardar.02" name="ter esperança" vncls="62">
+            <roles>
+                <role descr="expecter" n="0">
+                    <vnrole vncls="62" vntheta="Experiencer" />
+                </role>
+                <role descr="thing expected" n="1">
+                    <vnrole vncls="62" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1400:  Com cinco livros publicados,  e um sexto em preparação,  o escritor aguarda apenas,  para a definitiva consagração,  que Hollywood consiga adaptar alguma de suas histórias malucas para as telas. 
+</text>
+                <arg f="mnr" n="m">Com cinco livros publicados,  e um sexto em preparação
+</arg>
+                <arg f="" n="0">o escritor
+</arg>
+                <rel f="">aguarda</rel>
+                <arg f="adv" n="m">apenas
+</arg>
+                <arg f="pnc" n="m">para a definitiva consagração
+</arg>
+                <arg f="" n="1">que Hollywood consiga adaptar alguma de suas histórias malucas para as telas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="dividir">
+        <note />
+        <note />
+    <roleset framnet="divide.02" id="dividir.01" name="repartir" vncls="23.1 45.4">
+            <roles>
+                <role descr="entity causing separation" n="0">
+                    <vnrole vncls="23.1" vntheta="agent" />
+                    <vnrole vncls="45.4" vntheta="agent" />
+                </role>
+                <role descr="thing being divided" n="1">
+                    <vnrole vncls="23.1" vntheta="patient1" />
+                    <vnrole vncls="45.4" vntheta="patient" />
+                </role>
+                <role descr="divided among/between, if separate from arg1" n="2">
+                    <vnrole vncls="23.1" vntheta="patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4066:  O congresso é dividido em três temas,  com o objetivo de atender de profissionais de informática a executivos e empresários interessados em novas tecnologias,  passando pelo usuário final. 
+</text>
+                <arg f="" n="1">O congresso
+</arg>
+                <rel f="">dividido</rel>
+                <arg f="" n="2">em três temas
+</arg>
+                <arg f="pnc" n="m">com o objetivo de atender de profissionais de informática a executivos e empresários interessados em novas tecnologias,  passando pelo usuário final
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2240:  Segundo Laerte_  Leite_  Cordeiro,  consultor especializado em recolocação,  o currículo deve ser dividido em três partes:  área geral de interesse(  administrativa,  contábil,  financeira etc. ) ,  qualificações profissionais e descrição da trajetória de empregos(  empresas,  cargos,  períodos) . 
+</text>
+                <arg f="" n="1">o currículo
+</arg>
+                <rel f="">dividido</rel>
+                <arg f="" n="2">em três partes:  área geral de interesse(  administrativa,  contábil,  financeira etc. ) ,  qualificações profissionais e descrição da trajetória de empregos(  empresas,  cargos,  períodos) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s16:  Os jogadores se dividem pelos dez quartos do alojamento,  equipados com frigobar,  ar condicionado,  televisão e telefone. 
+</text>
+                <arg f="" n="0">Os jogadores
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">dividem</rel>
+                <arg f="" n="2">pelos dez quartos do alojamento,  equipados com frigobar,  ar condicionado,  televisão e telefone
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="share.01" id="dividir.02" name="partilhar; compartilhar" vncls="-">
+            <roles>
+                <role descr="sharer" n="0" />
+                <role descr="thing shared" n="1" />
+                <role descr="shared with, if separate from arg0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3750:  Depois de uma disputa acirrada entre as indústrias para conquistar os melhores mercados,  o ranking das gigantes multinacionais que dividem o bolo mudou. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">dividem</rel>
+                <arg f="" n="1">o bolo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1275:  No final do último ano,  Coelho dividiu a cena com o tenor espanhol Plácido_  Domingo. 
+</text>
+                <arg f="tmp" n="m">No final do último ano
+</arg>
+                <arg f="" n="0">Coelho
+</arg>
+                <rel f="">dividiu</rel>
+                <arg f="" n="1">a cena
+</arg>
+                <arg f="" n="2">com o tenor espanhol Plácido_  Domingo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

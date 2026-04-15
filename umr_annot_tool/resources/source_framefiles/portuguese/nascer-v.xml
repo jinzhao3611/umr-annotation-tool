@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="nascer">
+        <note />
+    <roleset framnet="" id="nascer.01" name="ganhar vida" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4103:  Nasci em Lono_  Island. 
+</text>
+                <rel f="">Nasci</rel>
+                <arg f="loc" n="m">em Lono_  Island
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3548:  A banda brasileira nasceu em 1990 para fazer uma homenagem a Zappa. 
+</text>
+                <arg f="" n="1">A banda brasileira
+</arg>
+                <rel f="">nasceu</rel>
+                <arg f="tmp" n="m">em 1990
+</arg>
+                <arg f="pnc" n="m">para fazer uma homenagem a Zappa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3280:  O caso nasceu de uma « vendetta »,  obra e desgraça de um certo Francesco_  Farina,  dono do Modena,  um time rebaixado ﻿à 3ª divisão. 
+</text>
+                <arg f="" n="1">O caso
+</arg>
+                <rel f="">nasceu</rel>
+                <arg f="" n="2">de uma « vendetta »,  obra e desgraça de um certo Francesco_  Farina,  dono do Modena,  um time rebaixado ﻿à 3ª divisão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3087:  Um caso típico foi o de « Someone_  to_  Watch_  Over_  Me »(  1926) ,  que nasceu « brejeira » e Ira recomendou que ela se tornasse uma balada romântica. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">nasceu</rel>
+                <arg f="" n="3">brejeira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1690:  A TV por assinatura no Brasil está nascendo concentrada nas mãos de quatro grupos:  Organizações_  Globo,  Multicanal(  subsidiária da Companhia_  de_  Mineração do Amapá) ,  Rede_  RBS e Abril. 
+</text>
+                <arg f="" n="1">A TV por assinatura no Brasil
+</arg>
+                <rel f="">nascendo</rel>
+                <arg f="" n="3">concentrada nas mãos de quatro grupos:  Organizações_  Globo,  Multicanal(  subsidiária da Companhia_  de_  Mineração do Amapá) ,  Rede_  RBS e Abril
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1255:  O museu funciona na casa em que nasceu Meirelles,  autor do quadro « A_  Primeira_  Missa_  no_  Brasil »,  sua obra mais famosa. 
+</text>
+                <rel f="">nasceu</rel>
+                <arg f="" n="1">Meirelles,  autor do quadro « A_  Primeira_  Missa_  no_  Brasil »,  sua obra mais famosa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s452:  O jogador disse que antes de voltar ﻿à Espanha visitará o Estado onde nasceu,  a Bahia. 
+</text>
+                <arg f="" n="1">O jogador
+</arg>
+                <arg f="loc" n="m">onde
+</arg>
+                <rel f="">nasceu</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

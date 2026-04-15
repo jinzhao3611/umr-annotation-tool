@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apor">
+        <note />
+    <roleset framnet="affix.01" id="apor.01" name="colocar" vncls="-">
+            <roles>
+                <role descr="attacher, agent" n="0" />
+                <role descr="focus of attachment" n="1" />
+                <role descr="thing arg 1 is affixed to" n="2" />
+                <role descr="instrument of bonding, glue" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3085:  Primeiro,  George fazia a música ; Ira capturava o « espírito » da canção e apunha-  lhe título e letra. 
+</text>
+                <arg f="" n="0">Ira
+</arg>
+                <rel f="">apunha-</rel>
+                <arg f="" n="2">lhe
+</arg>
+                <arg f="" n="1">título e letra
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

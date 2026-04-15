@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="significar">
+        <note />
+    <roleset framnet="mean.01" id="significar.01" name="ter como significado" vncls="29.5">
+            <roles>
+                <role descr="agent, person doing explanation" n="0">
+                    <vnrole vncls="29.5" vntheta="Agent" />
+                </role>
+                <role descr="thing meant, explanation" n="1">
+                    <vnrole vncls="29.5" vntheta="Theme" />
+                </role>
+                <role descr="meant for" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3143:  Esse percentual é razoavelmente pequeno porque significa US$  250 milhões »,  disse. 
+</text>
+                <arg f="" n="0">Esse percentual
+</arg>
+                <rel f="">significa</rel>
+                <arg f="" n="1">US$  250 milhões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3076:  Para « An_  American_  Evening » ele criou « Extra_  Veinous »,  cujo título significa o contrário de « intravenoso ». 
+</text>
+                <arg f="" n="0">cujo título
+</arg>
+                <rel f="">significa</rel>
+                <arg f="" n="1">o contrário de « intravenoso »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2663:  E emoção significa público,  o_  qual atrai patrocinadores. 
+</text>
+                <rel f="">significa</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2365:  O fato de haver razoável consenso acerca desses temas não significa,  porém,  que seja fácil ou rápido aprovar tais reformas no Congresso. 
+</text>
+                <arg f="" n="0">O fato de haver razoável consenso acerca desses temas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">significa</rel>
+                <arg f="dis" n="m">porém
+</arg>
+                <arg f="" n="1">que seja fácil ou rápido aprovar tais reformas no Congresso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1490:  Tem que se demonstrar através de contas e de raciocínios que o expurgo significará perda. 
+</text>
+                <arg f="" n="0">o expurgo
+</arg>
+                <rel f="">significará</rel>
+                <arg f="" n="1">perda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s946:  Isso significa que,  tudo indo bem,  a criação da URV fica para março. 
+</text>
+                <arg f="" n="0">Isso
+</arg>
+                <rel f="">significa</rel>
+                <arg f="" n="1">que,  tudo indo bem,  a criação da URV fica para março
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s401:  Há a necessidade de uma representação permanente do trabalhador que converse com o empregador e signifique garantia de que não haverá perseguição aos negociadores,  diz Siqueira. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">signifique</rel>
+                <arg f="" n="1">garantia de que não haverá perseguição aos negociadores
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s274:  Deve haver,  no mínimo,  uma linha digital chegando a cada casa,  mas acho que serviço universal deveria significar muito mais do_  que isso,  mais do_  que o fio. 
+</text>
+                <arg f="" n="0">serviço universal
+</arg>
+                <rel f="">significar</rel>
+                <arg f="" n="1">muito mais do_  que isso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

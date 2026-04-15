@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="favorecer">
+        <note />
+    <roleset framnet="benefit.01" id="favorecer.01" name="beneficiar" vncls="">
+            <roles>
+                <role descr="giver" n="0" />
+                <role descr="benefactive, given-to" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s397:  Além_  disso,  tem que se alterar o aparato jurídico para favorecer ações de negociação. 
+</text>
+                <rel f="">favorecer</rel>
+                <arg f="" n="1">ações de negociação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

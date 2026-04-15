@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conhecer">
+        <note />
+        <note />
+    <roleset framnet="meet.02" id="conhecer.01" name="encontrar alguém pela primeira vez" vncls="36.3">
+            <roles>
+                <role descr="meeter" n="0">
+                    <vnrole vncls="36.3" vntheta="Actor1" />
+                </role>
+                <role descr="person / entity / object being met" n="1">
+                    <vnrole vncls="36.3" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4205:  Nessa época,  Fishel teria conhecido o ginecologista britânico Robert_  Winston,  a quem convidou para um encontro científico promovido por Antinori. 
+</text>
+                <arg f="tmp" n="m">Nessa época
+</arg>
+                <arg f="" n="0">Fishel
+</arg>
+                <rel f="">conhecido</rel>
+                <arg f="" n="1">o ginecologista britânico Robert_  Winston,  a quem convidou para um encontro científico promovido por Antinori
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3520:  E se encontram ﻿à noite no bar Cabral,  embora não se conheçam. 
+</text>
+                <arg f="tmp" n="m">não
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">conheçam</rel>
+                <note>reflexivo recíproco: conhecer-se</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1222:  Steven quer aproveitar a viagem ao Brasil para completar sua discografia dos Mutantes e conhecer Arnaldo_  Baptista. 
+</text>
+                <rel f="">conhecer</rel>
+                <arg f="" n="1">Arnaldo_  Baptista
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="conhecer.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4048:  « Primeiro foi uma oportunidade de esclarecer muitos pontos que eu não conhecia antes. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">conhecia</rel>
+                <arg f="tmp" n="m">antes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3638:  Conhecer as normas de etiqueta empresarial e ser mais cordial são requisitos para o sucesso dos executivos
+</text>
+                <rel f="">Conhecer</rel>
+                <arg f="" n="1">as normas de etiqueta empresarial
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2681:  No caso de Alvarez,  a intimidade com os EUA levou-  o a conhecer a mentalidade norte-  americana,  seus gostos,  seus costumes. 
+</text>
+                <rel f="">conhecer</rel>
+                <arg f="" n="1">a mentalidade norte-  americana,  seus gostos,  seus costumes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2426:  Conhecia bem grandes embarcações e saberia como agir numa emergência. 
+</text>
+                <rel f="">Conhecia</rel>
+                <arg f="ext" n="m">bem
+</arg>
+                <arg f="" n="1">grandes embarcações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2296:  Segundo ACM,  « quem disser que conhece o plano,  de um modo geral,  está mentindo ». 
+</text>
+                <arg f="dis" n="m">Segundo ACM
+</arg>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">conhece</rel>
+                <arg f="" n="1">o plano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2070:  « Senti que eu já conhecia o Brasil antes de ter vindo aqui ». 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">conhecia</rel>
+                <arg f="" n="1">o Brasil
+</arg>
+                <arg f="tmp" n="m">antes de ter vindo aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1990:  « Quando viajar pela Europa de carro,  prefira as estradas secundárias às auto-  estradas,  pois nelas não há cobrança de pedágio e você poderá conhecer pequenas cidades,  lugarejos,  sítios e plantações de uvas com degustação de vinhos.  »
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">conhecer</rel>
+                <arg f="" n="1">pequenas cidades,  lugarejos,  sítios e plantações de uvas com degustação de vinhos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1444:  FHC ressalvou que não conhecia a proposta com detalhes e que o governo está aberto a negociações. 
+</text>
+                <arg f="" n="0">FHC
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">conhecia</rel>
+                <arg f="" n="1">a proposta
+</arg>
+                <arg f="mnr" n="m">com detalhes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1134:  Não estamos concluindo que este comportamento é intencional,  mas sim que há uma forte predisposição cultural(  preconceito)  em criticar o Legislativo antes mesmo de conhecer tudo que cerca algumas decisões. 
+</text>
+                <rel f="">conhecer</rel>
+                <arg f="" n="1">tudo que cerca algumas decisões
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reclamar">
+        <note />
+    <roleset framnet="complain.01" id="reclamar.01" name="queixar-se" vncls="37.8">
+            <roles>
+                <role descr="complainer" n="0">
+                    <vnrole vncls="37.8" vntheta="Agent" />
+                </role>
+                <role descr="cause, complain of or about" n="1">
+                    <vnrole vncls="37.8" vntheta="Topic" />
+                </role>
+                <role descr="hearer, complain to" n="2">
+                    <vnrole vncls="37.8" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3662:  Os funcionários da prefeitura reclamam que Lídice está adiando desde maio o pagamento das perdas salariais da categoria. 
+</text>
+                <arg f="" n="0">Os funcionários da prefeitura
+</arg>
+                <rel f="">reclamam</rel>
+                <arg f="" n="1">que Lídice está adiando desde maio o pagamento das perdas salariais da categoria
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3133:  « Acho absurdo um político pagar alguém para gritar seu nome »,  reclama. 
+</text>
+                <arg f="" n="1">« Acho absurdo um político pagar alguém para gritar seu nome »
+</arg>
+                <rel f="">reclama</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3021:  « Ele reclamou de que não lhe pagariam o prometido,  não lhe dariam um carro e que só bancariam seis meses de aluguel de sua casa e não os quatro anos,  como esperava »,  disse o dirigente. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">reclamou</rel>
+                <arg f="" n="1">de que não lhe pagariam o prometido,  não lhe dariam um carro e que só bancariam seis meses de aluguel de sua casa e não os quatro anos,  como esperava
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1065:  Outro dia mesmo,  durante a Copa,  um jornalista inglês que escreve sobre o futebol para os principais jornais do mundo,  reclamava dos poucos autores de expressão que escreveram sobre o fut. 
+</text>
+                <arg f="tmp" n="m">Outro dia mesmo
+</arg>
+                <arg f="tmp" n="m">durante a Copa
+</arg>
+                <arg f="" n="0">que escreve sobre o futebol para os principais jornais do mundo
+</arg>
+                <rel f="">reclamava</rel>
+                <arg f="" n="1">dos poucos autores de expressão que escreveram sobre o fut
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s146:  Murici reclamou da postura do time do Vitória. 
+</text>
+                <arg f="" n="0">Murici
+</arg>
+                <rel f="">reclamou</rel>
+                <arg f="" n="1">da postura do time do Vitória
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s52:  Só depois é_  que levanto a cabeça para fazer um lançamento »,  reclama Neto. 
+</text>
+                <arg f="" n="1">Só depois é_  que levanto a cabeça para fazer um lançamento
+</arg>
+                <rel f="">reclama</rel>
+                <arg f="" n="0">Neto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

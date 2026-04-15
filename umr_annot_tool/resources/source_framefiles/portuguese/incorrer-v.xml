@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="incorrer">
+        <note />
+    <roleset framnet="incur.01" id="incorrer.01" name="incidir; cair" vncls="">
+            <roles>
+                <role descr="entity taking something on" n="0" />
+                <role descr="penalty" n="1" />
+                <role descr="reason for penalty" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2950:  Já nas primeiras palavras a Medida_  Provisória que institui a Unidade_  Real_  de_  Valor incorre em erro e abre brecha para contestações na Justiça. 
+</text>
+                <arg f="loc" n="m">Já nas primeiras palavras
+</arg>
+                <arg f="" n="0">a Medida_  Provisória que institui a Unidade_  Real_  de_  Valor
+</arg>
+                <rel f="">incorre</rel>
+                <arg f="" n="1">em erro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="melhorar.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2740:  Como melhorar o ensino superior sem transformar as universidades em « escolões »,  onde os professores só repetem e se afastam da pesquisa? 
+</text>
+                <rel f="">melhorar</rel>
+                <arg f="" n="1">o ensino superior
+</arg>
+                <arg f="mnr" n="m">sem transformar as universidades em « escolões »,  onde os professores só repetem e se afastam da pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s840:  Para melhorar a ventilação,  podem ser criadas janelas nos telhados ou pequenos vãos.  com telas para evitar a entrada de insetos. 
+</text>
+                <rel f="">melhorar</rel>
+                <arg f="" n="1">a ventilação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s208:  « Quando analisei a pista na quinta-  feira,  pedi ﻿à FIA que melhorasse as condições daquele ponto »,  disse o alemão. 
+</text>
+                <arg f="" n="0">a FIA
+</arg>
+                <rel f="">melhorasse</rel>
+                <arg f="" n="1">as condições daquele ponto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

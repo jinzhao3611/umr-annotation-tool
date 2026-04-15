@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="apostar">
+        <note />
+    <roleset framnet="bet.01" id="apostar.01" name="fazer aposta, assumir risco" vncls="54.5 94">
+            <roles>
+                <role descr="better" n="0">
+                    <vnrole vncls="54.5" vntheta="Agent" />
+                    <vnrole vncls="94" vntheta="Agent" />
+                </role>
+                <role descr="amount of bet" n="1">
+                    <vnrole vncls="54.5" vntheta="Asset" />
+                </role>
+                <role descr="basis, proposition, bet-on" n="2">
+                    <vnrole vncls="54.5" vntheta="Cause" />
+                    <vnrole vncls="94" vntheta="Theme" />
+                </role>
+                <role descr="co-better" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4134:  Se você bate nele,  o revide vem forte,  pode apostar. 
+</text>
+                <arg f="adv" n="m">Se você bate nele
+</arg>
+                <arg f="" n="2">o revide vem forte
+</arg>
+                <rel f="">apostar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3549:  « Era um cara que sempre apostou no_  que acreditava. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">apostou</rel>
+                <arg f="" n="2">no_  que acreditava
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2931:  Lideranças do PSDB dizem apostar numa grande legenda social-  democrata para não ter de depender do PFL
+</text>
+                <arg f="" n="0">Lideranças do PSDB
+</arg>
+                <rel f="">apostar</rel>
+                <arg f="" n="2">numa grande legenda social-  democrata
+</arg>
+                <arg f="pnc" n="m">para não ter de depender do PFL
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1960:  A Eufrasio_  Veículos,  revendedora Ford,  aposta no showroom sazonal e se prepara para começar a atuar em Campos_  do_  Jordão por dois meses. 
+</text>
+                <arg f="" n="0">A Eufrasio_  Veículos,  revendedora Ford, 
+</arg>
+                <rel f="">aposta</rel>
+                <arg f="" n="2">no showroom sazonal
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1155:  Aposto uma boneca Barbie como os pais de crianças entre cinco e doze anos ainda vão perder vários fios de cabelo procurando por um tal de Mighty_  Max debaixo_  do sofá,  no cinzeiro do carro ou atrás_  da geladeira. 
+</text>
+                <rel f="">Aposto</rel>
+                <arg f="" n="1">uma boneca Barbie
+</arg>
+                <arg f="" n="2">como os pais de crianças entre cinco e doze anos ainda vão perder vários fios de cabelo procurando por um tal de Mighty_  Max debaixo_  do sofá,  no cinzeiro do carro ou atrás_  da geladeira
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

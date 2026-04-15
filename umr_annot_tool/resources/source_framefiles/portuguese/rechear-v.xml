@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rechear">
+        <note />
+    <roleset framnet="fill.01" id="rechear.01" name="encher" vncls="9.8 45.4">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                </role>
+                <role descr="container" n="1">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                </role>
+                <role descr="substance" n="2">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3100:  O texto é curto e prático e todos os capítulos são recheados de notas,  dicas e alertas,  ilustradas com as respectivas figuras « Note »,  « Tip » e « Stop ». 
+</text>
+                <arg f="" n="1">todos os capítulos
+</arg>
+                <rel f="">recheados</rel>
+                <arg f="" n="2">de notas,  dicas e alertas,  ilustradas com as respectivas figuras « Note »,  « Tip » e « Stop »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

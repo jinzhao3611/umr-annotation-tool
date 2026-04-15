@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="evidenciar">
+        <note />
+    <roleset framnet="evidence.01" id="evidenciar.01" name="tornar evidente" vncls="-">
+            <roles>
+                <role descr="proof" n="0" />
+                <role descr="thing proved" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s312:  Ostentavam um patamar aparentemente sólido,  que evidenciava a radicalidade dos estratos médios e dos intelectuais envolvidos na rejeição do « status_  quo ». 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">evidenciava</rel>
+                <arg f="" n="1">a radicalidade dos estratos médios e dos intelectuais envolvidos na rejeição do « status_  quo »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recusar-se">
+        <note />
+    <roleset framnet="refuse.01" id="recusar.01" name="recusar-se a + infinitivo: opor-se a " vncls="">
+            <roles>
+                <role descr="entity refusing" n="0" />
+                <role descr="refused action or object" n="1" />
+                <role descr="anti-benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3064:  O advogado José_  Carlo_  Dri,  que defende os responsáveis pela boate,  se recusou a falar. 
+</text>
+                <arg f="" n="0">O advogado José_  Carlo_  Dri,  que defende os responsáveis pela boate, 
+</arg>
+                <rel f="">recusou</rel>
+                <arg f="" n="1">a falar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2371:  As paulistas Mancha_  Verde(  Palmeiras)  e Gaviões_  da_  Fiel(  Corinthians)  aceitaram,  mas as cariocas se recusaram. 
+</text>
+                <arg f="" n="0">as cariocas
+</arg>
+                <rel f="">recusaram</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s408:  A legislação prevê multa de 300%  sobre o valor da venda para quem se recusar a emitir a nota. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">recusar</rel>
+                <arg f="" n="1">a emitir a nota
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="recusar">
+        <note />
+    <roleset framnet="refuse.01" id="recusar.02" name="não aceitar" vncls="">
+            <roles>
+                <role descr="entity refusing" n="0" />
+                <role descr="refused action or object" n="1" />
+                <role descr="anti-benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2947:  A ONU admitiu que os sérvios não haviam cumprido as exigências,  mas recusou autorização para bombardeio. 
+</text>
+                <arg f="" n="0">A ONU
+</arg>
+                <rel f="">recusou</rel>
+                <arg f="" n="1">autorização para bombardeio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2925:  Apesar_  de evitar dar um não definitivo,  Marise deixou claro que deve recusar o convite de Brizola. 
+</text>
+                <arg f="adv" n="m">Apesar_  de evitar dar um não definitivo
+</arg>
+                <arg f="" n="0">Marise
+</arg>
+                <rel f="">recusar</rel>
+                <arg f="" n="1">o convite de Brizola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s828:  O da advogada Zilda(  não quis dar o sobrenome) ,  49,  veio junto_  com uma carta dizendo que seu visto foi recusado. 
+</text>
+                <arg f="" n="1">seu visto
+</arg>
+                <rel f="">recusado</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s261:  « A Justiça foi aplicada porque o Estatuto_  da_  Criança_  e_  do_  Adolescente garante o direito de escolas a todas as crianças »,  disse Márcia_  Mendes,  presidente da Associaçãos_  dos_  Pais_  de_  Alunos do Pitágoras,  um dos seis colégios acusados de recusar as matrículas. 
+</text>
+                <rel f="">recusar</rel>
+                <arg f="" n="1">as matrículas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s198:  Os franceses « Le_  Monde » e « Le_  Figaro » e o alemão « Frankfurter_  Allgemeine » recusaram o anúncio. 
+</text>
+                <arg f="" n="0">Os franceses « Le_  Monde » e « Le_  Figaro » e o alemão « Frankfurter_  Allgemeine »
+</arg>
+                <rel f="">recusaram</rel>
+                <arg f="" n="1">o anúncio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2:  Brasília Pesquisa_  Datafolha publicada hoje revela um dado supreendente:  recusando uma postura radical,  a esmagadora maioria(  77% )  dos eleitores quer o PT participando do Governo Fernando_  Henrique_  Cardoso. 
+</text>
+                <rel f="">recusando</rel>
+                <arg f="" n="1">uma postura radical
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

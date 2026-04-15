@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="pertencer">
+        <note />
+    <roleset framnet="belong.01" id="pertencer.01" name="ser propriedade de" vncls="">
+            <roles>
+                <role descr="possession" n="0" />
+                <role descr="owner or group" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3755:  O engenheiro Bruno_  Maranhão,  líder do Movimento_  por_  Terra, _  Trabalho_  e_  Liberdade,  pertence a uma das famílias que dominam os latifúndios no Nordeste. 
+</text>
+                <arg f="" n="0">O engenheiro Bruno_  Maranhão,  líder do Movimento_  por_  Terra, _  Trabalho_  e_  Liberdade, 
+</arg>
+                <rel f="">pertence</rel>
+                <arg f="" n="1">a uma das famílias que dominam os latifúndios no Nordeste
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3658:  A_  partir_  da próxima semana,  vão viajar para os Estados os membros da coordenação que não pertenceram ao núcleo que passa a deter as decisões. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">pertenceram</rel>
+                <arg f="" n="1">ao núcleo que passa a deter as decisões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2707:  Elas pertencem basicamente ﻿à categoria « fuzil automático »,  isto_  é,  um híbrido surgido na Segunda_  Guerra entre os tradicionais fuzis e metralhadoras de mão ou submetralhadoras. 
+</text>
+                <arg f="" n="0">Elas
+</arg>
+                <rel f="">pertencem</rel>
+                <arg f="adv" n="m">basicamente
+</arg>
+                <arg f="" n="1">﻿à categoria « fuzil automático »,  isto_  é,  um híbrido surgido na Segunda_  Guerra entre os tradicionais fuzis e metralhadoras de mão ou submetralhadoras
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1907:  « Pertencemos a um grupo de caridade. 
+</text>
+                <rel f="">Pertencemos</rel>
+                <arg f="" n="1">a um grupo de caridade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1578:  Essa decisão deverá dar mais_  de US$  12 bilhões ao FSE,  só com tributos que pertencem ﻿à União. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">pertencem</rel>
+                <arg f="" n="1">﻿à União
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s704:  Reginaldo_  Duarte pertence a uma família de políticos de Juazeiro_  do_  Norte(  CE) ,  mas nunca havia disputado eleição. 
+</text>
+                <arg f="" n="0">Reginaldo_  Duarte
+</arg>
+                <rel f="">pertence</rel>
+                <arg f="" n="1">a uma família de políticos de Juazeiro_  do_  Norte(  CE) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s478:  Chiles,  que pertence ao Partido_  Democrata e ao mesmo grupo neoconservador que ajudou Bill_  Clinton a chegar ﻿à Casa_  Branca,  vai tentar se reeleger em novembro deste ano. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">pertence</rel>
+                <arg f="" n="1">ao Partido_  Democrata e ao mesmo grupo neoconservador que ajudou Bill_  Clinton a chegar ﻿à Casa_  Branca
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

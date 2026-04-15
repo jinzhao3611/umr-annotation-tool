@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="transportar">
+        <note />
+    <roleset framnet="transport.01" id="transportar.01" name="levar de um lugar para outro" vncls="11.1">
+            <roles>
+                <role descr="causer of motion" n="0">
+                    <vnrole vncls="11.1" vntheta="Agent" />
+                </role>
+                <role descr="thing in motion" n="1">
+                    <vnrole vncls="11.1" vntheta="Theme" />
+                </role>
+                <role descr="destination" n="2">
+                    <vnrole vncls="11.1" vntheta="Destination" />
+                </role>
+                <role descr="source" n="3">
+                    <vnrole vncls="11.1" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2358:  O ônibus era da Viação_  Boa_  Vista e transportava cerca_  de 40 passageiros na hora do acidente,  segundo a Polícia_  Rodoviária. 
+</text>
+                <arg f="" n="0">O ônibus
+</arg>
+                <rel f="">transportava</rel>
+                <arg f="" n="1">cerca_  de 40 passageiros
+</arg>
+                <arg f="tmp" n="m">na hora do acidente
+</arg>
+                <arg f="dis" n="m">segundo a Polícia_  Rodoviária
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="avaliar">
+        <note />
+        <note />
+    <roleset framnet="think.01" id="avaliar.01" name="pensar algo sobre alguma coisa" vncls="29.4">
+            <roles>
+                <role descr="Thinker" n="0">
+                    <vnrole vncls="29.4" vntheta="Agent" />
+                </role>
+                <role descr="Thought" n="1">
+                    <vnrole vncls="29.4" vntheta="Theme" />
+                </role>
+                <role descr="Attributive" n="2">
+                    <vnrole vncls="29.4" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3944:  Segundo ele,  Carvalho não está avaliando que pode ampliar seu espectro de opções sem a necessidade de uma mudança radical. 
+</text>
+                <arg f="dis" n="m">Segundo ele
+</arg>
+                <arg f="" n="0">Carvalho
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">avaliando</rel>
+                <arg f="" n="1">que pode ampliar seu espectro de opções sem a necessidade de uma mudança radical
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2791:  Deputados ligados a ACM diziam ontem,  em conversas com colegas,  que Benito_  Gama(  PFL-  BA)  foi vetado para ser vice de FHC porque o grupo avalia que são cada_  vez_  mais reduzidas as chances de vitória do tucano. 
+</text>
+                <arg f="" n="0">o grupo
+</arg>
+                <rel f="">avalia</rel>
+                <arg f="" n="1">que são cada_  vez_  mais reduzidas as chances de vitória do tucano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1505:  A equipe do ministro da Fazenda,  Rubens_  Ricupero,  avalia que o processo de crescimento do volume de dinheiro em circulação,  decorrente da queda da inflação,  está praticamente encerrado. 
+</text>
+                <arg f="" n="0">A equipe do ministro da Fazenda,  Rubens_  Ricupero, 
+</arg>
+                <rel f="">avalia</rel>
+                <arg f="" n="1">que o processo de crescimento do volume de dinheiro em circulação,  decorrente da queda da inflação,  está praticamente encerrado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="estimate.01" id="avaliar.02" name="julgar" vncls="54.4">
+            <roles>
+                <role descr="estimator" n="0">
+                    <vnrole vncls="54.4" vntheta="Agent" />
+                </role>
+                <role descr="thing estimated" n="1">
+                    <vnrole vncls="54.4" vntheta="Theme" />
+                </role>
+                <role descr="estimated-to-be, attribute of arg1" n="2">
+                    <vnrole vncls="54.4" vntheta="Attribute" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3655:  Além_  disso,  avaliou como fraca a organização existente até ontem na campanha. 
+</text>
+                <arg f="dis" n="m">Além_  disso
+</arg>
+                <rel f="">avaliou</rel>
+                <arg f="" n="2">como fraca
+</arg>
+                <arg f="" n="1">a organização existente até ontem na campanha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2624:  Para avaliar as perspectivas deste ano,  a Folha ouviu economistas e consultores que têm entre seus clientes muitas das principais empresas brasileiras. 
+</text>
+                <rel f="">avaliar</rel>
+                <arg f="" n="1">as perspectivas deste ano
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1847:  O modo de escapar disse é simples:  aplica-  se um reajuste de,  digamos,  40%  ; em_  seguida,  avalia-  se qual a inflação diária,  digamos de 1,  5% ,  e aí se aplica ao preço cheio um desconto decrescente. 
+</text>
+                <arg f="tmp" n="m">em_  seguida
+</arg>
+                <rel f="">avalia-</rel>
+                <arg f="" n="0">se
+</arg>
+                <arg f="" n="1">qual a inflação diária,  digamos de 1,  5% , 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s499:  O episódio é emblemático do tipo de política externa exercitada pelo governo Clinton e ajuda a explicar por_  que ela é tão mal avaliada. 
+</text>
+                <arg f="" n="1">ela
+</arg>
+                <arg f="" n="2">tão mal
+</arg>
+                <rel f="">avaliada</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

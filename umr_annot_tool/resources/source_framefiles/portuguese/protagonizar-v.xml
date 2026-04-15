@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="protagonizar">
+        <note />
+    <roleset framnet="perform.01" id="protagonizar.01" name="ser protagonista de" vncls="26.7-1">
+            <roles>
+                <role descr="performer" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="performance, thing performed" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s899:  Avesso a um tratamento mais técnico de candidatos durante as campanhas eleitorais,  Covas protagonizou a mudança mais significativa no horário eleitoral gratuito. 
+</text>
+                <arg f="prd" n="m">Avesso a um tratamento mais técnico de candidatos durante as campanhas eleitorais
+</arg>
+                <arg f="" n="0">Covas
+</arg>
+                <rel f="">protagonizou</rel>
+                <arg f="" n="1">a mudança mais significativa
+</arg>
+                <arg f="prd" n="m">no horário eleitoral gratuito
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

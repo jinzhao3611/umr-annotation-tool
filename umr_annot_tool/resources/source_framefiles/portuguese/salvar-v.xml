@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="salvar">
+        <note />
+    <roleset framnet="save.02" id="salvar.01" name="livrar de sofrer dano ou de morrer" vncls="-">
+            <roles>
+                <role descr="hero" n="0" />
+                <role descr="victim" n="1" />
+                <role descr="peril" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3700:  As outras três pessoas que estavam no carro conseguiram se salvar. 
+</text>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">salvar</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3281:  Farina tentou salvar o Modena na política e no tapetão. 
+</text>
+                <rel f="">salvar</rel>
+                <arg f="" n="1">o Modena
+</arg>
+                <arg f="loc" n="m">na política e no tapetão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2145:  FHC e Malan deverão defender que o uso das reservas foi necessário para salvar o acordo da dívida,  sem o_  qual o país não normalizará suas relações financeiras internacionais. 
+</text>
+                <rel f="">salvar</rel>
+                <arg f="" n="1">o acordo da dívida,  sem o_  qual o país não normalizará suas relações financeiras internacionais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1788:  Computador na sala de aula não salva ninguém da ignorância. 
+</text>
+                <arg f="" n="0">Computador na sala de aula
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">salva</rel>
+                <arg f="" n="1">ninguém
+</arg>
+                <arg f="" n="2">da ignorância
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="guardar">
+        <note />
+    <roleset framnet="hold.13" id="guardar.01" name="esconder; abrigar" vncls="54.3">
+            <roles>
+                <role descr="container, possessor, influencer" n="0">
+                    <vnrole vncls="54.3" vntheta="Agent" />
+                </role>
+                <role descr="contents, attribute" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2048:  As vitrinas sempre guardam surpresas,  variando desde o caro refinamento da avenida Montaigne(  que concentra a alta costura,  no Champs_  Elysèes)  até as pechinchas nas pequenas lojas espalhadas pela cidade e nos magazines. 
+</text>
+                <arg f="" n="0">As vitrinas
+</arg>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">guardam</rel>
+                <arg f="" n="1">surpresas
+</arg>
+                <arg f="adv" n="m">variando desde o caro refinamento da avenida Montaigne(  que concentra a alta costura,  no Champs_  Elysèes)  até as pechinchas nas pequenas lojas espalhadas pela cidade e nos magazines
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="camuflar">
+        <note />
+    <roleset framnet="camouflage.01" id="camuflar.01" name="disfarçar, esconder" vncls="29.6">
+            <roles>
+                <role descr="disguiser, agent" n="0">
+                    <vnrole vncls="29.6" vntheta="Agent" />
+                </role>
+                <role descr="thing disguised" n="1">
+                    <vnrole vncls="29.6" vntheta="Theme" />
+                </role>
+                <role descr="secondary predication" n="2">
+                    <vnrole vncls="29.6" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1826:  Eles servem para camuflar o improviso dos estádios da Copa. 
+</text>
+                <rel f="">camuflar</rel>
+                <arg f="" n="1">o improviso dos estádios da Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1823:  Desenho no gramado camufla improviso
+</text>
+                <arg f="" n="0">Desenho no gramado
+</arg>
+                <rel f="">camufla</rel>
+                <arg f="" n="1">improviso
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

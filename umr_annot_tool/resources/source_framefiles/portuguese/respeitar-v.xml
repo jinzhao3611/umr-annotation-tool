@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="respeitar">
+        <note />
+    <roleset framnet="respect.01" id="respeitar.01" name="obedecer; ter respeito por" vncls="-">
+            <roles>
+                <role descr="regarder, respecter, agent" n="0" />
+                <role descr="entity respected" n="1" />
+                <role descr="secondary predicate" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2605:  Como poderá fazer-  lo,  porém,  respeitando ele próprio a lei,  quando existem legalmente duas moedas? 
+</text>
+                <rel f="">respeitando</rel>
+                <arg f="" n="0">ele próprio
+</arg>
+                <arg f="" n="1">a lei
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1238:  A alteração deve ser feita de_  acordo com a hora local,  respeitando portanto as diferenças normais de fusos horários. 
+</text>
+                <rel f="">respeitando</rel>
+                <arg f="" n="1">as diferenças normais de fusos horários
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

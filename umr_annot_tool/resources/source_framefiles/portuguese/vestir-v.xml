@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="vestir">
+        <note />
+    <roleset framnet="wear.01" id="vestir.01" name="colocar (roupa, calçado, chapéu); usar" vncls="41.3.1">
+            <roles>
+                <role descr="wearer" n="0">
+                    <vnrole vncls="41.3.1" vntheta="Agent" />
+                </role>
+                <role descr="clothing" n="1">
+                    <vnrole vncls="41.3.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3277:  Patologistas de hospital de Riverside(  Califórnia)  tiveram que vestir roupas especiais para autopsiar corpo de uma mulher que teria químicos tóxicos no sangue,  porque o cheiro os fez desmaiar. 
+</text>
+                <arg f="" n="0">Patologistas de hospital de Riverside(  Califórnia) 
+</arg>
+                <rel f="">vestir</rel>
+                <arg f="" n="1">roupas especiais para autopsiar corpo de uma mulher que teria químicos tóxicos no sangue,  porque o cheiro os fez desmaiar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

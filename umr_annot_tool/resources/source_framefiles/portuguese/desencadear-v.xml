@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desencadear">
+        <note />
+    <roleset framnet="trigger.01" id="desencadear.01" name="dar início; provocar" vncls="">
+            <roles>
+                <role descr="Agent" n="0" />
+                <role descr="Theme(-Creation)" n="1" />
+                <role descr="Instrument" n="2" />
+                <role descr="secondary predication" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1831:  E propôs que eu desencadeasse nesta coluna uma campanha nacional contra saudações lambuzadas. 
+</text>
+                <arg f="" n="0">eu
+</arg>
+                <rel f="">desencadeasse</rel>
+                <arg f="loc" n="m">nesta coluna
+</arg>
+                <arg f="" n="1">uma campanha nacional contra saudações lambuzadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

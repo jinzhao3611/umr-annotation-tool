@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="violar">
+        <note />
+    <roleset framnet="violate.01" id="violar.01" name="desrespeitar" vncls="">
+            <roles>
+                <role descr="violator" n="0" />
+                <role descr="thing violated, usually a rule" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s216:  O relatório não diz se as reuniões entre funcionários da Casa_  Branca e do Tesouro violaram a ética. 
+</text>
+                <arg f="" n="0">as reuniões entre funcionários da Casa_  Branca e do Tesouro
+</arg>
+                <rel f="">violaram</rel>
+                <arg f="" n="1">a ética
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

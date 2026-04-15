@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="celebrar">
+        <note />
+        <note />
+    <roleset framnet="sign.02" id="celebrar.01" name="firmar (contrato, convênio)" vncls="37.4">
+            <roles>
+                <role descr="signer, agreer" n="0">
+                    <vnrole vncls="37.4" vntheta="Agent" />
+                </role>
+                <role descr="agreement" n="1">
+                    <vnrole vncls="37.4" vntheta="Topic" />
+                </role>
+                <role descr="co-signer" n="2">
+                    <vnrole vncls="37.4" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3324:  Termo de convênio que celebram,  entre_  si,  a União e o Estado do Rio_  de_  Janeiro
+</text>
+                <arg f="" n="1">convênio
+</arg>
+                <rel f="">celebram</rel>
+                <arg f="rec" n="m">entre_  si
+</arg>
+                <arg f="" n="0">a União e o Estado do Rio_  de_  Janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="celebrate.01" id="celebrar.02" name="homenagear" vncls="33">
+            <roles>
+                <role descr="honorer" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="honored" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="for what reason" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1673:  Os discursos da frugalidade,  da austeridade ficaram para as repúblicas gregas e romanas,  aquelas que Montesquieu ainda celebrava,  em meados do século 18,  quando dizia que o regime republicano se caracteriza pela disposição de seus cidadãos a renunciar ao bem privado em_  favor_  do bem comum e por isso,  acrescentava ele,  trata-  se de regime impossível na modernidade,  na_  qual se busca a vantagem pessoal. 
+</text>
+                <arg f="" n="0">Montesquieu
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">celebrava</rel>
+                <arg f="tmp" n="m">em meados do século 18,  quando dizia que o regime republicano se caracteriza pela disposição de seus cidadãos a renunciar ao bem privado em_  favor_  do bem comum e por isso,  acrescentava ele,  trata-  se de regime impossível na modernidade,  na_  qual se busca a vantagem pessoal
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="compartilhar">
+        <note />
+    <roleset framnet="share.01" id="compartilhar.01" name="compartilhar" vncls="-">
+            <roles>
+                <role descr="sharer" n="0" />
+                <role descr="thing shared" n="1" />
+                <role descr="shared with, if separate from arg0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s159:  A previsão de saques reduzidos sobre a poupança é compartilhada por especialistas. 
+</text>
+                <arg f="" n="1">A previsão de saques reduzidos sobre a poupança
+</arg>
+                <rel f="">compartilhada</rel>
+                <arg f="" n="0">por especialistas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

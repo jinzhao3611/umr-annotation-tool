@@ -1,0 +1,2437 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fazer">
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="make.01" id="fazer.01" name="efetuar; realizar" vncls="26.1-1">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.1-1" vntheta="Agent" />
+                </role>
+                <role descr="creation" n="1">
+                    <vnrole vncls="26.1-1" vntheta="Product" />
+                </role>
+                <role descr="created-from, thing changed" n="2">
+                    <vnrole vncls="26.1-1" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.1-1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4195:  Com a determinação da Justiça,  os empregados ficam impedidos de fazer o pagamento das ações. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o pagamento das ações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4104:  o_  que um chapéu de cowboy estaria fazendo ali? 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <arg f="" n="0">um chapéu de cowboy
+</arg>
+                <rel f="">fazendo</rel>
+                <arg f="loc" n="m">ali
+</arg>
+                <note>neste exemplo, "to do" seria mais adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3991:  Caso o tetracampeão seja o Brasil(  seja feita a vossa vontade assim na Terra como nos gramados) ,  confirma-  se que os últimos serão os primeiros. 
+</text>
+                <rel f="">feita</rel>
+                <arg f="" n="1">a vossa vontade
+</arg>
+                <arg f="loc" n="m">assim na Terra como nos gramados
+</arg>
+                <note>neste exemplo, "to do" seria mais adequado</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3987:  Ferrara põe o excelente Harvey_  Keitel para interpretar o seu papel:  o do diretor que faz da falsa loira uma verdadeira atriz. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="2">da falsa loira
+</arg>
+                <arg f="" n="1">uma verdadeira atriz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3972:  Gostamos da idéia,  resolvemos pegar velhos sucessos e fazer neste formato. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="mnr" n="m">neste formato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3907:  O caso Effenberg,  jogador cortado por ter feito gesto obsceno ﻿à torcida,  também foi criticado. 
+</text>
+                <rel f="">feito</rel>
+                <arg f="" n="1">gesto obsceno
+</arg>
+                <arg f="" n="3">﻿à torcida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3904:  O anúncio oficial será feito após o dia 20. 
+</text>
+                <arg f="" n="1">O anúncio oficial
+</arg>
+                <rel f="">feito</rel>
+                <arg f="tmp" n="m">após o dia 20
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3867:  Não é verdade,  como diz Gusmão,  que a missão enviada a Israel tenha feito « confronto de preços ». 
+</text>
+                <arg f="" n="0">a missão enviada a Israel
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="1">« confronto de preços »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3863:  O Príncipe Charles,  do Reino_  Unido,  fez respiração boca-  a-  boca num boneco(  foto)  na inauguração do novo prédio do Centro_  de_  Ambulâncias de Wellington,  capital da Nova_  Zelândia. 
+</text>
+                <arg f="" n="0">O Príncipe Charles,  do Reino_  Unido, 
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">respiração boca-  a-  boca
+</arg>
+                <arg f="" n="3">num boneco(  foto) 
+</arg>
+                <arg f="loc" n="m">na inauguração do novo prédio do Centro_  de_  Ambulâncias de Wellington,  capital da Nova_  Zelândia
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3739:  Os ataques a Sarney só serão feitos se a contabilidade quercista constatar que a vitória na prévia está ameaçada. 
+</text>
+                <arg f="" n="1">Os ataques a Sarney
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">feitos</rel>
+                <arg f="adv" n="m">se a contabilidade quercista constatar que a vitória na prévia está ameaçada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3710:  A mineira Contagem é outra grande concentração eleitoral,  com prefeito do PSDB e onde o partido,  já como propaganda,  fez a convenção de escolha de Fernando_  Henrique. 
+</text>
+                <arg f="" n="0">o partido
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <arg f="pnc" n="m">como propaganda
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">a convenção de escolha de Fernando_  Henrique
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3709:  A escolha tão particular de Sobral,  que por « ser uma das principais cidades do Ceará » é também uma grande concentração eleitoral do Estado,  coincide com sua escolha para a ação de campanha que lá fez o candidato Fernando_  Henrique no fim-  de-  semana. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="loc" n="m">lá
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="0">o candidato Fernando_  Henrique
+</arg>
+                <arg f="tmp" n="m">no fim-  de-  semana
+</arg>
+                <note>"fazer campanha" em inglês é "to campaign", verbo que não tem em português</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3672:  Desde a Idade_  Média,  esse caminho é feito através do intelecto e não do corpo. 
+</text>
+                <arg f="tmp" n="m">Desde a Idade_  Média
+</arg>
+                <arg f="" n="1">esse caminho
+</arg>
+                <rel f="">feito</rel>
+                <arg f="mnr" n="m">através do intelecto e não do corpo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3648:  Dos cinco,  Baselitz,  Immendorff e Kirkeby fizeram melhor. 
+</text>
+                <arg f="" n="0">Baselitz,  Immendorff e Kirkeby
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="mnr" n="m">melhor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3647:  Cada_  um o fez a_  seu_  modo. 
+</text>
+                <arg f="" n="0">Cada_  um
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">fez</rel>
+                <arg f="mnr" n="m">a_  seu_  modo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3626:  Para evitar distúrbios,  vamos distribuir às TVs uma fita para mostrar ﻿à população o_  que viemos fazer aqui. 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="loc" n="m">aqui
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3623:  Segundo o professor Vicente_  Amato_  Neto,  66,  « há informações que todos ouvem,  no sentido de fazer o estacionamento ». 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o estacionamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3619:  O SPQ(  Sistema_  de_  Projeções_  Qualificadas)  resulta da média de opiniões de 16 economistas que fazem análise de conjuntura. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">análise de conjuntura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3556:  A família foi alertada mas não chamou nenhum médico e fez o enterro depois de dez horas de velório. 
+</text>
+                <arg f="" n="0">A família
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">o enterro
+</arg>
+                <arg f="tmp" n="m">depois de dez horas de velório
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3548:  A banda brasileira nasceu em 1990 para fazer uma homenagem a Zappa. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">uma homenagem a Zappa
+</arg>
+                <note>em inglês é muito mais frequente "to pay homage"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3524:  Lá,  os plínios fazem amigos,  influenciam pessoas,  revêem colegas,  contam as novidades- -  as últimas viagens para os Estados_  Unidos,  quem comprou carro novo,  quem « vai ter » que começar a trabalhar com o pai,  os que ainda não conseguiram telefone celular. 
+</text>
+                <arg f="loc" n="m">Lá
+</arg>
+                <arg f="" n="0">os plínios
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">amigos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3514:  Na minha primeira tentativa,  fiz exatamente a mesma coisa que na primeira vez que pratiquei esqui aquático:  caí e me soltei. 
+</text>
+                <arg f="tmp" n="m">Na minha primeira tentativa
+</arg>
+                <rel f="">fiz</rel>
+                <arg f="adv" n="m">exatamente
+</arg>
+                <arg f="" n="1">a mesma coisa que na primeira vez que pratiquei esqui aquático:  caí e me soltei
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3484:  « Um ataque agora não faz mais sentido,  desde_  que os sérvios continuem a recuar »,  disse ﻿à Folha o coronel Andrew_  Duncan,  do IIEE. 
+</text>
+                <arg f="" n="1">Um ataque
+</arg>
+                <arg f="tmp" n="m">agora
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">faz</rel>
+                <arg f="adv" n="m">mais
+</arg>
+                <arg f="adv" n="m">desde_  que os sérvios continuem a recuar
+</arg>
+                <note>em inglês "to make sense"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3461:  Ou_  melhor,  não esqueça porque ainda se faz muita coisa boa,  mas deixe de querer ser bacana citando-  o como a última tendência. 
+</text>
+                <arg f="adv" n="m">ainda
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">muita coisa boa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3421:  Por_  que não publicar que o PT fez um seminário no Nordeste sobre ela e concluiu pela necessidade de sua construção? 
+</text>
+                <arg f="" n="0">o PT
+</arg>
+                <rel f="">fez</rel>
+                <arg f="tmp" n="m">no Nordeste
+</arg>
+                <arg f="" n="1">um seminário sobre ela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s3395:  Um(  mecenas)  nobre que deifica o saber antes e mistifica o dar depois ou ele deve ser um iconoclasta,  espalhar o_  que sabe enquanto o tempo faz das novidades fatos descartáveis. 
+</text>
+                <arg f="" n="0">o tempo
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="2">das novidades
+</arg>
+                <arg f="" n="1">fatos descartáveis
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3387:  Basicamente,  é o que tenho feito com os músicos com os_  quais trabalho. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="2">com os músicos com os_  quais trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3291:  E o volume de alumínio daria para fazer 275 mil latas de refrigerante. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">275 mil latas de refrigerante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3276: '  Astronautas'  fazem autópsia nos EUA
+</text>
+                <arg f="" n="0">Astronautas
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">autópsia
+</arg>
+                <arg f="" n="2">nos EUA
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3262:  E tudo,  segundo a Jovem_  Pan,  para fazer « proselitismo »,  para « as promessas de sempre ». 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">proselitismo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3197:  Laser faz 12 páginas por minuto
+</text>
+                <arg f="" n="0">Laser
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">12 páginas por minuto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3140:  Fomos convidados a fazer um minitreking,  ou_  seja,  caminhar claçando « crampones »(  sapatos com pregos de ferro)  sobre o glaciar. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">um minitreking
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3132:  Ela pertência a um grupo de cem garotas de Brasília contratado para fazer propaganda de Ana_  Paula_  Junqueira. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">propaganda de Ana_  Paula_  Junqueira
+</arg>
+                <note>"fazer propaganda" = "to advertise", "to promote"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3095:  O jogador,  sabendo que ganharia mais_  de US$  250 mil,  fez o_  que a voz ordenou. 
+</text>
+                <arg f="" n="0">O jogador
+</arg>
+                <arg f="adv" n="m">sabendo que ganharia mais_  de US$  250 mil
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">o_  que a voz ordenou
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3085:  Primeiro,  George fazia a música ; Ira capturava o « espírito » da canção e apunha-  lhe título e letra. 
+</text>
+                <arg f="tmp" n="m">Primeiro
+</arg>
+                <arg f="" n="0">George
+</arg>
+                <rel f="">fazia</rel>
+                <arg f="" n="1">a música
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3084:  George fazia a música,  Ira a letra,  embora,  como em toda parceria,  cada_  qual desse palpites na especialidade do outro. 
+</text>
+                <arg f="" n="0">George
+</arg>
+                <rel f="">fazia</rel>
+                <arg f="" n="1">a música
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3081:  Patricia_  Wells ensinou o preparo de codornas marinadas e cuscuz marroquino e incentivava o público a repartir « food_  experiences »(  o nome moderno para receber amigos para comer)  como ela mesma faz em sua casa na Provence(  sul da França) ,  região em moda nos Estados_  Unidos. 
+</text>
+                <arg f="" n="1">food_  experiences »(  o nome moderno para receber amigos para comer) 
+</arg>
+                <arg f="" n="0">ela mesma
+</arg>
+                <rel f="">faz</rel>
+                <arg f="loc" n="m">em sua casa
+</arg>
+                <arg f="loc" n="m">na Provence(  sul da França) ,  região em moda nos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3079:  O tema de Julia_  Child era uma simples quiche,  mas era político:  mostrar aos paranóicos americanos que o ovo e a manteiga fazem pratos deliciosos e que a patrulha do colesterol deve dar espaço ao prazer da comida. 
+</text>
+                <arg f="" n="0">o ovo e a manteiga
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">pratos deliciosos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3069:  « Voto no Fernando_  Henrique porque ele fez o Plano_  Real »,  afirmou o vice-  prefeito,  Manoel_  Lopes_  Duarte,  do PPR. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">o Plano_  Real
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s3059:  « Me parece que há um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa.  »
+</text>
+                <arg f="" n="0">todos os centros do país
+</arg>
+                <rel f="">façam</rel>
+                <arg f="" n="1">pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3058:  Gianetti_  da_  Fonseca afirmou que a avaliação tem que ser feita por « pares »(  pesquisadores da mesma área) ,  que não façam parte do grupo analisado. 
+</text>
+                <arg f="" n="1">a avaliação
+</arg>
+                <rel f="">feita</rel>
+                <arg f="" n="0">por « pares »(  pesquisadores da mesma área) ,  que não façam parte do grupo analisado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3026:  Vasco diz que não fez seguro para Dener
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">seguro
+</arg>
+                <arg f="" n="3">para Dener
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2997:  Sim,  embora a abertura dos portos não esteja sendo feita impunemente. 
+</text>
+                <arg f="" n="1">a abertura dos portos
+</arg>
+                <rel f="">feita</rel>
+                <arg f="mnr" n="m">impunemente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2965:  Um indigente conhecido como Daniel foi encontrado caído na rua Canindé na madrugada de ontem por policiais que estavam fazendo patrulhamento. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">fazendo</rel>
+                <arg f="" n="1">patrulhamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2943:  Ao_  contrário_  do que fez em campanhas anteriores,  Brizola quer promover comícios rápidos,  com três oradores. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">fez</rel>
+                <arg f="loc" n="m">em campanhas anteriores
+</arg>
+                <arg f="" n="0">Brizola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2941:  O candidato do PDT disse que quer fazer o mesmo. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o mesmo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2870:  Ou então lutava contra uma depressão repentina,  tentava controlar minha raiva,  fazia piadas com alguém ou fazia força para não sentir saudades de casa. 
+</text>
+                <rel f="">fazia</rel>
+                <arg f="" n="1">piadas com alguém
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2847:  Decidimos então,  por uma questão de economia cênica,  abolir uma das casas e só insinuar as outras duas,  fazendo apenas suas entradas,  que parecem as de um templo. 
+</text>
+                <rel f="">fazendo</rel>
+                <arg f="adv" n="m">apenas
+</arg>
+                <arg f="" n="1">suas entradas,  que parecem as de um templo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2845:  Depois de conversar com Antunes,  sempre faço uma maquete. 
+</text>
+                <arg f="tmp" n="m">Depois de conversar com Antunes
+</arg>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <rel f="">faço</rel>
+                <arg f="" n="1">uma maquete
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2828:  Em_  seguida,  Euller fez mais duas jogadas. 
+</text>
+                <arg f="tmp" n="m">Em_  seguida
+</arg>
+                <arg f="" n="0">Euller
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">mais duas jogadas
+</arg>
+                <note>"fazer uma jogada" = "to make a move"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2730:  « Eles são a razão de tudo_  o_  que faço,  de tudo aquilo em que acredito »,  disse,  com grandes espaços entre as palavras. 
+</text>
+                <arg f="" n="1">tudo_  o_  que
+</arg>
+                <rel f="">faço</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2709:  Já as submetralhadoras disparam balas semelhantes às dos revólveres,  mas podem fazer-  lo em rajadas,  a um alcance curto,  de dezenas de metros. 
+</text>
+                <arg f="" n="0">as submetralhadoras
+</arg>
+                <rel f="">fazer-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="mnr" n="m">em rajadas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2701:  Ela deverá inviabilizar a atual oportunidade de estabilizar afetivamente a economia brasileira e,  de_  quebra,  deverá fazer uma série de estragos irreversíveis,  que em muito debilitarão seu potencial de desenvolvimento a_  longo_  prazo. 
+</text>
+                <arg f="" n="0">Ela
+</arg>
+                <arg f="mnr" n="m">de_  quebra
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">uma série de estragos irreversíveis,  que em muito debilitarão seu potencial de desenvolvimento a_  longo_  prazo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2669:  Luna afirmou que é cedo para fazer uma avaliação completa do impacto das novas medidas. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">uma avaliação completa do impacto das novas medidas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2639:  Se não fizermos nada,  pode haver uma tragédia. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">fizermos</rel>
+                <arg f="" n="1">nada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2605:  Como poderá fazer-  lo,  porém,  respeitando ele próprio a lei,  quando existem legalmente duas moedas? 
+</text>
+                <arg f="mnr" n="m">Como
+</arg>
+                <rel f="">fazer-</rel>
+                <arg f="" n="1">lo
+</arg>
+                <arg f="dis" n="m">porém
+</arg>
+                <arg f="adv" n="m">respeitando ele próprio a lei,  quando existem legalmente duas moedas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2590:  No 1º semestre de 94 foram feitos 662 pedidos no total. 
+</text>
+                <arg f="tmp" n="m">No 1º semestre de 94
+</arg>
+                <rel f="">feitos</rel>
+                <arg f="" n="1">662 pedidos
+</arg>
+                <arg f="mnr" n="m">no total
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2586:  A pesquisa é feita pela Hubert_  Imóveis_  e_  Administração. 
+</text>
+                <arg f="" n="1">A pesquisa
+</arg>
+                <rel f="">feita</rel>
+                <arg f="" n="0">pela Hubert_  Imóveis_  e_  Administração
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2579:  Se a vacância ocorresse nos últimos dois anos de mandato,  a eleição seria feita pelo Congresso,  em 30 dias. 
+</text>
+                <arg f="adv" n="m">Se a vacância ocorresse nos últimos dois anos de mandato
+</arg>
+                <arg f="" n="1">a eleição
+</arg>
+                <rel f="">feita</rel>
+                <arg f="" n="0">pelo Congresso
+</arg>
+                <arg f="tmp" n="m">em 30 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2578:  No_  caso_  de impedimento do presidente da República ou de vacância do cargo nos primeiros dois anos de mandato,  a substituição será feita através de eleição direta em 90 dias. 
+</text>
+                <arg f="adv" n="m">No_  caso_  de impedimento do presidente da República ou de vacância do cargo nos primeiros dois anos de mandato
+</arg>
+                <arg f="" n="1">a substituição
+</arg>
+                <rel f="">feita</rel>
+                <arg f="mnr" n="m">através de eleição direta
+</arg>
+                <arg f="tmp" n="m">em 90 dias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2548:  Elas não podem ser reeditadas porque a criação ou alteração de impostos só podem ser feitas no ano anterior ao de sua cobrança. 
+</text>
+                <arg f="" n="1">a criação ou alteração de impostos
+</arg>
+                <arg f="adv" n="m">só
+</arg>
+                <rel f="">feitas</rel>
+                <arg f="tmp" n="m">no ano anterior ao de sua cobrança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2475:  « A Lílian sem calcinha fez mais estrago do_  que um bando do Comando_  Vermelho com revólver. 
+</text>
+                <arg f="" n="0">A Lílian sem calcinha
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">mais estrago do_  que um bando do Comando_  Vermelho com revólver
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2463:  O anúncio foi feito segunda-  feira pelo Instituto_  da_  Califórnia_  para_  Tecnologia_  Avançada(  Pasadena) ,  onde Sperry trabalhou até 1984. 
+</text>
+                <arg f="" n="1">O anúncio
+</arg>
+                <rel f="">feito</rel>
+                <arg f="tmp" n="m">segunda-  feira
+</arg>
+                <arg f="" n="0">pelo Instituto_  da_  Califórnia_  para_  Tecnologia_  Avançada(  Pasadena) ,  onde Sperry trabalhou até 1984
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2450:  Apesar_  da veracidade ainda hoje comprovável,  na ocasião Fernando_  Henrique me fez graves acusações. 
+</text>
+                <arg f="adv" n="m">Apesar_  da veracidade ainda hoje comprovável
+</arg>
+                <arg f="tmp" n="m">na ocasião
+</arg>
+                <arg f="" n="0">Fernando_  Henrique
+</arg>
+                <arg f="" n="3">me
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">graves acusações
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2436:  Seu editor,  Claude_  Durand,  disse ﻿à Folha por telefone,  de Paris,  que Soljenitsin não tem intenção de fazer qualquer despedida pública dos Estados_  Unidos. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">qualquer despedida pública dos Estados_  Unidos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2398:  O presidente do partido no Rio,  Sá_  Freire,  disse que o pedido de cassação foi feito porque Walter_  Queiroz não teria comparecido às reuniões marcadas para que ele explicasse sua nova declaração de renda. 
+</text>
+                <arg f="" n="1">o pedido de cassação
+</arg>
+                <rel f="">feito</rel>
+                <arg f="cau" n="m">porque Walter_  Queiroz não teria comparecido às reuniões marcadas para que ele explicasse sua nova declaração de renda
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2394:  Na cheia,  entre outubro e abril,  quando a média mensal de chuvas supera 290 milímetros,  a irrigação do arroz é feita por inundação. 
+</text>
+                <arg f="loc" n="m">Na cheia,  entre outubro e abril,  quando a média mensal de chuvas supera 290 milímetros, 
+</arg>
+                <arg f="" n="1">a irrigação do arroz
+</arg>
+                <rel f="">feita</rel>
+                <arg f="mnr" n="m">por inundação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2344:  USP faz curso sobre deformidade congênita
+</text>
+                <arg f="" n="0">USP
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">curso sobre deformidade congênita
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2340:  No final é feita uma auditoria para ver se a auto-  avaliação feita pela fábrica corresponde ﻿à realidade. 
+</text>
+                <arg f="tmp" n="m">No final
+</arg>
+                <rel f="">feita</rel>
+                <arg f="" n="1">uma auditoria para ver se a auto-  avaliação feita pela fábrica corresponde ﻿à realidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2337:  Num campeonato em que predominaram as defesas fechadas,  o_  que fez a diferença foi a imaginação ouso dizer,  para horror de Parreira,  a « magia » de um punhado de craques:  Romário,  Baggio,  Stoichkov,  Hagi,  Brolin. . . 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">a diferença
+</arg>
+                <note>"fazer a diferença" = "to make the difference"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2279:  As consultas serão feitas por_  escrito para evitar contestação. 
+</text>
+                <arg f="" n="1">As consultas
+</arg>
+                <rel f="">feitas</rel>
+                <arg f="mnr" n="m">por_  escrito
+</arg>
+                <arg f="pnc" n="m">para evitar contestação
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2180:  « Se não fizéssemos isso,  os jogadores sofreriam mais. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">fizéssemos</rel>
+                <arg f="" n="1">isso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2151:  Segundo a consultora de cores Renata_  Lourenção,  o trabalho pode ser feito por qualquer pessoa seguindo as instruções da lata,  sem a necessidade de um pintor profissional. 
+</text>
+                <arg f="dis" n="m">Segundo a consultora de cores Renata_  Lourenção
+</arg>
+                <arg f="" n="1">o trabalho
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="0">por qualquer pessoa
+</arg>
+                <arg f="mnr" n="m">seguindo as instruções da lata,  sem a necessidade de um pintor profissional
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2072:  Sua idéia é fazer na 22ª Bienal uma instalação com bambus no segundo andar que seja vista por_  cima,  do terceiro,  « com toda sua cor e padrão ». 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">na 22ª Bienal uma instalação com bambus no segundo andar que seja vista por_  cima,  do terceiro,  « com toda sua cor e padrão »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2057:  E eu gostaria de saber como fazer para adquirir a carteirinha de estudante. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="pnc" n="m">para adquirir a carteirinha de estudante
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2053:  « Existem algumas opções de como fazer isso »,  disse Sérgio_  Amaral,  chefe de gabinete do ministro Rubens_  Ricupero. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">isso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2047:  Um consumidor que tivesse apenas uma nota de CR$  50.  000,  00 para fazer uma compra de valor menor tinha de solicitar um cheque de conversão no valor aproximado da mercadoria e receber o troco em cruzeiros reais. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">uma compra de valor menor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1979:  Aprendi a falar direito e tentei fazer minha vida melhor para mim. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">minha vida melhor
+</arg>
+                <arg f="" n="3">para mim
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1908:  Fazemos um número de dança. 
+</text>
+                <rel f="">Fazemos</rel>
+                <arg f="" n="1">um número de dança
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1871:  « Talvez um quadrangular final,  como fizeram no campeonato do Rio_  de_  Janeiro.  »
+</text>
+                <arg f="" n="1">um quadrangular final
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="loc" n="m">no campeonato do Rio_  de_  Janeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1834:  Façam como eu! 
+</text>
+                <rel f="">Façam</rel>
+                <arg f="mnr" n="m">como eu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1746:  Andrade afirmou que a limpeza é feita diariamente. 
+</text>
+                <arg f="" n="1">a limpeza
+</arg>
+                <rel f="">feita</rel>
+                <arg f="tmp" n="m">diariamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1655:  As esculturas,  ela diz que faz em seis meses. 
+</text>
+                <arg f="" n="1">As esculturas
+</arg>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">faz</rel>
+                <arg f="tmp" n="m">em seis meses
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1642:  Nunca vi um partido render-  se tão rápida e incondicionalmente como o PT está fazendo. 
+</text>
+                <arg f="" n="0">o PT
+</arg>
+                <rel f="">fazendo.</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1626:  A restituição do IRPF poderá ser feita a terceiros,  desde_  que:  se de valor até 80 Ufir,  mediante simples autorização por_  escrito do beneficiário,  acompanhada de cédula de identidade e CPF do representante e do representado,  para verificação das assinaturas ; e se de valor acima_  de 80 Ufir só poderá ser paga a procurador(  Fund. :  instrução normativa DRF nº.  38/  92) . 
+</text>
+                <arg f="" n="1">A restituição do IRPF
+</arg>
+                <rel f="">feita</rel>
+                <arg f="" n="3">a terceiros
+</arg>
+                <arg f="adv" n="m">desde_  que:  se de valor até 80 Ufir,  mediante simples autorização por_  escrito do beneficiário,  acompanhada de cédula de identidade e CPF do representante e do representado,  para verificação das assinaturas ; e se de valor acima_  de 80 Ufir só poderá ser paga a procurador(  Fund. :  instrução normativa DRF nº.  38/  92) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1586:  O tucano tem passado a maior parte do tempo em seu quarto e,  ao_  contrário_  dos 60 hóspedes,  não tem feito exercícios. 
+</text>
+                <arg f="" n="0">O tucano tem passado a maior parte do tempo em seu quarto
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="1">exercícios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1571:  Folha- -  O sr.  já fez algum discurso contra a monarquia no Parlamento? 
+</text>
+                <arg f="dis" n="m">Folha
+</arg>
+                <arg f="" n="0">O sr. 
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">algum discurso contra a monarquia
+</arg>
+                <arg f="loc" n="m">no Parlamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1552:  A Asuapi doou 10 bicicletas para a guarda municipal fazer o policiamento do parque. 
+</text>
+                <arg f="" n="0">a guarda municipal
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o policiamento do parque
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1536:  Dallari,  após negociações com os laboratórios,  candidamente anunciou que « para janeiro,  não se pode fazer mais_  nada,  mas em fevereiro os reajustes serão iguais ﻿à inflação ». 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">mais_  nada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1532:  Após fazer uma única volta rápida,  Schumacher emprestou seu carro para o companheiro Jos_  Verstappen,  que havia rodado nos treinos da manhã. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">uma única volta rápida
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1514:  A cantora e violinista Meca_  Vargas não faz coro com os contentes com o computador. 
+</text>
+                <arg f="" n="0">A cantora e violinista Meca_  Vargas
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">coro com os contentes com o computador
+</arg>
+                <note>"fazer coro com" é "dizer a mesma coisa que"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1500:  Alguns proprietários fazem um contrato para o apartamento e um acordo,  muitas_  vezes verbal,  para a locação da garagem e/  ou do telefone. 
+</text>
+                <arg f="" n="0">Alguns proprietários
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">um contrato para o apartamento e um acordo,  muitas_  vezes verbal,  para a locação da garagem e/  ou do telefone
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1451:  Ao_  contrário_  do que tem acontecido em suas últimas declarações públicas,  FHC evitou ontem fazer ataques aos chamados « aumentos abusivos de preços » por_  parte_  dos oligopólios grandes empresas que dominam determinados segmentos da economia. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">ataques aos chamados « aumentos abusivos de preços »
+</arg>
+                <arg f="prd" n="m">por_  parte_  dos oligopólios grandes empresas que dominam determinados segmentos da economia
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1432:  Com uma ponte de safena e uma mamária implantadas há um ano e meio,  fez o trajeto em 1h41 58 minutos atrás_  do vencedor. 
+</text>
+                <arg f="adv" n="m">Com uma ponte de safena e uma mamária implantadas há um ano e meio
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">o trajeto
+</arg>
+                <arg f="tmp" n="m">em 1h41 58 minutos atrás_  do vencedor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1429:  Sindicalista faz o tempo de 1h41(  Da Reportagem Local) 
+</text>
+                <arg f="" n="0">Sindicalista
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">o tempo de 1h41
+</arg>
+                <arg f="dis" n="m">Da Reportagem Local
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1426:  « Foi ótimo,  você fez um minuto melhor do_  que o esperado »,  disse a Medeiros ao cruzar a linha de chegada. 
+</text>
+                <arg f="" n="0">você
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">um minuto melhor do_  que o esperado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1392:  Para marcar a doação da coleção de Takeo_  Hirata para a biblioteca do Masp,  dois designers japoneses fizeram ontem uma palestra na Fiesp. 
+</text>
+                <arg f="pnc" n="m">Para marcar a doação da coleção de Takeo_  Hirata para a biblioteca do Masp
+</arg>
+                <arg f="" n="0">dois designers japoneses
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">uma palestra
+</arg>
+                <arg f="loc" n="m">na Fiesp
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1390:  Hoje_  em_  dia,  qualquer americano medianamente equipado pode fazer diante_  do teclado tarefas que antes exigiam que ele tirasse o bumbum da cadeira:  mandar e receber fax e mensagens eletrônicas,  reservar passagens aéreas,  controlar a conta bancária,  acessar bancos de dados e dezenas_  doutros serviços. 
+</text>
+                <arg f="tmp" n="m">Hoje_  em_  dia
+</arg>
+                <arg f="" n="0">qualquer americano medianamente equipado
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="loc" n="m">diante_  do teclado
+</arg>
+                <arg f="" n="1">tarefas que antes exigiam que ele tirasse o bumbum da cadeira:  mandar e receber fax e mensagens eletrônicas,  reservar passagens aéreas,  controlar a conta bancária,  acessar bancos de dados e dezenas_  doutros serviços
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1364:  « Não sei se ele vai querer meu apoio,  mas farei tudo que puder por ele.  »
+</text>
+                <rel f="">farei</rel>
+                <arg f="" n="1">tudo que puder
+</arg>
+                <arg f="" n="3">por ele
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1362:  « Senti dores e,  como tenho uns casos de câncer na família,  decidi fazer o exame »,  contou a modelo. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o exame
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1353:  Autor da proposta do Imposto_  Único,  que pretende reduzir a enorme gama de tributos a um,  Marcos_  Cintra fará uma palestra sobre o assunto. 
+</text>
+                <arg f="" n="0">Marcos_  Cintra
+</arg>
+                <rel f="">fará</rel>
+                <arg f="" n="1">uma palestra sobre o assunto
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1350:  Os contribuintes que pagarem seus tributos(  IPTU,  ISS etc. )  hoje sairão ganhando,  pois o cálculo será feito pela UFM de R$  26,  54. 
+</text>
+                <arg f="" n="1">o cálculo
+</arg>
+                <rel f="">feito</rel>
+                <arg f="mnr" n="m">pela UFM de R$  26,  54
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1252:  Me ensinou que só o povo constrói grandeza e o faz desinteressadamente,  no dia-  a-  dia da generosidade. 
+</text>
+                <arg f="" n="0">só o povo
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">faz</rel>
+                <arg f="mnr" n="m">desinteressadamente
+</arg>
+                <arg f="tmp" n="m">no dia-  a-  dia da generosidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1238:  A alteração deve ser feita de_  acordo com a hora local,  respeitando portanto as diferenças normais de fusos horários. 
+</text>
+                <arg f="" n="1">A alteração
+</arg>
+                <rel f="">feita</rel>
+                <arg f="tmp" n="m">de_  acordo com a hora local
+</arg>
+                <arg f="mnr" n="m">respeitando portanto as diferenças normais de fusos horários
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1172:  « Já tinha feito dieta,  ginástica localizada,  exercícios com aparelhos e não conseguia eliminar essas gordurinhas. 
+</text>
+                <arg f="adv" n="m">Já
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="1">dieta,  ginástica localizada,  exercícios com aparelhos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1098:  A imprensa independente não quer cassar de Itamar_  Franco o direito de fazer seu sucessor. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">seu sucessor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1096:  Em respeito ﻿à história,  diga-  se que o mal que a UDN fez ao país não decorreu de seu moralismo,  mas de sua amoralidade. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">a UDN
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="3">ao país
+</arg>
+                <note>em inglês, "to make evil"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1086:  « Gostamos de gente que cala a boca e faz seu trabalho,  como Ronaldo. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">seu trabalho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1060:  Há algo de novo nestes quatro filmes que Cacá_  Diegues fez para a TV_  Cultura,  em_  cima_  de quatro canções de Gil,  Caetano,  Chico e Jorge_  Ben_  Jor. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">Cacá_  Diegues
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="3">para a TV_  Cultura
+</arg>
+                <arg f="" n="2">em_  cima_  de quatro canções de Gil,  Caetano,  Chico e Jorge_  Ben_  Jor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1055:  A lanchonete é simples,  mas faz um saboroso cachorro-  quente por US$  3. 
+</text>
+                <arg f="" n="0">A lanchonete
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">um saboroso cachorro-  quente
+</arg>
+                <arg f="ext" n="m">por US$  3
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1001:  No gramado,  antes do jogo,  representantes das torcidas dos grande times de São_  Paulo(  Corinthians,  São_  Paulo,  Palmeiras e Santos)  fizeram uma manifestação pela paz. 
+</text>
+                <arg f="loc" n="m">No gramado
+</arg>
+                <arg f="tmp" n="m">antes do jogo
+</arg>
+                <arg f="" n="0">representantes das torcidas dos grande times de São_  Paulo(  Corinthians,  São_  Paulo,  Palmeiras e Santos) 
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="" n="1">uma manifestação pela paz
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s984:  É a Companhia_  de_  Dança de Deborah_  Colker que faz a abertura. 
+</text>
+                <arg f="" n="0">a Companhia_  de_  Dança de Deborah_  Colker
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">a abertura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s974:  Profissionais com longa experiência em cargos gerenciais e administrativos devem se preocupar,  ao fazer o currículo,  em mostrar a essência da carreira,  resumindo suas conquistas e realizações. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o currículo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s935:  « Tem muitos conhecimentos gerais e faz digressões um_  pouco longas. 
+</text>
+                <rel f="">faz</rel>
+                <arg f="" n="1">digressões um_  pouco longas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s902:  Num dia da semana,  Z faz plantão ﻿à noite. 
+</text>
+                <arg f="tmp" n="m">Num dia da semana
+</arg>
+                <arg f="" n="0">Z
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">plantão
+</arg>
+                <arg f="tmp" n="m">﻿à noite
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s878:  Se abordo este tema aqui não é para arriscar-  me na análise política,  coisa que outros farão melhor do_  que eu. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">outros
+</arg>
+                <rel f="">farão</rel>
+                <arg f="mnr" n="m">melhor do_  que eu
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s871:  Foram analisadas apenas a primeira amostra dos produtos e ainda deve ser feita contraprova. 
+</text>
+                <arg f="dis" n="m">ainda
+</arg>
+                <rel f="">feita</rel>
+                <arg f="" n="1">contraprova
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s804:  Os alemães,  por_  outro_  lado,  fazem um tecnopop assobiável e nostálgico no seu uso de sintetizadores analógicos anteriores ao surgimento da tecnologia dos samplers digitais. 
+</text>
+                <arg f="" n="0">Os alemães
+</arg>
+                <arg f="dis" n="m">por_  outro_  lado
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">um tecnopop assobiável e nostálgico
+</arg>
+                <arg f="loc" n="m">no seu uso de sintetizadores analógicos anteriores ao surgimento da tecnologia dos samplers digitais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s771:  o_  que faço? 
+</text>
+                <arg f="" n="1">o_  que
+</arg>
+                <rel f="">faço</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s758:  Cite uma cantora da bossa_  nova ou estrela da televisão dos anos 60 e há poucas chances de que ele não a tenha namorado sempre dando a impressão de que fazia isto por tarefa. 
+</text>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">fazia</rel>
+                <arg f="" n="1">isto
+</arg>
+                <arg f="cau" n="m">por tarefa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s697:  A Argentina fez uma opção bastante ofensiva. 
+</text>
+                <arg f="" n="0">A Argentina
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">uma opção bastante ofensiva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s657:  Para quem vai fazer a pesquisa no computador a separação de dados não faz nenhuma diferença:  tudo funciona como_  se fizesse parte de um só arquivo. 
+</text>
+                <arg f="" n="0">a separação de dados
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">nenhuma diferença:  tudo funciona como_  se fizesse parte de um só arquivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s657:  Para quem vai fazer a pesquisa no computador a separação de dados não faz nenhuma diferença:  tudo funciona como_  se fizesse parte de um só arquivo. 
+</text>
+                <arg f="" n="0">quem
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">a pesquisa
+</arg>
+                <arg f="loc" n="m">no computador
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s647:  A fazenda de renas Napapiiri,  nas proximidades(  tel. _  38-  4048)  promove jantares com carne de rena e faz exibições folclóricas. 
+</text>
+                <arg f="" n="0">A fazenda de renas Napapiiri
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">exibições folclóricas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s585:  Fizemos um projeto e comecei a elaborar a estrutura do livro »,  diz Andréa. 
+</text>
+                <rel f="">Fizemos</rel>
+                <arg f="" n="1">um projeto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s583:  A idéia para o livro surgiu após uma entrevista que Andréa fez em meados de 93 para o « Tokyo_  Journal » com o jogador Zico,  ﻿à época atuando no Kashima. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">Andréa
+</arg>
+                <rel f="">fez</rel>
+                <arg f="tmp" n="m">em meados de 93
+</arg>
+                <arg f="" n="3">para o « Tokyo_  Journal »
+</arg>
+                <arg f="prd" n="m">com o jogador Zico, 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s579:  Tinha uma família para sustentar,  e pensavam que isso me impediria de fazer qualquer coisa. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">qualquer coisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s547:  Para tentar se recuperar do jet_  lag e da correria da exposição do marido no Yerba_  Buena,  Regina_  Casé fez ontem saída pela_  tangente. 
+</text>
+                <arg f="pnc" n="m">Para tentar se recuperar do jet_  lag e da correria da exposição do marido no Yerba_  Buena
+</arg>
+                <arg f="" n="0">Regina_  Casé
+</arg>
+                <rel f="">fez</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">saída
+</arg>
+                <arg f="prd" n="m">pela_  tangente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s537:  Não estamos fazendo política recessiva. 
+</text>
+                <arg f="neg" n="m">Não
+</arg>
+                <rel f="">fazendo</rel>
+                <arg f="" n="1">política recessiva
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s436:  O acordo não se tornou público,  mas,  agora,  se sabe que foram feitas muitas concessões políticas. 
+</text>
+                <rel f="">feitas</rel>
+                <arg f="" n="1">muitas concessões políticas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s388:  No clima de sinistrose,  as fragilidades do PT não ficaram tão visíveis ﻿à opinião_  pública:  a dificuldade de se fazerem alianças capazes de sustentar Lula quando virasse presidente ; os aloprados que conquistaram posições estratégicas no partido ; a falta de generalizada convicção sobre o valor da democracia. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">fazerem</rel>
+                <arg f="" n="1">alianças capazes de sustentar Lula
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s379:  Quando os britânicos retomaram o Egito em 1801 a pedra foi parar no Museu_  Britânico,  mas os franceses fizeram cópias dela. 
+</text>
+                <arg f="" n="0">os franceses
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="" n="1">cópias dela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s348:  Eles estão fazendo uma « guerra » contra o tráfico. 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">fazendo</rel>
+                <arg f="" n="1">uma « guerra » contra o tráfico
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s340:  Antes de estrear como editor senior da « Playboy »,  Nirlando_  Beirão fez uma série de testes de vídeo. 
+</text>
+                <arg f="tmp" n="m">Antes de estrear como editor senior da « Playboy »
+</arg>
+                <arg f="" n="0">Nirlando_  Beirão
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">uma série de testes de vídeo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s327:  Como naquela época ainda não existia a fotografia,  eram os pintores que faziam os retratos das famílias. 
+</text>
+                <arg f="cau" n="m">Como naquela época ainda não existia a fotografia
+</arg>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">faziam</rel>
+                <arg f="" n="1">os retratos das famílias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s307:  Considerados globalmente,  não faziam diferença. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">faziam</rel>
+                <arg f="" n="1">diferença
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s296:  Broz- -  Não tenho a receita exata,  tenho a certeza de que algo precisa ser feito diante_  do confronto entre nacionalismo albanês e sérvio. 
+</text>
+                <arg f="" n="1">algo
+</arg>
+                <rel f="">feito</rel>
+                <arg f="cau" n="m">diante_  do confronto entre nacionalismo albanês e sérvio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s284:  Daí a alguns anos,  os Gershwins foram para Hollywood,  a_  fim_  de fazer o que intimamente desprezavam:  escrever canções para filmes. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o que intimamente desprezavam:  escrever canções para filmes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s222:  Uma sala tem como ícones uma pilha de discos,  um aparelho de som,  uma enciclopédia e uma janela que mostra a encruzilhada onde Robert_  Johnson teria feito um pacto com o diabo,  trocando a alma pelo sucesso. 
+</text>
+                <arg f="loc" n="m">onde
+</arg>
+                <arg f="" n="0">Robert_  Johnson
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="1">um pacto com o diabo
+</arg>
+                <arg f="mnr" n="m">trocando a alma pelo sucesso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s167:  « A mãe da estudante prestou queixa do estupro e,  depois,  das ameaças de morte que Rúbio teria feito a Claudirene »,  disse Borlina. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">Rúbio
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="3">a Claudirene
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s148:  O que fizeram com o Pereira foi um absurdo »,  disse. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="" n="3">com o Pereira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s145:  Os que jogaram,  fariam treino de recuperação ﻿à tarde no Projeto_  Acqua. 
+</text>
+                <arg f="" n="0">Os que jogaram
+</arg>
+                <rel f="">fariam</rel>
+                <arg f="" n="1">treino de recuperação
+</arg>
+                <arg f="tmp" n="m">﻿à tarde
+</arg>
+                <arg f="loc" n="m">no Projeto_  Acqua
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s126:  Como a idéia de enxugar a Constituição enfrenta resistência inclusive nos partidos que apóiam o governo,  a equipe de FHC resolveu fazer as reformas por partes. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">as reformas
+</arg>
+                <arg f="mnr" n="m">por partes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s124:  Para fazer uma boa compra,  a técnica do Procon recomenda ao consumidor que verifique se já há dentro_  de casa os tradicionais equipamentos que desempenham as mesmas funções do conjugado,  só que separadamente. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">uma boa compra
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s106:  E,  assim,  tudo o que os afro-  americanos faziam bem teve de ser colocado em termos que menosprezassem a qualidade em_  questão. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">os afro-  americanos
+</arg>
+                <rel f="">faziam</rel>
+                <arg f="mnr" n="m">bem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s105:  Eles tiveram que fazer isso se os escravos fossem superiores em qualidades que os próprios brancos valorizavam,  onde estaria a justificativa moral para mantê-  los escravizados? 
+</text>
+                <arg f="" n="0">Eles
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">isso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s104:  Os brancos fizeram tudo em seu poder para invalidar ou menosprezar cada sinal de talento,  virtude ou superioridade entre os negros. 
+</text>
+                <arg f="" n="0">Os brancos
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="" n="1">tudo em seu poder para invalidar ou menosprezar cada sinal de talento,  virtude ou superioridade entre os negros
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s52:  Só depois é_  que levanto a cabeça para fazer um lançamento »,  reclama Neto. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">um lançamento
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s26:  Na época,  o então ministro da Fazenda,  Fernando_  Henrique_  Cardoso,  fez um pronunciamento em cadeia nacional para anunciar a intenção do governo de destinar o FSE a investimentos sociais. 
+</text>
+                <arg f="tmp" n="m">Na época
+</arg>
+                <arg f="" n="0">o então ministro da Fazenda,  Fernando_  Henrique_  Cardoso, 
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">um pronunciamento em cadeia nacional para anunciar a intenção do governo de destinar o FSE a investimentos sociais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="play.02" id="fazer.05" name="desempenhar (papel)" vncls="-">
+            <roles>
+                <role descr="actor" n="0" />
+                <role descr="role" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3985:  Em « Olhos_  de_  Serpente »(  Snake_  Eyes)  de Abel_  Ferrara,  Madonna faz o papel dela mesma:  uma falsa atriz,  falsa loira,  que paga para estar num filme. 
+</text>
+                <arg f="loc" n="m">Em « Olhos_  de_  Serpente »(  Snake_  Eyes)  de Abel_  Ferrara
+</arg>
+                <arg f="" n="0">Madonna
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">o papel dela mesma:  uma falsa atriz,  falsa loira,  que paga para estar num filme
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3829:  A Guarda_  Nacional da Venezuela passou a conversar com os índios e a convencê-  los de fazer o papel dela,  ou_  seja,  reprimir os garimpeiros »,  diz Altino. 
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">o papel dela
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3025:  Além_  de muito ruim,  o filme « O_  Magnata_  Grego »(  The_  Greek_  Tycoon)  dedicava mais atenção ao seu segundo marido,  interpretado por Anthony_  Quinn,  que aliás faria o papel de Sócrates_  Onassis(  sogro de Jackie)  no telefilme « Onassis: _  The_  Richest_  Man_  in_  the_  World »,  produzido em 1988. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="dis" n="m">aliás
+</arg>
+                <rel f="">faria</rel>
+                <arg f="" n="1">o papel de Sócrates_  Onassis(  sogro de Jackie)  no telefilme « Onassis: _  The_  Richest_  Man_  in_  the_  World »,  produzido em 1988
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="score.01" id="fazer.06" name="marcar pontos no esporte; marcar gol" vncls="-">
+            <roles>
+                <role descr="athlete, scorer" n="0" />
+                <role descr="cognate object, points" n="1" />
+                <role descr="opponent" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3631:  Roma derrota Lazio e Batistuta faz mais um
+</text>
+                <arg f="" n="0">Batistuta
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">mais um
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="make.02" id="fazer.07" name="fazer + infinitivo: causar uma ação" vncls="-">
+            <roles>
+                <role descr="impeller to action" n="0" />
+                <role descr="impelled action" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3473:  A uma pergunta sobre se a volta dos investimentos externos não dependeria do selo de aprovação do Plano_  Real através de um acordo formal entre o FMI e o Brasil,  Camdessus disse que o_  que vai fazer a taxa de juros cair não é um acordo com o FMI,  mas a credibilidade interna e externa do Plano_  Real. 
+</text>
+                <arg f="" n="0">o_  que
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">a taxa de juros cair
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3277:  Patologistas de hospital de Riverside(  Califórnia)  tiveram que vestir roupas especiais para autopsiar corpo de uma mulher que teria químicos tóxicos no sangue,  porque o cheiro os fez desmaiar. 
+</text>
+                <arg f="" n="0">o cheiro
+</arg>
+                <arg f="" n="2">os
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">desmaiar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s3059:  « Me parece que há um acordo quanto_  a especializar os centros vocacionados para a pesquisa e não tentar fazer que todos os centros do país façam pesquisa.  »
+</text>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">que todos os centros do país façam pesquisa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2919:  A crise no México deve fazer com que todos os países emergentes recebam um menor volume de capitais externos de renda fixa(  aplicados,  por_  exemplo,  em eurobônus) . 
+</text>
+                <arg f="" n="0">A crise no México
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">com que todos os países emergentes recebam um menor volume de capitais externos de renda fixa(  aplicados,  por_  exemplo,  em eurobônus) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2796:  As constantes desavenças com seu pai,  John_  Paul_  Getty,  fizeram John_  Paul_  Getty_  2º entrar no « affaire ». 
+</text>
+                <arg f="" n="0">As constantes desavenças com seu pai,  John_  Paul_  Getty, 
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="" n="1">John_  Paul_  Getty_  2º entrar no « affaire »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2367:  Ora,  se o presidente chegar ﻿à posse sem que estejam no mínimo delineados,  divulgados e negociados com os setores organizados da sociedade os projetos que consubstanciem tais reformas,  torna-  se muito mais difícil fazê-  los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC. 
+</text>
+                <rel f="">fazê-</rel>
+                <arg f="" n="1">los aprovar no Congresso no prazo de um semestre definido pelo próprio FHC
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2105:  O aquecimento das vendas nos últimos dois meses fez com que o empresário carioca Arthur_  Sendas desengavetasse antigo projeto de construção de shopping_  center,  hipermercado e conjunto residencial em área do grupo localizada na Via_  Dutra,  no final da Linha_  Vermelha. 
+</text>
+                <arg f="" n="0">O aquecimento das vendas nos últimos dois meses
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="1">com que o empresário carioca Arthur_  Sendas desengavetasse antigo projeto de construção de shopping_  center,  hipermercado e conjunto residencial em área do grupo localizada na Via_  Dutra,  no final da Linha_  Vermelha
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1710:  Expectativa de inflação menor faz juro cair
+</text>
+                <arg f="" n="0">Expectativa de inflação menor
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">juro cair
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1435:  A dor faz os golpeados desmaiarem. 
+</text>
+                <arg f="" n="0">A dor
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">os golpeados desmaiarem
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s424:  Fazer avançar uma reforma estrutural(  como a abertura da economia)  e,  ao_  mesmo_  tempo,  calibrar um processo de estabilização não é porém uma tarefa fácil. 
+</text>
+                <rel f="">Fazer</rel>
+                <arg f="" n="1">avançar uma reforma estrutural(  como a abertura da economia) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s411:  É gratificante exibir opiniões progressistas,  dessas que fazem chover cartas de apoio no « Painel_  do_  Leitor ». 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">chover cartas de apoio no « Painel_  do_  Leitor »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s160:  « O ceticismo em_  relação_  a planos econômicos faz a população manter reservas »,  diz o ex-  diretor de Política_  Monetária do BC,  Luís_  Eduardo_  de_  Assis,  diretor de investimentos do Citibank. 
+</text>
+                <arg f="" n="0">O ceticismo em_  relação_  a planos econômicos
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">a população manter reservas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="play.01" id="fazer.08" name="jogar " vncls="26.7-1">
+            <roles>
+                <role descr="player" n="0">
+                    <vnrole vncls="26.7-1" vntheta="Agent" />
+                </role>
+                <role descr="game/music" n="1">
+                    <vnrole vncls="26.7-1" vntheta="Theme" />
+                </role>
+                <role descr="instrument used to play game/music" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3055:  Depois da Portuguesa,  esta tarde no Canindé,  o Palmeiras fará três jogos seguidos em seu estádio:  contra o Bragantino,  terça-  feira,  a Ferroviária,  quinta-  feira,  e o América,  domingo. 
+</text>
+                <arg f="tmp" n="m">Depois da Portuguesa
+</arg>
+                <arg f="tmp" n="m">esta tarde
+</arg>
+                <arg f="loc" n="m">no Canindé
+</arg>
+                <arg f="" n="0">o Palmeiras
+</arg>
+                <rel f="">fará</rel>
+                <arg f="" n="1">três jogos seguidos em seu estádio:  contra o Bragantino,  terça-  feira,  a Ferroviária,  quinta-  feira,  e o América,  domingo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2453:  Pois_  é,  Palmeiras e Corinthians fazem hoje a finalíssima do Brasileiro. 
+</text>
+                <arg f="dis" n="m">Pois_  é
+</arg>
+                <arg f="" n="0">Palmeiras e Corinthians
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <arg f="" n="1">a finalíssima do Brasileiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="" id="fazer.10" name="completar (anos de idade)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2443:  A primeira fez dez anos há pouco. 
+</text>
+                <arg f="" n="1">A primeira
+</arg>
+                <rel f="">fez</rel>
+                <arg f="" n="2">dez anos
+</arg>
+                <arg f="tmp" n="m">há pouco
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="take.01" id="fazer.11" name="tomar, conquistar" vncls="10.5 11.3">
+            <roles>
+                <role descr="Taker" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="11.3" vntheta="Agent" />
+                </role>
+                <role descr="thing taken" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="11.3" vntheta="Theme" />
+                </role>
+                <role descr="entity taken from, or prepositional complement of arg1" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="11.3" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s313:  Na largada,  Ayrton_  Senna,  que havia feito a pole_  position,  manteve a primeira colocação. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">feito</rel>
+                <arg f="" n="1">a pole_  position
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="fazer-se">
+        <note />
+    <roleset framnet="became.01" id="fazer.02" name="alternância incoativa de &quot;fazer&quot; no sentido de fazer uma coisa a partir de outra: tornar-se" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2556:  Os acasos e interrupções misteriosas da música noturna bartokiana se fizeram,  em Lutoslawski,  silêncios e vibrações aleatórias da orquestra. 
+</text>
+                <arg f="" n="2">Os acasos e interrupções misteriosas da música noturna bartokiana
+</arg>
+                <rel f="">fizeram</rel>
+                <arg f="loc" n="m">em Lutoslawski
+</arg>
+                <arg f="" n="1">silêncios e vibrações aleatórias da orquestra
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="fazer_amor">
+        <note />
+    <roleset framnet="make.01" id="fazer.03" name="manter relações sexuais" vncls="26.1-1">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.1-1" vntheta="Agent" />
+                </role>
+                <role descr="creation" n="1">
+                    <vnrole vncls="26.1-1" vntheta="Product" />
+                </role>
+                <role descr="created-from, thing changed" n="2">
+                    <vnrole vncls="26.1-1" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.1-1" vntheta="Beneficiary" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4200:  « Várias vezes os dois foram pegos fazendo amor na minha clínica. 
+</text>
+                <rel f="">fazendo</rel>
+                <arg f="loc" n="m">na minha clínica
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="fazer_parte">
+        <note />
+    <roleset framnet="" id="fazer.04" name="integrar; ser parte de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4039:  José_  Arthur_  Giannotti,  Marilena_  Chaui,  Gloria_  Kalil e Jorge_  da_  Cunha_  Lima faziam parte de platéia-  cabeça que acompanhou anteontem no Masp a palestra de Claude_  Lefort apresentado por Sérgio_  Cardoso. 
+</text>
+                <arg f="" n="0">José_  Arthur_  Giannotti,  Marilena_  Chaui,  Gloria_  Kalil e Jorge_  da_  Cunha_  Lima
+</arg>
+                <rel f="">faziam</rel>
+                <arg f="" n="1">de platéia-  cabeça que acompanhou anteontem no Masp a palestra de Claude_  Lefort apresentado por Sérgio_  Cardoso
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3469:  Esses dados fazem parte do livro « Conflitos_  no_  Campo_  Brasil_  1993 »,  lançado na ABI(  Associação_  Brasileira_  de_  Imprensa) ,  no Rio_  de_  Janeiro,  pela CPT(  Comissão_  Pastoral_  da_  Terra) ,  órgão da Igreja. 
+</text>
+                <arg f="" n="0">Esses dados
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">do livro « Conflitos_  no_  Campo_  Brasil_  1993 »,  lançado na ABI(  Associação_  Brasileira_  de_  Imprensa) ,  no Rio_  de_  Janeiro,  pela CPT(  Comissão_  Pastoral_  da_  Terra) ,  órgão da Igreja
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3431:  Os 38 nomes fazem parte de um aditamento ﻿à primeira denúncia feita pelo Ministério_  Público no escândalo do bicho,  em junho. 
+</text>
+                <arg f="" n="0">Os 38 nomes
+</arg>
+                <rel f="">fazem</rel>
+                <arg f="" n="1">de um aditamento ﻿à primeira denúncia feita pelo Ministério_  Público no escândalo do bicho,  em junho
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3058:  Gianetti_  da_  Fonseca afirmou que a avaliação tem que ser feita por « pares »(  pesquisadores da mesma área) ,  que não façam parte do grupo analisado. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">façam</rel>
+                <arg f="" n="1">do grupo analisado
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2076:  O trabalho faz parte do projeto « Exercícios_  Visuais » do Sesc_  Pompéia,  que visa a ocupação inusual de espaços da ex-  fábrica. 
+</text>
+                <arg f="" n="0">O trabalho
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">do projeto « Exercícios_  Visuais » do Sesc_  Pompéia,  que visa a ocupação inusual de espaços da ex-  fábrica
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1577:  O governo teve que elevar de 15%  para 20%  o percentual dos recursos dos tributos que vão fazer parte do FSE para compensar a perda de recursos do Fundo_  de_  Participação_  dos_  Estados_  e_  municípios. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">fazer</rel>
+                <arg f="" n="1">do FSE
+</arg>
+                <arg f="pnc" n="m">para compensar a perda de recursos do Fundo_  de_  Participação_  dos_  Estados_  e_  municípios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s657:  Para quem vai fazer a pesquisa no computador a separação de dados não faz nenhuma diferença:  tudo funciona como_  se fizesse parte de um só arquivo. 
+</text>
+                <arg f="" n="0">tudo
+</arg>
+                <rel f="">fizesse</rel>
+                <arg f="" n="1">de um só arquivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s97:  Os_  Papéis_  De_  FLAVIO-  SHIRÓ- -  A mostra,  que faz parte das comemorações dos 50 anos de pintura do artista japonês,  reúne 25 obras em pequenos formatos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">faz</rel>
+                <arg f="" n="1">das comemorações dos 50 anos de pintura do artista japonês
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="fazer_força">
+        <note />
+    <roleset framnet="struggle.02" id="fazer.09" name="esforçar-se para; tentar com empenho" vncls="-">
+            <roles>
+                <role descr="entity trying" n="0" />
+                <role descr="predicative action" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2870:  Ou então lutava contra uma depressão repentina,  tentava controlar minha raiva,  fazia piadas com alguém ou fazia força para não sentir saudades de casa. 
+</text>
+                <rel f="">fazia</rel>
+                <arg f="" n="1">para não sentir saudades de casa
+</arg>
+                <note>verbo suporte?</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="empregar">
+        <note />
+        <note />
+    <roleset framnet="employ.02" id="empregar.01" name="usar em; utilizar" vncls="105">
+            <roles>
+                <role descr="user" n="0">
+                    <vnrole vncls="105" vntheta="Agent" />
+                </role>
+                <role descr="used" n="1">
+                    <vnrole vncls="105" vntheta="Theme" />
+                </role>
+                <role descr="job, purpose" n="2">
+                    <vnrole vncls="105" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3553:  Desse modo,  apenas parte do fundo de viagem seria empregada na compra de « traveler_  cheques » ou cédulas. 
+</text>
+                <arg f="mnr" n="m">Desse modo
+</arg>
+                <arg f="" n="1">apenas parte do fundo de viagem
+</arg>
+                <rel f="">empregada</rel>
+                <arg f="" n="2">na compra de « traveler_  cheques » ou cédulas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="employ.01" id="empregar.02" name="dar emprego a" vncls="29.2 13.5.3">
+            <roles>
+                <role descr="employer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="13.5.3" vntheta="Agent" />
+                </role>
+                <role descr="employee" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="13.5.3" vntheta="Theme" />
+                </role>
+                <role descr="job" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                    <vnrole vncls="13.5.3" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1296:  Itamar emprega seus amigos no futuro governo de FHC
+</text>
+                <arg f="" n="0">Itamar
+</arg>
+                <rel f="">emprega</rel>
+                <arg f="" n="1">seus amigos
+</arg>
+                <arg f="" n="2">no futuro governo de FHC
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="demorar">
+        <note />
+    <roleset framnet="take.10" id="demorar.01" name="levar (tempo); necessitar de tempo para" vncls="-">
+            <roles>
+                <role descr="requirer" n="0" />
+                <role descr="thing required" n="1" />
+                <role descr="required-of, required-from ('ablative')" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3853:  Serão beneficiados porque hoje demoram até 12 dias para receber seus benefícios,  vinculados ao salário mínimo: 
+</text>
+                <arg f="tmp" n="m">hoje
+</arg>
+                <rel f="">demoram</rel>
+                <arg f="" n="1">até 12 dias
+</arg>
+                <arg f="" n="2">para receber seus benefícios,  vinculados ao salário mínimo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

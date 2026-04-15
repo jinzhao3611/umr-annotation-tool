@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="procurar">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="search.01" id="procurar.01" name="tentar encontrar" vncls="35.2">
+            <roles>
+                <role descr="searcher" n="0">
+                    <vnrole vncls="35.2" vntheta="Agent" />
+                </role>
+                <role descr="Area searched" n="1">
+                    <vnrole vncls="35.2" vntheta="Location" />
+                </role>
+                <role descr="searched for" n="2">
+                    <vnrole vncls="35.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2757:  Pesquisa da Cia. _  City_  de_  Desenvolvimento mostra que os empresários procuram locais com infra-  estrutura,  facilidade de acesso,  boa oferta de mão-  de-  obra,  próximos de São_  Paulo e das rodovias e longe de movimentos sindicais. 
+</text>
+                <arg f="" n="0">os empresários
+</arg>
+                <rel f="">procuram</rel>
+                <arg f="" n="1">locais com infra-  estrutura,  facilidade de acesso,  boa oferta de mão-  de-  obra próximos de São_  Paulo e das rodovias
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1154:  Procurando Max
+</text>
+                <rel f="">Procurando</rel>
+                <arg f="" n="2">Max
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="contact.01" id="procurar.02" name="entrar em contato com" vncls="-">
+            <roles>
+                <role descr="contactor, agent" n="0" />
+                <role descr="entity contacted" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2058:  No interior,  o jeito mais fácil é procurar o grêmio estudantil ou a direção de sua escola. 
+</text>
+                <rel f="">procurar</rel>
+                <arg f="" n="1">o grêmio estudantil ou a direção de sua escola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1213:  A Folha procurou a Petrobrás mas não obteve retorno. 
+</text>
+                <arg f="" n="0">A Folha
+</arg>
+                <rel f="">procurou</rel>
+                <arg f="" n="1">a Petrobrás
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s455:  Luiz_  Henrique disse que o PMDB vai procurar os presidentes e líderes dos outros partidos em busca do consenso sobre a votação da reforma fiscal e tributária. 
+</text>
+                <arg f="" n="0">o PMDB
+</arg>
+                <rel f="">procurar</rel>
+                <arg f="" n="1">os presidentes e líderes dos outros partidos
+</arg>
+                <arg f="pnc" n="m">em busca do consenso sobre a votação da reforma fiscal e tributária
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s325:  Couto procurou a Odebrecht. 
+</text>
+                <arg f="" n="0">Couto
+</arg>
+                <rel f="">procurou</rel>
+                <arg f="" n="1">a Odebrecht
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s323:  Interessado em organizar um livro de arte sobre viajantes,  Ronaldo_  Graça_  Couto,  da produtora Metavídeo/  Metalivros,  tomou conhecimento da pesquisa e procurou Belluzzo. 
+</text>
+                <arg f="" n="0">Ronaldo_  Graça_  Couto,  da produtora Metavídeo/  Metalivros, 
+</arg>
+                <rel f="">procurou</rel>
+                <arg f="" n="1">Belluzzo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s317:  O « caso Paubrasil » já rendeu ﻿à Receita_  Federal,  segundo o coordenador-  geral de fiscalização do órgão,  Luiz_  Henrique_  Barros_  de_  Arruda,  cerca_  de US$  1,  5 milhão em crédito tributário- -  a soma do imposto devido,  multas,  correção monetária e juros de mora- -  de cerca_  de 20 empresas envolvidas no escândalo que procuraram a Receita espontaneamente. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">procuraram</rel>
+                <arg f="" n="1">a Receita
+</arg>
+                <arg f="mnr" n="m">espontaneamente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s219:  Só o procurou tempos depois,  quando o secretário de Assuntos_  Especiais,  Eliezer_  Baptista,  resolveu preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor e convocou Mourão para sua equipe. 
+</text>
+                <arg f="adv" n="m">Só
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">procurou</rel>
+                <arg f="tmp" n="m">tempos depois
+</arg>
+                <arg f="tmp" n="m">quando o secretário de Assuntos_  Especiais,  Eliezer_  Baptista,  resolveu preparar o macroplanejamento do país uma idéia esplendorosa que,  infelizmente,  não resistiu ao impeachment de Collor
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="use.01" id="procurar.03" name="usar; frequentar" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1700:  Segundo a polícia,  a estrada é procurada por grupos de extermínio para desova de cadáveres. 
+</text>
+                <arg f="dis" n="m">Segundo a polícia
+</arg>
+                <arg f="" n="1">a estrada
+</arg>
+                <rel f="">procurada</rel>
+                <arg f="" n="0">por grupos de extermínio
+</arg>
+                <arg f="" n="2">para desova de cadáveres
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

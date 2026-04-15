@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="denunciar">
+        <note />
+    <roleset framnet="denounce.01" id="denunciar.01" name="revelar coisas negativas " vncls="33">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="subject" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="grounds, reason" n="2">
+                    <vnrole vncls="33" vntheta="Cause" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3976:  A intenção é louvável e esta Folha tem denunciado sempre a ciranda financeira como obstáculo a uma autêntica estabilização. 
+</text>
+                <arg f="" n="0">esta Folha
+</arg>
+                <rel f="">denunciado</rel>
+                <arg f="tmp" n="m">sempre
+</arg>
+                <arg f="" n="1">a ciranda financeira
+</arg>
+                <arg f="" n="2">como obstáculo a uma autêntica estabilização
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3126:  Tanto dinheiro parece tornar desprezível a ética do marketing:  a Delta recebe centenas de cartas de crianças denunciando pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce. 
+</text>
+                <rel f="">denunciando</rel>
+                <arg f="" n="1">pais ou parentes que preferiram viajar por outras companhias aéreas,  configurando um claro estímulo ao « dedodurismo » precoce
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s445:  O golpe foi denunciado por funcionários da empresa. 
+</text>
+                <arg f="" n="1">O golpe
+</arg>
+                <rel f="">denunciado</rel>
+                <arg f="" n="0">por funcionários da empresa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s252:  As letras irônicas,  eruditas,  denunciando que os músicos talvez tenham estudado um_  pouco demais são gritadas. 
+</text>
+                <rel f="">denunciando</rel>
+                <arg f="" n="1">que os músicos talvez tenham estudado um_  pouco demais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

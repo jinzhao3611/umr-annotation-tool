@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desagravar">
+        <note />
+    <roleset framnet="relieve.01" id="desagravar.01" name="aliviar" vncls="10.6">
+            <roles>
+                <role descr="thing relieving" n="0">
+                    <vnrole vncls="10.6" vntheta="Agent" />
+                </role>
+                <role descr="thing being helped, eased, gotten rid of" n="1">
+                    <vnrole vncls="10.6" vntheta="Source" />
+                </role>
+                <role descr="benefactive" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s700:  Ainda há muito o que fazer para desgravar completamente as exportações de impostos indiretos,  conforme permitem as regras do Gatt e impõe a realidade de um ambiente internacional competitivo. 
+</text>
+                <rel f="">desgravar</rel>
+                <arg f="ext" n="m">completamente
+</arg>
+                <arg f="" n="2">as exportações
+</arg>
+                <arg f="" n="1">de impostos indiretos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

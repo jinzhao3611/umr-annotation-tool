@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="reciclar">
+        <note />
+    <roleset framnet="recycle.01" id="reciclar.01" name="reaproveitar; requalificar" vncls="-">
+            <roles>
+                <role descr="recycler" n="0" />
+                <role descr="garbage" n="1" />
+                <role descr="shiny new product" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1135:  Os agentes políticos,  sociais e econômicos também têm de se reciclar,  pois sua ação sobre o Legislativo paulistano só ocorre em_  função_  de interesses específicos. 
+</text>
+                <arg f="" n="0">Os agentes políticos,  sociais e econômicos
+</arg>
+                <arg f="adv" n="m">também
+</arg>
+                <arg f="rec" n="m">se
+</arg>
+                <rel f="">reciclar</rel>
+                <arg f="cau" n="m">pois sua ação sobre o Legislativo paulistano só ocorre em_  função_  de interesses específicos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

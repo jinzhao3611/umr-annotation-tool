@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cuidar">
+        <note />
+        <note />
+    <roleset framnet="" id="cuidar.01" name="zelar" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2482:  Todo presidente é uma autoridade pública e deve cuidar da imagem daquilo que ele representa. 
+</text>
+                <arg f="" n="0">Todo presidente
+</arg>
+                <rel f="">cuidar</rel>
+                <arg f="" n="1">da imagem daquilo que ele representa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s824:  Após a negociação das dívidas,  a reabertura do hospital está condicionada ao destombamento pelo Condephaat(  órgão que cuida do patrimônio histórico da cidade)  de uma área de 10 mil m2,  que deverá ser comercializada. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">cuida</rel>
+                <arg f="" n="1">do patrimônio histórico da cidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s290:  Com a intervenção no Rio,  que se cuide o resto do país! 
+</text>
+                <arg f="cau" n="m">Com a intervenção
+</arg>
+                <arg f="prd" n="m">no Rio
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">cuide</rel>
+                <arg f="" n="0">o resto do país
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="manage.01" id="cuidar.02" name="administrar" vncls="">
+            <roles>
+                <role descr="manager" n="0" />
+                <role descr="thing managed" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2140:  O Congresso_  Internacional_  de_  Direitos_  Autorais enviou,  na última sexta,  uma recomendação ao ministro da Cultura,  Luiz_  Roberto_  Nascimento_  Silva,  para reativar o órgão governamental que cuidava da área da propriedade intelectual. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">cuidava</rel>
+                <arg f="" n="1">da área da propriedade intelectual
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1715:  Eleito presidente e primeiro-  ministro,  ele cuidou pessoalmente das operações militares durante as guerras grego-  turcas(  1920-  22) . 
+</text>
+                <arg f="prd" n="m">Eleito presidente e primeiro-  ministro
+</arg>
+                <arg f="" n="0">ele
+</arg>
+                <rel f="">cuidou</rel>
+                <arg f="mnr" n="m">pessoalmente
+</arg>
+                <arg f="" n="1">das operações militares
+</arg>
+                <arg f="tmp" n="m">durante as guerras grego-  turcas(  1920-  22) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

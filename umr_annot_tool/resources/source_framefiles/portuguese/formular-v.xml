@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="formular">
+        <note />
+    <roleset framnet="formulate.01" id="formular.01" name="elaborar" vncls="26.4 26.1">
+            <roles>
+                <role descr="creator" n="0">
+                    <vnrole vncls="26.4" vntheta="Agent" />
+                    <vnrole vncls="26.1" vntheta="Agent" />
+                </role>
+                <role descr="thing created" n="1">
+                    <vnrole vncls="26.4" vntheta="Product" />
+                    <vnrole vncls="26.1" vntheta="Product" />
+                </role>
+                <role descr="source" n="2">
+                    <vnrole vncls="26.4" vntheta="Material" />
+                    <vnrole vncls="26.1" vntheta="Material" />
+                </role>
+                <role descr="benefactive" n="3">
+                    <vnrole vncls="26.4" vntheta="Beneficiary" />
+                    <vnrole vncls="26.1" vntheta="Beneficiary" />
+                </role>
+                <role descr="attribute, secondary predication" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1524:  O governo não está errado em formular regras que possibilitem o alongamento. 
+</text>
+                <rel f="">formular</rel>
+                <arg f="" n="1">regras que possibilitem o alongamento
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

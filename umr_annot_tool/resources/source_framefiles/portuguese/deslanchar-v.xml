@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="deslanchar">
+        <note />
+    <roleset framnet="take.19" id="deslanchar.01" name="progredir; ganhar velocidade" vncls="-">
+            <roles>
+                <role descr="airplane" n="1" />
+                <role descr="airport" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1206:  Embora ainda não possa ser definitivamente descartada,  a hipótese da candidatura do ex-  presidente José_  Sarney encontra-  se pelo_  menos momentaneamente bastante afastada,  abrindo espaço para que a campanha comece a deslanchar com base no atual grid de largada. 
+</text>
+                <arg f="" n="0">a campanha
+</arg>
+                <rel f="">deslanchar</rel>
+                <arg f="mnr" n="m">com base no atual grid de largada
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

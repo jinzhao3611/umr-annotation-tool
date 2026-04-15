@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="satisfazer">
+        <note />
+    <roleset framnet="fulfill.01" id="satisfazer.01" name="cumprir; preencher" vncls="-">
+            <roles>
+                <role descr="fulfiller" n="0" />
+                <role descr="promise, contract, unresolved issue" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3517:  Eu e meu marido,  advogados de meia idade,  apenas um_  pouco fora_  de_  forma,  satisfazíamos essas condições. 
+</text>
+                <arg f="" n="0">Eu e meu marido,  advogados de meia idade,  apenas um_  pouco fora_  de_  forma, 
+</arg>
+                <rel f="">satisfazíamos</rel>
+                <arg f="" n="1">essas condições
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1223:  A advogada diz que o Mais!  adulterou a obra « para satisfazer a vontade de neonazistas brasileiros ». 
+</text>
+                <rel f="">satisfazer</rel>
+                <arg f="" n="1">a vontade de neonazistas brasileiros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

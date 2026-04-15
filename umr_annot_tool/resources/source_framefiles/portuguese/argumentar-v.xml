@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="argumentar">
+        <note />
+    <roleset framnet="argue.01" id="argumentar.01" name="apresentar como argumento" vncls="37.6 36.4-1">
+            <roles>
+                <role descr="speaker" n="0">
+                    <vnrole vncls="37.6" vntheta="Actor1" />
+                    <vnrole vncls="36.4-1" vntheta="Actor1" />
+                </role>
+                <role descr="argument" n="1">
+                    <vnrole vncls="37.6" vntheta="Topic" />
+                    <vnrole vncls="36.4-1" vntheta="Topic" />
+                </role>
+                <role descr="listener" n="2">
+                    <vnrole vncls="37.6" vntheta="Actor2" />
+                    <vnrole vncls="36.4-1" vntheta="Actor2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2948:  Yasuhi_  Akashi,  reprsentante da organização,  argumentou que os sérvios estavam em meio ao processo de retirada. 
+</text>
+                <arg f="" n="0">Yasuhi_  Akashi,  reprsentante da organização, 
+</arg>
+                <rel f="">argumentou</rel>
+                <arg f="" n="1">que os sérvios estavam em meio ao processo de retirada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2026:  O Sinicesp impugnou concorrência da Prefeitura de Santana_  de_  Parnaíba argumentando que o edital para obra de infra-  estrutura contraria a Lei_  8.  666. 
+</text>
+                <rel f="">argumentando</rel>
+                <arg f="" n="1">que o edital para obra de infra-  estrutura contraria a Lei_  8.  666
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

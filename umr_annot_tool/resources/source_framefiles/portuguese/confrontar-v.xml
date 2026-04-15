@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confrontar">
+        <note />
+    <roleset framnet="confront.01" id="confrontar.01" name="comparar, por em confronto" vncls="98">
+            <roles>
+                <role descr="confrontational entity, agent" n="0">
+                    <vnrole vncls="98" vntheta="Agent" />
+                </role>
+                <role descr="entity confronted" n="1">
+                    <vnrole vncls="98" vntheta="Theme" />
+                </role>
+                <role descr="confronted with" n="2">
+                    <vnrole vncls="98" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1092:  Vamos confrontar os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano:  enquanto os titulares de Telê privilegiam o meio-  campo,  com três,  quatro,  às_  vezes cinco volantes congestionando o setor,  o_  que,  na prática,  não confere nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa,  os garotos jogam com Mona,  o único volante típico. 
+</text>
+                <rel f="">confrontar</rel>
+                <arg f="" n="1">os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano
+</arg>
+                <note>arg1 e arg2 em um só constituinte sintático; o correto é arg2: com esses meninos...</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="confrontar-se">
+        <note />
+    <roleset framnet="encounter.01" id="confrontar.02" name="deparar-se; encontrar" vncls="-">
+            <roles>
+                <role descr="entity encountering something" n="0" />
+                <role descr="entity encountered " n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s203:  Não falei nada,  mas visualizei a Sra. _  oke,  sentada no salão amarelo,  o mesmo salão onde nenhum Oke de Okehurst exceto ela ousava permanecer sozinho,  envergando o vestido de sua antepassada e confrontando-  se,  por_  assim_  dizer,  com aquela coisa vaga,  plangente,  que parecia permear o aposento. . .  aquela vaga presença- -  assim me parecia do galante poeta assassinado. 
+</text>
+                <rel f="">confrontando-</rel>
+                <arg f="dis" n="m">por_  assim_  dizer
+</arg>
+                <arg f="" n="2">com aquela coisa vaga,  plangente,  que parecia permear o aposento. . .  aquela vaga presença- -  assim me parecia do galante poeta assassinado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

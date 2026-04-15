@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="autopsiar">
+        <note />
+    <roleset framnet="authopsy.01" id="autopsiar.01" name="fazer autópsia" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3277:  Patologistas de hospital de Riverside(  Califórnia)  tiveram que vestir roupas especiais para autopsiar corpo de uma mulher que teria químicos tóxicos no sangue,  porque o cheiro os fez desmaiar. 
+</text>
+                <rel f="">autopsiar</rel>
+                <arg f="" n="1">corpo de uma mulher que teria químicos tóxicos no sangue,  porque o cheiro os fez desmaiar
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

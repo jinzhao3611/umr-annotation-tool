@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="chutar">
+        <note />
+        <note />
+    <roleset framnet="kick.01" id="chutar.01" name="aplicar força sobre algo com o pé" vncls="11.4-1 17.1 18.1 23.2 40.3.2 49">
+            <roles>
+                <role descr="kicker" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                    <vnrole vncls="17.1" vntheta="Agent" />
+                    <vnrole vncls="49" vntheta="Agent" />
+                    <vnrole vncls="18.1" vntheta="Agent" />
+                    <vnrole vncls="40.3.2" vntheta="Agent" />
+                    <vnrole vncls="11.4-1" vntheta="Agent" />
+                </role>
+                <role descr="thing kicked" n="1">
+                    <vnrole vncls="23.2" vntheta="Patient" />
+                    <vnrole vncls="17.1" vntheta="Patient" />
+                    <vnrole vncls="49" vntheta="Patient" />
+                    <vnrole vncls="18.1" vntheta="Patient" />
+                    <vnrole vncls="40.3.2" vntheta="Patient" />
+                    <vnrole vncls="11.4-1" vntheta="Theme" />
+                </role>
+                <role descr="instrument (defaults to foot)" n="2">
+                    <vnrole vncls="18.1" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s673:  A fanfarra que a seguir compôs para « Dizem_  que_  É_  Amor »(  High_  Time)  só não ficou também gravada na memória de todo mundo porque,  daquela vez,  Edwards nem_  sequer chutou na trave. 
+</text>
+                <arg f="" n="0">Edwards
+</arg>
+                <arg f="neg" n="m">nem_  sequer
+</arg>
+                <rel f="">chutou</rel>
+                <arg f="dir" n="m">na trave
+</arg>
+                <note>Arg1 default: a bola</note>
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="bet.01" id="chutar.02" name="apostar" vncls="54.5 94">
+            <roles>
+                <role descr="better" n="0">
+                    <vnrole vncls="54.5" vntheta="Agent" />
+                    <vnrole vncls="94" vntheta="Agent" />
+                </role>
+                <role descr="amount of bet" n="1">
+                    <vnrole vncls="54.5" vntheta="Asset" />
+                </role>
+                <role descr="basis, proposition, bet-on" n="2">
+                    <vnrole vncls="54.5" vntheta="Cause" />
+                    <vnrole vncls="94" vntheta="Theme" />
+                </role>
+                <role descr="co-better" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1605:  Chutando alto
+</text>
+                <rel f="">Chutando</rel>
+                <arg f="mnr" n="m">alto
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="hesitar">
+        <note />
+    <roleset framnet="hesitate.01" id="hesitar.01" name="vacilar; ficar em estado de incerteza" vncls="53.1">
+            <roles>
+                <role descr="hesitator" n="0">
+                    <vnrole vncls="53.1" vntheta="Agent" />
+                </role>
+                <role descr="secondary action" n="1">
+                    <vnrole vncls="53.1" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s182:  O senador catarinense ainda hesita. 
+</text>
+                <arg f="" n="0">O senador catarinense
+</arg>
+                <arg f="adv" n="m">ainda
+</arg>
+                <rel f="">hesita</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

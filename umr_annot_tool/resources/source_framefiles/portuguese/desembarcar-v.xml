@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desembarcar">
+        <note />
+    <roleset framnet="disembark.01" id="desembarcar.01" name="sair de um veículo" vncls="51.1-1">
+            <roles>
+                <role descr="passenger(s)" n="0">
+                    <vnrole vncls="51.1-1" vntheta="Theme" />
+                </role>
+                <role descr="vehicle(s)" n="1">
+                    <vnrole vncls="51.1-1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2793:  Ontem,  vários operadores da Bovespa creditavam a queda do índice da bolsa ﻿à percepção do mercado financeiro de que o PFL leia-  se ACM está desembarcando da candidatura de FHC. 
+</text>
+                <arg f="" n="0">o PFL leia-  se ACM
+</arg>
+                <rel f="">desembarcando</rel>
+                <arg f="" n="1">da candidatura de FHC
+</arg>
+                <note>uso metafórico, como se a candidatura fosse um barco</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="">
+        <note />
+    <roleset framnet="" id="desembarcar.02" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1496:  Ao desembarcar no Canadá,  troque a moeda norte-  americana por dólares canadenses. 
+</text>
+                <rel f="">desembarcar</rel>
+                <arg f="" n="2">no Canadá
+</arg>
+                <note>o Arg2, embora ausente do equivalente no PB, é bem frequente</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

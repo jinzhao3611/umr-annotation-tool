@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esmagar">
+        <note />
+    <roleset framnet="crush.01" id="esmagar.01" name="destruir; amassar" vncls="21.2-1 45.1">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="45.1" vntheta="Agent" />
+                    <vnrole vncls="21.2-1" vntheta="Agent" />
+                </role>
+                <role descr="thing crushed" n="1">
+                    <vnrole vncls="45.1" vntheta="Patient" />
+                    <vnrole vncls="21.2-1" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="45.1" vntheta="Instrument" />
+                    <vnrole vncls="21.2-1" vntheta="Instrument" />
+                </role>
+                <role descr="crushed from or upon" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2760:  Ao_  mesmo_  tempo o atual papado esmagou a teologia da libertação,  teorias de concorrência feroz são implantadas em toda parte,  o fascismo está de_  volta,  Fidel_  Castro se tornou uma espécie de Somoza e até Martin_  Luther_  King,  ficou provado,  era plagiário. 
+</text>
+                <arg f="tmp" n="m">Ao_  mesmo_  tempo
+</arg>
+                <arg f="" n="0">o atual papado
+</arg>
+                <rel f="">esmagou</rel>
+                <arg f="" n="1">a teologia da libertação
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

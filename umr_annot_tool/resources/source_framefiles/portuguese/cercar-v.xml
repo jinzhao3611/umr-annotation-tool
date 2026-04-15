@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="cercar">
+        <note />
+    <roleset framnet="surround.01" id="cercar.01" name="envolver; estar em torno " vncls="9.8">
+            <roles>
+                <role descr="causative agent" n="0">
+                    <vnrole vncls="9.8" vntheta="Agent" />
+                </role>
+                <role descr="thing surrounding" n="1">
+                    <vnrole vncls="9.8" vntheta="Theme" />
+                </role>
+                <role descr="thing surrounded" n="2">
+                    <vnrole vncls="9.8" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosF.  s1134:  Não estamos concluindo que este comportamento é intencional,  mas sim que há uma forte predisposição cultural(  preconceito)  em criticar o Legislativo antes mesmo de conhecer tudo que cerca algumas decisões. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">cerca</rel>
+                <arg f="" n="2">algumas decisões
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

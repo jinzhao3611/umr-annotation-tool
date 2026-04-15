@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="universalizar">
+        <note />
+    <roleset framnet="?? " id="universalizar.01" name="tornar de uso universal" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1852:  A generalização dessa indexação diária não só acostuma a economia,  como passa a exercer pressão para que o governo oficialize e universalize a prática. 
+</text>
+                <arg f="" n="0">o governo
+</arg>
+                <rel f="">universalize</rel>
+                <arg f="" n="1">a prática
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="confundir">
+        <note />
+    <roleset framnet="confuse.01" id="confundir.01" name="tomar equivocadamente uma coisa por outra; tornar confuso" vncls="22.2 31.1">
+            <roles>
+                <role descr="agentive cause of confusion" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                    <vnrole vncls="22.2" vntheta="Agent" />
+                </role>
+                <role descr="entity experiencing confusion" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                    <vnrole vncls="22.2" vntheta="Patient1" />
+                </role>
+                <role descr="confused about or over what?" n="2">
+                    <vnrole vncls="22.2" vntheta="Patient2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3955:  Mauro_  Pereira e Gilson_  Paulino_  dos_  Santos disseram ter sido sequestrados por traficantes,  que os teriam confundido com policiais. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="2">os
+</arg>
+                <rel f="">confundido</rel>
+                <arg f="" n="3">com policiais
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3588:  Peixe passou a ter gosto de carne para mim e uma noite destas,  no Rodeio,  eu confundi salsicha caseira com frango kebab. 
+</text>
+                <arg f="tmp" n="m">uma noite destas
+</arg>
+                <arg f="loc" n="m">no Rodeio
+</arg>
+                <arg f="" n="1">eu
+</arg>
+                <rel f="">confundi</rel>
+                <arg f="" n="2">salsicha caseira
+</arg>
+                <arg f="" n="3">com frango kebab
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2514:  Há quem se orgulhe dos golpes que consegue imaginar e confunda artimanhas com estratégia. 
+</text>
+                <arg f="" n="1">quem
+</arg>
+                <rel f="">confunda</rel>
+                <arg f="" n="2">artimanhas
+</arg>
+                <arg f="" n="3">com estratégia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

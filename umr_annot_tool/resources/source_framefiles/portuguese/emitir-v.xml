@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="emitir">
+        <note />
+    <roleset framnet="issue.01" id="emitir.01" name="fazer emissão (papéis)" vncls="13.3 13.4.1 48.1.1">
+            <roles>
+                <role descr="issuer" n="0">
+                    <vnrole vncls="13.3" vntheta="Agent" />
+                    <vnrole vncls="13.4.1" vntheta="Agent" />
+                </role>
+                <role descr="thing issued" n="1">
+                    <vnrole vncls="13.3" vntheta="Theme" />
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                    <vnrole vncls="13.4.1" vntheta="Theme" />
+                </role>
+                <role descr="issued to" n="2">
+                    <vnrole vncls="13.3" vntheta="Recipient" />
+                    <vnrole vncls="13.4.1" vntheta="Recipient" />
+                </role>
+                <role descr="attribute, issued as or at" n="3">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1329:  Antonio_  Jorge,  diretor técnico da Amil,  diz que a empresa ainda estuda a conversão,  mas que os carnês de junho já serão emitidos em URV. 
+</text>
+                <arg f="" n="1">os carnês de junho
+</arg>
+                <arg f="adv" n="m">já
+</arg>
+                <rel f="">emitidos</rel>
+                <arg f="" n="3">em URV
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s408:  A legislação prevê multa de 300%  sobre o valor da venda para quem se recusar a emitir a nota. 
+</text>
+                <rel f="">emitir</rel>
+                <arg f="" n="1">a nota
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s318:  Essas empresas,  diz Arruda,  reconheceram ter emitido « notas frias »,  sem o recebimento de nenhum serviço da empresa do pianista João_  Carlos_  Martins e de seu sócio Ettore_  Gagliardi. 
+</text>
+                <rel f="">emitido</rel>
+                <arg f="" n="1">« notas frias »,  sem o recebimento de nenhum serviço da empresa do pianista João_  Carlos_  Martins e de seu sócio Ettore_  Gagliardi
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

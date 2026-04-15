@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desmontar">
+        <note />
+    <roleset framnet="dismantle.01" id="desmontar.01" name="desfazer a montagem; fazer ruir" vncls="23.3">
+            <roles>
+                <role descr="taker apart, agent" n="0">
+                    <vnrole vncls="23.2" vntheta="Agent" />
+                </role>
+                <role descr="entity dismantled" n="1">
+                    <vnrole vncls="23.3" vntheta="Patient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1460:  Por isso,  já em 1991,  começamos a introduzir a propriedade privada da terra,  desmontando o sistema socialista. 
+</text>
+                <rel f="">desmontando</rel>
+                <arg f="" n="1">o sistema socialista
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

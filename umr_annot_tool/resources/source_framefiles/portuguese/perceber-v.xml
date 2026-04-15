@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="perceber">
+        <note />
+    <roleset framnet="realize.01" id="perceber.01" name="notar; tomar consciência" vncls="">
+            <roles>
+                <role descr="new knower" n="0" />
+                <role descr="new knowledge" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1724:  Muitos hotéis,  no_  entanto,  perceberam o crescente interesse pelo ecoturismo e diversificaram suas atrações. 
+</text>
+                <arg f="" n="0">Muitos hotéis
+</arg>
+                <arg f="dis" n="m">no_  entanto
+</arg>
+                <rel f="">perceberam</rel>
+                <arg f="" n="1">o crescente interesse pelo ecoturismo
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

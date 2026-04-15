@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="identificar">
+        <note />
+    <roleset framnet="identify.01" id="identificar.01" name="fazer reconhecer" vncls="29.2">
+            <roles>
+                <role descr="caller" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="item being labelled" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="attribute" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3237:  Segundo o detetive Paulo_  Araújo,  a delegacia recebeu um telefonema de homens que se identificaram como traficantes do morro Azul(  no Flamengo) . 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">se
+</arg>
+                <rel f="">identificaram</rel>
+                <arg f="" n="2">como traficantes do morro Azul(  no Flamengo) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1821:  O superintendente de Meio_  Ambiente,  Clarismino_  Júnior,  disse que um dos objetivos é identificar as macrozonas existentes no Estado. 
+</text>
+                <rel f="">identificar</rel>
+                <arg f="" n="1">as macrozonas existentes no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

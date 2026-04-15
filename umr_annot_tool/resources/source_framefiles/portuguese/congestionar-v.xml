@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="congestionar">
+        <note />
+    <roleset framnet="congest.01" id="congestionar.01" name="obstruir, dificultar ou impedir o fluxo" vncls="-">
+            <roles>
+                <role descr="causal agent" n="0" />
+                <role descr="passage" n="1" />
+                <role descr="substance blocking passage, instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s1092:  Vamos confrontar os titulares que tudo perderam com esses meninos que são a derradeira esperança de um título neste ano:  enquanto os titulares de Telê privilegiam o meio-  campo,  com três,  quatro,  às_  vezes cinco volantes congestionando o setor,  o_  que,  na prática,  não confere nem poder ofensivo ao time,  tampouco proteção infalível ﻿à defesa,  os garotos jogam com Mona,  o único volante típico. 
+</text>
+                <arg f="" n="0">três,  quatro,  às_  vezes cinco
+</arg>
+                <rel f="">congestionando</rel>
+                <arg f="" n="1">o setor
+</arg>
+                <note>sem Arg2 - instrumento ou substância de obstrução (implícito: os jogadores congestionam com seus próprios corpos)</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

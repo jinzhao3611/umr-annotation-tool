@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="restabelecer">
+        <note />
+    <roleset framnet="restore.01" id="restabelecer.01" name="fazer voltar ao estado anterior" vncls="">
+            <roles>
+                <role descr="giver, restorer" n="0" />
+                <role descr="gift, thing restored" n="1" />
+                <role descr="benefactive, restored-to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1279:  No sábado,  dia 2,  a CET(  Companhia_  de_  Engenharia_  de_  Tráfego)  restabeleceu o sentido normal de circulação da rua_  Visconde_  da_  Luz,  no Itaim-  Bibi(  zona sul) ,  da João_  Cachoeira para a Clodomiro_  Amazonas. 
+</text>
+                <arg f="tmp" n="m">No sábado,  dia 2, 
+</arg>
+                <arg f="" n="0">a CET(  Companhia_  de_  Engenharia_  de_  Tráfego) 
+</arg>
+                <rel f="">restabeleceu</rel>
+                <arg f="" n="1">o sentido normal de circulação da rua_  Visconde_  da_  Luz,  no Itaim-  Bibi(  zona sul) ,  da João_  Cachoeira para a Clodomiro_  Amazonas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

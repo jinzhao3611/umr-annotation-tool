@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recair">
+        <note />
+    <roleset framnet="lay.01" id="recair.01" name="incidir sobre; ser atribuído a" vncls="9.2">
+            <roles>
+                <role descr="layer" n="0">
+                    <vnrole vncls="9.2" vntheta="Agent" />
+                </role>
+                <role descr="thing laid" n="1">
+                    <vnrole vncls="9.2" vntheta="Theme" />
+                </role>
+                <role descr="location" n="2">
+                    <vnrole vncls="9.2" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2318:  Toda_  vez_  que um crime cometido por representantes do poder público fica sem punição,  o ônus recai sobre a corporação como um todo,  gerando um turbilhão que indiferência os bons dos maus policiais. 
+</text>
+                <arg f="" n="1">o ônus
+</arg>
+                <rel f="">recai</rel>
+                <arg f="" n="2">sobre a corporação
+</arg>
+                <arg f="prd" n="m">como um todo
+</arg>
+                <arg f="adv" n="m">gerando um turbilhão que indiferência os bons dos maus policiais
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

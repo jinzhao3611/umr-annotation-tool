@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conviver">
+        <note />
+    <roleset framnet="" id="conviver.01" name="viver na presença de" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2812:  O país convive com o novo indexador há um mês,  o ministro virou candidato e os preços chamados de « abusivos » continuam em_  vigor. 
+</text>
+                <arg f="" n="0">O país
+</arg>
+                <rel f="">convive</rel>
+                <arg f="" n="1">com o novo indexador
+</arg>
+                <arg f="tmp" n="m">há um mês
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2631:  Num grupo de 30 pessoas,  entre jogadores,  técnicos,  médicos e massagistas,  que devem conviver durante tanto tempo,  surgem problemas diariamente. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">conviver</rel>
+                <arg f="tmp" n="m">durante tanto tempo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1156:  Mighty_  Max é um boneco de plástico,  que convive com monstros e morcegos num universo miniaturizado. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">convive</rel>
+                <arg f="" n="1">com monstros e morcegos
+</arg>
+                <arg f="loc" n="m">num universo miniaturizado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

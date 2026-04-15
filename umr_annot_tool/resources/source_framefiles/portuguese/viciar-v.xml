@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="viciar">
+        <note />
+    <roleset framnet="vitiate.01" id="viciar.01" name="corromper; tornar ou tornar-se dependente de alguma coisa" vncls="-">
+            <roles>
+                <role descr="corrupter, agent" n="0" />
+                <role descr="patient, thing corrupted (etc)" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2809:  Enterrou as previsões mais do_  que otimistas,  e deixou ver quanto é viciado o noticiário esportivo. 
+</text>
+                <rel f="">viciado</rel>
+                <note>uso adjetival</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

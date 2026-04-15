@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="inaugurar">
+        <note />
+    <roleset framnet="inaugurate.02" id="inaugurar.01" name="abrir ou usar pela primeira vez" vncls="-">
+            <roles>
+                <role descr="marker" n="0" />
+                <role descr="thing beginning" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3813:  Chris_  Columbus está ligado ﻿à adaptação dos super-  heróis « Quarteto_  Fantástico »,  que inauguraram a era Marvel nos gibis há 30 anos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">inauguraram</rel>
+                <arg f="" n="1">a era Marvel
+</arg>
+                <arg f="loc" n="m">nos gibis
+</arg>
+                <arg f="tmp" n="m">há 30 anos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3571:  A empresa,  que faturou US$  1 milhão em 93,  vai inaugurar até setembro mais quatro unidades da Gelaguela_  Sobremesas. 
+</text>
+                <arg f="" n="0">A empresa,  que faturou US$  1 milhão em 93, 
+</arg>
+                <rel f="">inaugurar</rel>
+                <arg f="tmp" n="m">até setembro
+</arg>
+                <arg f="" n="1">mais quatro unidades da Gelaguela_  Sobremesas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3371:  O bar e restaurante Lanterna inaugurou na terça-  feira um espaço para dançar. 
+</text>
+                <arg f="" n="0">O bar e restaurante Lanterna
+</arg>
+                <rel f="">inaugurou</rel>
+                <arg f="tmp" n="m">na terça-  feira
+</arg>
+                <arg f="" n="1">um espaço para dançar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2645:  Em 1929,  inaugurou gravações de música caipira
+</text>
+                <arg f="tmp" n="m">Em 1929
+</arg>
+                <rel f="">inaugurou</rel>
+                <arg f="" n="1">gravações de música caipira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2112:  O músico e humorista Juca_  Chaves inaugura no dia 5 de outubro,  a_  partir_  das 22h,  um novo teatro em São_  Paulo. 
+</text>
+                <arg f="" n="0">O músico e humorista Juca_  Chaves
+</arg>
+                <rel f="">inaugura</rel>
+                <arg f="tmp" n="m">no dia 5 de outubro
+</arg>
+                <arg f="tmp" n="m">a_  partir_  das 22h
+</arg>
+                <arg f="" n="1">um novo teatro
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2111:  Juca_  Chaves inaugura teatro no centro de SP
+</text>
+                <arg f="" n="0">Juca_  Chaves
+</arg>
+                <rel f="">inaugura</rel>
+                <arg f="" n="1">teatro
+</arg>
+                <arg f="loc" n="m">no centro de SP
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2013:  Na sequência,  em 1498,  Vasco_  da_  Gama chegou às Índias e inaugurou uma nova era. 
+</text>
+                <arg f="tmp" n="m">Na sequência
+</arg>
+                <arg f="tmp" n="m">em 1498
+</arg>
+                <arg f="" n="0">Vasco_  da_  Gama
+</arg>
+                <rel f="">inaugurou</rel>
+                <arg f="" n="1">uma nova era
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s889:  A primeira etapa do M2.  000_  Summer_  Concerts amanhã em Santos e domingo no Rio,  inaugura a temporada 94 de caça aos shows. 
+</text>
+                <arg f="" n="0">A primeira etapa do M2.  000_  Summer_  Concerts
+</arg>
+                <arg f="tmp" n="m">amanhã em Santos e domingo no Rio
+</arg>
+                <rel f="">inaugura</rel>
+                <arg f="" n="1">a temporada 94 de caça aos shows
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s692:  No dia 1º de março,  a fundação inaugurou mais uma escola. 
+</text>
+                <arg f="tmp" n="m">No dia 1º de março
+</arg>
+                <arg f="" n="0">a fundação
+</arg>
+                <rel f="">inaugurou</rel>
+                <arg f="" n="1">mais uma escola
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s428:  Esse palco,  além_  de revelar inúmeros talentos que depois se « refugiaram » na Europa,  como Sonia_  Motta,  serviu para Marilena inaugurar a fase mais fértil de sua carreira. 
+</text>
+                <arg f="" n="0">Marilena
+</arg>
+                <rel f="">inaugurar</rel>
+                <arg f="" n="1">a fase mais fértil de sua carreira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s231:  Para isso,  ele afirma pretender inaugurar uma câmara setorial para discutir as questões específicas da economia no Estado. 
+</text>
+                <rel f="">inaugurar</rel>
+                <arg f="" n="1">uma câmara setorial
+</arg>
+                <arg f="pnc" n="m">para discutir as questões específicas da economia no Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

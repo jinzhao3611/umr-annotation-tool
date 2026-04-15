@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="nortear">
+        <note />
+    <roleset framnet="guide.01" id="nortear.01" name="guiar; dar um norte" vncls="51.7">
+            <roles>
+                <role descr="guide, agent" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="entity guided" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <role descr="guided in/through" n="2">
+                    <vnrole vncls="51.7" vntheta="Destination" />
+                </role>
+                <role descr="signposts along the way" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s689:  Entendemos que palavras como respeito,  atenção e ética,  incluindo a eficiência na prestação dos serviços,  devem mais do_  que nunca,  nortear nossa conduta nas relações com nossos clientes. 
+</text>
+                <arg f="" n="0">palavras como respeito,  atenção e ética incluindo a eficiência na prestação dos serviços
+</arg>
+                <arg f="tmp" n="m">mais do_  que nunca
+</arg>
+                <rel f="">nortear</rel>
+                <arg f="" n="1">nossa conduta
+</arg>
+                <arg f="" n="2">nas relações com nossos clientes
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

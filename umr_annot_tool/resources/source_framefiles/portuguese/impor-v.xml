@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="impor">
+        <note />
+    <roleset framnet="impose.01" id="impor.01" name="forçar; tornar obrigatório" vncls="63">
+            <roles>
+                <role descr="imposer (not imposter)" n="0">
+                    <vnrole vncls="63" vntheta="Agent" />
+                </role>
+                <role descr="thing imposed" n="1">
+                    <vnrole vncls="63" vntheta="Theme" />
+                </role>
+                <role descr="imposed on" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2469:  Depois disto,  os EUA podem impor tarifas punitivas de até 100%  às importações do país ofensor. 
+</text>
+                <arg f="tmp" n="m">Depois disto
+</arg>
+                <arg f="" n="0">os EUA
+</arg>
+                <rel f="">impor</rel>
+                <arg f="" n="1">tarifas punitivas de até 100% 
+</arg>
+                <arg f="" n="2">às importações do país ofensor
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2274:  « A aula é boa porque o professor jamais impõe a opinião dele. 
+</text>
+                <arg f="" n="0">o professor
+</arg>
+                <arg f="tmp" n="m">jamais
+</arg>
+                <rel f="">impõe</rel>
+                <arg f="" n="1">a opinião dele
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2255:  Eleito em 1988,  o ex-  presidente Carlos_  Andrés_  Pérez(  social-  democrata)  encetou uma política econômica neoliberal que impôs sacrifícios ﻿à população dando início a uma série de violentos protestos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">impôs</rel>
+                <arg f="" n="1">sacrifícios
+</arg>
+                <arg f="" n="2">﻿à população
+</arg>
+                <arg f="adv" n="m">dando início a uma série de violentos protestos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1090:  Assim,  o tricolor conseguiu impor seu melhor conjunto. 
+</text>
+                <rel f="">impor</rel>
+                <arg f="" n="1">seu melhor conjunto
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s700:  Ainda há muito o que fazer para desgravar completamente as exportações de impostos indiretos,  conforme permitem as regras do Gatt e impõe a realidade de um ambiente internacional competitivo. 
+</text>
+                <rel f="">impõe</rel>
+                <arg f="" n="0">a realidade de um ambiente internacional competitivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s301:  Pelas razões alinhadas,  que não refletem apenas conjeturas teóricas,  mas a experiência duramente vivida pela nação nas últimas duas décadas,  se impõe dar um basta definitivo a todos os remanescentes de indexação formal,  sejam eles nas taxas de juros nominais(  TR) ,  no recolhimento dos tributos(  Ufir e correlatos)  e nos salários(  IPC-  r) . 
+</text>
+                <arg f="cau" n="m">Pelas razões alinhadas,  que não refletem apenas conjeturas teóricas,  mas a experiência duramente vivida pela nação nas últimas duas décadas
+</arg>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">impõe</rel>
+                <arg f="" n="1">dar um basta definitivo a todos os remanescentes de indexação formal,  sejam eles nas taxas de juros nominais(  TR) ,  no recolhimento dos tributos(  Ufir e correlatos)  e nos salários(  IPC-  r) 
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

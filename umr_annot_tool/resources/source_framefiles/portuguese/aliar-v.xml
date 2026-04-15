@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="aliar">
+        <note />
+    <roleset framnet="ally.01" id="aliar.01" name="unir-se" vncls="71">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="71" vntheta="Actor1" />
+                </role>
+                <role descr="entity united" n="1">
+                    <vnrole vncls="71" vntheta="Actor2" />
+                </role>
+                <role descr="entity united with" n="2">
+                    <vnrole vncls="71" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3222:  Vargas,  na verdade,  preferia ficar de_  fora,  ou aliar-  se com os vencedores. 
+</text>
+                <arg f="" n="0">Vargas
+</arg>
+                <rel f="">aliar-</rel>
+                <arg f="" n="1">se
+</arg>
+                <arg f="" n="2">com os vencedores
+</arg>
+                <note>reflexivo: aliar-se</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

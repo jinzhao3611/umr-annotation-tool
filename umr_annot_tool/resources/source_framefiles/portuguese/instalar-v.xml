@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="instalar">
+        <note />
+    <roleset framnet="install.01" id="instalar.01" name="colocar em caráter duradouro" vncls="9.1">
+            <roles>
+                <role descr="putter" n="0">
+                    <vnrole vncls="9.1" vntheta="Agent" />
+                </role>
+                <role descr="thing put" n="1">
+                    <vnrole vncls="9.1" vntheta="Theme" />
+                </role>
+                <role descr="where put" n="2">
+                    <vnrole vncls="9.1" vntheta="Destination" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3902:  A Mercedes-  Benz deve instalar a linha de montagem do Swatch,  carro compacto com design do fabricante dos relógios da marca,  em Sarreguemines,  cidade do norte da França. 
+</text>
+                <arg f="" n="0">A Mercedes-  Benz
+</arg>
+                <rel f="">instalar</rel>
+                <arg f="" n="1">a linha de montagem do Swatch,  carro compacto com design do fabricante dos relógios da marca, 
+</arg>
+                <arg f="" n="2">em Sarreguemines,  cidade do norte da França
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2837:  Empresários alemães avançaram nas negociações para instalar unidades de beneficiamento de polpas de frutas. 
+</text>
+                <rel f="">instalar</rel>
+                <arg f="" n="1">unidades de beneficiamento de polpas de frutas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1653:  Nos EUA,  o Museu da OEA(  Organização_  dos_  Estados_  Americanos)  já tem agendada uma exposição de Amélia,  mas ela não sabe se instala lá suas « Sete_  Ondas ». 
+</text>
+                <arg f="" n="0">ela
+</arg>
+                <rel f="">instala</rel>
+                <arg f="" n="2">lá
+</arg>
+                <arg f="" n="1">suas « Sete_  Ondas »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s1104:  O casal quer trocar o piso do banheiro,  revestir o piso das áreas sociais com madeira e instalar armários. 
+</text>
+                <rel f="">instalar</rel>
+                <arg f="" n="1">armários
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

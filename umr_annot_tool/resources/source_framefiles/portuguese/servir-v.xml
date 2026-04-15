@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="servir">
+        <note />
+        <note />
+        <note />
+    <roleset framnet="" id="servir.01" name="ser útil ou adequado " vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3361:  « O boneco servirá para criar o_  que chamamos de'  efeito auréola'  no motorista. 
+</text>
+                <arg f="" n="1">O boneco
+</arg>
+                <rel f="">servirá</rel>
+                <arg f="" n="2">para criar o_  que chamamos de'  efeito auréola'  no motorista
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3216:  Filme serviria para propaganda aliada
+</text>
+                <arg f="" n="1">Filme
+</arg>
+                <rel f="">serviria</rel>
+                <arg f="" n="2">para propaganda aliada
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2954:  Diz o artigo primeiro que fica instituída a URV,  dotada de « curso legal » para servir « exclusivamente » como padrão de valor monetário. 
+</text>
+                <rel f="">servir</rel>
+                <arg f="mnr" n="m">exclusivamente
+</arg>
+                <arg f="" n="2">como padrão de valor monetário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2655:  Incluem ainda um outro CD,  que serve como guia para uso em sala de aula. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">serve</rel>
+                <arg f="" n="2">como guia para uso em sala de aula
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2364:  Já assessores do federalista Delors,  que em dez anos na presidência da CE aumentou os poderes do cargo e entrou em conflito com Margaret_  Thatcher(  antecessora de Major) ,  temem que a escolha de Santer sirva para enfraquecer os poderes do presidente,  o_  que abriria caminho para o eixo Alemanha-  França consolidar o seu domínio. 
+</text>
+                <arg f="" n="1">a escolha de Santer
+</arg>
+                <rel f="">sirva</rel>
+                <arg f="" n="2">para enfraquecer os poderes do presidente
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1999:  De_  volta ao Rio_  de_  Janeiro,  Euclides preparou alguns dos mapas que serviram de base para o tratado de fronteiras entre o Brasil e o Peru. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">serviram</rel>
+                <arg f="" n="2">de base para o tratado de fronteiras entre o Brasil e o Peru
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1826:  Eles servem para camuflar o improviso dos estádios da Copa. 
+</text>
+                <arg f="" n="1">Eles
+</arg>
+                <rel f="">servem</rel>
+                <arg f="" n="2">para camuflar o improviso dos estádios da Copa
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s495:  Ir a uma feira livre serve de aula para os principiantes aprenderem a comprar frutas,  legumes e verduras mais baratos e de melhor qualidade. 
+</text>
+                <arg f="" n="1">Ir a uma feira livre
+</arg>
+                <rel f="">serve</rel>
+                <arg f="" n="2">de aula para os principiantes aprenderem a comprar frutas,  legumes e verduras mais baratos e de melhor qualidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s428:  Esse palco,  além_  de revelar inúmeros talentos que depois se « refugiaram » na Europa,  como Sonia_  Motta,  serviu para Marilena inaugurar a fase mais fértil de sua carreira. 
+</text>
+                <arg f="" n="1">Esse palco
+</arg>
+                <rel f="">serviu</rel>
+                <arg f="" n="2">para Marilena inaugurar a fase mais fértil de sua carreira
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s288:  A desgraça é que,  cientificamente,  como demonstra a moderna criminologia,  quase nada dessa política criminal « simbólica » serve para atenuar o gravíssimo problema da criminalidade. 
+</text>
+                <arg f="tmp" n="m">cientificamente
+</arg>
+                <arg f="" n="1">quase nada dessa política criminal « simbólica »
+</arg>
+                <rel f="">serve</rel>
+                <arg f="" n="2">para atenuar o gravíssimo problema da criminalidade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s66:  Um dos injustiçados é Alfredo_  Volpi,  que recebe apenas um painel,  com cinco telas que servem para ilustrar sua « evolução » de figurativo a abstrato. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">servem</rel>
+                <arg f="pnc" n="m">para ilustrar sua « evolução » de figurativo a abstrato
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="serve.01" id="servir.02" name="atender; prestar serviço a" vncls="29.6">
+            <roles>
+                <role descr="worker" n="0">
+                    <vnrole vncls="29.6" vntheta="Agent" />
+                </role>
+                <role descr="job, project" n="1">
+                    <vnrole vncls="29.6" vntheta="Predicate" />
+                </role>
+                <role descr="employer" n="2">
+                    <vnrole vncls="29.6" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3105:  Notamos ainda que,  quando um passageiro brasileiro se inscreve num programa de milhagem de uma companhia aérea internacional que serve o Brasil,  passados 30 dias,  recebe a proposta da Iapa. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">serve</rel>
+                <arg f="" n="1">o Brasil
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s1099:  Também não lhe pede que cometa o maior pecado de um governante,  que é não governar e não servir ao público. 
+</text>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">servir</rel>
+                <arg f="" n="2">ao público
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="serve.02" id="servir.04" name="oferecer/fornecer comida ou bebida" vncls="">
+            <roles>
+                <role descr="server" n="0" />
+                <role descr="thing served" n="1" />
+                <role descr="served to" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1293:  Pelo preço de CR$  6.  200,  os clientes poderão se servir ﻿à vontade do ravióli com recheio de salmão. 
+</text>
+                <arg f="cau" n="m">Pelo preço de CR$  6.  200
+</arg>
+                <arg f="" n="0">os clientes
+</arg>
+                <arg f="" n="2">se
+</arg>
+                <rel f="">servir</rel>
+                <arg f="mnr" n="m">﻿à vontade
+</arg>
+                <arg f="" n="1">do ravióli com recheio de salmão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s186:  Por_  exemplo:  o master-  franqueado da Arby'  s no México enfrentará menos problemas e menos burocracia para importar o rosbife(  que,  ao_  contrário_  do que ocorre com a Arby'  s Brasil,  vem dos EUA)  e as batatinhas(  canadenses)  que serve em seus restaurantes próprios e franqueados. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">serve</rel>
+                <arg f="loc" n="m">em seus restaurantes próprios e franqueados
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="servir-se_de">
+        <note />
+    <roleset framnet="use.01" id="servir.03" name="fazer uso de" vncls="29.2 54.3">
+            <roles>
+                <role descr="User" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="54.3" vntheta="Location" />
+                </role>
+                <role descr="thing used" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="54.3" vntheta="Attribute" />
+                </role>
+                <role descr="purpose" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosE.  s2608:  Cabe perguntar:  Se o Supremo não está de_  acordo com a suposta falta de regra das duas moedas,  que existem de_  fato desde a emissão da última medida provisória,  por_  que não a proclamou imediatamente inconstitucional e se serviu dela privadamente? 
+</text>
+                <arg f="" n="0">o Supremo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">serviu</rel>
+                <arg f="" n="1">dela
+</arg>
+                <arg f="mnr" n="m">privadamente
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

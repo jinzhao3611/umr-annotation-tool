@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="violentar">
+        <note />
+    <roleset framnet="rape.01" id="violentar.01" name="manter relação sexual à força" vncls="-">
+            <roles>
+                <role descr="assaulter, agent" n="0" />
+                <role descr="victim" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s787:  Ele sequestrou e violentou três meninos com a intenção de lhes transmitir o vírus da Aids de que se sabia portador. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">violentou</rel>
+                <arg f="" n="1">três meninos
+</arg>
+                <arg f="pnc" n="m">com a intenção de lhes transmitir o vírus da Aids de que se sabia portador
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

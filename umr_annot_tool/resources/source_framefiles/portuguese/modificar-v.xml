@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="modificar">
+        <note />
+    <roleset framnet="modify.01" id="modificar.01" name="alterar" vncls="">
+            <roles>
+                <role descr="causer of transformation" n="0" />
+                <role descr="thing changing" n="1" />
+                <role descr="end state" n="2" />
+                <role descr="start state" n="3" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1481:  Segundo o sindicato dos arquitetos,  o projeto da prefeitura modifica o desenho original. 
+</text>
+                <arg f="dis" n="m">Segundo o sindicato dos arquitetos
+</arg>
+                <arg f="" n="0">o projeto da prefeitura
+</arg>
+                <rel f="">modifica</rel>
+                <arg f="" n="1">o desenho original
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

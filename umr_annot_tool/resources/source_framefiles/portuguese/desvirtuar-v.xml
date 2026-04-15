@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="desvirtuar">
+        <note />
+    <roleset framnet="distort.01" id="desvirtuar.01" name="usar para fins diferentes dos previstos; descaracterizar; tirar a virtude" vncls="26.5">
+            <roles>
+                <role descr="alterer, agent" n="0">
+                    <vnrole vncls="26.5" vntheta="Agent" />
+                </role>
+                <role descr="thing distorted" n="1">
+                    <vnrole vncls="26.5" vntheta="Material" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s103:  Não se trata simplesmente da questão da escravidão certamente ter tido efeitos duradouros sobre a cultura negra,  nem_  mesmo dela ter exercido um amplo efeito negativo sobre a auto-  confiança e auto-  estima dos negros,  mas mais especificamente da experiência da escravatura ter desvirtuado e tolhido a evolução do algoritmo etnocêntrico que os negros americanos teriam desenvolvido no decorrer normal dos acontecimentos. 
+</text>
+                <rel f="">desvirtuado</rel>
+                <arg f="" n="1">a evolução do algoritmo etnocêntrico que os negros americanos teriam desenvolvido no decorrer normal dos acontecimentos
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

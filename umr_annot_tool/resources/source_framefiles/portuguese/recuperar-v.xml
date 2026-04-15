@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recuperar">
+        <note />
+    <roleset framnet="recover.02" id="recuperar.01" name="obter o que havia sido perdido" vncls="10.5 13.5.2">
+            <roles>
+                <role descr="entity getting something" n="0">
+                    <vnrole vncls="10.5" vntheta="Agent" />
+                    <vnrole vncls="13.5.2" vntheta="Agent" />
+                </role>
+                <role descr="thing gotten" n="1">
+                    <vnrole vncls="10.5" vntheta="Theme" />
+                    <vnrole vncls="13.5.2" vntheta="Theme" />
+                </role>
+                <role descr="gotten from" n="2">
+                    <vnrole vncls="10.5" vntheta="Source" />
+                    <vnrole vncls="13.5.2" vntheta="Source" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4183:  E,  depois de uma semana com gripe,  recupera a sua forma o holandês Ruud_  Gullit,  artilheiro do time com 14 tentos. 
+</text>
+                <arg f="tmp" n="m">depois de uma semana com gripe
+</arg>
+                <rel f="">recupera</rel>
+                <arg f="" n="1">a sua forma
+</arg>
+                <arg f="" n="0">o holandês Ruud_  Gullit,  artilheiro do time com 14 tentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s2808:  Senna,  todo mundo viu,  rodou quando estava em segundo lugar e com poucas chances de recuperar o primeiro. 
+</text>
+                <rel f="">recuperar</rel>
+                <arg f="" n="1">o primeiro
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s1083:  Para o presidente da Abav,  Sérgio_  Nogueira,  a expectativa é que o mercado de viagens e turismo recupere este ano os mesmos índices favoráveis de 1990,  ano em que foi registrado o maior volume de vendas em passagens aéreas. 
+</text>
+                <arg f="" n="0">o mercado de viagens e turismo
+</arg>
+                <rel f="">recupere</rel>
+                <arg f="tmp" n="m">este ano
+</arg>
+                <arg f="" n="1">os mesmos índices favoráveis de 1990,  ano em que foi registrado o maior volume de vendas em passagens aéreas
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s475:  O governador da Flórida,  Lawton_  Chiles,  63,  resolveu processar o governo dos EUA para recuperar os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado. 
+</text>
+                <rel f="">recuperar</rel>
+                <arg f="" n="1">os US$  739 milhões anuais que ele diz estar gastando em despesas com imigrantes ilegais em seu Estado
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="recuperar-se">
+        <note />
+    <roleset framnet="recover.01" id="recuperar.02" name="refazer-se após acidente ou desgaste " vncls="-">
+            <roles>
+                <role descr="that which was sick, now getting better" n="1" />
+                <role descr="sickness" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s547:  Para tentar se recuperar do jet_  lag e da correria da exposição do marido no Yerba_  Buena,  Regina_  Casé fez ontem saída pela_  tangente. 
+</text>
+                <rel f="">recuperar</rel>
+                <arg f="" n="1">do jet_  lag e da correria da exposição do marido no Yerba_  Buena
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

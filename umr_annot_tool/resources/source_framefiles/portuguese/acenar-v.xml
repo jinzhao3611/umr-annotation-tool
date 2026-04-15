@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acenar">
+        <note />
+    <roleset framnet="indicate.01" id="acenar.02" name="apontar" vncls="78-1">
+            <roles>
+                <role descr="indicator" n="0">
+                    <vnrole vncls="78-1" vntheta="Cause" />
+                </role>
+                <role descr="thing indicated" n="1">
+                    <vnrole vncls="78-1" vntheta="Topic" />
+                </role>
+                <role descr="indicated to" n="2">
+                    <vnrole vncls="78-1" vntheta="Recipient" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s482:  Depois será a vez dos financiamentos rurais e,  no início de junho,  acenará os rumos que poderão tomar os pontos fundamentais do plano a política monetária e a política cambial. 
+</text>
+                <arg f="tmp" n="m">no início de junho
+</arg>
+                <rel f="">acenará</rel>
+                <arg f="" n="1">os rumos que poderão tomar os pontos fundamentais do plano a política monetária e a política cambial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="inflamar-se">
+        <note />
+    <roleset framnet="" id="inflamar.01" name="alternância incoativa de &quot;inflamar&quot;: pegar fogo; ficar em chamas; ficar entusiasmado ou exaltado (figurativo)" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3735:  Esse é o meu grito »,  se inflama. 
+</text>
+                <arg f="mnr" n="m">Esse é o meu grito
+</arg>
+                <rel f="">inflama</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

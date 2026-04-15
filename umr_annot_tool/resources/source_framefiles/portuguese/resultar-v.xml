@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="sujeito pós-verbal">
+        <note />
+    <roleset framnet="result.01" id="resultar.01" name="ser resultado de; dar como resultado" vncls="48.1.1">
+            <roles>
+                <role descr="Theme, prior condition" n="1">
+                    <vnrole vncls="48.1.1" vntheta="Theme" />
+                </role>
+                <role descr="Goal, end condition" n="2">
+                    <vnrole vncls="48.1.1" vntheta="Location" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3619:  O SPQ(  Sistema_  de_  Projeções_  Qualificadas)  resulta da média de opiniões de 16 economistas que fazem análise de conjuntura. 
+</text>
+                <arg f="" n="2">O SPQ(  Sistema_  de_  Projeções_  Qualificadas) 
+</arg>
+                <rel f="">resulta</rel>
+                <arg f="" n="1">da média de opiniões de 16 economistas que fazem análise de conjuntura
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2957:  « É um erro técnico grave e que pode resultar num conflito judiciário muito grande »,  segundo Saulo_  Ramos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">resultar</rel>
+                <arg f="" n="2">num conflito judiciário muito grande
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2615:  A absolvição em abril de 1992 dos policiais provocou 48 horas de conflitos raciais em LA que resultaram em 58 mortes,  4.  000 feridos e US$  1 bilhão em prejuízos. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <rel f="">resultaram</rel>
+                <arg f="" n="2">em 58 mortes,  4.  000 feridos e US$  1 bilhão em prejuízos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2050:  Mesmo abstraindo-  se tudo o que a cidade representa como patrimônio cultural da humanidade,  ainda_  assim ela resulta « parisdisíaca »,  adornada de todo o sortilégio. 
+</text>
+                <arg f="adv" n="m">ainda_  assim
+</arg>
+                <arg f="" n="1">ela
+</arg>
+                <rel f="">resulta</rel>
+                <arg f="" n="2">« parisdisíaca »,  adornada de todo o sortilégio
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s918:  Parágrafo 3º- -  Da aplicação do disposto neste artigo não poderá resultar pagamento de benefício inferior ao efetivamente pago,  em cruzeiros reais,  na competência de fevereiro de 1994. 
+</text>
+                <arg f="" n="1">Da aplicação do disposto neste artigo
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">resultar</rel>
+                <arg f="" n="2">pagamento de benefício inferior ao efetivamente pago,  em cruzeiros reais,  na competência de fevereiro de 1994
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

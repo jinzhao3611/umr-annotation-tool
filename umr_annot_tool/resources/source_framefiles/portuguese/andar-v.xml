@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="andar">
+        <note />
+    <roleset framnet="ride.01" id="andar.01" name="dirigir veículo ou montar animal" vncls="51.4.2">
+            <roles>
+                <role descr="rider" n="0">
+                    <vnrole vncls="51.4.2" vntheta="Agent" />
+                </role>
+                <role descr="steed" n="1">
+                    <vnrole vncls="51.4.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3513:  A sensação que se tem quando se está andando num trenó puxado por cães é semelhante ﻿à do esqui aquático. 
+</text>
+                <arg f="" n="0">se
+</arg>
+                <rel f="">andando</rel>
+                <arg f="" n="1">num trenó puxado por cães
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s766:  Se eu fosse você,  passava a andar de táxi especial e apresentava a conta ﻿à concessionária. 
+</text>
+                <arg f="adv" n="m">Se eu fosse você
+</arg>
+                <rel f="">andar</rel>
+                <arg f="mnr" n="m">de táxi especial
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

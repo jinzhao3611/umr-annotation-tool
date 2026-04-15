@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="fascinar">
+        <note />
+    <roleset framnet="fascinate.01" id="fascinar.01" name="encantar; provocar fascínio" vncls="31.1">
+            <roles>
+                <role descr="causer of fascination" n="0">
+                    <vnrole vncls="31.1" vntheta="Cause" />
+                </role>
+                <role descr="fascinated entity" n="1">
+                    <vnrole vncls="31.1" vntheta="Experiencer" />
+                </role>
+                <role descr="instrument, if separate from arg0" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s773:  O Brasil é um país do Terceiro_  Mundo,  ainda sem cara e sem personalidade,  mas metade do seu território é a Hiléia,  que tem fascinado os iluminados,  de Humboldt a Euclides_  da_  Cunha ; acontece que,  no passo de Jeca_  Tatu em que caminha,  o Brasil ameaça transformar a Hiléia,  no século 21,  que já nos olha com cara feia por_  cima_  do muro,  num gigantesco cinzeiro,  cheio da cinza das árvores e da cinza dos índios. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">fascinado</rel>
+                <arg f="" n="1">os iluminados,  de Humboldt a Euclides_  da_  Cunha
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

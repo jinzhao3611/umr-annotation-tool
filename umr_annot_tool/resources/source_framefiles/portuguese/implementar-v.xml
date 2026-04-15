@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="implementar">
+        <note />
+    <roleset framnet="implement.01" id="implementar.01" name="por em execução" vncls="">
+            <roles>
+                <role descr="implementer" n="0" />
+                <role descr="thing implemented" n="1" />
+                <role descr="instrument" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4190:  O projeto vem sendo implementado,  em caráter experimental,  em três escolas:  Morumbi,  Visconde_  de_  Porto_  Seguro(  particulares)  e Godofredo_  Furtado(  estadual) . 
+</text>
+                <arg f="" n="1">O projeto
+</arg>
+                <rel f="">implementado</rel>
+                <arg f="mnr" n="m">em caráter experimental
+</arg>
+                <arg f="loc" n="m">em três escolas:  Morumbi,  Visconde_  de_  Porto_  Seguro(  particulares)  e Godofredo_  Furtado(  estadual) 
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2222:  Executivos em cargos de liderança assumem seus cargos com mais uma pesada função:  implementar cada passo da estratégia que eles próprios esboçaram. 
+</text>
+                <rel f="">implementar</rel>
+                <arg f="" n="1">cada passo da estratégia que eles próprios esboçaram
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

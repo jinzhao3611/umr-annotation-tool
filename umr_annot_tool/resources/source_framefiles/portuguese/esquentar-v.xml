@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="esquentar">
+        <note />
+    <roleset framnet="heat.01" id="esquentar.01" name="aumentar a temperatura; aumentar a intensidade (figurativo)" vncls="45.3 45.4">
+            <roles>
+                <role descr="agent, causer" n="0">
+                    <vnrole vncls="45.4" vntheta="Agent" />
+                    <vnrole vncls="45.3" vntheta="Agent" />
+                </role>
+                <role descr="entity heated" n="1">
+                    <vnrole vncls="45.4" vntheta="Patient" />
+                    <vnrole vncls="45.3" vntheta="Patient" />
+                </role>
+                <role descr="instrument" n="2">
+                    <vnrole vncls="45.4" vntheta="Instrument" />
+                    <vnrole vncls="45.3" vntheta="Instrument" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1959:  Esquentando as vendas
+</text>
+                <rel f="">Esquentando</rel>
+                <note>uso figurativo</note>
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

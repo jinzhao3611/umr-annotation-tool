@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="recompensar">
+        <note />
+    <roleset framnet="recompense.01" id="recompensar.01" name="indenizar; dar compensação" vncls="33">
+            <roles>
+                <role descr="payer, rewarder" n="0">
+                    <vnrole vncls="33" vntheta="Agent" />
+                </role>
+                <role descr="person being repaid" n="1">
+                    <vnrole vncls="33" vntheta="Theme" />
+                </role>
+                <role descr="repaid for" n="2">
+                    <vnrole vncls="33" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3309:  Moscou exige que conferência sobre segurança européia recompense a Sérvia por pressionar sérvios-  bósnios
+</text>
+                <arg f="" n="0">conferência sobre segurança européia
+</arg>
+                <rel f="">recompense</rel>
+                <arg f="" n="1">a Sérvia
+</arg>
+                <arg f="" n="2">por pressionar sérvios-  bósnios
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s378:  No início do mês,  o presidente Carlos_  Menem criou um fundo especial de US$  1 milhão para recompensar quem fornecesse informações que ajudem nas investigações. 
+</text>
+                <rel f="">recompensar</rel>
+                <arg f="" n="1">quem fornecesse informações que ajudem nas investigações
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

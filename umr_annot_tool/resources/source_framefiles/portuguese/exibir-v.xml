@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="">
+        <note />
+    <roleset framnet="" id="exibir.01" name="" vncls="">
+            <roles>
+                <role descr="" n="">
+                    <vnrole vncls="" vntheta="" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3271:  A MTV não exibiu ontem o desenho animado « Beavis_  e_  Butt-  Head » por determinação de liminar expedida pela Vara_  Central_  da_  Infância_  e_  Juventude,  em São_  Paulo. 
+</text>
+                <arg f="" n="0">A MTV
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">exibiu</rel>
+                <arg f="tmp" n="m">ontem
+</arg>
+                <arg f="" n="1">o desenho animado « Beavis_  e_  Butt-  Head »
+</arg>
+                <arg f="cau" n="m">por determinação de liminar expedida pela Vara_  Central_  da_  Infância_  e_  Juventude
+</arg>
+                <arg f="loc" n="m">em São_  Paulo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2093:  Entre os clips que o programa exibe estão « Blitzkrieg_  Bop »,  « I_  Wanna_  Live » e « Poison_  Heart ». 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">o programa
+</arg>
+                <rel f="">exibe</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2073:  Sesc_  Pompéia exibe obra de Nuno_  Ramos
+</text>
+                <arg f="" n="0">Sesc_  Pompéia
+</arg>
+                <rel f="">exibe</rel>
+                <arg f="" n="1">obra de Nuno_  Ramos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s682:  Semana que vem,  começa a reescrever « Irmãos_  Coragem »,  novela de Janete_  Clair que a Globo exibiu com enorme sucesso entre junho de 1970 e julho de 1971. 
+</text>
+                <arg f="" n="1">que
+</arg>
+                <arg f="" n="0">a Globo
+</arg>
+                <rel f="">exibiu</rel>
+                <arg f="mnr" n="m">com enorme sucesso
+</arg>
+                <arg f="tmp" n="m">entre junho de 1970 e julho de 1971
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s411:  É gratificante exibir opiniões progressistas,  dessas que fazem chover cartas de apoio no « Painel_  do_  Leitor ». 
+</text>
+                <rel f="">exibir</rel>
+                <arg f="" n="1">opiniões progressistas,  dessas que fazem chover cartas de apoio no « Painel_  do_  Leitor »
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

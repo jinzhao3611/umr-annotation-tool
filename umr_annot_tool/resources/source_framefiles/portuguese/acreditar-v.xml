@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acreditar">
+        <note />
+    <roleset framnet="believe.01" id="acreditar.01" name="ter certeza de" vncls="29.9-2 31.2">
+            <roles>
+                <role descr="believer" n="0">
+                    <vnrole vncls="29.9-2" vntheta="Agent" />
+                    <vnrole vncls="31.2" vntheta="Experiencer" />
+                </role>
+                <role descr="belief" n="1">
+                    <vnrole vncls="29.9-2" vntheta="Theme" />
+                    <vnrole vncls="31.2" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s4160:  O paulistano não acredita em queda de inflação nos próximos meses. 
+</text>
+                <arg f="" n="0">O paulistano
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">acredita</rel>
+                <arg f="" n="1">em queda de inflação nos próximos meses
+</arg>
+                <note>a expressão de tempo modifica o arg1 e não "acreditar"</note>
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3585:  « Eu acredito no efeito barriga no balcão »,  afirma o empresário Humberto_  Nastari,  37. 
+</text>
+                <arg f="" n="0">Eu
+</arg>
+                <rel f="">acredito</rel>
+                <arg f="" n="1">no efeito barriga no balcão
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s3549:  « Era um cara que sempre apostou no_  que acreditava. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">no_  que
+</arg>
+                <rel f="">acreditava</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s3491:  Um psicanalista(  sic) ,  José_  Nazar,  sugere,  acreditem se quiser,  nada_  mais_  nada_  menos do_  que linchamento como punição. 
+</text>
+                <rel f="">acreditem</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3057:  Acredito que,  mantendo esse percentual,  seremos campeões »,  disse Luxemburgo. 
+</text>
+                <rel f="">Acredito</rel>
+                <arg f="" n="1">que,  mantendo esse percentual,  seremos campeões
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2920:  Ele acredita,  no_  entanto,  que o mercado acionário brasileiro deve crescer em 1995. 
+</text>
+                <arg f="" n="0">Ele
+</arg>
+                <rel f="">acredita</rel>
+                <arg f="dis" n="m">no_  entanto
+</arg>
+                <arg f="" n="1">que o mercado acionário brasileiro deve crescer em 1995
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2807:  E que só Schumacher acreditava em sua possibilidade de vencer. 
+</text>
+                <arg f="" n="0">só Schumacher
+</arg>
+                <rel f="">acreditava</rel>
+                <arg f="" n="1">em sua possibilidade de vencer
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2730:  « Eles são a razão de tudo_  o_  que faço,  de tudo aquilo em que acredito »,  disse,  com grandes espaços entre as palavras. 
+</text>
+                <arg f="" n="1">em que
+</arg>
+                <rel f="">acredito</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2690:  Nela,  o presidente confidenciou não acreditar mais que terminaria o seu mandato. 
+</text>
+                <arg f="" n="0">o presidente
+</arg>
+                <rel f="">acreditar</rel>
+                <arg f="neg" n="m">não mais
+</arg>
+                <arg f="" n="1">que terminaria o seu mandato
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s2515:  É_  que « os dirigentes petistas acreditavam tanto na vitória no primeiro turno que dispensaram os políticos »,  quer_  dizer,  a direita. 
+</text>
+                <arg f="" n="0">os dirigentes petistas
+</arg>
+                <rel f="">acreditavam</rel>
+                <arg f="" n="1">na vitória no primeiro turno
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1939:  Os empresários brasileiros acreditam que os setores mais propícios a investimentos na Argentina são:  cerveja,  celulose,  alimentos,  petroquímica,  telecomunicações e gás. 
+</text>
+                <arg f="" n="0">Os empresários brasileiros
+</arg>
+                <rel f="">acreditam</rel>
+                <arg f="" n="1">que os setores mais propícios a investimentos na Argentina são:  cerveja,  celulose,  alimentos,  petroquímica,  telecomunicações e gás
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1665:  Diretor do Banco_  Central não acredita que o real esteja valorizado porque « tem gente comprando e vendendo »
+</text>
+                <arg f="" n="0">Diretor do Banco_  Central
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">acredita</rel>
+                <arg f="" n="1">que o real esteja valorizado
+</arg>
+                <arg f="cau" n="m">porque « tem gente comprando e vendendo »
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s962:  Folha- -  O Sr.  acredita ter influenciado estes filmes? 
+</text>
+                <arg f="" n="0">O Sr. 
+</arg>
+                <rel f="">acredita</rel>
+                <arg f="" n="1">ter influenciado estes filmes
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s666:  « Nós não vamos acreditar que um povo tão culto como o da Guanabara possa ter problemas como andam dizendo por aí »,  afirmou,  referindo-  se ﻿à população do antigo Estado da Guanabara,  que desapareceu na fusão com o Estado do Rio_  de_  Janeiro. 
+</text>
+                <arg f="" n="0">Nós
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">acreditar</rel>
+                <arg f="" n="1">que um povo tão culto como o da Guanabara possa ter problemas como andam dizendo por aí
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s578:  Me deram uma licença de dois anos,  acreditavam que o exílio ia me neutralizar. 
+</text>
+                <rel f="">acreditavam</rel>
+                <arg f="" n="1">que o exílio ia me neutralizar
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s567:  Apesar_  de todas as restrições,  a esmagadora maioria dos consultados(  86% )  acredita que Lula tomará posse sem resistência de qualquer setor da sociedade. 
+</text>
+                <arg f="" n="0">a esmagadora maioria dos consultados(  86% ) 
+</arg>
+                <rel f="">acredita</rel>
+                <arg f="" n="1">que Lula tomará posse sem resistência de qualquer setor da sociedade
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s448:  A PF ainda não levantou os números exatos do golpe,  mas acredita que pelo_  menos cem pessoas tenham perdido seu dinheiro. 
+</text>
+                <arg f="" n="0">A PF
+</arg>
+                <rel f="">acredita</rel>
+                <arg f="" n="1">que pelo_  menos cem pessoas tenham perdido seu dinheiro
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

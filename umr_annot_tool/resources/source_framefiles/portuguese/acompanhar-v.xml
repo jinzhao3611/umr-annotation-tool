@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="acompanhar">
+        <note />
+        <note />
+        <note />
+        <note />
+    <roleset framnet="accompany.01" id="acompanhar.01" name="ir junto com" vncls="51.7">
+            <roles>
+                <role descr="subject accompanier" n="0">
+                    <vnrole vncls="51.7" vntheta="Agent" />
+                </role>
+                <role descr="object accompanied" n="1">
+                    <vnrole vncls="51.7" vntheta="Theme" />
+                </role>
+                <role descr="start point" n="3" />
+                <role descr="end point" n="4" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2743:  O bom uso dos modems e fax/  modem depende dos programas para gerenciamento e transmissão de dados que acompanham os equipamentos. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">acompanham</rel>
+                <arg f="" n="1">os equipamentos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2732:  Ricupero,  na verdade,  foi o último do grupo que o acompanhava familiares e assessores a sucumbir ﻿à emoção,  pelo_  menos publicamente. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">acompanhava</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1366:  Itamar e as autoridades que o acompanhavam chegaram ao cemitério ﻿à 1h50 de ontem. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">acompanhavam</rel>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s559:  A declaração de Fleury de que continua candidato não convenceu alguns prefeitos que o acompanhavam. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <arg f="" n="1">o
+</arg>
+                <rel f="">acompanhavam</rel>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="monitor.01" id="acompanhar.02" name="manter-se informado sobre" vncls="35.4">
+            <roles>
+                <role descr="observer" n="0">
+                    <vnrole vncls="35.4" vntheta="Agent" />
+                </role>
+                <role descr="thing looked at" n="1">
+                    <vnrole vncls="35.4" vntheta="Location" />
+                </role>
+                <role descr="looking for what?" n="2">
+                    <vnrole vncls="35.4" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s711:  Jônice_  Tristão afirma que acompanha a vida política de Elcio_  Álvares há duas décadas. 
+</text>
+                <arg f="" n="0">Jônice_  Tristão
+</arg>
+                <rel f="">acompanha</rel>
+                <arg f="" n="1">a vida política de Elcio_  Álvares
+</arg>
+                <arg f="tmp" n="m">há duas décadas
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="attend.01" id="acompanhar.03" name="ver com atenção, assistir" vncls="">
+            <roles>
+                <role descr="thing attending" n="0" />
+                <role descr="thing attended" n="1" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosD.  s4107:  Os dirigentes da seleção pediram aos seguranças da universidade que afastassem o público,  composto em sua maior parte por jovens,  que já se preparava para acompanhar os treinos. 
+</text>
+                <rel f="">acompanhar</rel>
+                <arg f="" n="1">os treinos
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4039:  José_  Arthur_  Giannotti,  Marilena_  Chaui,  Gloria_  Kalil e Jorge_  da_  Cunha_  Lima faziam parte de platéia-  cabeça que acompanhou anteontem no Masp a palestra de Claude_  Lefort apresentado por Sérgio_  Cardoso. 
+</text>
+                <arg f="" n="0">que
+</arg>
+                <rel f="">acompanhou</rel>
+                <arg f="tmp" n="m">anteontem
+</arg>
+                <arg f="loc" n="m">no Masp
+</arg>
+                <arg f="" n="1">a palestra de Claude_  Lefort apresentado por Sérgio_  Cardoso
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s2223:  Em junho,  Christensen esteve no Brasil a convite da Fundação_  Dom_  Cabral de Belo_  Horizonte,  para acompanhar a segunda etapa do curso STC-  Executivo. 
+</text>
+                <rel f="">acompanhar</rel>
+                <arg f="" n="1">a segunda etapa do curso STC-  Executivo
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s2035:  A Folha realizou um teste num dos ônibus que integram a nova linha Penha-  Lapa,  acompanhando a décima viagem de ontem. 
+</text>
+                <rel f="">acompanhando</rel>
+                <arg f="" n="1">a décima viagem de ontem
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        <roleset framnet="follow.01" id="acompanhar.04" name="seguir" vncls="47.8">
+            <roles>
+                <role descr="causal agent" n="0" />
+                <role descr="thing following, coming after" n="1">
+                    <vnrole vncls="47.8" vntheta="Theme1" />
+                </role>
+                <role descr="thing followed, coming before" n="2">
+                    <vnrole vncls="47.8" vntheta="Theme2" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s399:  Só assim se evitará a estratificação da legislação,  permitindo que o sistema acompanhe de maneira dinâmica as transformações na economia. 
+</text>
+                <arg f="" n="1">o sistema
+</arg>
+                <rel f="">acompanhe</rel>
+                <arg f="mnr" n="m">de maneira dinâmica
+</arg>
+                <arg f="" n="2">as transformações na economia
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

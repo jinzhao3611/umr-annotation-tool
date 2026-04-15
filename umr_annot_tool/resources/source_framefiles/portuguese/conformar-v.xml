@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="conformar-se">
+        <note />
+    <roleset framnet="resign.02" id="conformar.01" name="aceitar algo indesejado; resignar-se" vncls="-">
+            <roles>
+                <role descr="experiencer of emotional resignation" n="1" />
+                <role descr="resigned to what" n="2" />
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s3398:  Um crítico de jornal cotidiano deve se conformar com o papel de narrador e seu destaque secundário ao simples gesto de uma página ser virada e ficar para trás. 
+</text>
+                <arg f="" n="0">Um crítico de jornal cotidiano
+</arg>
+                <rel f="">conformar</rel>
+                <arg f="" n="1">com o papel de narrador e seu destaque secundário
+</arg>
+                <note />
+            </example>
+            <note />
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1888:  E os são-  paulinos podem se conformar com o Zico. 
+</text>
+                <arg f="" n="0">os são-  paulinos
+</arg>
+                <rel f="">conformar</rel>
+                <arg f="" n="1">com o Zico
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

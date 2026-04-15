@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="rotular">
+        <note />
+    <roleset framnet="label.01" id="rotular.01" name="classificar" vncls="9.9 25.3 29.3">
+            <roles>
+                <role descr="caller" n="0">
+                    <vnrole vncls="29.3" vntheta="Agent" />
+                    <vnrole vncls="9.9" vntheta="Agent" />
+                    <vnrole vncls="25.3" vntheta="Agent" />
+                </role>
+                <role descr="item being labelled" n="1">
+                    <vnrole vncls="29.3" vntheta="Theme" />
+                    <vnrole vncls="9.9" vntheta="Destination" />
+                    <vnrole vncls="25.3" vntheta="Destination" />
+                </role>
+                <role descr="attribute, label itself" n="2">
+                    <vnrole vncls="29.3" vntheta="Predicate" />
+                    <vnrole vncls="9.9" vntheta="Theme" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosA.  s1380:  No espectro político,  Fogaça e Requião são rotulados como membros da centro-  esquerda. 
+</text>
+                <arg f="loc" n="m">No espectro político
+</arg>
+                <arg f="" n="1">Fogaça e Requião
+</arg>
+                <rel f="">rotulados</rel>
+                <arg f="" n="2">como membros da centro-  esquerda
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>

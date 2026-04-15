@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<frameset>
+    <note />
+<predicate lemma="classificar">
+        <note />
+    <roleset framnet="classify.01" id="classificar.01" name="atribuir classes a" vncls="29.2">
+            <roles>
+                <role descr="describer" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                </role>
+                <role descr="thing defined" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                </role>
+                <role descr="secondary attribute, described-as, definition" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosB.  s4090:  Ele estima em dez horas o tempo necessário para classificar as áreas e culturas plantadas numa extensão de 180 quilômetros. 
+</text>
+                <rel f="">classificar</rel>
+                <arg f="" n="1">as áreas e culturas plantadas numa extensão de 180 quilômetros
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    <predicate lemma="classificar-se">
+        <note />
+    <roleset framnet="rank.01" id="classificar.02" name="alternância incoativa de &quot;classificar&quot;: obter classificação (em concurso ou competição)" vncls="29.2 29.6">
+            <roles>
+                <role descr="assigner" n="0">
+                    <vnrole vncls="29.2" vntheta="Agent" />
+                    <vnrole vncls="29.6" vntheta="Agent" />
+                </role>
+                <role descr="thing assigned a position" n="1">
+                    <vnrole vncls="29.2" vntheta="Theme" />
+                    <vnrole vncls="29.6" vntheta="Theme" />
+                </role>
+                <role descr="position" n="2">
+                    <vnrole vncls="29.2" vntheta="Predicate" />
+                    <vnrole vncls="29.6" vntheta="Predicate" />
+                </role>
+                <note />
+            </roles>
+            <example src="corpus Propbank-Br" type="">
+                <inflection aspect="" form="" person="" tense="" voice="" />
+                <text>bosC.  s4169:  Segundo a agência de noticias Notimex,  a reação pode ser uma amostra de que como vai reagir a torcida se o México não se classificar para a segunda fase da Copa. 
+</text>
+                <arg f="" n="0">o México
+</arg>
+                <arg f="neg" n="m">não
+</arg>
+                <rel f="">classificar</rel>
+                <arg f="" n="2">para a segunda fase da Copa
+</arg>
+                <note />
+            </example>
+            <note />
+        </roleset>
+        </predicate>
+    </frameset>
