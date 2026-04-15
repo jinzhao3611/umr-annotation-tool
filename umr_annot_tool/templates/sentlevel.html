@@ -1833,6 +1833,10 @@
                                 // Add frames to the grid
                                 frames.forEach(frame => {
                                     const frameButton = document.createElement('button');
+                                    // Default <button> type is "submit"; inside the dialog
+                                    // form that auto-creates the node and closes the dialog
+                                    // before the user can read the metadata panel.
+                                    frameButton.type = 'button';
                                     frameButton.className = 'btn btn-outline-primary btn-sm';
                                     frameButton.style.textAlign = 'left';
                                     frameButton.style.whiteSpace = 'nowrap';
