@@ -1843,28 +1843,41 @@
                                     frameButton.setAttribute('data-frame', frame);
                                     frameButton.title = `Click to select ${frame}`; // Better tooltip
                                     
-                                    frameButton.addEventListener('click', function() {
+                                    frameButton.addEventListener('click', async function() {
                                         // Remove active class from all frame buttons
                                         document.querySelectorAll('#frames-list button').forEach(btn => {
                                             btn.classList.remove('active');
                                         });
-                                        
+
                                         // Add active class to clicked button
                                         this.classList.add('active');
-                                        
+
                                         // Set concept value without showing the custom concept container
                                         window.selectedFrameConcept = this.getAttribute('data-frame');
                                         console.log('Selected frame concept:', window.selectedFrameConcept);
-                                        
-                                        // Show a confirmation message
+
+                                        // Build a confirmation panel that includes the rich roleset
+                                        // metadata (args / argm / vncls / framnet / examples) when
+                                        // the language frame file provides them. Falls back to a
+                                        // bare confirmation for flat-shape language files.
+                                        let metaHtml = '';
+                                        try {
+                                            const framesData = await loadFramesData();
+                                            const meta = getRolesetMeta(framesData[frame]);
+                                            metaHtml = renderRolesetMeta(meta);
+                                        } catch (e) {
+                                            console.warn('Could not load rich roleset meta:', e);
+                                        }
+
                                         const confirmMessage = document.createElement('div');
                                         confirmMessage.className = 'alert alert-success mt-3';
                                         confirmMessage.style.fontSize = '0.9rem';
                                         confirmMessage.innerHTML = `
                                             <strong>Selected frame:</strong> ${frame}
-                                            <p class="mb-0 mt-1">Click "Create Node" to use this frame.</p>
+                                            ${metaHtml ? `<div class="mt-2" style="border-top:1px solid rgba(0,0,0,0.1);padding-top:8px;">${metaHtml}</div>` : ''}
+                                            <p class="mb-0 mt-2">Click "Create Node" to use this frame.</p>
                                         `;
-                                        
+
                                         // Find or create the frame confirmation container
                                         let confirmContainer = document.getElementById('frame-selection-confirm');
                                         if (!confirmContainer) {
@@ -1872,7 +1885,7 @@
                                             confirmContainer.id = 'frame-selection-confirm';
                                             document.getElementById('frames-container').appendChild(confirmContainer);
                                         }
-                                        
+
                                         // Update the confirmation message
                                         confirmContainer.innerHTML = '';
                                         confirmContainer.appendChild(confirmMessage);
