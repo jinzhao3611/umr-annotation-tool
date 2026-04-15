@@ -1807,64 +1807,16 @@
                     // Function to look up frames for a lemma
                     async function lookupFrames(lemma, originalToken) {
                         try {
+                            // Reuse the same loader the Add Branch dialog uses; this hits
+                            // /download_frames (which is wired per-project-language) and
+                            // filters senses by lemma client-side, giving us a single
+                            // source of truth for frame lookup across both dialogs.
                             let frames = [];
-                            
                             try {
-                                // Try to get frames from the server - ensure relative URL is used
-                                // For Flask Blueprints, we need to use the full path - this matches the route in main
-                                const framesUrl = new URL('/get_frames', window.location.origin);
-                                framesUrl.searchParams.append('word', lemma);
-                                
-                                // Add project ID parameter to use the correct language frames
-                                // First try to get project ID from URL parameters
-                                let projectId = null;
-                                const urlParams = new URLSearchParams(window.location.search);
-                                
-                                // Extract from state if available
-                                if (window.state && window.state.projectId) {
-                                    projectId = window.state.projectId;
-                                }
-                                
-                                // If state doesn't have it, check for project_id global variable
-                                if (!projectId && typeof project_id !== 'undefined') {
-                                    projectId = project_id;
-                                }
-                                
-                                // If still not found, try to extract from path
-                                if (!projectId) {
-                                    // Try to find project ID in path
-                                    const pathMatch = window.location.pathname.match(/\/project\/(\d+)/);
-                                    if (pathMatch) {
-                                        projectId = pathMatch[1];
-                                    }
-                                }
-                                
-                                if (projectId) {
-                                    framesUrl.searchParams.append('project_id', projectId);
-                                    console.log('Adding project ID to frames request:', projectId);
-                                }
-                                
-                                console.log('Fetching frames from:', framesUrl.toString());
-                                
-                                const framesResponse = await fetch(framesUrl);
-                                console.log('Frame lookup response status:', framesResponse.status);
-                                
-                                // If we get a non-OK response, log the error message
-                                if (!framesResponse.ok) {
-                                    const errorText = await framesResponse.text();
-                                    console.error(`Error response (${framesResponse.status}):`, errorText);
-                                    throw new Error(`Server returned ${framesResponse.status}: ${errorText}`);
-                                }
-                                
-                                const framesData = await framesResponse.json();
-                                console.log('Frames data received:', framesData);
-                                
-                                if (framesData.frames && Array.isArray(framesData.frames)) {
-                                    frames = framesData.frames;
-                                    console.log(`Found ${frames.length} frames for "${lemma}":`, frames);
-                                }
+                                frames = await findFrameSenses(lemma);
+                                console.log(`Found ${frames.length} frames for "${lemma}":`, frames);
                             } catch (error) {
-                                console.warn('Server-side frame lookup failed:', error);
+                                console.warn('Frame lookup via findFrameSenses failed:', error);
                             }
                             
                             // Populate frames list
