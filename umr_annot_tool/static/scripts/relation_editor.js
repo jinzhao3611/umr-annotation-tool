@@ -375,7 +375,7 @@ function setupEditor(annotationElement) {
         makeValuesClickable(annotationElement);
         makeVariablesClickable(annotationElement);  // Make variables clickable for branch addition
         
-        // Setup branch operations (delete, move) - this will only add trash bins if inPlaceEditMode is false
+        // Setup branch operations (right-click context menu for delete/move/store)
         addBranchOperations(annotationElement);
         
         // Extract sentence tokens for later use in concept suggestion
@@ -570,11 +570,8 @@ function addInPlaceEditToggle() {
         // Update the toggle appearance
         updateToggleAppearance(this.checked, editModeIcon, currentModeText, statusIndicator);
         
-        // If turning edit mode ON, immediately remove all delete icons
         if (inPlaceEditMode) {
-            console.log('Turning edit mode ON, removing all trash bin icons');
-            const deleteIcons = document.querySelectorAll('.delete-branch-icon');
-            deleteIcons.forEach(icon => icon.remove());
+            console.log('Turning edit mode ON');
         } else {
             console.log('Turning edit mode OFF, restoring branch operations');
             // For OFF mode, we need to ensure everything for branch operations is ready
@@ -663,7 +660,7 @@ function updateEditModeStatus() {
         annotationElement.style.borderRadius = '4px';
         annotationElement.style.padding = '8px';
         
-        // Re-add branch operations with trash bins when in-place edit is OFF
+        // Re-attach right-click context menu for branch operations when in-place edit is OFF
         addBranchOperations(annotationElement);
         
         // Re-add variable clickability for branch addition
@@ -1333,14 +1330,7 @@ function addBranchOperations(annotationElement) {
     }
 
     console.log('Adding branch operations (right-click menu only)');
-    
-    // Get all the relation spans
-    const relationSpans = annotationElement.querySelectorAll('.relation-span');
-    
-    // Remove code that adds delete icons to each relation span
-    // We're keeping only the right-click context menu
-    
-    // Add right-click context menu
+
     annotationElement.addEventListener('contextmenu', (event) => {
         // Only enable context menu if edit mode is OFF (for branch operations)
         if (!inPlaceEditMode) {
