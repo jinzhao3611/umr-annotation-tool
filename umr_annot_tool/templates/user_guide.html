@@ -3,7 +3,6 @@
 <div class="container user-guide">
     <div class="row">
         <div class="col-md-3">
-            <!-- Navigation Sidebar -->
             <div class="sticky-top" style="top: 80px;">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
@@ -12,309 +11,1090 @@
                     <div class="card-body">
                         <nav id="guide-nav" class="nav flex-column">
                             <a class="nav-link" href="#getting-started">Getting Started</a>
-                            <a class="nav-link" href="#project-workflow">Project Workflow</a>
+                            <a class="nav-link" href="#common-tasks">Common Tasks</a>
                             <a class="nav-link" href="#account-page">Account Page</a>
                             <a class="nav-link" href="#project-page">Project Page</a>
                             <a class="nav-link" href="#sentence-annotation">Sentence-Level Annotation</a>
+                            <a class="nav-link" href="#sentence-dialogs">Sentence-Level Dialogs & Menus</a>
                             <a class="nav-link" href="#document-annotation">Document-Level Annotation</a>
                             <a class="nav-link" href="#search">Search Functionality</a>
                             <a class="nav-link" href="#updates">Updates & Announcements</a>
-                            <a class="nav-link" href="#sample-files">Sample Files</a>
+                            <a class="nav-link" href="#sample-files">File Formats</a>
                         </nav>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-9">
-            <!-- Welcome Section -->
             <div class="jumbotron">
-                <h1 class="display-4">Welcome to UMR Writer 3.0</h1>
-                <p class="lead">A web application for UMR (Uniform Meaning Representation) annotation.</p>
+                <h1 class="display-4">UMR Writer 3.0 Detailed Guide</h1>
+                <p class="lead">A control-by-control reference for the current UMR Writer interface.</p>
                 <hr class="my-4">
-                <p>This guide will help you navigate through the features and functionalities of the UMR Writer 3.0.</p>
-                
+                <p>This guide documents the visible buttons, links, tabs, dropdown menus, text fields, and context-menu actions in the current application templates.</p>
                 <div class="mt-4 p-3 bg-light border rounded">
                     <h5><i class="fas fa-bug"></i> Feedback & Support</h5>
-                    <p>I welcome bug reports and feature requests. I will respond within 24 hours. You can:</p>
-                    <ul>
-                        <li><strong>Raise an issue</strong> on the <a href="https://github.com/jinzhao3611/umr-annotation-tool" target="_blank">UMR GitHub page</a></li>
-                        <li><strong>Send an email</strong> to <a href="mailto:jinzhao@brandeis.edu">jinzhao@brandeis.edu</a></li>
-                    </ul>
-                    <p class="mb-0">Thank you for your support in improving UMR Writer.</p>
+                    <p>If you find a mismatch between this guide and the live interface, report it on the <a href="https://github.com/jinzhao3611/umr-annotation-tool" target="_blank">UMR GitHub page</a> or email <a href="mailto:jinzhao@brandeis.edu">jinzhao@brandeis.edu</a>.</p>
                 </div>
             </div>
-            
-            <!-- Getting Started Section -->
+
             <section id="getting-started" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Getting Started</h2>
                     </div>
                     <div class="card-body">
-                        <h4>Register and Login</h4>
-                        <p>To begin using UMR Writer, you'll need to:</p>
+                        <h4>Basic Workflow</h4>
                         <ol>
-                            <li>Click on the <strong>Register</strong> link in the top navigation bar</li>
-                            <li>Fill in your information to create an account</li>
-                            <li>Once registered, use the <strong>Login</strong> link to access your account</li>
+                            <li>Create an account and log in.</li>
+                            <li>Open your <strong>Account</strong> page to see your projects and document history.</li>
+                            <li>Enter a project and use <strong>Checkout for Annotation</strong> on a document.</li>
+                            <li>Annotate sentence-level UMR first.</li>
+                            <li>Open document-level annotation when sentence-level work is ready.</li>
+                            <li>Save, export, and optionally submit checked-out work for quality control.</li>
                         </ol>
-                        <p>All annotation work requires you to be logged in to your account.</p>
-                        
-                        <div class="mt-4">
-                            <h4>Video Tutorial</h4>
-                            <p>Watch this video tutorial to learn how to use UMR Writer effectively:</p>
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tdCUIsof9y0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
+
+                        <h4>Top Navigation</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Register</strong></td>
+                                    <td>Creates a new user account.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Login</strong></td>
+                                    <td>Signs in and unlocks annotation pages.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Account</strong></td>
+                                    <td>Opens your dashboard with projects, documents, and profile settings.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Posts / announcements</strong></td>
+                                    <td>Shows update posts and project-wide notices.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Video Tutorial</h4>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tdCUIsof9y0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
+
                     </div>
                 </div>
             </section>
-            
-            <!-- Project Workflow Section -->
-            <section id="project-workflow" class="mb-5">
+
+            <section id="common-tasks" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
-                        <h2>Project Workflow</h2>
+                        <h2>Common Tasks</h2>
                     </div>
                     <div class="card-body">
-                        <p>UMR Writer organizes annotation work into projects. Here's the typical workflow:</p>
+                        <h4>For Annotators</h4>
                         <ol>
-                            <li>Create or join a project</li>
-                            <li>Check out documents for annotation</li>
-                            <li>Complete sentence-level annotations</li>
-                            <li>Complete document-level annotations</li>
-                            <li>Submit your work for quality control</li>
+                            <li>Open <strong>Account</strong> and click your project.</li>
+                            <li>Go to <strong>Documents</strong> and click <strong>Checkout for Annotation</strong>.</li>
+                            <li>Open the checked-out file from <strong>My Checked Out Documents</strong>.</li>
+                            <li>Annotate sentence-level UMR, save, and manage alignments.</li>
+                            <li>Open <strong>Document-Level Annotation</strong> from the sentence page when ready.</li>
+                            <li>Export if needed, then use <strong>Submit for QC</strong>.</li>
+                        </ol>
+
+                        <h4>For Project Admins</h4>
+                        <ol>
+                            <li>Use <strong>Upload Document</strong> to add new files.</li>
+                            <li>Manage project-specific schema extensions in <strong>Temporary Rolesets</strong> and <strong>Temporary Relations</strong>.</li>
+                            <li>Adjust available lattice values in the lattice sections.</li>
+                            <li>Manage users from <strong>Members</strong>.</li>
+                            <li>Review QC submissions and run adjudication from <strong>Quality Control</strong>.</li>
                         </ol>
                     </div>
                 </div>
             </section>
-            
-            <!-- Account Page Section -->
+
             <section id="account-page" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Account Page</h2>
                     </div>
                     <div class="card-body">
-                        <p>Your account page serves as your dashboard and displays:</p>
-                        <ul>
-                            <li>All projects you are a member of</li>
-                            <li>Quick access to your projects by clicking on their names</li>
-                            <li>Preview of documents within your account</li>
-                            <li>Association between documents and projects</li>
-                        </ul>
-                        <p>This is your starting point for all annotation activities after logging in.</p>
+                        <p>The account page is split into a left content area and a right profile panel.</p>
+
+                        <h4>Projects Card</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Project name link</td>
+                                    <td>Opens that project page.</td>
+                                </tr>
+                                <tr>
+                                    <td>Permission badge</td>
+                                    <td>Shows your role for the project, such as <code>admin</code> or annotator-level access.</td>
+                                </tr>
+                                <tr>
+                                    <td>Red delete-project button</td>
+                                    <td>Visible to admins only. Deletes the whole project after confirmation. This is irreversible.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>All Documents Card</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Document row link</td>
+                                    <td>Opens the combined sentence/annotation viewer for that document.</td>
+                                </tr>
+                                <tr>
+                                    <td>Project badge next to a document</td>
+                                    <td>Shows which project that document belongs to.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Profile Panel</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Field or button</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Profile image</td>
+                                    <td>Displays your current avatar.</td>
+                                </tr>
+                                <tr>
+                                    <td>Username field</td>
+                                    <td>Read-only display of your username.</td>
+                                </tr>
+                                <tr>
+                                    <td>Email field</td>
+                                    <td>Read-only display of your email.</td>
+                                </tr>
+                                <tr>
+                                    <td>Picture upload input</td>
+                                    <td>Selects a new profile picture file.</td>
+                                </tr>
+                                <tr>
+                                    <td>Submit button</td>
+                                    <td>Uploads the selected new profile picture.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
-            
-            <!-- Project Page Section -->
+
             <section id="project-page" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Project Page</h2>
                     </div>
                     <div class="card-body">
-                        <h4>Creating a New Project</h4>
-                        <ul>
-                            <li>Each project supports files in a single language only</li>
-                            <li>Language-specific framefiles are automatically installed upon project creation</li>
-                        </ul>
-                        
-                        <h4>Project Navigation</h4>
-                        <p>Navigate through project features using tabs on the left panel:</p>
-                        
-                        <div class="accordion" id="projectFeaturesAccordion">
-                            <!-- Documents Tab -->
-                            <div class="card">
-                                <div class="card-header" id="headingDocuments">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDocuments" aria-expanded="true" aria-controls="collapseDocuments">
-                                            Documents Tab
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseDocuments" class="collapse show" aria-labelledby="headingDocuments" data-parent="#projectFeaturesAccordion">
-                                    <div class="card-body">
-                                        <ul>
-                                            <li>Preview initial documents available for annotation</li>
-                                            <li>Check out documents for annotation</li>
-                                            <li>View which annotator has checked out specific documents</li>
-                                            <li>Admins can delete initial documents (this also removes related annotations and quality control documents)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- My Checked-out Documents Tab -->
-                            <div class="card">
-                                <div class="card-header" id="headingCheckedOut">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseCheckedOut" aria-expanded="false" aria-controls="collapseCheckedOut">
-                                            My Checked-out Documents Tab
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseCheckedOut" class="collapse" aria-labelledby="headingCheckedOut" data-parent="#projectFeaturesAccordion">
-                                    <div class="card-body">
-                                        <ul>
-                                            <li>Access your annotations here</li>
-                                            <li>Override existing annotations by uploading a document with an identical name and format using the "Override Document" button</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Administrative Functions -->
-                            <div class="card">
-                                <div class="card-header" id="headingAdmin">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseAdmin">
-                                            Administrative Functions
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseAdmin" class="collapse" aria-labelledby="headingAdmin" data-parent="#projectFeaturesAccordion">
-                                    <div class="card-body">
-                                        <ul>
-                                            <li><strong>Upload Documents:</strong> Admins upload initial annotation documents here</li>
-                                            <li><strong>Temporary Lexicon:</strong> If you find the current frame files insufficient, you can propose new frames here.</li>
-                                            <li><strong>Temporary rolesets and relations:</strong> If you find the current rolesets and relations insufficient, you can propose new rolesets and relations here.</li>
-                                            <li><strong>Add and Delete Members:</strong> Only admins manage project membership</li>
-                                            <li><strong>Check Statistics:</strong> View annotation progress by members</li>
-                                            <li><strong>Change Settings:</strong> Modify document names and other project settings</li>
-                                            <li><strong>Change Lattice Settings:</strong> Customize annotation dropdown menus based on language needs</li>
-                                            <li><strong>Change Privacy Settings:</strong> Feature pending for future version</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- Quality Control -->
-                            <div class="card">
-                                <div class="card-header" id="headingQC">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseQC" aria-expanded="false" aria-controls="collapseQC">
-                                            Quality Control Features
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseQC" class="collapse" aria-labelledby="headingQC" data-parent="#projectFeaturesAccordion">
-                                    <div class="card-body">
-                                        <ul>
-                                            <li><strong>Submit to Quality Control:</strong> Annotators submit finished annotations for review</li>
-                                            <li><strong>Adjudicate:</strong> Compare two annotation files using AnCast integration and review evaluation metrics</li>
-                                            <li><strong>Add New Frames and Rolesets:</strong> Feature pending for UMR Writer 3.0</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p>The project page uses a left sidebar for navigation and a large right content area. Which actions you can use depends on your project permission.</p>
+
+                        <h4>Sidebar Navigation</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sidebar item</th>
+                                    <th>What opens</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Documents</strong></td>
+                                    <td>Main project document list.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>My Checked Out Documents</strong></td>
+                                    <td>Your active annotation assignments.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quality Control</strong></td>
+                                    <td>QC document list and adjudication tools.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Temporary Rolesets</strong></td>
+                                    <td>Project-specific roleset definitions.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Temporary Relations</strong></td>
+                                    <td>Project-specific relation definitions.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Lexicon</strong></td>
+                                    <td>Opens the project lexicon page.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Statistics</strong></td>
+                                    <td>Opens project statistics.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Members</strong></td>
+                                    <td>Member list and membership management.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Settings</strong></td>
+                                    <td>Project-level editable settings.</td>
+                                </tr>
+                                <tr>
+                                    <td>Lattice sections</td>
+                                    <td>Admin-only configuration pages for discourse, aspect, person, number, modal strength, and modification value availability.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Documents Section</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Upload Document</strong></td>
+                                    <td>Admin-only button. Opens the upload page for source documents.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>View Sentences and Annotations</strong></td>
+                                    <td>Opens a read-oriented combined view for the selected document.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Checkout for Annotation</strong></td>
+                                    <td>Creates or opens your annotator copy so you can work on the document.</td>
+                                </tr>
+                                <tr>
+                                    <td>Checked out by text</td>
+                                    <td>Shows who currently has annotator copies checked out.</td>
+                                </tr>
+                                <tr>
+                                    <td>Delete document button</td>
+                                    <td>Admin-only. Deletes the whole document after confirmation.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>My Checked Out Documents Section</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Document name link</td>
+                                    <td>Opens sentence-level annotation at sentence 1.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Submit for QC</strong></td>
+                                    <td>Marks your checked-out document ready for quality control after confirmation.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Override</strong></td>
+                                    <td>Opens the override page so you can replace the checked-out annotation with an uploaded file.</td>
+                                </tr>
+                                <tr>
+                                    <td>Delete button</td>
+                                    <td>Deletes your checked-out annotation copy after confirmation.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Quality Control Section</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>QC document link</td>
+                                    <td>Opens the QC document at sentence-level annotation.</td>
+                                </tr>
+                                <tr>
+                                    <td>Remove QC button</td>
+                                    <td>Admin-only. Removes a document from the QC list.</td>
+                                </tr>
+                                <tr>
+                                    <td>Adjudication checkboxes</td>
+                                    <td>Select exactly two documents to compare.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sentence-level comparison</strong> radio</td>
+                                    <td>Compares sentence-level annotations.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Document-level comparison</strong> radio</td>
+                                    <td>Compares document-level annotations.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Compare Documents</strong></td>
+                                    <td>Submits the selected pair for adjudication when exactly two documents are selected.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Members Section</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Member rows</td>
+                                    <td>List all users currently assigned to the project.</td>
+                                </tr>
+                                <tr>
+                                    <td>Remove-member button</td>
+                                    <td>Admin-only. Removes that user from the project.</td>
+                                </tr>
+                                <tr>
+                                    <td>New member username field</td>
+                                    <td>Enter the username of the person you want to add.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Add Member</strong></td>
+                                    <td>Admin-only. Adds the entered username to the project.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Settings Section</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Project Name field</td>
+                                    <td>Edits the displayed project name.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Save Changes</strong></td>
+                                    <td>Saves project setting edits.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Temporary Rolesets</h4>
+                        <p>These are project-specific rolesets added to supplement the built-in annotation inventory.</p>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Add New Roleset</strong></td>
+                                    <td>Shows the roleset creation form.</td>
+                                </tr>
+                                <tr>
+                                    <td>Roleset Name</td>
+                                    <td>Name of the temporary roleset.</td>
+                                </tr>
+                                <tr>
+                                    <td>Type dropdown</td>
+                                    <td>Assigns the roleset category.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sub-roles mode dropdown</td>
+                                    <td>Controls how the sub-role list is defined.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sub-roles text field</td>
+                                    <td>Comma-separated sub-role list when fixed sub-roles are used.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Allow Repeat</strong> checkbox</td>
+                                    <td>Marks the roleset as repeatable.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Save Roleset</strong></td>
+                                    <td>Saves the new temporary roleset.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cancel</strong></td>
+                                    <td>Closes the creation form without saving.</td>
+                                </tr>
+                                <tr>
+                                    <td>Delete button in the table</td>
+                                    <td>Removes an existing temporary roleset.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Temporary Relations</h4>
+                        <p>These are project-specific relation labels that become available in annotation menus.</p>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Add New Relation</strong></td>
+                                    <td>Shows the relation creation form.</td>
+                                </tr>
+                                <tr>
+                                    <td>Relation Name</td>
+                                    <td>Enter the custom relation name without the leading colon. The form displays the colon separately.</td>
+                                </tr>
+                                <tr>
+                                    <td>Type dropdown</td>
+                                    <td>Available values are <code>participant</code>, <code>modifier</code>, and <code>attribute</code>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Allow Repeat</strong> checkbox</td>
+                                    <td>Marks the relation as repeatable.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Save Relation</strong></td>
+                                    <td>Saves the new temporary relation.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cancel</strong></td>
+                                    <td>Closes the form without saving.</td>
+                                </tr>
+                                <tr>
+                                    <td>Delete button in the table</td>
+                                    <td>Removes an existing temporary relation.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Annotation Lattice Sections</h4>
+                        <p>Admin users also see configuration pages for <strong>Discourse Relations</strong>, <strong>Aspect</strong>, <strong>Person</strong>, <strong>Number</strong>, <strong>Modal Strength</strong>, and <strong>Modification</strong>. These pages expose toggle-style controls that determine which values are available in annotation dropdowns.</p>
                     </div>
                 </div>
             </section>
-            
-            <!-- Sentence-Level Annotation Section -->
+
             <section id="sentence-annotation" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Sentence-Level Annotation</h2>
                     </div>
                     <div class="card-body">
-                        <h4>Interface Overview</h4>
-                        <p>The sentence-level annotation interface features a two-column display:</p>
-                        <ul>
-                            <li><strong>Left panel:</strong> Navigate between sentences and view interactive annotations</li>
-                            <li><strong>Right panel:</strong> Document info, quick actions, temporary branch storage, and alignments</li>
-                        </ul>
-                        
-                        <h4>Key Features</h4>
-                        <ul>
-                            <li><strong>Sentence Navigation:</strong> Click sentences directly or use previous/next buttons (`<-`/`->`)</li>
-                            <li><strong>In-Place Editing:</strong> Enable edit mode to directly modify relations (highlighted blue) and attribute values (highlighted green)</li>
-                            <li><strong>Branch Management:</strong> Delete, move, or add branches via right-click context menu (with edit mode OFF)</li>
-                            <li><strong>Annotation Types:</strong> Annotate root nodes, abstract concepts, discourse concepts, reification roles, lexicalized concepts, MWEs, named entities, quoted strings, numbers, and reentrancies</li>
-                            <li><strong>Temporary Branch Storage:</strong> Store branches temporarily to reuse across sentences, viewable in the right panel</li>
-                            <li><strong>Alignment Handling:</strong> Alignments auto-generated with edits. Manual alignment required when using temporary branches or numeric abstract concepts</li>
-                            <li><strong>Export Annotations:</strong> Save all annotations of this documentlocally</li>
-                        </ul>
+                        <p>The sentence-level page is split into a left annotation workspace and a right utility panel.</p>
+
+                        <h4>Left Panel: Navigation Card</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Left arrow <strong>←</strong></td>
+                                    <td>Opens the previous sentence.</td>
+                                </tr>
+                                <tr>
+                                    <td>Right arrow <strong>→</strong></td>
+                                    <td>Opens the next sentence.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sentence counter</td>
+                                    <td>Shows the current sentence number and total sentence count.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sentence list</td>
+                                    <td>Each row is a link to that exact sentence.</td>
+                                </tr>
+                                <tr>
+                                    <td>Active sentence highlight</td>
+                                    <td>Marks which sentence you are currently annotating.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Left Panel: Current Sentence Card</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Edit</strong></td>
+                                    <td>Toggles sentence segmentation editing. In edit state the button changes to <strong>Save</strong> and writes the updated sentence text to the server.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sentence display</td>
+                                    <td>Shows the tokenized sentence used by annotation and alignment tools.</td>
+                                </tr>
+                                <tr>
+                                    <td>Hidden sentence editor textarea</td>
+                                    <td>Appears only when sentence editing is enabled.</td>
+                                </tr>
+                                <tr>
+                                    <td>Translation badges <code>EN</code> and <code>ES</code></td>
+                                    <td>Show available glosses for the current sentence.</td>
+                                </tr>
+                                <tr>
+                                    <td>Notes box</td>
+                                    <td>Displays sentence notes when notes exist.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Left Panel: Annotation Preview Toolbar</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Button or control</th>
+                                    <th>Behavior</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>In-place Edit Mode toggle</td>
+                                    <td>Switches between <strong>Branch Mode</strong> and <strong>Edit Mode</strong>. In Edit Mode you click relations and values to change them with dropdowns. In Branch Mode right-click branch operations are enabled.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Text Editor</strong> / <strong>Graph</strong></td>
+                                    <td>Switches between the interactive graph view and a plain-text editor view of the same annotation.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Save</strong></td>
+                                    <td>Saves the current sentence-level annotation and also saves current alignments.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Validate</strong></td>
+                                    <td>Runs graph validation and displays errors and warnings in the validation results panel below the graph.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Delete</strong></td>
+                                    <td>Deletes the entire sentence annotation and clears all alignments for that sentence after confirmation.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Copy</strong></td>
+                                    <td>Copies the full current annotation text to the clipboard.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Parens</strong></td>
+                                    <td>Opens the parenthesis checker overlay. Clicking a parenthesis highlights its matching pair.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Diff</strong></td>
+                                    <td>Opens a before/after comparison modal. Added, deleted, and moved lines are highlighted.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Add Top</strong></td>
+                                    <td>Visible only when the sentence has no usable graph yet. Opens the top-node creation dialog.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Graph View and Text View</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Element</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Line-number column</td>
+                                    <td>Shows live line numbers for the current graph text.</td>
+                                </tr>
+                                <tr>
+                                    <td>Graph preview area</td>
+                                    <td>Shows the current UMR as interactive text.</td>
+                                </tr>
+                                <tr>
+                                    <td>Text editor textarea</td>
+                                    <td>Shows the same graph as editable plain text. Pressing <code>Tab</code> inserts four spaces for indentation.</td>
+                                </tr>
+                                <tr>
+                                    <td>Validation results box</td>
+                                    <td>Displays validation errors and warnings after running <strong>Validate</strong>.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Mode-Specific Behavior</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mode</th>
+                                    <th>What is enabled</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Branch Mode</strong></td>
+                                    <td>Right-click menus for <strong>Add Branch</strong>, <strong>Delete Branch</strong>, <strong>Move Branch</strong>, and <strong>Store Temporarily</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>In-place Edit Mode</strong></td>
+                                    <td>Clickable relation and value dropdown editing. Right-click branch operations are disabled.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Text Editor Mode</strong></td>
+                                    <td>Plain-text editing; graph-only controls such as branch operations and undo/redo are hidden.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Right Panel</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Panel</th>
+                                    <th>What it contains</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Document Info</strong></td>
+                                    <td>Collapsible table with annotator, file name, language, project name, and project admin.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Quick Actions</strong></td>
+                                    <td>Links to <strong>Document-Level Annotation</strong>, <strong>Export Annotation</strong>, and <strong>Back to Project</strong>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Temporary Branch Storage</strong></td>
+                                    <td>Collapsible area that lists branches you stored temporarily for reuse in this document.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Alignments</strong></td>
+                                    <td>Manual alignment editor plus auto-generation tools.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Alignments Panel</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Generate Alignments</strong></td>
+                                    <td>Runs automatic alignment generation from the current sentence tokens and graph. Confident matches are applied automatically; ambiguous matches open a disambiguation dialog.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Variable</strong> field</td>
+                                    <td>Enter the graph variable you want to align manually.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Alignment</strong> field</td>
+                                    <td>Enter the token span, typically in range form such as <code>3-3</code> or <code>4-6</code>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Add Alignment</strong></td>
+                                    <td>Adds the manual alignment row to the current sentence.</td>
+                                </tr>
+                                <tr>
+                                    <td>Existing alignment badges</td>
+                                    <td>Show saved alignment values for each variable. Clicking a badge makes it editable. The adjacent red <strong>×</strong> button removes that alignment value.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </section>
-            
-            <!-- Document-Level Annotation Section -->
+
+            <section id="sentence-dialogs" class="mb-5">
+                <div class="card">
+                    <div class="card-header bg-steel text-white">
+                        <h2>Sentence-Level Dialogs & Menus</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4>Add Top Dialog</h4>
+                        <p>This dialog appears when you click <strong>Add Top</strong> on an empty sentence.</p>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Field or control</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Concept Type</strong> dropdown</td>
+                                    <td>Available values are <code>Sentence Token</code>, <code>Discourse Concept</code>, <code>Abstract Concept</code>, <code>Named Entity</code>, <code>Reification Roleset</code>, and <code>Custom Concept</code>.</td>
+                                </tr>
+                                <tr>
+                                    <td>Token search field</td>
+                                    <td>Filters sentence tokens when <code>Sentence Token</code> is selected.</td>
+                                </tr>
+                                <tr>
+                                    <td>Token grid</td>
+                                    <td>Lets you select one or more tokens for the top concept. Selected tokens are automatically used for alignment.</td>
+                                </tr>
+                                <tr>
+                                    <td>Frame lookup area</td>
+                                    <td>For a single selected token, shows lemma lookup and candidate frames. It also includes a <strong>Use token as is</strong> button.</td>
+                                </tr>
+                                <tr>
+                                    <td>Discourse concept search/select</td>
+                                    <td>Used when <code>Discourse Concept</code> is selected.</td>
+                                </tr>
+                                <tr>
+                                    <td>Abstract concept search/select</td>
+                                    <td>Used when <code>Abstract Concept</code> is selected.</td>
+                                </tr>
+                                <tr>
+                                    <td>Named entity type search/select</td>
+                                    <td>Used when <code>Named Entity</code> is selected.</td>
+                                </tr>
+                                <tr>
+                                    <td>Name-token selector</td>
+                                    <td>Appears for named entities so you can choose which tokens populate the <code>:name</code> content.</td>
+                                </tr>
+                                <tr>
+                                    <td>Non-event roleset search/select</td>
+                                    <td>Used when <code>Reification Roleset</code> is selected.</td>
+                                </tr>
+                                <tr>
+                                    <td>Custom Concept field</td>
+                                    <td>Manual free-text concept entry.</td>
+                                </tr>
+                                <tr>
+                                    <td>Variable field</td>
+                                    <td>Lets you specify the top node variable explicitly.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Generate Variable</strong></td>
+                                    <td>Fills the variable field automatically.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cancel</strong></td>
+                                    <td>Closes the dialog without creating a node.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Confirm</strong></td>
+                                    <td>Creates the top node and associated initial alignment data.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Branch Mode Right-Click Menus</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Right-click target</th>
+                                    <th>Menu options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Variable node</td>
+                                    <td><strong>Add Branch</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Relation span or branch</td>
+                                    <td><strong>Delete Branch</strong>, <strong>Move Branch</strong>, <strong>Store Temporarily</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Add Branch Dialog</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Field or control</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Relation search field</td>
+                                    <td>Filters available relations.</td>
+                                </tr>
+                                <tr>
+                                    <td>Relation list</td>
+                                    <td>Selects the relation to attach under the chosen parent node.</td>
+                                </tr>
+                                <tr>
+                                    <td>Relation description box</td>
+                                    <td>Shows schema help for the currently selected relation when available.</td>
+                                </tr>
+                                <tr>
+                                    <td>Child-node controls</td>
+                                    <td>These change depending on the selected relation. The dialog can request a token-based concept, discourse concept, abstract concept, named entity, reification roleset, string value, number value, or an existing reentrant variable.</td>
+                                </tr>
+                                <tr>
+                                    <td>Search inputs inside child-node sections</td>
+                                    <td>Filter the relevant token, concept, value, or variable list.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Add Branch</strong></td>
+                                    <td>Inserts the new branch into the graph and updates alignments when the chosen child originates from sentence tokens.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Delete, Move, and Temporary Storage</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Delete Branch</strong></td>
+                                    <td>Removes the selected branch from the graph.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Move Branch</strong></td>
+                                    <td>Reattaches an existing branch elsewhere in the graph.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Store Temporarily</strong></td>
+                                    <td>Copies the selected branch into the temporary branch storage panel so you can reuse it later, including across different sentences in the same document.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Diff and Parenthesis Utilities</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Utility</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Parenthesis checker modal</td>
+                                    <td>Shows the graph in a separate overlay. Clicking any <code>(</code> or <code>)</code> highlights its matching pair and scrolls to it if necessary.</td>
+                                </tr>
+                                <tr>
+                                    <td>Diff modal</td>
+                                    <td>Shows a two-column comparison between an earlier graph state and the current graph. The modal also includes <strong>Mark as Saved</strong>, which resets the comparison baseline.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
             <section id="document-annotation" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Document-Level Annotation</h2>
                     </div>
                     <div class="card-body">
-                        <h4>Interface Overview</h4>
-                        <p>The document-level annotation interface features a three-column display:</p>
-                        <ul>
-                            <li><strong>Left column:</strong> Sentence-level annotations</li>
-                            <li><strong>Middle column:</strong> Current document-level annotation</li>
-                            <li><strong>Right column:</strong> Document info, navigation, and annotation menu</li>
-                        </ul>
-                        
-                        <h4>Working with Triples</h4>
-                        <ul>
-                            <li><strong>Add Triples:</strong> Add temporal, modal, or coreference triples via the annotation menu in the right column</li>
-                            <li><strong>Delete Triples:</strong> Delete triples directly from the middle column via right-click</li>
-                            <li><strong>Save Work:</strong> Remember to save annotations frequently to prevent data loss</li>
-                            <li><strong>Export Annotations:</strong> Save all annotations of this document locally</li>
-                        </ul>
+                        <p>The document-level page has three columns: all sentence-level annotations on the left, the current document-level annotation in the middle, and triple-entry plus export tools on the right.</p>
+
+                        <h4>Left Column: All Sentence-Level Annotations</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Element</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sentence badge</td>
+                                    <td>Identifies each sentence number.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sentence text</td>
+                                    <td>Shows the original sentence content.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sentence-level annotation preview</td>
+                                    <td>Shows the sentence-level graph for reference.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>No annotation available</strong> notice</td>
+                                    <td>Appears if that sentence has no sentence-level annotation.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Middle Column: Current Document-Level Annotation</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Left arrow <strong>←</strong></td>
+                                    <td>Moves to the previous sentence and asks whether you want to save current changes first.</td>
+                                </tr>
+                                <tr>
+                                    <td>Right arrow <strong>→</strong></td>
+                                    <td>Moves to the next sentence and asks whether you want to save current changes first.</td>
+                                </tr>
+                                <tr>
+                                    <td>Sentence label</td>
+                                    <td>Shows which sentence the current document-level annotation is anchored to.</td>
+                                </tr>
+                                <tr>
+                                    <td>Structured annotation display</td>
+                                    <td>Shows the current <code>:temporal</code>, <code>:modal</code>, and <code>:coref</code> branches in a readable grouped format.</td>
+                                </tr>
+                                <tr>
+                                    <td>Jump to sentence dropdown</td>
+                                    <td>Lets you move directly to any sentence. The page prompts you to save before navigating away.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Right Column: Document Info</h4>
+                        <p>The collapsible <strong>Document Info</strong> card shows annotator, file, language, and project.</p>
+
+                        <h4>Right Column: Add Document-Level Triples</h4>
+                        <p>This card uses three tabs. Each tab has a source field, a relation dropdown, a target field, and an add button.</p>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tab</th>
+                                    <th>Controls and values</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Temporal</strong></td>
+                                    <td>
+                                        Reference Node and Current Node fields use datalist suggestions.
+                                        Predefined temporal node suggestions are <code>document-creation-time</code>, <code>past-reference</code>, <code>present-reference</code>, and <code>future-reference</code>.
+                                        The Relation Type dropdown contains <code>:contained</code>, <code>:before</code>, <code>:after</code>, <code>:overlap</code>, and <code>:depends-on</code>.
+                                        The action button is <strong>Add Temporal Triple</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Modal</strong></td>
+                                    <td>
+                                        Source Node and Target Node fields use datalist suggestions.
+                                        Predefined modal node suggestions are <code>root</code>, <code>author</code>, and <code>null-conceiver</code>.
+                                        The Relation Type dropdown contains <code>:modal</code>, <code>:full-affirmative</code>, <code>:partial-affirmative</code>, <code>:strong-partial-affirmative</code>, <code>:weak-partial-affirmative</code>, <code>:neutral-affirmative</code>, <code>:strong-neutral-affirmative</code>, <code>:weak-neutral-affirmative</code>, <code>:full-negative</code>, <code>:partial-negative</code>, <code>:strong-partial-negative</code>, <code>:weak-partial-negative</code>, <code>:neutral-negative</code>, <code>:strong-neutral-negative</code>, <code>:weak-neutral-negative</code>, and <code>:unspecified</code>.
+                                        The action button is <strong>Add Modal Triple</strong>.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Coreference</strong></td>
+                                    <td>
+                                        Source Node and Target Node are free text fields with datalist support.
+                                        The Relation Type dropdown contains <code>:same-entity</code>, <code>:same-event</code>, and <code>:subset-of</code>.
+                                        The action button is <strong>Add Coreference Triple</strong>.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Right Column: Actions Card</h4>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Control</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Save Document Annotation</strong></td>
+                                    <td>Saves the current document-level triple set to the server.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Modal Export Mode</strong> dropdown</td>
+                                    <td>Controls export behavior for modal information. Available values are <code>Modal on both levels</code> and <code>Modal on document level only</code>.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Export Annotation</strong></td>
+                                    <td>Exports the full document annotation as a downloadable file. The export respects the selected modal export mode.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Back to Sentence Level</strong></td>
+                                    <td>Returns to sentence-level annotation for the current sentence.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Deleting Triples</h4>
+                        <p>Existing triples shown in the middle column can be removed with a right-click context menu. The document-level UI also marks unsaved changes and reminds you to click <strong>Save Document Annotation</strong>.</p>
                     </div>
                 </div>
             </section>
-            
-            <!-- Search Functionality Section -->
+
             <section id="search" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Search Functionality</h2>
                     </div>
                     <div class="card-body">
-                        <p>UMR Writer offers powerful search capabilities:</p>
-                        <ul>
-                            <li>Search tokens, concepts, or relations at sentence or document levels</li>
-                            <li>View comprehensive statistics on search results</li>
-                            <li>Filter search results by various criteria</li>
-                        </ul>
-                        <p>This functionality is particularly useful for finding patterns across annotations or locating specific examples.</p>
+                        <p>UMR Writer includes dedicated search pages outside the sentence/document annotation screens. In general, search is used to locate documents, annotation patterns, concepts, or relations across project data.</p>
+                        <p>If you are documenting a local deployment for annotators, this section should be paired with screenshots from the actual search page because search controls are not embedded in the main annotation templates.</p>
                     </div>
                 </div>
             </section>
-            
-            <!-- Updates & Announcements Section -->
+
             <section id="updates" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>Updates & Announcements</h2>
                     </div>
                     <div class="card-body">
-                        <p>Check the Posts section for:</p>
-                        <ul>
-                            <li>Latest updates about UMR Writer 3.0</li>
-                            <li>Feature announcements</li>
-                            <li>Important changes to the application</li>
-                            <li>Community announcements</li>
-                        </ul>
+                        <p>Use the posts and announcement pages to track changes to annotation workflow, platform behavior, and schema policy. This is the correct place to publish project-wide notices when you introduce new temporary relations, new QC procedures, or UI changes that affect annotators.</p>
                     </div>
                 </div>
             </section>
-            
-            <!-- Sample Files Section -->
+
             <section id="sample-files" class="mb-5">
                 <div class="card">
                     <div class="card-header bg-steel text-white">
                         <h2>File Formats Accepted by UMR Writer 3.0</h2>
                     </div>
                     <div class="card-body">
-                        <p>UMR Writer only supports the format in UMR 2.0 data release.</p>
-                        <p>Both uploaded and exported files are in UMR 2.0 format.</p>
+                        <p>UMR Writer supports the UMR 2.0 data release format for both upload and export.</p>
+                        <p>In practice this means exported files are expected to round-trip back into the tool without format conversion, assuming the project language and document structure remain compatible.</p>
                     </div>
                 </div>
             </section>
@@ -324,30 +1104,27 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Highlight active section in sidebar as user scrolls
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('#guide-nav a');
-        
+
         window.addEventListener('scroll', function() {
             let current = '';
-            
+
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if(pageYOffset >= (sectionTop - 150)) {
+                if (pageYOffset >= (sectionTop - 150)) {
                     current = section.getAttribute('id');
                 }
             });
-            
+
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if(link.getAttribute('href').substring(1) === current) {
+                if (link.getAttribute('href').substring(1) === current) {
                     link.classList.add('active');
                 }
             });
         });
-        
-        // Smooth scrolling for navigation links
+
         document.querySelectorAll('#guide-nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -364,35 +1141,27 @@
     .user-guide .card-header.bg-steel {
         background-color: #5f788a;
     }
-    
+
     .user-guide .nav-link.active {
         background-color: #5f788a;
         color: white;
     }
-    
+
     .user-guide section {
         scroll-margin-top: 100px;
     }
-    
-    .user-guide .accordion .btn-link {
-        color: #5f788a;
-        text-decoration: none;
-        width: 100%;
-        text-align: left;
-    }
-    
-    .user-guide .accordion .btn-link:hover,
-    .user-guide .accordion .btn-link:focus {
-        text-decoration: none;
-    }
-    
+
     .user-guide .jumbotron {
         background-color: #f8f9fa;
         border-left: 5px solid #5f788a;
     }
-</style>
+
+    .user-guide table td,
+    .user-guide table th {
+        vertical-align: top;
+    }
+ </style>
 {% endblock content %}
 
 {% block scripts %}
-<!-- Additional JavaScript for the user guide page can be added here -->
 {% endblock scripts %}
