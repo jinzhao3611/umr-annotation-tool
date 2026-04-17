@@ -20,6 +20,50 @@ from umr_annot_tool.main.umr_parser import parse_umr_file
 
 users = Blueprint('users', __name__)
 
+
+def get_lexicon_entry_template(language):
+    language = (language or '').lower()
+    if language == 'portuguese':
+        return {
+            "args": {
+                "ARG0": "agent",
+                "ARG1": "patient"
+            },
+            "examples": [],
+            "framnet": "",
+            "name": "",
+            "vncls": ""
+        }
+    return {
+        "ARG0": "agent",
+        "ARG1": "patient"
+    }
+
+
+def get_argument_lines_template(language):
+    language = (language or '').lower()
+    if language == 'portuguese':
+        return "ARG0: agent\nARG1: patient"
+    return "ARG0: agent\nARG1: patient"
+
+def parse_argument_lines(argument_text):
+    parsed_args = {}
+    for raw_line in (argument_text or '').splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+        if ':' not in line:
+            raise ValueError(f'Invalid argument line "{line}". Use the format ARG0: description')
+        role, description = line.split(':', 1)
+        role = role.strip()
+        description = description.strip()
+        if not role or not description:
+            raise ValueError(f'Invalid argument line "{line}". Use the format ARG0: description')
+        parsed_args[role] = description
+    if not parsed_args:
+        raise ValueError('Please provide at least one argument')
+    return parsed_args
+
 @users.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -1634,17 +1678,37 @@ def alllexicon(project_id):
     # Create form for adding entries
     from umr_annot_tool.users.forms import LexiconAddForm
     add_form = LexiconAddForm()
+    prefill_lemma = (request.args.get('lemma') or '').strip()
+    return_to = (request.args.get('return_to') or request.form.get('return_to') or '').strip()
+    add_form.args.render_kw = dict(add_form.args.render_kw or {})
+    add_form.args.render_kw["placeholder"] = get_argument_lines_template(project.language)
+    if project.language.lower() == 'portuguese':
+        add_form.name.render_kw = dict(add_form.name.render_kw or {})
+        add_form.name.render_kw["placeholder"] = "e.g. amortecer um som"
+    if request.method == 'GET' and prefill_lemma:
+        add_form.lemma.data = prefill_lemma
+        add_form.args.data = get_argument_lines_template(project.language)
     
     # Handle adding new lexicon entry
     if request.method == 'POST' and add_form.validate_on_submit():
         try:
-            lemma = add_form.lemma.data
-            # Parse the JSON args
-            args = json.loads(add_form.args.data)
+            lemma = add_form.lemma.data.strip()
+            parsed_args = parse_argument_lines(add_form.args.data)
+
+            if project.language.lower() == 'portuguese':
+                entry = {
+                    "args": parsed_args,
+                    "examples": [],
+                    "framnet": (add_form.framnet.data or '').strip(),
+                    "name": (add_form.name.data or '').strip(),
+                    "vncls": (add_form.vncls.data or '').strip()
+                }
+            else:
+                entry = parsed_args
             
             # Update the lexicon data
-            current_data = lexicon.data
-            current_data[lemma] = args
+            current_data = dict(lexicon.data or {})
+            current_data[lemma] = entry
             
             # Save to database
             lexicon.data = current_data
@@ -1652,9 +1716,15 @@ def alllexicon(project_id):
             db.session.commit()
             
             flash(f'Lexicon entry "{lemma}" has been added successfully', 'success')
-            return redirect(url_for('users.alllexicon', project_id=project_id))
-        except json.JSONDecodeError:
-            flash('Invalid JSON format for arguments', 'danger')
+            redirect_kwargs = {
+                'project_id': project_id,
+                'lemma': lemma,
+            }
+            if return_to:
+                redirect_kwargs['return_to'] = return_to
+            return redirect(url_for('users.alllexicon', **redirect_kwargs))
+        except ValueError as e:
+            flash(str(e), 'danger')
         except Exception as e:
             flash(f'Error adding lexicon entry: {str(e)}', 'danger')
     
@@ -1663,9 +1733,48 @@ def alllexicon(project_id):
         title='Lexicon Management',
         project_id=project_id,
         project_name=project_name,
-        entries=lexicon.data,
+        project_language=project.language,
+        prefill_lemma=prefill_lemma,
+        return_to=return_to,
+        entries=dict(lexicon.data or {}),
         add_form=add_form
     )
+
+
+@users.route("/download_lexicon/<int:project_id>", methods=['GET'])
+@login_required
+def download_lexicon(project_id):
+    """Download the project lexicon as a JSON file."""
+    project_user = Projectuser.query.filter_by(
+        project_id=project_id,
+        user_id=current_user.id
+    ).first()
+
+    if not project_user:
+        flash('You do not have permission to access this project', 'danger')
+        return redirect(url_for('users.account'))
+
+    project = Project.query.get_or_404(project_id)
+    lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+    lexicon_entries = dict(lexicon.data or {}) if lexicon else {}
+
+    payload = {
+        "project_id": project.id,
+        "project_name": project.project_name,
+        "language": project.language,
+        "exported_at": datetime.utcnow().isoformat() + "Z",
+        "entries": lexicon_entries,
+    }
+
+    filename_root = secure_filename(project.project_name) or f"project_{project.id}"
+    response = make_response(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True)
+    )
+    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    response.headers['Content-Disposition'] = (
+        f'attachment; filename={filename_root}_lexicon.json'
+    )
+    return response
 
 @users.route("/delete_lexicon_entry/<int:project_id>", methods=['POST'])
 @login_required
@@ -1682,8 +1791,8 @@ def delete_lexicon_entry(project_id):
     
     try:
         # Get the lemma to delete from request
-        data = request.json
-        lemma = data.get('lemma')
+        data = request.get_json(silent=True) or {}
+        lemma = (data.get('lemma') or '').strip()
         
         if not lemma:
             return jsonify({"success": False, "message": "No lemma provided"})
@@ -1695,7 +1804,7 @@ def delete_lexicon_entry(project_id):
             return jsonify({"success": False, "message": "Lexicon not found"})
         
         # Remove the entry
-        current_data = lexicon.data
+        current_data = dict(lexicon.data or {})
         if lemma in current_data:
             del current_data[lemma]
             

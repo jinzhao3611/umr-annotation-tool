@@ -75,7 +75,13 @@ class LexiconAddForm(FlaskForm):
     lemma = StringField('Lemma', 
                        validators=[DataRequired()],
                        render_kw={"placeholder": "Enter lemma"})
-    args = TextAreaField('Arguments (JSON format)', 
+    name = StringField('Roleset Name',
+                      render_kw={"placeholder": "Short roleset description"})
+    framnet = StringField('FrameNet',
+                         render_kw={"placeholder": "e.g. rescue.01"})
+    vncls = StringField('VerbNet',
+                       render_kw={"placeholder": "e.g. 10.5"})
+    args = TextAreaField('Arguments',
                         validators=[DataRequired()],
-                        render_kw={"placeholder": "{\n  \"ARG0\": \"agent\",\n  \"ARG1\": \"patient\"\n}"})
+                        render_kw={"placeholder": "ARG0: agent\nARG1: patient"})
     submit = SubmitField('Add Entry')

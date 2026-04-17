@@ -57,6 +57,36 @@ FRAME_FILE_PORTUGUESE = 'umr_annot_tool/resources/frames_portuguese.json'
 LEMMA_DICT_ARABIC = 'umr_annot_tool/resources/arabic_lemma_dict.json'
 lemma_dict = json.load(open(LEMMA_DICT_ARABIC, "r"))
 
+
+def get_frame_file_for_language(language):
+    """Return the frame file path for a project language."""
+    frame_files = {
+        'english': FRAME_FILE_ENGLISH,
+        'chinese': FRAME_FILE_CHINESE,
+        'arabic': FRAME_FILE_ARABIC,
+        'uzbek': FRAME_FILE_UZBEK,
+        'portuguese': FRAME_FILE_PORTUGUESE,
+    }
+    return frame_files.get(language.lower())
+
+
+def load_project_frames(project):
+    """Load base frames for a project language and merge project lexicon entries."""
+    frame_file = get_frame_file_for_language(project.language)
+    if not frame_file:
+        raise ValueError(f'No frame file available for language: {project.language}')
+
+    with open(frame_file, 'r') as f:
+        frame_dict = json.load(f)
+
+    lexicon = Lexicon.query.filter_by(project_id=project.id).first()
+    if lexicon and lexicon.data:
+        for sense, entry in lexicon.data.items():
+            if isinstance(entry, dict):
+                frame_dict[sense] = entry
+
+    return frame_dict
+
 # from farasa.stemmer import FarasaStemmer
 # stemmer = FarasaStemmer(interactive=True)
 
@@ -466,22 +496,13 @@ def sentlevel(doc_version_id, sent_id):
         # Load frame dictionary based on project language
         frame_dict = {}
         try:
-            lang = project.language.lower()
-            frame_files = {
-                'english': FRAME_FILE_ENGLISH,
-                'chinese': FRAME_FILE_CHINESE,
-                'arabic': FRAME_FILE_ARABIC,
-                'uzbek': FRAME_FILE_UZBEK,
-                'portuguese': FRAME_FILE_PORTUGUESE,
-            }
-            frame_file = frame_files.get(lang)
+            frame_file = get_frame_file_for_language(project.language)
             if frame_file:
-                with open(frame_file, 'r') as f:
-                    frame_dict = json.load(f)
+                frame_dict = load_project_frames(project)
                 logger.info(f"Successfully loaded frame dictionary from {frame_file}")
             else:
                 logger.info(f"No frame file available for language: {project.language}")
-        except (IOError, json.JSONDecodeError) as e:
+        except (IOError, json.JSONDecodeError, ValueError) as e:
             logger.error(f"Error loading frame dictionary: {str(e)}")
         
         # Get partial graphs for this project
@@ -2233,31 +2254,75 @@ def download_frames():
         # Get the project to determine language
         project = Project.query.get_or_404(project_id)
         
-        # Select frame file based on project language
-        lang = project.language.lower()
-        frame_files = {
-            'english': FRAME_FILE_ENGLISH,
-            'chinese': FRAME_FILE_CHINESE,
-            'arabic': FRAME_FILE_ARABIC,
-            'uzbek': FRAME_FILE_UZBEK,
-            'portuguese': FRAME_FILE_PORTUGUESE,
-        }
-        frame_file = frame_files.get(lang)
-        if not frame_file:
+        if not get_frame_file_for_language(project.language):
             return jsonify({'error': f'No frame file available for language: {project.language}'}), 400
             
         # Load and return frame data
         try:
-            with open(frame_file, 'r') as f:
-                frame_dict = json.load(f)
+            frame_dict = load_project_frames(project)
             return jsonify(frame_dict)
-        except (IOError, json.JSONDecodeError) as e:
+        except (IOError, json.JSONDecodeError, ValueError) as e:
             logger.error(f"Error loading frame dictionary: {str(e)}")
             return jsonify({'error': f'Error loading frames: {str(e)}'}), 500
             
     except Exception as e:
         logger.error(f"Error in download_frames: {str(e)}")
         return jsonify({'error': str(e)}), 500
+
+
+@main.route("/save_lexicon_frame", methods=['POST'])
+@login_required
+def save_lexicon_frame():
+    """Persist a project lexicon frame entry for future retrieval."""
+    try:
+        data = request.get_json() or {}
+        project_id = data.get('project_id')
+        sense = (data.get('sense') or '').strip()
+        surface_form = (data.get('surface_form') or '').strip()
+        lemma = (data.get('lemma') or '').strip()
+
+        if not project_id or not sense:
+            return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+
+        membership = Projectuser.query.filter_by(project_id=project_id, user_id=current_user.id).first()
+        if not membership or membership.permission not in ['admin', 'edit', 'annotate']:
+            return jsonify({'success': False, 'error': 'User does not have permission for this project'}), 403
+
+        lexicon = Lexicon.query.filter_by(project_id=project_id).first()
+        if not lexicon:
+            lexicon = Lexicon(project_id=project_id, data={})
+            db.session.add(lexicon)
+
+        lexicon_data = dict(lexicon.data or {})
+        already_exists = sense in lexicon_data
+        existing_entry = lexicon_data.get(sense, {})
+        if not isinstance(existing_entry, dict):
+            existing_entry = {}
+
+        lexicon_data[sense] = {
+            'args': existing_entry.get('args', {}) if isinstance(existing_entry.get('args'), dict) else {},
+            'argm': existing_entry.get('argm', {}) if isinstance(existing_entry.get('argm'), dict) else {},
+            'vncls': existing_entry.get('vncls', ''),
+            'framnet': existing_entry.get('framnet', ''),
+            'name': existing_entry.get('name', ''),
+            'examples': existing_entry.get('examples', []) if isinstance(existing_entry.get('examples'), list) else [],
+            '_manual': {
+                'created_at': datetime.utcnow().isoformat() + 'Z',
+                'created_by': current_user.username,
+                'lemma': lemma,
+                'surface_form': surface_form,
+            }
+        }
+
+        lexicon.data = lexicon_data
+        db.session.commit()
+
+        return jsonify({'success': True, 'sense': sense, 'already_exists': already_exists})
+
+    except Exception as e:
+        current_app.logger.error(f"Error saving lexicon frame: {str(e)}", exc_info=True)
+        db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 @main.route("/get_schema_descriptions", methods=['GET'])
 @login_required
@@ -2536,6 +2601,8 @@ def lemmatize():
         language = project.language.lower()
 
         lemma = word.lower()  # Default fallback
+        used_fallback = True
+        lemmatizer_status = 'fallback'
 
         if language == 'uzbek':
             try:
@@ -2543,6 +2610,8 @@ def lemmatize():
                 result = uzb_ltr.Lemma(word)
                 if result:
                     lemma = result
+                    used_fallback = False
+                    lemmatizer_status = 'success'
                 else:
                     lemma = word.lower()
                 logger.info(f"Uzbek lemmatization: '{word}' -> '{lemma}'")
@@ -2558,6 +2627,8 @@ def lemmatize():
                 all_lemmas = lemminflect.getAllLemmas(word)
                 if all_lemmas:
                     lemma = list(all_lemmas.values())[0][0]
+                    used_fallback = False
+                    lemmatizer_status = 'success'
                 else:
                     lemma = word.lower()
             except ImportError:
@@ -2568,6 +2639,8 @@ def lemmatize():
             try:
                 import simplemma
                 lemma = simplemma.lemmatize(word, lang='pt')
+                used_fallback = False
+                lemmatizer_status = 'success'
                 logger.info(f"Portuguese lemmatization: '{word}' -> '{lemma}'")
             except ImportError:
                 logger.warning("simplemma not installed, using lowercase")
@@ -2575,7 +2648,14 @@ def lemmatize():
                 logger.error(f"Error lemmatizing Portuguese word '{word}': {e}")
         # For other languages, just return lowercase
 
-        return jsonify({'success': True, 'lemma': lemma, 'original': word, 'language': language})
+        return jsonify({
+            'success': True,
+            'lemma': lemma,
+            'original': word,
+            'language': language,
+            'used_fallback': used_fallback,
+            'lemmatizer_status': lemmatizer_status
+        })
 
     except Exception as e:
         logger.error(f"Error in lemmatize: {str(e)}")

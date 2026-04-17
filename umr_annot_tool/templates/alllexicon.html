@@ -56,6 +56,28 @@
         .arg-item {
             margin-bottom: 5px;
         }
+        .entry-meta {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 8px;
+        }
+        .entry-meta-item {
+            padding: 8px 10px;
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .entry-json {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
         .no-entries {
             text-align: center;
             padding: 20px;
@@ -68,9 +90,19 @@
     <div class="content-section">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Lexicon Management - {{ project_name }}</h2>
-            <a class="btn btn-outline-secondary" href="{{ url_for('users.project', project_id=project_id) }}">
-                <i class="fas fa-arrow-left"></i> Back to Project
-            </a>
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-success mr-2" href="{{ url_for('users.download_lexicon', project_id=project_id) }}">
+                    <i class="fas fa-download"></i> Download Lexicon
+                </a>
+                {% if return_to %}
+                <a class="btn btn-outline-primary mr-2" href="{{ return_to }}">
+                    <i class="fas fa-arrow-left"></i> Back to Annotation
+                </a>
+                {% endif %}
+                <a class="btn btn-outline-secondary" href="{{ url_for('users.project', project_id=project_id) }}">
+                    <i class="fas fa-arrow-left"></i> Back to Project
+                </a>
+            </div>
         </div>
 
         <div class="lexicon-container">
@@ -83,9 +115,14 @@
                             <label for="client-search">Search Term</label>
                             <input type="text" class="form-control" id="client-search" 
                                    placeholder="Enter lemma to search"
-                                   oninput="filterLexiconEntries('client-search')">
+                                   oninput="renderLexiconSearchResults()">
                         </div>
                     </form>
+                    <div id="lexicon-search-results" class="lexicon-search-results">
+                        <div class="no-entries">
+                            <p>Search for a lemma to verify that an entry was added.</p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Add Form -->
@@ -93,13 +130,33 @@
                     <h4>Add New Entry</h4>
                     <form method="POST" action="{{ url_for('users.alllexicon', project_id=project_id) }}">
                         {{ add_form.hidden_tag() }}
+                        <input type="hidden" name="return_to" value="{{ return_to }}">
                         <div class="form-group">
                             {{ add_form.lemma.label(class="form-control-label") }}
-                            {{ add_form.lemma(class="form-control") }}
+                            {{ add_form.lemma(class="form-control", id="lemma-input") }}
                         </div>
+                        {% if project_language|lower == 'portuguese' %}
+                        <div class="form-group">
+                            {{ add_form.name.label(class="form-control-label") }}
+                            {{ add_form.name(class="form-control") }}
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ add_form.framnet.label(class="form-control-label") }}
+                                {{ add_form.framnet(class="form-control") }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ add_form.vncls.label(class="form-control-label") }}
+                                {{ add_form.vncls(class="form-control") }}
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="form-group">
                             {{ add_form.args.label(class="form-control-label") }}
                             {{ add_form.args(class="form-control", rows=5) }}
+                            <small class="form-text text-muted">
+                                One argument per line, using `ARG0: description`.
+                            </small>
                         </div>
                         <div class="form-group">
                             {{ add_form.submit(class="btn btn-success") }}
@@ -108,42 +165,139 @@
                 </div>
             </div>
 
-            <!-- Lexicon Entries -->
-            <div class="lexicon-entries">
-                <h4>Lexicon Entries</h4>
-                {% if entries %}
-                    {% for lemma, args in entries.items() %}
-                        <div class="entry-item">
-                            <div class="entry-header">
-                                <div class="entry-lemma">{{ lemma }}</div>
-                                <div class="entry-actions">
-                                    <button class="btn btn-sm btn-outline-danger" 
-                                            onclick="deleteLexiconEntry('{{ lemma }}', {{ project_id }})">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="entry-args">
-                                {% for arg, desc in args.items() %}
-                                    <div class="arg-item">
-                                        <strong>{{ arg }}:</strong> {{ desc }}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="no-entries">
-                        <p>No lexicon entries found. Add a new entry to get started.</p>
-                    </div>
-                {% endif %}
-            </div>
         </div>
     </div>
 {% endblock content %}
 
-{% block footer_scripts %}
+{% block scripts %}
 <script>
+const lexiconEntries = {{ entries|tojson }};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const prefillLemma = {{ prefill_lemma|tojson }};
+    if (prefillLemma) {
+        const lemmaInput = document.getElementById('lemma-input');
+        if (lemmaInput) {
+            lemmaInput.value = prefillLemma;
+            lemmaInput.focus();
+            lemmaInput.select();
+        }
+
+        const searchInput = document.getElementById('client-search');
+        if (searchInput) {
+            searchInput.value = prefillLemma;
+        }
+    }
+
+    renderLexiconSearchResults();
+});
+
+function escapeHtml(value) {
+    return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function renderEntryHtml(lemma, args) {
+    let bodyHtml = '';
+
+    if (args && typeof args === 'object' && args.args) {
+        const argItems = Object.entries(args.args).map(([arg, desc]) => `
+            <div class="arg-item">
+                <strong>${escapeHtml(arg)}:</strong> ${escapeHtml(desc)}
+            </div>
+        `).join('');
+
+        bodyHtml = `
+            ${argItems}
+            <div class="entry-meta">
+                <div class="entry-meta-item"><strong>Name:</strong> ${escapeHtml(args.name || '—')}</div>
+                <div class="entry-meta-item"><strong>VerbNet:</strong> ${escapeHtml(args.vncls || '—')}</div>
+                <div class="entry-meta-item"><strong>FrameNet:</strong> ${escapeHtml(args.framnet || '—')}</div>
+                <div class="entry-meta-item"><strong>Examples:</strong> ${Array.isArray(args.examples) ? args.examples.length : 0}</div>
+            </div>
+        `;
+    } else {
+        bodyHtml = Object.entries(args || {}).map(([arg, desc]) => `
+            <div class="arg-item">
+                <strong>${escapeHtml(arg)}:</strong> ${escapeHtml(desc)}
+            </div>
+        `).join('');
+    }
+
+    return `
+        <div class="entry-item">
+            <div class="entry-header">
+                <div class="entry-lemma">${escapeHtml(lemma)}</div>
+                <div class="entry-actions">
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                            onclick="deleteLexiconEntry(${JSON.stringify(lemma)}, {{ project_id }})">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+            <div class="entry-args">${bodyHtml}</div>
+        </div>
+    `;
+}
+
+function renderLexiconSearchResults() {
+    const resultsContainer = document.getElementById('lexicon-search-results');
+    const searchInput = document.getElementById('client-search');
+    if (!resultsContainer || !searchInput) {
+        return;
+    }
+
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+        resultsContainer.innerHTML = `
+            <div class="no-entries">
+                <p>Search for a lemma to verify that an entry was added.</p>
+            </div>
+        `;
+        return;
+    }
+
+    const matchedEntries = Object.entries(lexiconEntries).filter(([lemma]) =>
+        lemma.toLowerCase().includes(query)
+    );
+
+    if (matchedEntries.length === 0) {
+        resultsContainer.innerHTML = `
+            <div class="no-entries">
+                <p>No lexicon entry found for "${escapeHtml(searchInput.value.trim())}".</p>
+            </div>
+        `;
+        return;
+    }
+
+    resultsContainer.innerHTML = matchedEntries
+        .sort(([lemmaA], [lemmaB]) => lemmaA.localeCompare(lemmaB))
+        .map(([lemma, args]) => renderEntryHtml(lemma, args))
+        .join('');
+}
+
+function removeLexiconEntryFromResults(lemma) {
+    if (Object.prototype.hasOwnProperty.call(lexiconEntries, lemma)) {
+        delete lexiconEntries[lemma];
+    }
+
+    const searchInput = document.getElementById('client-search');
+    if (searchInput && searchInput.value.trim().toLowerCase() === lemma.toLowerCase()) {
+        searchInput.focus();
+        searchInput.select();
+    }
+    renderLexiconSearchResults();
+}
+
+function getLexiconCsrfToken() {
+    const csrfInput = document.querySelector('input[name="csrf_token"]');
+    return csrfInput ? csrfInput.value : '';
+}
+
 function deleteLexiconEntry(lemma, projectId) {
     if (confirm(`Are you sure you want to delete the lexicon entry "${lemma}"?`)) {
         // Send AJAX request to delete
@@ -151,15 +305,20 @@ function deleteLexiconEntry(lemma, projectId) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token() }}'
+                'X-CSRFToken': getLexiconCsrfToken()
             },
             body: JSON.stringify({ lemma: lemma })
         })
-        .then(response => response.json())
+        .then(async response => {
+            const data = await response.json().catch(() => null);
+            if (!response.ok) {
+                throw new Error((data && data.message) || `Request failed with status ${response.status}`);
+            }
+            return data;
+        })
         .then(data => {
             if (data.success) {
-                // Reload the page to refresh the entries
-                window.location.reload();
+                removeLexiconEntryFromResults(lemma);
             } else {
                 alert('Error deleting entry: ' + data.message);
             }
@@ -171,4 +330,4 @@ function deleteLexiconEntry(lemma, projectId) {
     }
 }
 </script>
-{% endblock footer_scripts %} 
+{% endblock scripts %} 

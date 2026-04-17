@@ -69,23 +69,23 @@
         };
     </script>
     <!-- Load utilities first -->
-    <script src="{{ url_for('static', filename='scripts/utils.js') }}"></script>
+    <script src="{{ versioned_static('scripts/utils.js') }}"></script>
     <!-- Load application scripts -->
-    <script src="{{ url_for('static', filename='scripts/sentLevel.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/penmanString2umrDict.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/umrDict2penmanString.js') }}"></script>
+    <script src="{{ versioned_static('scripts/sentLevel.js') }}"></script>
+    <script src="{{ versioned_static('scripts/penmanString2umrDict.js') }}"></script>
+    <script src="{{ versioned_static('scripts/umrDict2penmanString.js') }}"></script>
     <!-- Load temporary branch storage script first -->
-    <script src="{{ url_for('static', filename='scripts/tempBranchStorage.js') }}"></script>
+    <script src="{{ versioned_static('scripts/tempBranchStorage.js') }}"></script>
     <!-- Load relation editor script after branch storage script -->
-    <script src="{{ url_for('static', filename='scripts/relation_editor.js') }}"></script>
+    <script src="{{ versioned_static('scripts/relation_editor.js') }}"></script>
     <!-- Clean branch operations implementation -->
-    <script src="{{ url_for('static', filename='scripts/branch_operations.js') }}"></script>
+    <script src="{{ versioned_static('scripts/branch_operations.js') }}"></script>
     <!-- Load undo/redo manager for graph editing history -->
-    <script src="{{ url_for('static', filename='scripts/undo_redo_manager.js') }}"></script>
+    <script src="{{ versioned_static('scripts/undo_redo_manager.js') }}"></script>
     <!-- Load command line interface for branch operations -->
-    <script src="{{ url_for('static', filename='scripts/umr_command_line.js') }}"></script>
+    <script src="{{ versioned_static('scripts/umr_command_line.js') }}"></script>
     <!-- Load text editor mode for direct annotation editing -->
-    <script src="{{ url_for('static', filename='scripts/text_editor_mode.js') }}"></script>
+    <script src="{{ versioned_static('scripts/text_editor_mode.js') }}"></script>
     <!-- Inline parenthesis checker with modal -->
     <script>
         // Simple inline parenthesis checker
@@ -3194,7 +3194,6 @@
     }
 </script>
 {% endblock content %}
-
 
 
 

@@ -18,6 +18,225 @@ let framesData = null;
 
 // Global variable to store schema descriptions
 let schemaDescriptions = null;
+let addBranchRestoreAttempted = false;
+
+function getCurrentProjectId() {
+    let projectId = null;
+
+    const projectMatch = window.location.pathname.match(/\/project\/(\d+)/);
+    if (projectMatch) {
+        projectId = projectMatch[1];
+    }
+
+    if (!projectId && typeof project_id !== 'undefined') {
+        projectId = project_id;
+    }
+
+    if (!projectId && window.state && window.state.projectId) {
+        projectId = window.state.projectId;
+    }
+
+    return projectId;
+}
+
+function buildAnnotationReturnUrl(parentVariable = '') {
+    const returnUrl = new URL(window.location.href);
+
+    if (parentVariable) {
+        returnUrl.searchParams.set('reopen_add_branch', '1');
+        returnUrl.searchParams.set('parent_variable', parentVariable);
+    } else {
+        returnUrl.searchParams.delete('reopen_add_branch');
+        returnUrl.searchParams.delete('parent_variable');
+    }
+
+    return `${returnUrl.pathname}${returnUrl.search}${returnUrl.hash}`;
+}
+
+function getProjectLexiconUrl(options = {}) {
+    const projectId = getCurrentProjectId();
+    if (!projectId) {
+        return null;
+    }
+
+    const params = new URLSearchParams();
+    params.set(
+        'return_to',
+        buildAnnotationReturnUrl(options.parentVariable || window.currentParentVariable || '')
+    );
+    return `/alllexicon/${projectId}?${params.toString()}`;
+}
+
+function buildNoFramesFoundContent(token, lemma, lemmatizerUsedFallback, isManualLemmaOverride = false) {
+    const lexiconUrl = getProjectLexiconUrl({
+        parentVariable: window.currentParentVariable || ''
+    });
+    const lexiconLink = lexiconUrl
+        ? `<a href="${lexiconUrl}&lemma=${encodeURIComponent(lemma)}"
+                class="btn btn-sm btn-outline-secondary"
+                style="margin-top: 10px; display: inline-block;">
+                Open Lexicon For "${lemma}"
+           </a>`
+        : '';
+
+    if (lemmatizerUsedFallback && !isManualLemmaOverride) {
+        return `
+            <div>
+                <div style="padding: 10px; background-color: #fff3cd; border-radius: 4px; margin-bottom: 15px;">
+                    <strong>No predicate frames found for "${token}" using the automatic lemma "${lemma}"</strong>
+                    <p style="margin-top: 5px; margin-bottom: 0;">
+                        Automatic lemmatization may have failed. Type the correct lemma and retrieve the frame files again.
+                    </p>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <label for="retry-lemma" style="font-weight: bold;">Retry with a lemma:</label>
+                    <div style="display: flex; margin-top: 8px;">
+                        <input type="text" id="retry-lemma"
+                            style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;"
+                            placeholder="e.g., ${lemma}"
+                            value="${lemma}">
+                        <button id="retry-lemma-search"
+                            style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
+                            Retrieve Frames
+                        </button>
+                    </div>
+                </div>
+
+                ${lexiconLink}
+            </div>
+        `;
+    }
+
+    return `
+        <div>
+            <div style="padding: 10px; background-color: #fff3cd; border-radius: 4px; margin-bottom: 15px;">
+                <strong>No predicate frames found for "${lemma}"</strong>
+                <p style="margin-top: 5px; margin-bottom: 0;">
+                    The lemma was found, but it does not exist in the current frame files. Build or update the frame entry in the project lexicon for this lemma.
+                </p>
+            </div>
+
+            ${lexiconLink}
+        </div>
+    `;
+}
+
+function buildLexiconActionLink(lemma, buttonLabel = null) {
+    const lexiconUrl = getProjectLexiconUrl({
+        parentVariable: window.currentParentVariable || ''
+    });
+    if (!lexiconUrl) {
+        return '';
+    }
+
+    const label = buttonLabel || `Open Lexicon For "${lemma}"`;
+    return `
+        <a href="${lexiconUrl}&lemma=${encodeURIComponent(lemma)}"
+           class="btn btn-sm btn-outline-secondary"
+           style="margin-top: 10px; display: inline-block;">
+           ${label}
+        </a>
+    `;
+}
+
+async function persistLexiconFrame(sense, metadata = {}) {
+    const normalizedSense = (sense || '').trim();
+    if (!normalizedSense) {
+        return false;
+    }
+
+    const projectId = getCurrentProjectId();
+    if (!projectId) {
+        console.warn('No project ID found, skipping lexicon frame persistence');
+        return false;
+    }
+
+    try {
+        const response = await fetch('/save_lexicon_frame', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken() || ''
+            },
+            body: JSON.stringify({
+                project_id: projectId,
+                sense: normalizedSense,
+                lemma: metadata.lemma || '',
+                surface_form: metadata.surfaceForm || ''
+            })
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+            throw new Error(result.error || `Failed to save lexicon frame: ${response.status}`);
+        }
+
+        if (!framesData || typeof framesData !== 'object') {
+            framesData = {};
+        }
+        if (!framesData[normalizedSense]) {
+            framesData[normalizedSense] = {
+                args: {},
+                argm: {},
+                vncls: '',
+                framnet: '',
+                name: '',
+                examples: []
+            };
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error saving lexicon frame:', error);
+        showNotification(`The lexicon frame could not be saved for future reuse: ${error.message}`, 'error', 5000);
+        return false;
+    }
+}
+
+function clearAddBranchRestoreParams() {
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete('reopen_add_branch');
+    currentUrl.searchParams.delete('parent_variable');
+    const cleanedUrl = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+    window.history.replaceState({}, document.title, cleanedUrl);
+}
+
+function findVariableSpanByName(variableName) {
+    const variableSpans = document.querySelectorAll('#amr pre .variable-span');
+    return Array.from(variableSpans).find(span => {
+        const spanVariable = (span.getAttribute('data-variable') || span.textContent || '').trim();
+        return spanVariable === variableName;
+    }) || null;
+}
+
+function maybeRestoreAddBranchDialog() {
+    if (addBranchRestoreAttempted) {
+        return;
+    }
+    addBranchRestoreAttempted = true;
+
+    const currentUrl = new URL(window.location.href);
+    if (currentUrl.searchParams.get('reopen_add_branch') !== '1') {
+        return;
+    }
+
+    const parentVariable = (currentUrl.searchParams.get('parent_variable') || '').trim();
+    clearAddBranchRestoreParams();
+
+    if (!parentVariable) {
+        console.warn('Cannot restore add-branch dialog without a parent variable');
+        return;
+    }
+
+    const variableSpan = findVariableSpanByName(parentVariable);
+    if (!variableSpan) {
+        console.warn(`Could not find variable span for "${parentVariable}" while restoring add-branch dialog`);
+        return;
+    }
+
+    showAddBranchDialog(variableSpan);
+}
 
 // Function to load frames data
 async function loadFramesData() {
@@ -29,23 +248,7 @@ async function loadFramesData() {
         console.log('Loading frames data...');
         
         // Get project ID from URL path or window.state
-        let projectId = null;
-        
-        // Try to extract from URL (like /project/123/...)
-        const projectMatch = window.location.pathname.match(/\/project\/(\d+)/);
-        if (projectMatch) {
-            projectId = projectMatch[1];
-        }
-        
-        // If not found in URL, check if it's defined as a global variable
-        if (!projectId && typeof project_id !== 'undefined') {
-            projectId = project_id;
-        }
-        
-        // If still not found, try from window.state (may be set in some pages)
-        if (!projectId && window.state && window.state.projectId) {
-            projectId = window.state.projectId;
-        }
+        const projectId = getCurrentProjectId();
         
         console.log('Using project ID for frames:', projectId);
         
@@ -123,21 +326,16 @@ function lemmatizeTokenFallback(token) {
 // Server-side lemmatization function (supports multiple languages)
 async function lemmatizeToken(token) {
     // Get project ID
-    let projectId = null;
-    const projectMatch = window.location.pathname.match(/\/project\/(\d+)/);
-    if (projectMatch) {
-        projectId = projectMatch[1];
-    }
-    if (!projectId && typeof project_id !== 'undefined') {
-        projectId = project_id;
-    }
-    if (!projectId && window.state && window.state.projectId) {
-        projectId = window.state.projectId;
-    }
+    const projectId = getCurrentProjectId();
 
     if (!projectId) {
         console.warn('No project ID found, using fallback lemmatization');
-        return lemmatizeTokenFallback(token);
+        return {
+            lemma: lemmatizeTokenFallback(token),
+            usedFallback: true,
+            language: null,
+            lemmatizerStatus: 'fallback'
+        };
     }
 
     try {
@@ -150,7 +348,12 @@ async function lemmatizeToken(token) {
         const data = await response.json();
         if (data.success && data.lemma) {
             console.log(`Server lemmatized "${token}" to "${data.lemma}" (language: ${data.language})`);
-            return data.lemma;
+            return {
+                lemma: data.lemma,
+                usedFallback: Boolean(data.used_fallback),
+                language: data.language || null,
+                lemmatizerStatus: data.lemmatizer_status || (data.used_fallback ? 'fallback' : 'success')
+            };
         } else {
             console.warn('Server returned unsuccessful lemmatization:', data);
         }
@@ -158,7 +361,12 @@ async function lemmatizeToken(token) {
         console.warn('Server-side lemmatization failed, using fallback:', error);
     }
 
-    return lemmatizeTokenFallback(token);
+    return {
+        lemma: lemmatizeTokenFallback(token),
+        usedFallback: true,
+        language: null,
+        lemmatizerStatus: 'fallback'
+    };
 }
 
 // Normalize a roleset entry into a uniform shape regardless of which
@@ -377,6 +585,7 @@ function setupEditor(annotationElement) {
         
         // Setup branch operations (right-click context menu for delete/move/store)
         addBranchOperations(annotationElement);
+        maybeRestoreAddBranchDialog();
         
         // Extract sentence tokens for later use in concept suggestion
         extractSentenceTokens();
@@ -2814,8 +3023,18 @@ async function showAddBranchDialog(parentVariableSpan) {
             }
 
             // Function to show sense selector for a token
-            async function showSenseSelector(token) {
-                const lemma = await lemmatizeToken(token);
+            async function showSenseSelector(token, options = {}) {
+                window.selectedSense = null;
+                window.selectedSenseIsManual = false;
+                const lemmatization = options.overrideLemma
+                    ? {
+                        lemma: options.overrideLemma.trim(),
+                        usedFallback: false,
+                        language: null,
+                        lemmatizerStatus: 'manual'
+                    }
+                    : await lemmatizeToken(token);
+                const lemma = lemmatization.lemma;
                 console.log(`Lemmatized '${token}' to '${lemma}'`);
 
                 try {
@@ -2882,30 +3101,43 @@ async function showAddBranchDialog(parentVariableSpan) {
                                     </button>
                                 </div>
                             </div>
-                        `;
-                    } else {
-                        senseContent = `
-                            <div>
-                                <div style="padding: 10px; background-color: #fff3cd; border-radius: 4px; margin-bottom: 15px;">
-                                    <strong>No predicate frames found for "${token}" (lemmatized as "${lemma}")</strong>
+                            <div style="margin-top: 12px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+                                <div style="font-size: 13px; color: #495057;">
+                                    If none of these senses is correct, add or update the project lexicon for "${lemma}".
                                 </div>
-                                <div style="margin-top: 15px;">
-                                    <p>You may still manually enter a sense:</p>
-                                    <div style="display: flex; margin-top: 8px;">
-                                        <input type="text" id="manual-sense"
-                                            style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;"
-                                            placeholder="e.g., ${lemma}-01">
-                                        <button id="apply-manual-sense"
-                                            style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
-                                            Apply
-                                        </button>
-                                    </div>
-                                </div>
+                                ${buildLexiconActionLink(lemma)}
                             </div>
                         `;
+                    } else {
+                        senseContent = buildNoFramesFoundContent(
+                            token,
+                            lemma,
+                            lemmatization.usedFallback,
+                            Boolean(options.overrideLemma)
+                        );
                     }
 
                     senseContainer.innerHTML = senseContent;
+
+                    const retryLemmaButton = document.getElementById('retry-lemma-search');
+                    const retryLemmaInput = document.getElementById('retry-lemma');
+                    if (retryLemmaButton && retryLemmaInput) {
+                        retryLemmaButton.addEventListener('click', async () => {
+                            const retryLemma = retryLemmaInput.value.trim();
+                            if (!retryLemma) {
+                                showNotification('Please enter a lemma to retrieve frame files', 'error');
+                                return;
+                            }
+                            await showSenseSelector(token, { overrideLemma: retryLemma });
+                        });
+
+                        retryLemmaInput.addEventListener('keypress', async (event) => {
+                            if (event.key === 'Enter') {
+                                event.preventDefault();
+                                retryLemmaButton.click();
+                            }
+                        });
+                    }
 
                     // Add event listeners for sense selection
                     if (senses.length > 0) {
@@ -3639,6 +3871,8 @@ async function showAddBranchDialog(parentVariableSpan) {
                 window.selectedTokens = [];
                 // Track selected sense when applicable
                 window.selectedSense = null;
+                window.selectedSenseIsManual = false;
+                window.selectedSenseLemma = null;
 
                 // Function to handle token click
                 const handleTokenClick = async (item) => {
@@ -3725,10 +3959,21 @@ async function showAddBranchDialog(parentVariableSpan) {
                 }
                 
                 // Function to show sense selector for a token
-                async function showSenseSelector(token) {
+                async function showSenseSelector(token, options = {}) {
+                    window.selectedSense = null;
+                    window.selectedSenseIsManual = false;
                     // First lemmatize the token (now async)
-                    const lemma = await lemmatizeToken(token);
+                    const lemmatization = options.overrideLemma
+                        ? {
+                            lemma: options.overrideLemma.trim(),
+                            usedFallback: false,
+                            language: null,
+                            lemmatizerStatus: 'manual'
+                        }
+                        : await lemmatizeToken(token);
+                    const lemma = lemmatization.lemma;
                     console.log(`Lemmatized '${token}' to '${lemma}'`);
+                    window.selectedSenseLemma = lemma;
                     
                     try {
                         // Find senses for this lemma
@@ -3798,7 +4043,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                     </div>
                                 </div>
                                 <div style="margin-top: 10px;">
-                                    <label for="manual-sense" style="font-weight: bold;">Or manually enter a sense (this is the fallback if lemmatizer fails):</label>
+                                    <label for="manual-sense" style="font-weight: bold;">Or manually enter a sense if you already know the correct roleset:</label>
                                     <div style="display: flex; margin-top: 5px;">
                                         <input type="text" id="manual-sense" 
                                             style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" 
@@ -3809,41 +4054,46 @@ async function showAddBranchDialog(parentVariableSpan) {
                                         </button>
                                     </div>
                                     <small style="display: block; margin-top: 5px; color: #666;">
-                                        Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the frame files.
+                                        Format: lemma-NN (e.g., ${lemma}-01). Use this only when you already know the exact roleset.
                                     </small>
+                                </div>
+                                <div style="margin-top: 12px; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">
+                                    <div style="font-size: 13px; color: #495057;">
+                                        If none of these senses is correct, add or update the project lexicon for "${lemma}".
+                                    </div>
+                                    ${buildLexiconActionLink(lemma)}
                                 </div>
                             `;
                         } else {
-                            // If no senses found, show a clear message but still allow manual entry
-                            senseContent = `
-                                <div>
-                                    <div style="padding: 10px; background-color: #fff3cd; border-radius: 4px; margin-bottom: 15px;">
-                                        <strong>No predicate frames found for "${token}" (lemmatized as "${lemma}")</strong>
-                                        <p style="margin-top: 5px; margin-bottom: 0;">No entries matching this lemma were found in the frames data.</p>
-                                    </div>
-                                    
-                                    <div style="margin-top: 15px;">
-                                        <p>You may still manually enter a sense if you know it exists in the frames data:</p>
-                                        <div style="display: flex; margin-top: 8px;">
-                                            <input type="text" id="manual-sense" 
-                                                style="flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px 0 0 4px;" 
-                                                placeholder="e.g., ${lemma}-01">
-                                            <button id="apply-manual-sense" 
-                                                style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 0 4px 4px 0; cursor: pointer;">
-                                                Apply
-                                            </button>
-                                        </div>
-                                        <small style="display: block; margin-top: 5px; color: #666;">
-                                            Format: lemma-NN (e.g., ${lemma}-01). Note: Please verify this sense exists in the predicate frames.
-                                        </small>
-                                    </div>
-                                    
-                                    <p style="margin-top: 15px;">Otherwise, the token text will be used as the concept.</p>
-                                </div>
-                            `;
+                            senseContent = buildNoFramesFoundContent(
+                                token,
+                                lemma,
+                                lemmatization.usedFallback,
+                                Boolean(options.overrideLemma)
+                            );
                         }
                         
                         senseContainer.innerHTML = senseContent;
+                        
+                        const retryLemmaButton = document.getElementById('retry-lemma-search');
+                        const retryLemmaInput = document.getElementById('retry-lemma');
+                        if (retryLemmaButton && retryLemmaInput) {
+                            retryLemmaButton.addEventListener('click', async () => {
+                                const retryLemma = retryLemmaInput.value.trim();
+                                if (!retryLemma) {
+                                    showNotification('Please enter a lemma to retrieve frame files', 'error');
+                                    return;
+                                }
+                                await showSenseSelector(token, { overrideLemma: retryLemma });
+                            });
+
+                            retryLemmaInput.addEventListener('keypress', async (event) => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    retryLemmaButton.click();
+                                }
+                            });
+                        }
                         
                         // Add event listeners
                         if (senses.length > 0) {
@@ -3867,6 +4117,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                     if (selectedSense) {
                                         // Save selected sense
                                         window.selectedSense = selectedSense;
+                                        window.selectedSenseIsManual = false;
                                         console.log(`Selected sense: ${selectedSense}`);
                                         updateTokenSelectionDisplay();
                                         
@@ -3887,6 +4138,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                         }
                                     } else {
                                         window.selectedSense = null;
+                                        window.selectedSenseIsManual = false;
                                         updateTokenSelectionDisplay();
                                         argsDisplay.style.display = 'none';
                                     }
@@ -3953,6 +4205,7 @@ async function showAddBranchDialog(parentVariableSpan) {
                                         const manualSense = manualSenseInput.value.trim();
                                         if (manualSense) {
                                             window.selectedSense = manualSense;
+                                            window.selectedSenseIsManual = true;
                                             console.log(`Manually set sense: ${manualSense}`);
                                             
                                             // Clear any dropdown selection to avoid confusion
@@ -3982,10 +4235,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                                     const manualSense = manualSenseInput.value.trim();
                                     if (manualSense) {
                                         window.selectedSense = manualSense;
+                                        window.selectedSenseIsManual = true;
                                         console.log(`Manually set sense: ${manualSense}`);
                                         updateTokenSelectionDisplay();
                                     } else {
                                         window.selectedSense = null;
+                                        window.selectedSenseIsManual = false;
                                         updateTokenSelectionDisplay();
                                     }
                                 });
@@ -4056,10 +4311,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                                 const manualSense = manualSenseInput.value.trim();
                                 if (manualSense) {
                                     window.selectedSense = manualSense;
+                                    window.selectedSenseIsManual = true;
                                     console.log(`Manually set sense: ${manualSense}`);
                                     updateTokenSelectionDisplay();
                                 } else {
                                     window.selectedSense = null;
+                                    window.selectedSenseIsManual = false;
                                     updateTokenSelectionDisplay();
                                 }
                             });
@@ -4078,6 +4335,8 @@ async function showAddBranchDialog(parentVariableSpan) {
                 // Function to hide the sense selector
                 function hideSenseSelector() {
                     window.selectedSense = null;
+                    window.selectedSenseIsManual = false;
+                    window.selectedSenseLemma = null;
                     const senseContainer = document.getElementById('sense-selector-container');
                     if (senseContainer) {
                         senseContainer.remove();
@@ -4101,6 +4360,8 @@ async function showAddBranchDialog(parentVariableSpan) {
                     window.selectedTokenObjects = [];
                     window.selectedTokens = [];
                     window.selectedSense = null;
+                    window.selectedSenseIsManual = false;
+                    window.selectedSenseLemma = null;
 
                     // Hide sense selector
                     hideSenseSelector();
@@ -4300,6 +4561,12 @@ async function showAddBranchDialog(parentVariableSpan) {
                     if (window.selectedTokens.length === 1 && window.selectedSense) {
                         // We have a selected sense for this token
                         const sense = window.selectedSense;
+                        if (window.selectedSenseIsManual) {
+                            await persistLexiconFrame(sense, {
+                                lemma: window.selectedSenseLemma,
+                                surfaceForm: window.selectedTokens[0]
+                            });
+                        }
                         const variable = generateUniqueVariable(sense, annotationText);
                         newVariable = variable; // Save for alignment
                         childNode = `(${variable} / ${sense})`;

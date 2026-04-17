@@ -2,12 +2,14 @@ name: CI
 
 on:
   push:
-    branches: [ master, main, develop ]
+    branches:
+      - '**'
   pull_request:
     branches: [ master, main ]
 
 jobs:
-  test:
+  tests:
+    name: Tests (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
 
     strategy:
@@ -58,6 +60,7 @@ jobs:
         fail_ci_if_error: false
 
   lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
@@ -77,3 +80,41 @@ jobs:
     - name: Run flake8 (fatal errors only)
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  e2e-lexicon-roundtrip:
+    name: E2E Lexicon Roundtrip
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Cache pip packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install playwright pytest-playwright requests
+
+    - name: Install Playwright Chromium
+      run: |
+        python -m playwright install --with-deps chromium
+
+    - name: Run lexicon roundtrip e2e test
+      env:
+        SECRET_KEY: test-secret-key-for-ci
+      run: |
+        pytest tests/e2e/test_lexicon_roundtrip.py -v
