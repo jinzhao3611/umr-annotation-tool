@@ -18,7 +18,6 @@
                             <a class="nav-link" href="#sentence-dialogs">Sentence-Level Dialogs & Menus</a>
                             <a class="nav-link" href="#document-annotation">Document-Level Annotation</a>
                             <a class="nav-link" href="#search">Search Functionality</a>
-                            <a class="nav-link" href="#updates">Updates & Announcements</a>
                             <a class="nav-link" href="#sample-files">File Formats</a>
                         </nav>
                     </div>
@@ -74,10 +73,6 @@
                                 <tr>
                                     <td><strong>Account</strong></td>
                                     <td>Opens your dashboard with projects, documents, and profile settings.</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Posts / announcements</strong></td>
-                                    <td>Shows update posts and project-wide notices.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -245,7 +240,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Lexicon</strong></td>
-                                    <td>Opens the project lexicon page.</td>
+                                    <td>Opens the project lexicon page, where annotators can add project-specific frame entries, search existing entries, and download the current project lexicon as JSON.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Statistics</strong></td>
@@ -867,11 +862,38 @@
                                     <td>Filter the relevant token, concept, value, or variable list.</td>
                                 </tr>
                                 <tr>
+                                    <td>Sense lookup area for token-based predicates</td>
+                                    <td>When a single sentence token is selected, the dialog lemmatizes the token and looks up candidate senses from the base frame files plus the project lexicon.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Retry with a lemma</strong></td>
+                                    <td>Appears when automatic lemmatization may have failed. Annotators can type the corrected lemma and retrieve frame candidates again.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Open Lexicon For "lemma"</strong></td>
+                                    <td>Appears when no matching frame is found, and also remains available when matches are found but none of them is correct. Use it to add or update a project-specific frame entry for the current lemma.</td>
+                                </tr>
+                                <tr>
+                                    <td>Manual sense field</td>
+                                    <td>Use this only when you already know the exact roleset name. If that sense is used to add the branch, it is saved into the project lexicon so it can be retrieved in future annotation.</td>
+                                </tr>
+                                <tr>
                                     <td><strong>Add Branch</strong></td>
                                     <td>Inserts the new branch into the graph and updates alignments when the chosen child originates from sentence tokens.</td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        <h4>Lexicon Workflow For Missing or Incorrect Frames</h4>
+                        <ol>
+                            <li>Select the token in <strong>Add Branch</strong> and inspect the returned sense list.</li>
+                            <li>If the lemma looks wrong, use <strong>Retry with a lemma</strong> first.</li>
+                            <li>If the lemma is correct but the needed frame is missing, or the existing matches are not the right sense, click <strong>Open Lexicon For "lemma"</strong>.</li>
+                            <li>Add the project lexicon entry on the lexicon page. The lemma field is filled automatically.</li>
+                            <li>Use the lexicon search panel on the left to confirm the entry was added successfully.</li>
+                            <li>Click <strong>Back to Annotation</strong> to return to the sentence page. The same <strong>Add Branch</strong> dialog reopens automatically for the same parent node.</li>
+                            <li>Run the lookup again and choose the new project lexicon sense.</li>
+                        </ol>
 
                         <h4>Delete, Move, and Temporary Storage</h4>
                         <table class="table table-sm table-bordered">
@@ -1072,17 +1094,6 @@
                     <div class="card-body">
                         <p>UMR Writer includes dedicated search pages outside the sentence/document annotation screens. In general, search is used to locate documents, annotation patterns, concepts, or relations across project data.</p>
                         <p>If you are documenting a local deployment for annotators, this section should be paired with screenshots from the actual search page because search controls are not embedded in the main annotation templates.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="updates" class="mb-5">
-                <div class="card">
-                    <div class="card-header bg-steel text-white">
-                        <h2>Updates & Announcements</h2>
-                    </div>
-                    <div class="card-body">
-                        <p>Use the posts and announcement pages to track changes to annotation workflow, platform behavior, and schema policy. This is the correct place to publish project-wide notices when you introduce new temporary relations, new QC procedures, or UI changes that affect annotators.</p>
                     </div>
                 </div>
             </section>

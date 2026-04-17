@@ -3,7 +3,7 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint,
 from flask_login import login_user, current_user, logout_user, login_required
 from umr_annot_tool import db, bcrypt
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm, UpdateProjectForm
-from umr_annot_tool.models import User, Post, Doc, Annotation, Sent, Projectuser, Project, Lattice, Lexicon, Partialgraph, DocVersion
+from umr_annot_tool.models import User, Doc, Annotation, Sent, Projectuser, Project, Lattice, Lexicon, Partialgraph, DocVersion
 from umr_annot_tool.users.utils import save_picture, send_reset_email
 from sqlalchemy.orm.attributes import flag_modified
 import logging
@@ -729,18 +729,14 @@ def project(project_id):
 
 @users.route("/user/<string:username>")
 def user_posts(username):
-    page = request.args.get('page', default=1, type=int)
-    user = User.query.filter_by(username=username).first_or_404()
-    posts = Post.query.filter_by(author=user) \
-        .order_by(Post.date_posted.desc()) \
-        .paginate(page=page, per_page=2)
-    return render_template('user_post.html', posts=posts, user=user)
+    flash('The posts feature is no longer available.', 'info')
+    return redirect(url_for('users.account'))
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:  # make sure they are logged out
-        return redirect(url_for('main.display_post'))
+        return redirect(url_for('users.account'))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -753,7 +749,7 @@ def reset_request():
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
     if current_user.is_authenticated:
-        return redirect(url_for('main.display_post'))
+        return redirect(url_for('users.account'))
     user = User.verify_reset_token(token)
     if user is None:
         flash('That is an invalid token or expired token', 'warning')

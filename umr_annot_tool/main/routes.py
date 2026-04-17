@@ -11,7 +11,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 from flask import Blueprint
 from umr_annot_tool import db, bcrypt
-from umr_annot_tool.models import Sent, Doc, Annotation, User, Post, Lexicon, Projectuser, Project, Lattice, Partialgraph, DocVersion
+from umr_annot_tool.models import Sent, Doc, Annotation, User, Lexicon, Projectuser, Project, Lattice, Partialgraph, DocVersion
 from umr_annot_tool.umr_validator import validate_and_fix_annotation, process_document_annotations
 from umr_annot_tool.main.forms import UploadForm, CreateProjectForm
 from umr_annot_tool.resources.rolesets import known_relations
@@ -31,7 +31,6 @@ import secrets
 from urllib.parse import quote
 import uuid
 from umr_annot_tool.users.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from umr_annot_tool.posts.forms import PostForm
 
 # Create logs directory if it doesn't exist
 os.makedirs('logs', exist_ok=True)
