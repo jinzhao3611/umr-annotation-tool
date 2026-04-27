@@ -2,57 +2,59 @@
 
 This document is for the next maintainer of UMR Writer. It assumes you have already read `README.md` (local setup), `CONTRIBUTING.md` (dev workflow / PR process), and `tests/README.md` (test infrastructure). This file covers the things those documents *don't*: production operations, accounts and credentials, architectural decisions, and the tacit knowledge that only lives in the previous maintainer's head.
 
-**Outgoing maintainer:** Jin Zhao (jinzhao@brandeis.edu) — graduating <FILL IN: graduation date>.
+**Outgoing maintainer:** Jin Zhao (jinzhao@brandeis.edu) — graduating May 17 2026.
 **Incoming maintainer:** <FILL IN: name + email>.
-**Faculty owner of record:** <FILL IN: advisor name + email> — the long-term escalation point if the active maintainer rotates again.
+**Faculty owner of record:** Nianwen Xue (xuen@brandeis.edu) — the long-term escalation point if the active maintainer rotates again.
 
 ---
 
 ## 1. What this project is (one paragraph)
 
-UMR Writer is a Flask web app for annotating Uniform Meaning Representation across multiple languages, at both sentence and document level. It is used by <FILL IN: which research groups / classes / external annotators>. The annotators we currently know about are listed in <FILL IN: spreadsheet / Slack channel / nowhere — list them here>.
-
-Active annotation projects in production right now: <FILL IN: project names + rough size + who runs each>. This list matters because schema changes or downtime affect these people first.
+UMR Writer is a Flask web app for annotating Uniform Meaning Representation across multiple languages, at both sentence and document level.
 
 ---
 
 ## 2. Production deployment
 
 ### Where it runs
-- **Hosting:** Heroku (`Procfile` uses gunicorn). <FILL IN: app name(s), region, dyno tier>.
-- **Production URL:** <FILL IN>.
-- **Staging URL (if any):** <FILL IN, or "none — we deploy straight to prod">.
-- **Custom domain / DNS:** <FILL IN: registrar, who pays, renewal date>.
+- **Hosting:** Heroku, app `glacial-shelf-55504`, region `us`, stack `heroku-22`, 1 web dyno (gunicorn via `Procfile`).
+  - Owner: Heroku team account `umr-cs-brandeis-edu@herokumanager.com` (a Brandeis CS team account, **not** an individual login). The successor doesn't need ownership transferred — they just need to be added as a collaborator on the app. Current collaborators: `jinzhao@brandeis.edu`.
+  - Add-ons: `heroku-postgresql:essential-1` (Postgres), `sendgrid:starter` (SMTP for password reset).
+  - TLS: Heroku Auto Cert Management is on.
+- **Production URL:** https://umr-tool.cs.brandeis.edu (the user-facing address). The Heroku-internal address `https://glacial-shelf-55504.herokuapp.com/` also works but is not what we hand out.
+- **Staging URL:** none — we deploy straight to prod.
+- **Custom domain / DNS:** `umr-tool.cs.brandeis.edu` is a Brandeis CS subdomain managed by Brandeis CS IT, not a commercial registrar. There is no renewal/billing for this domain on our side; if the CNAME ever needs to change, contact **Christopher Alison** at Brandeis CS IT — he owns the DNS record. The CNAME currently points to `fundamental-fly-dfzm0bxp4wbx7mm47mxdcheh.herokudns.com` (Heroku SNI endpoint `hypsilophodon-34597`).
 
 ### Accounts that need to transfer
 | Service | Purpose | Where credentials live | Action on handoff |
 |---|---|---|---|
-| Heroku | App hosting + Postgres add-on | <FILL IN> | Add successor as collaborator/admin, transfer billing |
-| SendGrid (or current SMTP provider) | Password-reset email (`MAIL_PASSWORD`) | <FILL IN> | Rotate API key, give successor access |
-| GitHub repo | Source + CI | github.com/<FILL IN: org/repo> | Transfer repo ownership or grant admin |
-| Domain registrar | <FILL IN domain> | <FILL IN> | Transfer or update billing contact |
-| Codecov | Coverage badges (CI uses it) | CI secret `CODECOV_TOKEN` | Rotate or remove if not wanted |
-| <Anything else> | | | |
+| Heroku | App hosting (`glacial-shelf-55504`) + Postgres add-on | Heroku team `umr-cs-brandeis-edu` (team-owned, not individual) | Add successor as a collaborator on the app. No ownership transfer needed since the team owns it. |
+| SendGrid | Password-reset email (`MAIL_PASSWORD`) | Heroku add-on `sendgrid:starter` — credentials provisioned by Heroku as `MAIL_PASSWORD` / `MAIL_DEFAULT_SENDER` config vars. Manage via `heroku addons:open sendgrid -a glacial-shelf-55504`. | Successor inherits add-on access automatically once they're a Heroku collaborator. |
+| Brandeis CS IT (DNS) | `umr-tool.cs.brandeis.edu` CNAME | Christopher Alison, Brandeis CS IT | Notify him of the maintainer change so he has the right contact for any future DNS work. |
+| GitHub repo | Source + CI | github.com/jinzhao3611/umr-annotation-tool | Transfer repo ownership or grant admin to the successor. |
+| Codecov | Coverage badges (CI uses it) | CI secret `CODECOV_TOKEN` | Rotate or remove if not wanted. |
 
 ### Heroku config vars currently set in production
-Run `heroku config -a <app>` and paste the *names* (not values) here so the successor knows what's expected:
+Names only (verify with `heroku config -a glacial-shelf-55504`):
 ```
-DATABASE_URL          (set automatically by Heroku Postgres add-on)
-SECRET_KEY            <FILL IN how it was generated; rotate on handoff>
-MAIL_PASSWORD         (SendGrid API key)
-MAIL_DEFAULT_SENDER
-STATIC_VERSION        (cache-busting; bump on each deploy or set to commit SHA)
-<anything else>
+DATABASE_URL                 set automatically by the Heroku Postgres add-on
+HEROKU_POSTGRESQL_JADE_URL   alias of DATABASE_URL added by the Postgres add-on; same value, ignore
+SECRET_KEY                   Flask session/CSRF/reset-token signing key — rotate on handoff
+MAIL_PASSWORD                SendGrid SMTP password (provisioned by the sendgrid add-on)
+MAIL_DEFAULT_SENDER          From-address used by Flask-Mail for password-reset emails
+SENDGRID_PASSWORD            provisioned by the sendgrid add-on (alongside SENDGRID_USERNAME); the app reads MAIL_PASSWORD instead, but rotating credentials goes through SendGrid's dashboard
+SENDGRID_USERNAME            provisioned by the sendgrid add-on
 ```
+Note: there is no `STATIC_VERSION` set in production. The app falls back to `'1.0.0'` (see `umr_annot_tool/__init__.py`), which means cache-busting is not actually working in prod. If a future change needs to invalidate cached static assets, set `STATIC_VERSION` to the commit SHA on each deploy.
 
 ### Deploy / rollback runbook
 1. Merge to `master`. CI must pass (`.github/workflows/ci.yml`).
-2. `git push heroku master` (or whatever the prod remote is named — <FILL IN>).
-3. Watch `heroku logs --tail -a <app>` for ~2 minutes. Hit the homepage and log in to confirm.
-4. **Rollback:** `heroku releases -a <app>` to find the previous release, then `heroku rollback v<N>`. The Postgres DB is *not* rolled back — see "Schema changes" below.
+2. `git push heroku master` — the prod remote is named `heroku` (URL `https://git.heroku.com/glacial-shelf-55504.git`).
+3. Watch `heroku logs --tail -a glacial-shelf-55504` for ~2 minutes. Hit https://umr-tool.cs.brandeis.edu and log in to confirm.
+4. **Rollback:** `heroku releases -a glacial-shelf-55504` to find the previous release, then `heroku rollback v<N>`. The Postgres DB is *not* rolled back — see "Schema changes" below.
 
 ### Why Java 11 in `system.properties`?
-**Required, do not delete.** Heroku is configured with two buildpacks — `heroku/python` and `heroku/jvm` (verify with `heroku buildpacks -a <app>`). The JVM is needed by `farasapy`, which wraps the Farasa Arabic NLP toolkit (a Java program). `system.properties` pins the Java version the JVM buildpack uses. Removing the file would let Heroku fall back to its default Java version, which is not what production currently runs on.
+**Required, do not delete.** Heroku is configured with two buildpacks — `heroku/python` and `heroku/jvm` (verify with `heroku buildpacks -a glacial-shelf-55504`). The JVM is needed by `farasapy`, which wraps the Farasa Arabic NLP toolkit (a Java program). `system.properties` pins the Java version the JVM buildpack uses. Removing the file would let Heroku fall back to its default Java version, which is not what production currently runs on.
 
 ---
 
@@ -66,15 +68,9 @@ STATIC_VERSION        (cache-busting; bump on each deploy or set to commit SHA)
 ### No migration system
 There is **no Alembic / no migration framework**. Schema changes today are made by editing `models.py` and re-running `create_db.py` (which calls `db.create_all()`). `create_all()` does *not* alter existing tables — it only adds missing ones.
 
-This is the single biggest operational risk. In practice, schema changes in prod have been done by:
-<FILL IN: how you've actually done this — manual `ALTER TABLE` via `heroku pg:psql`? a one-off script? rebuilding the DB from a dump?>
 
 **Strong recommendation for the successor:** introduce Flask-Migrate (Alembic) before the next schema change. The audit in this handoff was the trigger to flag this; no one has done it yet because there's been no breaking schema change in a while.
 
-### Backups
-- <FILL IN: do you have Heroku Postgres continuous protection, or scheduled `pg:backups`? what's the retention?>
-- <FILL IN: is there an off-Heroku copy anywhere? S3? a local dump on your laptop?>
-- **Restore drill:** has anyone ever actually restored from backup? <FILL IN — if no, the successor should do this within their first month.>
 
 ### Useful one-liners
 ```bash
@@ -104,19 +100,11 @@ umr_annot_tool/
 
 The hot spots — places where bugs hurt most — are documented in `CONTRIBUTING.md` under "Sensitive Areas." Read that section before touching auth, uploads, or annotation core.
 
-### Things that look weird but are intentional
-<This section is the highest-value part of this doc. Fill it in from memory — it's what git blame won't tell the successor.>
-
-- <FILL IN: e.g. "We rewrite postgres:// to postgresql:// because Heroku gives the old URL form and SQLAlchemy 2 rejects it">
-- <FILL IN: parenthesis handling in branch operations is fragile — see commits about "parenthesis bugs"; the relevant code is in <file>>
-- <FILL IN: alignment cross-highlighting is implemented in JS that touches both sentence-level and graph DOMs — easy to break if you refactor either side>
-- <FILL IN: anything else where the obvious refactor is wrong>
 
 ### Things that look wrong and *are* wrong (known debt)
 - `posts/` blueprint is dead code. Safe to delete in a focused PR.
 - `system.properties` Java pin is unused (see §2).
 - Only one `TODO` in the codebase (`resources/utility_modules/parse_lexicon_file.py` — frame numbering). Not urgent.
-- <FILL IN: any other backlog items only you remember>
 
 ---
 
@@ -125,19 +113,13 @@ The hot spots — places where bugs hurt most — are documented in `CONTRIBUTIN
 These are user-facing operational tasks that aren't in the user guide because they require DB access or admin privilege.
 
 ### Promote / demote a project admin
-Done through the UI — see `templates/user_guide.html` section on admin handoff. Code path: <FILL IN: route + file>.
-
-### Reset a user's password manually (when SendGrid is down or they can't receive email)
-<FILL IN: do you do this via `heroku pg:psql` and bcrypt-hash a temporary password? Document the exact command.>
-
-### Delete or archive a finished annotation project
-<FILL IN: have you ever done this? what did you do?>
+Done through the UI — see `templates/user_guide.html` section on admin handoff. Code path: `users/routes.py` → `project()` view at `/project/<int:project_id>`, search for the `2.2.1 Promote/demote a member's permission` block. The "cannot demote the last admin" guard lives there too — that guard is intentional, do not refactor away (an ownerless project becomes unmanageable).
 
 ### Export annotations from a project
-<FILL IN: route + file, or manual SQL>.
+- Per-doc-version annotation export: `main/routes.py` → `export_annotation()` at `/export_annotation/<int:doc_version_id>`. This is the route the user-facing "Export" button hits.
+- Per-project lexicon export: `users/routes.py` → `download_lexicon()` at `/download_lexicon/<int:project_id>`.
+- For bulk pulls across many projects, query directly via `heroku pg:psql -a glacial-shelf-55504` (read-only by habit). The `annotation` table joins through `doc_version` → `doc` → `project`.
 
-### Handle a stuck / corrupted annotation
-<FILL IN: any time you've had to fix data by hand, write down what you did>.
 
 ---
 
@@ -164,25 +146,6 @@ Done through the UI — see `templates/user_guide.html` section on admin handoff
 
 ## 8. Communication and users
 
-- **Bug reports:** <FILL IN: GitHub issues? jinzhao@brandeis.edu? both?> — update the user guide footer when this changes.
-- **Annotator chat / mailing list:** <FILL IN, or "none">.
-- **Where new releases get announced:** <FILL IN, or "nowhere — we just deploy">.
+- **Bug reports:** GitHub issues.
 
 ---
-
-## 9. Post-handoff support window
-
-Outgoing maintainer (Jin) is available for questions until <FILL IN: date>. After that, the new maintainer is on their own and the faculty owner of record (§intro) is the escalation point.
-
-Things to do *together* before Jin leaves, in priority order:
-1. **Walkthrough deploy:** successor deploys a no-op change to prod with Jin watching.
-2. **Walkthrough restore:** successor restores a Heroku Postgres backup to a local DB.
-3. **Walkthrough a real bug fix:** pair on one open issue, end-to-end (branch → PR → merge → deploy).
-4. **Account transfer day:** sit down together and move Heroku, SendGrid, domain, GitHub admin in one session. Verify the successor can log in to each.
-5. **Rotate all secrets** after Jin's access is removed: `SECRET_KEY`, `MAIL_PASSWORD`, any other API keys.
-
----
-
-## 10. Open questions for Jin to answer before leaving
-
-Anything in this doc tagged `<FILL IN: ...>` is an open question. The doc is only useful once those are filled in. A reasonable goal: fill them in during one focused afternoon, then have the successor read this end-to-end and ask follow-ups.
