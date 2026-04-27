@@ -2370,6 +2370,12 @@ function makeVariablesClickable(annotationElement) {
         
         // Add a data attribute to help track variables
         newSpan.setAttribute('data-variable', newSpan.textContent);
+
+        // Wire cross-highlighting between this variable and its aligned tokens.
+        // Spans are recreated on every graph re-render, so this rebinds each time.
+        if (window.crossHighlight && window.crossHighlight.bindVariableSpan) {
+            window.crossHighlight.bindVariableSpan(newSpan);
+        }
     });
     
     // Also ensure relations and values are properly clickable after updating the HTML

@@ -783,3 +783,17 @@ html, body {
     transform: scale(1.05);
     transition: transform 0.1s, background 0.15s;
 }
+/* Cross-highlight: hovering a graph variable lights up its aligned tokens
+   in the source sentence, and vice versa. Backgrounds match the modal palette
+   already used by the alignment disambiguation UI. */
+.token.token-cross-highlight {
+    background-color: #ffeb3b;
+    border-radius: 3px;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.variable-span.variable-cross-highlight {
+    background-color: #c8e6c9;
+    border-radius: 3px;
+    transition: background-color 0.1s ease-in-out;
+}

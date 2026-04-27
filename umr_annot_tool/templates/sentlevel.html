@@ -5,6 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/alignments_v2.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/alignment_generator.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/cross_highlight.js') }}"></script>
     <style>
         /* The card-body holding the annotation scrolls horizontally */
         .annotation-card-body {
@@ -2906,7 +2907,15 @@
 
         // Initialize alignments
         const currentAlignments = {{ curr_alignment|tojson|safe }};
-        initializeAlignments(currentAlignments);        
+        initializeAlignments(currentAlignments);
+
+        // Wire cross-highlighting between graph variables and source tokens.
+        // bindVariableSpan is also called from updateVariableSpans() in
+        // relation_editor.js for every subsequent graph re-render.
+        if (window.crossHighlight) {
+            window.crossHighlight.init();
+        }
+
 
         // Handle collapse icon rotation for the right panel Document Info
         const docInfoHeader = document.querySelector('[data-bs-target="#docInfo"]');
