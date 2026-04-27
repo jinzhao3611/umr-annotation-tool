@@ -107,7 +107,7 @@
                             <li>Use <strong>Upload Document</strong> to add new files.</li>
                             <li>Manage project-specific schema extensions in <strong>Temporary Rolesets</strong> and <strong>Temporary Relations</strong>.</li>
                             <li>Adjust available lattice values in the lattice sections.</li>
-                            <li>Manage users from <strong>Members</strong>.</li>
+                            <li>Manage users from <strong>Members</strong>, including promoting other members to admin or demoting admins back to annotators (a project must always have at least one admin).</li>
                             <li>Review QC submissions and run adjudication from <strong>Quality Control</strong>.</li>
                         </ol>
                     </div>
@@ -368,7 +368,15 @@
                             <tbody>
                                 <tr>
                                     <td>Member rows</td>
-                                    <td>List all users currently assigned to the project.</td>
+                                    <td>List all users currently assigned to the project. Each row shows a small badge with that member's role (<code>admin</code> or <code>annotate</code>).</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Promote</strong> button</td>
+                                    <td>Admin-only. Promotes a regular member to admin. A project can have multiple admins at the same time; promoting someone does not remove your own admin status.</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Demote</strong> button</td>
+                                    <td>Admin-only. Demotes another admin back to a regular annotator. You can also demote yourself, as long as at least one other admin remains. The button is hidden when only one admin is left, so a project always has at least one admin.</td>
                                 </tr>
                                 <tr>
                                     <td>Remove-member button</td>
@@ -380,7 +388,7 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Add Member</strong></td>
-                                    <td>Admin-only. Adds the entered username to the project.</td>
+                                    <td>Admin-only. Adds the entered username to the project. New members are added with <code>annotate</code> permission; promote them afterwards if they should also be an admin.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -684,7 +692,7 @@
                             <tbody>
                                 <tr>
                                     <td><strong>Document Info</strong></td>
-                                    <td>Collapsible table with annotator, file name, language, project name, and project admin.</td>
+                                    <td>Collapsible table with annotator, file name, language, project name, and project creator (the user who originally set up the project; the project may have additional admins beyond this person).</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Quick Actions</strong></td>
