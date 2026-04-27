@@ -421,21 +421,45 @@
                 <h2>Project Members</h2>
             </div>
             <div class="members-list">
+                {% set admin_count = zipped_pairs | selectattr('0.permission', 'equalto', 'admin') | list | length %}
                 {% for member, member_name in zipped_pairs %}
                 <div class="member-item">
                     <div class="member-info">
                         <i class="fas fa-user"></i>
                         <span>{{ member_name }}</span>
+                        <span class="badge badge-secondary ml-2">{{ member.permission }}</span>
                     </div>
-                    {% if permission in ['admin'] and member.user_id != current_user.id %}
+                    {% if permission in ['admin'] %}
                     <div class="member-actions">
+                        {% if member.permission != 'admin' %}
+                        <form method="POST" action="" class="d-inline">
+                            <input type="hidden" name="set_permission_user_id" value="{{ member.user_id }}">
+                            <input type="hidden" name="set_permission_value" value="admin">
+                            <button type="submit" class="btn btn-sm btn-success"
+                                    title="Promote to admin">
+                                <i class="fas fa-user-shield"></i> Promote
+                            </button>
+                        </form>
+                        {% elif admin_count > 1 %}
+                        <form method="POST" action="" class="d-inline">
+                            <input type="hidden" name="set_permission_user_id" value="{{ member.user_id }}">
+                            <input type="hidden" name="set_permission_value" value="annotate">
+                            <button type="submit" class="btn btn-sm btn-warning"
+                                    title="Demote to annotate"
+                                    onclick="return confirm('Demote this member to annotate?')">
+                                <i class="fas fa-user"></i> Demote
+                            </button>
+                        </form>
+                        {% endif %}
+                        {% if member.user_id != current_user.id %}
                         <form method="POST" action="" class="d-inline">
                             <input type="hidden" name="remove_member_id" value="{{ member.user_id }}">
-                            <button type="submit" class="btn btn-sm btn-danger" 
+                            <button type="submit" class="btn btn-sm btn-danger"
                                     onclick="return confirm('Are you sure you want to remove this member?')">
                                 <i class="fas fa-user-minus"></i>
                             </button>
                         </form>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>

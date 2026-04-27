@@ -307,7 +307,7 @@ def project(project_id):
         
         if remove_member_id.isdigit() and int(remove_member_id) != 0 and membership.permission == 'admin':
             member_to_remove = Projectuser.query.filter_by(
-                project_id=project_id, 
+                project_id=project_id,
                 user_id=int(remove_member_id)
             ).first()
             if member_to_remove:
@@ -320,6 +320,37 @@ def project(project_id):
                 DocVersion.query.filter(DocVersion.user_id == int(remove_member_id)).delete()
                 db.session.delete(member_to_remove)
                 msg_list.append("Removed member from project.")
+
+        # 2.2.1 Promote/demote a member's permission
+        set_permission_user_id = request.form.get('set_permission_user_id', '0')
+        set_permission_value = request.form.get('set_permission_value', '').strip()
+        if (set_permission_user_id.isdigit() and int(set_permission_user_id) != 0
+                and set_permission_value in ('admin', 'annotate')
+                and membership.permission == 'admin'):
+            target = Projectuser.query.filter_by(
+                project_id=project_id,
+                user_id=int(set_permission_user_id)
+            ).first()
+            if not target:
+                msg_list.append("Member not found in project.")
+            elif target.permission == set_permission_value:
+                msg_list.append(f"Member already has '{set_permission_value}' permission.")
+            else:
+                # Block demoting the last admin so the project can never become
+                # ownerless. Self-demotion is fine as long as another admin remains.
+                if target.permission == 'admin' and set_permission_value != 'admin':
+                    admin_count = Projectuser.query.filter_by(
+                        project_id=project_id, permission='admin'
+                    ).count()
+                    if admin_count <= 1:
+                        msg_list.append("Cannot demote the last admin. "
+                                        "Promote another member to admin first.")
+                        target = None
+                if target is not None:
+                    target.permission = set_permission_value
+                    target_user = User.query.get(target.user_id)
+                    target_name = target_user.username if target_user else f"user {target.user_id}"
+                    msg_list.append(f"Set {target_name}'s permission to '{set_permission_value}'.")
         
         # 2.3 Document management
         delete_doc = request.form.get('delete_doc', '0')
