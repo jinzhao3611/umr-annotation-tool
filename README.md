@@ -65,13 +65,16 @@ export MAIL_DEFAULT_SENDER='your-email@example.com'
 
 ### 4. Initialize Database Tables
 
-Run the database initialization script to create all required tables:
+Apply the database migrations to create all required tables:
 
 ```bash
-python create_db.py
+export FLASK_APP=run.py
+flask db upgrade
 ```
 
-Note: You may need to update the database URL in `create_db.py` to match your local configuration.
+This is the preferred path for both fresh installs and ongoing schema updates. See `migrations/README` for details on authoring new migrations and stamping an existing (pre-migration) production database.
+
+`python create_db.py` remains as a legacy fallback that calls `db.create_all()` directly without recording an alembic revision.
 
 ### 5. Run the Application
 

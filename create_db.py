@@ -8,7 +8,14 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def init_db():
-    """Initialize the database with all tables."""
+    """Initialize the database with all tables.
+
+    Prefer `flask db upgrade` for both fresh installs and existing deployments:
+    it applies the alembic migration history and records the schema version.
+    This script remains as a fallback for environments that can't run flask-cli;
+    it does NOT stamp the alembic_version table, so a follow-up
+    `flask db stamp head` is required if you later want to use migrations.
+    """
     # Check if DATABASE_URL environment variable is set
     database_url = os.environ.get('DATABASE_URL')
 
@@ -35,6 +42,7 @@ def init_db():
 
     # Create all database tables
     logger.info("Creating database tables...")
+    logger.info("Note: `flask db upgrade` is the preferred way to set up the schema.")
     db.create_all()
     logger.info("Database tables created successfully!")
 

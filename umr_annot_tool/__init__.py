@@ -3,6 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask, request, jsonify, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -14,6 +15,7 @@ from werkzeug.exceptions import HTTPException
 
 # extensions
 db = SQLAlchemy()
+migrate = Migrate()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
@@ -57,6 +59,9 @@ def create_app(config_class=None):
 
     # Initialize extensions
     db.init_app(app)
+    # Import models so Flask-Migrate's autogenerate sees them.
+    from umr_annot_tool import models  # noqa: F401
+    migrate.init_app(app, db)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)

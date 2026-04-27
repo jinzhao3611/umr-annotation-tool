@@ -1,0 +1,41 @@
+Database migrations (Flask-Migrate / Alembic).
+
+## Common commands
+
+    flask db upgrade            # apply pending migrations (use this on fresh installs and after pulling new revisions)
+    flask db migrate -m "msg"   # autogenerate a new revision from model changes
+    flask db downgrade          # roll back one revision
+    flask db current            # show current revision
+    flask db history            # show revision history
+
+`FLASK_APP=run.py` and `DATABASE_URL` must be set in the environment.
+
+## First-time prod baselining
+
+Before this directory existed, the production database was created via
+`db.create_all()` from create_db.py. To bring an existing prod database
+under migration control, run ONCE:
+
+    flask db stamp head
+
+This records the current schema version without altering tables. After this,
+all future schema changes go through `flask db migrate` + `flask db upgrade`.
+
+## Authoring new migrations
+
+1. Edit models.py.
+2. Run `flask db migrate -m "describe the change"` against a postgres DB
+   (a fresh local one is fine — alembic compares models to the live schema
+   to generate the diff).
+3. Open the generated file in migrations/versions/ and review it. Autogenerate
+   often misses things (column type changes, server defaults, indexes on JSON
+   keys) — fix manually before committing.
+4. Run `flask db upgrade` locally to apply, run the test suite, and commit
+   the migration alongside the model change.
+
+## Notes
+
+- The conftest.py test fixture uses `db.create_all()`, not migrations, so
+  tests do not exercise the migration files. After non-trivial migrations,
+  also test by running `flask db upgrade` against a fresh local database.
+- Single-database configuration (no multi-bind support).
