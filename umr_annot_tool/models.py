@@ -23,7 +23,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
 
     # Example relationships
-    posts = db.relationship('Post', backref='author', lazy=True)
     docs = db.relationship('Doc', backref='author', lazy=True)
     projectusers = db.relationship('Projectuser', backref='author', lazy=True)
     projects_created = db.relationship("Project", backref="creator", lazy=True)
@@ -46,20 +45,6 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
-
-
-class Post(db.Model):
-    __tablename__ = "post"
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-
-    user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
 
 
 class Project(db.Model):
