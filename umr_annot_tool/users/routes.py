@@ -1661,11 +1661,8 @@ def delete_user_and_data(user):
     
     # Step 7: Delete all projects created by the user
     Project.query.filter_by(created_by_user_id=user_id).delete()
-    
-    # Step 8: Delete all posts by the user
-    Post.query.filter_by(user_id=user_id).delete()
-    
-    # Step 9: Finally, delete the user
+
+    # Step 8: Finally, delete the user
     db.session.delete(user)
     db.session.commit()
     
