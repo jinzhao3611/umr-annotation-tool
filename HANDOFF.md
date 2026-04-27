@@ -52,7 +52,7 @@ STATIC_VERSION        (cache-busting; bump on each deploy or set to commit SHA)
 4. **Rollback:** `heroku releases -a <app>` to find the previous release, then `heroku rollback v<N>`. The Postgres DB is *not* rolled back — see "Schema changes" below.
 
 ### Why Java 11 in `system.properties`?
-Legacy artifact, no longer needed. Safe to remove on the next deploy. <FILL IN if you remember a real reason — otherwise delete this line and the file.>
+**Required, do not delete.** Heroku is configured with two buildpacks — `heroku/python` and `heroku/jvm` (verify with `heroku buildpacks -a <app>`). The JVM is needed by `farasapy`, which wraps the Farasa Arabic NLP toolkit (a Java program). `system.properties` pins the Java version the JVM buildpack uses. Removing the file would let Heroku fall back to its default Java version, which is not what production currently runs on.
 
 ---
 
@@ -157,7 +157,7 @@ Done through the UI — see `templates/user_guide.html` section on admin handoff
 ## 7. External dependencies worth knowing about
 
 - **`umr_validator.py`** (35KB, lives in this repo) is the canonical UMR validator we ship. Don't accidentally diverge from upstream UMR spec — when the spec changes, this file needs review.
-- **Language-specific tooling:** `farasapy` (Arabic), `lemminflect` (English), `simplemma` (multilingual), `UzbekLemmatizer`, `ancast` (UMR eval). Each is pip-installed; if any becomes unmaintained the successor will need a replacement.
+- **Language-specific tooling:** `farasapy` (Arabic — **wraps Farasa, a Java program; this is why the Heroku JVM buildpack and `system.properties` are required**), `lemminflect` (English), `simplemma` (multilingual), `UzbekLemmatizer`, `ancast` (UMR eval). Each is pip-installed; if any becomes unmaintained the successor will need a replacement.
 - **No OAuth, no third-party login** — auth is username/password with bcrypt + Flask-Login. Password reset is the only thing that depends on email working.
 
 ---
