@@ -347,6 +347,31 @@ def generate_modal_triples_for_document(all_sent_annotations):
     return unique_triples
 
 
+def filter_new_auto_triples(current_triples, snapshot_keys):
+    """
+    Return only auto-derived triples that have appeared since the last save.
+
+    The save handler records the keys of all auto modal triples that were
+    "live" (derived from the sentence-level annotation) at save time. Anything
+    already in that snapshot is, by definition, either kept by the user (in
+    the saved doc_annot) or explicitly deleted — in both cases the user's
+    saved state should win on the next page load. Newly-derived triples (e.g.
+    from a :modal-strength added to the sentence after the last save) are
+    not in the snapshot and should be surfaced.
+
+    Args:
+        current_triples: List of ModalTriple objects derived right now.
+        snapshot_keys: Iterable of (source, relation, target) tuples or
+            length-3 lists from the last-save snapshot.
+
+    Returns:
+        Subset of current_triples whose keys are not in snapshot_keys.
+    """
+    snapshot = {tuple(k) for k in snapshot_keys}
+    return [t for t in current_triples
+            if (t.source, t.relation, t.target) not in snapshot]
+
+
 def triples_to_json_list(triples):
     """
     Convert a list of ModalTriple objects to a JSON-serializable list of dicts.

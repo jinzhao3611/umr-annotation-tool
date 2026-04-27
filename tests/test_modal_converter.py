@@ -8,6 +8,7 @@ from umr_annot_tool.resources.utility_modules.modal_converter import (
     generate_modal_triples_for_sentence,
     generate_modal_triples_for_document,
     generate_modal_triples_by_sentence,
+    filter_new_auto_triples,
     triples_to_json_list,
     extract_existing_modal_triples,
     strip_modal_annotations_from_penman,
@@ -237,6 +238,62 @@ class TestDocumentLevel:
         by_sent = generate_modal_triples_by_sentence(annotations)
         assert by_sent['1'] == []
         assert len(by_sent['2']) > 0
+
+    def test_filter_new_auto_triples_first_load(self):
+        """No snapshot yet → all current triples are 'new' and should be injected."""
+        from umr_annot_tool.resources.utility_modules.modal_converter import ModalTriple
+        current = [
+            ModalTriple('root', ':modal', 'author'),
+            ModalTriple('author', ':full-affirmative', 's1e'),
+        ]
+        result = filter_new_auto_triples(current, [])
+        assert _triple_set(result) == {
+            ('root', ':modal', 'author'),
+            ('author', ':full-affirmative', 's1e'),
+        }
+
+    def test_filter_new_auto_triples_deletion_sticks(self):
+        """A triple that was in the last snapshot is filtered out, even if still derivable.
+
+        After save, last_auto_modal_keys captures everything that was live. On
+        the next load the user's saved doc_annot is authoritative for those —
+        whether they kept or deleted the triple, we don't auto-inject again.
+        """
+        from umr_annot_tool.resources.utility_modules.modal_converter import ModalTriple
+        current = [
+            ModalTriple('root', ':modal', 'author'),
+            ModalTriple('author', ':full-affirmative', 's1e'),
+        ]
+        snapshot = [
+            ('root', ':modal', 'author'),
+            ('author', ':full-affirmative', 's1e'),
+        ]
+        result = filter_new_auto_triples(current, snapshot)
+        assert result == []
+
+    def test_filter_new_auto_triples_new_modal_strength_appears(self):
+        """A triple newly derived since the last save (e.g. a freshly added
+        :modal-strength) is not in the snapshot, so it surfaces."""
+        from umr_annot_tool.resources.utility_modules.modal_converter import ModalTriple
+        current = [
+            ModalTriple('root', ':modal', 'author'),
+            ModalTriple('author', ':full-affirmative', 's1e'),
+            ModalTriple('author', ':partial-affirmative', 's1f'),  # newly added
+        ]
+        snapshot = [
+            ('root', ':modal', 'author'),
+            ('author', ':full-affirmative', 's1e'),
+        ]
+        result = filter_new_auto_triples(current, snapshot)
+        assert _triple_set(result) == {('author', ':partial-affirmative', 's1f')}
+
+    def test_filter_accepts_list_keys(self):
+        """JSON round-trip leaves snapshot keys as lists, not tuples."""
+        from umr_annot_tool.resources.utility_modules.modal_converter import ModalTriple
+        current = [ModalTriple('author', ':full-affirmative', 's1e')]
+        snapshot = [['author', ':full-affirmative', 's1e']]  # JSON-deserialized
+        result = filter_new_auto_triples(current, snapshot)
+        assert result == []
 
     def test_triples_to_json_list(self):
         from umr_annot_tool.resources.utility_modules.modal_converter import ModalTriple

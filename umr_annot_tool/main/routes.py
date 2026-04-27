@@ -19,6 +19,9 @@ from umr_annot_tool.resources.utility_modules import (
     get_merged_rolesets,
     generate_modal_triples_for_document,
     generate_modal_triples_by_sentence,
+    generate_modal_triples_for_sentence,
+    parse_sentence_annotation,
+    filter_new_auto_triples,
     triples_to_json_list,
     strip_modal_annotations_from_penman,
     extract_existing_modal_triples,
@@ -1273,23 +1276,29 @@ def doclevel(doc_version_id, sent_id):
             logger.error(f"Error loading all sentence annotations: {str(e)}")
             all_sent_annotations = {}
 
-        # Generate auto-generated modal triples for the current sentence only.
-        # The frontend used to receive triples for the entire document and dump
-        # them all into whichever sentence the user was viewing; partition by
-        # sentence so each sentence shows only its own derived triples.
-        # Also: once a user has saved a :modal block for this sentence, treat
-        # the saved state as authoritative — don't re-inject auto triples that
-        # they may have explicitly deleted.
+        # Generate auto-generated modal triples for the current sentence only,
+        # filtered against the snapshot of what was "live" at the last save.
+        #
+        # The triples come from sentence-level :modal-strength etc. The frontend
+        # merges them with the saved doc_annot. To make deletions stick while
+        # still surfacing newly-added sentence-level modals, we send only the
+        # diff: triples that have appeared since the last save (i.e. were not
+        # in last_auto_modal_keys). Anything previously offered is now either
+        # present in the saved doc_annot (kept) or explicitly absent (deleted),
+        # and the user's saved state wins.
         try:
             current_idx_str = str(sent_id)
-            user_has_modal_block = ':modal' in (curr_doc_annot_string or '')
-            if user_has_modal_block:
-                auto_modal_triples = []
-            else:
-                auto_by_sent = generate_modal_triples_by_sentence(all_sent_annotations)
-                auto_modal_triples = auto_by_sent.get(current_idx_str, [])
+            auto_by_sent = generate_modal_triples_by_sentence(all_sent_annotations)
+            sent_auto_triples = auto_by_sent.get(current_idx_str, [])
+
+            actions = (curr_annotation.actions or {}) if curr_annotation else {}
+            last_keys = actions.get('last_auto_modal_keys', [])
+
+            auto_modal_triples = filter_new_auto_triples(sent_auto_triples, last_keys)
             auto_modal_triples_json = json.dumps(triples_to_json_list(auto_modal_triples))
-            logger.info(f"Generated {len(auto_modal_triples)} auto modal triples for sentence {current_idx_str}")
+            logger.info(f"Auto modal triples for sentence {current_idx_str}: "
+                        f"{len(sent_auto_triples)} live, {len(last_keys)} in snapshot, "
+                        f"{len(auto_modal_triples)} new to inject")
         except Exception as e:
             logger.error(f"Error generating auto modal triples: {str(e)}")
             auto_modal_triples_json = '[]'
@@ -1442,7 +1451,22 @@ def update_doc_annotation(doc_version_id, sent_id):
                     alignment={}
                 )
                 db.session.add(annotation)
-            
+
+            # Snapshot the auto modal triple keys derived from the current
+            # sentence-level annotation. On the next load, only triples not in
+            # this snapshot will be auto-injected, so deletions stick while
+            # newly-added :modal-strength annotations still appear.
+            try:
+                sent_position = int(sentence_number) if sentence_number else sent_id
+                info = parse_sentence_annotation(annotation.sent_annot or '', sent_position)
+                live_triples = generate_modal_triples_for_sentence(info)
+                live_keys = sorted({(t.source, t.relation, t.target) for t in live_triples})
+                new_actions = dict(annotation.actions or {})
+                new_actions['last_auto_modal_keys'] = [list(k) for k in live_keys]
+                annotation.actions = new_actions
+            except Exception as snap_err:
+                logger.warning(f"Could not snapshot auto modal keys: {snap_err}")
+
             # Save changes
             db.session.commit()
             logger.info(f"Successfully saved annotation (id={annotation.id})")
