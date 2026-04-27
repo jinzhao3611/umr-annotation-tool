@@ -564,7 +564,7 @@
                                 </tr>
                                 <tr>
                                     <td>Sentence display</td>
-                                    <td>Shows the tokenized sentence used by annotation and alignment tools.</td>
+                                    <td>Shows the tokenized sentence used by annotation and alignment tools. Hovering a token highlights any graph variables aligned to it (in green), and hovering a variable in the graph highlights its aligned tokens here (in yellow). See <em>Alignments Panel</em> below for details.</td>
                                 </tr>
                                 <tr>
                                     <td>Hidden sentence editor textarea</td>
@@ -710,6 +710,8 @@
                         </table>
 
                         <h4>Alignments Panel</h4>
+                        <p><strong>Hover cross-highlighting.</strong> Once alignments exist for a sentence, hovering over a variable span in the UMR graph (e.g. <code>s1x</code>) highlights its aligned tokens in the source sentence in yellow, and any other instances of the same variable in the graph (reentrancy / coreference) in green. Hovering over a token in the source sentence does the reverse — every variable aligned to that token lights up. Multi-token alignments such as <code>2-3</code> and discontiguous alignments such as <code>2-3, 5-5</code> highlight all included tokens together. The unaligned sentinel <code>0-0</code> produces no highlight.</p>
+
                         <table class="table table-sm table-bordered">
                             <thead>
                                 <tr>
