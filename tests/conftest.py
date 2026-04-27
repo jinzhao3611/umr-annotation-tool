@@ -54,10 +54,13 @@ def app():
         )
         db.session.add(admin_user)
 
-        # Create test project (created by admin user)
+        # Create test project (created by admin user).
+        # Use 'English' (matching the form's SelectField choices, which is what
+        # real production rows look like) rather than 'en' so language-aware
+        # routes such as /download_frames can resolve a frame file.
         test_project = Project(
             project_name='Test Project',
-            language='en',
+            language='English',
             created_by_user_id=2  # Admin user creates the project
         )
         db.session.add(test_project)
