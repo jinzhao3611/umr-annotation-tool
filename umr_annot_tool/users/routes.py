@@ -758,12 +758,6 @@ def project(project_id):
     )
 
 
-@users.route("/user/<string:username>")
-def user_posts(username):
-    flash('The posts feature is no longer available.', 'info')
-    return redirect(url_for('users.account'))
-
-
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:  # make sure they are logged out

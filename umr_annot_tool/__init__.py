@@ -138,13 +138,11 @@ def create_app(config_class=None):
 
     try:
         from umr_annot_tool.users.routes import users
-        from umr_annot_tool.posts.routes import posts
         from umr_annot_tool.main.routes import main
         from umr_annot_tool.errors.handlers import errors
         from umr_annot_tool.main.validation_routes import validation
 
         app.register_blueprint(users)
-        app.register_blueprint(posts)
         app.register_blueprint(main)
         app.register_blueprint(validation)
         app.register_blueprint(errors)

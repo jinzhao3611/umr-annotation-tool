@@ -27,7 +27,7 @@ class TestAppCreation:
 
     def test_blueprints_registered(self, app):
         """All expected blueprints are registered."""
-        expected_blueprints = ['users', 'posts', 'main', 'validation', 'errors']
+        expected_blueprints = ['users', 'main', 'validation', 'errors']
         for bp_name in expected_blueprints:
             assert bp_name in app.blueprints, f"Blueprint '{bp_name}' not registered"
 

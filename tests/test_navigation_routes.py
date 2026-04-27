@@ -49,9 +49,3 @@ class TestProtectedRoutes:
         """GET /search returns 200 when authenticated."""
         response = auth_client.get('/search')
         assert response.status_code == 200
-
-    def test_legacy_post_route_redirects_to_account_when_logged_in(self, auth_client):
-        """Legacy post feature routes redirect to account after feature removal."""
-        response = auth_client.get('/post/new', follow_redirects=False)
-        assert response.status_code == 302
-        assert '/account' in response.headers.get('Location', '')
