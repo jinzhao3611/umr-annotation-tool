@@ -18,6 +18,7 @@ from umr_annot_tool.resources.rolesets import known_relations
 from umr_annot_tool.resources.utility_modules import (
     get_merged_rolesets,
     generate_modal_triples_for_document,
+    generate_modal_triples_by_sentence,
     triples_to_json_list,
     strip_modal_annotations_from_penman,
     extract_existing_modal_triples,
@@ -1272,11 +1273,23 @@ def doclevel(doc_version_id, sent_id):
             logger.error(f"Error loading all sentence annotations: {str(e)}")
             all_sent_annotations = {}
 
-        # Generate auto-generated modal triples from sentence-level annotations
+        # Generate auto-generated modal triples for the current sentence only.
+        # The frontend used to receive triples for the entire document and dump
+        # them all into whichever sentence the user was viewing; partition by
+        # sentence so each sentence shows only its own derived triples.
+        # Also: once a user has saved a :modal block for this sentence, treat
+        # the saved state as authoritative — don't re-inject auto triples that
+        # they may have explicitly deleted.
         try:
-            auto_modal_triples = generate_modal_triples_for_document(all_sent_annotations)
+            current_idx_str = str(sent_id)
+            user_has_modal_block = ':modal' in (curr_doc_annot_string or '')
+            if user_has_modal_block:
+                auto_modal_triples = []
+            else:
+                auto_by_sent = generate_modal_triples_by_sentence(all_sent_annotations)
+                auto_modal_triples = auto_by_sent.get(current_idx_str, [])
             auto_modal_triples_json = json.dumps(triples_to_json_list(auto_modal_triples))
-            logger.info(f"Generated {len(auto_modal_triples)} auto modal triples")
+            logger.info(f"Generated {len(auto_modal_triples)} auto modal triples for sentence {current_idx_str}")
         except Exception as e:
             logger.error(f"Error generating auto modal triples: {str(e)}")
             auto_modal_triples_json = '[]'
@@ -2137,11 +2150,13 @@ def export_annotation(doc_version_id):
                     all_sent_annotations[str(idx + 1)] = ann.sent_annot or ''
                     break
 
-        # Generate auto modal triples for export
+        # Generate auto modal triples for export, partitioned by sentence so
+        # each sentence's doc annotation only includes triples derived from
+        # its own sentence-level annotation.
         try:
-            auto_modal_triples = generate_modal_triples_for_document(all_sent_annotations)
+            auto_modal_by_sent = generate_modal_triples_by_sentence(all_sent_annotations)
         except Exception:
-            auto_modal_triples = []
+            auto_modal_by_sent = {}
 
         # Format the UMR content
         umr_content = []
@@ -2201,19 +2216,16 @@ def export_annotation(doc_version_id):
             if annotation and annotation.doc_annot:
                 doc_annot = annotation.doc_annot.strip()
 
-            # Merge auto-generated modal triples into doc annotation
-            if auto_modal_triples:
-                existing_modal = extract_existing_modal_triples(doc_annot)
-                existing_keys = {(t.source, t.relation, t.target) for t in existing_modal}
-                new_triples = [t for t in auto_modal_triples
-                               if (t.source, t.relation, t.target) not in existing_keys]
-                if new_triples and not doc_annot:
-                    # Build a fresh doc annotation with auto triples
-                    modal_lines = [f'({t.source} {t.relation} {t.target})' for t in new_triples]
-                    doc_annot = (f'(s{i}s0 / sentence\n'
-                                 f'    :temporal ()\n'
-                                 f'    :modal ({" ".join(modal_lines)})\n'
-                                 f'    :coref ()\n)')
+            # Merge auto-generated modal triples into doc annotation only if
+            # the user has not already curated a :modal block for this sentence.
+            # If they have, respect their saved state (including deletions).
+            sent_auto_triples = auto_modal_by_sent.get(str(i), [])
+            if sent_auto_triples and ':modal' not in doc_annot:
+                modal_lines = [f'({t.source} {t.relation} {t.target})' for t in sent_auto_triples]
+                doc_annot = (f'(s{i}s0 / sentence\n'
+                             f'    :temporal ()\n'
+                             f'    :modal ({" ".join(modal_lines)})\n'
+                             f'    :coref ()\n)')
 
             if doc_annot:
                 umr_content.append(doc_annot)

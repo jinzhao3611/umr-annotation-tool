@@ -291,6 +291,38 @@ def generate_modal_triples_for_sentence(info):
     return triples
 
 
+def generate_modal_triples_by_sentence(all_sent_annotations):
+    """
+    Generate modal triples partitioned by the sentence they are derived from.
+
+    Each sentence's doc-level view should only display the modal triples
+    that come from its own sentence-level annotation, so callers can look
+    up triples for the current sentence without seeing others.
+
+    Args:
+        all_sent_annotations: Dict mapping sentence index strings to Penman annotation strings
+
+    Returns:
+        Dict mapping sentence index strings to lists of ModalTriple objects
+        (deduplicated within each sentence).
+    """
+    by_sent = {}
+    for sent_idx_str, penman_str in all_sent_annotations.items():
+        sent_idx = int(sent_idx_str)
+        info = parse_sentence_annotation(penman_str, sent_idx)
+        sent_triples = generate_modal_triples_for_sentence(info)
+
+        seen = set()
+        unique = []
+        for triple in sent_triples:
+            key = (triple.source, triple.relation, triple.target)
+            if key not in seen:
+                seen.add(key)
+                unique.append(triple)
+        by_sent[sent_idx_str] = unique
+    return by_sent
+
+
 def generate_modal_triples_for_document(all_sent_annotations):
     """
     Generate modal triples for an entire document by processing all sentence annotations.
@@ -301,24 +333,16 @@ def generate_modal_triples_for_document(all_sent_annotations):
     Returns:
         List of deduplicated ModalTriple objects
     """
-    all_triples = []
+    by_sent = generate_modal_triples_by_sentence(all_sent_annotations)
 
-    # Process each sentence in order
-    for sent_idx_str, penman_str in sorted(all_sent_annotations.items(),
-                                           key=lambda x: int(x[0])):
-        sent_idx = int(sent_idx_str)
-        info = parse_sentence_annotation(penman_str, sent_idx)
-        sent_triples = generate_modal_triples_for_sentence(info)
-        all_triples.extend(sent_triples)
-
-    # Deduplicate by (source, relation, target)
     seen = set()
     unique_triples = []
-    for triple in all_triples:
-        key = (triple.source, triple.relation, triple.target)
-        if key not in seen:
-            seen.add(key)
-            unique_triples.append(triple)
+    for sent_idx_str in sorted(by_sent, key=int):
+        for triple in by_sent[sent_idx_str]:
+            key = (triple.source, triple.relation, triple.target)
+            if key not in seen:
+                seen.add(key)
+                unique_triples.append(triple)
 
     return unique_triples
 

@@ -7,6 +7,7 @@ from umr_annot_tool.resources.utility_modules.modal_converter import (
     convert_modstr_to_relation,
     generate_modal_triples_for_sentence,
     generate_modal_triples_for_document,
+    generate_modal_triples_by_sentence,
     triples_to_json_list,
     extract_existing_modal_triples,
     strip_modal_annotations_from_penman,
@@ -199,6 +200,43 @@ class TestDocumentLevel:
         root_modal_count = sum(1 for t in triples
                                if t.source == 'root' and t.relation == ':modal' and t.target == 'author')
         assert root_modal_count == 1
+
+    def test_partition_by_sentence(self):
+        """Each sentence's triples should only reference variables from that sentence."""
+        annotations = {
+            '1': """(s1e / eat-01
+                :ARG0 (s1x / person)
+                :modal-strength full-affirmative)""",
+            '2': """(s2e / run-01
+                :ARG0 (s2x / dog)
+                :modal-strength partial-affirmative)""",
+            '14': """(s14a / sleep-01
+                :ARG0 (s14p / person)
+                :modal-strength neutral-affirmative)""",
+        }
+        by_sent = generate_modal_triples_by_sentence(annotations)
+
+        assert set(by_sent.keys()) == {'1', '2', '14'}
+
+        s1_targets = {t.target for t in by_sent['1'] if t.source == 'author'}
+        s2_targets = {t.target for t in by_sent['2'] if t.source == 'author'}
+        s14_targets = {t.target for t in by_sent['14'] if t.source == 'author'}
+
+        assert s1_targets == {'s1e'}
+        assert s2_targets == {'s2e'}
+        assert s14_targets == {'s14a'}
+
+    def test_partition_empty_sentence(self):
+        """A sentence with no modal-strength should yield an empty triple list."""
+        annotations = {
+            '1': '(s1x / person)',
+            '2': """(s2e / run-01
+                :ARG0 (s2x / dog)
+                :modal-strength full-affirmative)""",
+        }
+        by_sent = generate_modal_triples_by_sentence(annotations)
+        assert by_sent['1'] == []
+        assert len(by_sent['2']) > 0
 
     def test_triples_to_json_list(self):
         from umr_annot_tool.resources.utility_modules.modal_converter import ModalTriple
