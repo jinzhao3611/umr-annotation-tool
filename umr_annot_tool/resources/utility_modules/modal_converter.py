@@ -445,6 +445,67 @@ def extract_existing_modal_triples(doc_annot_string):
     return triples
 
 
+def remove_modal_triples_from_doc_annot(doc_annot_string, keys_to_remove):
+    """
+    Remove specific modal triples from a document-level annotation string.
+
+    Used to auto-clean up triples that were previously auto-derived (and saved)
+    but are no longer derivable because the user removed the corresponding
+    sentence-level :modal-strength annotation.
+
+    Args:
+        doc_annot_string: The saved doc_annot Penman string.
+        keys_to_remove: Iterable of (source, relation, target) tuples or
+            length-3 lists identifying the triples to strip.
+
+    Returns:
+        A new doc_annot string with the matching triples removed from the
+        :modal block. The :modal block itself is preserved (possibly empty).
+        If there's no :modal section or no matches, returns the input unchanged.
+    """
+    if not doc_annot_string or not keys_to_remove:
+        return doc_annot_string
+
+    keys_set = {tuple(k) for k in keys_to_remove}
+    if not keys_set:
+        return doc_annot_string
+
+    modal_start = doc_annot_string.find(':modal')
+    if modal_start == -1:
+        return doc_annot_string
+
+    paren_start = doc_annot_string.find('(', modal_start)
+    if paren_start == -1:
+        return doc_annot_string
+
+    depth = 0
+    paren_end = -1
+    for i in range(paren_start, len(doc_annot_string)):
+        if doc_annot_string[i] == '(':
+            depth += 1
+        elif doc_annot_string[i] == ')':
+            depth -= 1
+            if depth == 0:
+                paren_end = i
+                break
+
+    if paren_end == -1:
+        return doc_annot_string
+
+    modal_content = doc_annot_string[paren_start + 1:paren_end]
+
+    triple_pattern = re.compile(r'\((\S+)\s+(:\S+)\s+(\S+)\)')
+
+    def replace(match):
+        key = (match.group(1), match.group(2), match.group(3))
+        return '' if key in keys_set else match.group(0)
+
+    new_content = triple_pattern.sub(replace, modal_content)
+    new_content = re.sub(r'\s+', ' ', new_content).strip()
+
+    return doc_annot_string[:paren_start + 1] + new_content + doc_annot_string[paren_end:]
+
+
 def strip_modal_annotations_from_penman(penman_str):
     """
     Remove :modal-strength, :modal-predicate, and :quote annotations from a Penman string.

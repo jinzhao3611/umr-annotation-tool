@@ -22,6 +22,7 @@ from umr_annot_tool.resources.utility_modules import (
     generate_modal_triples_for_sentence,
     parse_sentence_annotation,
     filter_new_auto_triples,
+    remove_modal_triples_from_doc_annot,
     triples_to_json_list,
     strip_modal_annotations_from_penman,
     extract_existing_modal_triples,
@@ -1276,25 +1277,37 @@ def doclevel(doc_version_id, sent_id):
             logger.error(f"Error loading all sentence annotations: {str(e)}")
             all_sent_annotations = {}
 
-        # Generate auto-generated modal triples for the current sentence only,
-        # filtered against the snapshot of what was "live" at the last save.
-        #
-        # The triples come from sentence-level :modal-strength etc. The frontend
-        # merges them with the saved doc_annot. To make deletions stick while
-        # still surfacing newly-added sentence-level modals, we send only the
-        # diff: triples that have appeared since the last save (i.e. were not
-        # in last_auto_modal_keys). Anything previously offered is now either
-        # present in the saved doc_annot (kept) or explicitly absent (deleted),
-        # and the user's saved state wins.
+        # Reconcile the saved doc_annot's modal block with the current state of
+        # sentence-level :modal-strength derivation. Three buckets:
+        #   - Orphans: triples in the last-save snapshot AND in the saved
+        #     doc_annot, but no longer derivable. The user removed the
+        #     corresponding :modal-strength, so strip them from doc_annot.
+        #   - Newly derived: triples in current auto but not in the snapshot.
+        #     Inject these into the frontend on top of the saved state.
+        #   - Everything else: governed by the saved doc_annot (kept or
+        #     manually added by the user).
         try:
             current_idx_str = str(sent_id)
             auto_by_sent = generate_modal_triples_by_sentence(all_sent_annotations)
             sent_auto_triples = auto_by_sent.get(current_idx_str, [])
+            current_auto_keys = {(t.source, t.relation, t.target) for t in sent_auto_triples}
 
             actions = (curr_annotation.actions or {}) if curr_annotation else {}
-            last_keys = actions.get('last_auto_modal_keys', [])
+            last_keys_raw = actions.get('last_auto_modal_keys', [])
+            last_keys = {tuple(k) for k in last_keys_raw}
 
-            auto_modal_triples = filter_new_auto_triples(sent_auto_triples, last_keys)
+            saved_modal_triples = extract_existing_modal_triples(curr_doc_annot_string)
+            saved_modal_keys = {(t.source, t.relation, t.target) for t in saved_modal_triples}
+
+            orphans = (last_keys & saved_modal_keys) - current_auto_keys
+            if orphans:
+                curr_doc_annot_string = remove_modal_triples_from_doc_annot(
+                    curr_doc_annot_string, orphans
+                )
+                logger.info(f"Stripped {len(orphans)} orphan auto modal triples "
+                            f"from sentence {current_idx_str} doc_annot")
+
+            auto_modal_triples = filter_new_auto_triples(sent_auto_triples, last_keys_raw)
             auto_modal_triples_json = json.dumps(triples_to_json_list(auto_modal_triples))
             logger.info(f"Auto modal triples for sentence {current_idx_str}: "
                         f"{len(sent_auto_triples)} live, {len(last_keys)} in snapshot, "

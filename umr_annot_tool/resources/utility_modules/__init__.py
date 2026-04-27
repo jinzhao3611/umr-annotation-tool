@@ -8,6 +8,7 @@ from umr_annot_tool.resources.utility_modules.modal_converter import (
     triples_to_json_list,
     strip_modal_annotations_from_penman,
     extract_existing_modal_triples,
+    remove_modal_triples_from_doc_annot,
 )
 from umr_annot_tool.resources.utility_modules.alignment_generator import (
     generate_alignments_interactive,

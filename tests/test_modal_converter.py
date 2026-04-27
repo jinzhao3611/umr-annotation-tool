@@ -11,6 +11,7 @@ from umr_annot_tool.resources.utility_modules.modal_converter import (
     filter_new_auto_triples,
     triples_to_json_list,
     extract_existing_modal_triples,
+    remove_modal_triples_from_doc_annot,
     strip_modal_annotations_from_penman,
 )
 
@@ -329,6 +330,64 @@ class TestExtractExistingTriples:
     def test_no_modal_section(self):
         doc_annot = """(s0d / doc :temporal ((s1e :before DCT)))"""
         assert extract_existing_modal_triples(doc_annot) == []
+
+
+# ── remove_modal_triples_from_doc_annot ──────────────────────────────────
+
+class TestRemoveModalTriples:
+    def test_removes_matching_triple(self):
+        doc_annot = ("(s1s0 / sentence\n"
+                     "    :temporal ()\n"
+                     "    :modal ((root :modal author) (author :full-affirmative s1e))\n"
+                     "    :coref ()\n)")
+        result = remove_modal_triples_from_doc_annot(
+            doc_annot, [('author', ':full-affirmative', 's1e')]
+        )
+        remaining = _triple_set(extract_existing_modal_triples(result))
+        assert remaining == {('root', ':modal', 'author')}
+
+    def test_preserves_non_matching_triples(self):
+        """Triples not in the keys-to-remove set should be left untouched —
+        critical so manually-added triples aren't auto-cleaned."""
+        doc_annot = ("(s1s0 / sentence\n"
+                     "    :modal ((root :modal author) (author :full-affirmative s1e) "
+                     "(author :neutral-affirmative s1x))\n)")
+        result = remove_modal_triples_from_doc_annot(
+            doc_annot, [('author', ':full-affirmative', 's1e')]
+        )
+        remaining = _triple_set(extract_existing_modal_triples(result))
+        assert remaining == {
+            ('root', ':modal', 'author'),
+            ('author', ':neutral-affirmative', 's1x'),
+        }
+
+    def test_empty_keys_returns_input(self):
+        doc_annot = "(s1s0 / sentence :modal ((root :modal author)))"
+        assert remove_modal_triples_from_doc_annot(doc_annot, []) == doc_annot
+
+    def test_no_modal_section_returns_input(self):
+        doc_annot = "(s1s0 / sentence :temporal ((s1e :before DCT)))"
+        result = remove_modal_triples_from_doc_annot(
+            doc_annot, [('author', ':full-affirmative', 's1e')]
+        )
+        assert result == doc_annot
+
+    def test_removing_all_leaves_empty_modal_block(self):
+        doc_annot = "(s1s0 / sentence :modal ((author :full-affirmative s1e)))"
+        result = remove_modal_triples_from_doc_annot(
+            doc_annot, [('author', ':full-affirmative', 's1e')]
+        )
+        # The :modal block stays in place but contains no triples
+        assert ':modal' in result
+        assert extract_existing_modal_triples(result) == []
+
+    def test_accepts_list_keys(self):
+        """Snapshot keys come back from JSON as lists, not tuples."""
+        doc_annot = "(s1s0 / sentence :modal ((author :full-affirmative s1e)))"
+        result = remove_modal_triples_from_doc_annot(
+            doc_annot, [['author', ':full-affirmative', 's1e']]
+        )
+        assert extract_existing_modal_triples(result) == []
 
 
 # ── strip_modal_annotations_from_penman ──────────────────────────────────
