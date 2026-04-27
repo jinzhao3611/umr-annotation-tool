@@ -5,6 +5,20 @@ from umr_annot_tool import db
 from umr_annot_tool.models import Lexicon, Project
 
 
+@pytest.fixture(autouse=True)
+def restore_test_project_language(app):
+    """Some tests in this module mutate the seeded Test Project's language
+    (the session-scoped `app` fixture creates it once with language='English').
+    Without this teardown, the mutation leaks across tests in definition
+    order and breaks test_models.py::test_project_exists."""
+    yield
+    with app.app_context():
+        project = Project.query.get(1)
+        if project is not None and project.language != 'English':
+            project.language = 'English'
+            db.session.commit()
+
+
 @pytest.mark.integration
 class TestLexiconIntegration:
     def test_lexicon_page_preserves_annotation_return_target(self, admin_client, app):

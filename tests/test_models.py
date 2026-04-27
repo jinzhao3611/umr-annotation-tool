@@ -65,7 +65,7 @@ class TestProjectModel:
         with app.app_context():
             project = Project.query.filter_by(project_name='Test Project').first()
             assert project is not None
-            assert project.language == 'en'
+            assert project.language == 'English'
 
     def test_project_creator(self, app):
         """Project has correct creator."""
