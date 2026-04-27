@@ -421,7 +421,7 @@
                 <h2>Project Members</h2>
             </div>
             <div class="members-list">
-                {% set admin_count = zipped_pairs | selectattr('0.permission', 'equalto', 'admin') | list | length %}
+                {% set admin_count = members | selectattr('permission', 'equalto', 'admin') | list | length %}
                 {% for member, member_name in zipped_pairs %}
                 <div class="member-item">
                     <div class="member-info">

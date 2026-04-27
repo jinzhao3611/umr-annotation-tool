@@ -746,7 +746,7 @@ def project(project_id):
         permission=membership.permission,
         members=memberships,
         member_names=member_names,
-        zipped_pairs=zip(memberships, member_names),
+        zipped_pairs=zipped_pairs,
         person_setting=json.dumps(person_setting),
         aspect_setting=json.dumps(aspect_setting),
         discourse_setting=json.dumps(discourse_setting),
