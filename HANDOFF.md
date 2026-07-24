@@ -3,7 +3,7 @@
 This document is for the next maintainer of UMR Writer. It assumes you have already read `README.md` (local setup), `CONTRIBUTING.md` (dev workflow / PR process), and `tests/README.md` (test infrastructure). This file covers the things those documents *don't*: production operations, accounts and credentials, architectural decisions, and the tacit knowledge that only lives in the previous maintainer's head.
 
 **Outgoing maintainer:** Jin Zhao (jinzhao@brandeis.edu) — graduating May 17 2026.
-**Incoming maintainer:** <FILL IN: name + email>.
+**Incoming maintainer:** James Petullo (jamespetullo@brandeis.edu).
 **Faculty owner of record:** Nianwen Xue (xuen@brandeis.edu) — the long-term escalation point if the active maintainer rotates again.
 
 ---

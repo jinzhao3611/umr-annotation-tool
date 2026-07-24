@@ -11,6 +11,7 @@
     { "name": "plant" },
     { "name": "language" },
     { "name": "nationality" },
+    {"name": "implicit-argument"},
     {
       "name": "social-group",
       "children": [

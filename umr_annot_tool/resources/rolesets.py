@@ -259,6 +259,7 @@ discourse_concepts = [
 abstract_concepts = {
     'person': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']},
     'individual-person': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']}, #todo: bert says replacing 'person'? just the named entities
+    'implicit-argument': {'type': 'basic', 'sub-roles': []},
     'place': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']}, #todo: what does ref menu mean?
     'event': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']}, #todo: what does ref menu mean?
     'name': {'type': 'basic', 'sub-roles': ':opN'},
@@ -561,6 +562,7 @@ ne_types = ['academic-organization',
  'arts-movement',
  'cyber-attack',
  'individual-person',
+ 'implicit-argument',
  'nation',
  'nature-reserve',
  'religious-movement',

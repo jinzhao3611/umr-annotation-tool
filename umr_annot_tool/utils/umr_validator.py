@@ -1238,6 +1238,7 @@ discourse_concept_re = re.compile(r"^(" + '|'.join(discourse_concepts) + r")$")
 abstract_concepts = {
     'person': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']},
     'individual-person': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']}, #todo: bert says replacing 'person'? just the named entities
+    'implicit-argument': {'type': 'basic', 'sub-roles': []},
     'place': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']}, #todo: what does ref menu mean?
     'event': {'type': 'basic', 'sub-roles': [':ref-person', ':ref-number']}, #todo: what does ref menu mean?
     'name': {'type': 'basic', 'sub-roles': ':opN'},

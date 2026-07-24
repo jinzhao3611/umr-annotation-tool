@@ -2700,7 +2700,7 @@ async function showAddBranchDialog(parentVariableSpan) {
         
         // Use full abstract concepts list from server (includes abstract-91 rolesets)
         const abstractConceptsList = conceptsData.abstract_concepts || [
-            'person', 'individual-person', 'place', 'event', 'name', 'umr-choice',
+            'person', 'individual-person', 'implicit-argument', 'place', 'event', 'name', 'umr-choice',
             'manner', 'umr-unknown', 'umr-unintelligible', 'umr-empty',
             'date-entity', 'string-entity', 'ordinal-entity', 'url-entity',
             'monetary-quantity', 'distance-quantity', 'temporal-quantity', 'temperature-quantity',
